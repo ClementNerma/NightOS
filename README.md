@@ -28,3 +28,11 @@ NightOS, on its side, starts from a blank page. There is no compatibility to mai
 ## I have more questions!
 
 Most frequent questions are answered [here](docs/FAQ.md). Feel free to [open an issue](https://github.com/ClementNerma/NightOS/issues/new) if you have additional questions!
+
+## License
+
+This project is released under the [Apache-2.0](LICENSE.md) license terms.
+
+## Credits
+
+The [project's logo](logo.png) was created using a night sky picture from [Joe Parks](https://www.flickr.com/people/34450190@N08), who owns the original image's rights (you can find the original photo [here](https://www.flickr.com/photos/parksjd/9253056182/)).

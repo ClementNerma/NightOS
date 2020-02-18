@@ -42,6 +42,7 @@ The list of default applications and their description can be found [here](appli
 * [Pre-compiling applications](technical/pre-compiling.md) - pre-compiling applications to improve installation time and size
 * [Processes](technical/processes.md) - how processes work
 * [The registry](technical/registry.md) - everything about the system registry
+* [The shell](technical/shell.md) - how the shell and scripting work
 * [Signals](technical/signals.md) - signals management
 
 ### Applications

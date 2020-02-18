@@ -49,6 +49,22 @@ Note that the store has an option for installing applications as volatile.
 
 See the [permissions document](../features/permissions.md).
 
+## Name and slug
+
+Each application has a name as well as a slug. The name can any valid UTF-8 string, while the slug must respect several rules:
+
+* Only lowercase letters, underscores and digits
+* Must not start by a digit
+* Must not be the name of a native shell command
+* Must not be the name of a native shell function
+* Must not be the name of a shell type
+
+By default, the slug is auto-generated from the name, but it can also be customized.
+
+From the slug is generated the _Application's IDentifier_ (AID), which is prefixed by the developer's identifier (DID) which is specified in the application's manifest (must match the publisher's identifier on the store). The DID is submitted to the same rules as the application's slug.
+
+For instance, an application with a slug of `utils` made by a developer whose DID is `superdev` will get an AID of `utils.superdev`.
+
 ## Commands
 
 Application can expose [shell commands](../technical/shell.md). Multiple commands can be exposed without any risk of clashing as the command name must be prefixed by the application's slug first.

@@ -35,7 +35,7 @@ The list of default applications and their description can be found [here](appli
 
 * [The controller](technical/controller.md) - permissions management system
 * [Developer mode](technical/dev-mode.md) - enable powerful development options
-* [Integrity checker](technical/intergrity-checker.md) - ensure the system hasn't been corrupted
+* [Integrity checker](technical/integrity-checker.md) - ensure the system hasn't been corrupted
 * [I/O manager](technical/io-manager.md) - manage input/output requests
 * [The kernel](technical/kernel.md) - kernel design
 * [Performances](technical/performances.md) - everything about the performance side of processes management

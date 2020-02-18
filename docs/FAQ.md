@@ -29,18 +29,9 @@ The project is currently in its very early stages. Here is the roadmap:
 
 Currently we are the very first stage, "High-level conception".
 
-## Who are you?
-
-My name is Clément Nerma (my last name is a pseudonym). I'm a back-end developer that loves to touch everything related to low-level things, like operating systems.
-
-## Why did you create NightOS?
-
-I created it as an answer to the frustration modern OSes provided me. All modern systems have many stability and security problems that cannot be resolved easily because they need to maintain backward compatibility with older pieces of software.
-This is where I had the idea of creating NightOS: an operating system that is both robust (understand stable, with mechanisms to minimize data loss in case something goes wrong) and secure, with many security features available to the average user and some more complex ones for advanced users.
-
 ## Will this project replace Windows/MacOS/Linux/... one day?
 
-No. Absolutely not. Because, as I said in the project's README ([this project seems too good to be true](../README.md#this-project-seems-too-good-to-be-true)), it's not viable for an operating system today to just get rid of all backward compatibility with existing software, simply because what users are interested in is applications first, and **then** the system itself - is it secure, stable, performant, and so on.
+No. Absolutely not. Because, as I said in sooner, it's not viable for an operating system today to just get rid of all backward compatibility with existing software, simply because what users are interested in is applications first, and **then** the system itself - is it secure, stable, performant, and so on.
 
 Imagine someone introducing the perfect operating system, but with almost no application on it. Would you get rid of your Windows/MacOS/Linux/... system for this one? Surely not, at least not as your everyday system.
 
@@ -57,6 +48,15 @@ In terms of similarities:
 * The [v1](https://github.com/ClementNerma/NightOS-v1) was more of a draft, which had a lot of problems up to its roots. It was a pretty bad version overall, and was created when I did not have a real knowledge about how an operating system actually worked ;
 * The [v2](https://github.com/ClementNerma/NightOS-v2) was a bit more realistic, but still far from being mature enough ;
 * The [v3](https://github.com/ClementNerma/NightOS-v3) was more serious and ambitious, but it was still a desktop environment and not designed to be a full operating system
+
+## Who are you?
+
+My name is Clément Nerma (my last name is a pseudonym). I'm a back-end developer that loves to touch everything related to low-level things, like operating systems.
+
+## Why did you create NightOS?
+
+I created it as an answer to the frustration modern OSes provided me. All modern systems have many stability and security problems that cannot be resolved easily because they need to maintain backward compatibility with older pieces of software.
+This is where I had the idea of creating NightOS: an operating system that is both robust (understand stable, with mechanisms to minimize data loss in case something goes wrong) and secure, with many security features available to the average user and some more complex ones for advanced users.
 
 ## How can I help?
 

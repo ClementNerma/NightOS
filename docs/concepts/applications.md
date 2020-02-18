@@ -48,3 +48,9 @@ Note that the store has an option for installing applications as volatile.
 ## Permissions
 
 See the [permissions document](../features/permissions.md).
+
+## Commands
+
+Application can expose [shell commands](../technical/shell.md). Multiple commands can be exposed without any risk of clashing as the command name must be prefixed by the application's slug first.
+
+For instance, if an application with slug `utils` exposes an `get_time` command, the final usable command will be `utils.get_time`.

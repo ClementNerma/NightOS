@@ -1,6 +1,6 @@
 # Shell scripting
 
-The scripting language of [Hydre](shell.md) offers a lot of powerful easy-to-use features. This allows to create complex script that are still very readable and maintanable.
+The scripting language of [Hydre](../technical/shell.md) offers a lot of powerful easy-to-use features. This allows to create complex script that are still very readable and maintanable.
 
 ## Running a command
 

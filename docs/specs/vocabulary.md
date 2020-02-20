@@ -18,7 +18,7 @@ An _interaction_ with a given [surface](#surface) consists in the user clicking 
 
 A _window_ is a 2D figure provided to an application for manipulation.
 It does not refer to the desktop environment itself, or to the bootloader's screens for example.
-There are several types of windows: [resizable windows]
+There are several types of windows: [resizable windows](#resizable-windows) and [borderless windows](#borderless-windows).
 
 #### Borderless windows
 

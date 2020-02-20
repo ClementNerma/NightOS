@@ -33,7 +33,12 @@ The problem with administrators account is that they can do absolutely **anythin
 
 This is why it's extremely discouraged to have two administrator users on the same computer, unless the two accounts are used by really trustworthy persons. As such, a large warning is shown if you try to create a new administrator user.
 
-## User's homedir encryption
+## Alternative User Control (AUC)
+
+When a user asks to perform a task as another user, an _Alternative User Control_ (AUC) dialog is shown, asking for the other user's credentials.
+Each request, even not successful, is logged in the log file at `/etc/logs/auc`.
+
+## Users' data encryption
 
 See [encryption](../features/encryption.md).
 

@@ -14,7 +14,7 @@ When it requires a right, it asks for it to the system by using a SDK built-in f
 * For important permissions, like microphone or webcam access, an emphasized confirmation message is added to the overlay ;
 * For external user permissions, like editing the registry (Admin only), the _Alternative User Control_ (AUC) dialog is shown.
 
-An exception to the above cases is for special rules permission rules (e.g. application proxy).
+An exception to the above cases is for special rules permission rules (e.g. [application proxies](../technical/dev-mode.md#application-proxies)).
 
 A dropdown allows to set the grant duration (e.g: once, for the one minute, for the current instance, for the current session, forever while the application is active, forever).
 By default, it is set to "forever". But for important permissions like microphone access, this choice is set by default to "forever while the application is active", which prevents the application from accessing them from background tasks.

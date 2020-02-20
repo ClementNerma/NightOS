@@ -35,7 +35,6 @@ Below is the list of applications that are installed (by default) during the ins
 * [*Blackhole*](Blackhole.md)       : Archives manager
 * [*Reader*](Reader.md)             : A complete e-book reader with many supported formats and options
 * [*Postal*](Postal.md)             : An e-mail client
-* [*Terminal*](Terminal.md)         : A powerful terminal application with tabs, syntax highlighting, etc.
 
 ### Suites
 
@@ -45,4 +44,4 @@ Below is the list of applications that are installed (by default) during the ins
 ### Security
 
 * [*Vortex*](Vortex.md) : Firewall
-* [*Locky*](Locky.md)   : Manage encrypted archives and volumes
+* [*Locky*](Locky.md)   : System's encryption tool, with the ability to manage encrypted archives and volumes

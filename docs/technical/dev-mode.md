@@ -20,3 +20,11 @@ Then a final confirmation dialog will ensure you're sure about what you're doing
 
 * Additional features will appear in the control center ([see the options](../applications/central.md#development-related-options))
 * The registry can be [imported and exported](../registry.md#debugging)
+
+## Application proxies
+
+_Application proxies_ are applications that intercept all applications calls to the system on-the-fly. It is useful for applications debugging.
+
+When a proxy is set up for an application, all system calls sent to this application will be transferred to the proxy, which will be able to do whatever it wants with it. It's possible for the proxy to never answer the signal, to change its content before actually sending it to the system, etc.
+
+Basic usage of an application proxy is as a "listener": it only listens to specific signals and logs them, without cancelling them and/or modifying them. This is useful to check all filesystem access requested by an application, in real time.

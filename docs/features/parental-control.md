@@ -48,6 +48,8 @@ This feature restricts access to some websites, either using a whitelist or a bl
 
 Whenever an application tries to access a forbidden website, the request will fail with a specific code indicating it's forbidden by parental control. Applications can still enforce this rule but this requires a specific permission that cannot be allowed by child users.
 
+These restrictions are enabled through the built-in firewall, [Vortex](../applications/Vortex.md).
+
 ### Restrict mature contents
 
 The child user's birth date can be declared during setup, so its age (not its birth date) will be available to every application which asks for it (with a specific permission, which is by default automatically granted to all applications which ask it).

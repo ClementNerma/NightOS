@@ -48,3 +48,7 @@ The list of default applications and their description can be found [here](appli
 ### Applications
 
 * [Applications package](technical/applications/package.md) - what is an application package made of
+
+### Specifications
+
+* [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language

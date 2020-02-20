@@ -51,4 +51,7 @@ The list of default applications and their description can be found [here](appli
 
 ### Specifications
 
+* [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms
 * [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
+* [Signals](specs/signals.md) - list and behaviour of all [signals](technical/kpc.md)
+* [System calls](specs/syscalls.md) - list and behaviour of all [system calls](technical/kpc.md)

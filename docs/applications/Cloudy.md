@@ -1,6 +1,6 @@
 # Cloudy
 
-While the system and main data can be backed up using [TimeTravel](timetravel.md), it's not always handy to manage backups on an external hard drive and keep it safe.
+While the system and main data can be backed up using [TimeTravel](TimeTravel.md), it's not always handy to manage backups on an external hard drive and keep it safe.
 
 This is where Cloudy comes: it allows to synchronize data on the cloud, using a master password which is stored nowhere but in the user's mind.
 

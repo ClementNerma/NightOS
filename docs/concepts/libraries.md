@@ -25,7 +25,7 @@ When an application is removed, the system looks for each of its dependencies. I
 Just like applications, libraries have a unique slug and an identifier equivalent to AID called LID (for _Library IDentifier_).
 Commands are exposed the same way ; if a library's LID is `utils` and the DID is `superdev`, the exposed commands will be prefixed by `:utils.superdev`.
 
-For more informations about this part, see how [applications expose commands](../applications.md#commands).
+For more informations about this part, see how [applications expose commands](applications.md#commands).
 
 ## System libraries
 

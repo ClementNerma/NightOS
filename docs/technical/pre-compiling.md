@@ -18,7 +18,7 @@ CommonAssembly is very similar to WebAssembly: compressed very low-level source-
 
 CommonAssembly can be ran on other operating systems than NightOS using a lightweight wrapper available on NightOS' official website.
 
-_NOTE:_ While CommonAssembly is multi-platform, NightOS applications take advantage of NightOS' features like more powerful signals that are *not* natively available on other systems. In order to run such applications, you must install the [full wrapper](../_drafts/multi-platform.md) which is available on the same website.
+_NOTE:_ While CommonAssembly is multi-platform, NightOS applications take advantage of NightOS' features like more powerful signals that are *not* natively available on other systems. In order to run such applications, you must install the [full wrapper](multi-platform.md) which is available on the same website.
 
 ## Usage
 

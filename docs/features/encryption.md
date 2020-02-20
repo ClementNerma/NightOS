@@ -28,7 +28,7 @@ When enabled, the encrypted directories are:
 * The homedir at `/home/[username]`
 * The tempdir at `/tmp/[username]`
 
-This feature is enabled by default, but can be disabled by the administrator. Also, it is disabled by default on [domains](../domains/concept.md).
+This feature is enabled by default, but can be disabled by the administrator. Also, it is disabled by default on [domains](domains.md).
 
 ## Combining global and per-user encryptions
 

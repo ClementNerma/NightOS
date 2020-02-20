@@ -18,8 +18,8 @@ Then a final confirmation dialog will ensure you're sure about what you're doing
 
 ## Features
 
-* Additional features will appear in the control center ([see the options](../applications/central.md#development-related-options))
-* The registry can be [imported and exported](../registry.md#debugging)
+* Additional features will appear in the control center ([see the options](../applications/Central.md#development-related-options))
+* The registry can be [imported and exported](registry.md#debugging)
 
 ## Application proxies
 

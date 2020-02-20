@@ -138,4 +138,4 @@ users(map:(uint{4}):(in:(0,1,2,3))):
 
 ## Debugging
 
-In [developer mode](../dev-mode.md), the registry can be exported to the HFRR format and imported back.
+In [developer mode](dev-mode.md), the registry can be exported to the HFRR format and imported back.

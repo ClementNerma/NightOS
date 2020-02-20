@@ -17,7 +17,8 @@ _NOTE:_ `(F)` indicates the item is a file.
 │   ├── flow                       Opened flows
 │   ├── hosts <F>                  Hosts overriding (e.g. 'localhost')
 │   ├── lock                       Opened lock files
-│   ├── log                        Log files
+│   ├── logs                       Log files
+│   |   └── auc                    History of [AUC requests](../concepts/users.md#alternative-user-control-auc)
 │   ├── public                     Public data, readable and writable by everyone
 │   └── sys                        System's mutable data - available to system only
 │       ├── registry               System's registry

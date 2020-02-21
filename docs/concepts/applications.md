@@ -81,3 +81,8 @@ For instance, if an application with AID `superdev.utils` exposes an `get_time` 
 This is quite a long name but allows to prevent any clashing between commands. It's common for shell scripts to define aliases at the beginning of the script to refer more easily to applications' commands.
 
 Commands work by launching the application with a specific [argument](#application-arguments).
+
+## Services
+
+Application can provide a [service](../technical/services.md) by specifying it in their [manifest](../specs/applications/manifest.md).
+The service will be run at startup with the usual application's permissions.

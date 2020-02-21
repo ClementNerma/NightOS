@@ -12,12 +12,14 @@ The balancer allows to manage the priority of userland processes - and only them
 * Suspend/resume this application: see below ;
 * Enter performance mode: see below
 
-## Applications suspension
+## Application processes suspension
 
-Applications can be _suspended_, which is an equivalent of pause where they don't run at all.
+Application processes can be _suspended_, which is an equivalent of pause where they don't run at all.
 This is achieved by setting their priority to 0.
 
 A suspended application can then be _resumed_, and because it was just suspended it will instantly run again, without any data loss.
+
+When a process is suspended, all its [child processes](../technical/processes.md#child-processes) are, too.
 
 ## Performance mode
 

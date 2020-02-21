@@ -89,3 +89,31 @@ Datafield: -
 
 Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
 The thread is expected to terminate as soon as possible (there is no time limit though).
+
+### `0x40` RECV_IUC_RC
+
+Default: -
+Datafield: [Pipe](ipc.md#pipes) SC identifier (64-bit), command code (16-bit)
+
+Sent to a process when another process of the same application and running under the same user opened an IUC with this process, giving it the readable part.
+The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
+
+### `0x41` RECV_IUC_SC
+
+Default: -
+Datafield: [Pipe](ipc.md#pipes) RC identifier (64-bit), command code (16-bit)
+
+Sent to a process when another process of the same application and running under the same user opened an IUC with this process, giving it the writable part.
+The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
+
+### `0x42` IUC_CLOSED
+
+Default: -
+Datafield:
+* `0x00` if the IUC was closed properly using the [CLOSE_IUC](signals.md#0x42-closeiuc) signal, or `0x01` if the other process brutally terminated
+* `0x00` if this process contained the RC part, `0x01` if it contained the SC part
+* RC/SC identifier (64-bit)
+
+Sent to a process when an [pipe](ipc.md#pipes) shared with another process is closed.
+
+**NOTE:** This does not apply to service IUC.

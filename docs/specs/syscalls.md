@@ -95,8 +95,8 @@ Kill the current process.
 Arguments: application's [AID](../concepts/applications.md#application-identifier)
 Return value:
 * Unique connection ID (64-bit)
-* [IUC](../technical/processes.md#inter-process-uni-directional-channels) SC identifier (64-bit)
-* [IUC](../technical/processes.md#inter-process-uni-directional-channels) RC identifier (64-bit)
+* [Pipe](ipc.md#pipes) SC identifier (64-bit)
+* [Pipe](ipc.md#pipes) RC identifier (64-bit)
 
 Errors:
 * `0x10`: the provided AID does not exist
@@ -118,15 +118,15 @@ Errors:
 * `0x11`: this connection was already closed
 * `0x12`: the associated service thread already terminated
 
-Tell a service to properly close the connection. The associated [IUC](../technical/processes.md#inter-process-uni-directional-channels) SC and RC channels will immediatly be closed.
+Tell a service to properly close the connection. The associated [pipe](ipc.md#pipes) SC and RC channels will immediatly be closed.
 
 ## `0x30` ACCEPT_SERVICE_CONN
 
 Arguments: connection's unique request ID (64-bit)
 Return value:
 * `0x00` if the current process is now the associated client's thread, `0x01` else
-* [IUC](../technical/processes.md#inter-process-uni-directional-channels) RC identifier (64-bit)
-* [IUC](../technical/processes.md#inter-process-uni-directional-channels) SC identifier (64-bit)
+* [Pipe](ipc.md#pipes) RC identifier (64-bit)
+* [Pipe](ipc.md#pipes) SC identifier (64-bit)
 
 Errors:
 * `0x10`: this request ID does not exist
@@ -152,3 +152,47 @@ Errors:
 * `0x12`: the process which requested the connection already terminated
 
 Reject a connection request to the current service.
+
+## `0x40` OPEN_WRITE_IUC
+
+Arguments: target process' PID (64-bit), command code (16-bit)
+Return value: [Pipe](ipc.md#pipes) SC identifier (64-bit)
+
+Errors:
+* `0x10`: the provided PID does not exist
+* `0x11`: the target process is not part of this application
+* `0x12`: the target process runs under another user
+* `0x13`: the target process does not have a handler registered for the [`RECV_IUC_RC`](signals.md#0x40-recviucrc) signal
+
+Open an IUC with a process of the same application and running under the same user and get its SC.
+The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
+The target process will receive the [`RECV_IUC_RC`](signals.md#0x40-recviucrc) signal with the provided command code.
+
+## `0x41` OPEN_READ_IUC
+
+Arguments: target process' PID (64-bit), command code (16-bit)
+Return value: [Pipe](ipc.md#pipes) RC identifier (64-bit)
+
+Errors:
+* `0x10`: the provided PID does not exist
+* `0x11`: the target process is not part of this application
+* `0x12`: the target process runs under another user
+* `0x13`: the target process does not have a handler registered for the [`RECV_IUC_SC`](signals.md#0x40-recviucsc) signal
+
+Open an IUC with a process of the same application and running under the same user and get its RC.
+The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
+The target process will receive the [`RECV_IUC_SC`](signals.md#0x40-recviucsc) signal with the provided command code.
+
+## `0x42` CLOSE_IUC
+
+Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (64-bit)
+Return value: -
+
+Errors:
+* `0x10`: the provided RC/SC identifier does not exist
+* `0x11`: the target process already terminated
+* `0x20`: the provided RC/SC identifier is part of a service IUC
+
+Close an IUC properly. The RC and SC parts will be immediatly closed.
+The other process this IUC was shared with will receive the [`IUC_CLOSED`](signals.md#0x42-iucclosed) signal.
+If this syscall is not performed on an IUC before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.

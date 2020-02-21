@@ -41,7 +41,7 @@ Datafield: -
 
 Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the [`SUSPEND`](syscalls.md#0x12-suspend) syscall.
 
-## `0x11` Terminate
+## `0x11` TERMINATE
 
 Default: -
 Datafield: -

@@ -23,9 +23,8 @@ You can find below the exhaustive list of system calls.
 
 ## `0x01` HANDLE_SIGNAL
 
-Arguments: Code of the signal (8 bits), pointer to the handler function
-Return value: -
-
+Arguments: Code of the signal (8 bits), pointer to the handler function  
+Return value: -  
 Errors:
 * `0x10`: the requested signal does not exist
 
@@ -34,9 +33,8 @@ If the address pointed by this syscall's is not executable by the current proces
 
 ## `0x02` UNHANDLE_SIGNAL
 
-Arguments: Code of the signal (8 bits)
-Return value: -
-
+Arguments: Code of the signal (8 bits)  
+Return value: -  
 Errors:
 * `0x10`: the requested signal does not exist
 * `0x11`: the requested signal does not have an handler
@@ -45,9 +43,8 @@ Unregister a signal handler, falling back to the default signal reception behavi
 
 ## `0x03` IS_SIGNAL_HANDLED
 
-Arguments: Code of the signal (8 bits)
-Return value: `0` if the signal is not handled, `1` if it is
-
+Arguments: Code of the signal (8 bits)  
+Return value: `0` if the signal is not handled, `1` if it is  
 Errors:
 * `0x10`: the requested signal does not exist
 
@@ -55,8 +52,8 @@ Check if a signal has a registered handler.
 
 ## `0x04` READY
 
-Arguments: -
-Return value: -
+Arguments: -  
+Return value: -  
 Errors:
 * `0x10`: The process already told it was ready
 
@@ -68,32 +65,32 @@ Indicate the system this process has set up all its event listeners, so it can s
 
 ## `0x10` GET_PID
 
-Arguments: -
-Return value: Current process' PID
+Arguments: -  
+Return value: Current process' PID  
 Errors: -
 
 Get the current process' PID.
 
 ## `0x12` SUSPEND
 
-Arguments: -
-Return value: Amount of time the process was suspended, in milliseconds (64-bit)
+Arguments: -  
+Return value: Amount of time the process was suspended, in milliseconds (64-bit)  
 Errors: `0x10` if the current process is not an application process
 
 [Suspend](../features/balancer.md#application-processes-suspension) the current process.
 
 ## `0x13` EXIT
 
-Arguments: -
-Return value: - (never)
+Arguments: -  
+Return value: - (never)  
 Errors: -
 
 Kill the current process.
 
 ## `0x20` CONNECT_SERVICE
 
-Arguments: application's [AID](../concepts/applications.md#application-identifier)
-Return value:
+Arguments: application's [AID](../concepts/applications.md#application-identifier)  
+Return value:  
 * Unique connection ID (64-bit)
 * [Pipe](ipc.md#pipes) SC identifier (64-bit)
 * [Pipe](ipc.md#pipes) RC identifier (64-bit)
@@ -110,8 +107,8 @@ Ask a service to etablish connection. The current process is called the service'
 
 ## `0x21` END_SERVICE_CONN
 
-Arguments: unique connection ID (64-bit)
-Return value: -
+Arguments: unique connection ID (64-bit)  
+Return value: -  
 Errors:
 
 * `0x10`: the provided connection ID does not exist
@@ -122,7 +119,7 @@ Tell a service to properly close the connection. The associated [pipe](ipc.md#pi
 
 ## `0x30` ACCEPT_SERVICE_CONN
 
-Arguments: connection's unique request ID (64-bit)
+Arguments: connection's unique request ID (64-bit)  
 Return value:
 * `0x00` if the current process is now the associated client's thread, `0x01` else
 * [Pipe](ipc.md#pipes) RC identifier (64-bit)
@@ -143,7 +140,7 @@ When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#
 
 ## `0x31` REJECT_SERVICE_CONN
 
-Arguments: connection's unique request ID (64-bit)
+Arguments: connection's unique request ID (64-bit)  
 Return value: -
 
 Errors:
@@ -155,7 +152,7 @@ Reject a connection request to the current service.
 
 ## `0x40` OPEN_WRITE_IUC
 
-Arguments: target process' PID (64-bit), command code (16-bit)
+Arguments: target process' PID (64-bit), command code (16-bit)  
 Return value: [Pipe](ipc.md#pipes) SC identifier (64-bit)
 
 Errors:
@@ -170,7 +167,7 @@ The target process will receive the [`RECV_IUC_RC`](signals.md#0x40-recv_iuc_rc)
 
 ## `0x41` OPEN_READ_IUC
 
-Arguments: target process' PID (64-bit), command code (16-bit)
+Arguments: target process' PID (64-bit), command code (16-bit)  
 Return value: [Pipe](ipc.md#pipes) RC identifier (64-bit)
 
 Errors:
@@ -185,7 +182,7 @@ The target process will receive the [`RECV_IUC_SC`](signals.md#0x41-recv_iuc_sc)
 
 ## `0x42` CLOSE_IUC
 
-Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (64-bit)
+Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (64-bit)  
 Return value: -
 
 Errors:

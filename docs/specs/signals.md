@@ -28,7 +28,7 @@ You can find below the exhaustive list of signals.
 
 ### `0x01` HANDLER_FAULT
 
-Default: kills the process
+Default: kills the process  
 Datafield: faulty signal ID
 
 Sent when a signal is sent to a process but the registered handler points to a memory zone that is not executable by the current process.
@@ -36,35 +36,35 @@ If the sending of this signal to the process results to another fault, it's call
 
 ### `0x10` SUSPEND
 
-Default: -
+Default: -  
 Datafield: delay before suspension, in milliseconds (16-bit)
 
 Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
 
 ### `0x11` TERMINATE
 
-Default: kills the process
+Default: kills the process  
 Datafield: delay before forced termination, in milliseconds (16-bit)
 
 Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.
 
 ### `0x12` KILL
 
-Default: kills the process
+Default: kills the process  
 Datafield: [registry](registry.md)'s `system.signals.kill_delay` key (default: 500ms)
 
 Kills the process after the provided amount of time.
 
 ### `0x20` SERVICE_CLOSED
 
-Default: -
+Default: -  
 Datafield: connection's unique request ID (64-bit)
 
 Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
 
 ### `0x30` SERVICE_CONN_REQUEST
 
-Default: kills the process
+Default: kills the process  
 Datafield:
 * Callee process' ID (64-bit)
 * Connection's unique request ID (64-bit)
@@ -76,7 +76,7 @@ The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscal
 
 ### `0x31` SERVICE_CLIENT_CONN_END
 
-Default: -
+Default: -  
 Datafield: -
 
 Sent to a [client thread](services.md#thread-types) to indicate its client asked to close the connection.
@@ -84,7 +84,7 @@ The associated RC and SC are immediatly closed.
 
 ### `0x32` SERVICE_CLIENT_CLOSED
 
-Default: -
+Default: -  
 Datafield: -
 
 Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
@@ -92,7 +92,7 @@ The thread is expected to terminate as soon as possible (there is no time limit 
 
 ### `0x40` RECV_IUC_RC
 
-Default: -
+Default: -  
 Datafield: [Pipe](ipc.md#pipes) SC identifier (64-bit), command code (16-bit)
 
 Sent to a process when another process of the same application and running under the same user opened an IUC with this process, giving it the readable part.
@@ -100,7 +100,7 @@ The command code can be used to determine what the other process is expecting th
 
 ### `0x41` RECV_IUC_SC
 
-Default: -
+Default: -  
 Datafield: [Pipe](ipc.md#pipes) RC identifier (64-bit), command code (16-bit)
 
 Sent to a process when another process of the same application and running under the same user opened an IUC with this process, giving it the writable part.
@@ -108,7 +108,7 @@ The command code can be used to determine what the other process is expecting th
 
 ### `0x42` IUC_CLOSED
 
-Default: -
+Default: -  
 Datafield:
 * `0x00` if the IUC was closed properly using the [CLOSE_IUC](syscalls.md#0x42-close_iuc) syscall, or `0x01` if the other process brutally terminated
 * `0x00` if this process contained the RC part, `0x01` if it contained the SC part

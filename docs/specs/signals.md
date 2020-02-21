@@ -37,7 +37,7 @@ If the sending of this signal to the process results to another fault, it's call
 ## `0x10` SUSPEND
 
 Default: -  
-Datafield: delay before suspension, in milliseconds (2 bytes)
+Datafield: [registry](registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
 
 Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
 

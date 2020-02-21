@@ -22,7 +22,7 @@ Virtual storages are files that contain one or several virtual filesystems. Diff
 
 The filesystems can be encrypted individually. The whole storage can also be encrypted.
 
-They have multiple purposes: store encrypted files, virtual filesystem for sandboxed applications, etc.
+They have multiple purposes: store encrypted files, virtual filesystems for sandboxed applications, etc.
 
 Virtual storage files have the `.vts` extension and are opened using [Locky](../applications/locky.md).
 

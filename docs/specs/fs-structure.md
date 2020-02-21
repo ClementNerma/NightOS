@@ -1,5 +1,7 @@
 # Filesystem hierarchy
 
+This document presents the filesystem's hierarchy.
+
 ## Hierarchy
 
 _NOTE:_ `(F)` indicates the item is a file.

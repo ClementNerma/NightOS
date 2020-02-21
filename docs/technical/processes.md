@@ -1,5 +1,7 @@
 # Processes
 
+**WARNING: This document is far from being complete and may lack a good description of what processes are, and/or the features they offer.**
+
 NightOS _processes_ are implemented a bit like Linux' ones, with additional features.
 There are several types of processes:
 

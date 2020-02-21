@@ -4,17 +4,17 @@ Here is all the documentation about NightOS. Each file describes a specific thin
 
 You can find the answer to [frequently-asked questions here](FAQ.md).
 
-## Applications
+## [Applications](applications/)
 
-The list of default applications and their description can be found [here](applications/).
+The list of default applications and their description can be found [here](applications/README.md).
 
-## Concepts
+## [Concepts](concepts/)
 
-* [What are applications?](concepts/applications.md)
-* [What are libraries?](concepts/libraries.md)
-* [What are users?](concepts/users.md)
+* [What are applications?](concepts/applications.md) - the way to run software on NightOS
+* [What are libraries?](concepts/libraries.md) - sharing identical behaviours between multiple applications
+* [What are users?](concepts/users.md) - sharing a computer between multiple persons
 
-## Features
+## [Features](features/)
 
 * [The balancer](features/balancer.md) - improve performances by balancing processes' priority
 * [Crash saves](features/crash-saves.md) - prevent data loss at maximum with crash-proof data saving
@@ -26,31 +26,33 @@ The list of default applications and their description can be found [here](appli
 * [Sandboxes](features/sandboxes.md) - isolate applications to prevent them from harming important data
 * [Synchronization](features/synchronization.md) - synchronize settings between multiple computers
 
-## Filesystem
-
-* [File formats](filesystem/file-formats.md) - description of all native file formats
-* [Filesystem hierarchy](filesystem/Hierarchy.md) - list of file and directories and how their meaning
-
-## Technical
+## [Technical](technical/)
 
 * [The controller](technical/controller.md) - permissions management system
 * [Developer mode](technical/dev-mode.md) - enable powerful development options
+* [File formats](technical/file-formats.md) - description of all native file formats
 * [Integrity checker](technical/integrity-checker.md) - ensure the system hasn't been corrupted
 * [I/O manager](technical/io-manager.md) - manage input/output requests
 * [The kernel](technical/kernel.md) - kernel design
-* [Performances](technical/performances.md) - everything about the performance side of processes management
-* [Pre-compiling applications](technical/pre-compiling.md) - pre-compiling applications to improve installation time and size
-* [Processes](technical/processes.md) - how processes work
-* [The registry](technical/registry.md) - everything about the system registry
-* [The shell](technical/shell.md) - how the shell and scripting work
 * [Kernel-process communication](technical/kpc.md) - how the kernel communicate with processes and vice-versa
+* [Multi-platform management](technical/multi-platform.md) - how the NightOS ecosystem can be used on other operating systems
+* [Performances](technical/performances.md) - system tweaks used to optimize general and specific-case performances
+* [Pre-compiling applications](technical/pre-compiling.md) - pre-compiling applications to improve installation time and size
+* [Processes](technical/processes.md) - low-level view of how code runs in a concurrent way
+* [The registry](technical/registry.md) - configure the system's behaviour and features
+* [Services](technical/services.md) - special processes that run in the background and allow other applications to perform specific tasks
+* [The shell](technical/shell.md) - the de-facto way to run complex and/or automatized tasks on NightOS
 
 ### Specifications
 
+* [Application context](specs/applications/context.md) - launch an application to directly perform a specific task
+* [Applications package](specs/applications/package.md) - files representing a whole application
+* [Applications manifest](specs/applications/manifest.md) - how applications describe themselves in their package
+* [Filesystem structure](specs/fs-structure.md) - list of file and directories and their meaning
+* [Inter-process communication](specs/ipc.md) - communication between processes
+* [Permissions](specs/permissions.md) - complete list of user and application permissions
+* [The registry](specs/registry.md) - exhaustive specification of the registry's content
 * [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms
 * [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
-* [Signals](specs/signals.md) - list and behaviour of all [signals](technical/kpc.md)
-* [System calls](specs/syscalls.md) - list and behaviour of all [system calls](technical/kpc.md)
-* [Application context](specs/applications/context.md) - how an application can identify its context at startup
-* [Applications package](specs/applications/package.md) - what is an application package made of
-* [Applications manifest](specs/applications/manifest.md) - applications manifest' format
+* [Signals](specs/signals.md) - complete specification of [signals](technical/kpc.md)
+* [System calls](specs/syscalls.md) - complete specification of [system calls](technical/kpc.md)

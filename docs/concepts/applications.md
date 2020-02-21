@@ -39,7 +39,7 @@ Applications can be also be ran as _volatile applications_, which means they are
 
 By default, volatile applications are ran in *local-persistent* mode. In this mode, the system first checks if a file with the same name as the application's package but with the *.vad* (Volatile Application's Data) exists. If so, it opens this file as the application's storage. Then, when the application wants to store some data, it is stored inside this data file.
 
-Note that VAD files are disguised [VSF](../filesystem/file-formats.md) files.
+Note that VAD files are disguised [VST](../technical/file-formats.md#virtual-storages) files.
 
 Volatile applications running as persistent do not appear in the applications list and can only be managed through a specific option in the *Control Center*. Their executable files are not stored anywhere and stay in the application's package, while only their data are stored on the disk. This allows to run the same application several times without losing any data and without worrying about a data file. This also allows to store common data between users.
 

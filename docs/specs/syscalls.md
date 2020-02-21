@@ -1,9 +1,9 @@
 # System calls
 
-_System calls_, abbreviated _syscalls_, are the first type of KPC. They allow a process to ask the kernel to perform an action.
+_System calls_, abbreviated _syscalls_, are the first type of [KPC](../technical/kpc.md). They allow a process to ask the kernel to perform an action.
 
 A syscall is made of a 8-bit code, as well as arguments, whose size will vary depending on their type.
-When performing a syscall, the process will put in a specific CPU register an address poiting to a memory address containing in a row the syscall's code and its arguments. The maximum size of code and arguments combined is 128 bits (16 bytes).
+When performing a syscall, the process will put in a specific CPU register an address poiting to a memory address containing in a row the syscall's code and its arguments. For most syscalls, code and arguments will be not be longer than 128 bits, but some may use larger arguments.
 
 Some syscalls require the process to send a buffer of data. In such case, the process simply provides a pointer to the said buffer - so the argument's size will vary depending on the length of memory addresses.
 
@@ -89,3 +89,66 @@ Return value: - (never)
 Errors: -
 
 Kill the current process.
+
+## `0x20` CONNECT_SERVICE
+
+Arguments: application's [AID](../concepts/applications.md#application-identifier)
+Return value:
+* Unique connection ID (64-bit)
+* [IUC](../technical/processes.md#inter-process-uni-directional-channels) SC identifier (64-bit)
+* [IUC](../technical/processes.md#inter-process-uni-directional-channels) RC identifier (64-bit)
+
+Errors:
+* `0x10`: the provided AID does not exist
+* `0x11`: target application does not have a service
+* `0x12`: failed to send the [`SERVICE`] due to a [double handler fault](signals.md#0x01-handlerfault)
+* `0x20`: service rejected the connection request
+
+Ask a service to etablish connection. The current process is called the service's _client_.
+
+**NOTE:** When this signal is sent, the service's answer will be waited, so the instructions following the sending of this signal may not be ran until several seconds in the worst scenario.
+
+## `0x21` END_SERVICE_CONN
+
+Arguments: unique connection ID (64-bit)
+Return value: -
+Errors:
+
+* `0x10`: the provided connection ID does not exist
+* `0x11`: this connection was already closed
+* `0x12`: the associated service thread already terminated
+
+Tell a service to properly close the connection. The associated [IUC](../technical/processes.md#inter-process-uni-directional-channels) SC and RC channels will immediatly be closed.
+
+## `0x30` ACCEPT_SERVICE_CONN
+
+Arguments: connection's unique request ID (64-bit)
+Return value:
+* `0x00` if the current process is now the associated client's thread, `0x01` else
+* [IUC](../technical/processes.md#inter-process-uni-directional-channels) RC identifier (64-bit)
+* [IUC](../technical/processes.md#inter-process-uni-directional-channels) SC identifier (64-bit)
+
+Errors:
+* `0x10`: this request ID does not exist
+* `0x11`: answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
+* `0x12`: the process which requested the connection already terminated
+
+Confirm the current service accepts the connection with a client.
+A dedicated IUC' SC and another's RC will be provided to communicate with the client.
+
+This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.
+The client thread will not receive any [`SERVICE_REQUEST`](signals.md#0x20-servicerequest) signal, only [dispatcher thread](services.md#thread-types) will.
+
+When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x21-serviceclientclosed) signal is sent to this thread.
+
+## `0x31` REJECT_SERVICE_CONN
+
+Arguments: connection's unique request ID (64-bit)
+Return value: -
+
+Errors:
+* `0x10`: this request ID does not exist
+* `0x11`: answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
+* `0x12`: the process which requested the connection already terminated
+
+Reject a connection request to the current service.

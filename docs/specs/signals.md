@@ -54,3 +54,38 @@ Default: kills the process
 Datafield: [registry](registry.md)'s `system.signals.kill_delay` key (default: 500ms)
 
 Kills the process after the provided amount of time.
+
+### `0x21` SERVICE_CLOSED
+
+Default: -
+Datafield: connection's unique request ID (64-bit)
+
+Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
+
+### `0x30` SERVICE_CONN_REQUEST
+
+Default: kills the process
+Datafield:
+* Callee process' ID (64-bit)
+* Connection's unique request ID (64-bit)
+* [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
+
+Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x20-connectservice) syscall.
+
+The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscalls.md#0x21-acceptserviceconnection) under the provided delay, else it's considered as a rejection.
+
+### `0x31` SERVICE_CLIENT_CONN_END
+
+Default: -
+Datafield: -
+
+Sent to a [client thread](services.md#thread-types) to indicate its client asked to close the connection.
+The associated RC and SC are immediatly closed.
+
+### `0x32` SERVICE_CLIENT_CLOSED
+
+Default: -
+Datafield: -
+
+Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
+The thread is expected to terminate as soon as possible (there is no time limit though).

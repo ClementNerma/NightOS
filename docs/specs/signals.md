@@ -32,6 +32,7 @@ Default: kills the process
 Datafield: faulty signal ID
 
 Sent when a signal is sent to a process but the registered handler points to a memory zone that is not executable by the current process.
+If the sending of this signal to the process results to another fault, it's called a _double handler fault_ and the process is immediatly killed.
 
 ### `0x10` SUSPEND
 

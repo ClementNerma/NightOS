@@ -7,7 +7,7 @@ The _application context_ is a piece of data that is provided when the applicati
 The context is stored as a single block of data.
 
 The first byte is called the  _execution context_ and indicates the reason the application was started. It may be:
-  * `0x01`: the application was started by the system as an [application service](../concepts/applications.md#services)
+  * `0x01`: the application was started by the system as an [application service](../../concepts/applications.md#services)
   * `0x02`: the application was started automatically after an improper shutdown (and will *likely* receive a crash save soon)
   * `0x03`: the application was started by the desktop environment
   * `0x04`: the application was started by itself (from another process of the same application)

@@ -14,7 +14,7 @@ For instance, the system library `fs` which is natively available allows to mani
 
 ## Dependencies management and resolving
 
-Each application indicates in its [manifest](../technical/applications/package.md#manifest) the list of libraries it requires.
+Each application indicates in its [manifest](../specs/applications/manifest.md) the list of libraries it requires.
 
 When the application is installed, the system will also check if the required libaries are already installed, and with the matching versions. If this is not the case, the library will be downloaded and installed as well (even if it's a volatile application).
 

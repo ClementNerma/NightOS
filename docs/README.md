@@ -43,11 +43,7 @@ The list of default applications and their description can be found [here](appli
 * [Processes](technical/processes.md) - how processes work
 * [The registry](technical/registry.md) - everything about the system registry
 * [The shell](technical/shell.md) - how the shell and scripting work
-* [Signals](technical/signals.md) - signals management
-
-### Applications
-
-* [Applications package](technical/applications/package.md) - what is an application package made of
+* [Kernel-process communication](technical/kpc.md) - how the kernel communicate with processes and vice-versa
 
 ### Specifications
 
@@ -55,3 +51,6 @@ The list of default applications and their description can be found [here](appli
 * [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
 * [Signals](specs/signals.md) - list and behaviour of all [signals](technical/kpc.md)
 * [System calls](specs/syscalls.md) - list and behaviour of all [system calls](technical/kpc.md)
+* [Application context](specs/applications/context.md) - how an application can identify its context at startup
+* [Applications package](specs/applications/package.md) - what is an application package made of
+* [Applications manifest](specs/applications/manifest.md) - applications manifest' format

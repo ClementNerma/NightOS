@@ -28,7 +28,7 @@ Virtual storage files have the `.vts` extension and are opened using [Locky](../
 
 ## Application packages
 
-Applications can be installed from standalone files called [application packages](../technical/applications/package.md).
+Applications can be installed from standalone files called [application packages](../specs/applications/package.md).
 Installable applications have the `.nap` (NightOS Application Package) extension, while volatile applications have the `.nva` (NightOS Volatile Application) one.
 
 They are opened using [Skyer](../applications/skyer.md).

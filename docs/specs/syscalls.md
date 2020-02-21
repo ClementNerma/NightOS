@@ -29,8 +29,8 @@ Return value: -
 Errors:
 * `0x10`: the requested signal does not exist
 
-Register a [signal handler](#signals).
-If the address pointed by this syscall's is not executable by the current process when this signal is sent to the process, the signal will be converted to an [`HANDLER_FAULT`](#0x01-handlerfault) signal instead.
+Register a [signal handler](signals.md).
+If the address pointed by this syscall's is not executable by the current process when this signal is sent to the process, the signal will be converted to an [`HANDLER_FAULT`](signals.md#0x01-handler_fault) signal instead.
 
 ## `0x02` UNHANDLE_SIGNAL
 
@@ -80,7 +80,7 @@ Arguments: -
 Return value: Amount of time the process was suspended, in milliseconds (64-bit)
 Errors: -
 
-[Suspend](../features/balancer.md#processes-suspension) the current process.
+[Suspend](../features/balancer.md#application-processes-suspension) the current process.
 
 ## `0x13` EXIT
 
@@ -101,7 +101,7 @@ Return value:
 Errors:
 * `0x10`: the provided AID does not exist
 * `0x11`: target application does not have a service
-* `0x12`: failed to send the [`SERVICE`] due to a [double handler fault](signals.md#0x01-handlerfault)
+* `0x12`: failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x30-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 * `0x20`: service rejected the connection request
 
 Ask a service to etablish connection. The current process is called the service's _client_.
@@ -137,9 +137,9 @@ Confirm the current service accepts the connection with a client.
 A dedicated IUC' SC and another's RC will be provided to communicate with the client.
 
 This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.
-The client thread will not receive any [`SERVICE_REQUEST`](signals.md#0x20-servicerequest) signal, only [dispatcher thread](services.md#thread-types) will.
+The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x30-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
 
-When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x21-serviceclientclosed) signal is sent to this thread.
+When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x32-service_client_closed) signal is sent to this thread.
 
 ## `0x31` REJECT_SERVICE_CONN
 
@@ -162,11 +162,11 @@ Errors:
 * `0x10`: the provided PID does not exist
 * `0x11`: the target process is not part of this application
 * `0x12`: the target process runs under another user
-* `0x13`: the target process does not have a handler registered for the [`RECV_IUC_RC`](signals.md#0x40-recviucrc) signal
+* `0x13`: the target process does not have a handler registered for the [`RECV_IUC_RC`](signals.md#0x40-recv_iuc_rc) signal
 
 Open an IUC with a process of the same application and running under the same user and get its SC.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
-The target process will receive the [`RECV_IUC_RC`](signals.md#0x40-recviucrc) signal with the provided command code.
+The target process will receive the [`RECV_IUC_RC`](signals.md#0x40-recv_iuc_rc) signal with the provided command code.
 
 ## `0x41` OPEN_READ_IUC
 
@@ -177,11 +177,11 @@ Errors:
 * `0x10`: the provided PID does not exist
 * `0x11`: the target process is not part of this application
 * `0x12`: the target process runs under another user
-* `0x13`: the target process does not have a handler registered for the [`RECV_IUC_SC`](signals.md#0x40-recviucsc) signal
+* `0x13`: the target process does not have a handler registered for the [`RECV_IUC_SC`](signals.md#0x41-recv_iuc_sc) signal
 
 Open an IUC with a process of the same application and running under the same user and get its RC.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
-The target process will receive the [`RECV_IUC_SC`](signals.md#0x40-recviucsc) signal with the provided command code.
+The target process will receive the [`RECV_IUC_SC`](signals.md#0x41-recv_iuc_sc) signal with the provided command code.
 
 ## `0x42` CLOSE_IUC
 
@@ -194,5 +194,5 @@ Errors:
 * `0x20`: the provided RC/SC identifier is part of a service IUC
 
 Close an IUC properly. The RC and SC parts will be immediatly closed.
-The other process this IUC was shared with will receive the [`IUC_CLOSED`](signals.md#0x42-iucclosed) signal.
+The other process this IUC was shared with will receive the [`IUC_CLOSED`](signals.md#0x42-iuc_closed) signal.
 If this syscall is not performed on an IUC before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.

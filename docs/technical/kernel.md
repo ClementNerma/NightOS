@@ -2,4 +2,4 @@
 
 NightOS' kernel, called *Cosmos*, is a micro-kernel written in Rust, enabling great memory safety while preserving great performances.
 
-Communication between the kernel and processes is described in the [KPC specifications](../specs/kpc.md).
+Communication between the kernel and processes is described in the [related document](kpc.md).

@@ -12,11 +12,11 @@ Each signal has a 8-bit code that identifies it, as well as a 64-bit _datafield_
 
 When the kernel sends a signal to a process, it first checks if an handler is already running. If so, it simply pushes the signal to the queue.
 
-Else, it checks the readiness indicator. If it is `false` (so if the process did not sent the [`READY`](signals.md#0x04-ready) syscall yet), the signal is pushed to the queue.
+Else, it checks the readiness indicator. If it is `false` (so if the process did not sent the [`READY`](syscalls.md#0x04-ready) syscall yet), the signal is pushed to the queue.
 
 Else, it checks in the SHT if the signal has a handler. If there is no handler, depending on the specific signal, it may either be ignored or use a default behaviour (this is documented for each signal).
 
-If a handler is found, the kernel checks if the pointer points to a memory area that is executable by the current process. If it isn't, the signal is converted to an [`HANDLER_FAULT`](#0x01-handlerfault) one. If the signal that was being sent was already an `HANDLER_FAULT`, the process is killed.
+If a handler is found, the kernel checks if the pointer points to a memory area that is executable by the current process. If it isn't, the signal is converted to an [`HANDLER_FAULT`](#0x01-handler_fault) one. If the signal that was being sent was already an `HANDLER_FAULT`, the process is killed.
 
 The kernel then makes the program jump to the handler's address, and resumes it.
 
@@ -70,9 +70,9 @@ Datafield:
 * Connection's unique request ID (64-bit)
 * [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
 
-Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x20-connectservice) syscall.
+Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x20-connect_service) syscall.
 
-The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscalls.md#0x21-acceptserviceconnection) under the provided delay, else it's considered as a rejection.
+The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscalls.md#0x30-accept_service_conn) under the provided delay, else it's considered as a rejection.
 
 ### `0x31` SERVICE_CLIENT_CONN_END
 
@@ -110,7 +110,7 @@ The command code can be used to determine what the other process is expecting th
 
 Default: -
 Datafield:
-* `0x00` if the IUC was closed properly using the [CLOSE_IUC](signals.md#0x42-closeiuc) signal, or `0x01` if the other process brutally terminated
+* `0x00` if the IUC was closed properly using the [CLOSE_IUC](syscalls.md#0x42-close_iuc) syscall, or `0x01` if the other process brutally terminated
 * `0x00` if this process contained the RC part, `0x01` if it contained the SC part
 * RC/SC identifier (64-bit)
 

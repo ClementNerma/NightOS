@@ -87,7 +87,7 @@ The easiest way to understand the format is to look at the default registry stru
 
 **NOTE: This section is under heavy development and is by no mean complete!**
 
-Here is the content of the default registry file (when installing NightOS with all default settings), converted to the [HFRR format](#debugging):
+Here is the content of the default registry file (when installing NightOS with all default settings), converted to the [HFRR format](#hffr-format):
 
 ```yaml
 # System configuration

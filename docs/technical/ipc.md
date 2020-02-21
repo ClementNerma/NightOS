@@ -1,13 +1,13 @@
 # Inter-Process Communication
 
-The _Inter-Process Communication_ (IPC) is the way processes communicate with each others, based on [Inter-process Uni-directional Channels](processes.md#inter-process-uni-directional-channels).
+The _Inter-Process Communication_ (IPC) is the way processes communicate with other ones.
 
 ## Communication permissions
 
 A non-administrator process can communicate with another through IPC if the target process is either:
 
 * Run by the same user and originates from the same application
-* A [_service_](services.md) through a [RC/SC couple](processes.md#inter-process-uni-directional-channels) provided by the [`CONNECT_SERVICE`](../specs/syscalls.md#0x20-connect_service) system call.
+* A [_service_](services.md) through a [pipe](../specs/ipc.md#pipes) provided by the [`CONNECT_SERVICE`](../specs/syscalls.md#0x20-connect_service) system call.
 
 Administrator processes can communicate freely with every [userland process](processes.md).
 

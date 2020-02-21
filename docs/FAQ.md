@@ -14,20 +14,7 @@ Still, we do all we can to maintain as much compatibility as we can. For instanc
 
 ## What's the currente state of the project?
 
-The project is currently in its very early stages. Here is the roadmap:
-
-|           Stage           |                            Description                               |
-|---------------------------|----------------------------------------------------------------------|
-| High-level conception     | Designing the O.S.'s features and structure                          |
-| Validation 1              | Validating and freezing the high-level conception                    |
-| Low-level conception      | Designing the microkernel, the available APIs, etc.                  |
-| Validation 2              | Validating and freezing the low-level conception                     |
-| API documentation         | Redacting the documentation on how to build applications for NightOS |
-| High-level implementation | Implementing the project using the Linux kernel as a base            |
-| Low-level implementation  | Implementing the microkernel                                         |
-| Applications development  | Implementing native applications (text editor, web browser, ...)     |
-
-Currently we are the very first stage, "High-level conception".
+The project is currently in its very early stages. You can find more informations about this in the [ROADMAP](project/roadmap.md).
 
 ## Will this project replace Windows/MacOS/Linux/... one day?
 

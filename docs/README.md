@@ -4,15 +4,21 @@ Here is all the documentation about NightOS. Each file describes a specific thin
 
 You can find the answer to [frequently-asked questions here](FAQ.md).
 
-## [Applications](applications/)
+## [Project](project/)
 
-The list of default applications and their description can be found [here](applications/README.md).
+* [Roadmap](project/roadmap.md) - the project's roadmap
+* [Development](project/development.md) - how the project will be developped
+* [Supported architectures](project/architectures.md) - the list of supported CPU architectures
 
 ## [Concepts](concepts/)
 
 * [What are applications?](concepts/applications.md) - the way to run software on NightOS
 * [What are libraries?](concepts/libraries.md) - sharing identical behaviours between multiple applications
 * [What are users?](concepts/users.md) - sharing a computer between multiple persons
+
+## [Applications](applications/)
+
+The list of default applications and their description can be found [here](applications/README.md).
 
 ## [Features](features/)
 

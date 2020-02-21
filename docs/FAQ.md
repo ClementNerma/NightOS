@@ -12,7 +12,7 @@ This is why NightOS will probably never be completed. The current goal of this p
 
 Still, we do all we can to maintain as much compatibility as we can. For instance, we are currently investigating how existing Linux applications may be ran on NightOS, with a system call wrapper that would allow them to run correctly on the system, without compromising security, but with lacking features of course.
 
-## What's the currente state of the project?
+## What's the current state of the project?
 
 The project is currently in its very early stages. You can find more informations about this in the [ROADMAP](project/roadmap.md).
 

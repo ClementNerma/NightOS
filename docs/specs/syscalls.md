@@ -89,6 +89,9 @@ Errors: -
 
 Kill the current process.
 
+A [`SERVICE_CLIENT_CLOSED`](signals.md#0x32-service_client_closed) signal is sent to all services connection the process has.
+If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x20-service_closed) signal is sent to all active clients.
+
 ## `0x20` CONNECT_SERVICE
 
 Arguments: null-terminated application's [AID](../concepts/applications.md#application-identifier) (256 bytes) 

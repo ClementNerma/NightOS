@@ -36,24 +36,31 @@ If the sending of this signal to the process results to another fault, it's call
 
 ## `0x10` SUSPEND
 
+Default: -
+Datafield: -
+
+Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the [`SUSPEND`](syscalls.md#0x12-suspend) syscall.
+
+## `0x11` Terminate
+
+Default: -
+Datafield: -
+
+Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the [`EXIT`](syscalls.md#0x13-exit) syscall).
+
+## `0x12` WILL_SUSPEND
+
 Default: -  
 Datafield: [registry](registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
 
 Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
 
-## `0x11` TERMINATE
+## `0x13` WILL_TERMINATE
 
 Default: kills the process  
 Datafield: delay before forced termination, in milliseconds (2 bytes)
 
 Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.
-
-## `0x12` KILL
-
-Default: kills the process  
-Datafield: [registry](registry.md)'s `system.signals.kill_delay` key (default: 500ms) (2 bytes)
-
-Kills the process after the provided amount of time.
 
 ## `0x20` SERVICE_CLOSED
 

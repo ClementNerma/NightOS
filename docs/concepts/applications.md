@@ -86,3 +86,5 @@ Commands work by launching the application with a specific [context](#applicatio
 
 Application can provide a [service](../technical/services.md) by specifying it in their [manifest](../specs/applications/manifest.md).
 The service will be run at startup with the usual application's permissions.
+
+When an application uses a service, there is exactly one service process running per active user. 

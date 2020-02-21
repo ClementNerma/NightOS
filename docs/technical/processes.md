@@ -12,3 +12,9 @@ The base and system processes are called _low-level processes_, while applicatio
 ## User permissions
 
 Each process is ran as a specific user, which determines the maximum allowed scope for [controller requests](controller.md), and with a list of initial permissions (the ones given to the application).
+
+## Child processes
+
+A process can create _child processes_ (it's called a _fork_). The child process will roughly be a 1:1 copy of the parent process, but with its own unique PID.
+
+Child processes automatically inherit their parent's permissions.

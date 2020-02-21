@@ -67,6 +67,11 @@ From the slug is generated the _Application's IDentifier_ (AID), which is prefix
 
 For instance, an application with a slug of `utils` made by a developer whose DID is `superdev` will get an AID of `utils.superdev`.
 
+## Application Arguments
+
+When an application starts, it can retrieve its _argumets_, which are data indicating the execution context of the application.
+Detailed informations can be found in the related [specifications document](../specs/arguments.md).
+
 ## Commands
 
 Application can expose [shell commands](../technical/shell.md). Multiple commands can be exposed without any risk of clashing as the command name must be prefixed by the AID first.
@@ -74,3 +79,5 @@ Application can expose [shell commands](../technical/shell.md). Multiple command
 For instance, if an application with AID `superdev.utils` exposes an `get_time` command, the final usable command will be `:superdev.utils.get_time`.
 
 This is quite a long name but allows to prevent any clashing between commands. It's common for shell scripts to define aliases at the beginning of the script to refer more easily to applications' commands.
+
+Commands work by launching the application with a specific [argument](#application-arguments).

@@ -82,6 +82,14 @@ This is quite a long name but allows to prevent any clashing between commands. I
 
 Commands work by launching the application with a specific [context](#application-context).
 
+## System applications
+
+Some [native applications](../applications/) are part of the system itself and are called _system applications_ as such. They get a few specific features:
+
+* Access to system-reserved features
+* Ability to create [system services](#services)
+* They cannot be uninstalled
+
 ## Services
 
 Application can provide a [service](../technical/services.md) by specifying it in their [manifest](../specs/applications/manifest.md).

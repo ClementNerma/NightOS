@@ -78,7 +78,7 @@ Get the current process' PID.
 
 Arguments: -
 Return value: Amount of time the process was suspended, in milliseconds (64-bit)
-Errors: -
+Errors: `0x10` if the current process is not an application process
 
 [Suspend](../features/balancer.md#application-processes-suspension) the current process.
 

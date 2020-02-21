@@ -39,8 +39,6 @@ cmdname -s=1 --long=2
 cmdname -s 1 --long 2
 ```
 
-This is why positional arguments must all be written before dash arguments.
-
 ## Comments
 
 Comments can be written on a single line with the `#` symbol:
@@ -90,9 +88,31 @@ dir/file.ext
 command pos1 -s --long
 ```
 
+There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.
+
 There are also _presential arguments_, which are dash arguments that take no value. The command will simply check if the argument was provided or not.
 
-There also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.
+**NOTE:** In order to avoid writing errors, positional arguments cannot be provided after a presential argument.
+
+For instance, considering `pos1` and `pos2` are positional arguments, `--pres` a presential argument and `--val` a non-presential long argument:
+
+```coffee
+# VALID
+command pos1 pos2 --pres --val 2
+
+# VALID
+command pos1 --val 2 pos2 --pres
+
+# VALID
+command pos1 --pres --val 2 pos2
+
+# VALID
+command --press --val 2 pos1 pos2
+
+# INVALID (we could think by reading this that "pos2" is the
+#          value of the non-presential argument "--pres")
+command pos1 --pres pos2 --val 2
+```
 
 ## Variables
 

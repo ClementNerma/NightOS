@@ -8,7 +8,7 @@ When a process is created, the kernel associates it:
 * A _signals queue_ ;
 * A _readiness indicator_
 
-Each signal has a 8-bit code that identifies it, as well as a 64-bit _datafield_ which is used to attach additional informations about the signal.
+Each signal has a 8-bit code that identifies it, as well as a 8 bytes _datafield_ which is used to attach additional informations about the signal.
 
 When the kernel sends a signal to a process, it first checks if an handler is already running. If so, it simply pushes the signal to the queue.
 
@@ -29,7 +29,7 @@ You can find below the exhaustive list of signals.
 ## `0x01` HANDLER_FAULT
 
 Default: kills the process  
-Datafield: faulty signal ID
+Datafield: faulty signal ID (8 bytes)
 
 Sent when a signal is sent to a process but the registered handler points to a memory zone that is not executable by the current process.
 If the sending of this signal to the process results to another fault, it's called a _double handler fault_ and the process is immediatly killed.
@@ -37,28 +37,28 @@ If the sending of this signal to the process results to another fault, it's call
 ## `0x10` SUSPEND
 
 Default: -  
-Datafield: delay before suspension, in milliseconds (16-bit)
+Datafield: delay before suspension, in milliseconds (2 bytes)
 
 Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
 
 ## `0x11` TERMINATE
 
 Default: kills the process  
-Datafield: delay before forced termination, in milliseconds (16-bit)
+Datafield: delay before forced termination, in milliseconds (2 bytes)
 
 Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.
 
 ## `0x12` KILL
 
 Default: kills the process  
-Datafield: [registry](registry.md)'s `system.signals.kill_delay` key (default: 500ms)
+Datafield: [registry](registry.md)'s `system.signals.kill_delay` key (default: 500ms) (2 bytes)
 
 Kills the process after the provided amount of time.
 
 ## `0x20` SERVICE_CLOSED
 
 Default: -  
-Datafield: connection's unique request ID (64-bit)
+Datafield: connection's unique request ID (8 bytes)
 
 Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
 
@@ -66,9 +66,9 @@ Sent to a process that previously established a connection with a service, to in
 
 Default: kills the process  
 Datafield:
-* Callee process' ID (64-bit)
-* Connection's unique request ID (64-bit)
-* [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
+* Callee process' ID (8 bytes)
+* Connection's unique request ID (8 bytes)
+* [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
 
 Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x20-connect_service) syscall.
 
@@ -93,7 +93,7 @@ The thread is expected to terminate as soon as possible (there is no time limit 
 ## `0x40` RECV_IUC_RC
 
 Default: -  
-Datafield: [Pipe](ipc.md#pipes) SC identifier (64-bit), command code (16-bit)
+Datafield: [Pipe](ipc.md#pipes) SC identifier (8 bytes), command code (2 bytes)
 
 Sent to a process when another process of the same application and running under the same user opened an IUC with this process, giving it the readable part.
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
@@ -101,7 +101,7 @@ The command code can be used to determine what the other process is expecting th
 ## `0x41` RECV_IUC_SC
 
 Default: -  
-Datafield: [Pipe](ipc.md#pipes) RC identifier (64-bit), command code (16-bit)
+Datafield: [Pipe](ipc.md#pipes) RC identifier (8 bytes), command code (2 bytes)
 
 Sent to a process when another process of the same application and running under the same user opened an IUC with this process, giving it the writable part.
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
@@ -110,9 +110,9 @@ The command code can be used to determine what the other process is expecting th
 
 Default: -  
 Datafield:
-* `0x00` if the IUC was closed properly using the [CLOSE_IUC](syscalls.md#0x42-close_iuc) syscall, or `0x01` if the other process brutally terminated
+* `0x00` if the IUC was closed properly using the [CLOSE_IUC](syscalls.md#0x42-close_iuc) syscall, or `0x01` if the other process brutally terminated (1 byte)
 * `0x00` if this process contained the RC part, `0x01` if it contained the SC part
-* RC/SC identifier (64-bit)
+* RC/SC identifier (8 bytes)
 
 Sent to a process when an [pipe](ipc.md#pipes) shared with another process is closed.
 

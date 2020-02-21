@@ -9,7 +9,7 @@ Some syscalls require the process to send a buffer of data. In such case, the pr
 
 After preparing the syscall's code and arguments, the process raises a specific exception that is caught by the kernel. When the syscall is complete, the kernel puts the result values in specific registers and resumes the process. This means that **all syscalls are synchronous**.
 
-System calls always return two numbers: a 8-bit one (errcode) and a 64-bit one (result code). If the errcode is not null, then an error occured during the syscall. The specific value indicate the encountered type of error:
+System calls always return two numbers: a 8-bit one (errcode) and a 8 bytes one (result code). If the errcode is not null, then an error occured during the syscall. The specific value indicate the encountered type of error:
 
 * `0x00`: cannot read syscall's code or arguments (error while reading memory)
 * `0x01`: the requested syscall does not exist
@@ -21,9 +21,11 @@ Note that advanced actions like permissions management or filesystem access are 
 
 You can find below the exhaustive list of system calls.
 
+_NOTE:_ *"CPU-dependent size"* indicates a data that will be 16-bit long on a 16-bit CPU, 32-bit long on a 32-bit CPU, and so on.
+
 ## `0x01` HANDLE_SIGNAL
 
-Arguments: Code of the signal (8 bits), pointer to the handler function  
+Arguments: Code of the signal (1 byte), pointer to the handler function (CPU-dependent size)  
 Return value: -  
 Errors:
 * `0x10`: the requested signal does not exist
@@ -33,7 +35,7 @@ If the address pointed by this syscall's is not executable by the current proces
 
 ## `0x02` UNHANDLE_SIGNAL
 
-Arguments: Code of the signal (8 bits)  
+Arguments: Code of the signal (1 byte)  
 Return value: -  
 Errors:
 * `0x10`: the requested signal does not exist
@@ -43,8 +45,8 @@ Unregister a signal handler, falling back to the default signal reception behavi
 
 ## `0x03` IS_SIGNAL_HANDLED
 
-Arguments: Code of the signal (8 bits)  
-Return value: `0` if the signal is not handled, `1` if it is  
+Arguments: Code of the signal (1 byte)  
+Return value: `0` if the signal is not handled, `1` if it is (1 byte)  
 Errors:
 * `0x10`: the requested signal does not exist
 
@@ -66,7 +68,7 @@ Indicate the system this process has set up all its event listeners, so it can s
 ## `0x10` GET_PID
 
 Arguments: -  
-Return value: Current process' PID  
+Return value: Current process' PID (8 bytes)  
 Errors: -
 
 Get the current process' PID.
@@ -74,7 +76,7 @@ Get the current process' PID.
 ## `0x12` SUSPEND
 
 Arguments: -  
-Return value: Amount of time the process was suspended, in milliseconds (64-bit)  
+Return value: Amount of time the process was suspended, in milliseconds (8 bytes)  
 Errors: `0x10` if the current process is not an application process
 
 [Suspend](../features/balancer.md#application-processes-suspension) the current process.
@@ -89,11 +91,11 @@ Kill the current process.
 
 ## `0x20` CONNECT_SERVICE
 
-Arguments: application's [AID](../concepts/applications.md#application-identifier)  
+Arguments: null-terminated application's [AID](../concepts/applications.md#application-identifier) (256 bytes) 
 Return value:  
-* Unique connection ID (64-bit)
-* [Pipe](ipc.md#pipes) SC identifier (64-bit)
-* [Pipe](ipc.md#pipes) RC identifier (64-bit)
+* Unique connection ID (8 bytes)
+* [Pipe](ipc.md#pipes) SC identifier (8 bytes)
+* [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 
 Errors:
 * `0x10`: the provided AID does not exist
@@ -107,7 +109,7 @@ Ask a service to etablish connection. The current process is called the service'
 
 ## `0x21` END_SERVICE_CONN
 
-Arguments: unique connection ID (64-bit)  
+Arguments: unique connection ID (8 bytes)  
 Return value: -  
 Errors:
 
@@ -119,11 +121,11 @@ Tell a service to properly close the connection. The associated [pipe](ipc.md#pi
 
 ## `0x30` ACCEPT_SERVICE_CONN
 
-Arguments: connection's unique request ID (64-bit)  
+Arguments: connection's unique request ID (8 bytes)  
 Return value:
 * `0x00` if the current process is now the associated client's thread, `0x01` else
-* [Pipe](ipc.md#pipes) RC identifier (64-bit)
-* [Pipe](ipc.md#pipes) SC identifier (64-bit)
+* [Pipe](ipc.md#pipes) RC identifier (8 bytes)
+* [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 
 Errors:
 * `0x10`: this request ID does not exist
@@ -140,7 +142,7 @@ When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#
 
 ## `0x31` REJECT_SERVICE_CONN
 
-Arguments: connection's unique request ID (64-bit)  
+Arguments: connection's unique request ID (8 bytes)  
 Return value: -
 
 Errors:
@@ -152,8 +154,8 @@ Reject a connection request to the current service.
 
 ## `0x40` OPEN_WRITE_IUC
 
-Arguments: target process' PID (64-bit), command code (16-bit)  
-Return value: [Pipe](ipc.md#pipes) SC identifier (64-bit)
+Arguments: target process' PID (8 bytes), command code (1 byte)  
+Return value: [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 
 Errors:
 * `0x10`: the provided PID does not exist
@@ -167,8 +169,8 @@ The target process will receive the [`RECV_IUC_RC`](signals.md#0x40-recv_iuc_rc)
 
 ## `0x41` OPEN_READ_IUC
 
-Arguments: target process' PID (64-bit), command code (16-bit)  
-Return value: [Pipe](ipc.md#pipes) RC identifier (64-bit)
+Arguments: target process' PID (8 bytes), command code (2 bytes)  
+Return value: [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 
 Errors:
 * `0x10`: the provided PID does not exist
@@ -182,7 +184,7 @@ The target process will receive the [`RECV_IUC_SC`](signals.md#0x41-recv_iuc_sc)
 
 ## `0x42` CLOSE_IUC
 
-Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (64-bit)  
+Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)  
 Return value: -
 
 Errors:

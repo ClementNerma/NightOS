@@ -12,16 +12,17 @@ The first byte is called the  _execution context_ and indicates the reason the a
   * `0x03`: the application was started by the desktop environment
   * `0x04`: the application was started by itself (from another process of the same application)
   * `0x05`: the application was started by another application
-  * `0x06`: the application was started from a [shell command](../../technical/shell.md#commands)
+  * `0x06`: the application was started using one its exposed [shell commands](../../concepts/applications.md#commands)
 
 It is followed by indicators used to determine command-line usage:
 
 * _Bytes 001-001_: The number of arguments the process was started with (0 to 255)
-* _Bytes 002-003_: Cumulated size of all arguments in bytes (up to 63.75 KB)
+* _Bytes 002-003_: Cumulated size of all arguments in bytes (up to 63.5 KB)
 * _Bytes 003-255_: Future-proof
-* _Bytes 256-end_: Value of arguments
+* _Bytes 256-511_: Name of the command (filled with zeros if the process is not created as a command)
+* _Bytes 512-end_: Value of arguments
 
-The context's size may vary depending on the provided command-line arguments from 256 bytes to 64 KB.
+The context's size may vary depending on the provided command-line arguments from 512 bytes to 64 KB.
 
 ## Arguments structure
 

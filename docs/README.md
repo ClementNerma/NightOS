@@ -49,7 +49,7 @@ The list of default applications and their description can be found [here](appli
 * [Services](technical/services.md) - special processes that run in the background and allow other applications to perform specific tasks
 * [The shell](technical/shell.md) - the de-facto way to run complex and/or automatized tasks on NightOS
 
-### Specifications
+### [Specifications](specs/)
 
 * [Application context](specs/applications/context.md) - launch an application to directly perform a specific task
 * [Applications package](specs/applications/package.md) - files representing a whole application

@@ -671,7 +671,7 @@ Concatenate two strings (equivalent to `"${left}${right}"`).
 
 #### `string.split(str: string, sep: string) -> string`
 
-muSplit a string into a list.
+Split a string into a list.
 
 ```coffee
 split("ab", "")  # [ "a", "b" ]

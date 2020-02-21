@@ -55,7 +55,7 @@ Datafield: [registry](registry.md)'s `system.signals.kill_delay` key (default: 5
 
 Kills the process after the provided amount of time.
 
-### `0x21` SERVICE_CLOSED
+### `0x20` SERVICE_CLOSED
 
 Default: -
 Datafield: connection's unique request ID (64-bit)

@@ -6,7 +6,7 @@ This document describes the architecture of [services](../technical/services.md)
 
 Application services have exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.
 
-An application process can tell if it was started as a service or not by looking at its [execution context](applications/context.md).
+An application process can tell if it was started as a service or not by looking at its [execution context](applications/context.md#execution-context).
 
 Once a service process indicates it's ready using the [`READY`](syscalls.md#0x04-ready) syscall, other processes will be able to _connect_ to this service.
 

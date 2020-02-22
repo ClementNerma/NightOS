@@ -46,7 +46,7 @@ Any of the two processes (be it the receiver or the sender) can close a pipe usi
 
 ### Interactive usage
 
-When an application process' [execution context](applications/context.md) indicates this it was started from a command, the caller process will be able to:
+When an application process' [execution context](applications/context.md#execution-context) indicates this it was started from a command, the caller process will be able to:
 
 * Send data to the callee's STDIN pipe ;
 * Read data from the callee's STDOUT/STDERR pipes

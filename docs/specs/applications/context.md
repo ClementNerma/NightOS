@@ -2,25 +2,29 @@
 
 The _application context_ is a piece of data that is provided when the application starts.
 
+## Execution Context
+
+The most important information is the _execution context_, which indicates the reason the application was started.
+
+It is one-byte long and is one the following values:
+
+* `0x01`: the application was started by the system as an [application service](../../concepts/applications.md#services)
+* `0x02`: the application was started automatically after an improper shutdown (and will *likely* receive a crash save soon)
+* `0x03`: the application was started by the desktop environment
+* `0x04`: the application was started by itself (from another process of the same application)
+* `0x05`: the application was started by another application
+* `0x06`: the application was started using one its exposed [shell commands](../../concepts/applications.md#commands)
+
 ## Data structure
 
-The context is stored as a single block of data.
+The context is stored as a single block of data, consisting of:
 
-The first byte is called the  _execution context_ and indicates the reason the application was started. It may be:
-  * `0x01`: the application was started by the system as an [application service](../../concepts/applications.md#services)
-  * `0x02`: the application was started automatically after an improper shutdown (and will *likely* receive a crash save soon)
-  * `0x03`: the application was started by the desktop environment
-  * `0x04`: the application was started by itself (from another process of the same application)
-  * `0x05`: the application was started by another application
-  * `0x06`: the application was started using one its exposed [shell commands](../../concepts/applications.md#commands)
-
-It is followed by indicators used to determine command-line usage:
-
-* _Bytes 001-001_: The number of arguments the process was started with (0 to 255)
-* _Bytes 002-003_: Cumulated size of all arguments in bytes (up to 63.5 KB)
-* _Bytes 003-255_: Future-proof
-* _Bytes 256-511_: Name of the command (filled with zeros if the process is not created as a command)
-* _Bytes 512-end_: Value of arguments
+* The execution context (1 byte)
+* The number of arguments the process was started with (1 byte)
+* The cumulated size of all arguments, in bytes - up to 63.5 KB (2 bytes)
+* _Future-proof shift space_ (252 bytes)
+* The null-terminated name of the command the process was started from, filled with zeros if the process was not created from a command (256 bytes)
+* The value of command-line arguments (up to 63.5 KB)
 
 The context's size may vary depending on the provided command-line arguments from 512 bytes to 64 KB.
 

@@ -200,7 +200,18 @@ Errors:
 
 Read pending data from a pipe.
 
-## `0x43` PIPE_READ
+## `0x43` PIPE_COUNT_WRITE
+
+Arguments: [Pipe](ipc.md#pipes) SC identifier (8 bytes)
+Return value: number of bytes that can be written to a pipe
+
+Errors:
+* `0x10`: the provided RC identifier does not exist
+* `0x11`: the provided RC was already closed
+
+Count the pipe's pending data's free size, which is the number of bytes this process can currently write to the pipe without blocking.
+
+## `0x44` PIPE_READ
 
 Arguments:
 * [Pipe](ipc.md#pipes) SC identifier (8 bytes)
@@ -215,7 +226,18 @@ Errors:
 
 Write data to a pipe.
 
-## `0x44` CLOSE_PIPE
+## `0x45` PIPE_COUNT_READ
+
+Arguments: [Pipe](ipc.md#pipes) RC identifier (8 bytes)
+Return value: number of bytes that can be read from the pipe
+
+Errors:
+* `0x10`: the provided RC identifier does not exist
+* `0x11`: the provided RC was already closed
+
+Count the pipe's pending data's size, which is the number of bytes this process can currently read from the pipe without blocking.
+
+## `0x46` CLOSE_PIPE
 
 Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)  
 Return value: -

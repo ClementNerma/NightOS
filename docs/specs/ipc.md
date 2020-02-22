@@ -42,7 +42,7 @@ When it is reached, no data can be written to the pipe anymore, meaning the othe
 
 ### Closing pipes
 
-Any of the two processes (be it the receiver or the sender) can close a pipe using the [`CLOSE_PIPE`](syscalls.md#0x44-close_pipe) syscall, providing its SC or RC identifier. The pipe is immediatly closed on both sides, and the other process receives the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal.
+Any of the two processes (be it the receiver or the sender) can close a pipe using the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe) syscall, providing its SC or RC identifier. The pipe is immediatly closed on both sides, and the other process receives the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal.
 
 ## Shared Memory
 

@@ -117,7 +117,7 @@ The command code can be used to determine what the other process is expecting th
 
 Default: -  
 Datafield:
-* `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x44-close_pipe) syscall, or `0x01` if the other process brutally terminated (1 byte)
+* `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x46-close_pipe) syscall, or `0x01` if the other process brutally terminated (1 byte)
 * `0x00` if this process contained the RC part, `0x01` if it contained the SC part
 * RC/SC identifier (8 bytes)
 

@@ -20,9 +20,9 @@ The process that creates the pipe gets both the SC and the RC, and is expected t
 
 When a process is created, it gets several "forced" pipes:
 
-* The standard input ;
-* The standard normal output ;
-* The standard error output ;
+* The standard input (STDIN) ;
+* The standard normal output (STDOUT) ;
+* The standard error output (STDERR) ;
 
 Each SC and RC has a unique identifier.
 
@@ -43,6 +43,15 @@ When it is reached, no data can be written to the pipe anymore, meaning the othe
 ### Closing pipes
 
 Any of the two processes (be it the receiver or the sender) can close a pipe using the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe) syscall, providing its SC or RC identifier. The pipe is immediatly closed on both sides, and the other process receives the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal.
+
+### Interactive usage
+
+When an application process' [execution context](applications/context.md) indicates this it was started from a command, the caller process will be able to:
+
+* Send data to the callee's STDIN pipe ;
+* Read data from the callee's STDOUT/STDERR pipes
+
+If the process is not started from a command, the STDIN pipe will never receive data and all data sent to the STDOUT/STDERR pipes will be automatically ignored.
 
 ## Shared Memory
 

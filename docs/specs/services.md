@@ -33,7 +33,7 @@ A service process' threads are called _dispatcher threads_, except threads that 
 The service cannot terminate a connection by itself.
 If a client thread terminates brutally, the [`SERVICE_CLOSED`](signals.md#0x20-service_closed) signal will be sent to its client.
 
-Only clients can properly close a connection to a service, using the [`END_SERVICE_CONN`](syscalls.md#0x21-end_service_conn) syscall. The IUC communication channels immediatly close (on both the client and the thread's sides).
+Only clients can properly close a connection to a service, using the [`END_SERVICE_CONN`](syscalls.md#0x21-end_service_conn) syscall. The pipe communication channels immediatly close (on both the client and the thread's sides).
 
 The service then receives the [`SERVICE_CLIENT_CONN_END`](signals.md#0x31-service_client_conn_end) signal.
 

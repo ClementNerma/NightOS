@@ -18,7 +18,7 @@ The two processes sharing a pipes are:
 
 The process that creates the pipe gets both the SC and the RC, and is expected to provide one of them to another process.
 
-When a process is created, it gets several de-facto IUC:
+When a process is created, it gets several "forced" pipes:
 
 * The standard input ;
 * The standard normal output ;

@@ -136,7 +136,7 @@ Errors:
 * `0x12`: the process which requested the connection already terminated
 
 Confirm the current service accepts the connection with a client.
-A dedicated IUC' SC and another's RC will be provided to communicate with the client.
+A dedicated pipe's SC and another's RC will be provided to communicate with the client.
 
 This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.
 The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x30-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
@@ -155,7 +155,7 @@ Errors:
 
 Reject a connection request to the current service.
 
-## `0x40` OPEN_WRITE_IUC
+## `0x40` OPEN_WRITE_PIPE
 
 Arguments: target process' PID (8 bytes), command code (1 byte)  
 Return value: [Pipe](ipc.md#pipes) SC identifier (8 bytes)
@@ -164,13 +164,13 @@ Errors:
 * `0x10`: the provided PID does not exist
 * `0x11`: the target process is not part of this application
 * `0x12`: the target process runs under another user
-* `0x13`: the target process does not have a handler registered for the [`RECV_IUC_RC`](signals.md#0x40-recv_iuc_rc) signal
+* `0x13`: the target process does not have a handler registered for the [`RECV_PIPE_RC`](signals.md#0x40-recv_pipe_rc) signal
 
-Open an IUC with a process of the same application and running under the same user and get its SC.
+Open an PIPE with a process of the same application and running under the same user and get its SC.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
-The target process will receive the [`RECV_IUC_RC`](signals.md#0x40-recv_iuc_rc) signal with the provided command code.
+The target process will receive the [`RECV_PIPE_RC`](signals.md#0x40-recv_pipe_rc) signal with the provided command code.
 
-## `0x41` OPEN_READ_IUC
+## `0x41` OPEN_READ_PIPE
 
 Arguments: target process' PID (8 bytes), command code (2 bytes)  
 Return value: [Pipe](ipc.md#pipes) RC identifier (8 bytes)
@@ -179,13 +179,13 @@ Errors:
 * `0x10`: the provided PID does not exist
 * `0x11`: the target process is not part of this application
 * `0x12`: the target process runs under another user
-* `0x13`: the target process does not have a handler registered for the [`RECV_IUC_SC`](signals.md#0x41-recv_iuc_sc) signal
+* `0x13`: the target process does not have a handler registered for the [`RECV_PIPE_SC`](signals.md#0x41-recv_pipe_sc) signal
 
-Open an IUC with a process of the same application and running under the same user and get its RC.
+Open an PIPE with a process of the same application and running under the same user and get its RC.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
-The target process will receive the [`RECV_IUC_SC`](signals.md#0x41-recv_iuc_sc) signal with the provided command code.
+The target process will receive the [`RECV_PIPE_SC`](signals.md#0x41-recv_pipe_sc) signal with the provided command code.
 
-## `0x42` CLOSE_IUC
+## `0x42` CLOSE_PIPE
 
 Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)  
 Return value: -
@@ -193,8 +193,8 @@ Return value: -
 Errors:
 * `0x10`: the provided RC/SC identifier does not exist
 * `0x11`: the target process already terminated
-* `0x20`: the provided RC/SC identifier is part of a service IUC
+* `0x20`: the provided RC/SC identifier is part of a service PIPE
 
-Close an IUC properly. The RC and SC parts will be immediatly closed.
-The other process this IUC was shared with will receive the [`IUC_CLOSED`](signals.md#0x42-iuc_closed) signal.
-If this syscall is not performed on an IUC before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
+Close an PIPE properly. The RC and SC parts will be immediatly closed.
+The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal.
+If this syscall is not performed on an PIPE before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.

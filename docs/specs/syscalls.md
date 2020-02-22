@@ -193,6 +193,8 @@ Arguments:
 * Number of bytes to read with `0` meaning to read as much data possible (2 bytes)
 * Pointer to a writable buffer (CPU-dependent size)
 
+Return value: remaining capacity of the pipe
+
 Errors:
 * `0x10`: the provided SC identifier does not exist
 * `0x11`: the provided SC was already closed
@@ -218,6 +220,8 @@ Arguments:
 * Mode (1 byte): `0x00` = block until there is enough space to write, `0x01` = fail if there is not enough space to write, `0x02` = write as much as possible
 * Number of bytes to write
 * Pointer to a readable buffer (CPU-dependent size)
+
+Return value: size of remaining pending data
 
 Errors:
 * `0x10`: the provided RC identifier does not exist

@@ -53,6 +53,8 @@ When an application process' [execution context](applications/context.md#executi
 
 If the process is not started from a command, the STDIN pipe will never receive data and all data sent to the STDOUT/STDERR pipes will be automatically ignored.
 
+Even if the process closes the pipe propery (by calling the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe)), the command is not considered as finished until the process itself did not terminate.
+
 ## Shared Memory
 
 **TODO**

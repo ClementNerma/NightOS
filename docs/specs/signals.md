@@ -97,7 +97,7 @@ Datafield: -
 Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
 The thread is expected to terminate as soon as possible (there is no time limit though).
 
-## `0x40` RECV_PIPE_RC
+## `0x40` RECV_READ_PIPE
 
 Default: -  
 Datafield: [Pipe](ipc.md#pipes) SC identifier (8 bytes), command code (2 bytes)
@@ -105,7 +105,7 @@ Datafield: [Pipe](ipc.md#pipes) SC identifier (8 bytes), command code (2 bytes)
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the readable part.
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
 
-## `0x41` RECV_PIPE_SC
+## `0x41` RECV_WRITE_PIPE
 
 Default: -  
 Datafield: [Pipe](ipc.md#pipes) RC identifier (8 bytes), command code (2 bytes)

@@ -164,11 +164,11 @@ Errors:
 * `0x10`: the provided PID does not exist
 * `0x11`: the target process is not part of this application
 * `0x12`: the target process runs under another user
-* `0x13`: the target process does not have a handler registered for the [`RECV_PIPE_RC`](signals.md#0x40-recv_pipe_rc) signal
+* `0x13`: the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal
 
 Open an PIPE with a process of the same application and running under the same user and get its SC.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
-The target process will receive the [`RECV_PIPE_RC`](signals.md#0x40-recv_pipe_rc) signal with the provided command code.
+The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal with the provided command code.
 
 ## `0x41` OPEN_READ_PIPE
 
@@ -179,11 +179,11 @@ Errors:
 * `0x10`: the provided PID does not exist
 * `0x11`: the target process is not part of this application
 * `0x12`: the target process runs under another user
-* `0x13`: the target process does not have a handler registered for the [`RECV_PIPE_SC`](signals.md#0x41-recv_pipe_sc) signal
+* `0x13`: the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
 
 Open an PIPE with a process of the same application and running under the same user and get its RC.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
-The target process will receive the [`RECV_PIPE_SC`](signals.md#0x41-recv_pipe_sc) signal with the provided command code.
+The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code.
 
 ## `0x42` PIPE_WRITE
 

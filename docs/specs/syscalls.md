@@ -185,7 +185,37 @@ Open an PIPE with a process of the same application and running under the same u
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
 The target process will receive the [`RECV_PIPE_SC`](signals.md#0x41-recv_pipe_sc) signal with the provided command code.
 
-## `0x42` CLOSE_PIPE
+## `0x42` PIPE_WRITE
+
+Arguments:
+* [Pipe](ipc.md#pipes) RC identifier (8 bytes)
+* Mode (1 byte): `0x00` = block until there are enough data to read, `0x01` = fail if there is not enough data to read, `0x02` = read as much as possible
+* Number of bytes to read with `0` meaning to read as much data possible (2 bytes)
+* Pointer to a writable buffer (CPU-dependent size)
+
+Errors:
+* `0x10`: the provided RC identifier does not exist
+* `0x11`: the provided RC was already closed
+* `0x12`: there is no pending data in the pipe and the mode argument was set to `0x01`
+
+Read pending data from a pipe.
+
+## `0x43` PIPE_READ
+
+Arguments:
+* [Pipe](ipc.md#pipes) SC identifier (8 bytes)
+* Mode (1 byte): `0x00` = block until there is enough space to write, `0x01` = fail if there is not enough space to write, `0x02` = write as much as possible
+* Number of bytes to write
+* Pointer to a readable buffer (CPU-dependent size)
+
+Errors:
+* `0x10`: the provided SC identifier does not exist
+* `0x11`: the provided SC was already closed
+* `0x12`: there is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
+
+Write data to a pipe.
+
+## `0x44` CLOSE_PIPE
 
 Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)  
 Return value: -

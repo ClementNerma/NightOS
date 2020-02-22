@@ -6,15 +6,15 @@ This document presents the file formats natively handled by NightOS. Some files 
 
 Common file formats are natively handled:
 
-* Text files (`.txt`, `.md`, ...) with [Gravity](../applications/gravity.md)
-* Audio files (`.mp3`, `.flac`, ...) with [Sonata](../applications/sonata.md)
-* Image files (`.png`, `.jpg`, ...) with [ShootingStar](../applications/shootingstar.md)
-* Video files (`.mp4`, `.mkv`, ...) with [Milkshake](../applications/milkshake.md)
-* Archive files (`.zip`, `.tar`, ...) with [Blackhole](../applications/blackhole.md)
-* E-book files (`.cbz`, `.cbr`, ...) with [Reader](../applications/reader.md)
-* E-mail files (`.eml`, `.vcf`, ...) with [Postal](../applications/postal.md)
-* Web files (`.html`, ...) with [Rocket](../applications/rocket.md)
-* Virtual storage files (`.iso`, `.vfd`, ...) with [Locky](../applications/locky.md)
+* Text files (`.txt`, `.md`, ...) with [Gravity](../applications/Gravity.md)
+* Audio files (`.mp3`, `.flac`, ...) with [Sonata](../applications/Sonata.md)
+* Image files (`.png`, `.jpg`, ...) with [ShootingStar](../applications/ShootingStar.md)
+* Video files (`.mp4`, `.mkv`, ...) with [Milkshake](../applications/Milkshake.md)
+* Archive files (`.zip`, `.tar`, ...) with [Blackhole](../applications/Blackhole.md)
+* E-book files (`.cbz`, `.cbr`, ...) with [Reader](../applications/Reader.md)
+* E-mail files (`.eml`, `.vcf`, ...) with [Postal](../applications/Postal.md)
+* Web files (`.html`, ...) with [Rocket](../applications/Rocket.md)
+* Virtual storage files (`.iso`, `.vfd`, ...) with [Locky](../applications/Locky.md)
 
 ## Virtual storages
 
@@ -24,14 +24,14 @@ The filesystems can be encrypted individually. The whole storage can also be enc
 
 They have multiple purposes: store encrypted files, virtual filesystems for sandboxed applications, etc.
 
-Virtual storage files have the `.vts` extension and are opened using [Locky](../applications/locky.md).
+Virtual storage files have the `.vts` extension and are opened using [Locky](../applications/Locky.md).
 
 ## Application packages
 
 Applications can be installed from standalone files called [application packages](../specs/applications/package.md).
 Installable applications have the `.nap` (NightOS Application Package) extension, while volatile applications have the `.nva` (NightOS Volatile Application) one.
 
-They are opened using [Skyer](../applications/skyer.md).
+They are opened using [Skyer](../applications/Skyer.md).
 
 ## System updates
 
@@ -39,4 +39,4 @@ The system is intended to be updated through the update section in the settings,
 
 They may contain one or several updates, and are only installable on a very specific version of the system, to avoid missing some other incremental updates.
 
-System update files have the `.nsu` (NightOS System Update) extension and are opened using [Central](../applications/central.md).
+System update files have the `.nsu` (NightOS System Update) extension and are opened using [Central](../applications/Central.md).

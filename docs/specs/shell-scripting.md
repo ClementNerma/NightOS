@@ -74,6 +74,9 @@ true
 # Floating-point numbers (float)
 3.14
 
+# Characters (char)
+'a'
+
 # Strings (string)
 "abc"
 
@@ -88,6 +91,8 @@ dir/file.ext
 # Commands (used to run custom commands later in functions)
 { command pos1 -s --long }
 ```
+
+The `char` type contains a _grapheme cluster_, which may be composed of multiple Unicode codepoints. A `string` is composed of multiple `char`s.
 
 There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.
 
@@ -662,6 +667,7 @@ Turns the provided value into a string, depending on the value's type:
 (true).str() # true
 (3).str(3)   # 3
 (3.14).str() # 3.14
+'B'.str()    # B
 "Yoh".str()  # Yoh
 
 ["a","b"].str()   # [ "a", "b" ]
@@ -679,7 +685,41 @@ Fails if the base is not between 2 and 36.
 (11).to_radix_str(16, true)  # "0xA"
 ```
 
+### Characters
+
+#### `char.single() -> bool`
+
+Indicate if a character is made of a single codepoint.
+
+#### `char.codepoints() -> list[int]`
+
+Get the codepoints composing a character.
+
+#### `char.len() -> int`
+
+Get the number of codepoints composing a character.
+
+#### `char.bytes() -> int`
+
+Get the size of a character, in bytes.
+
 ### Strings
+
+#### `string.chars() -> list[char]`
+
+Get the characters composing a string.
+
+#### `string.codepoints() -> list[int]`
+
+Get the codepoints composing a string.
+
+#### `string.len() -> int`
+
+Get the number of codepoints composing a string.
+
+#### `string.bytes() -> int`
+
+Get the size of a string, in bytes.
 
 #### `string.parse_int(base = 10) -> failable int`
 
@@ -722,14 +762,6 @@ Reverse a string.
 "abc".reverse() # "cba"
 ```
 
-#### `string.count() -> string`
-
-Count the number of characters in a string.
-
-```coffee
-"abc".count() # 3
-```
-
 #### `string.concat(right: string) -> string`
 
 Concatenate two strings (equivalent to `"${left}${right}"`).
@@ -748,6 +780,14 @@ split("a b", " ") # [ "a", "b" ]
 ```
 
 ### Lists
+
+#### `list[char].stringify() -> str`
+
+Turns a list of characters to a string.
+
+```coffee
+[ 'a', 'b', 'c' ].str() == "abc"
+```
 
 #### `list[T].sort(asc = true) -> list[T]`
 

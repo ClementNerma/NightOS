@@ -4,7 +4,9 @@ This folder contains technical documents which essential describe low-level part
 
 * [The controller](controller.md) - permissions management system
 * [Developer mode](dev-mode.md) - enable powerful development options
+* [Devices](devices.md) - manage hardware devices
 * [File formats](file-formats.md) - description of all native file formats
+* [Flows](flows.md) - how flows work
 * [Integrity checker](integrity-checker.md) - ensure the system hasn't been corrupted
 * [I/O manager](io-manager.md) - manage input/output requests
 * [Inter-process communication](ipc.md) - communication between processes

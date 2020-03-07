@@ -36,7 +36,9 @@ The list of default applications and their description can be found [here](appli
 
 * [The controller](technical/controller.md) - permissions management system
 * [Developer mode](technical/dev-mode.md) - enable powerful development options
+* [Devices](technical/devices.md) - manage hardware devices
 * [File formats](technical/file-formats.md) - description of all native file formats
+* [Flows](technical/flows.md) - how flows work
 * [Integrity checker](technical/integrity-checker.md) - ensure the system hasn't been corrupted
 * [I/O manager](technical/io-manager.md) - manage input/output requests
 * [Multi-platform management](technical/multi-platform.md) - how the NightOS ecosystem can be used on other operating systems

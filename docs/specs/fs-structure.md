@@ -4,8 +4,9 @@ This document presents the filesystem's hierarchy.
 
 ## Hierarchy
 
-_NOTE:_ `(F)` indicates the item is a file.
+_NOTE:_ `<F>` indicates the item is a file.
 
+```
 /
 ├── app                            Interactables available to all users
 │   └── <appname>                  An application's folder (NOTE: one sub-folder per version for libraries)
@@ -15,19 +16,19 @@ _NOTE:_ `(F)` indicates the item is a file.
 │       ├── packages               Application's packages (original package + update packages)
 │       └── sandboxes              Application's sandboxes
 ├── etc                            Mutable data folder
-│   ├── env <F>                    Environment variables
+│   ├── env   <F>                  Environment variables
 │   ├── flow                       Opened flows
 │   ├── hosts <F>                  Hosts overriding (e.g. 'localhost')
 │   ├── lock                       Opened lock files
 │   ├── logs                       Log files
-│   |   └── auc                    History of [AUC requests](../concepts/users.md#alternative-user-control-auc)
+│   |   └── auc                    History of AUC requests (1)
 │   ├── public                     Public data, readable and writable by everyone
 │   └── sys                        System's mutable data - available to system only
 │       ├── registry               System's registry
-│       ├── awake (F)              System's shutdown indicator to detect if there was an error during last shutdown
-│       ├── hashes (F)             Critical files' hashes for the [integrity checker](../technical/integrity-checker.md)
-│       ├── gbpwd (F)              Global storage [encryption key](../features/encryption.md#global-encryption)
-│       └── users (F)              User profiles and groups
+│       ├── awake    <F>           System's shutdown indicator to detect if there was an error during last shutdown
+│       ├── hashes   <F>           Critical files' hashes for the integrity checker (2)
+│       ├── gbpwd    <F>           Global storage's encryption key (3)
+│       └── users    <F>           User profiles and groups
 ├── home                           Users' data
 │   └── <user>                     A specific user's data
 │       ├── apps                   User's applications (same structure as for `/apps`)
@@ -48,9 +49,16 @@ _NOTE:_ `(F)` indicates the item is a file.
 │   ├── old                        Old versions of the system, used during the repair process (compressed archives)
 │   ├── backup                     Copy of the last system version (compressed archive)
 │   ├── kernel                     Custom micro-kernel
-│   └── valid (F)                  A file that just contains "ValidMasterKey" to test if the provided master key is valid at startup
+│   └── valid   <F>                A file that just contains "ValidMasterKey" to test if the provided master key is valid at startup
 ├── tmp                            Temporary folder (cleaned during shutdown)
 │   └── <user>                     Temporary folder for a specific user
+```
+
+Links:
+
+* (1) [AUC requests](../concepts/users.md#alternative-user-control-auc)
+* (2) The [integrity checker](../technical/integrity-checker.md)
+* (3) Global storage's [encryption key](../features/encryption.md#global-encryption)
 
 ## Notes
 

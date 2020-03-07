@@ -354,6 +354,28 @@ end
 
 This will run `command 0` to `command 10`.
 
+We can also iterate on a list:
+
+```coffee
+let list = [ "Jack", "John" ]
+
+for name in list
+  echo ${name}
+end
+```
+
+This will display `Jack` and `John`.
+
+To get the indexes as well, we can do:
+
+```coffee
+for i, name in list
+  echo "${i}: ${name}"
+end
+```
+
+This will display `0: Jack` and `1: John`.
+
 There is another type of loop, which runs a piece of code while a condition is met:
 
 ```coffee

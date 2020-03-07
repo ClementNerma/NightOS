@@ -100,7 +100,7 @@ The thread is expected to terminate as soon as possible (there is no time limit 
 ## `0x40` RECV_READ_PIPE
 
 Default: -  
-Datafield: [Pipe](ipc.md#pipes) SC identifier (8 bytes), command code (2 bytes)
+Datafield: Sender PID (8 bytes), [Pipe](ipc.md#pipes) SC identifier (8 bytes), command code (2 bytes)
 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the readable part.
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
@@ -108,7 +108,7 @@ The command code can be used to determine what the other process is expecting th
 ## `0x41` RECV_WRITE_PIPE
 
 Default: -  
-Datafield: [Pipe](ipc.md#pipes) RC identifier (8 bytes), command code (2 bytes)
+Datafield: Receiver PID (8 bytes), [Pipe](ipc.md#pipes) RC identifier (8 bytes), command code (2 bytes)
 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the writable part.
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.

@@ -83,6 +83,7 @@ true
 # Paths (path) - must contain at least one `/` to indicate clearly that it's a path and not a string or something else
 dir/file.ext
 ./file.ext
+/tmp
 
 # Commands (used to run custom commands later in functions)
 command pos1 -s --long

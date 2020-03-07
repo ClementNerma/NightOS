@@ -24,7 +24,7 @@ The context is stored as a single block of data, consisting of:
 * The number of arguments the process was started with (1 byte)
 * The cumulated size of all arguments, in bytes - up to 63.5 KB (2 bytes)
 * _Future-proof shift space_ (252 bytes)
-* The null-terminated name of the command the process was started from, filled with zeros if the process was not created from a command (256 bytes)
+* The null-terminated name of the exposed command the process was started for, filled with zeros if the process was not created from a command (256 bytes)
 * The value of command-line arguments (up to 63.5 KB)
 
 The context's size may vary depending on the provided command-line arguments from 512 bytes to 64 KB.

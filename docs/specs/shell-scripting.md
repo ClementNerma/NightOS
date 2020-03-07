@@ -532,6 +532,12 @@ fn retry_cmd(cmd: command, retries: int) -> failable
 end
 ```
 
+It can be used like this:
+
+```coffee
+retry_cmd({ read "file.txt" }, 10)
+```
+
 ## Aliases
 
 As you may already know, command names can be [quite long and complicated](../concepts/applications.md#commands). In order to prevent from having to repeat very long names that are not really readable, it's recommanded to use _aliases_ which are declared at the beginning of script:

@@ -48,6 +48,7 @@ The list of default applications and their description can be found [here](appli
 * [The registry](technical/registry.md) - configure the system's behaviour and features
 * [Services](technical/services.md) - special processes that run in the background and allow other applications to perform specific tasks
 * [The shell](technical/shell.md) - the de-facto way to run complex and/or automatized tasks on NightOS
+* [Symbolic links](technical/symlinks.md) - simple but powerful links to other filesystem items
 
 ## [Specifications](specs/)
 

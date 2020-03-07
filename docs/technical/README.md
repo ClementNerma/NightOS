@@ -17,3 +17,4 @@ This folder contains technical documents which essential describe low-level part
 * [The registry](registry.md) - configure the system's behaviour and features
 * [Services](services.md) - special processes that run in the background and allow other applications to perform specific tasks
 * [The shell](shell.md) - the de-facto way to run complex and/or automatized tasks on NightOS
+* [Symbolic links](symlinks.md) - simple but powerful links to other filesystem items

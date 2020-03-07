@@ -570,6 +570,16 @@ It can be used like this:
 retry_cmd({ read "file.txt" }, 10)
 ```
 
+## Waiting
+
+Scripts may wait for a specific event before continuing. This can be achieved without a `while` loop that consumes a lot of CPU, using the `wait` keyword:
+
+```coffee
+wait condition
+```
+
+The script will block while the provided `condition` is not `true`. The checking interval is defined by the system, and the condition should as fast to check as possible to consume as little CPU as possible.
+
 ## Aliases
 
 As you may already know, command names can be [quite long and complicated](../concepts/applications.md#commands). In order to prevent from having to repeat very long names that are not really readable, it's recommanded to use _aliases_ which are declared at the beginning of script:

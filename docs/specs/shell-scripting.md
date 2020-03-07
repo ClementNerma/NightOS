@@ -611,6 +611,110 @@ It can be used like this:
 retry_cmd({ read "file.txt" }, 10)
 ```
 
+## Optional types
+
+Sometimes, it's useful to be able to represent a value that may be either _something_ or _nothing_. In many programming languages, "nothing" is represented as the `null`, `nil` or `()` value.
+
+Optional types are suffixed by a `?` symbol, and may either contain a value of the provided type **or** `null`. Here is an example:
+
+```coffee
+fn custom_rand() -> int?
+  let rnd = rand_int(-5, 5)
+
+  if rnd > 0
+    return rnd
+  else
+    return null
+  end
+end
+```
+
+To declare a variable with an optional type, we either suffix it by `?` to make the value nullable:
+
+```coffee
+let a = 1  # int
+let b = 1? # int?
+```
+
+Or using the `null.<type>()` function to declare the variable as nullable with the `null` value:
+
+```coffee
+let c = null.int() # int?
+```
+
+Note that imbricated types are not supported, which means we cannot create `int??` values for instance.
+
+### Handle the `null` value
+
+If we try to access an optional value "as is", we will get a type error:
+
+```coffee
+let a = 1?
+
+let mut b = 0
+b = a # ERROR: Cannot use an `int?` value where `int` is expected
+```
+
+We then have multiple options. We can use one of the nullable types' function:
+
+```coffee
+let a = 1?
+
+let mut b = 0
+
+# Make the program exit with an error message if 'a' is null
+b = a.unwrap()
+
+# Make the program exit with a custom error message if 'a' is null
+b = a.expect("'a' should not be null :(")
+```
+
+We can also detect if a value is `null` by using the `.isNull()` method:
+
+```coffee
+let a = 1?
+let b = null.int()
+
+echo ${a.isNull()} # false
+echo ${b.isNull()} # true
+```
+
+We can also use special syntaxes in blocks:
+
+```coffee
+let a = 1?
+
+if some a
+  # While we are in this block, 'a' is considered as an 'int'
+else
+  # While we are in this block, 'a' is considered as 'null'
+end
+
+while some a
+  # Same here
+end
+
+# Wait until 'a' is not null
+# The type of 'a' will not change, though
+wait some a
+
+# Wait until 'a' is not null, then assign the result to 'b'
+# 'b' will have a non-nullable type
+wait some a -> b
+```
+
+### The case of optional arguments
+
+When a command takes an optional argument, it's possible to provide a nullable value of the same type instead:
+
+```coffee
+let no_newline = false?
+
+echo "Hello!" -n ${no_newline}
+```
+
+If the value is `null`, the argument will not be provided. Else, it will be provided with the non-null value.
+
 ## Waiting
 
 Scripts may wait for a specific event before continuing. This can be achieved without a `while` loop that consumes a lot of CPU, using the `wait` keyword:

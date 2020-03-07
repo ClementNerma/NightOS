@@ -29,9 +29,9 @@ For each application that do not have an available crash save (e.g. when the sys
 
 ### Application's crash indicator
 
-When an application starts, a part of code bundled in the SDK creates an empty file in `/home/[user]/appdata/[appname]/crashsaves/awake` for user applications (even for global applications).
+When an application starts, the system creates an empty file in `/home/[user]/appdata/[appname]/crashsaves/awake` for user applications (even for global applications).
 
-When the application exits gracefully, another SDK code removes this file.
+When the application exits gracefully, the file is removed automatically.
 When the system detects the application exited, if this file still exists, it shows a dialog box asking if the user wants to relaunch the application with the last crash save.
 
 _NOTE:_ If there is no available crash save (e.g. when the application crashed before a crash save could have been made), the dialog box will simply show the application crashed.
@@ -40,7 +40,7 @@ _NOTE:_ Because a crash save could have been collected for several instances of 
 
 ## Restoration process
 
-When a crash save is attempted to be restored, the application is ran with the `SYS_CRASHSAVE_WILLRESTORE` launch signal. When the application is ready, a `SYS_CRASHSAVE_RESTORE` confirmable signal is sent, with the application's crash save.
+When a crash save is attempted to be restored, the [crash save service](../specs/services.md#syscrshsv). When the application is ready, a `SYS_CRASHSAVE_RESTORE` confirmable signal is sent, with the application's crash save.
 The application is expected to confirm the signal when it has finished restoring its state using the crash save.
 The crash save is not deleted directly, though. It is renamed using the new instance's PID and kept until the next collect process receives a new crash save for this instance.
 

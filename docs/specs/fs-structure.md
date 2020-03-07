@@ -40,7 +40,7 @@ _NOTE:_ `<F>` indicates the item is a file.
 │       ├── pictures               User's pictures
 │       ├── videos                 User's videos
 │       └── trash                  User's trash
-├── media                          Mounted storages
+├── mnt                            Mounted storages
 │   └── root                       Soft link to `/`
 ├── sys                            System - immutable outside of installation, repair processes and updates
 │   ├── apps                       System applications

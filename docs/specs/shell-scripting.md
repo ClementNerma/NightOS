@@ -334,6 +334,16 @@ switch rand_int(0, 10)
 end
 ```
 
+Note that, for blocks that only contain a single instruction, we can shorten this using the following syntax:
+
+```coffee
+switch rand_int(0, 10)
+  when 0 -> echo "It's zero!"
+  when 1 -> echo "It's one!"
+  else   -> echo "It's something else!"
+end
+```
+
 ## Loops
 
 Loops allow to run a piece of code for a while. The most common loop is the range loop:

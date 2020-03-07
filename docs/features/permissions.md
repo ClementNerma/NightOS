@@ -8,11 +8,12 @@ By default, an application has for only right to run code. It cannot interact wi
 
 When an app wants to get a permission, it asks [the system to give it](../specs/services.md#sysgrid).
 
-* For nearly risk-free permissions, like windows creation, the permission is granted automatically ;
-* For implicit permissions, like reading filesystem opened by the application, the permission is also granted automatically ;
-* For data-related permissions, like filesystem or network access, a confirmation overlay is simply shown to the user ;
-* For important permissions, like microphone or webcam access, an emphasized confirmation message is added to the overlay ;
-* For external user permissions, like editing the registry (Admin only), the _Alternative User Control_ (AUC) dialog is shown.
+Permissions are split across different _types_:
+
+* _Safe permissions_, like windows creation, are granted automatically by default ;
+* _Implicit permissions_, like reading filesystem opened by the application, are also granted automatically by default ;
+* _Sensitive permissions_, like filesystem or network access, trigger a confirmation overlay visible by the user ;
+* _Privacy permissions_, like microphone or webcam access, add an emphasized confirmation message to the same overlay ;
 
 An exception to the above cases is for special rules permission rules (e.g. [application proxies](../technical/dev-mode.md#application-proxies)).
 

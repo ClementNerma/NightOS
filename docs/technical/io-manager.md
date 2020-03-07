@@ -2,6 +2,12 @@
 
 The _Input/Output Nano-manager_, formerly known as *Ion*, is a part of the system which treats input/output requests from processes.
 
+## Hardware access
+
+When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired component.
+
+[System services](services.md) like [`sys:fs`](../specs/services.md#sysfs) or [`sys:net`](../specs/services.md#sysnet) use Ion to deal with the related hardware components.
+
 ## Requests
 
 When a process tries to access, for instance, the filesystem, it sends an I/O request to the manager which is pushed in an internal queue. The manager sorts incoming requests and treat them depending on their arrival.

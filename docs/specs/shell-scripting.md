@@ -768,7 +768,6 @@ cmd
     pos "names"
       type list[string]
       help "List of names to display"
-    end
 
     # Declare a dash argument named 'repeat'
     dash "repeat"
@@ -776,8 +775,6 @@ cmd
       short "r"
       long "repeat"
       optional
-    end
-  end
 end
 ```
 

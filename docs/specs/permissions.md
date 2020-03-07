@@ -2,6 +2,10 @@
 
 This document describes all [application and user permissions](../features/permissions.md).
 
+For applications, these are named _permissions_, while for users their are called _privileges_.
+
+The rule being that applications cannot get permissions that the user running them has not.
+
 ## List of permissions
 
 Below is the list of all permissions, with `<D>` indicating it's a default privilege for all users:

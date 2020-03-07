@@ -32,12 +32,12 @@ The context's size may vary depending on the provided command-line arguments fro
 
 Each argument is represented as a [type](../shell-scripting.md#value-types) code described below, followed by its actual value depending on the concrete type:
 
-| Type code | Type      | Description                         | Representation                                                                                   |
-| --------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `0x01`    | `bool`    | Boolean                             | 1 byte, `0x00` = falsy, `0x01` = truthy                                                          |
-| `0x02`    | `int`     | 64-bit signed integer number        | Two's complement                                                                                 |
-| `0x03`    | `float`   | 64-bit signed floating-point number | [IEEE 754](https://standards.ieee.org/standard/754-2019.html)                                    |
-| `0x04`    | `string`  | UTF-8 string                        | String's length (64 bits), followed by the UTF-8 encoded string                                  |
-| `0x05`    | `list`    | Typed linear list                   | Type code of the list's items, followed by the list's length (64 bits), then by the list's items |
-| `0x06`    | `path`    | Filesystem path                     | Represented as an UTF-8 string                                                                   |
-| `0x07`    | `command` | Shell command                       | Represented as an UTF-8 string                                                                   |
+| Type code | Type      | Description                         | Representation                                                                             |
+| --------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------ |
+| `0x01`    | `bool`    | Boolean                             | 1 byte, `0x00` = falsy, `0x01` = truthy                                                    |
+| `0x02`    | `int`     | 64-bit signed integer number        | Two's complement                                                                           |
+| `0x03`    | `float`   | 64-bit signed floating-point number | [IEEE 754](https://standards.ieee.org/standard/754-2019.html)                              |
+| `0x04`    | `string`  | UTF-8 string                        | String's length (64 bits), followed by the UTF-8 encoded string                            |
+| `0x05`    | `list`    | Typed linear list                   | Type code of the list's number of items (1 byte), length in bytes (64 bits), encoded items |
+| `0x06`    | `path`    | Filesystem path                     | Represented as an UTF-8 string                                                             |
+| `0x07`    | `command` | Shell command                       | Represented as an UTF-8 string                                                             |

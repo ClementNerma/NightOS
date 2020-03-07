@@ -745,6 +745,76 @@ As you may already know, command names can be [quite long and complicated](../co
 
 The `read_file` command is then made available.
 
+## Commands typing
+
+For script files to be called as commands, they must define a `main` function and declare a _command description_.
+
+Here is an example of command description:
+
+```coffee
+cmd
+  help "A program that repeats the name of a list of person"
+  author "Me <my@email>" # Optional
+  license "MIT" # Optional
+  args
+    # Declare a positional argument named 'names' with a help text
+    pos "names"
+      type list[string]
+      help "List of names to display"
+    end
+
+    # Declare a dash argument named 'repeat'
+    dash "repeat"
+      type int
+      short "r"
+      long "repeat"
+      optional
+    end
+  end
+end
+```
+
+The options for each argument are:
+
+* `type`: Required, the type of the argument (optional types are forbidden)
+* `help`: A help message indicating what the argument does
+* `short`: Short name for a dash argument
+* `long`: Long name for a dash argument
+* `optional`: Indicate the optional can be omitted (the type will be converted to an optional one)
+* `default`: Make the value optional, but with a default value (so the type will not be optional)
+* `requires`: Indicate one or several other arguments are required to use this dash one
+* `conflicts`: Indicate this dash argument cannot be used when one or several other specific arguments are already in use
+* `enum`: Allow only a subset of values
+
+For dash arguments, at least `short` or `long` must be provided. Also, `optional` and `default` cannot be provided at the same time.
+
+Here is an example that uses all these options:
+
+```coffee
+  # ...
+  dash "repeat"
+    type int
+    help "How many times to repeat the names"
+    short "r"
+    long "repeat"
+    default 1
+    requires "arg1"
+    conflicts "arg2" "arg3"
+    enum 1 | 2 | 3 | 4
+  end
+  # ...
+```
+
+The `main` function takes arguments with the same name as described in the `cmd` block:
+
+```coffee
+fn main(names: list[string], repeat: int?)
+  for i in 0..=repeat.default(1)
+    echo ${names.join(", ")}
+  end
+end
+```
+
 ## Native library
 
 The native library is a list of functions that are provided by the shell.

@@ -86,7 +86,7 @@ dir/file.ext
 /tmp
 
 # Commands (used to run custom commands later in functions)
-command pos1 -s --long
+{ command pos1 -s --long }
 ```
 
 There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.

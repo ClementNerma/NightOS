@@ -7,7 +7,7 @@ The _developer mode_ enables several features that are not available to default 
 Developer mode can be enabled either by typing the following command in the terminal:
 
 ```shell script
-asadmin system enable-dev-mode
+adm central --enable dev-mode
 ```
 
 Or, while holding the `Ctrl` `Alt` and `Maj` key, type `DEV` (three letters).

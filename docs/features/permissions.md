@@ -6,7 +6,7 @@ _Permissions_ allow users to finely control what applications can access, and ad
 
 By default, an application has for only right to run code. It cannot interact with any external resource in any way (which means: no window creation, no filesystem/network access, ...).
 
-When it requires a right, it asks for it to the system by using a SDK built-in function, which will perform distinct operations following cases:
+When an app wants to get a permission, it asks [the system to give it](../specs/services.md#sysgrid).
 
 * For nearly risk-free permissions, like windows creation, the permission is granted automatically ;
 * For implicit permissions, like reading filesystem opened by the application, the permission is also granted automatically ;

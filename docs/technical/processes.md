@@ -11,6 +11,8 @@ There are several types of processes:
 
 The base and system processes are called _low-level processes_, while application and worker ones are called _userland processes_.
 
+You can find the implementation details of processes in the [kernel document](../specs/kernel/processes.md).
+
 ## User permissions
 
 Each process is ran as a specific user, which determines the maximum allowed scope for [controller requests](controller.md), and with a list of initial permissions (the ones given to the application).

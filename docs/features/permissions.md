@@ -28,4 +28,4 @@ _NOTE:_ Permissions are specific to the current user (the AUC is not taken in ac
 
 ## From the control center
 
-Permissions can be revoked at anytime from the control center, allowing to revoke a specific permission for a given application, to revoke a specific permission to all applications (useful for microphone or webcam access, for example) or to revoke all permissions of a specific application.
+Permissions can be revoked at anytime from the [control center](../applications/Central.md), allowing to revoke a specific permission for a given application, to revoke a specific permission to all applications (useful for microphone or webcam access, for example) or to revoke all permissions of a specific application.

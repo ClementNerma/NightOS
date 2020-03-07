@@ -61,10 +61,8 @@ content:
         # [OPT] Application's uninstaller
         uninstaller: precomp/uninstaller.npp
 
-# [OPT] Global commands
-commands:
-    # These commands are command-line flags provided to the application's command-line entrypoint
-    command1: arg # Equivalent to: "launch cloud-notepad-app -- arg"
+# [OPT] Exposed commands (see the related document for additional informations)
+commands: {}
 
 # [OPT] Additional informations
 additional:
@@ -81,3 +79,5 @@ dependencies:
   fonts:
     fonts:open-sans: true # Any version
 ```
+
+For more informations about exposed commands, see the [related document](commands.md).

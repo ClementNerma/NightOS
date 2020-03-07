@@ -15,6 +15,15 @@ _NOTE:_ `<F>` indicates the item is a file.
 │       ├── data                   Application's data (e.g. database)
 │       ├── packages               Application's packages (original package + update packages)
 │       └── sandboxes              Application's sandboxes
+├── dev                            Connected devices
+│   ├── cam                        Cameras
+│   ├── bst                        Basic storage devices (SD cards, USB keys, ...)
+│   ├── etc                        Uncategorized devices
+│   ├── mic                        Microphones
+│   ├── net                        Network adapters (Ethernet adapter, WiFi card, ...)
+│   ├── snd                        Sound-related output devices (Sound card, DAC, ...)
+│   ├── sst                        Sensitive storage devices (Hard drives, SSDs, ...)
+│   └── wrl                        Other supported wireless devices (Bluetooth adapter, ...)
 ├── etc                            Mutable data folder
 │   ├── env   <F>                  Environment variables
 │   ├── flow                       Opened flows

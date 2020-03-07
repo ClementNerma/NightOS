@@ -51,6 +51,10 @@ You can find below the list of system services, as well as the list of their fea
 
 **TODO**
 
+### `sys:hw`
+
+**TODO**
+
 ### `sys:grid`
 
 **TODO**

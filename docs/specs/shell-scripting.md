@@ -679,6 +679,16 @@ echo ${a.isNull()} # false
 echo ${b.isNull()} # true
 ```
 
+There is also the `.default(T)` method that allows to use a fallback value in case of `null`:
+
+```coffee
+let a = 1?
+let b = null.int()
+
+echo ${a.default(3)} # 1
+echo ${b.default(3)} # 3
+```
+
 We can also use special syntaxes in blocks:
 
 ```coffee

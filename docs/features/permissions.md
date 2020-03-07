@@ -1,6 +1,6 @@
 # Permissions
 
-_Permissions_ allow users to finely control what applications can access.
+_Permissions_ allow users to finely control what applications can access, and administrators to finely control what other users can do.
 
 ## How permissions work
 

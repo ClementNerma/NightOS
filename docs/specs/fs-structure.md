@@ -26,7 +26,6 @@ _NOTE:_ `<F>` indicates the item is a file.
 │   └── wrl                        Other supported wireless devices (Bluetooth adapter, ...)
 ├── etc                            Mutable data folder
 │   ├── env   <F>                  Environment variables
-│   ├── flow                       Opened flows
 │   ├── hosts <F>                  Hosts overriding (e.g. 'localhost')
 │   ├── lock                       Opened lock files
 │   ├── logs                       Log files
@@ -38,6 +37,7 @@ _NOTE:_ `<F>` indicates the item is a file.
 │       ├── hashes   <F>           Critical files' hashes for the integrity checker (2)
 │       ├── gbpwd    <F>           Global storage's encryption key (3)
 │       └── users    <F>           User profiles and groups
+├── fl                             Flow files
 ├── home                           Users' data
 │   └── <user>                     A specific user's data
 │       ├── apps                   User's applications (same structure as for `/apps`)

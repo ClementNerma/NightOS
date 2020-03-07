@@ -187,7 +187,7 @@ echo "Hello, ${name[0]}!" # Hello, Jack!
 
 ## Output of a command
 
-Commands can either output data to STDOUT (standard) or STDERR (errors). It's possible to get the result of a command as a value:
+Commands can either output data to STDOUT (standard), STDRET (typed) or STDERR (errors). It's possible to get the result of a command as a value:
 
 ```coffee
 $(echo "Hello!")
@@ -205,7 +205,13 @@ As this syntax is not very readable, evaluating a single command can be made wit
 echo $(echo "Hello!") # Prints: "Hello!"
 ```
 
-Note that the provided result will always be a string.
+Note that this only work if the command supports piping through STDRET.
+
+To get the result from STDOUT instead (always as a string):
+
+```coffee
+echo $^(echo "Hello!") # Prints: "Hello!"
+```
 
 To get the result from STDERR:
 
@@ -1118,6 +1124,10 @@ Run the command and fail if the status code after exit is not 0.
 #### `command.stdout() -> string`
 
 Run the command and get its STDOUT output.
+
+#### `command.stdret_str() -> string`
+
+Run the command and get its stringified STDERR output.
 
 #### `command.stderr() -> string`
 

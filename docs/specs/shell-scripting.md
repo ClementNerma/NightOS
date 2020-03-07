@@ -824,6 +824,50 @@ Turns the provided value into a string, depending on the value's type:
 ["a","b"].str()   # [ "a", "b" ]
 ```
 
+### Optional types
+
+#### `T?.isNull() -> T`
+
+Check if the value is `null`.
+
+```coffee
+let a = 1?
+let b = null.int()
+
+echo ${a.isNull()} # false
+echo ${b.isNull()} # true
+```
+
+#### `T?.default(fallback: T) -> T`
+
+Use a fallback value in case of `null`:
+
+```coffee
+let a = 1?
+let b = null.int()
+
+echo ${a.default(3)} # 1
+echo ${b.default(3)}
+```
+
+#### `T?.unwrap() -> T`
+
+Make the program exit with an error message if the value is null.
+
+```coffee
+let a = 0?
+let b = a.unwrap()
+```
+
+#### `T?.expect(message: string) -> T`
+
+Make the program exit with a custom error message if 'a' is null
+
+```coffee
+let a = 0?
+let b = a.expect("'a' should not be null :(")
+```
+
 ### Numbers
 
 #### `num.to_radix_str(base: num, leading = false) -> failable string`

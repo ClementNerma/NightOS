@@ -669,6 +669,7 @@ Turns the provided value into a string, depending on the value's type:
 (3.14).str() # 3.14
 'B'.str()    # B
 "Yoh".str()  # Yoh
+{ command --arg1 -c 2 -d=4 } # command --arg1 -c 2 -d 4
 
 ["a","b"].str()   # [ "a", "b" ]
 ```

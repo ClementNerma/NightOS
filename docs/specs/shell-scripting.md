@@ -821,6 +821,14 @@ fn main(names: list[string], repeat: int?)
 end
 ```
 
+The script can then be called like any command, with the default `$(...)` operator returning the script's return value:
+
+```coffee
+./myscript.ns
+# or
+let result = $(./myscript.ns)
+```
+
 ## Native library
 
 The native library is a list of functions that are provided by the shell.

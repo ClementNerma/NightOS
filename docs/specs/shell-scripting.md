@@ -266,6 +266,30 @@ Logical operators take two operands and return a boolean:
 
 Finally, there is the `!` operator, which takes a single operand on its right, and simply reverts a boolean.
 
+### Assignment operators
+
+The neutral assignment operator `=` can be prefixed by any mathematical, bit-wise or logical operator's symbol(s). The operator's left operand will be the current variable's content, while the right one will be the value on the left of the assignment operator. The result will then be stored in the variable.
+
+Here is an example:
+
+```coffee
+let mut a = 3
+
+a += 1
+a *= 8
+a /= 2
+
+echo ${a} # 16
+```
+
+Note that the result's type must be compatible with the variable:
+
+```coffee
+let mut a = 0
+
+a &&= 1 # ERROR: Cannot assign a 'bool' to an 'int'
+```
+
 ## Blocks
 
 Blocks allow to run a piece of code multiple times or if a specific condition is met. They are useful combined to comparison operators.

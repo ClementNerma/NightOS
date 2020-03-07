@@ -290,6 +290,18 @@ let mut a = 0
 a &&= 1 # ERROR: Cannot assign a 'bool' to an 'int'
 ```
 
+There are also the `++` and `--` operators, which respectively increase and decrease the desired variable:
+
+```coffee
+let mut a = 0
+
+a ++
+a ++
+a --
+
+echo ${a} # 1
+```
+
 ## Blocks
 
 Blocks allow to run a piece of code multiple times or if a specific condition is met. They are useful combined to comparison operators.

@@ -38,7 +38,7 @@ The list of default applications and their description can be found [here](appli
 * [Developer mode](technical/dev-mode.md) - enable powerful development options
 * [Devices](technical/devices.md) - manage hardware devices
 * [File formats](technical/file-formats.md) - description of all native file formats
-* [Flows](technical/flows.md) - how flows work
+* [Filesystem Abstraction Layer](technical/fs-abslayer.md) - how the system ensures specific features on less powerful filesystems
 * [Integrity checker](technical/integrity-checker.md) - ensure the system hasn't been corrupted
 * [I/O manager](technical/io-manager.md) - manage input/output requests
 * [Multi-platform management](technical/multi-platform.md) - how the NightOS ecosystem can be used on other operating systems
@@ -48,7 +48,6 @@ The list of default applications and their description can be found [here](appli
 * [The registry](technical/registry.md) - configure the system's behaviour and features
 * [Services](technical/services.md) - special processes that run in the background and allow other applications to perform specific tasks
 * [The shell](technical/shell.md) - the de-facto way to run complex and/or automatized tasks on NightOS
-* [Symbolic links](technical/symlinks.md) - simple but powerful links to other filesystem items
 
 ## [Specifications](specs/)
 

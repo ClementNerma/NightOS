@@ -254,3 +254,32 @@ Errors:
 Close an PIPE properly. The RC and SC parts will be immediatly closed.
 The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal.
 If this syscall is not performed on an PIPE before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
+
+## `0x50` MEM_ALLOC
+
+Arguments:
+* Pointer to the start address to map the allocated memory to (CPU-dependent size)
+* The number of [pages](kernel/memory.md#pages) to allocate
+
+Return value: -
+
+Errors:
+* `0x10`: the provided start address is out of the process' range
+* `0x11`: the provided size, added to the start address, would exceed the process' range
+* `0x12`: the kernel could not find a linear block of memory of the requested size
+
+Allocate a linear block of memory.
+
+## `0x51` MEM_UNALLOC
+
+Arguments:
+* Pointer to the start address to unallocate the memory from (CPU-dependent size)
+* The number of [pages](kernel/memory.md#pages) to unallocate
+
+Return value: -
+
+Errors:
+* `0x10`: the provided start address is out of the process' range
+* `0x11`: the provided size, added to the start address, would exceed the process' range
+
+Unallocate a linear block of memory.

@@ -205,7 +205,7 @@ As this syntax is not very readable, evaluating a single command can be made wit
 echo $(echo "Hello!") # Prints: "Hello!"
 ```
 
-Note that this only work if the command supports piping through STDRET.
+Note that this only work if the command supports piping through STDRET, and if the return type is not `void`.
 
 To get the result from STDOUT instead (always as a string):
 
@@ -762,6 +762,7 @@ cmd
   help "A program that repeats the name of a list of person"
   author "Me <my@email>" # Optional
   license "MIT" # Optional
+  return void
   args
     # Declare a positional argument named 'names' with a help text
     pos "names"
@@ -779,6 +780,8 @@ cmd
   end
 end
 ```
+
+The command's return type can be any existing type, as well as `void` which indicates it returns nothing.
 
 The options for each argument are:
 

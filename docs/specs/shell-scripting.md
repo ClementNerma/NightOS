@@ -182,7 +182,7 @@ Values in lists through their index (starting at 0):
 
 ```coffee
 let names = [ "Jack" ]
-echo "Hello, ${name[0]}!" # Hello, Jack!
+echo "Hello, ${names[0]}!" # Hello, Jack!
 ```
 
 Note that getting an out-of-bound index will make the program _panic_, which means it exits immediatly with an error message.

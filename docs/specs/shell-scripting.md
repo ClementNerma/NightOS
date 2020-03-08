@@ -585,8 +585,6 @@ fn handle_bad_div (a: num, b: num) -> num
 end
 ```
 
-Note that accessing an out-of-bound index in a list results in a failing.
-
 #### Retries
 
 It's possible to retry a function until it succeeds using the `retry` keyword:

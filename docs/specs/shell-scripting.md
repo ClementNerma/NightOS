@@ -122,19 +122,13 @@ command pos1 --pres pos2 --val 2
 
 ## Variables
 
-Variables are declared with the `let` keyword:
+Variables are declared with the `var` keyword:
 
 ```coffee
-let age = 19
+var age = 19
 ```
 
 Here, we declare a variable `age` with value `19`. As variables are typed, this variable will only be allowed to contain numbers from now on - no strings, no booleans, nothing else.
-
-By default, variables are constant, meaning we can't assign any new value to them. To declare a _mutable_ variable, we must write:
-
-```coffee
-let mut age = 19
-```
 
 And to assign a new value to it:
 
@@ -174,21 +168,21 @@ tellage ${age + add}
 String and characters can also be inserted inside a string:
 
 ```coffee
-let name = "Jack"
+var name = "Jack"
 echo "Hello, ${name}!" # Hello, Jack!
 ```
 
 Values in lists through their index (starting at 0):
 
 ```coffee
-let names = [ "Jack" ]
+var names = [ "Jack" ]
 echo "Hello, ${names[0]}!" # Hello, Jack!
 ```
 
 Note that getting an out-of-bound index will make the program _panic_, which means it exits immediatly with an error message.
 
 ```coffee
-let names = [ "Jack" ]
+var names = [ "Jack" ]
 echo "Hello, ${names[1]}!" # Panics
 ```
 
@@ -288,7 +282,7 @@ The neutral assignment operator `=` can be prefixed by any mathematical, bit-wis
 Here is an example:
 
 ```coffee
-let mut a = 3
+var a = 3
 
 a += 1
 a *= 8
@@ -300,7 +294,7 @@ echo ${a} # 16
 Note that the result's type must be compatible with the variable:
 
 ```coffee
-let mut a = 0
+var a = 0
 
 a &&= 1 # ERROR: Cannot assign a 'bool' to an 'int'
 ```
@@ -308,7 +302,7 @@ a &&= 1 # ERROR: Cannot assign a 'bool' to an 'int'
 There are also the `++` and `--` operators, which respectively increase and decrease the desired variable:
 
 ```coffee
-let mut a = 0
+var a = 0
 
 a ++
 a ++
@@ -423,7 +417,7 @@ This will run `command 0` to `command 10`.
 We can also iterate on a list:
 
 ```coffee
-let list = [ "Jack", "John" ]
+var list = [ "Jack", "John" ]
 
 for name in list
   echo ${name}
@@ -526,7 +520,7 @@ hello("Jack") # Will print "Hello, Jack!"
 Note that a function's arguments do not require to wrap the value between `${...}` as it's implicit. Which means we can write:
 
 ```coffee
-let name = "Jack"
+var name = "Jack"
 hello(name) # Prints: "Hello, Jack!"
 ```
 
@@ -649,7 +643,7 @@ Optional types are suffixed by a `?` symbol, and may either contain a value of t
 
 ```coffee
 fn custom_rand() -> int?
-  let rnd = rand_int(-5, 5)
+  var rnd = rand_int(-5, 5)
 
   if rnd > 0
     return rnd
@@ -662,14 +656,14 @@ end
 To declare a variable with an optional type, we either suffix it by `?` to make the value nullable:
 
 ```coffee
-let a = 1  # int
-let b = 1? # int?
+var a = 1  # int
+var b = 1? # int?
 ```
 
 Or using the `null.<type>()` function to declare the variable as nullable with the `null` value:
 
 ```coffee
-let c = null.int() # int?
+var c = null.int() # int?
 ```
 
 Note that imbricated types are not supported, which means we cannot create `int??` values for instance.
@@ -679,18 +673,18 @@ Note that imbricated types are not supported, which means we cannot create `int?
 If we try to access an optional value "as is", we will get a type error:
 
 ```coffee
-let a = 1?
+var a = 1?
 
-let mut b = 0
+var b = 0
 b = a # ERROR: Cannot use an `int?` value where `int` is expected
 ```
 
 We then have multiple options. We can use one of the nullable types' function:
 
 ```coffee
-let a = 1?
+var a = 1?
 
-let mut b = 0
+var b = 0
 
 # Make the program exit with an error message if 'a' is null
 b = a.unwrap()
@@ -702,8 +696,8 @@ b = a.expect("'a' should not be null :(")
 We can also detect if a value is `null` by using the `.isNull()` method:
 
 ```coffee
-let a = 1?
-let b = null.int()
+var a = 1?
+var b = null.int()
 
 echo ${a.isNull()} # false
 echo ${b.isNull()} # true
@@ -712,8 +706,8 @@ echo ${b.isNull()} # true
 There is also the `.default(T)` method that allows to use a fallback value in case of `null`:
 
 ```coffee
-let a = 1?
-let b = null.int()
+var a = 1?
+var b = null.int()
 
 echo ${a.default(3)} # 1
 echo ${b.default(3)} # 3
@@ -722,7 +716,7 @@ echo ${b.default(3)} # 3
 We can also use special syntaxes in blocks:
 
 ```coffee
-let a = 1?
+var a = 1?
 
 if some a
   # While we are in this block, 'a' is considered as an 'int'
@@ -748,7 +742,7 @@ wait some a -> b
 When a command takes an optional argument, it's possible to provide a nullable value of the same type instead:
 
 ```coffee
-let no_newline = false?
+var no_newline = false?
 
 echo "Hello!" -n ${no_newline}
 ```
@@ -796,7 +790,7 @@ The script will block while the provided `condition` is not `true`. The checking
 ```coffee
 echo "Please press the <F> key to validate your choice"
 
-let validated = false
+var validated = false
 
 on keypress as keycode
   if keycode == KEY_F
@@ -894,7 +888,7 @@ The script can then be called like any command, with the default `$(...)` operat
 ```coffee
 ./myscript.ns ["Jack", "John"] -r 1
 # or
-let result = $(./myscript.ns ["Jack", "John"] -r 1)
+var result = $(./myscript.ns ["Jack", "John"] -r 1)
 ```
 
 Also, know that scripts can `fail` too. This allows errors to be handled when the script is run as a function:
@@ -994,8 +988,8 @@ Turns the provided value into a string, depending on the value's type:
 Check if the value is `null`.
 
 ```coffee
-let a = 1?
-let b = null.int()
+var a = 1?
+var b = null.int()
 
 echo ${a.isNull()} # false
 echo ${b.isNull()} # true
@@ -1006,8 +1000,8 @@ echo ${b.isNull()} # true
 Use a fallback value in case of `null`:
 
 ```coffee
-let a = 1?
-let b = null.int()
+var a = 1?
+var b = null.int()
 
 echo ${a.default(3)} # 1
 echo ${b.default(3)}
@@ -1018,8 +1012,8 @@ echo ${b.default(3)}
 Make the program exit with an error message if the value is null.
 
 ```coffee
-let a = 0?
-let b = a.unwrap()
+var a = 0?
+var b = a.unwrap()
 ```
 
 #### `T?.expect(message: string) -> T`
@@ -1027,8 +1021,8 @@ let b = a.unwrap()
 Make the program exit with a custom error message if 'a' is null
 
 ```coffee
-let a = 0?
-let b = a.expect("'a' should not be null :(")
+var a = 0?
+var b = a.expect("'a' should not be null :(")
 ```
 
 ### Numbers
@@ -1152,7 +1146,7 @@ Turns a list of characters to a string.
 Try to get an item from the list, without panicking if the index is out-of-bounds.
 
 ```coffee
-let names = [ "Jack", "John" ]
+var names = [ "Jack", "John" ]
 
 names.get(0) # "Jack"
 names.get(1) # "John"
@@ -1164,7 +1158,7 @@ names.get(2) # null
 Get an item from the list, and panic with a custom error message if the index is out-of-bounds.
 
 ```coffee
-let names = [ "Jack", "John" ]
+var names = [ "Jack", "John" ]
 
 names.get(2, "Third item was not found")
 ```
@@ -1252,13 +1246,13 @@ Run the command and get its STDOUT and STDERR outputs combined.
 
 ```coffee
 while true
-  let mut won = false
-  let secret = rand_int(0, 100)
+  var won = false
+  var secret = rand_int(0, 100)
 
   echo "Secret number between 0 and 100 has been chosen."
 
   while !won
-    let user_input = retry prompt_int("Please input your guess: ")
+    var user_input = retry prompt_int("Please input your guess: ")
 
     if user_input < secret
       echo "It's higher!"

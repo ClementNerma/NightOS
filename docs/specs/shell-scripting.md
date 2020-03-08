@@ -92,9 +92,9 @@ dir/file.ext
 { command pos1 -s --long }
 ```
 
-The `char` type contains a _grapheme cluster_, which may be composed of multiple Unicode codepoints. A `string` is composed of multiple `char`s.
-
-There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.
+The `char` type contains a _grapheme cluster_, which may be composed of multiple Unicode codepoints. A `string` is composed of multiple `char`s.  
+There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.  
+Finally, there is the `void` type which cannot be written 'as is' but is used in special contexts like [commands return values](#commands-typing). It's a type that contains no data at all.
 
 There are also _presential arguments_, which are dash arguments that take no value. The command will simply check if the argument was provided or not.
 
@@ -212,7 +212,7 @@ As this syntax is not very readable, evaluating a single command can be made wit
 echo $(echo "Hello!") # Prints: "Hello!"
 ```
 
-Note that this only work if the command supports piping through STDRET, and if the return type is not `void`.
+Note that this only work if the command supports piping through STDRET.
 
 To get the result from STDOUT instead (always as a string):
 
@@ -802,7 +802,7 @@ cmd
 end
 ```
 
-The command's return type can be any existing type, as well as `void` which indicates it returns nothing.
+The command's return type can be any existing type.
 
 The options for each argument are:
 

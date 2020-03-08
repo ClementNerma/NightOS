@@ -574,16 +574,22 @@ end
 
 The `failable` keyword must be present before the return type to indicate the function may fail (even if the function doesn't return anything).
 
-When a function fails, the program stops and print the provided error message. But fails can be handled too using the `catch` keyword:
+When a function fails, the program stops and print the provided error message. But it's also possible to handle the error:
 
 ```coffee
 fn handle_bad_div (a: num, b: num) -> num
-  catch divide(a, b) as errmsg:
-    echo "Division failed :("
-    echo "Here is the error message: ${errmsg}"
+  catch divide(a, b)
+    ok result
+      echo "Divided successfully: ${a} / ${b} = ${result}"
+    
+    err errmsg
+      echo "Division failed :("
+      echo "Here is the error message: ${errmsg}"
   end
 end
 ```
+
+Note that you may handle only the success or error case depending on your needs ; you do not have to handle both cases.
 
 #### Retries
 
@@ -842,8 +848,8 @@ myscript(["Jack", "John"], 1)
 Also, know that scripts can `fail` too. This allows errors to be handled when the script is run as a function:
 
 ```coffee
-catch myscript(["Jack", "John"]) as err
-  echo "Something went wrong: ${err}"
+catch myscript(["Jack", "John"])
+  err data -> echo "Something went wrong: ${err}"
 end
 ```
 

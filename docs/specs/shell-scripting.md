@@ -232,6 +232,8 @@ To get the combined result from STDOUT and STDERR:
 echo $?(echo "Hello!") # Prints "Hello!"
 ```
 
+Note that using the `$(...)` operator will make the program panic if the command exits with a non-zero status code.
+
 ## Computing values
 
 It's also possible to compute values using operators. Each operator takes one or multiple operands, which can be either a variable or a literal value.

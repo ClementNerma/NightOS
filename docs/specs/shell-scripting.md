@@ -591,6 +591,17 @@ end
 
 Note that you may handle only the success or error case depending on your needs ; you do not have to handle both cases.
 
+This keyword also allows to catch errors from commands:
+
+```coffee
+# To get the typed return value, if supported
+# It's also possible to catch STDOUT instead, using $^(somecommand)
+catch $(somecommand)
+  ok data -> echo "Success: ${data}"
+  err msg -> echo "Error: ${msg}"
+end
+```
+
 #### Retries
 
 It's possible to retry a function until it succeeds using the `retry` keyword:
@@ -840,16 +851,16 @@ The script can then be called like any command, with the default `$(...)` operat
 ./myscript.ns ["Jack", "John"] -r 1
 # or
 let result = $(./myscript.ns ["Jack", "John"] -r 1)
-# or
-./myscript.ns as function myscript
-myscript(["Jack", "John"], 1)
 ```
 
 Also, know that scripts can `fail` too. This allows errors to be handled when the script is run as a function:
 
 ```coffee
-catch myscript(["Jack", "John"])
-  err data -> echo "Something went wrong: ${err}"
+# main(names: list[string], repeat: int?) -> failable
+
+catch $(myscript ["Jack", "John"])
+  ok _ -> echo "Everything went fine :)"
+  err _ -> echo "Something went wrong :("
 end
 ```
 

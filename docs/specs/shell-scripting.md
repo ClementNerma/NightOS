@@ -557,7 +557,7 @@ end
 Functions can also _fail_ to indicate something went wrong:
 
 ```hydre
-fn divide (a: num, b: num) -> failable num
+fn divide (a: num, b: num) -> fallible num
   if b == 0
     fail "Cannot divide by 0!"
   else
@@ -566,7 +566,7 @@ fn divide (a: num, b: num) -> failable num
 end
 ```
 
-The `failable` keyword must be present before the return type to indicate the function may fail (even if the function doesn't return anything).
+The `fallible` keyword must be present before the return type to indicate the function may fail (even if the function doesn't return anything).
 
 When a function fails, the program stops and print the provided error message. But it's also possible to handle the error:
 
@@ -621,8 +621,8 @@ retry(5) may_fail
 For information, here is the declaration of the native `retry_cmd` command, which allows to try to run a command until it succeeds:
 
 ```hydre
-fn retry_cmd(cmd: command, retries: int) -> failable
-  retry(retries) cmd.failable()
+fn retry_cmd(cmd: command, retries: int) -> fallible
+  retry(retries) cmd.fallible()
   if status() != 0
     fail "Command did not suceed after ${retries} retries."
   end
@@ -894,7 +894,7 @@ var result = $(./myscript.ns ["Jack", "John"] -r 1)
 Also, know that scripts can `fail` too. This allows errors to be handled when the script is run as a function:
 
 ```hydre
-# main(names: list[string], repeat: int?) -> failable
+# main(names: list[string], repeat: int?) -> fallible
 
 catch $(myscript ["Jack", "John"])
   ok _ -> echo "Everything went fine :)"
@@ -914,29 +914,29 @@ All types have _extensions_, which are functions that can be called using the `.
 
 Ask the user a string.
 
-#### `prompt_int(message: string) -> failable int`
+#### `prompt_int(message: string) -> fallible int`
 
 Ask the user an integer number.
 Fails if the provided input is not a number.
 Fails if the shell is not interactive.
 
-#### `prompt_float(message: string) -> failable float`
+#### `prompt_float(message: string) -> fallible float`
 
 Ask the user a floating-point number.
 Fails if the provided input is not a floating-point number.
 Fails if the shell is not interactive.
 
-#### `confirm(message: string) -> failable bool`
+#### `confirm(message: string) -> fallible bool`
 
 Ask the user to confirm a message using an `[Y/n]` prompt.
 Fails if the shell is not interactive.
 
-#### `choose(options: list[string]) -> failable int`
+#### `choose(options: list[string]) -> fallible int`
 
 Ask the user to pick a value from a list and get the index of the chosen value.
 Fails if the shell is not interactive.
 
-#### `retry_cmd(cmd: command, retries: int) -> failable`
+#### `retry_cmd(cmd: command, retries: int) -> fallible`
 
 Run a command and retry it a given number of times if it fails.
 Fails if the command still fails after all allowed tries.
@@ -954,12 +954,12 @@ Returns `0` if no command was ran since the beginning of the script.
 
 Generate a random floating-point number between 0 and 1.
 
-#### `rand_int(low: int, up: int) -> failable int`
+#### `rand_int(low: int, up: int) -> fallible int`
 
 Generate a random integer between `low` and `up`.
 Fails if `low` is not strictly less than `up`.
 
-#### `rand_float(low: float, up: float) -> failable float`
+#### `rand_float(low: float, up: float) -> fallible float`
 
 Generate a floating-point number between `low` and `up`.
 Fails if `low` is not strictly less than `up`.
@@ -1027,7 +1027,7 @@ var b = a.expect("'a' should not be null :(")
 
 ### Numbers
 
-#### `num.to_radix_str(base: num, leading = false) -> failable string`
+#### `num.to_radix_str(base: num, leading = false) -> fallible string`
 
 Represent the provided number in a given base.
 Fails if the base is not between 2 and 36.
@@ -1073,7 +1073,7 @@ Get the number of codepoints composing a string.
 
 Get the size of a string, in bytes.
 
-#### `string.parse_int(base = 10) -> failable int`
+#### `string.parse_int(base = 10) -> fallible int`
 
 Tries to parse the provided string as a number in the provided base.
 Leading zeroes are accepted.
@@ -1086,7 +1086,7 @@ Fails if the string does not represent a number in this base.
 "A".parse_int(16) # 11
 ```
 
-#### `string.parse_float(base = 10) -> failable float`
+#### `string.parse_float(base = 10) -> fallible float`
 
 Identical to `string.parse_int(base)` but with floats.
 
@@ -1220,7 +1220,7 @@ Concatenate multiple lists.
 
 Run the command and gets its status code after exit.
 
-#### `command.failable()`
+#### `command.fallible()`
 
 Run the command and fail if the status code after exit is not 0.
 

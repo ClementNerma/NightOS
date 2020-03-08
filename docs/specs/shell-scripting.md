@@ -89,7 +89,7 @@ dir/file.ext
 /tmp
 
 # Commands (used to run custom commands later in functions)
-{ command pos1 -s --long }
+@{ command pos1 -s --long }
 ```
 
 The `char` type contains a _grapheme cluster_, which may be composed of multiple Unicode codepoints. A `string` is composed of multiple `char`s.  
@@ -262,16 +262,16 @@ Bit-wise operators only take integer operands and produce an integer result:
 
 Logical operators take two operands and return a boolean:
 
-|  Symbol  |           Name           |            Returns `true` if...          |
-|----------|--------------------------|------------------------------------------|
-|  `&&`    | and                      | `a` and `b` are `true` booleans          |
-|  `\|\|`  | or                       | `a`, `b` or both are `true` booleans     |
-|  `==`    | equal to                 | `a` is equal to `b`                      |
-|  `!=`    | different than           | `a` is different than `b`                |
-|  `>`     | greater than             |  `a` is greater than `b`                 |
-|  `<`     | lower than               | `a` is lower than `b`                    |
-|  `>=`    | greater than or equal to | `a` is greater than or equal to `b`      |
-|  `<=`    | lower than or equal to   | `a` is lower than or equal to `b`        |
+| Symbol | Name                     | Returns `true` if...                 |
+| ------ | ------------------------ | ------------------------------------ |
+| `&&`   | and                      | `a` and `b` are `true` booleans      |
+| `\|\|` | or                       | `a`, `b` or both are `true` booleans |
+| `==`   | equal to                 | `a` is equal to `b`                  |
+| `!=`   | different than           | `a` is different than `b`            |
+| `>`    | greater than             | `a` is greater than `b`              |
+| `<`    | lower than               | `a` is lower than `b`                |
+| `>=`   | greater than or equal to | `a` is greater than or equal to `b`  |
+| `<=`   | lower than or equal to   | `a` is lower than or equal to `b`    |
 
 Finally, there is the `!` operator, which takes a single operand on its right, and simply reverts a boolean.
 
@@ -632,7 +632,7 @@ end
 It can be used like this:
 
 ```hydre
-retry_cmd({ read "file.txt" }, 10)
+retry_cmd(@{ read "file.txt" }, 10)
 ```
 
 ## Optional types
@@ -976,7 +976,7 @@ Turns the provided value into a string, depending on the value's type:
 (3.14).str() # 3.14
 'B'.str()    # B
 "Yoh".str()  # Yoh
-{ command --arg1 -c 2 -d=4 } # command --arg1 -c 2 -d 4
+@{ command --arg1 -c 2 -d=4 } # command --arg1 -c 2 -d 4
 
 ["a","b"].str()   # [ "a", "b" ]
 ```

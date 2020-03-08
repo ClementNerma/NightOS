@@ -755,7 +755,35 @@ echo "Hello!" -n ${no_newline}
 
 If the value is `null`, the argument will not be provided. Else, it will be provided with the non-null value.
 
-## Waiting
+## Event listeners
+
+Scripts can listen to events using the `on` keyword:
+
+```coffee
+on keypress as keycode
+  echo "A key was pressed: ${keycode}"
+end
+```
+
+This program will display a message each time a key is pressed.
+
+If the event listener is registered in a function, the is automatically unregistered when that function returns. If it's registered outside a function, it is unregistered when the script ends.
+
+```coffee
+fn test()
+  on keypress as keycode # (1)
+  end
+  # Event listener (1) is unregistered here
+end
+
+on keypress as keycode # (2)
+end
+
+echo "Hello world!"
+# Event listener (2) is unregistered here
+```
+
+### Waiting
 
 Scripts may wait for a specific event before continuing. This can be achieved without a `while` loop that consumes a lot of CPU, using the `wait` keyword:
 
@@ -764,6 +792,22 @@ wait condition
 ```
 
 The script will block while the provided `condition` is not `true`. The checking interval is defined by the system, and the condition should as fast to check as possible to consume as little CPU as possible.
+
+```coffee
+echo "Please press the <F> key to validate your choice"
+
+let validated = false
+
+on keypress as keycode
+  if keycode == KEY_F
+    validated = true
+  end
+end
+
+wait validated
+
+echo "Thanks for validating your choice :D"
+```
 
 ## Aliases
 

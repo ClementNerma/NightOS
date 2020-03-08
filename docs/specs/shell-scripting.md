@@ -8,7 +8,7 @@ Hydre uses an intuitive syntax. Commands are written like they would be in \*-sh
 
 Arugments can either be positional (they are written directly), shorts (prefixed by a `-` symbol and one-character long), or longs (prefixed by two `-` symbols). Here is an example:
 
-```coffee
+```hydre
 cmdname pos1 pos2 -a --arg1
 ```
 
@@ -19,13 +19,13 @@ Short and long arguments are called _dash arguments_.
 
 It's possible to combine multiple short arguments in once by writing them one after the other:
 
-```coffee
+```hydre
 cmdname -abc
 ```
 
 This line is strictly equivalent to:
 
-```coffee
+```hydre
 cmdname -a -b -c
 ```
 
@@ -33,7 +33,7 @@ cmdname -a -b -c
 
 Short and long arguments can also require a value. This value must be provided using an `=` symbol or by simply using a space:
 
-```coffee
+```hydre
 cmdname -s=1 --long=2
 # or:
 cmdname -s 1 --long 2
@@ -43,13 +43,13 @@ cmdname -s 1 --long 2
 
 Comments can be written on a single line with the `#` symbol:
 
-```coffee
+```hydre
 cmdname # single-line comment
 ```
 
 Everything after the `#` symbol is ignored. For multiple-line comments, it's required to use three `#` symbols:
 
-```coffee
+```hydre
 ###
 this
 is a
@@ -64,7 +64,7 @@ All arguments must match their expected _type_: if the command is expecting a nu
 
 Here is the list of all types and how they are written:
 
-```coffee
+```hydre
 # Booleans (bool) (`true` or `false`)
 true
 
@@ -102,7 +102,7 @@ There are also _presential arguments_, which are dash arguments that take no val
 
 For instance, considering `pos1` and `pos2` are positional arguments, `--pres` a presential argument and `--val` a non-presential long argument:
 
-```coffee
+```hydre
 # VALID
 command pos1 pos2 --pres --val 2
 
@@ -124,7 +124,7 @@ command pos1 --pres pos2 --val 2
 
 Variables are declared with the `var` keyword:
 
-```coffee
+```hydre
 var age = 19
 ```
 
@@ -132,7 +132,7 @@ Here, we declare a variable `age` with value `19`. As variables are typed, this 
 
 And to assign a new value to it:
 
-```coffee
+```hydre
 age = 20
 ```
 
@@ -140,26 +140,26 @@ age = 20
 
 To use a variable, we can directly use it like this::
 
-```coffee
+```hydre
 tellage age
 ```
 
 So this code:
 
-```coffee
+```hydre
 age = 20
 tellage age
 ```
 
 Is equivalent to this one:
 
-```coffee
+```hydre
 tellage 20
 ```
 
 It's also possible to perform computations using expressions:
 
-```coffee
+```hydre
 age = 20
 add = 12
 tellage ${age + add}
@@ -167,21 +167,21 @@ tellage ${age + add}
 
 String and characters can also be inserted inside a string:
 
-```coffee
+```hydre
 var name = "Jack"
 echo "Hello, ${name}!" # Hello, Jack!
 ```
 
 Values in lists through their index (starting at 0):
 
-```coffee
+```hydre
 var names = [ "Jack" ]
 echo "Hello, ${names[0]}!" # Hello, Jack!
 ```
 
 Note that getting an out-of-bound index will make the program _panic_, which means it exits immediatly with an error message.
 
-```coffee
+```hydre
 var names = [ "Jack" ]
 echo "Hello, ${names[1]}!" # Panics
 ```
@@ -190,19 +190,19 @@ echo "Hello, ${names[1]}!" # Panics
 
 Commands can either output data to STDOUT (standard), STDRET (typed) or STDERR (errors). It's possible to get the result of a command as a value:
 
-```coffee
+```hydre
 $(echo "Hello!")
 ```
 
 This gets the STDOUT content and can be used like this for instance:
 
-```coffee
+```hydre
 echo ${$(echo "Hello!")} # Prints: "Hello!"
 ```
 
 As this syntax is not very readable, evaluating a single command can be made without the `${...}` expression wrapper:
 
-```coffee
+```hydre
 echo $(echo "Hello!") # Prints: "Hello!"
 ```
 
@@ -210,19 +210,19 @@ Note that this only work if the command supports piping through STDRET.
 
 To get the result from STDOUT instead (always as a string):
 
-```coffee
+```hydre
 echo $^(echo "Hello!") # Prints: "Hello!"
 ```
 
 To get the result from STDERR:
 
-```coffee
+```hydre
 echo $!(echo "Hello!") # Prints nothing
 ```
 
 To get the combined result from STDOUT and STDERR:
 
-```coffee
+```hydre
 echo $?(echo "Hello!") # Prints "Hello!"
 ```
 
@@ -281,7 +281,7 @@ The neutral assignment operator `=` can be prefixed by any mathematical, bit-wis
 
 Here is an example:
 
-```coffee
+```hydre
 var a = 3
 
 a += 1
@@ -293,7 +293,7 @@ echo ${a} # 16
 
 Note that the result's type must be compatible with the variable:
 
-```coffee
+```hydre
 var a = 0
 
 a &&= 1 # ERROR: Cannot assign a 'bool' to an 'int'
@@ -301,7 +301,7 @@ a &&= 1 # ERROR: Cannot assign a 'bool' to an 'int'
 
 There are also the `++` and `--` operators, which respectively increase and decrease the desired variable:
 
-```coffee
+```hydre
 var a = 0
 
 a ++
@@ -319,7 +319,7 @@ Blocks allow to run a piece of code multiple times or if a specific condition is
 
 Conditionals uses the following syntax:
 
-```coffee
+```hydre
 if condition
   command1
 end
@@ -327,7 +327,7 @@ end
 
 When this block is ran, if `condition` (which is an expression that must result in a boolean) is equal to `true`, `command1` is ran. Here is an example:
 
-```coffee
+```hydre
 if 2 + 2 == 4
   command1
 end
@@ -335,7 +335,7 @@ end
 
 It's possible to specify multiple commands at once:
 
-```coffee
+```hydre
 if 2 + 2 == 4
   command1
   command2
@@ -347,7 +347,7 @@ Note that all commands must be indented by one tabulation.
 
 It's also possible to run a set of commands in case the condition isn't met too using `else`:
 
-```coffee
+```hydre
 if 2 + 2 == 4
   command1
 else
@@ -371,7 +371,7 @@ end
 
 A _switch_ allows to perform actions depending on a value. It's roughly equivalent to a combination of multiple `if` and `elif` statements.
 
-```coffee
+```hydre
 switch rand_int(0, 10)
   when 0
     echo "It's zero!"
@@ -386,7 +386,7 @@ end
 
 Note that, for blocks that only contain a single instruction, we can shorten this using the following syntax:
 
-```coffee
+```hydre
 switch rand_int(0, 10)
   when 0 -> echo "It's zero!"
   when 1 -> echo "It's one!"
@@ -398,7 +398,7 @@ end
 
 Loops allow to run a piece of code for a while. The most common loop is the range loop:
 
-```coffee
+```hydre
 for i in 0..10
   command ${i}
 end
@@ -406,7 +406,7 @@ end
 
 This will run `command 0` to `command 9`. To include the upper bound, we must add an `=` symbol:
 
-```coffee
+```hydre
 for i in 0..=10
   command ${i}
 end
@@ -416,7 +416,7 @@ This will run `command 0` to `command 10`.
 
 We can also iterate on a list:
 
-```coffee
+```hydre
 var list = [ "Jack", "John" ]
 
 for name in list
@@ -428,7 +428,7 @@ This will display `Jack` and `John`.
 
 To get the indexes as well, we can do:
 
-```coffee
+```hydre
 for i, name in list
   echo "${i}: ${name}"
 end
@@ -438,7 +438,7 @@ This will display `0: Jack` and `1: John`.
 
 There is another type of loop, which runs a piece of code while a condition is met:
 
-```coffee
+```hydre
 while condition
   command
 end
@@ -448,7 +448,7 @@ If the `condition` is `false` when the loop is reached, the `command` will not b
 
 Note that loops can be broke anytime using the `break` keyword:
 
-```coffee
+```hydre
 for i in 0..10
   command ${i}
 
@@ -464,7 +464,7 @@ This will run `command 0`, `command 1` and `command 2` only.
 
 It's possible to iterate on a list of files and directories:
 
-```coffee
+```hydre
 for file in (*.txt)
   echo "Found a text file: ${file}"
 end
@@ -472,7 +472,7 @@ end
 
 The pattern between parenthesis must be a glob pattern. Recursivity is supported to:
 
-```coffee
+```hydre
 for file in (**/*.txt)
   echo "Found a text file: ${file}"
 end
@@ -482,7 +482,7 @@ end
 
 Functions allow to split the code in several parts to make it more readable, as well as to re-use similar pieces of code across the script.
 
-```coffee
+```hydre
 fn hello
   echo "Hello!"
 end
@@ -490,7 +490,7 @@ end
 
 Now we can call `hello` this way:
 
-```coffee
+```hydre
 hello() # Will print "Hello !"
 ```
 
@@ -498,7 +498,7 @@ hello() # Will print "Hello !"
 
 Function can also take arguments, which must have a type.
 
-```coffee
+```hydre
 fn hello (name: string)
   echo "Hello, ${name}!"
 end
@@ -508,7 +508,7 @@ hello("Jack") # Will print "Hello, Jack!"
 
 Arguments can be made optional by providing default values. This also allows to get rid of their explicit type as it's now implicit:
 
-```coffee
+```hydre
 fn hello (name = "Unknown") {
   echo "Hello, ${name}!"
 }
@@ -519,14 +519,14 @@ hello("Jack") # Will print "Hello, Jack!"
 
 Note that a function's arguments do not require to wrap the value between `${...}` as it's implicit. Which means we can write:
 
-```coffee
+```hydre
 var name = "Jack"
 hello(name) # Prints: "Hello, Jack!"
 ```
 
 We can also combine functions and blocks, for instance:
 
-```coffee
+```hydre
 fn greet (names: list[string])
   # .len() is called an _extension_, we will see more about that later
   if names.len() == 0
@@ -546,7 +546,7 @@ hello(["John", "Jack"]) # Hello, John! Hello, Jack!
 
 Functions can also return values. In such case, they must specify the type of values they return, and ensure all code paths will return a value of this type:
 
-```coffee
+```hydre
 fn add (a: num, b: num) -> num
   return a + b
 end
@@ -556,7 +556,7 @@ end
 
 Functions can also _fail_ to indicate something went wrong:
 
-```coffee
+```hydre
 fn divide (a: num, b: num) -> failable num
   if b == 0
     fail "Cannot divide by 0!"
@@ -570,7 +570,7 @@ The `failable` keyword must be present before the return type to indicate the fu
 
 When a function fails, the program stops and print the provided error message. But it's also possible to handle the error:
 
-```coffee
+```hydre
 fn handle_bad_div (a: num, b: num) -> num
   catch divide(a, b)
     ok result
@@ -587,7 +587,7 @@ Note that you may handle only the success or error case depending on your needs 
 
 This keyword also allows to catch errors from commands:
 
-```coffee
+```hydre
 # To get the typed return value, if supported
 # It's also possible to catch STDOUT instead, using $^(somecommand)
 catch $(somecommand)
@@ -600,7 +600,7 @@ end
 
 It's possible to retry a function until it succeeds using the `retry` keyword:
 
-```coffee
+```hydre
 fn may_fail ()
   if rand() > 0.5
     fail "I don't like high numbers"
@@ -614,13 +614,13 @@ This will run `may_fail`, and run it again if it fails, until it succeeds.
 
 It's also possible to specify a maximum number of retries:
 
-```coffee
+```hydre
 retry(5) may_fail
 ```
 
 For information, here is the declaration of the native `retry_cmd` command, which allows to try to run a command until it succeeds:
 
-```coffee
+```hydre
 fn retry_cmd(cmd: command, retries: int) -> failable
   retry(retries) cmd.failable()
   if status() != 0
@@ -631,7 +631,7 @@ end
 
 It can be used like this:
 
-```coffee
+```hydre
 retry_cmd({ read "file.txt" }, 10)
 ```
 
@@ -641,7 +641,7 @@ Sometimes, it's useful to be able to represent a value that may be either _somet
 
 Optional types are suffixed by a `?` symbol, and may either contain a value of the provided type **or** `null`. Here is an example:
 
-```coffee
+```hydre
 fn custom_rand() -> int?
   var rnd = rand_int(-5, 5)
 
@@ -655,14 +655,14 @@ end
 
 To declare a variable with an optional type, we either suffix it by `?` to make the value nullable:
 
-```coffee
+```hydre
 var a = 1  # int
 var b = 1? # int?
 ```
 
 Or using the `null.<type>()` function to declare the variable as nullable with the `null` value:
 
-```coffee
+```hydre
 var c = null.int() # int?
 ```
 
@@ -672,7 +672,7 @@ Note that imbricated types are not supported, which means we cannot create `int?
 
 If we try to access an optional value "as is", we will get a type error:
 
-```coffee
+```hydre
 var a = 1?
 
 var b = 0
@@ -681,7 +681,7 @@ b = a # ERROR: Cannot use an `int?` value where `int` is expected
 
 We then have multiple options. We can use one of the nullable types' function:
 
-```coffee
+```hydre
 var a = 1?
 
 var b = 0
@@ -695,7 +695,7 @@ b = a.expect("'a' should not be null :(")
 
 We can also detect if a value is `null` by using the `.isNull()` method:
 
-```coffee
+```hydre
 var a = 1?
 var b = null.int()
 
@@ -705,7 +705,7 @@ echo ${b.isNull()} # true
 
 There is also the `.default(T)` method that allows to use a fallback value in case of `null`:
 
-```coffee
+```hydre
 var a = 1?
 var b = null.int()
 
@@ -715,7 +715,7 @@ echo ${b.default(3)} # 3
 
 We can also use special syntaxes in blocks:
 
-```coffee
+```hydre
 var a = 1?
 
 if some a
@@ -741,7 +741,7 @@ wait some a -> b
 
 When a command takes an optional argument, it's possible to provide a nullable value of the same type instead:
 
-```coffee
+```hydre
 var no_newline = false?
 
 echo "Hello!" -n ${no_newline}
@@ -753,7 +753,7 @@ If the value is `null`, the argument will not be provided. Else, it will be prov
 
 Scripts can listen to events using the `on` keyword:
 
-```coffee
+```hydre
 on keypress as keycode
   echo "A key was pressed: ${keycode}"
 end
@@ -763,7 +763,7 @@ This program will display a message each time a key is pressed.
 
 If the event listener is registered in a function, the is automatically unregistered when that function returns. If it's registered outside a function, it is unregistered when the script ends.
 
-```coffee
+```hydre
 fn test()
   on keypress as keycode # (1)
   end
@@ -781,13 +781,13 @@ echo "Hello world!"
 
 Scripts may wait for a specific event before continuing. This can be achieved without a `while` loop that consumes a lot of CPU, using the `wait` keyword:
 
-```coffee
+```hydre
 wait condition
 ```
 
 The script will block while the provided `condition` is not `true`. The checking interval is defined by the system, and the condition should as fast to check as possible to consume as little CPU as possible.
 
-```coffee
+```hydre
 echo "Please press the <F> key to validate your choice"
 
 var validated = false
@@ -807,7 +807,7 @@ echo "Thanks for validating your choice :D"
 
 As you may already know, command names can be [quite long and complicated](../concepts/applications.md#commands). In order to prevent from having to repeat very long names that are not really readable, it's recommanded to use _aliases_ which are declared at the beginning of script:
 
-```coffee
+```hydre
 :system.fs.read_file as read_file
 ```
 
@@ -819,7 +819,7 @@ For script files to be called as commands, they must define a `main` function an
 
 Here is an example of command description:
 
-```coffee
+```hydre
 cmd
   help "A program that repeats the name of a list of person"
   author "Me <my@email>" # Optional
@@ -858,7 +858,7 @@ For dash arguments, at least `short` or `long` must be provided. Also, `optional
 
 Here is an example that uses all these options:
 
-```coffee
+```hydre
   # ...
   dash "repeat"
     type int
@@ -875,7 +875,7 @@ Here is an example that uses all these options:
 
 The `main` function takes arguments with the same name as described in the `cmd` block, and in the same order:
 
-```coffee
+```hydre
 fn main(names: list[string], repeat: int?)
   for i in 0..=repeat.default(1)
     echo ${names.join(", ")}
@@ -885,7 +885,7 @@ end
 
 The script can then be called like any command, with the default `$(...)` operator returning the script's return value:
 
-```coffee
+```hydre
 ./myscript.ns ["Jack", "John"] -r 1
 # or
 var result = $(./myscript.ns ["Jack", "John"] -r 1)
@@ -893,7 +893,7 @@ var result = $(./myscript.ns ["Jack", "John"] -r 1)
 
 Also, know that scripts can `fail` too. This allows errors to be handled when the script is run as a function:
 
-```coffee
+```hydre
 # main(names: list[string], repeat: int?) -> failable
 
 catch $(myscript ["Jack", "John"])
@@ -970,7 +970,7 @@ Fails if `low` is not strictly less than `up`.
 
 Turns the provided value into a string, depending on the value's type:
 
-```coffee
+```hydre
 (true).str() # true
 (3).str(3)   # 3
 (3.14).str() # 3.14
@@ -987,7 +987,7 @@ Turns the provided value into a string, depending on the value's type:
 
 Check if the value is `null`.
 
-```coffee
+```hydre
 var a = 1?
 var b = null.int()
 
@@ -999,7 +999,7 @@ echo ${b.isNull()} # true
 
 Use a fallback value in case of `null`:
 
-```coffee
+```hydre
 var a = 1?
 var b = null.int()
 
@@ -1011,7 +1011,7 @@ echo ${b.default(3)}
 
 Make the program exit with an error message if the value is null.
 
-```coffee
+```hydre
 var a = 0?
 var b = a.unwrap()
 ```
@@ -1020,7 +1020,7 @@ var b = a.unwrap()
 
 Make the program exit with a custom error message if 'a' is null
 
-```coffee
+```hydre
 var a = 0?
 var b = a.expect("'a' should not be null :(")
 ```
@@ -1032,7 +1032,7 @@ var b = a.expect("'a' should not be null :(")
 Represent the provided number in a given base.
 Fails if the base is not between 2 and 36.
 
-```coffee
+```hydre
 (11).to_radix_str(16, false) # "A"
 (11).to_radix_str(16, true)  # "0xA"
 ```
@@ -1080,7 +1080,7 @@ Leading zeroes are accepted.
 `0` symbol followed by `b`, `o`, `d` or `x` is accepted for bases 2, 8, 10 and 16 respectively.
 Fails if the string does not represent a number in this base.
 
-```coffee
+```hydre
 "2".parse_int()   # 2
 "A".parse_int()   # <FAIL>
 "A".parse_int(16) # 11
@@ -1094,7 +1094,7 @@ Identical to `string.parse_int(base)` but with floats.
 
 Convert a string to uppercase.
 
-```coffee
+```hydre
 "aBc".upper_case() # "ABC"
 ```
 
@@ -1102,7 +1102,7 @@ Convert a string to uppercase.
 
 Convert a string to lowercase.
 
-```coffee
+```hydre
 "aBc".lower_case() # "abc"
 ```
 
@@ -1110,7 +1110,7 @@ Convert a string to lowercase.
 
 Reverse a string.
 
-```coffee
+```hydre
 "abc".reverse() # "cba"
 ```
 
@@ -1118,7 +1118,7 @@ Reverse a string.
 
 Concatenate two strings (equivalent to `"${left}${right}"`).
 
-```coffee
+```hydre
 "a".concat("b") # "ab"
 ```
 
@@ -1126,7 +1126,7 @@ Concatenate two strings (equivalent to `"${left}${right}"`).
 
 Split a string into a list.
 
-```coffee
+```hydre
 split("ab", "")  # [ "a", "b" ]
 split("a b", " ") # [ "a", "b" ]
 ```
@@ -1137,7 +1137,7 @@ split("a b", " ") # [ "a", "b" ]
 
 Turns a list of characters to a string.
 
-```coffee
+```hydre
 [ 'a', 'b', 'c' ].str() == "abc"
 ```
 
@@ -1145,7 +1145,7 @@ Turns a list of characters to a string.
 
 Try to get an item from the list, without panicking if the index is out-of-bounds.
 
-```coffee
+```hydre
 var names = [ "Jack", "John" ]
 
 names.get(0) # "Jack"
@@ -1157,7 +1157,7 @@ names.get(2) # null
 
 Get an item from the list, and panic with a custom error message if the index is out-of-bounds.
 
-```coffee
+```hydre
 var names = [ "Jack", "John" ]
 
 names.get(2, "Third item was not found")
@@ -1167,7 +1167,7 @@ names.get(2, "Third item was not found")
 
 Sorts a list.
 
-```coffee
+```hydre
 [ 2, 8, 4 ].sort()      # [ 2, 4, 8 ]
 [ 2, 8, 4 ].sort(false) # [ 8, 4, 2 ]
 ```
@@ -1176,7 +1176,7 @@ Sorts a list.
 
 Reverse a list.
 
-```coffee
+```hydre
 [ 2, 8, 4 ].reverse() # [ 4, 8, 2 ]
 ```
 
@@ -1184,7 +1184,7 @@ Reverse a list.
 
 Count the number of entries in a list.
 
-```coffee
+```hydre
 [ 2, 8, 4 ].len() # 3
 ```
 
@@ -1193,7 +1193,7 @@ Count the number of entries in a list.
 
 Join a list of strings with a separator.
 
-```coffee
+```hydre
 join([ "a", "b" ])       # "a,b"
 join([ "a", "b" ], "; ") # "a; b"
 ```
@@ -1202,7 +1202,7 @@ join([ "a", "b" ], "; ") # "a; b"
 
 Concatenate two lists.
 
-```coffee
+```hydre
 [ 1, 2 ].concat([ 3, 4 ]) # [ 1, 2, 3, 4 ]
 ```
 
@@ -1210,7 +1210,7 @@ Concatenate two lists.
 
 Concatenate multiple lists.
 
-```coffee
+```hydre
 [ 1, 2 ].concat([ [ 3, 4 ], [ 5, 6 ] ]) # [ 1, 2, 3, 4, 5, 6 ]
 ```
 
@@ -1244,7 +1244,7 @@ Run the command and get its STDOUT and STDERR outputs combined.
 
 ### Guess The Number
 
-```coffee
+```hydre
 while true
   var won = false
   var secret = rand_int(0, 100)

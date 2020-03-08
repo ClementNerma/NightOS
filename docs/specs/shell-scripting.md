@@ -811,7 +811,7 @@ Here is an example that uses all these options:
   # ...
 ```
 
-The `main` function takes arguments with the same name as described in the `cmd` block:
+The `main` function takes arguments with the same name as described in the `cmd` block, and in the same order:
 
 ```coffee
 fn main(names: list[string], repeat: int?)
@@ -824,9 +824,20 @@ end
 The script can then be called like any command, with the default `$(...)` operator returning the script's return value:
 
 ```coffee
-./myscript.ns
+./myscript.ns ["Jack", "John"] -r 1
 # or
-let result = $(./myscript.ns)
+let result = $(./myscript.ns ["Jack", "John"] -r 1)
+# or
+./myscript.ns as function myscript
+myscript(["Jack", "John"], 1)
+```
+
+Also, know that scripts can `fail` too. This allows errors to be handled when the script is run as a function:
+
+```coffee
+catch myscript(["Jack", "John"]) as err
+  echo "Something went wrong: ${err}"
+end
 ```
 
 ## Native library

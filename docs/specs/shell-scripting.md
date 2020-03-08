@@ -185,6 +185,13 @@ let names = [ "Jack" ]
 echo "Hello, ${name[0]}!" # Hello, Jack!
 ```
 
+Note that getting an out-of-bound index will make the program _panic_, which means it exits immediatly with an error message.
+
+```coffee
+let names = [ "Jack" ]
+echo "Hello, ${names[1]}!" # Panics
+```
+
 ## Output of a command
 
 Commands can either output data to STDOUT (standard), STDRET (typed) or STDERR (errors). It's possible to get the result of a command as a value:
@@ -1077,6 +1084,28 @@ Turns a list of characters to a string.
 
 ```coffee
 [ 'a', 'b', 'c' ].str() == "abc"
+```
+
+#### `list[T].get(index: int) -> T?`
+
+Try to get an item from the list, without panicking if the index is out-of-bounds.
+
+```coffee
+let names = [ "Jack", "John" ]
+
+names.get(0) # "Jack"
+names.get(1) # "John"
+names.get(2) # null
+```
+
+#### `list[T].expect(index: number, message: string) -> T`
+
+Get an item from the list, and panic with a custom error message if the index is out-of-bounds.
+
+```coffee
+let names = [ "Jack", "John" ]
+
+names.get(2, "Third item was not found")
 ```
 
 #### `list[T].sort(asc = true) -> list[T]`

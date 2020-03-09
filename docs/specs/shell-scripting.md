@@ -808,10 +808,20 @@ echo "Thanks for validating your choice :D"
 As you may already know, command names can be [quite long and complicated](../concepts/applications.md#commands). In order to prevent from having to repeat very long names that are not really readable, it's recommanded to use _aliases_ which are declared at the beginning of script:
 
 ```hydre
-:system.fs.read_file as read_file
+system::fs::read_file as read_file
+
+read_file # ...
 ```
 
 The `read_file` command is then made available.
+
+It's also possible to only bind the application itself:
+
+```hydre
+system::fs as fs
+
+fs::read_file # ...
+```
 
 ## Commands typing
 

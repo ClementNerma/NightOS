@@ -32,6 +32,15 @@ commands:
         short: r
         long: repeat
         optional: true
+
+      # Return the time this command took to complete
+      get-duration:
+        syntax: presential
+        short: d
+        long: duration
+        $if:
+          cond: present()
+          return: void
 # [...end of the manifest...]
 ```
 

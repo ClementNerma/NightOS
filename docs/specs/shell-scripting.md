@@ -921,8 +921,31 @@ cmd
       short "r"
       long "repeat"
       optional
+
+    # Get the time this command took to complete
+    presential "duration"
+      short "d"
+      long "duration"
+
+      # Conditional return type
+      # 'present()' also accepts an optional argument name to check if another argument is present
+      if present()
+        return int
 end
 ```
+
+### Arguments type
+
+Arguments type can be any existing type, or:
+
+- `any`: accepts any type of argument except `stream`, which will be converted to a `string` when the command is called (which means the argument will be a `string` from the command's point of view)
+- `stream_str`: accepts `string` as well as `stream` values, with streams being automatically fetched at once and converted to `string` values directly
+
+### Enumerations
+
+The `enum` type for arguments indicate the argument only accepts a subset of values (whose type is inferred), which must be specified as a constant. This means the caller cannot use a variable as this argument's value, because the return type may depend on it.
+
+### Return type
 
 The command's return type can be any existing type.
 
@@ -939,6 +962,9 @@ The options for each argument are:
 - `enum`: Allow only a subset of values
 
 For dash arguments, at least `short` or `long` must be provided. Also, `optional` and `default` cannot be provided at the same time.
+For presential arguments, at least `short` or `long` must be provided. Also, `type`, `optional`, `default` and `enum` are not accepted.
+
+Conditions can also use the `elif` and `else` keywords, and use the `present()` and `absent()` operators as well as usual relational operators like `==` or `<` for constant values like enums.
 
 Here is an example that uses all these options:
 

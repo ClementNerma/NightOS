@@ -6,15 +6,15 @@ This document presents the file formats natively handled by NightOS. Some files 
 
 Common file formats are natively handled:
 
-* Text files (`.txt`, `.md`, ...) with [Gravity](../applications/Gravity.md)
-* Audio files (`.mp3`, `.flac`, ...) with [Sonata](../applications/Sonata.md)
-* Image files (`.png`, `.jpg`, ...) with [ShootingStar](../applications/ShootingStar.md)
-* Video files (`.mp4`, `.mkv`, ...) with [Milkshake](../applications/Milkshake.md)
-* Archive files (`.zip`, `.tar`, ...) with [Blackhole](../applications/Blackhole.md)
-* E-book files (`.cbz`, `.cbr`, ...) with [Reader](../applications/Reader.md)
-* E-mail files (`.eml`, `.vcf`, ...) with [Postal](../applications/Postal.md)
-* Web files (`.html`, ...) with [Rocket](../applications/Rocket.md)
-* Virtual storage files (`.iso`, `.vfd`, ...) with [Locky](../applications/Locky.md)
+- Text files (`.txt`, `.md`, ...) with [Gravity](../applications/Gravity.md)
+- Audio files (`.mp3`, `.flac`, ...) with [Sonata](../applications/Sonata.md)
+- Image files (`.png`, `.jpg`, ...) with [ShootingStar](../applications/ShootingStar.md)
+- Video files (`.mp4`, `.mkv`, ...) with [Milkshake](../applications/Milkshake.md)
+- Archive files (`.zip`, `.tar`, ...) with [Blackhole](../applications/Blackhole.md)
+- E-book files (`.cbz`, `.cbr`, ...) with [Reader](../applications/Reader.md)
+- E-mail files (`.eml`, `.vcf`, ...) with [Postal](../applications/Postal.md)
+- Web files (`.html`, ...) with [Rocket](../applications/Rocket.md)
+- Virtual storage files (`.iso`, `.vfd`, ...) with [Locky](../applications/Locky.md)
 
 ## Virtual storages
 

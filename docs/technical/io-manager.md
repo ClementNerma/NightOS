@@ -1,6 +1,6 @@
 # I/O nano-manager
 
-The _Input/Output Nano-manager_, formerly known as *Ion*, is a part of the system which treats input/output requests from processes.
+The _Input/Output Nano-manager_, formerly known as _Ion_, is a part of the system which treats input/output requests from processes.
 
 ## Hardware access
 

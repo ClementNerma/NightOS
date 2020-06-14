@@ -8,22 +8,22 @@ _Inter-process Uni-directional Channels_ (IUC), also called _pipes_, allow two d
 
 Pipes are made of two uni-directional parts:
 
-* A _sender channel_ (SC) which can only be written to (write-only)
-* A _receiver channel_ (RC), which can only be read from (read-only)
+- A _sender channel_ (SC) which can only be written to (write-only)
+- A _receiver channel_ (RC), which can only be read from (read-only)
 
 The two processes sharing a pipes are:
 
-* The _sender process_, which uses the SC to send data to the other process
-* The _receiver process_, which uses the RC to retrieve data sent by the other process
+- The _sender process_, which uses the SC to send data to the other process
+- The _receiver process_, which uses the RC to retrieve data sent by the other process
 
 The process that creates the pipe gets both the SC and the RC, and is expected to provide one of them to another process.
 
 When a process is created, it gets several "forced" pipes:
 
-* The standard input (STDIN) ;
-* The standard normal output (STDOUT) ;
-* The standard error output (STDERR) ;
-* The standard types output (STDRET)
+- The standard input (STDIN) ;
+- The standard normal output (STDOUT) ;
+- The standard error output (STDERR) ;
+- The standard types output (STDRET)
 
 Each SC and RC has a unique identifier.
 
@@ -49,8 +49,8 @@ Any of the two processes (be it the receiver or the sender) can close a pipe usi
 
 When an application process' [execution context](applications/context.md#execution-context) indicates this it was started from a command, the caller process will be able to:
 
-* Send data to the callee's STDIN pipe ;
-* Read data from the callee's STDOUT/STDRET/STDERR pipes
+- Send data to the callee's STDIN pipe ;
+- Read data from the callee's STDOUT/STDRET/STDERR pipes
 
 If the process is not started from a command, the STDIN pipe will never receive data and all data sent to the STDOUT/STDRET/STDERR pipes will be automatically ignored.
 

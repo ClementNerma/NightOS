@@ -1,6 +1,6 @@
 # Shell
 
-The _shell_, called *Hydre*, is the part that interprets scripts.
+The _shell_, called _Hydre_, is the part that interprets scripts.
 
 ## Commands
 

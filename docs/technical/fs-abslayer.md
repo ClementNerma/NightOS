@@ -66,4 +66,3 @@ When a process wants to create a flow, it follows the following procedure:
 ### Connecting to a flow
 
 When a process wants to read from or write to a file, it first asks the [`sys:flow`](../specs/services.md#sysflow) service to connect to this file. If accepted, it receives a [SC or RC](../specs/ipc.md#pipes) to interact with the flow.
-

@@ -22,7 +22,7 @@ No. Absolutely not. Because, as I said in sooner, it's not viable for an operati
 
 Imagine someone introducing the perfect operating system, but with almost no application on it. Would you get rid of your Windows/MacOS/Linux/... system for this one? Surely not, at least not as your everyday system.
 
-This is why this project is for now purely *theorical*. It aims to describe how great an OS could be if we did not have to care about backward compatibility. Changes to see it in a usable state one day are like very low.
+This is why this project is for now purely _theorical_. It aims to describe how great an OS could be if we did not have to care about backward compatibility. Changes to see it in a usable state one day are like very low.
 
 ## How does this project relates to NightOS [v1](https://github.com/ClementNerma/NightOS-v1), [v2](https://github.com/ClementNerma/NightOS-v2) and [v3](https://github.com/ClementNerma/NightOS-v3)?
 
@@ -32,9 +32,9 @@ This project does not use JavaScript anymore, but Rust, which is both performant
 
 In terms of similarities:
 
-* The [v1](https://github.com/ClementNerma/NightOS-v1) was more of a draft, which had a lot of problems up to its roots. It was a pretty bad version overall, and was created when I did not have a real knowledge about how an operating system actually worked ;
-* The [v2](https://github.com/ClementNerma/NightOS-v2) was a bit more realistic, but still far from being mature enough ;
-* The [v3](https://github.com/ClementNerma/NightOS-v3) was more serious and ambitious, but it was still a desktop environment and not designed to be a full operating system
+- The [v1](https://github.com/ClementNerma/NightOS-v1) was more of a draft, which had a lot of problems up to its roots. It was a pretty bad version overall, and was created when I did not have a real knowledge about how an operating system actually worked ;
+- The [v2](https://github.com/ClementNerma/NightOS-v2) was a bit more realistic, but still far from being mature enough ;
+- The [v3](https://github.com/ClementNerma/NightOS-v3) was more serious and ambitious, but it was still a desktop environment and not designed to be a full operating system
 
 ## Who are you?
 

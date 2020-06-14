@@ -32,18 +32,18 @@ For more informations about this part, see how [applications expose commands](ap
 The system provides several _system libraries_, which work are libraries that communicate with the system through signals to enable system-related and hardware-related features.
 Note that's it's possible to use signals directly to deal with the system and the hardware, but it's a lot more complicated than just using these system libaries.
 
-* `fs`        : Filesystem management
-* `net`       : Network communications
-* `ipm`       : Inter-process management (create processes, workers, IPC, shared memory, ...)
-* `gui`       : Graphical user interface library (relies on `desktop`)
-* `apps`      : Applications management
-* `grid`      : Permissions controller
-* `shell`     : Shell interface (run commands, ...)
-* `input`     : Input interface (keyboard, mouse, microphone, ...)
-* `sound`     : Sound interface
-* `system`    : System interface (control panel, low-level changes, updates, ...)
-* `sandbox`   : Sandboxes management (run applications in sandboxes, ...)
-* `desktop`   : Desktop management (desktop, windows, notifications, ...)
-* `hardware`  : Hardware management (drivers and devices)
-* `reactive`  : Reactive (relies on `reactive`, includes Reactive Markup Language, ...)
-* `sysver`    : Exposes the system version, its main purpose to indicate which system version is required for an application
+- `fs` : Filesystem management
+- `net` : Network communications
+- `ipm` : Inter-process management (create processes, workers, IPC, shared memory, ...)
+- `gui` : Graphical user interface library (relies on `desktop`)
+- `apps` : Applications management
+- `grid` : Permissions controller
+- `shell` : Shell interface (run commands, ...)
+- `input` : Input interface (keyboard, mouse, microphone, ...)
+- `sound` : Sound interface
+- `system` : System interface (control panel, low-level changes, updates, ...)
+- `sandbox` : Sandboxes management (run applications in sandboxes, ...)
+- `desktop` : Desktop management (desktop, windows, notifications, ...)
+- `hardware` : Hardware management (drivers and devices)
+- `reactive` : Reactive (relies on `reactive`, includes Reactive Markup Language, ...)
+- `sysver` : Exposes the system version, its main purpose to indicate which system version is required for an application

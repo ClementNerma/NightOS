@@ -2,7 +2,7 @@
 
 _Applications_ are the system's way to handle software.
 
-**NOTE :** This document is only an *introduction* to how applications work.
+**NOTE :** This document is only an _introduction_ to how applications work.
 
 ## How applications work
 
@@ -15,13 +15,13 @@ Administrator users can install global applications, which are available to ever
 
 Applications are installed through an _application package_ via [Skyer](../applications/Skyer.md), the applications manager. There are several installation methods:
 
-* From the store
-* Directly from the application's package
-* As a volatile application
+- From the store
+- Directly from the application's package
+- As a volatile application
 
 ### From the store
 
-Applications can be downloaded from NightOS' official applications store (available via [*Stellar*](../applications/Stellar.md)).
+Applications can be downloaded from NightOS' official applications store (available via [_Stellar_](../applications/Stellar.md)).
 
 - For closed-source applications, the store only provides [_pre-compiled programs_](../technical/pre-compiling.md)
 - For open-source applications, the store provides both pre-built programs as well as the source code
@@ -32,16 +32,16 @@ For the latter, user can choose either to build the program from source, using t
 
 Applications can be also be ran as _volatile applications_, which means they are not installed on the disk. There are three methods:
 
-* *Full-volatile*: the app's data are removed when the application closes
-* *Session-scoped*: the app's data are stored on disk until the system shuts down
-* *Local-persistent*: the app's data are stored within a data file located in the same folder
-* *Persistent*: the app's data are stored in a dedicated folder, also enabling common data between users
+- _Full-volatile_: the app's data are removed when the application closes
+- _Session-scoped_: the app's data are stored on disk until the system shuts down
+- _Local-persistent_: the app's data are stored within a data file located in the same folder
+- _Persistent_: the app's data are stored in a dedicated folder, also enabling common data between users
 
-By default, volatile applications are ran in *local-persistent* mode. In this mode, the system first checks if a file with the same name as the application's package but with the *.vad* (Volatile Application's Data) exists. If so, it opens this file as the application's storage. Then, when the application wants to store some data, it is stored inside this data file.
+By default, volatile applications are ran in _local-persistent_ mode. In this mode, the system first checks if a file with the same name as the application's package but with the _.vad_ (Volatile Application's Data) exists. If so, it opens this file as the application's storage. Then, when the application wants to store some data, it is stored inside this data file.
 
 Note that VAD files are disguised [VST](../technical/file-formats.md#virtual-storages) files.
 
-Volatile applications running as persistent do not appear in the applications list and can only be managed through a specific option in the *Control Center*. Their executable files are not stored anywhere and stay in the application's package, while only their data are stored on the disk. This allows to run the same application several times without losing any data and without worrying about a data file. This also allows to store common data between users.
+Volatile applications running as persistent do not appear in the applications list and can only be managed through a specific option in the _Control Center_. Their executable files are not stored anywhere and stay in the application's package, while only their data are stored on the disk. This allows to run the same application several times without losing any data and without worrying about a data file. This also allows to store common data between users.
 
 Note that the store has an option for installing applications as volatile.
 
@@ -53,11 +53,11 @@ See the [permissions document](../features/permissions.md).
 
 Each application has a name as well as a slug. The name can any valid UTF-8 string, while the slug must respect several rules:
 
-* Only lowercase letters, underscores and digits
-* Must not start by a digit
-* Must not be the name of a native shell command
-* Must not be the name of a native shell function
-* Must not be the name of a shell type
+- Only lowercase letters, underscores and digits
+- Must not start by a digit
+- Must not be the name of a native shell command
+- Must not be the name of a native shell function
+- Must not be the name of a shell type
 
 By default, the slug is auto-generated from the name, but it can also be customized.
 
@@ -86,13 +86,13 @@ Commands work by launching the application with a specific [context](#applicatio
 
 Some [native applications](../applications/) are part of the system itself and are called _system applications_ as such. They get a few specific features:
 
-* Access to system-reserved features
-* Ability to create [system services](#services)
-* They cannot be uninstalled
+- Access to system-reserved features
+- Ability to create [system services](#services)
+- They cannot be uninstalled
 
 ## Services
 
 Application can provide a [service](../technical/services.md) by specifying it in their [manifest](../specs/applications/manifest.md).
 The service will be run at startup with the usual application's permissions.
 
-When an application uses a service, there is exactly one service process running per active user. 
+When an application uses a service, there is exactly one service process running per active user.

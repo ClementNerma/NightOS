@@ -30,8 +30,8 @@ The first piece to be implemented will be the kernel. This is required as the ke
 
 Once the unoptimized kernel is ready, two implementations will start in parallel:
 
-* Kernel optimization (as the unoptimized kernel will be really, really slow)
-* System development
+- Kernel optimization (as the unoptimized kernel will be really, really slow)
+- System development
 
 The system development will consist in building the following pieces successively:
 

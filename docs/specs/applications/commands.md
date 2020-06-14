@@ -4,9 +4,9 @@ Applications can expose commands through their [manifest](manifest.md).
 
 The format is the same as the [shell's command typing](../shell-scripting.md#commands-typing), although adapted to YAML:
 
-* The `pos` or `dash` indicator is turned into a (required) `syntax` option
-* The `optional` indicator becomes a boolean that must be set to `true`
-* The `void` type is forbidden
+- The `pos` or `dash` indicator is turned into a (required) `syntax` option
+- The `optional` indicator becomes a boolean that must be set to `true`
+- The `void` type is forbidden
 
 ## Example
 
@@ -39,9 +39,9 @@ commands:
 
 The value must be returned using the [STDRET](../ipc.md#interactive-usage) pipe. The data sent through this pipe must be:
 
-* The return value's length (8 bytes) ;
-* The value's [shell type](../shell-scripting.md#value-types) code ;
-* The encoded value
+- The return value's length (8 bytes) ;
+- The value's [shell type](../shell-scripting.md#value-types) code ;
+- The encoded value
 
 | Type code | Type      | Description                         | Representation                                                                             |
 | --------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------ |

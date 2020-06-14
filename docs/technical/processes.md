@@ -5,9 +5,9 @@
 NightOS _processes_ are implemented a bit like Linux' ones, with additional features.
 There are several types of processes:
 
-* _System processes_, which are created by the system ;
-* _Application processes_, in which applications run ;
-* _Worker processes_, in which applications' workers run
+- _System processes_, which are created by the system ;
+- _Application processes_, in which applications run ;
+- _Worker processes_, in which applications' workers run
 
 The base and system processes are called _low-level processes_, while application and worker ones are called _userland processes_.
 

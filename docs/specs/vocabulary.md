@@ -32,8 +32,8 @@ _Resizable_ windows are the most common type of windows. They feature a [title b
 
 A window's _title bar_ is a bar located above the window's content. It contains:
 
-* On its left: a set of four buttons (customizable) which allow to hide the window in the taskbar, restore/maximize it, close it, or suspend/resume the related application ;
-* On its center: the window's title, which is controlled by the application and may change during the window's lifetime
+- On its left: a set of four buttons (customizable) which allow to hide the window in the taskbar, restore/maximize it, close it, or suspend/resume the related application ;
+- On its center: the window's title, which is controlled by the application and may change during the window's lifetime
 
 #### Windows' resizing lines
 

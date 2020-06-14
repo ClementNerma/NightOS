@@ -38,7 +38,7 @@ Session time extension applies here as well, and works the same way as for restr
 
 ### Restrict access to applications
 
-This feature restricts access to some applications, either using a whitelist (listing all the *allowed* applications), or using a blacklist (listing all the *forbidden* applications).
+This feature restricts access to some applications, either using a whitelist (listing all the _allowed_ applications), or using a blacklist (listing all the _forbidden_ applications).
 
 It's possible to automatically while/black-list new applications.
 
@@ -63,4 +63,4 @@ By default, installation is allowed but sends a notification to the parent user 
 
 ### Controlling session remotely
 
-This feature allows parents to log out the child user remotely. This will show a pop-up indicating the session will be closed in 60 seconds, behaving just like usage hours restriction. It may also provide session time extension based on how the log out was triggered (log out the child user *or* log out the child user and disable session time extension) and the setting selected during the setup process.
+This feature allows parents to log out the child user remotely. This will show a pop-up indicating the session will be closed in 60 seconds, behaving just like usage hours restriction. It may also provide session time extension based on how the log out was triggered (log out the child user _or_ log out the child user and disable session time extension) and the setting selected during the setup process.

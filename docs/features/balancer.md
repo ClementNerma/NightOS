@@ -6,11 +6,11 @@ The _balancer_ is a program that allows to get more performances out of most imp
 
 The balancer allows to manage the priority of userland processes - and only them. Here is the list of its features:
 
-* Increase priority of this application: gives a priority of 8 to the process linked to the active window ;
-* Give maximum priority to this application: gives a priority of 10 to the process linked to the active window ;
-* Set this application with maximum priority: always give a priority of 8 to this application's processes ;
-* Suspend/resume this application: see below ;
-* Enter performance mode: see below
+- Increase priority of this application: gives a priority of 8 to the process linked to the active window ;
+- Give maximum priority to this application: gives a priority of 10 to the process linked to the active window ;
+- Set this application with maximum priority: always give a priority of 8 to this application's processes ;
+- Suspend/resume this application: see below ;
+- Enter performance mode: see below
 
 ## Application processes suspension
 
@@ -25,8 +25,8 @@ When a process is suspended, all its [child processes](../technical/processes.md
 
 The _performance mode_ performs the following actions:
 
-* For all userland processes with a non-null priority, set their priority to 1 ;
-* For all the processes of the application related to the active window, set a priority of 10.
+- For all userland processes with a non-null priority, set their priority to 1 ;
+- For all the processes of the application related to the active window, set a priority of 10.
 
 This makes all other applications running a lot slower, but the current one will run a lot faster.
 The priority is re-calculated whenever the active window changes.

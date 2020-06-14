@@ -44,4 +44,4 @@ When a crash save is attempted to be restored, the [crash save service](../specs
 The application is expected to confirm the signal when it has finished restoring its state using the crash save.
 The crash save is not deleted directly, though. It is renamed using the new instance's PID and kept until the next collect process receives a new crash save for this instance.
 
-If the application crashes before another crash save can be made *and* didn't confirm the restoration signal, when this process happens again, system will indicate the application appear to have crashed during crash save restoration.
+If the application crashes before another crash save can be made _and_ didn't confirm the restoration signal, when this process happens again, system will indicate the application appear to have crashed during crash save restoration.

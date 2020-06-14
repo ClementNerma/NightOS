@@ -6,9 +6,9 @@ The _controller_ is a system library that manages permissions of processes. The 
 
 Permissions are split into several scopes:
 
-* The _application scope_ contains the permissions a given process is borned from ;
-* The _user scope_ contains the permissions the user who launched the application has ;
-* The _mode scope_ contains the permissions the _execution mode_ (either system or userland) has.
+- The _application scope_ contains the permissions a given process is borned from ;
+- The _user scope_ contains the permissions the user who launched the application has ;
+- The _mode scope_ contains the permissions the _execution mode_ (either system or userland) has.
 
 The mode scope restricts the user scope, which itself restricts the application scope. This means that, if the application scope specify a permission that is not covered by the user scope, it is not applyable to the process. This allows to prevent applications and users from getting too high permissions.
 

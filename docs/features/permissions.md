@@ -10,10 +10,10 @@ When an app wants to get a permission, it asks [the system to give it](../specs/
 
 Permissions are split across different _types_:
 
-* _Safe permissions_, like windows creation, are granted automatically by default ;
-* _Implicit permissions_, like reading filesystem opened by the application, are also granted automatically by default ;
-* _Sensitive permissions_, like filesystem or network access, trigger a confirmation overlay visible by the user ;
-* _Privacy permissions_, like microphone or webcam access, add an emphasized confirmation message to the same overlay ;
+- _Safe permissions_, like windows creation, are granted automatically by default ;
+- _Implicit permissions_, like reading filesystem opened by the application, are also granted automatically by default ;
+- _Sensitive permissions_, like filesystem or network access, trigger a confirmation overlay visible by the user ;
+- _Privacy permissions_, like microphone or webcam access, add an emphasized confirmation message to the same overlay ;
 
 An exception to the above cases is for special rules permission rules (e.g. [application proxies](../technical/dev-mode.md#application-proxies)).
 

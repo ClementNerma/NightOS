@@ -4,9 +4,9 @@ _Signals_ are the second type of [KPC](kernel/kpc.md). They are used by the kern
 
 When a process is created, the kernel associates it:
 
-* A _signals handler table_ (SHT) ;
-* A _signals queue_ ;
-* A _readiness indicator_
+- A _signals handler table_ (SHT) ;
+- A _signals queue_ ;
+- A _readiness indicator_
 
 Each signal has a 8-bit code that identifies it, as well as a 8 bytes _datafield_ which is used to attach additional informations about the signal.
 
@@ -73,9 +73,10 @@ Sent to a process that previously established a connection with a service, to in
 
 Default: kills the process  
 Datafield:
-* Callee process' ID (8 bytes)
-* Connection's unique request ID (8 bytes)
-* [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
+
+- Callee process' ID (8 bytes)
+- Connection's unique request ID (8 bytes)
+- [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
 
 Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x20-connect_service) syscall.
 
@@ -101,11 +102,12 @@ The thread is expected to terminate as soon as possible (there is no time limit 
 
 Default: -  
 Datafield:
-* Sender PID (8 bytes)
-* Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier)
-* Length of the AID (1 byte)
-* [Pipe](ipc.md#pipes) SC identifier (8 bytes)
-* Command code (2 bytes)
+
+- Sender PID (8 bytes)
+- Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier)
+- Length of the AID (1 byte)
+- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
+- Command code (2 bytes)
 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the readable part.
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
@@ -114,11 +116,12 @@ The command code can be used to determine what the other process is expecting th
 
 Default: -  
 Datafield:
-* Receiver PID (8 bytes)
-* Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier)
-* Length of the AID (1 byte)
-* [Pipe](ipc.md#pipes) RC identifier (8 bytes)
-* Command code (2 bytes)
+
+- Receiver PID (8 bytes)
+- Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier)
+- Length of the AID (1 byte)
+- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
+- Command code (2 bytes)
 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the writable part.
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
@@ -127,9 +130,10 @@ The command code can be used to determine what the other process is expecting th
 
 Default: -  
 Datafield:
-* `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x46-close_pipe) syscall, or `0x01` if the other process brutally terminated (1 byte)
-* `0x00` if this process contained the RC part, `0x01` if it contained the SC part
-* RC/SC identifier (8 bytes)
+
+- `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x46-close_pipe) syscall, or `0x01` if the other process brutally terminated (1 byte)
+- `0x00` if this process contained the RC part, `0x01` if it contained the SC part
+- RC/SC identifier (8 bytes)
 
 Sent to a process when an [pipe](ipc.md#pipes) shared with another process is closed.
 

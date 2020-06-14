@@ -8,4 +8,3 @@ The main point of separating programs in processes is to be able to give them di
 For instance, if two programs A and B run, we may not want A to be able to read and modify the next instructions and/or program data of B.
 
 ## Performance balancing
-

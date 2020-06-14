@@ -10,42 +10,42 @@ Each map has string keys and a value that describes the entry: its purpose, its 
 
 All types are described as a name, optionally followed by a maximum number of entries between brackets or a maximum number of bytes between braces. Here is the list, in [HFRR notation](#hffr-format):
 
-|        Name        |   Size (s) in bytes   |                                       Description                                     |
-|--------------------|-----------------------|---------------------------------------------------------------------------------------|
-| `struct`           | s = ?                 | A structure - keys are ASCII strings and values' type may be various
-| `string`           | s = ?                 | An UTF-8 encoded string
-| `string[x]`        | x <= s <= x * 4       | An UTF-8 encoded string with a maximum capacity of `x` characters
-| `string{x}`        | s <= x * 4            | An UTF-8 encoded string with a maximum capacity of `x` bytes
-| `asciistr`         | s = ?                 | An ASCII encoded string
-| `asciistr[x]`      | s <= x                | An ASCII encoded string with a maximum capacity of `x` characters
-| `asciistr{x}`      | s <= x                | An ASCII encoded string with a maximum capacity of `x` bytes
-| `int{x}`           | s = x                 | A signed integer on `x` bytes
-| `uint{x}`          | s = x                 | An unsigned integer on `x` bytes
-| `float{x}`         | s = x                 | A floating-point number on `x` bytes
-| `pfloat{x}`        | s = x                 | A positive floating-point number on `x` bytes
-| `ints`             | s = {CPU bits}        | A signed integer on as many bytes as the CPU
-| `uints`            | s = {CPU bits}        | An unsigned integer on as many bytes as the CPU
-| `bool`             | s = 1                 | A boolean
-| `list:type`        | s = ?                 | A list of entries with the provided `type`
-| `list[x]:type`     | s = sizeof(type) * x  | A list of entries with the provided `type` with a maximum of `x` entries
-| `structlist`       | s = ?                 | A list of structures guaranteeing its first entry (the structure model) will never be removed
-| `map:(key):(val)`  | s = ?                 | A dictionary mapping keys of the `key` to values of the `val` type
-| `mapc:(key):(val)` | s = ?                 | A dictionary mapping all possible keys of the `key` to values of the `val` type
-| `structmap:(key)`  | s = ?                 | A dictionary mapping keys of the `key` to structures
-| `structmapc:(key)` | s = ?                 | A dictionary mapping all possible keys of the `key` to structures
-| `time(p)`          | s <= 8                | A duration with a precision of `p` (see below)
-| `tmin(p,min)`      | s <= 8                | Equivalent of `time(p)` but with a minimum value
-| `tmax(p,min)`      | s <= 8                | Equivalent of `time(p)` but with a maximum value
-| `tbtw(p,min,max)`  | s <= 8                | Equivalent of `time(p)` but with a minimum and a maximum value
-| `stime(p)`         | s <= 8                | Equivalent of `time(p)` but allows negative durations
-| `size(p)`          | s <= 8                | A data size with a precision of `p` (see below)
-| `smin(p,min)`      | s <= 8                | Equivalent of `size(p)` but with a minimum value
-| `smax(p,min)`      | s <= 8                | Equivalent of `size(p)` but with a maximum value
-| `sbtw(p,min,max)`  | s <= 8                | Equivalent of `size(p)` but with a minimum and a maximum value
-| `id:app`           | s <= 256              | Identifier of an installed application (ASCII string)
-| `id:lib`           | s <= 256              | Identifier of an installed library (ASCII string)
-| `id:user`          | s = 4                 | Identifier of an installed user (32-bit unsigned number)
-| `in:(type):(a...)` | s = max(sizeof(type)) | Any value in the provided tuple
+| Name               | Size (s) in bytes     | Description                                                                                   |
+| ------------------ | --------------------- | --------------------------------------------------------------------------------------------- |
+| `struct`           | s = ?                 | A structure - keys are ASCII strings and values' type may be various                          |
+| `string`           | s = ?                 | An UTF-8 encoded string                                                                       |
+| `string[x]`        | x <= s <= x \* 4      | An UTF-8 encoded string with a maximum capacity of `x` characters                             |
+| `string{x}`        | s <= x \* 4           | An UTF-8 encoded string with a maximum capacity of `x` bytes                                  |
+| `asciistr`         | s = ?                 | An ASCII encoded string                                                                       |
+| `asciistr[x]`      | s <= x                | An ASCII encoded string with a maximum capacity of `x` characters                             |
+| `asciistr{x}`      | s <= x                | An ASCII encoded string with a maximum capacity of `x` bytes                                  |
+| `int{x}`           | s = x                 | A signed integer on `x` bytes                                                                 |
+| `uint{x}`          | s = x                 | An unsigned integer on `x` bytes                                                              |
+| `float{x}`         | s = x                 | A floating-point number on `x` bytes                                                          |
+| `pfloat{x}`        | s = x                 | A positive floating-point number on `x` bytes                                                 |
+| `ints`             | s = {CPU bits}        | A signed integer on as many bytes as the CPU                                                  |
+| `uints`            | s = {CPU bits}        | An unsigned integer on as many bytes as the CPU                                               |
+| `bool`             | s = 1                 | A boolean                                                                                     |
+| `list:type`        | s = ?                 | A list of entries with the provided `type`                                                    |
+| `list[x]:type`     | s = sizeof(type) \* x | A list of entries with the provided `type` with a maximum of `x` entries                      |
+| `structlist`       | s = ?                 | A list of structures guaranteeing its first entry (the structure model) will never be removed |
+| `map:(key):(val)`  | s = ?                 | A dictionary mapping keys of the `key` to values of the `val` type                            |
+| `mapc:(key):(val)` | s = ?                 | A dictionary mapping all possible keys of the `key` to values of the `val` type               |
+| `structmap:(key)`  | s = ?                 | A dictionary mapping keys of the `key` to structures                                          |
+| `structmapc:(key)` | s = ?                 | A dictionary mapping all possible keys of the `key` to structures                             |
+| `time(p)`          | s <= 8                | A duration with a precision of `p` (see below)                                                |
+| `tmin(p,min)`      | s <= 8                | Equivalent of `time(p)` but with a minimum value                                              |
+| `tmax(p,min)`      | s <= 8                | Equivalent of `time(p)` but with a maximum value                                              |
+| `tbtw(p,min,max)`  | s <= 8                | Equivalent of `time(p)` but with a minimum and a maximum value                                |
+| `stime(p)`         | s <= 8                | Equivalent of `time(p)` but allows negative durations                                         |
+| `size(p)`          | s <= 8                | A data size with a precision of `p` (see below)                                               |
+| `smin(p,min)`      | s <= 8                | Equivalent of `size(p)` but with a minimum value                                              |
+| `smax(p,min)`      | s <= 8                | Equivalent of `size(p)` but with a maximum value                                              |
+| `sbtw(p,min,max)`  | s <= 8                | Equivalent of `size(p)` but with a minimum and a maximum value                                |
+| `id:app`           | s <= 256              | Identifier of an installed application (ASCII string)                                         |
+| `id:lib`           | s <= 256              | Identifier of an installed library (ASCII string)                                             |
+| `id:user`          | s = 4                 | Identifier of an installed user (32-bit unsigned number)                                      |
+| `in:(type):(a...)` | s = max(sizeof(type)) | Any value in the provided tuple                                                               |
 
 The registry's root is a `struct`. Each key-value association in a struct is called a _node_. Nodes that are single values (neither a list, a map or a structure) or called _leafs_.
 
@@ -53,13 +53,13 @@ All sizes that are exceptly provided in bytes must be a multiple of two.
 
 ### Notes about types
 
-* Durations (`time`, `tmin`, `tmax` and `tbtw` types) have a precision which indicate the smallest unit of time they accept. `1` is for years, `2` for months, `3` for weeks, `4` for days, `5` for hours, `6` for minutes, `7` for seconds, `8` for milliseconds, `9` for microseconds and `10` for nanoseconds.
+- Durations (`time`, `tmin`, `tmax` and `tbtw` types) have a precision which indicate the smallest unit of time they accept. `1` is for years, `2` for months, `3` for weeks, `4` for days, `5` for hours, `6` for minutes, `7` for seconds, `8` for milliseconds, `9` for microseconds and `10` for nanoseconds.
 
-* Sizes (`size`, `smin`, `smax` and `sbtw` types) accept values that are a multiple of their precision. `1` is for terabytes, `2` for gigabytes, `3` for megabytes, `4` for kilobytes, `5` for bytes and `6` for bits.
+- Sizes (`size`, `smin`, `smax` and `sbtw` types) accept values that are a multiple of their precision. `1` is for terabytes, `2` for gigabytes, `3` for megabytes, `4` for kilobytes, `5` for bytes and `6` for bits.
 
-* For the `struct` type, there is no need to specify the list of possible keys and the type of associated values, because they are already present in the registry when it's installed by the system - so it's all implicit. The keys in a struct should never change through time, nor the type of the value of each key. As such, it is not possible to create a list of `struct`, for instance.
+- For the `struct` type, there is no need to specify the list of possible keys and the type of associated values, because they are already present in the registry when it's installed by the system - so it's all implicit. The keys in a struct should never change through time, nor the type of the value of each key. As such, it is not possible to create a list of `struct`, for instance.
 
-* For map structures (`structmap` and `structmapc`), the first key when sorting using the default algorithm for each type is guaranteed to never be removed. Its mapped value acts as the model structure for all over values in the map.
+- For map structures (`structmap` and `structmapc`), the first key when sorting using the default algorithm for each type is guaranteed to never be removed. Its mapped value acts as the model structure for all over values in the map.
 
 ## HFFR Format
 
@@ -69,7 +69,7 @@ In this format, structures' keys are described using the `key(type):` format. Ea
 
 Strings are describes using double quotes, with a `r` prefix symbol for ASCII strings. Floating-point numbers use a `.` symbol as their decimal separators, and an explicit `+` or `-` symbol indicates all numbers' sign.
 
-Each list entry is prefixed by a `- ` symbol, and each key is described as a set of `key: value` list (on multiple lines for lists and maps).
+Each list entry is prefixed by a `-` symbol, and each key is described as a set of `key: value` list (on multiple lines for lists and maps).
 
 Empty lists are represented as `[]` and empty maps as `{}`.
 

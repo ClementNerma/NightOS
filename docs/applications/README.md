@@ -10,38 +10,38 @@ Below is the list of applications that are installed (by default) during the ins
 
 ### Basics
 
-* [*Nova*](Nova.md)             : Desktop environment
-* [*Comet*](Comet.md)           : File manager
-* [*Stellar*](Stellar.md)       : Application store
-* [*Rocket*](Rocket.md)         : Web browser
-* [*Pluton*](Pluton.md)         : Terminal
-* [*TimeTravel*](TimeTravel.md) : Backup and versioning program
+- [_Nova_](Nova.md) : Desktop environment
+- [_Comet_](Comet.md) : File manager
+- [_Stellar_](Stellar.md) : Application store
+- [_Rocket_](Rocket.md) : Web browser
+- [_Pluton_](Pluton.md) : Terminal
+- [_TimeTravel_](TimeTravel.md) : Backup and versioning program
 
 ### System utilities
 
-* [*Central*](Central.md)   : Settings
-* [*Monitor*](Monitor.md)   : Monitor opened applications, processes, CPU/RAM usage, etc.
-* [*Registry*](Registry.md) : View and edit the registry (for advanced users)
-* [*Skyer*](Skyer.md)       : Applications manager
-* [*Cloudy*](Cloudy.md)     : Backup & Sync manager
+- [_Central_](Central.md) : Settings
+- [_Monitor_](Monitor.md) : Monitor opened applications, processes, CPU/RAM usage, etc.
+- [_Registry_](Registry.md) : View and edit the registry (for advanced users)
+- [_Skyer_](Skyer.md) : Applications manager
+- [_Cloudy_](Cloudy.md) : Backup & Sync manager
 
 ### Utilities
 
-* [*Gravity*](Gravity.md)           : Text editor
-* [*Thinker*](Thinker.md)           : Notes and task lists manager
-* [*ShootingStar*](ShootingStar.md) : Pictures viewer and simple editor
-* [*Sonata*](Sonata.md)             : Music player (with Hi-Res support and options)
-* [*Milkshake*](Milkshake.md)       : Video player
-* [*Blackhole*](Blackhole.md)       : Archives manager
-* [*Reader*](Reader.md)             : A complete e-book reader with many supported formats and options
-* [*Postal*](Postal.md)             : An e-mail client
+- [_Gravity_](Gravity.md) : Text editor
+- [_Thinker_](Thinker.md) : Notes and task lists manager
+- [_ShootingStar_](ShootingStar.md) : Pictures viewer and simple editor
+- [_Sonata_](Sonata.md) : Music player (with Hi-Res support and options)
+- [_Milkshake_](Milkshake.md) : Video player
+- [_Blackhole_](Blackhole.md) : Archives manager
+- [_Reader_](Reader.md) : A complete e-book reader with many supported formats and options
+- [_Postal_](Postal.md) : An e-mail client
 
 ### Suites
 
-* [*Particle*](Particle.md) : A complete IDE to make applications
-* [*Astral*](Astral.md)     : The complete toolchain allowing to build applications
+- [_Particle_](Particle.md) : A complete IDE to make applications
+- [_Astral_](Astral.md) : The complete toolchain allowing to build applications
 
 ### Security
 
-* [*Vortex*](Vortex.md) : Firewall
-* [*Locky*](Locky.md)   : System's encryption tool, with the ability to manage encrypted archives and volumes
+- [_Vortex_](Vortex.md) : Firewall
+- [_Locky_](Locky.md) : System's encryption tool, with the ability to manage encrypted archives and volumes

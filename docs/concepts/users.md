@@ -8,18 +8,18 @@ By default, there is two user accounts: the System and the Administrator. They a
 
 Each custom user has a dedicated data directory called the _homedir_, in `/home/[username]`, as well as a list of files and directories it can read and/or write. By default, each user gets access to:
 
-* Its homedir in `/home/[username]` ;
-* The mounted periphericals in `/media` ;
-* Its temporary directory in `/tmp/[username]`
+- Its homedir in `/home/[username]` ;
+- The mounted periphericals in `/media` ;
+- Its temporary directory in `/tmp/[username]`
 
 ## Users type
 
 Each user is of a specific type:
 
-* _Phantom_: the user's data are erased after the computer is turned off ;
-* _Standard_: nothing special
-* _Administrator_: can run programs directly as administrator
-* _Main administrator_: administrator that can manage storage encryption
+- _Phantom_: the user's data are erased after the computer is turned off ;
+- _Standard_: nothing special
+- _Administrator_: can run programs directly as administrator
+- _Main administrator_: administrator that can manage storage encryption
 
 When a user wants to perform a task it does not have the privileges to, it can (by default) ask to run the task as _another user_. The other user's credentials are then required.
 

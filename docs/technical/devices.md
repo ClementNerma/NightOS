@@ -16,12 +16,12 @@ Device handler files are not simple files ; they can only be used through the [`
 
 Different actions may happen depending on the device's type:
 
-* Camera devices: when an application asks to capture a photo/video, the device will be suggested to take the images from
-* Microphones: when an application asks to capture sound, the device will be suggested to capture the sound from
-* Sound output devices: the device will be available for playback
-* Network adapters: the device will be available to make network requests on
-* Other supported wireless devices: depends on the type (Bluetooth adapter, ...)
-* Basic/persistent storage devices: when possible, the device will be automatically mounted in `/mnt` and visible in the files explorer
+- Camera devices: when an application asks to capture a photo/video, the device will be suggested to take the images from
+- Microphones: when an application asks to capture sound, the device will be suggested to capture the sound from
+- Sound output devices: the device will be available for playback
+- Network adapters: the device will be available to make network requests on
+- Other supported wireless devices: depends on the type (Bluetooth adapter, ...)
+- Basic/persistent storage devices: when possible, the device will be automatically mounted in `/mnt` and visible in the files explorer
 
 For uncategorized devices (in `/dev/etc`), a popup is shown to the user, to indicate the connected device is not recognized. Some applications may still be able to interact with it (for instance, a storage device using an unsupported protocol).
 

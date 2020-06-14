@@ -18,16 +18,16 @@ Applications can ask to store and synchronize their own data through Cloudy. The
 
 The data that can be backup-ed and synchronized by Cloudy are:
 
-* User's settings, computer's settings if the user is administrator
-* Installed applications and their data
-* Applications can ask to store additional custom data (e.g. a password manager)
+- User's settings, computer's settings if the user is administrator
+- Installed applications and their data
+- Applications can ask to store additional custom data (e.g. a password manager)
 
 ## Synchronization
 
 The synchronization process has two parts:
 
-* The **up-sync** process, which sends new data to the cloud ;
-* The **down-sync** process, which reflects these changes on the local computer
+- The **up-sync** process, which sends new data to the cloud ;
+- The **down-sync** process, which reflects these changes on the local computer
 
 Up-sync can be performed manually at anytime, or scheduled to be performed frequently. It's also possible to ask, for instance, to update the list of applications when a new one is installed or removed, while only backuping applications' data once a day.
 
@@ -35,7 +35,7 @@ Down-sync can be performed anytime, and a preview will show which items will be 
 
 ## Synchronization chain
 
-Data are synchronized through all computers of a single *synchronization chain*, which is simply a set of computers. Synchronization happens per user, which is why Cloudy doesn't backup every user of the computer, but only the one synchronization is enabled on. Of course, every user can enable synchronization for its account.
+Data are synchronized through all computers of a single _synchronization chain_, which is simply a set of computers. Synchronization happens per user, which is why Cloudy doesn't backup every user of the computer, but only the one synchronization is enabled on. Of course, every user can enable synchronization for its account.
 
 When a user enabled Cloudy for its account, it must connect with a NightOS account, and it is then added to the synchronization chain consisting of every computer having Cloudy enabled with this NightOS account.
 

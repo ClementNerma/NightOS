@@ -25,8 +25,8 @@ The encryption/decryption key is generated automatically when the user account i
 
 When enabled, the encrypted directories are:
 
-* The homedir at `/home/[username]`
-* The tempdir at `/tmp/[username]`
+- The homedir at `/home/[username]`
+- The tempdir at `/tmp/[username]`
 
 This feature is enabled by default, but can be disabled by the administrator. Also, it is disabled by default on [domains](domains.md).
 

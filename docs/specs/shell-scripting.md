@@ -239,24 +239,24 @@ If both operands are integers, the result will be an integer, but if at least on
 
 The operators are:
 
-* `+`: addition
-* `-`: substraction
-* `*`: multiplication
-* `**`: pow
-* `/`: division
-* `//`: floating-point division (gives a floating-point number even if the two operands are integers)
-* `%`: remainder (works only with two integers)
+- `+`: addition
+- `-`: substraction
+- `*`: multiplication
+- `**`: pow
+- `/`: division
+- `//`: floating-point division (gives a floating-point number even if the two operands are integers)
+- `%`: remainder (works only with two integers)
 
 ### Bit-wise operators
 
 Bit-wise operators only take integer operands and produce an integer result:
 
-* `&` bit-by-bit and
-* `|` bit-by-bit or
-* `^` bit-by-bit exclusive or
-* `<<` binary left shift operator
-* `>>` binary right shift operator
-* `~` one's complement - takes a single number
+- `&` bit-by-bit and
+- `|` bit-by-bit or
+- `^` bit-by-bit exclusive or
+- `<<` binary left shift operator
+- `>>` binary right shift operator
+- `~` one's complement - takes a single number
 
 ### Logical operators
 
@@ -575,7 +575,7 @@ fn handle_bad_div (a: num, b: num) -> num
   catch divide(a, b)
     ok result
       echo "Divided successfully: ${a} / ${b} = ${result}"
-    
+
     err errmsg
       echo "Division failed :("
       echo "Here is the error message: ${errmsg}"
@@ -854,15 +854,15 @@ The command's return type can be any existing type.
 
 The options for each argument are:
 
-* `type`: Required, the type of the argument (optional types are forbidden)
-* `help`: A help message indicating what the argument does
-* `short`: Short name for a dash argument
-* `long`: Long name for a dash argument
-* `optional`: Indicate the optional can be omitted (the type will be converted to an optional one)
-* `default`: Make the value optional, but with a default value (so the type will not be optional)
-* `requires`: Indicate one or several other arguments are required to use this dash one
-* `conflicts`: Indicate this dash argument cannot be used when one or several other specific arguments are already in use
-* `enum`: Allow only a subset of values
+- `type`: Required, the type of the argument (optional types are forbidden)
+- `help`: A help message indicating what the argument does
+- `short`: Short name for a dash argument
+- `long`: Long name for a dash argument
+- `optional`: Indicate the optional can be omitted (the type will be converted to an optional one)
+- `default`: Make the value optional, but with a default value (so the type will not be optional)
+- `requires`: Indicate one or several other arguments are required to use this dash one
+- `conflicts`: Indicate this dash argument cannot be used when one or several other specific arguments are already in use
+- `enum`: Allow only a subset of values
 
 For dash arguments, at least `short` or `long` must be provided. Also, `optional` and `default` cannot be provided at the same time.
 
@@ -1197,7 +1197,6 @@ Count the number of entries in a list.
 ```hydre
 [ 2, 8, 4 ].len() # 3
 ```
-
 
 #### `list[string].join(sep = ",") -> string`
 

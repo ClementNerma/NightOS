@@ -65,9 +65,9 @@ _NOTE:_ `<F>` indicates the item is a file.
 
 Links:
 
-* (1) [AUC requests](../concepts/users.md#alternative-user-control-auc)
-* (2) The [integrity checker](../technical/integrity-checker.md)
-* (3) Global storage's [encryption key](../features/encryption.md#global-encryption)
+- (1) [AUC requests](../concepts/users.md#alternative-user-control-auc)
+- (2) The [integrity checker](../technical/integrity-checker.md)
+- (3) Global storage's [encryption key](../features/encryption.md#global-encryption)
 
 ## Notes
 

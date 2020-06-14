@@ -548,11 +548,10 @@ Note that you may handle only the success or error case depending on your needs 
 This keyword also allows to catch errors from commands:
 
 ```hydre
-# To get the typed return value, if supported
-# It's also possible to catch STDOUT instead, using $^(somecommand)
+# Run a command and get error messages from STDERR instead if the command fails
 catch $(somecommand)
   ok data -> echo "Success: ${data}"
-  err msg -> echo "Error: ${msg}"
+  err msg -> echo "Errors: ${msg.join("; ")}"
 end
 ```
 

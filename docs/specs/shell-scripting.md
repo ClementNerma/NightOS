@@ -268,6 +268,33 @@ The prefixes are the same as for the `$(...)` operator:
 - `!>` for STDERR
 - `*>` for STDMSG and STDERR combined
 
+### Output data
+
+If a script is [declared as a command](#commands-typing), it gets its own STDIN, STDOUT and STDRAW pipes (the STDUSR, STDMSG and STDERR pipes remain as usual).
+
+They can be accessed using three built-in commands: `stdin`, `stdout` and `stdraw`.
+
+#### Reading from STDIN
+
+The `stdin` command simply writes in its STDOUT the value provided in the shell's STDIN. For instance:
+
+```hydre
+# Considering this shell script accepts `string` values as input.
+
+# If this shell script is called with 'Hello world!' as an input:
+echo $(stdin | length) # Prints: 12
+```
+
+The original type is preserved, which means we can perform typed operations on the input value.
+
+#### Returning with STDOUT
+
+The `stdout` command takes a typed value and writes it to the shell script's STDOUT pipe. This also makes the program exit.
+
+#### Writing to STDRAW
+
+The `stdraw` command takes a `stream` value and writes it to the shell script's STDRAW pipe. Only one stream can be piped at a time, so if `stdraw` is called while another is pending, the command will simply fail (this can be caught with `catch`).
+
 ## Input of a command
 
 Some commands accept _inputs_ through the command pipe `|` operator. They can be used this way:

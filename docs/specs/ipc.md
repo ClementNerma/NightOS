@@ -22,6 +22,7 @@ When a process is created, it gets several "forced" pipes:
 
 - The standard input (STDIN) ;
 - The standard normal output (STDOUT) ;
+- The standard raw output (STDRAW) ;
 - The standard error output (STDERR) ;
 - The standard types output (STDRET)
 
@@ -50,13 +51,13 @@ Any of the two processes (be it the receiver or the sender) can close a pipe usi
 When an application process' [execution context](applications/context.md#execution-context) indicates this it was started from a command, the caller process will be able to:
 
 - Send data to the callee's STDIN pipe ;
-- Read data from the callee's STDOUT/STDRET/STDERR pipes
+- Read data from the callee's STDOUT/SDTRAW/STDERR/STDRET pipes
 
-If the process is not started from a command, the STDIN pipe will never receive data and all data sent to the STDOUT/STDRET/STDERR pipes will be automatically ignored.
+If the process is not started from a command, the STDIN pipe will never receive data and all data sent to the STDOUT/STDRAW/STDERR/STDRET pipes will be automatically ignored.
 
 If the process is started using the [typed reception operator](shell-scripting.md#output-of-a-command) but either terminates before the return value has been fully transmitted through STDRET or closes the STDRET pipe, the process is killed (if still alive) and the calling script exits with an error message.
 
-Even if the process closes either STDOUT or STDERR propery (by calling the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe)), the command is not considered as finished until the process itself did not terminate.
+Even if the process closes either STDOUT, STDRAW or STDERR propery (by calling the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe)), the command is not considered as finished until the process itself did not terminate.
 
 Note that when a return value has been fully transmitted through STDRET, all pipes are closed and the command is considered as finished.
 

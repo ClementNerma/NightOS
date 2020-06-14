@@ -46,7 +46,7 @@ commands:
 
 ## Values encoding
 
-The value must be returned using the [STDRET](../ipc.md#interactive-usage) pipe. The data sent through this pipe must be:
+The value must be returned using the [STDOUT](../ipc.md#interactive-usage) pipe. The data sent through this pipe must be:
 
 - The return value's length (8 bytes) ;
 - The value's [shell type](../shell-scripting.md#value-types) code ;

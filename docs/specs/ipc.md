@@ -61,9 +61,9 @@ If the process is not started from a command, the STDIN and STDUSR pipes will ne
 
 If the process is started using the [typed reception operator](shell-scripting.md#reading-a-commands-output) but either terminates before the return value has been fully transmitted through STDRET or closes the STDRET pipe, the process is killed (if still alive) and the calling script exits with an error message.
 
-Even if the process closes its STDMSG, STDRAW or STDOUT pipe properly (by calling the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe)), the command is not considered as finished until the process itself did not terminate.
+Even if the process closes its STDMSG or STDRAW pipe properly (by calling the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe)), the command is not considered as finished until the process itself did not terminate.
 
-Note that when a return value has been fully transmitted through STDRET, all pipes are closed and the command is considered as finished.
+Note that when a return value has been fully transmitted through STDOUT, all pipes are closed and the command is considered as finished.
 
 ## Shared Memory
 

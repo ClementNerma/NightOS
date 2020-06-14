@@ -42,7 +42,7 @@ The other process will then respectively receive either the [`RECV_READ_PIPE`](s
 
 ### Pipes' pending data
 
-When a pipe is written to, the data is written to a memory zone. This zone's content is called the _pending data_.  
+When a pipe is written to, the data is written to a memory zone. This zone is called the _pipe's buffer_ and it's content is called the _pending data_.  
 When a pipe is read from, the pending data is progressively retrieved, erased as the read progresses.
 
 There is a size limit to pending data though, of 64 KB, called the pipe's _capacity_.  

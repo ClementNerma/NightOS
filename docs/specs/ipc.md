@@ -20,13 +20,17 @@ The process that creates the pipe gets both the SC and the RC, and is expected t
 
 When a process is created, it gets several "forced" pipes:
 
-- The standard input (STDIN) ;
-- The standard normal output (STDOUT) ;
-- The standard raw output (STDRAW) ;
-- The standard error output (STDERR) ;
-- The standard types output (STDRET)
+| Pipe identifier | Standard pipe name | Format  | Description                                                                                                |
+| --------------- | ------------------ | ------- | ---------------------------------------------------------------------------------------------------------- |
+| STDIN           | Typed input        | _typed_ | Data coming either from a command pipe (`|`) or, if the input format is `buffer`, from an input pipe (`<`) |
+| STDUSR          | Interactive input  | UTF-8   | Data coming from a terminal session (e.g. user inputs)                                                     |
+| STDMSG          | Messages output    | UTF-8   | Messages to display in the console, which won't be redirected by default                                   |
+| STDRAW          | Raw bytes          | Buffer  | Output data, which will be redirected if an output pipe (`>`) is used                                      |
+| STDOUT          | Typed output       | _typed_ | Typed output data, which will be used by [shell scripts](shell-scripting.md))                              |
 
 Each SC and RC has a unique identifier.
+
+UTF-8 strings are sent as a couple of length + message, where the length is an unsigned integer on 32 bits.
 
 ### Opening pipes
 
@@ -50,14 +54,14 @@ Any of the two processes (be it the receiver or the sender) can close a pipe usi
 
 When an application process' [execution context](applications/context.md#execution-context) indicates this it was started from a command, the caller process will be able to:
 
-- Send data to the callee's STDIN pipe ;
-- Read data from the callee's STDOUT/SDTRAW/STDERR/STDRET pipes
+- Send data to the callee's STDIN/STDUSR pipe ;
+- Read data from the callee's STDMSG/STDRAW/STDOUT pipes
 
-If the process is not started from a command, the STDIN pipe will never receive data and all data sent to the STDOUT/STDRAW/STDERR/STDRET pipes will be automatically ignored.
+If the process is not started from a command, the STDIN and STDUSR pipes will never receive data and all data sent to the STDMSG, STDRAW and STDOUT pipes will be automatically ignored.
 
-If the process is started using the [typed reception operator](shell-scripting.md#output-of-a-command) but either terminates before the return value has been fully transmitted through STDRET or closes the STDRET pipe, the process is killed (if still alive) and the calling script exits with an error message.
+If the process is started using the [typed reception operator](shell-scripting.md#reading-a-commands-output) but either terminates before the return value has been fully transmitted through STDRET or closes the STDRET pipe, the process is killed (if still alive) and the calling script exits with an error message.
 
-Even if the process closes either STDOUT, STDRAW or STDERR propery (by calling the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe)), the command is not considered as finished until the process itself did not terminate.
+Even if the process closes its STDMSG, STDRAW or STDOUT pipe properly (by calling the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe)), the command is not considered as finished until the process itself did not terminate.
 
 Note that when a return value has been fully transmitted through STDRET, all pipes are closed and the command is considered as finished.
 

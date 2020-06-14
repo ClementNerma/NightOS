@@ -54,7 +54,7 @@ The value must be returned using the [STDOUT](../ipc.md#interactive-usage) pipe.
 
 | Type code | Type      | Description                         | Representation                                                                             |
 | --------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------ |
-| `0x00`    | `void`    | Void                                | 1 byte: `0x00`                                                                             |
+| `0x00`    | `void`    | Void                                | nothing                                                                                    |
 | `0x01`    | `bool`    | Boolean                             | 1 byte, `0x00` = falsy, `0x01` = truthy                                                    |
 | `0x02`    | `int`     | 64-bit signed integer number        | Two's complement                                                                           |
 | `0x03`    | `float`   | 64-bit signed floating-point number | [IEEE 754](https://standards.ieee.org/standard/754-2019.html)                              |

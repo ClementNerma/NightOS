@@ -1005,7 +1005,7 @@ Here is an example that uses all these options:
     default 1
     requires "arg1"
     conflicts "arg2" "arg3"
-    enum 1 | 2 | 3 | 4
+    enum 1, 2, 3, 4
   end
   # ...
 ```

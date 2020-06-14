@@ -45,7 +45,7 @@ The other process will then respectively receive either the [`RECV_READ_PIPE`](s
 When a pipe is written to, the data is written to a memory zone. This zone is called the _pipe's buffer_ and it's content is called the _pending data_.  
 When a pipe is read from, the pending data is progressively retrieved, erased as the read progresses.
 
-There is a size limit to pending data though, of 64 KB, called the pipe's _capacity_.  
+The default size of the pipe's buffer is 64 KB, but this can be extended to up to 1024 KB during its creation.
 When it is reached, no data can be written to the pipe anymore, meaning the other process must read data from it in order to free space to write it.
 
 ### Closing pipes

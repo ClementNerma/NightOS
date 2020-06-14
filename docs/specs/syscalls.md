@@ -166,7 +166,12 @@ Reject a connection request to the current service.
 
 ## `0x40` OPEN_WRITE_PIPE
 
-Arguments: target process' PID (8 bytes), command code (1 byte)  
+Arguments:
+
+- Target process' PID (8 bytes)
+- Command code (2 bytes)
+- Buffer size multiplier (1 byte)
+
 Return value: [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 
 Errors:
@@ -177,12 +182,18 @@ Errors:
 - `0x13`: the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal
 
 Open an PIPE with a process of the same application and running under the same user and get its SC.
+The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 4 KB. The default (`0`) falls back to a size of 64 KB.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
 The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal with the provided command code.
 
 ## `0x41` OPEN_READ_PIPE
 
-Arguments: target process' PID (8 bytes), command code (2 bytes)  
+Arguments:
+
+- Target process' PID (8 bytes)
+- Command code (2 bytes)
+- Buffer size multiplier (1 byte)
+
 Return value: [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 
 Errors:
@@ -193,6 +204,7 @@ Errors:
 - `0x13`: the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
 
 Open an PIPE with a process of the same application and running under the same user and get its RC.
+The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 4 KB. The default (`0`) falls back to a size of 64 KB.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
 The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code.
 

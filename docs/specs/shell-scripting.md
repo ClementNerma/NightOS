@@ -1364,23 +1364,23 @@ Run the command and gets its status code after exit.
 
 Run the command and fail if the status code after exit is not 0.
 
-#### `command.stdout() -> string`
+#### `command.ret_str() -> string`
 
-Run the command and get its STDOUT output.
+Run the command and get its stringified return value.
 
 #### `command.stdraw() -> stream`
 
 Run the command and get its STDRAW output.
 
-#### `command.stdret_str() -> string`
+#### `command.stdmsg() -> list[string]`
 
-Run the command and get its stringified STDERR output.
+Run the command and get its STDMSG output.
 
-#### `command.stderr() -> string`
+#### `command.stderr() -> list[string]`
 
 Run the command and get its STDERR output.
 
-#### `command.output() -> string`
+#### `command.output() -> list[string]`
 
 Run the command and get its STDOUT and STDERR outputs combined.
 

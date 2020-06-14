@@ -46,11 +46,11 @@ commands:
 
 ## Values encoding
 
-The value must be returned using the [STDOUT](../ipc.md#interactive-usage) pipe. The data sent through this pipe must be:
+The application's startup arguments and output value use the following encoding:
 
 - The return value's length (8 bytes) ;
-- The value's [shell type](../shell-scripting.md#value-types) code ;
-- The encoded value
+- The value's [shell type](../shell-scripting.md#value-types) code (see the table below) ;
+- The encoded value (see the table below)
 
 | Type code | Type      | Description                         | Representation                                                                             |
 | --------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------ |
@@ -66,3 +66,9 @@ The value must be returned using the [STDOUT](../ipc.md#interactive-usage) pipe.
 | `0x09`    | `stream`  | [Pipe RC](../ipc.md#pipes)          | RC identifier (8 bytes)                                                                    |
 
 The type code is present to avoid misinterpreting the value in case the command returned a value of the wrong type.
+
+## Returning and failing
+
+The value must be returned using the [STDOUT](../ipc.md#interactive-usage) pipe. The data sent through this pipe must follow the above [encoding](#values-encoding).
+
+A command may also fail. To indicate so, the process must send the `0xFF` value through the pipe, and the shell will consider the command as failed (but not invalid, so the process won't be abruptly killed).

@@ -941,6 +941,11 @@ cmd
     pos "names"
       type list[string]
       help "List of names to display"
+      optional true
+
+      # If this argument is omitted, the command will expect the list of names to be provided through STDIN
+      if absent()
+        stdin list[string]
 
     # Declare a dash argument named 'repeat'
     dash "repeat"

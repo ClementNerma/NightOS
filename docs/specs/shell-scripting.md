@@ -80,6 +80,9 @@ true
 # Strings (string)
 "abc"
 
+# Buffers (buffer)
+@[ 0x01, 0x02, 0x03 ]
+
 # Lists of a given type (list[type])
 [ 3, 3.14 ]
 
@@ -188,19 +191,21 @@ echo "Hello, ${names[1]}!" # Panics
 
 ## Output of a command
 
-Commands can either output data to STDOUT (standard), STDRET (typed) or STDERR (errors). It's possible to get the result of a command as a value:
+Commands can either output data to STDOUT (text), STDRAW (raw), STDRET (typed) or STDERR (errors).
+
+There is a specific syntax to get the output from each pipe. To get the (typde) output from STDRET:
 
 ```hydre
 $(echo "Hello!")
 ```
 
-This gets the STDOUT content and can be used like this for instance:
+It can be used like this for instance:
 
 ```hydre
 echo ${$(echo "Hello!")} # Prints: "Hello!"
 ```
 
-As this syntax is not very readable, evaluating a single command can be made without the `${...}` expression wrapper:
+But, as this syntax is not very readable, evaluating a single command can be made without the `${...}` expression wrapper:
 
 ```hydre
 echo $(echo "Hello!") # Prints: "Hello!"
@@ -212,6 +217,12 @@ To get the result from STDOUT instead (always as a string):
 
 ```hydre
 echo $^(echo "Hello!") # Prints: "Hello!"
+```
+
+To get the result from STDRAW:
+
+```hydre
+echo -b $@(echo --bufferize "Hello!") # Prints: "Hello!"
 ```
 
 To get the result from STDERR:
@@ -1236,6 +1247,10 @@ Run the command and fail if the status code after exit is not 0.
 #### `command.stdout() -> string`
 
 Run the command and get its STDOUT output.
+
+#### `command.stdraw() -> buffer`
+
+Run the command and get its STDRAW output.
 
 #### `command.stdret_str() -> string`
 

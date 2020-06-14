@@ -181,7 +181,7 @@ Errors:
 - `0x12`: the target process runs under another user
 - `0x13`: the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal
 
-Open an PIPE with a process of the same application and running under the same user and get its SC.
+Open a PIPE with a process of the same application and running under the same user and get its SC.
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 4 KB. The default (`0`) falls back to a size of 64 KB.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
 The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal with the provided command code.
@@ -203,7 +203,7 @@ Errors:
 - `0x12`: the target process runs under another user
 - `0x13`: the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
 
-Open an PIPE with a process of the same application and running under the same user and get its RC.
+Open a PIPE with a process of the same application and running under the same user and get its RC.
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 4 KB. The default (`0`) falls back to a size of 64 KB.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
 The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code.

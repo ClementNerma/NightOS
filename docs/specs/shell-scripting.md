@@ -80,9 +80,6 @@ true
 # Strings (string)
 "abc"
 
-# Buffers (buffer)
-@[ 0x01, 0x02, 0x03 ]
-
 # Lists of a given type (list[type])
 [ 3, 3.14 ]
 
@@ -94,6 +91,8 @@ dir/file.ext
 # Commands (used to run custom commands later in functions)
 @{ command pos1 -s --long }
 ```
+
+One usual type is not listed here: `stream`, which is notably used by commands which manipulate potentially long and/or asynchronous data.
 
 The `char` type contains a _grapheme cluster_, which may be composed of multiple Unicode codepoints. A `string` is composed of multiple `char`s.  
 There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.  
@@ -189,17 +188,24 @@ var names = [ "Jack" ]
 echo "Hello, ${names[1]}!" # Panics
 ```
 
-## Output of a command
+## Commands input & output
 
-Commands can either output data to STDOUT (text), STDRAW (raw), STDRET (typed) or STDERR (errors).
+### Reading a command's output
 
-There is a specific syntax to get the output from each pipe. To get the (typde) output from STDRET:
+Commands output data through _pipes_. There are several output pipes that can be used:
+
+- STDOUT is the default output pipe, which returns typed values (the command declares its output type beforehand)
+- STDRAW allows to send a `stream`, which is useful when dealing with a lot of data or with external data
+- STDMSG allows to send `string` messages that are displayed in the terminal's windows
+- STDERR allows to send `string` messages that are also displayed, but as error messages
+
+There is a specific syntax to get the output from each pipe. To get the (typed) output from STDOUT:
 
 ```hydre
 $(echo "Hello!")
 ```
 
-It can be used like this for instance:
+This is called the _typed reception operator_. It can be used like this for instance:
 
 ```hydre
 echo ${$(echo "Hello!")} # Prints: "Hello!"
@@ -211,33 +217,90 @@ But, as this syntax is not very readable, evaluating a single command can be mad
 echo $(echo "Hello!") # Prints: "Hello!"
 ```
 
-Note that this only work if the command supports piping through STDRET.
+Note that this only work if the command supports piping through STDOUT.
 
-To get the result from STDOUT instead (always as a string):
+To get the result from STDRAW instead (as a `stream`), if the command supports it:
 
 ```hydre
-echo $^(echo "Hello!") # Prints: "Hello!"
+# '-b' makes 'echo' read from a stream
+echo -b $@(streamify "Hello!") # Prints: "Hello!"
 ```
 
-To get the result from STDRAW:
+To get the output of STDMSG instead (as a `list[string]`):
 
 ```hydre
-echo -b $@(echo --bufferize "Hello!") # Prints: "Hello!"
+echo $?(echo "Hello!") # Prints: "["Hello!"]"
 ```
 
-To get the result from STDERR:
+To get the output of STDERR (as a `list[string]`):
 
 ```hydre
-echo $!(echo "Hello!") # Prints nothing
+echo $!(echo "Hello!") # Prints "[]"
 ```
 
-To get the combined result from STDOUT and STDERR:
+To get the combined output of STDMSG and STDERR (as a `list[string]`):
 
 ```hydre
-echo $?(echo "Hello!") # Prints "Hello!"
+echo $*(echo "Hello!") # Prints "["Hello!"]"
 ```
 
 Note that using the `$(...)` operator will make the program panic if the command exits with a non-zero status code.
+
+### Redirecting the output to a file
+
+It's also possible to redirect the output of a command to a file, using the `>` operator. The values are converted to strings before being written, except `stream` values which are written as they are.
+
+```hydre
+echo "Hello!" > ./test.txt
+```
+
+This works because `echo` outputs by default to STDOUT, not to STDMSG. If it did, we could still perform the redirection this way:
+
+```hydre
+echo "Hello!" ?> ./test.txt
+```
+
+The prefixes are the same as for the `$(...)` operator:
+
+- `>` for STDOUT
+- `@>` for STDRAW
+- `?>` for STDMSG
+- `!>` for STDERR
+- `*>` for STDMSG and STDERR combined
+
+## Input of a command
+
+Some commands accept _inputs_ through the command pipe `|` operator. They can be used this way:
+
+```hydre
+echo "Hello world!" > somefile.txt
+
+read somefile.txt # Prints: "Hello world!"
+
+read somefile.txt | length # Prints: 12
+```
+
+How does this work exactly? First, `read` reads the file and outputs it to STDOUT as a `string`, which is then passed to `length` which happens to accept strings as an input. It then computes the length of the provided input and writes it to STDOUT, as a `number`. Which means we can do that:
+
+```hydre
+echo ${ $(read ./somefile.txt | length) * 2 } # Prints: 24
+```
+
+The input may be typed and only accept specific types of values. For instance `length` only accepts strings, so if we try to give it something else:
+
+```hydre
+echo $(pass 2 | length) # ERROR
+```
+
+What happens here is that we use the builtin `pass` command which writes to STDOUT the exact same value we gave it as an input. Then we give it to `length`, which fails because it doesn't accept `number`s.
+
+There's also a shorthand syntax for providing a file's content as STDIN to a command:
+
+```hydre
+echo $(length < ./somefile.txt) # Prints: 24
+```
+
+For commands that only accept `string` inputs, the file is automatically decoded and converted to a string. Else, it's kept as a `stream`.
 
 ## Computing values
 
@@ -368,7 +431,7 @@ end
 
 Finally, conditions can be chained using `elif`:
 
-```python
+```hydre
 if 1 + 1 == 4
   echo "Bizarre."
 elif 1 + 1 == 3
@@ -1248,7 +1311,7 @@ Run the command and fail if the status code after exit is not 0.
 
 Run the command and get its STDOUT output.
 
-#### `command.stdraw() -> buffer`
+#### `command.stdraw() -> stream`
 
 Run the command and get its STDRAW output.
 

@@ -14,7 +14,7 @@ It is one-byte long and is one the following values:
 - `0x04`: the application was started by itself (from another process of the same application)
 - `0x05`: the application was started by another application
 - `0x06`: the application was started using one its exposed [shell commands](../../concepts/applications.md#commands)
-- `0x07`: the application's return value will be received using the dedicated [shell operator](../shell-scripting.md#output-of-a-command)
+- `0x07`: the application's return value will be received using the dedicated [shell operator](../shell-scripting.md#reading-a-commands-output)
 
 ## Data structure
 

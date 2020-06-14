@@ -32,6 +32,8 @@ Each SC and RC has a unique identifier.
 
 UTF-8 strings are sent as a couple of length + message, where the length is an unsigned integer on 32 bits.
 
+When the process is called as a command, its STDMSG and STDERR messages are printed as they are received by the shell, and its STDOUT value is printed when it finishes. All data written to STDRAW is not shown, as they don't have to be UTF-8 encoded, or even to be a string. They can be redirected through pipes, though.
+
 ### Opening pipes
 
 A process can open a pipe with another process using the [`OPEN_WRITE_PIPE`](syscalls.md#0x40-open_write_pipe) (it send data) or the [`OPEN_READ_PIPE`](syscalls.md#0x41-open_read_pipe) (to receive data) syscall.

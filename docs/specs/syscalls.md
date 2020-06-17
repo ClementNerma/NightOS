@@ -171,18 +171,20 @@ Arguments:
 - Target process' PID (8 bytes)
 - Command code (2 bytes)
 - Buffer size multiplier (1 byte)
+- Mode (1 byte): `0x01` to create a message pipe, `0x02` to create a raw pipe
 
 Return value: [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 
 Errors:
 
-- `0x10`: the provided PID does not exist
-- `0x11`: the target process is not part of this application
-- `0x12`: the target process runs under another user
-- `0x13`: the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal
+- `0x10`: invalid mode provided
+- `0x11`: the provided PID does not exist
+- `0x12`: the target process is not part of this application
+- `0x13`: the target process runs under another user
+- `0x14`: the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal
 
 Open a PIPE with a process of the same application and running under the same user and get its SC.
-The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 4 KB. The default (`0`) falls back to a size of 64 KB.
+The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
 The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal with the provided command code.
 
@@ -193,18 +195,20 @@ Arguments:
 - Target process' PID (8 bytes)
 - Command code (2 bytes)
 - Buffer size multiplier (1 byte)
+- Mode (1 byte): `0x01` to create a message pipe, `0x02` to create a raw pipe
 
 Return value: [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 
 Errors:
 
-- `0x10`: the provided PID does not exist
-- `0x11`: the target process is not part of this application
-- `0x12`: the target process runs under another user
-- `0x13`: the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
+- `0x10`: invalid mode provided
+- `0x11`: the provided PID does not exist
+- `0x12`: the target process is not part of this application
+- `0x13`: the target process runs under another user
+- `0x14`: the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
 
 Open a PIPE with a process of the same application and running under the same user and get its RC.
-The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 4 KB. The default (`0`) falls back to a size of 64 KB.
+The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
 The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code.
 
@@ -215,17 +219,29 @@ Arguments:
 - [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 - Number of bytes to write (CPU-dependent size)
 - Pointer to a readable buffer (CPU-dependent size)
-- Mode (1 byte): `0x00` = block until there is enough space to write, `0x01` = fail if there is not enough space to write, `0x02` = write as much as possible
+- Mode (1 byte):
+  - `0x00` = block until there is enough space to write
+  - `0x01` = fail if there is not enough space to write or if the pipe is locked
+  - `0x02` = write as much as possible
 
-Return value: remaining capacity of the pipe
+Return value:
+
+- If mode is `0x00`: remaining capacity of the pipe
+- If mode is `0x01`: `0x00` if the cause of failure was because the pipe was locked, `0x01` if it was because of of a lack of space in the target buffer
+- If mode is `0x02`: number of bytes written
 
 Errors:
 
-- `0x10`: the provided SC identifier does not exist
-- `0x11`: the provided SC was already closed
-- `0x12`: there is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
+- `0x10`: invalid mode provided
+- `0x11`: the provided SC identifier does not exist
+- `0x12`: the provided SC was already closed
+- `0x13`: the provided SC refers to a message pipe but the provided size is larger than 64 KB
+- `0x14`: the provided SC refers to a message pipe but the `0x02` mode was provided
+- `0x15`: there is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
 
-Write data through a pipe.
+Write data through a pipe.  
+Messages will always be sent at once when writing to message pipes.  
+If the data is 0-byte long, this pipe will return successfully without waiting, even if the target pipe's buffer is full or locked.
 
 ## `0x43` PIPE_COUNT_WRITE
 
@@ -244,20 +260,28 @@ Count the pipe's pending data's free size, which is the number of bytes this pro
 Arguments:
 
 - [Pipe](ipc.md#pipes) RC identifier (8 bytes)
-- Mode (1 byte): `0x00` = block until there are enough data to read, `0x01` = fail if there is not enough data to read, `0x02` = read as much as possible
+- Mode (1 byte):
+  - `0x00` = block until there are enough data to read
+  - `0x01` = fail if there is not enough data to read or if the pipe is locked
+  - `0x02` = read as much as possible
 - Number of bytes to read with `0` meaning to read as much data possible (2 bytes)
 - Pointer to a writable buffer (CPU-dependent size)
 
-Return value: number of read bytes
+Return value:
+
+- If mode is `0x00`: remaining bytes in the buffer
+- If mode is `0x01`: `0x00` if the cause of failure was because the pipe was locked, `0x01` if it was because of of a lack of space in the target buffer
+- If mode is `0x02`: number of read bytes
 
 Errors:
 
-- `0x10`: the provided RC identifier does not exist
-- `0x11`: the provided RC was already closed
-- `0x12`: there is no pending data in the pipe and the mode argument was set to `0x01`
-Read pending data from a pipe.
+- `0x10`: invalid mode provided
+- `0x11`: the provided RC identifier does not exist
+- `0x12`: the provided RC was already closed
+- `0x13`: there is no pending data in the pipe and the mode argument was set to `0x01`
+- `0x14`: the provided RC refers to a message pipe but the `0x02` mode was provided
 
-Write data to a pipe.
+Read pending data or message from a pipe.
 
 ## `0x45` PIPE_COUNT_READ
 

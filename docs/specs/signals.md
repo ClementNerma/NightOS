@@ -108,6 +108,7 @@ Datafield:
 - Length of the AID (1 byte)
 - [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 - Command code (2 bytes)
+- Mode (1 byte): `0x01` if it's a raw pipe, `0x02` if it's a message pipe
 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the readable part.
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
@@ -122,6 +123,7 @@ Datafield:
 - Length of the AID (1 byte)
 - [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 - Command code (2 bytes)
+- Mode (1 byte): `0x01` if it's a raw pipe, `0x02` if it's a message pipe
 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the writable part.
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.

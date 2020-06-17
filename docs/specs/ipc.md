@@ -48,6 +48,10 @@ When a pipe is read from, the pending data is progressively retrieved, erased as
 The default size of the pipe's buffer is 64 KB, but this can be extended to up to 16 MB during its creation.
 When it is reached, no data can be written to the pipe anymore, meaning the other process must read data from it in order to free space to write it.
 
+### Pipes locking
+
+When a pipe is being written to or read from, it is _locked_, which means no other writing or reading can happen during this time. This prevents data races which are a common source of bugs which are complex to debug, while not compromising performances.
+
 ### Closing pipes
 
 Any of the two processes (be it the receiver or the sender) can close a pipe using the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe) syscall, providing its SC or RC identifier. The pipe is immediatly closed on both sides, and the other process receives the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal.

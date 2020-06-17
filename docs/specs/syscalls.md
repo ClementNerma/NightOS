@@ -223,7 +223,7 @@ Errors:
 
 - `0x10`: the provided SC identifier does not exist
 - `0x11`: the provided SC was already closed
-- `0x12`: there is no pending data in the pipe and the mode argument was set to `0x01`
+- `0x12`: there is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
 
 Write data through a pipe.
 
@@ -254,7 +254,7 @@ Errors:
 
 - `0x10`: the provided RC identifier does not exist
 - `0x11`: the provided RC was already closed
-- `0x12`: there is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
+- `0x12`: there is no pending data in the pipe and the mode argument was set to `0x01`
 Read pending data from a pipe.
 
 Write data to a pipe.

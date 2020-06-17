@@ -213,9 +213,9 @@ The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_wri
 Arguments:
 
 - [Pipe](ipc.md#pipes) SC identifier (8 bytes)
-- Mode (1 byte): `0x00` = block until there are enough data to read, `0x01` = fail if there is not enough data to read, `0x02` = read as much as possible
-- Number of bytes to read with `0` meaning to read as much data possible (2 bytes)
-- Pointer to a writable buffer (CPU-dependent size)
+- Number of bytes to write (CPU-dependent size)
+- Pointer to a readable buffer (CPU-dependent size)
+- Mode (1 byte): `0x00` = block until there is enough space to write, `0x01` = fail if there is not enough space to write, `0x02` = write as much as possible
 
 Return value: remaining capacity of the pipe
 
@@ -225,7 +225,7 @@ Errors:
 - `0x11`: the provided SC was already closed
 - `0x12`: there is no pending data in the pipe and the mode argument was set to `0x01`
 
-Read pending data from a pipe.
+Write data through a pipe.
 
 ## `0x43` PIPE_COUNT_WRITE
 
@@ -244,9 +244,9 @@ Count the pipe's pending data's free size, which is the number of bytes this pro
 Arguments:
 
 - [Pipe](ipc.md#pipes) RC identifier (8 bytes)
-- Mode (1 byte): `0x00` = block until there is enough space to write, `0x01` = fail if there is not enough space to write, `0x02` = write as much as possible
-- Number of bytes to write
-- Pointer to a readable buffer (CPU-dependent size)
+- Mode (1 byte): `0x00` = block until there are enough data to read, `0x01` = fail if there is not enough data to read, `0x02` = read as much as possible
+- Number of bytes to read with `0` meaning to read as much data possible (2 bytes)
+- Pointer to a writable buffer (CPU-dependent size)
 
 Return value: size of remaining pending data
 
@@ -255,6 +255,7 @@ Errors:
 - `0x10`: the provided RC identifier does not exist
 - `0x11`: the provided RC was already closed
 - `0x12`: there is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
+Read pending data from a pipe.
 
 Write data to a pipe.
 

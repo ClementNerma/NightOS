@@ -28,7 +28,8 @@ When a process is created, it gets several "forced" pipes:
 | STDRAW          | Raw bytes          | Raw       | Buffer  | Output data, which will be redirected if an output pipe (`>`) is used                                      |
 | STDOUT          | Typed output       | Raw       | _typed_ | Typed output data, which will be used by [shell scripts](shell-scripting.md))                              |
 
-Each SC and RC has a unique identifier.
+Each SC and RC has a unique identifier, which is binded to the process that created it.  
+The process receiving an SC or RC receives another identifier, binded to that process, which prevents unique IDs collision.
 
 UTF-8 strings are sent as a couple of length + message, where the length is an unsigned integer on 32 bits.
 

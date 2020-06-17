@@ -56,6 +56,16 @@ When a pipe is being written to or read from, it is _locked_, which means no oth
 
 Any of the two processes (be it the receiver or the sender) can close a pipe using the [`CLOSE_PIPE`](syscalls.md#0x46-close_pipe) syscall, providing its SC or RC identifier. The pipe is immediatly closed on both sides, and the other process receives the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal.
 
+### Message pipes
+
+Pipes are designed to transmit streams of data, but sometimes we need to use them to transmit messages. This is why there are specific [syscalls](syscalls.md) and [signals](signals.md) to deal with this problem.
+
+A _message pipe_ is a pipe that only sends and receives dynamic-sized messages instead of a stream of bytes.  
+They have a maximum length of 64 KB, which is the pipes' buffer's minimal capacity. Messages must always be sent at once and cannot be sent partially.  
+Their length is determined when the message is sent which, coupled to [pipes locking](#pipes-locking), allows to retrieve complete messages directly.
+
+It's not possible to send "non-message" data through a message pipe, as the action of writing to a pipe will automatically check if it's a message pipe and ensure the size and "send at once" requirement are met.
+
 ### Interactive usage
 
 When an application process' [execution context](applications/context.md#execution-context) indicates this it was started from a command, the caller process will be able to:

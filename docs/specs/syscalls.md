@@ -248,7 +248,7 @@ Arguments:
 - Number of bytes to read with `0` meaning to read as much data possible (2 bytes)
 - Pointer to a writable buffer (CPU-dependent size)
 
-Return value: size of remaining pending data
+Return value: number of read bytes
 
 Errors:
 

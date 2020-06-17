@@ -20,13 +20,13 @@ The process that creates the pipe gets both the SC and the RC, and is expected t
 
 When a process is created, it gets several "forced" pipes:
 
-| Pipe identifier | Standard pipe name | Format  | Description                                                                                                |
-| --------------- | ------------------ | ------- | ---------------------------------------------------------------------------------------------------------- |
-| STDIN           | Typed input        | _typed_ | Data coming either from a command pipe (`|`) or, if the input format is `buffer`, from an input pipe (`<`) |
-| STDUSR          | Interactive input  | UTF-8   | Data coming from a terminal session (e.g. user inputs)                                                     |
-| STDMSG          | Messages output    | UTF-8   | Messages to display in the console, which won't be redirected by default                                   |
-| STDRAW          | Raw bytes          | Buffer  | Output data, which will be redirected if an output pipe (`>`) is used                                      |
-| STDOUT          | Typed output       | _typed_ | Typed output data, which will be used by [shell scripts](shell-scripting.md))                              |
+| Pipe identifier | Standard pipe name | Pipe type | Format  | Description                                                                                                |
+| --------------- | ------------------ | --------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| STDIN           | Typed input        | Raw       | _typed_ | Data coming either from a command pipe (`|`) or, if the input format is `buffer`, from an input pipe (`<`) |
+| STDUSR          | Interactive input  | Message   | UTF-8   | Data coming from a terminal session (e.g. user inputs)                                                     |
+| STDMSG          | Messages output    | Message   | UTF-8   | Messages to display in the console, which won't be redirected by default                                   |
+| STDRAW          | Raw bytes          | Raw       | Buffer  | Output data, which will be redirected if an output pipe (`>`) is used                                      |
+| STDOUT          | Typed output       | Raw       | _typed_ | Typed output data, which will be used by [shell scripts](shell-scripting.md))                              |
 
 Each SC and RC has a unique identifier.
 

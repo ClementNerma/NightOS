@@ -310,6 +310,21 @@ Close an PIPE properly. The RC and SC parts will be immediatly closed.
 The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal.
 If this syscall is not performed on an PIPE before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
 
+## `0x47` PIPE_INFO
+
+Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)
+Return value: (1 byte)
+
+- Bit 0 (strongest): indicates if the pipe is opened
+- Bit 1: indicates if the pipe is a message pipe
+- Bit 2: indicates if the pipe's buffer is full
+- Bit 3: indicates if the pipe is locked
+- Bit 4: indicates if a writing request is pending (waiting for the pipe to be unlocked)
+- Bit 5: indicates if a reading request is pending (waiting for the pipe to be unlocked)
+- Bit 6: indicates if the provided identifier is an SC
+
+Get informations on a pipe from its RC or SC identifier.
+
 ## `0x50` MEM_ALLOC
 
 Arguments:

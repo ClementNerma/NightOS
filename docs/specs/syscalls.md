@@ -281,7 +281,8 @@ Errors:
 - `0x13`: there is no pending data in the pipe and the mode argument was set to `0x01`
 - `0x14`: the provided RC refers to a message pipe but the `0x02` mode was provided
 
-Read pending data or message from a pipe.
+Read pending data or message from a pipe.  
+If the pipe was closed while the buffer was not empty, this syscall will still be able to read the remaining buffer's data - but the pipe will not be able to receive any additional data. Then, once the buffer is empty, the pipe will be made unavailable.
 
 ## `0x45` PIPE_COUNT_READ
 

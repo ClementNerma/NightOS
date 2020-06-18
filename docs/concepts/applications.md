@@ -90,6 +90,9 @@ Some [native applications](../applications/) are part of the system itself and a
 - Ability to create [system services](#services)
 - They cannot be uninstalled
 
+System applications cannot be removed in any way, as some of them are critical for the system to function properly.  
+Native applications which are _not_ system applications can be removed, though.
+
 ## Services
 
 Application can provide a [service](../technical/services.md) by specifying it in their [manifest](../specs/applications/manifest.md).

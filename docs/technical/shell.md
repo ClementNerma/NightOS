@@ -11,6 +11,15 @@ The special thing about running an application from one of its exposed commands 
 
 You can find more informations about how a process can interact with a running command in the [IPC documentation](../specs/ipc.md#interactive-usage).
 
+## Pipes
+
+When a command is run from [Pluton](../applications/Pluton.md), the command process' pipes are handled as follows:
+
+- All user inputs are sent to the STDUSR pipe
+- All messages sent through STDMSG and STDERR pipes are printed as they are received by the shell
+- The command's return value (from STDOUT) is printed after the command completes
+- Data written to STDRAW is not shown, as they don't have to be UTF-8 encoded, or even to be a string. They can be redirected through pipes, though
+
 ## Scripting language
 
 You can find more about the script language in the [related document](../specs/shell-scripting.md).

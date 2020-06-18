@@ -548,7 +548,7 @@ Note that you may handle only the success or error case depending on your needs 
 This keyword also allows to catch errors from commands:
 
 ```hydre
-# Run a command and get error messages from STDERR instead if the command fails
+# Run a command and get error messages from CMDERR instead if the command fails
 catch $(somecommand)
   ok data -> echo "Success: ${data}"
   err msg -> echo "Errors: ${msg.join("; ")}"
@@ -788,12 +788,12 @@ fs::read_file # ...
 
 Commands output data through _pipes_. There are several output pipes that can be used:
 
-- STDOUT is the default output pipe, which returns typed values (the command declares its output type beforehand)
-- STDRAW allows to send a `stream`, which is useful when dealing with a lot of data or with external data
-- STDMSG allows to send `string` messages that are displayed in the terminal's windows
-- STDERR allows to send `string` messages that are also displayed, but as error messages
+- CMDOUT is the default output pipe, which returns typed values (the command declares its output type beforehand)
+- CMDRAW allows to send a `stream`, which is useful when dealing with a lot of data or with external data
+- CMDMSG allows to send `string` messages that are displayed in the terminal's windows
+- CMDERR allows to send `string` messages that are also displayed, but as error messages
 
-There is a specific syntax to get the output from each pipe. To get the (typed) output from STDOUT:
+There is a specific syntax to get the output from each pipe. To get the (typed) output from CMDOUT:
 
 ```hydre
 $(echo "Hello!")
@@ -811,28 +811,28 @@ But, as this syntax is not very readable, evaluating a single command can be mad
 echo $(echo "Hello!") # Prints: "Hello!"
 ```
 
-Note that this only work if the command supports piping through STDOUT.
+Note that this only work if the command supports piping through CMDOUT.
 
-To get the result from STDRAW instead (as a `stream`), if the command supports it:
+To get the result from CMDRAW instead (as a `stream`), if the command supports it:
 
 ```hydre
 # '-b' makes 'echo' read from a stream
 echo -b $@(streamify "Hello!") # Prints: "Hello!"
 ```
 
-To get the output of STDMSG instead (as a `list[string]`):
+To get the output of CMDMSG instead (as a `list[string]`):
 
 ```hydre
 echo $?(echo "Hello!") # Prints: "["Hello!"]"
 ```
 
-To get the output of STDERR (as a `list[string]`):
+To get the output of CMDERR (as a `list[string]`):
 
 ```hydre
 echo $!(echo "Hello!") # Prints "[]"
 ```
 
-To get the combined output of STDMSG and STDERR (as a `list[string]`):
+To get the combined output of CMDMSG and CMDERR (as a `list[string]`):
 
 ```hydre
 echo $*(echo "Hello!") # Prints "["Hello!"]"
@@ -848,7 +848,7 @@ It's also possible to redirect the output of a command to a file, using the `>` 
 echo "Hello!" > ./test.txt
 ```
 
-This works because `echo` outputs by default to STDOUT, not to STDMSG. If it did, we could still perform the redirection this way:
+This works because `echo` outputs by default to CMDOUT, not to CMDMSG. If it did, we could still perform the redirection this way:
 
 ```hydre
 echo "Hello!" ?> ./test.txt
@@ -856,38 +856,38 @@ echo "Hello!" ?> ./test.txt
 
 The prefixes are the same as for the `$(...)` operator:
 
-- `>` for STDOUT
-- `@>` for STDRAW
-- `?>` for STDMSG
-- `!>` for STDERR
-- `*>` for STDMSG and STDERR combined
+- `>` for CMDOUT
+- `@>` for CMDRAW
+- `?>` for CMDMSG
+- `!>` for CMDERR
+- `*>` for CMDMSG and CMDERR combined
 
 ### Output data
 
-If a script is [declared as a command](#commands-typing), it gets its own STDIN, STDOUT and STDRAW pipes (the STDUSR, STDMSG and STDERR pipes remain as usual).
+If a script is [declared as a command](#commands-typing), it gets its own CMDIN, CMDOUT and CMDRAW pipes (the CMDUSR, CMDMSG and CMDERR pipes remain as usual).
 
-They can be accessed using three built-in commands: `stdin`, `stdout` and `stdraw`.
+They can be accessed using three built-in commands: `cmdin`, `cmdout` and `cmdraw`.
 
-#### Reading from STDIN
+#### Reading from CMDIN
 
-The `stdin` command simply writes in its STDOUT the value provided in the shell's STDIN. For instance:
+The `cmdin` command simply writes in its CMDOUT the value provided in the shell's CMDIN. For instance:
 
 ```hydre
 # Considering this shell script accepts `string` values as input.
 
 # If this shell script is called with 'Hello world!' as an input:
-echo $(stdin | length) # Prints: 12
+echo $(cmdin | length) # Prints: 12
 ```
 
 The original type is preserved, which means we can perform typed operations on the input value.
 
-#### Returning with STDOUT
+#### Returning with CMDOUT
 
-The `stdout` command takes a typed value and writes it to the shell script's STDOUT pipe. This also makes the program exit.
+The `cmdout` command takes a typed value and writes it to the shell script's CMDOUT pipe. This also makes the program exit.
 
-#### Writing to STDRAW
+#### Writing to CMDRAW
 
-The `stdraw` command takes a `stream` value and writes it to the shell script's STDRAW pipe. Only one stream can be piped at a time, so if `stdraw` is called while another is pending, the command will simply fail (this can be caught with `catch`).
+The `cmdraw` command takes a `stream` value and writes it to the shell script's CMDRAW pipe. Only one stream can be piped at a time, so if `cmdraw` is called while another is pending, the command will simply fail (this can be caught with `catch`).
 
 ### Input of a command
 
@@ -901,7 +901,7 @@ read somefile.txt # Prints: "Hello world!"
 read somefile.txt | length # Prints: 12
 ```
 
-How does this work exactly? First, `read` reads the file and outputs it to STDOUT as a `string`, which is then passed to `length` which happens to accept strings as an input. It then computes the length of the provided input and writes it to STDOUT, as a `number`. Which means we can do that:
+How does this work exactly? First, `read` reads the file and outputs it to CMDOUT as a `string`, which is then passed to `length` which happens to accept strings as an input. It then computes the length of the provided input and writes it to CMDOUT, as a `number`. Which means we can do that:
 
 ```hydre
 echo ${ $(read ./somefile.txt | length) * 2 } # Prints: 24
@@ -913,9 +913,9 @@ The input may be typed and only accept specific types of values. For instance `l
 echo $(pass 2 | length) # ERROR
 ```
 
-What happens here is that we use the builtin `pass` command which writes to STDOUT the exact same value we gave it as an input. Then we give it to `length`, which fails because it doesn't accept `number`s.
+What happens here is that we use the builtin `pass` command which writes to CMDOUT the exact same value we gave it as an input. Then we give it to `length`, which fails because it doesn't accept `number`s.
 
-There's also a shorthand syntax for providing a file's content as STDIN to a command:
+There's also a shorthand syntax for providing a file's content as CMDIN to a command:
 
 ```hydre
 echo $(length < ./somefile.txt) # Prints: 24
@@ -942,9 +942,9 @@ cmd
       help "List of names to display"
       optional true
 
-      # If this argument is omitted, the command will expect the list of names to be provided through STDIN
+      # If this argument is omitted, the command will expect the list of names to be provided through CMDIN
       if absent()
-        stdin list[string]
+        cmdin list[string]
 
     # Declare a dash argument named 'repeat'
     dash "repeat"
@@ -1368,21 +1368,21 @@ Run the command and fail if the status code after exit is not 0.
 
 Run the command and get its stringified return value.
 
-#### `command.stdraw() -> stream`
+#### `command.cmdraw() -> stream`
 
-Run the command and get its STDRAW output.
+Run the command and get its CMDRAW output.
 
-#### `command.stdmsg() -> list[string]`
+#### `command.cmdmsg() -> list[string]`
 
-Run the command and get its STDMSG output.
+Run the command and get its CMDMSG output.
 
-#### `command.stderr() -> list[string]`
+#### `command.cmderr() -> list[string]`
 
-Run the command and get its STDERR output.
+Run the command and get its CMDERR output.
 
 #### `command.output() -> list[string]`
 
-Run the command and get its STDOUT and STDERR outputs combined.
+Run the command and get its CMDOUT and CMDERR outputs combined.
 
 ## Examples
 

@@ -69,6 +69,6 @@ The type code is present to avoid misinterpreting the value in case the command 
 
 ## Returning and failing
 
-The value must be returned using the [STDOUT](../ipc.md#interactive-usage) pipe. The data sent through this pipe must follow the above [encoding](#values-encoding).
+The value must be returned using the [CMDOUT](../ipc.md#interactive-usage) pipe. The data sent through this pipe must follow the above [encoding](#values-encoding).
 
 A command may also fail. To indicate so, the process must send the `0xFF` value through the pipe, and the shell will consider the command as failed (but not invalid, so the process won't be abruptly killed).

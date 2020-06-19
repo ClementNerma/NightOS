@@ -326,6 +326,16 @@ Return value: (1 byte)
 
 Get informations on a pipe from its RC or SC identifier.
 
+## `0x48` PIPE_SEND
+
+Arguments: [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes), target PID (8 bytes)  
+Return value: -
+
+Share an RC or SC identifier with another process.  
+This will trigger in the target process the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal (if an RC is provided) or the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal (if an SC is provided).
+
+When the target process writes through the received SC or read from the received RC, the performance will be equal to writing or reading through the original RC/SC identifier.
+
 ## `0x50` MEM_ALLOC
 
 Arguments:

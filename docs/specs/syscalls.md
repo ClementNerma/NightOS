@@ -172,23 +172,23 @@ Arguments:
 - Command code (2 bytes)
 - Buffer size multiplier (1 byte)
 - Transmission mode (1 byte): `0x01` to create a message pipe, `0x02` to create a raw pipe
-- Notifying mode (1 byte): `0x00` to notify the process with the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal, `0x01` to skip it
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal, `0x01` to skip it
 
 Return value: [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 
 Errors:
 
 - `0x10`: invalid transmission mode provided
-- `0x11`: invalid notifying mode provided
+- `0x11`: invalid notification mode provided
 - `0x12`: the provided PID does not exist
 - `0x13`: the target process is not part of this application
 - `0x14`: the target process runs under another user
-- `0x15`: notifying mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal
+- `0x15`: notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal
 
 Open a PIPE with a process of the same application and running under the same user and get its SC.
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
-The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal with the provided command code, unless notifying mode tells otherwise.
+The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal with the provided command code, unless notification mode tells otherwise.
 
 ## `0x41` OPEN_READ_PIPE
 
@@ -198,23 +198,23 @@ Arguments:
 - Command code (2 bytes)
 - Buffer size multiplier (1 byte)
 - Transmission mode (1 byte): `0x01` to create a message pipe, `0x02` to create a raw pipe
-- Notifying mode (1 byte): `0x00` to notify the process with the [`RECV_WRITE_PIPE`](signals.md#0x40-recv_write_pipe) signal, `0x01` to skip the signal
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_WRITE_PIPE`](signals.md#0x40-recv_write_pipe) signal, `0x01` to skip the signal
 
 Return value: [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 
 Errors:
 
 - `0x10`: invalid transmission mode provided
-- `0x11`: invalid notifying mode provided
+- `0x11`: invalid notification mode provided
 - `0x12`: the provided PID does not exist
 - `0x13`: the target process is not part of this application
 - `0x14`: the target process runs under another user
-- `0x15`: notifying mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
+- `0x15`: notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
 
 Open a PIPE with a process of the same application and running under the same user and get its RC.
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
-The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code, unless notifying mode tells otherwise.
+The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code, unless notification mode tells otherwise.
 
 ## `0x42` PIPE_WRITE
 
@@ -336,17 +336,17 @@ Arguments:
 
 - [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)
 - Target PID (8 bytes)
-- Notifying mode (1 byte): `0x00` to notify the process with a pipe reception signal, `0x01` to skip the signal
+- Notification mode (1 byte): `0x00` to notify the process with a pipe reception signal, `0x01` to skip the signal
 
 Return value: -
 
 Errors:
 
-- `0x10`: notifying mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
-  The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code, unless notifying mode is different than
+- `0x10`: notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
+  The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code, unless notification mode is different than
 
 Share an RC or SC identifier with another process.  
-This will trigger in the target process the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal (if an RC is provided) or the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal (if an SC is provided), unless the notifying mode tells otherwise.
+This will trigger in the target process the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal (if an RC is provided) or the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal (if an SC is provided), unless the notification mode tells otherwise.
 
 When the target process writes through the received SC or read from the received RC, the performance will be equal to writing or reading through the original RC/SC identifier.
 

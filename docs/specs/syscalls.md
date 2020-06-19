@@ -328,7 +328,7 @@ Return value: (1 byte)
 
 Get informations on a pipe from its RC or SC identifier.
 
-## `0x48` PIPE_SEND
+## `0x48` SEND_PIPE
 
 Arguments:
 

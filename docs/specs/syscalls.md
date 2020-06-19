@@ -338,6 +338,11 @@ Arguments:
 
 Return value: -
 
+Errors:
+
+- `0x10`: notifying mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
+  The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code, unless notifying mode is different than
+
 Share an RC or SC identifier with another process.  
 This will trigger in the target process the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal (if an RC is provided) or the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal (if an SC is provided), unless the notifying mode is different than `0x00`.
 

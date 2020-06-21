@@ -50,7 +50,7 @@ _Empty_
 
 #### Description
 
-Register a [signal handler](signals.md).
+Register a [signal handler](signals.md).  
 If the address pointed by this syscall's is not executable by the current process when this signal is sent to the process, the signal will be converted to an [`HANDLER_FAULT`](signals.md#0x01-handler_fault) signal instead.
 
 ## `0x02` UNHANDLE_SIGNAL
@@ -266,10 +266,10 @@ Tell a service to properly close the connection. The associated [pipe](ipc.md#pi
 
 #### Description
 
-Confirm the current service accepts the connection with a client.
+Confirm the current service accepts the connection with a client.  
 A dedicated pipe's SC and another's RC will be provided to communicate with the client.
 
-This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.
+This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
 The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x30-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
 
 When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x32-service_client_closed) signal is sent to this thread.
@@ -329,9 +329,9 @@ Reject a connection request to the current service.
 
 #### Description
 
-Open a PIPE with a process of the same application and running under the same user and get its SC.
-The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.
-The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
+Open a PIPE with a process of the same application and running under the same user and get its SC.  
+The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
+The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
 The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal with the provided command code, unless notification mode tells otherwise.
 
 ## `0x41` OPEN_READ_PIPE
@@ -365,9 +365,9 @@ The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read
 
 #### Description
 
-Open a PIPE with a process of the same application and running under the same user and get its RC.
-The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.
-The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.
+Open a PIPE with a process of the same application and running under the same user and get its RC.  
+The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
+The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
 The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code, unless notification mode tells otherwise.
 
 ## `0x42` PIPE_WRITE
@@ -512,8 +512,8 @@ _None_
 
 #### Description
 
-Close an PIPE properly. The RC and SC parts will be immediatly closed.
-The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal unless this pipe was created during a [service connection](#0x30-accept_service_conn).
+Close an PIPE properly. The RC and SC parts will be immediatly closed.  
+The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal unless this pipe was created during a [service connection](#0x30-accept_service_conn).  
 If this syscall is not performed on an PIPE before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
 
 ## `0x47` PIPE_INFO

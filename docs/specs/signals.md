@@ -106,7 +106,7 @@ The thread is expected to terminate as soon as possible (there is no time limit 
 | Command code                                                                                           | 2 bytes            |
 | Mode                                                                                                   | 1 byte             | `0x01` if it's a raw pipe, `0x02` if it's a message pipe |
 
-Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the readable part.
+Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the readable part.  
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
 
 ## `0x41` RECV_WRITE_PIPE
@@ -120,7 +120,7 @@ The command code can be used to determine what the other process is expecting th
 | Command code                                                                                           | 2 bytes            |
 | Mode                                                                                                   | 1 byte             | `0x01` if it's a raw pipe, `0x02` if it's a message pipe |
 
-Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the writable part.
+Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the writable part.  
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
 
 ## `0x42` PIPE_CLOSED

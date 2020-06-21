@@ -31,92 +31,76 @@ _NOTE:_ _"CPU-dependent size"_ indicates a data that will be 16-bit long on a 16
 
 ## `0x01` HANDLE_SIGNAL
 
-#### Arguments
+**Arguments:**
 
-| Description                     | Size               |
-| ------------------------------- | ------------------ |
-| Code of the signal to handle    | 1 byte             |
-| Pointer to the handler function | CPU-dependent size |
+- Code of the signal to handle (1 byte)
+- Pointer to the handler function (CPU-dependent size)
 
-#### Return value
+**Return value:**
 
 _Empty_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                         |
-| ---------- | ----------------------------------- |
-| `0x10`     | The requested signal does not exist |
+- `0x10`: The requested signal does not exist
 
-#### Description
+**Description:**
 
 Register a [signal handler](signals.md).  
 If the address pointed by this syscall's is not executable by the current process when this signal is sent to the process, the signal will be converted to an [`HANDLER_FAULT`](signals.md#0x01-handler_fault) signal instead.
 
 ## `0x02` UNHANDLE_SIGNAL
 
-#### Arguments
+**Arguments:**
 
-| Description                         | Size   |
-| ----------------------------------- | ------ |
-| Code of the signal to stop handling | 1 byte |
+- Code of the signal to stop handling (1 byte)
 
-#### Return value
+**Return value:**
 
 _Empty_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                   |
-| ---------- | --------------------------------------------- |
-| `0x10`     | The requested signal does not exist           |
-| `0x20`     | The requested signal does not have an handler |
+- `0x10`: The requested signal does not exist
+- `0x20`: The requested signal does not have an handler
 
-#### Description
+**Description:**
 
 Unregister a signal handler, falling back to the default signal reception behaviour if this signal is sent to the process.
 
 ## `0x03` IS_SIGNAL_HANDLED
 
-#### Arguments
+**Arguments:**
 
-| Description        | Size   |
-| ------------------ | ------ |
-| Code of the signal | 1 byte |
+- Code of the signal (1 byte)
 
-#### Return value
+**Return value:**
 
-| Description                                    | Size   |
-| ---------------------------------------------- | ------ |
-| `0` if the signal is not handled, `1` if it is | 1 byte |
+- `0` if the signal is not handled, `1` if it is (1 byte)
 
-#### Errors
+**Errors:**
 
-| Error code | Description                         |
-| ---------- | ----------------------------------- |
-| `0x10`     | The requested signal does not exist |
+- `0x10`: The requested signal does not exist
 
-#### Description
+**Description:**
 
 Check if a signal has a registered handler.
 
 ## `0x04` READY
 
-#### Arguments
+**Arguments:**
 
 _None_
 
-#### Return value
+**Return value:**
 
 _Empty_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                           |
-| ---------- | ------------------------------------- |
-| `0x20`     | The process already told it was ready |
+- `0x20`: The process already told it was ready
 
-#### Description
+**Description:**
 
 Indicate the system this process has set up all its event listeners, so it can start dequeuing [signals](signals.md).
 
@@ -126,61 +110,55 @@ Indicate the system this process has set up all its event listeners, so it can s
 
 ## `0x10` GET_PID
 
-#### Arguments
+**Arguments:**
 
 _None_
 
-#### Return value
+**Return value:**
 
-| Description          | Size    |
-| -------------------- | ------- |
-| Current process' PID | 8 bytes |
+- Current process' PID (8 bytes)
 
-#### Errors
+**Errors:**
 
 _None_
 
-#### Description
+**Description:**
 
 Get the current process' PID.
 
 ## `0x12` SUSPEND
 
-#### Arguments
+**Arguments:**
 
 _None_
 
-#### Return value
+**Return value:**
 
-| Description                                               | Size    |
-| --------------------------------------------------------- | ------- |
-| Amount of time the process was suspended, in milliseconds | 8 bytes |
+- Amount of time the process was suspended, in milliseconds (8 bytes)
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                          |
-| ---------- | ---------------------------------------------------- |
-| `0x20`     | If the current process is not an application process |
+- `0x20`: the current process is not an application process
 
-#### Description
+**Description:**
 
 [Suspend](../features/balancer.md#application-processes-suspension) the current process.
 
 ## `0x13` EXIT
 
-#### Arguments
+**Arguments:**
 
 _None_
 
-#### Return value
+**Return value:**
 
 _None_ (never returns)
 
-#### Errors
+**Errors:**
 
 _None_
 
-#### Description
+**Description:**
 
 Kill the current process.
 
@@ -189,88 +167,74 @@ If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x2a-servic
 
 ## `0x20` OPEN_WRITE_PIPE
 
-#### Arguments
+**Arguments:**
 
-| Description            | Size    | Value                                                                                                              |
-| ---------------------- | ------- | ------------------------------------------------------------------------------------------------------------------ |
-| Target process' PID    | 8 bytes |
-| Command code           | 2 bytes |
-| Buffer size multiplier | 1 byte  |
-| Transmission mode      | 1 byte  | `0x00` to create a raw pipe, `0x01` to create a message pipe                                                       |
-| Notification mode      | 1 byte  | `0x00` to notify the process with the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal, `0x01` to skip it |
+- Target process' PID (8 bytes)
+- Command code (2 bytes)
+- Buffer size multiplier (1 byte)
+- Transmission mode (1 byte): `0x00` to create a raw pipe, `0x01` to create a message pipe
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal, `0x01` to skip it
 
-#### Return value
+**Return value:**
 
-| Description                        | Size    |
-| ---------------------------------- | ------- |
-| [Pipe](ipc.md#pipes) SC identifier | 8 bytes |
+- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                                                                                              |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | Invalid transmission mode provided                                                                                                                       |
-| `0x11`     | Invalid notification mode provided                                                                                                                       |
-| `0x20`     | The provided PID does not exist                                                                                                                          |
-| `0x21`     | The target process is not part of this application                                                                                                       |
-| `0x22`     | The target process runs under another user                                                                                                               |
-| `0x23`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal |
+- `0x10`: Invalid transmission mode provided
+- `0x11`: Invalid notification mode provided
+- `0x20`: The provided PID does not exist
+- `0x21`: The target process is not part of this application
+- `0x22`: The target process runs under another user
+- `0x23`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal
 
-#### Description
+**Description:**
 
-Open a PIPE with a process of the same application and running under the same user and get its SC.  
+Open a pipe with a process of the same application and running under the same user and get its SC.  
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
 The target process will receive the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal with the provided command code, unless notification mode tells otherwise.
 
 ## `0x21` OPEN_READ_PIPE
 
-#### Arguments
+**Arguments:**
 
-| Description            | Size    | Value                                                                                                                        |
-| ---------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Target process' PID    | 8 bytes |
-| Command code           | 2 bytes |
-| Buffer size multiplier | 1 byte  |
-| Transmission mode      | 1 byte  | `0x00` to create a raw pipe, `0x01` to create a message pipe                                                                 |
-| Notification mode      | 1 byte  | `0x00` to notify the process with the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal, `0x01` to skip the signal |
+- Target process' PID (8 bytes)
+- Command code (2 bytes)
+- Buffer size multiplier (1 byte)
+- Transmission mode (1 byte): `0x00` to create a raw pipe, `0x01` to create a message pipe
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal, `0x01` to skip the signal
 
-#### Return value
+**Return value:**
 
-| Description                        | Size    |
-| ---------------------------------- | ------- |
-| [Pipe](ipc.md#pipes) RC identifier | 8 bytes |
+- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                                                                                                |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | Invalid transmission mode provided                                                                                                                         |
-| `0x11`     | Invalid notification mode provided                                                                                                                         |
-| `0x20`     | The provided PID does not exist                                                                                                                            |
-| `0x21`     | The target process is not part of this application                                                                                                         |
-| `0x22`     | The target process runs under another user                                                                                                                 |
-| `0x23`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal |
+- `0x10`: Invalid transmission mode provided
+- `0x11`: Invalid notification mode provided
+- `0x20`: The provided PID does not exist
+- `0x21`: The target process is not part of this application
+- `0x22`: The target process runs under another user
+- `0x23`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal
 
-#### Description
+**Description:**
 
-Open a PIPE with a process of the same application and running under the same user and get its RC.  
+Open a pipe with a process of the same application and running under the same user and get its RC.  
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
 The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal with the provided command code, unless notification mode tells otherwise.
 
 ## `0x22` PIPE_WRITE
 
-#### Arguments
+**Arguments:**
 
-| Description                        | Size               | Value                                                                                                                                                                 |
-| ---------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Pipe](ipc.md#pipes) SC identifier | 8 bytes            |
-| Number of bytes to write           | CPU-dependent size |
-| Pointer to a readable buffer       | CPU-dependent size |
-| Mode                               | 1 byte             | `0x00` = block until there is enough space to write, `0x01` = fail if there is not enough space to write or if the pipe is locked, `0x02` = write as much as possible |
+- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
+- Number of bytes to write (CPU-dependent size)
+- Pointer to a readable buffer (CPU-dependent size)
+- Mode (1 byte): `0x00` = block until there is enough space to write, `0x01` = fail if there is not enough space to write or if the pipe is locked, `0x02` = write as much as possible
 
-#### Return value
+**Return value:**
 
 Encoded on 4 bytes:
 
@@ -278,18 +242,16 @@ Encoded on 4 bytes:
 - If mode is `0x01`: `0x00` if the cause of failure was because the pipe was locked, `0x01` if it was because of of a lack of space in the target buffer
 - If mode is `0x02`: number of bytes written
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                                                  |
-| ---------- | ------------------------------------------------------------------------------------------------------------ |
-| `0x10`     | Invalid mode provided                                                                                        |
-| `0x20`     | The provided SC identifier does not exist                                                                    |
-| `0x21`     | The provided SC was already closed                                                                           |
-| `0x22`     | The provided SC refers to a message pipe but the provided size is larger than 64 KB                          |
-| `0x23`     | The provided SC refers to a message pipe but the `0x02` mode was provided                                    |
-| `0x30`     | There is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01` |
+- `0x10`: Invalid mode provided
+- `0x20`: The provided SC identifier does not exist
+- `0x21`: The provided SC was already closed
+- `0x22`: The provided SC refers to a message pipe but the provided size is larger than 64 KB
+- `0x23`: The provided SC refers to a message pipe but the `0x02` mode was provided
+- `0x30`: There is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
 
-#### Description
+**Description:**
 
 Write data through a pipe.  
 Messages will always be sent at once when writing to message pipes.  
@@ -297,41 +259,33 @@ If the data is 0-byte long, this pipe will return successfully without waiting, 
 
 ## `0x23` PIPE_COUNT_WRITE
 
-#### Arguments
+**Arguments:**
 
-| Description                        | Size    |
-| ---------------------------------- | ------- |
-| [Pipe](ipc.md#pipes) SC identifier | 8 bytes |
+- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 
-#### Return value
+**Return value:**
 
-| Description                                   | Size    |
-| --------------------------------------------- | ------- |
-| Number of bytes that can be written to a pipe | 4 bytes |
+- Number of bytes that can be written to a pipe (4 bytes)
 
-#### Errors
+**Errors:**
 
-| Error code | Description                               |
-| ---------- | ----------------------------------------- |
-| `0x10`     | The provided SC identifier does not exist |
-| `0x11`     | The provided SC was already closed        |
+- `0x10`: The provided SC identifier does not exist
+- `0x11`: The provided SC was already closed
 
-#### Description
+**Description:**
 
 Count the pipe's pending data's free size, which is the number of bytes this process can currently write to the pipe without blocking.
 
 ## `0x24` PIPE_READ
 
-#### Arguments
+**Arguments:**
 
-| Description                        | Size               | Value                                                                                                                                                             |
-| ---------------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Pipe](ipc.md#pipes) RC identifier | 8 byte             |
-| Mode                               | 1 byte             | `0x00` = block until there are enough data to read, `0x01` = fail if there is not enough data to read or if the pipe is locked, `0x02` = read as much as possible |
-| Number of bytes to read            | 4 bytes            | `0` = read as much data as possible                                                                                                                               |
-| Pointer to a writable buffer       | CPU-dependent size |
+- [Pipe](ipc.md#pipes) RC identifier (8 byte)
+- Mode (1 byte): `0x00` = block until there are enough data to read, `0x01` = fail if there is not enough data to read or if the pipe is locked, `0x02` = read as much as possible
+- Number of bytes to read (4 bytes): `0` = read as much data as possible
+- Pointer to a writable buffer (CPU-dependent size)
 
-#### Return value
+**Return value:**
 
 Encoded on 4 bytes:
 
@@ -339,81 +293,67 @@ Encoded on 4 bytes:
 - If mode is `0x01`: `0x00` if the cause of failure was because the pipe was locked, `0x01` if it was because of of a lack of space in the target buffer
 - If mode is `0x02`: number of read bytes
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                  |
-| ---------- | ---------------------------------------------------------------------------- |
-| `0x10`     | Invalid mode provided                                                        |
-| `0x20`     | The provided RC identifier does not exist                                    |
-| `0x21`     | The provided RC was already closed                                           |
-| `0x22`     | There is no pending data in the pipe and the mode argument was set to `0x01` |
-| `0x23`     | The provided RC refers to a message pipe but the `0x02` mode was provided    |
+- `0x10`: Invalid mode provided
+- `0x20`: The provided RC identifier does not exist
+- `0x21`: The provided RC was already closed
+- `0x22`: There is no pending data in the pipe and the mode argument was set to `0x01`
+- `0x23`: The provided RC refers to a message pipe but the `0x02` mode was provided
 
-#### Description
+**Description:**
 
 Read pending data or message from a pipe.  
 If the pipe was closed while the buffer was not empty, this syscall will still be able to read the remaining buffer's data - but the pipe will not be able to receive any additional data. Then, once the buffer is empty, the pipe will be made unavailable.
 
 ## `0x25` PIPE_COUNT_READ
 
-#### Arguments
+**Arguments:**
 
-| Description                        | Size    |
-| ---------------------------------- | ------- |
-| [Pipe](ipc.md#pipes) RC identifier | 8 bytes |
+- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 
-#### Return value
+**Return value:**
 
-| Description                                    | Size    |
-| ---------------------------------------------- | ------- |
-| Number of bytes that can be read from the pipe | 4 bytes |
+- Number of bytes that can be read from the pipe (4 bytes)
 
-#### Errors
+**Errors:**
 
-| Error code | Description                               |
-| ---------- | ----------------------------------------- |
-| `0x10`     | The provided RC identifier does not exist |
-| `0x11`     | The provided RC was already closed        |
+- `0x10`: The provided RC identifier does not exist
+- `0x11`: The provided RC was already closed
 
-#### Description
+**Description:**
 
 Count the pipe's pending data's size, which is the number of bytes this process can currently read from the pipe without blocking.
 
 ## `0x26` CLOSE_PIPE
 
-#### Arguments
+**Arguments:**
 
-| Description                              | Size    |
-| ---------------------------------------- | ------- |
-| [Pipe](ipc.md#pipes) RC or SC identifier | 8 bytes |
+- [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)
 
-#### Return value
+**Return value:**
 
 _None_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                             |
-| ---------- | ------------------------------------------------------- |
-| `0x10`     | The provided RC/SC identifier does not exist            |
-| `0x11`     | The target process already terminated                   |
-| `0x20`     | The provided RC/SC identifier is part of a service PIPE |
+- `0x10`: The provided RC/SC identifier does not exist
+- `0x11`: The target process already terminated
+- `0x20`: The provided RC/SC identifier is part of a service pipe
 
-#### Description
+**Description:**
 
-Close an PIPE properly. The RC and SC parts will be immediatly closed.  
-The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x22-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
-If this syscall is not performed on an PIPE before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
+Close a pipe properly. The RC and SC parts will be immediatly closed.  
+The other process this pipe was shared with will receive the [`PIPE_CLOSED`](signals.md#0x22-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
+If this syscall is not performed on a pipe before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
 
 ## `0x27` PIPE_INFO
 
-#### Arguments
+**Arguments:**
 
-| Description                              | Size    |
-| ---------------------------------------- | ------- |
-| [Pipe](ipc.md#pipes) RC or SC identifier | 8 bytes |
+- [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)
 
-#### Return value
+**Return value:**
 
 Encoded on 1 byte:
 
@@ -425,35 +365,31 @@ Encoded on 1 byte:
 - Bit 5: indicates if a reading request is pending (waiting for the pipe to be unlocked)
 - Bit 6: indicates if the provided identifier is an SC
 
-#### Errors
+**Errors:**
 
 _None_
 
-#### Description
+**Description:**
 
 Get informations on a pipe from its RC or SC identifier.
 
 ## `0x28` SEND_PIPE
 
-#### Arguments
+**Arguments:**
 
-| Description                              | Size    | Value                                                                                |
-| ---------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
-| [Pipe](ipc.md#pipes) RC or SC identifier | 8 bytes |
-| Target PID                               | 8 bytes |
-| Notification mode                        | 1 byte  | `0x00` to notify the process with a pipe reception signal, `0x01` to skip the signal |
+- [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)
+- Target PID (8 bytes)
+- Notification mode (1 byte): `0x00` to notify the process with a pipe reception signal, `0x01` to skip the signal
 
-#### Return value
+**Return value:**
 
 _None_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                                                                                                |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal |
+- `0x10`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal
 
-#### Description
+**Description:**
 
 Share an RC or SC identifier with another process.  
 This will trigger in the target process the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal (if an RC is provided) or the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal (if an SC is provided), unless the notification mode tells otherwise.
@@ -462,30 +398,24 @@ When the target process writes through the received SC or read from the received
 
 ## `0x2A` CONNECT_SERVICE
 
-#### Arguments
+**Arguments:**
 
-| Description                                                                                            | Size      |
-| ------------------------------------------------------------------------------------------------------ | --------- |
-| Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier) | 256 bytes |
+- Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier) (8 bytes)
 
-#### Return value
+**Return value:**
 
-| Description                        | Size    |
-| ---------------------------------- | ------- |
-| Unique connection ID               | 8 bytes |
-| [Pipe](ipc.md#pipes) SC identifier | 8 bytes |
-| [Pipe](ipc.md#pipes) RC identifier | 8 bytes |
+- Unique connection ID (8 bytes)
+- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
+- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                                                                                      |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `0x10`     | The provided AID does not exist                                                                                                                  |
-| `0x20`     | Target application does not have a service                                                                                                       |
-| `0x30`     | Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2b-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault) |
-| `0x31`     | Service rejected the connection request                                                                                                          |
+- `0x10`: The provided AID does not exist
+- `0x20`: Target application does not have a service
+- `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2b-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
+- `0x31`: Service rejected the connection request
 
-#### Description
+**Description:**
 
 Ask a service to etablish connection. The current process is called the service's _client_.
 
@@ -493,51 +423,43 @@ Ask a service to etablish connection. The current process is called the service'
 
 ## `0x2B` END_SERVICE_CONN
 
-#### Arguments
+**Arguments:**
 
-| Description          | Size    |
-| -------------------- | ------- |
-| Unique connection ID | 8 bytes |
+- Unique connection ID (8 bytes)
 
-#### Return value
+**Return value:**
 
 _None_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                      |
-| ---------- | ------------------------------------------------ |
-| `0x10`     | The provided connection ID does not exist        |
-| `0x20`     | This connection was already closed               |
-| `0x21`     | The associated service thread already terminated |
+- `0x10`: The provided connection ID does not exist
+- `0x20`: This connection was already closed
+- `0x21`: The associated service thread already terminated
 
-#### Description
+**Description:**
 
 Tell a service to properly close the connection. The associated [pipe](ipc.md#pipes) SC and RC channels will immediatly be closed.
 
 ## `0x2C` ACCEPT_SERVICE_CONN
 
-#### Arguments
+**Arguments:**
 
-| Description                    | Size    |
-| ------------------------------ | ------- |
-| Connection's unique request ID | 8 bytes |
+- Connection's unique request ID (8 bytes)
 
-#### Return value
+**Return value:**
 
 - `0x00` if the current process is now the associated client's thread, `0x01` else
 - [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 - [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                                                                       |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | This request ID does not exist                                                                                                    |
-| `0x20`     | The process which requested the connection already terminated                                                                     |
-| `0x30`     | Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) |
+- `0x10`: This request ID does not exist
+- `0x20`: The process which requested the connection already terminated
+- `0x30`: Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
 
-#### Description
+**Description:**
 
 Confirm the current service accepts the connection with a client.  
 A dedicated pipe's SC and another's RC will be provided to communicate with the client.
@@ -549,112 +471,94 @@ When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#
 
 ## `0x2D` REJECT_SERVICE_CONN
 
-#### Arguments
+**Arguments:**
 
-| Description                    | Size    |
-| ------------------------------ | ------- |
-| Connection's unique request ID | 8 bytes |
+- Connection's unique request ID (8 bytes)
 
-#### Return value
+**Return value:**
 
 _None_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                                                                       |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | This request ID does not exist                                                                                                    |
-| `0x20`     | The process which requested the connection already terminated                                                                     |
-| `0x30`     | Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) |
+- `0x10`: This request ID does not exist
+- `0x20`: The process which requested the connection already terminated
+- `0x30`: Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
 
-#### Description
+**Description:**
 
 Reject a connection request to the current service.
 
 ## `0x30` MEM_ALLOC
 
-#### Arguments
+**Arguments:**
 
-| Description                                                 | Size               |
-| ----------------------------------------------------------- | ------------------ |
-| Pointer to the start address to map the allocated memory to | CPU-dependent size |
-| The number of [pages](kernel/memory.md#pages) to allocate   | 8 bytes            |
+- Pointer to the start address to map the allocated memory to (CPU-dependent size)
+- The number of [pages](kernel/memory.md#pages) to allocate (8 bytes)
 
-#### Return value
+**Return value:**
 
 _None_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                    |
-| ---------- | ------------------------------------------------------------------------------ |
-| `0x10`     | The provided start address is out of the process' range                        |
-| `0x11`     | The provided size, added to the start address, would exceed the process' range |
-| `0x30`     | The kernel could not find a linear block of memory of the requested size       |
+- `0x10`: The provided start address is out of the process' range
+- `0x11`: The provided size, added to the start address, would exceed the process' range
+- `0x30`: The kernel could not find a linear block of memory of the requested size
 
-#### Description
+**Description:**
 
 Allocate a linear block of memory.
 
 ## `0x31` MEM_UNALLOC
 
-#### Arguments
+**Arguments:**
 
-| Description                                                 | Size               |
-| ----------------------------------------------------------- | ------------------ |
-| Pointer to the start address to unallocate the memory from  | CPU-dependent size |
-| The number of [pages](kernel/memory.md#pages) to unallocate | 8 bytes            |
+- Pointer to the start address to unallocate the memory from (CPU-dependent size)
+- The number of [pages](kernel/memory.md#pages) to unallocate (8 bytes)
 
-#### Return value
+**Return value:**
 
 _None_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                    |
-| ---------- | ------------------------------------------------------------------------------ |
-| `0x10`     | The provided start address is out of the process' range                        |
-| `0x11`     | The provided size, added to the start address, would exceed the process' range |
+- `0x10`: The provided start address is out of the process' range
+- `0x11`: The provided size, added to the start address, would exceed the process' range
 
-#### Description
+**Description:**
 
 Unallocate a linear block of memory.
 
 ## `0x32` SHARE_MEM
 
-#### Arguments
+**Arguments:**
 
-| Description                    | Size               | Value                                                                                                                |
-| ------------------------------ | ------------------ | -------------------------------------------------------------------------------------------------------------------- |
-| Target process' PID            | 8 bytes            |
-| Pointer to the buffer to share | CPU-dependent size |
-| Number of bytes to share       | CPU-dependent size |
-| Command code                   | 2 bytes            |
-| Notification mode              | 1 byte             | `0x00` to notify the process with the [`RECV_SHARED_MEM`](signals.md#0x32-recv_shared_mem) signal, `0x01` to skip it |
-| Sharing mode                   | 1 byte             | `0x00` to perform a mutual sharing, `0x01` to perform an exclusive sharing                                           |
-| Access permissions             | 1 byte             | Strongest bit for read, next for write, next for exec - other bits are considered invalid when set                   |
+- Target process' PID (8 bytes)
+- Pointer to the buffer to share (CPU-dependent size)
+- Number of bytes to share (CPU-dependent size)
+- Command code (2 bytes)
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_SHARED_MEM`](signals.md#0x32-recv_shared_mem) signal, `0x01` to skip it
+- Sharing mode (1 byte): `0x00` to perform a mutual sharing, `0x01` to perform an exclusive sharing
+- Access permissions (1 byte): Strongest bit for read, next for write, next for exec - other bits are considered invalid when set
 
-#### Return value
+**Return value:**
 
-| Description              | Size    |
-| ------------------------ | ------- |
-| Shared memory segment ID | 8 bytes |
+- Shared memory segment ID (8 bytes)
 
-#### Errors
+**Errors:**
 
-| Error code | Description                                                                                         |
-| ---------- | --------------------------------------------------------------------------------------------------- |
-| `0x10`     | Invalid notification mode provided                                                                  |
-| `0x11`     | Invalid sharing mode provided                                                                       |
-| `0x12`     | Invalid access permissions provided                                                                 |
-| `0x13`     | Access permissions were not set but the sharing mode is set to mutual                               |
-| `0x14`     | Access permissions were provided but the sharing mode is set to exclusive                           |
-| `0x15`     | The buffer's start address is not aligned with a page                                               |
-| `0x16`     | The buffer's length is not a multiple of a page's size                                              |
-| `0x17`     | The buffer's size is null (0 bytes)                                                                 |
-| `0x30`     | There is not enough contiguous space in the receiver process' memory space to map the shared memory |
+- `0x10`: Invalid notification mode provided
+- `0x11`: Invalid sharing mode provided
+- `0x12`: Invalid access permissions provided
+- `0x13`: Access permissions were not set but the sharing mode is set to mutual
+- `0x14`: Access permissions were provided but the sharing mode is set to exclusive
+- `0x15`: The buffer's start address is not aligned with a page
+- `0x16`: The buffer's length is not a multiple of a page's size
+- `0x17`: The buffer's size is null (0 bytes)
+- `0x30`: There is not enough contiguous space in the receiver process' memory space to map the shared memory
 
-#### Description
+**Description:**
 
 Share memory pages of the current process with one or multiple external processes.  
 In mutual sharing mode, the memory is available to both the sharer and the receiver. In exclusive mode, the memory is unmapped from the sharer process.  
@@ -665,54 +569,44 @@ When a process wants to transmit a set of data without getting it back later, th
 
 ## `0x33` UNSHARE_MEM
 
-#### Arguments
+**Arguments:**
 
-| Description              | Size    |
-| ------------------------ | ------- |
-| Shared memory segment ID | 8 bytes |
+- Shared memory segment ID (8 bytes)
 
-#### Return value
+**Return value:**
 
 _None_
 
-#### Errors
+**Errors:**
 
-| Error code | Description                               |
-| ---------- | ----------------------------------------- |
-| `0x10`     | Unknown shared memory segment ID provided |
-| `0x20`     | Provided sharing ID is exclusive          |
+- `0x10`: Unknown shared memory segment ID provided
+- `0x20`: Provided sharing ID is exclusive
 
-#### Description
+**Description:**
 
 Stop sharing a memory segment started by [`SHARE_MEM`](#0x32-share_mem). Note that only mutual sharing can be unmapped.  
 This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x33-unshared_mem) signal.
 
 ## `0x34` MEM_SHARING_INFO
 
-#### Arguments
+**Arguments:**
 
-| Description              | Size    |
-| ------------------------ | ------- |
-| Shared memory segment ID | 8 bytes |
+- Shared memory segment ID (8 bytes)
 
-#### Return value
+**Return value:**
 
-| Description                   | Size               | Value                                                                                                       |
-| ----------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------- |
-| Sharer process' PID           | 8 bytes            |
-| Receiver process' PID         | 8 bytes            |
-| Sharing mode                  | 1 byte             | `0x00` for mutual mode, `0x01` for exclusive mode                                                           |
-| Shared buffer's start address | CPU-dependent size |
-| Sharer buffer's length        | CPU-dependent size |
-| Command code                  | 2 bytes            |
-| Access permissions            | 1 byte             | For mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, `0x00` |
+- Sharer process' PID (8 bytes)
+- Receiver process' PID (8 bytes)
+- Sharing mode (1 byte): `0x00` for mutual mode, `0x01` for exclusive mode
+- Shared buffer's start address (CPU-dependent size)
+- Sharer buffer's length (CPU-dependent size)
+- Command code (2 bytes)
+- Access permissions (1 byte): for mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, `0x00`
 
-#### Errors
+**Errors:**
 
-| Error code | Description                               |
-| ---------- | ----------------------------------------- |
-| `0x10`     | Unknwon shared memory segment ID provided |
+- `0x10`: Unknwon shared memory segment ID provided
 
-#### Description
+**Description:**
 
 Get informations about a shared memory segment.

@@ -191,7 +191,9 @@ If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x20-servic
 
 ### Arguments
 
-null-terminated application's [AID](../concepts/applications.md#application-identifier) (256 bytes)
+| Description                                                                                            | Size      |
+| ------------------------------------------------------------------------------------------------------ | --------- |
+| Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier) | 256 bytes |
 
 ### Return value
 

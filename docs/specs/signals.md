@@ -63,39 +63,7 @@ Sent when the process is asked to terminate. If it does not terminate by itself 
 
 If no handler is registered for this signal, it will kill the process when received.
 
-## `0x20` SERVICE_CLOSED
-
-| Datafield description          | Size    |
-| ------------------------------ | ------- |
-| Connection's unique request ID | 8 bytes |
-
-Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
-
-## `0x30` SERVICE_CONN_REQUEST
-
-| Datafield description                                                                 | Size    |
-| ------------------------------------------------------------------------------------- | ------- |
-| Callee process' ID                                                                    | 8 bytes |
-| Connection's unique request ID                                                        | 8 bytes |
-| [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) | 2 bytes |
-
-Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x20-connect_service) syscall.
-
-The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscalls.md#0x30-accept_service_conn) under the provided delay, else it's considered as a rejection.
-
-If no handler is registered for this signal, it will kill the process when received.
-
-## `0x31` SERVICE_CLIENT_CONN_END
-
-Sent to a [client thread](services.md#thread-types) to indicate its client asked to close the connection.
-The associated RC and SC are immediatly closed.
-
-## `0x32` SERVICE_CLIENT_CLOSED
-
-Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
-The thread is expected to terminate as soon as possible (there is no time limit though).
-
-## `0x40` RECV_READ_PIPE
+## `0x20` RECV_READ_PIPE
 
 | Datafield description                                                                                  | Size               | Value                                                    |
 | ------------------------------------------------------------------------------------------------------ | ------------------ | -------------------------------------------------------- |
@@ -109,7 +77,7 @@ The thread is expected to terminate as soon as possible (there is no time limit 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the readable part.  
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
 
-## `0x41` RECV_WRITE_PIPE
+## `0x21` RECV_WRITE_PIPE
 
 | Datafield description                                                                                  | Size               | Value                                                    |
 | ------------------------------------------------------------------------------------------------------ | ------------------ | -------------------------------------------------------- |
@@ -123,11 +91,11 @@ The command code can be used to determine what the other process is expecting th
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the writable part.  
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
 
-## `0x42` PIPE_CLOSED
+## `0x22` PIPE_CLOSED
 
 | Datafield description | Size    |
 | --------------------- | ------- |
-| Closing type          | 1 byte  | `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x46-close_pipe) syscall, or `0x01` if the other process brutally terminated |
+| Closing type          | 1 byte  | `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x26-close_pipe) syscall, or `0x01` if the other process brutally terminated |
 | Pipe identity         | 1 byte  | `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte) |
 | RC/SC identifier      | 8 bytes |
 
@@ -135,7 +103,39 @@ Sent to a process when a [pipe](ipc.md#pipes) shared with another process is clo
 
 **NOTE:** This does not apply to service pipes.
 
-## `0x52` RECV_SHARED_MEM
+## `0x2A` SERVICE_CLOSED
+
+| Datafield description          | Size    |
+| ------------------------------ | ------- |
+| Connection's unique request ID | 8 bytes |
+
+Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
+
+## `0x2B` SERVICE_CONN_REQUEST
+
+| Datafield description                                                                 | Size    |
+| ------------------------------------------------------------------------------------- | ------- |
+| Callee process' ID                                                                    | 8 bytes |
+| Connection's unique request ID                                                        | 8 bytes |
+| [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) | 2 bytes |
+
+Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.
+
+The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscalls.md#0x2c-accept_service_conn) under the provided delay, else it's considered as a rejection.
+
+If no handler is registered for this signal, it will kill the process when received.
+
+## `0x2C` SERVICE_CLIENT_CONN_END
+
+Sent to a [client thread](services.md#thread-types) to indicate its client asked to close the connection.
+The associated RC and SC are immediatly closed.
+
+## `0x2D` SERVICE_CLIENT_CLOSED
+
+Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
+The thread is expected to terminate as soon as possible (there is no time limit though).
+
+## `0x32` RECV_SHARED_MEM
 
 | Datafield description                                 | Size               | Value                                                                                                       |
 | ----------------------------------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------- |
@@ -148,10 +148,10 @@ Sent to a process when a [pipe](ipc.md#pipes) shared with another process is clo
 
 Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by another process.
 
-## `0x53` UNSHARED_MEM
+## `0x33` UNSHARED_MEM
 
 | Datafield description | Size   |
 | --------------------- | ------ |
-| Unsharing type        | 1 byte | `0x00` if the shared memory was unshared properly using the [UNSHARE_MEM](syscalls.md#0x53-unshare_mem) syscall, or `0x01` if the other process brutally terminated |
+| Unsharing type        | 1 byte | `0x00` if the shared memory was unshared properly using the [UNSHARE_MEM](syscalls.md#0x33-unshare_mem) syscall, or `0x01` if the other process brutally terminated |
 
 Sent to a process when a [shared segment of memory](ipc.md#shared-memory) is unshared by the sharer process.

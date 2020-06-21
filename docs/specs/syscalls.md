@@ -184,121 +184,10 @@ _None_
 
 Kill the current process.
 
-A [`SERVICE_CLIENT_CLOSED`](signals.md#0x32-service_client_closed) signal is sent to all services connection the process has.  
-If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x20-service_closed) signal is sent to all active clients.
+A [`SERVICE_CLIENT_CLOSED`](signals.md#0x2d-service_client_closed) signal is sent to all services connection the process has.  
+If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x2a-service_closed) signal is sent to all active clients.
 
-## `0x20` CONNECT_SERVICE
-
-#### Arguments
-
-| Description                                                                                            | Size      |
-| ------------------------------------------------------------------------------------------------------ | --------- |
-| Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier) | 256 bytes |
-
-#### Return value
-
-| Description                        | Size    |
-| ---------------------------------- | ------- |
-| Unique connection ID               | 8 bytes |
-| [Pipe](ipc.md#pipes) SC identifier | 8 bytes |
-| [Pipe](ipc.md#pipes) RC identifier | 8 bytes |
-
-#### Errors
-
-| Error code | Description                                                                                                                                      |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `0x10`     | The provided AID does not exist                                                                                                                  |
-| `0x20`     | Target application does not have a service                                                                                                       |
-| `0x30`     | Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x30-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault) |
-| `0x31`     | Service rejected the connection request                                                                                                          |
-
-#### Description
-
-Ask a service to etablish connection. The current process is called the service's _client_.
-
-**NOTE:** When this signal is sent, the service's answer will be waited, so the instructions following the sending of this signal may not be ran until several seconds in the worst scenario.
-
-## `0x21` END_SERVICE_CONN
-
-#### Arguments
-
-| Description          | Size    |
-| -------------------- | ------- |
-| Unique connection ID | 8 bytes |
-
-#### Return value
-
-_None_
-
-#### Errors
-
-| Error code | Description                                      |
-| ---------- | ------------------------------------------------ |
-| `0x10`     | The provided connection ID does not exist        |
-| `0x20`     | This connection was already closed               |
-| `0x21`     | The associated service thread already terminated |
-
-#### Description
-
-Tell a service to properly close the connection. The associated [pipe](ipc.md#pipes) SC and RC channels will immediatly be closed.
-
-## `0x30` ACCEPT_SERVICE_CONN
-
-#### Arguments
-
-| Description                    | Size    |
-| ------------------------------ | ------- |
-| Connection's unique request ID | 8 bytes |
-
-#### Return value
-
-- `0x00` if the current process is now the associated client's thread, `0x01` else
-- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
-- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
-
-#### Errors
-
-| Error code | Description                                                                                                                       |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | This request ID does not exist                                                                                                    |
-| `0x20`     | The process which requested the connection already terminated                                                                     |
-| `0x30`     | Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) |
-
-#### Description
-
-Confirm the current service accepts the connection with a client.  
-A dedicated pipe's SC and another's RC will be provided to communicate with the client.
-
-This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
-The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x30-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
-
-When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x32-service_client_closed) signal is sent to this thread.
-
-## `0x31` REJECT_SERVICE_CONN
-
-#### Arguments
-
-| Description                    | Size    |
-| ------------------------------ | ------- |
-| Connection's unique request ID | 8 bytes |
-
-#### Return value
-
-_None_
-
-#### Errors
-
-| Error code | Description                                                                                                                       |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | This request ID does not exist                                                                                                    |
-| `0x20`     | The process which requested the connection already terminated                                                                     |
-| `0x30`     | Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) |
-
-#### Description
-
-Reject a connection request to the current service.
-
-## `0x40` OPEN_WRITE_PIPE
+## `0x20` OPEN_WRITE_PIPE
 
 #### Arguments
 
@@ -308,7 +197,7 @@ Reject a connection request to the current service.
 | Command code           | 2 bytes |
 | Buffer size multiplier | 1 byte  |
 | Transmission mode      | 1 byte  | `0x00` to create a raw pipe, `0x01` to create a message pipe                                                       |
-| Notification mode      | 1 byte  | `0x00` to notify the process with the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal, `0x01` to skip it |
+| Notification mode      | 1 byte  | `0x00` to notify the process with the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal, `0x01` to skip it |
 
 #### Return value
 
@@ -325,16 +214,16 @@ Reject a connection request to the current service.
 | `0x20`     | The provided PID does not exist                                                                                                                          |
 | `0x21`     | The target process is not part of this application                                                                                                       |
 | `0x22`     | The target process runs under another user                                                                                                               |
-| `0x23`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal |
+| `0x23`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal |
 
 #### Description
 
 Open a PIPE with a process of the same application and running under the same user and get its SC.  
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
-The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal with the provided command code, unless notification mode tells otherwise.
+The target process will receive the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal with the provided command code, unless notification mode tells otherwise.
 
-## `0x41` OPEN_READ_PIPE
+## `0x21` OPEN_READ_PIPE
 
 #### Arguments
 
@@ -344,7 +233,7 @@ The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read
 | Command code           | 2 bytes |
 | Buffer size multiplier | 1 byte  |
 | Transmission mode      | 1 byte  | `0x00` to create a raw pipe, `0x01` to create a message pipe                                                                 |
-| Notification mode      | 1 byte  | `0x00` to notify the process with the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal, `0x01` to skip the signal |
+| Notification mode      | 1 byte  | `0x00` to notify the process with the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal, `0x01` to skip the signal |
 
 #### Return value
 
@@ -361,16 +250,16 @@ The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read
 | `0x20`     | The provided PID does not exist                                                                                                                            |
 | `0x21`     | The target process is not part of this application                                                                                                         |
 | `0x22`     | The target process runs under another user                                                                                                                 |
-| `0x23`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal |
+| `0x23`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal |
 
 #### Description
 
 Open a PIPE with a process of the same application and running under the same user and get its RC.  
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
-The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal with the provided command code, unless notification mode tells otherwise.
+The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal with the provided command code, unless notification mode tells otherwise.
 
-## `0x42` PIPE_WRITE
+## `0x22` PIPE_WRITE
 
 #### Arguments
 
@@ -406,7 +295,7 @@ Write data through a pipe.
 Messages will always be sent at once when writing to message pipes.  
 If the data is 0-byte long, this pipe will return successfully without waiting, even if the target pipe's buffer is full or locked.
 
-## `0x43` PIPE_COUNT_WRITE
+## `0x23` PIPE_COUNT_WRITE
 
 #### Arguments
 
@@ -431,7 +320,7 @@ If the data is 0-byte long, this pipe will return successfully without waiting, 
 
 Count the pipe's pending data's free size, which is the number of bytes this process can currently write to the pipe without blocking.
 
-## `0x44` PIPE_READ
+## `0x24` PIPE_READ
 
 #### Arguments
 
@@ -465,7 +354,7 @@ Encoded on 4 bytes:
 Read pending data or message from a pipe.  
 If the pipe was closed while the buffer was not empty, this syscall will still be able to read the remaining buffer's data - but the pipe will not be able to receive any additional data. Then, once the buffer is empty, the pipe will be made unavailable.
 
-## `0x45` PIPE_COUNT_READ
+## `0x25` PIPE_COUNT_READ
 
 #### Arguments
 
@@ -490,7 +379,7 @@ If the pipe was closed while the buffer was not empty, this syscall will still b
 
 Count the pipe's pending data's size, which is the number of bytes this process can currently read from the pipe without blocking.
 
-## `0x46` CLOSE_PIPE
+## `0x26` CLOSE_PIPE
 
 #### Arguments
 
@@ -513,10 +402,10 @@ _None_
 #### Description
 
 Close an PIPE properly. The RC and SC parts will be immediatly closed.  
-The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal unless this pipe was created during a [service connection](#0x30-accept_service_conn).  
+The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x22-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
 If this syscall is not performed on an PIPE before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
 
-## `0x47` PIPE_INFO
+## `0x27` PIPE_INFO
 
 #### Arguments
 
@@ -544,7 +433,7 @@ _None_
 
 Get informations on a pipe from its RC or SC identifier.
 
-## `0x48` SEND_PIPE
+## `0x28` SEND_PIPE
 
 #### Arguments
 
@@ -562,16 +451,127 @@ _None_
 
 | Error code | Description                                                                                                                                                |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal |
+| `0x10`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal |
 
 #### Description
 
 Share an RC or SC identifier with another process.  
-This will trigger in the target process the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal (if an RC is provided) or the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal (if an SC is provided), unless the notification mode tells otherwise.
+This will trigger in the target process the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal (if an RC is provided) or the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal (if an SC is provided), unless the notification mode tells otherwise.
 
 When the target process writes through the received SC or read from the received RC, the performance will be equal to writing or reading through the original RC/SC identifier.
 
-## `0x50` MEM_ALLOC
+## `0x2A` CONNECT_SERVICE
+
+#### Arguments
+
+| Description                                                                                            | Size      |
+| ------------------------------------------------------------------------------------------------------ | --------- |
+| Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier) | 256 bytes |
+
+#### Return value
+
+| Description                        | Size    |
+| ---------------------------------- | ------- |
+| Unique connection ID               | 8 bytes |
+| [Pipe](ipc.md#pipes) SC identifier | 8 bytes |
+| [Pipe](ipc.md#pipes) RC identifier | 8 bytes |
+
+#### Errors
+
+| Error code | Description                                                                                                                                      |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `0x10`     | The provided AID does not exist                                                                                                                  |
+| `0x20`     | Target application does not have a service                                                                                                       |
+| `0x30`     | Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2b-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault) |
+| `0x31`     | Service rejected the connection request                                                                                                          |
+
+#### Description
+
+Ask a service to etablish connection. The current process is called the service's _client_.
+
+**NOTE:** When this signal is sent, the service's answer will be waited, so the instructions following the sending of this signal may not be ran until several seconds in the worst scenario.
+
+## `0x2B` END_SERVICE_CONN
+
+#### Arguments
+
+| Description          | Size    |
+| -------------------- | ------- |
+| Unique connection ID | 8 bytes |
+
+#### Return value
+
+_None_
+
+#### Errors
+
+| Error code | Description                                      |
+| ---------- | ------------------------------------------------ |
+| `0x10`     | The provided connection ID does not exist        |
+| `0x20`     | This connection was already closed               |
+| `0x21`     | The associated service thread already terminated |
+
+#### Description
+
+Tell a service to properly close the connection. The associated [pipe](ipc.md#pipes) SC and RC channels will immediatly be closed.
+
+## `0x2C` ACCEPT_SERVICE_CONN
+
+#### Arguments
+
+| Description                    | Size    |
+| ------------------------------ | ------- |
+| Connection's unique request ID | 8 bytes |
+
+#### Return value
+
+- `0x00` if the current process is now the associated client's thread, `0x01` else
+- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
+- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
+
+#### Errors
+
+| Error code | Description                                                                                                                       |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `0x10`     | This request ID does not exist                                                                                                    |
+| `0x20`     | The process which requested the connection already terminated                                                                     |
+| `0x30`     | Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) |
+
+#### Description
+
+Confirm the current service accepts the connection with a client.  
+A dedicated pipe's SC and another's RC will be provided to communicate with the client.
+
+This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
+The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x2b-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
+
+When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x2d-service_client_closed) signal is sent to this thread.
+
+## `0x2D` REJECT_SERVICE_CONN
+
+#### Arguments
+
+| Description                    | Size    |
+| ------------------------------ | ------- |
+| Connection's unique request ID | 8 bytes |
+
+#### Return value
+
+_None_
+
+#### Errors
+
+| Error code | Description                                                                                                                       |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `0x10`     | This request ID does not exist                                                                                                    |
+| `0x20`     | The process which requested the connection already terminated                                                                     |
+| `0x30`     | Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) |
+
+#### Description
+
+Reject a connection request to the current service.
+
+## `0x30` MEM_ALLOC
 
 #### Arguments
 
@@ -596,7 +596,7 @@ _None_
 
 Allocate a linear block of memory.
 
-## `0x51` MEM_UNALLOC
+## `0x31` MEM_UNALLOC
 
 #### Arguments
 
@@ -620,7 +620,7 @@ _None_
 
 Unallocate a linear block of memory.
 
-## `0x52` SHARE_MEM
+## `0x32` SHARE_MEM
 
 #### Arguments
 
@@ -630,7 +630,7 @@ Unallocate a linear block of memory.
 | Pointer to the buffer to share | CPU-dependent size |
 | Number of bytes to share       | CPU-dependent size |
 | Command code                   | 2 bytes            |
-| Notification mode              | 1 byte             | `0x00` to notify the process with the [`RECV_SHARED_MEM`](signals.md#0x52-recv_shared_mem) signal, `0x01` to skip it |
+| Notification mode              | 1 byte             | `0x00` to notify the process with the [`RECV_SHARED_MEM`](signals.md#0x32-recv_shared_mem) signal, `0x01` to skip it |
 | Sharing mode                   | 1 byte             | `0x00` to perform a mutual sharing, `0x01` to perform an exclusive sharing                                           |
 | Access permissions             | 1 byte             | Strongest bit for read, next for write, next for exec - other bits are considered invalid when set                   |
 
@@ -659,11 +659,11 @@ Unallocate a linear block of memory.
 Share memory pages of the current process with one or multiple external processes.  
 In mutual sharing mode, the memory is available to both the sharer and the receiver. In exclusive mode, the memory is unmapped from the sharer process.  
 The provided access permissions indicates how the receiver process will be able to access the shared memory when sharing in mutual mode.  
-This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x52-recv_shared_mem) with the provided command code, unless the notification mode states otherwise.
+This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x32-recv_shared_mem) with the provided command code, unless the notification mode states otherwise.
 
 When a process wants to transmit a set of data without getting it back later, the exclusive mode is to prefer. When the data needs to be accessed back by the sharer, the mutual mode should be used instead.
 
-## `0x53` UNSHARE_MEM
+## `0x33` UNSHARE_MEM
 
 #### Arguments
 
@@ -684,10 +684,10 @@ _None_
 
 #### Description
 
-Stop sharing a memory segment started by [`SHARE_MEM`](#0x52-share_mem). Note that only mutual sharing can be unmapped.  
-This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x53-unshared_mem) signal.
+Stop sharing a memory segment started by [`SHARE_MEM`](#0x32-share_mem). Note that only mutual sharing can be unmapped.  
+This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x33-unshared_mem) signal.
 
-## `0x54` MEM_SHARING_INFO
+## `0x34` MEM_SHARING_INFO
 
 #### Arguments
 

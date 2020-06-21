@@ -140,3 +140,26 @@ Datafield:
 Sent to a process when a [pipe](ipc.md#pipes) shared with another process is closed.
 
 **NOTE:** This does not apply to service pipes.
+
+## `0x52` RECV_SHARED_MEM
+
+Default: -
+Datafield:
+
+- Sender PID (8 bytes)
+- Command code (2 bytes)
+- Mapped segment's start address in the current process (CPU-dependent size)
+- Mapped segment's length (CPU-dependent size)
+- Sharing mode (1 byte): `0x00` for mutual sharing, `0x01` for exclusive sharing
+- Access permissions (1 byte): for mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, `0x00`
+
+Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by another process.
+
+## `0x53` UNSHARED_MEM
+
+Default: -
+Datafield:
+
+- `0x00` if the shared memory was unshared properly using the [UNSHARE_MEM](syscalls.md#0x53-unshare_mem) syscall, or `0x01` if the other process brutally terminated (1 byte)
+
+Sent to a process when a [shared segment of memory](ipc.md#shared-memory) is unshared by the sharer process.

@@ -83,4 +83,21 @@ Note that when a return value has been fully transmitted through CMDOUT, all pip
 
 ## Shared Memory
 
-**TODO**
+Shared memory allows a process to share a part of its memory with another process. It has multiple advantages over pipes:
+
+- Data is not copied twice, as the sender process directly shares a part of its own memory
+- There is no pipe management, which results in saving operations and less memory accesses
+- There is no pipe buffer to manage which means all the data can be sent at once
+
+Its main disadvantage being that all data is shared at once, so there is no synchronization or "asynchronous sending" mechanism, which is the purpose of pipes.
+
+It works by asking the kernel to share the memory through the [`SHARE_MEM`](syscalls.md#0x52-share_mem) syscall, the target process receiving the [`RECV_SHARED_MEM`](signals.md#0x52-recv_shared_mem) signal.
+
+There are two types of sharing:
+
+- _Mutual_ sharing allows both the sharer and the receiver processes to access the shared memory ;
+- _Exclusive_ sharing unmaps the shared memory from the sharer and only allows the receiver process to access it
+
+Exclusive mode has several advantages: the sender process to not have to care about managing this memory and avoid overwriting it by accident, but it also ensures the receiving process that the sender will not perform malicious modifications on the shared buffer while the data is processed on its side.
+
+Mutual memory sharing can be stopped using the [`UNSHARE_MEM`](syscalls.md#0x53-unshare_mem) syscall, while exclusive sharing are left to the receiver process.

@@ -312,7 +312,7 @@ Errors:
 - `0x20`: the provided RC/SC identifier is part of a service PIPE
 
 Close an PIPE properly. The RC and SC parts will be immediatly closed.
-The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal.
+The other process this PIPE was shared with will receive the [`PIPE_CLOSED`](signals.md#0x42-pipe_closed) signal unless this pipe was created during a [service connection](#0x30-accept_service_conn).
 If this syscall is not performed on an PIPE before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
 
 ## `0x47` PIPE_INFO
@@ -382,3 +382,70 @@ Errors:
 - `0x11`: the provided size, added to the start address, would exceed the process' range
 
 Unallocate a linear block of memory.
+
+## `0x52` SHARE_MEM
+
+Arguments:
+
+- Target process' PID (8 bytes)
+- Pointer to the buffer to share (CPU-dependent size)
+- Number of bytes to share (CPU-dependent size)
+- Command code (2 bytes)
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_SHARED_MEM`](signals.md#0x52-recv_shared_mem) signal, `0x01` to skip it
+- Sharing mode (1 byte): `0x00` to perform a mutual sharing, `0x01` to perform an exclusive sharing
+- Access permissions (1 byte): strongest bit for read, next for write, next for exec - other bits are considered invalid when set
+
+Return value: Shared memory segment ID (8 bytes)
+
+Errors:
+
+- `0x10`: invalid notification mode provided
+- `0x11`: invalid sharing mode provided
+- `0x12`: invalid access permissions provided
+- `0x13`: access permissions were not set but the sharing mode is set to mutual
+- `0x14`: access permissions were provided but the sharing mode is set to exclusive
+- `0x15`: the buffer's start address is not aligned with a page
+- `0x16`: the buffer's length is not a multiple of a page's size
+- `0x17`: the buffer's size is null (0 bytes)
+- `0x18`: there is not enough contiguous space in the process' memory space to allocate the buffer
+
+Share memory pages of the current process with one or multiple external processes.  
+In mutual sharing mode, the memory is available to both the sharer and the receiver. In exclusive mode, the memory is unmapped from the sharer process.  
+The provided access permissions indicates how the receiver process will be able to access the shared memory when sharing in mutual mode.  
+This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x52-recv_shared_mem) with the provided command code, unless the notification mode states otherwise.
+
+When a process wants to transmit a set of data without getting it back later, the exclusive mode is to prefer. When the data needs to be accessed back by the sharer, the mutual mode should be used instead.
+
+## `0x53` UNSHARE_MEM
+
+Arguments: Shared memory segment ID (8 bytes)
+
+Return value: -
+
+Errors:
+
+- `0x10`: unknown shared memory segment ID provided
+- `0x11`: provided sharing ID is exclusive
+
+Stop sharing a memory segment started by [`SHARE_MEM`](#0x52-share_mem). Note that only mutual sharing can be unmapped.  
+This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x53-unshared_mem) signal.
+
+## `0x54` MEM_SHARING_INFO
+
+Arguments: Shared memory segment ID (8 bytes)
+
+Return value:
+
+- Sharer process' PID (8 bytes)
+- Receiver process' PID (8 bytes)
+- Sharing mode (1 byte): `0x00` for mutual mode, `0x01` for exclusive mode
+- Shared buffer's start address (CPU-dependent size)
+- Sharer buffer's length (CPU-dependent size)
+- Command code (2 bytes)
+- Access permissions (1 byte): for mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, `0x00`
+
+Errors:
+
+- `0x10`: unknwon shared memory segment ID provided
+
+Get informations about a shared memory segment.

@@ -137,6 +137,6 @@ Datafield:
 - `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte)
 - RC/SC identifier (8 bytes)
 
-Sent to a process when an [pipe](ipc.md#pipes) shared with another process is closed.
+Sent to a process when a [pipe](ipc.md#pipes) shared with another process is closed.
 
 **NOTE:** This does not apply to service pipes.

@@ -15,7 +15,13 @@ System calls always return two numbers: a 8-bit one (errcode) and a 8 bytes one 
 - `0x01`: the requested syscall does not exist
 - `0x02`: at least one argument is invalid (e.g. providing a pointer to the `0` address)
 
-Some syscalls have specific error codes (starting from `0x10`).
+Errors are encoded this way:
+
+- `0x00` to `0x0F`: generic errors (see above)
+- `0x10` to `0x1F`: invalid arguments provided (e.g. value is too high)
+- `0x20` to `0x2F`: arguments are not valid in the current context (e.g. provided ID does not exist)
+- `0x30` to `0x3F`: resource errors (e.g. file not found)
+- `0x40` to `0xFF`: other types of errors
 
 Note that advanced actions like permissions management or filesystem access are achieved through the use of [IPC](ipc.md).
 
@@ -41,7 +47,7 @@ Return value: -
 Errors:
 
 - `0x10`: the requested signal does not exist
-- `0x11`: the requested signal does not have an handler
+- `0x20`: the requested signal does not have an handler
 
 Unregister a signal handler, falling back to the default signal reception behaviour if this signal is sent to the process.
 
@@ -61,7 +67,7 @@ Arguments: -
 Return value: -  
 Errors:
 
-- `0x10`: The process already told it was ready
+- `0x20`: The process already told it was ready
 
 Indicate the system this process has set up all its event listeners, so it can start dequeuing [signals](signals.md).
 
@@ -81,7 +87,7 @@ Get the current process' PID.
 
 Arguments: -  
 Return value: Amount of time the process was suspended, in milliseconds (8 bytes)  
-Errors: `0x10` if the current process is not an application process
+Errors: `0x20` if the current process is not an application process
 
 [Suspend](../features/balancer.md#application-processes-suspension) the current process.
 
@@ -108,9 +114,9 @@ Return value:
 Errors:
 
 - `0x10`: the provided AID does not exist
-- `0x11`: target application does not have a service
-- `0x12`: failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x30-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
-- `0x20`: service rejected the connection request
+- `0x20`: target application does not have a service
+- `0x30`: failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x30-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
+- `0x31`: service rejected the connection request
 
 Ask a service to etablish connection. The current process is called the service's _client_.
 
@@ -123,8 +129,8 @@ Return value: -
 Errors:
 
 - `0x10`: the provided connection ID does not exist
-- `0x11`: this connection was already closed
-- `0x12`: the associated service thread already terminated
+- `0x20`: this connection was already closed
+- `0x21`: the associated service thread already terminated
 
 Tell a service to properly close the connection. The associated [pipe](ipc.md#pipes) SC and RC channels will immediatly be closed.
 
@@ -140,8 +146,8 @@ Return value:
 Errors:
 
 - `0x10`: this request ID does not exist
-- `0x11`: answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
-- `0x12`: the process which requested the connection already terminated
+- `0x20`: the process which requested the connection already terminated
+- `0x30`: answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
 
 Confirm the current service accepts the connection with a client.
 A dedicated pipe's SC and another's RC will be provided to communicate with the client.
@@ -159,8 +165,8 @@ Return value: -
 Errors:
 
 - `0x10`: this request ID does not exist
-- `0x11`: answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
-- `0x12`: the process which requested the connection already terminated
+- `0x20`: the process which requested the connection already terminated
+- `0x30`: answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
 
 Reject a connection request to the current service.
 
@@ -180,10 +186,10 @@ Errors:
 
 - `0x10`: invalid transmission mode provided
 - `0x11`: invalid notification mode provided
-- `0x12`: the provided PID does not exist
-- `0x13`: the target process is not part of this application
-- `0x14`: the target process runs under another user
-- `0x15`: notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal
+- `0x20`: the provided PID does not exist
+- `0x21`: the target process is not part of this application
+- `0x22`: the target process runs under another user
+- `0x23`: notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal
 
 Open a PIPE with a process of the same application and running under the same user and get its SC.
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.
@@ -206,10 +212,10 @@ Errors:
 
 - `0x10`: invalid transmission mode provided
 - `0x11`: invalid notification mode provided
-- `0x12`: the provided PID does not exist
-- `0x13`: the target process is not part of this application
-- `0x14`: the target process runs under another user
-- `0x15`: notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
+- `0x20`: the provided PID does not exist
+- `0x21`: the target process is not part of this application
+- `0x22`: the target process runs under another user
+- `0x23`: notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal
 
 Open a PIPE with a process of the same application and running under the same user and get its RC.
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.
@@ -237,11 +243,11 @@ Return value:
 Errors:
 
 - `0x10`: invalid mode provided
-- `0x11`: the provided SC identifier does not exist
-- `0x12`: the provided SC was already closed
-- `0x13`: the provided SC refers to a message pipe but the provided size is larger than 64 KB
-- `0x14`: the provided SC refers to a message pipe but the `0x02` mode was provided
-- `0x15`: there is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
+- `0x20`: the provided SC identifier does not exist
+- `0x21`: the provided SC was already closed
+- `0x22`: the provided SC refers to a message pipe but the provided size is larger than 64 KB
+- `0x23`: the provided SC refers to a message pipe but the `0x02` mode was provided
+- `0x30`: there is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
 
 Write data through a pipe.  
 Messages will always be sent at once when writing to message pipes.  
@@ -280,10 +286,10 @@ Return value:
 Errors:
 
 - `0x10`: invalid mode provided
-- `0x11`: the provided RC identifier does not exist
-- `0x12`: the provided RC was already closed
-- `0x13`: there is no pending data in the pipe and the mode argument was set to `0x01`
-- `0x14`: the provided RC refers to a message pipe but the `0x02` mode was provided
+- `0x20`: the provided RC identifier does not exist
+- `0x21`: the provided RC was already closed
+- `0x22`: there is no pending data in the pipe and the mode argument was set to `0x01`
+- `0x23`: the provided RC refers to a message pipe but the `0x02` mode was provided
 
 Read pending data or message from a pipe.  
 If the pipe was closed while the buffer was not empty, this syscall will still be able to read the remaining buffer's data - but the pipe will not be able to receive any additional data. Then, once the buffer is empty, the pipe will be made unavailable.
@@ -363,7 +369,7 @@ Errors:
 
 - `0x10`: the provided start address is out of the process' range
 - `0x11`: the provided size, added to the start address, would exceed the process' range
-- `0x12`: the kernel could not find a linear block of memory of the requested size
+- `0x30`: the kernel could not find a linear block of memory of the requested size
 
 Allocate a linear block of memory.
 
@@ -407,7 +413,7 @@ Errors:
 - `0x15`: the buffer's start address is not aligned with a page
 - `0x16`: the buffer's length is not a multiple of a page's size
 - `0x17`: the buffer's size is null (0 bytes)
-- `0x18`: there is not enough contiguous space in the process' memory space to allocate the buffer
+- `0x30`: there is not enough contiguous space in the process' memory space to allocate the buffer
 
 Share memory pages of the current process with one or multiple external processes.  
 In mutual sharing mode, the memory is available to both the sharer and the receiver. In exclusive mode, the memory is unmapped from the sharer process.  
@@ -425,7 +431,7 @@ Return value: -
 Errors:
 
 - `0x10`: unknown shared memory segment ID provided
-- `0x11`: provided sharing ID is exclusive
+- `0x20`: provided sharing ID is exclusive
 
 Stop sharing a memory segment started by [`SHARE_MEM`](#0x52-share_mem). Note that only mutual sharing can be unmapped.  
 This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x53-unshared_mem) signal.

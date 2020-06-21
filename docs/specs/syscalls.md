@@ -413,7 +413,7 @@ Errors:
 - `0x15`: the buffer's start address is not aligned with a page
 - `0x16`: the buffer's length is not a multiple of a page's size
 - `0x17`: the buffer's size is null (0 bytes)
-- `0x30`: there is not enough contiguous space in the process' memory space to allocate the buffer
+- `0x30`: there is not enough contiguous space in the receiver process' memory space to map the shared memory
 
 Share memory pages of the current process with one or multiple external processes.  
 In mutual sharing mode, the memory is available to both the sharer and the receiver. In exclusive mode, the memory is unmapped from the sharer process.  

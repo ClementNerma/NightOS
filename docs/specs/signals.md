@@ -134,7 +134,7 @@ Default: -
 Datafield:
 
 - `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x46-close_pipe) syscall, or `0x01` if the other process brutally terminated (1 byte)
-- `0x00` if this process contained the RC part, `0x01` if it contained the SC part
+- `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte)
 - RC/SC identifier (8 bytes)
 
 Sent to a process when an [pipe](ipc.md#pipes) shared with another process is closed.

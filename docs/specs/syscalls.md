@@ -318,14 +318,14 @@ Reject a connection request to the current service.
 
 #### Errors
 
-| Error code | Description                                                                                                                                                    |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | Invalid transmission mode provided                                                                                                                             |
-| `0x11`     | Invalid notification mode provided                                                                                                                             |
-| `0x20`     | The provided PID does not exist                                                                                                                                |
-| `0x21`     | The target process is not part of this application                                                                                                             |
-| `0x22`     | The target process runs under another user                                                                                                                     |
-| `0x23`     | Notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal |
+| Error code | Description                                                                                                                                              |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `0x10`     | Invalid transmission mode provided                                                                                                                       |
+| `0x11`     | Invalid notification mode provided                                                                                                                       |
+| `0x20`     | The provided PID does not exist                                                                                                                          |
+| `0x21`     | The target process is not part of this application                                                                                                       |
+| `0x22`     | The target process runs under another user                                                                                                               |
+| `0x23`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x40-recv_read_pipe) signal |
 
 #### Description
 
@@ -354,14 +354,14 @@ The target process will receive the [`RECV_READ_PIPE`](signals.md#0x40-recv_read
 
 #### Errors
 
-| Error code | Description                                                                                                                                                      |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | Invalid transmission mode provided                                                                                                                               |
-| `0x11`     | Invalid notification mode provided                                                                                                                               |
-| `0x20`     | The provided PID does not exist                                                                                                                                  |
-| `0x21`     | The target process is not part of this application                                                                                                               |
-| `0x22`     | The target process runs under another user                                                                                                                       |
-| `0x23`     | Notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal |
+| Error code | Description                                                                                                                                                |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `0x10`     | Invalid transmission mode provided                                                                                                                         |
+| `0x11`     | Invalid notification mode provided                                                                                                                         |
+| `0x20`     | The provided PID does not exist                                                                                                                            |
+| `0x21`     | The target process is not part of this application                                                                                                         |
+| `0x22`     | The target process runs under another user                                                                                                                 |
+| `0x23`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal |
 
 #### Description
 
@@ -560,9 +560,9 @@ _None_
 
 #### Errors
 
-| Error code | Description                                                                                                                                                      |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0x10`     | Notification mode is set to `0x00` but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal |
+| Error code | Description                                                                                                                                                |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `0x10`     | Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal |
 
 #### Description
 

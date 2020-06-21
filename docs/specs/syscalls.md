@@ -198,7 +198,7 @@ Arguments:
 - Command code (2 bytes)
 - Buffer size multiplier (1 byte)
 - Transmission mode (1 byte): `0x00` to create a raw pipe, `0x01` to create a message pipe
-- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_WRITE_PIPE`](signals.md#0x40-recv_write_pipe) signal, `0x01` to skip the signal
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_WRITE_PIPE`](signals.md#0x41-recv_write_pipe) signal, `0x01` to skip the signal
 
 Return value: [Pipe](ipc.md#pipes) RC identifier (8 bytes)
 

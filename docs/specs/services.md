@@ -16,7 +16,7 @@ A _connection_ is the opening of two communication [pipes](ipc.md#pipes) (one fo
 
 When a process wants to connect to a service, it uses the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) to send a _connection request_ to this service.
 
-The service process then receives the request through the [`SERVICE_CONN_REQUEST`](signals.md#0x2b-service_conn_request).
+The service process then receives the request through the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request).
 
 It is expected to answer under a short delay specified in the [registry](registry.md)'s `system.signals.service_answer_delay` key (1000 ms by default).
 
@@ -31,13 +31,13 @@ A service process' threads are called _dispatcher threads_, except threads that 
 ### Closing a connection
 
 The service cannot terminate a connection by itself.
-If a client thread terminates brutally, the [`SERVICE_CLOSED`](signals.md#0x2a-service_closed) signal will be sent to its client.
+If a client thread terminates brutally, the [`SERVICE_CLOSED`](signals.md#0x2d-service_closed) signal will be sent to its client.
 
 Only clients can properly close a connection to a service, using the [`END_SERVICE_CONN`](syscalls.md#0x2b-end_service_conn) syscall. The pipe communication channels immediatly close (on both the client and the thread's sides).
 
 The service then receives the [`SERVICE_CLIENT_CONN_END`](signals.md#0x2c-service_client_conn_end) signal.
 
-If the client terminates brutally (before the connection was properly ended), the client thread receives the [`SERVICE_CLIENT_CLOSED`](signals.md#0x2d-service_client_closed) signal.
+If the client terminates brutally (before the connection was properly ended), the client thread receives the [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal.
 
 When a client thread receives on these two signals, it is expected to end as soon as possible (though there is no time limit).
 

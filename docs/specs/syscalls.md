@@ -162,8 +162,8 @@ _None_
 
 Kill the current process.
 
-A [`SERVICE_CLIENT_CLOSED`](signals.md#0x2d-service_client_closed) signal is sent to all services connection the process has.  
-If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x2a-service_closed) signal is sent to all active clients.
+A [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to all services connection the process has.  
+If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x2d-service_closed) signal is sent to all active clients.
 
 ## `0x20` OPEN_PIPE
 
@@ -349,7 +349,7 @@ If this syscall is not performed on a pipe before the process exits, the other p
 
 - `0x10`: The provided ANID does not exist
 - `0x20`: Target application does not have a service
-- `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2b-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
+- `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 - `0x31`: Service rejected the connection request
 
 **Description:**
@@ -402,9 +402,9 @@ Confirm the current service accepts the connection with a client.
 A dedicated message pipe's SC and another's RC will be provided to communicate with the client.
 
 This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
-The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x2b-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
+The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
 
-When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x2d-service_client_closed) signal is sent to this thread.
+When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to this thread.
 
 ## `0x2D` REJECT_SERVICE_CONN
 

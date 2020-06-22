@@ -92,15 +92,7 @@ Sent to a process when a [pipe](ipc.md#pipes) shared with another process is clo
 
 **NOTE:** This does not apply to service pipes.
 
-## `0x2A` SERVICE_CLOSED
-
-**Datafield:**
-
-- Connection's unique request ID (8 bytes)
-
-Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
-
-## `0x2B` SERVICE_CONN_REQUEST
+## `0x2A` SERVICE_CONN_REQUEST
 
 **Datafield:**
 
@@ -115,15 +107,23 @@ The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscal
 
 If no handler is registered for this signal, it will kill the process when received.
 
+## `0x2B` SERVICE_CLIENT_CLOSED
+
+Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
+The thread is expected to terminate as soon as possible (there is no time limit though).
+
 ## `0x2C` SERVICE_CLIENT_CONN_END
 
 Sent to a [client thread](services.md#thread-types) to indicate its client asked to close the connection.
 The associated RC and SC are immediatly closed.
 
-## `0x2D` SERVICE_CLIENT_CLOSED
+## `0x2D` SERVICE_CLOSED
 
-Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
-The thread is expected to terminate as soon as possible (there is no time limit though).
+**Datafield:**
+
+- Connection's unique request ID (8 bytes)
+
+Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
 
 ## `0x32` RECV_SHARED_MEM
 

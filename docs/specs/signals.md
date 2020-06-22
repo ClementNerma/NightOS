@@ -28,14 +28,14 @@ You can find below the exhaustive list of signals.
 
 ## `0x01` HANDLER_FAULT
 
-**Datafield:**
-
-- Faulty signal ID (8 bytes)
-
 Sent when a signal is sent to a process but the registered handler points to a memory zone that is not executable by the current process.
 If the sending of this signal to the process results to another fault, it's called a _double handler fault_ and the process is immediatly killed.
 
 If no handler is registered for this signal, it will kill the process when received.
+
+**Datafield:**
+
+- Faulty signal ID (8 bytes)
 
 ## `0x10` SUSPEND
 
@@ -47,23 +47,26 @@ Sent when the process is asked to terminate. It's up to the process to either ig
 
 ## `0x12` WILL_SUSPEND
 
+Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
+
 **Datafield:**
 
 - [Registry](registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
 
-Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
-
 ## `0x13` WILL_TERMINATE
-
-**Datafield:**
-
-- Delay before forced termination, in milliseconds (2 bytes)
 
 Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.
 
 If no handler is registered for this signal, it will kill the process when received.
 
+**Datafield:**
+
+- Delay before forced termination, in milliseconds (2 bytes)
+
 ## `0x20` RECV_PIPE
+
+Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.  
+The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
 
 **Datafield:**
 
@@ -75,10 +78,11 @@ If no handler is registered for this signal, it will kill the process when recei
 - Mode (1 byte): `0x00` if it's a raw pipe, `0x01` if it's a message pipe
 - Size hint in bytes (8 bytes), with `0` being the 'no size hint' value
 
-Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.  
-The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
-
 ## `0x21` PIPE_CLOSED
+
+Sent to a process when a [pipe](ipc.md#pipes) shared with another process is closed.
+
+**NOTE:** This does not apply to service pipes.
 
 **Datafield:**
 
@@ -88,18 +92,7 @@ The command code can be used to determine what the other process is expecting th
 - Pipe identity (1 byte): `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte)
 - RC or SC identifier (8 bytes)
 
-Sent to a process when a [pipe](ipc.md#pipes) shared with another process is closed.
-
-**NOTE:** This does not apply to service pipes.
-
 ## `0x2A` SERVICE_CONN_REQUEST
-
-**Datafield:**
-
-- Callee process' ID (8 bytes)
-- Connection's unique request ID (8 bytes)
-- Command code (2 bytes)
-- [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
 
 Sent to a service process' [dispatcher thread](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.
 
@@ -108,6 +101,13 @@ The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscal
 If no handler is registered for this signal, it will kill the process when received.
 
 **NOTE:** This signal cannot be received if the application does not [expose a service](../concepts/applications.md#services).
+
+**Datafield:**
+
+- Callee process' ID (8 bytes)
+- Connection's unique request ID (8 bytes)
+- Command code (2 bytes)
+- [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
 
 ## `0x2B` SERVICE_CLIENT_CLOSED
 
@@ -121,13 +121,15 @@ The associated RC and SC are immediatly closed.
 
 ## `0x2D` SERVICE_SERVER_QUITTED
 
+Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
+
 **Datafield:**
 
 - Connection's unique request ID (8 bytes)
 
-Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
-
 ## `0x32` RECV_SHARED_MEM
+
+Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by another process.
 
 **Datafield:**
 
@@ -140,14 +142,12 @@ Sent to a process that previously established a connection with a service, to in
   - For mutual sharings: strongest bit for read, next for write, next for exec
   - For exclusive sharings: `0x00`
 
-Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by another process.
-
 ## `0x33` UNSHARED_MEM
+
+Sent to a process when a [shared segment of memory](ipc.md#shared-memory) is unshared by the sharer process.
 
 **Datafield:**
 
 - Unsharing type (1 byte):
   - `0x00` if the shared memory was unshared properly using the [UNSHARE_MEM](syscalls.md#0x33-unshare_mem) syscall
   - `0x01` if the other process brutally terminated
-
-Sent to a process when a [shared segment of memory](ipc.md#shared-memory) is unshared by the sharer process.

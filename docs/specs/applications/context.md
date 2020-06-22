@@ -7,15 +7,20 @@ It indicates why the application was started and so what it is supposed to do.
 
 The most important information is the _execution context_, which indicates the reason the application was started.
 
-It is one-byte long and is one the following values:
+It is one-byte long, and is made of the following bits (starting from the strongest):
 
-- `0x01`: the application was started by the system as an [application service](../../concepts/applications.md#services)
-- `0x02`: the application was started automatically after an improper shutdown (and will _likely_ receive a crash save soon)
-- `0x03`: the application was started by the desktop environment
-- `0x04`: the application was started by itself (from another process of the same application)
-- `0x05`: the application was started by another application
-- `0x06`: the application was started using one its exposed [shell commands](../../concepts/applications.md#commands)
-- `0x07`: the application's return value will be received using the dedicated [shell operator](../shell-scripting.md#reading-a-commands-output)
+- Bits 0-3: _execution purpose_
+  - `0x1`: the application was started by the system as an [application service](../../concepts/applications.md#services)
+  - `0x2`: the application was started by the desktop environment
+  - `0x3`: the application was started by itself (from another process of the same application)
+  - `0x4`: the application was started by another application
+  - `0x5`: the application was started using one its exposed [shell commands](../../concepts/applications.md#commands)
+- Bit 4: set if the application was started automatically after an improper shutdown and should connect to the [`sys:crshsv`](../services.md#syscrshsv) service in order to get its crash save
+- Bit 5: set if the application's raw output (CMDRAW) will be read (e.g. through the use of a [shell operator](../shell-scripting.md#reading-a-commands-output))
+- Bit 6: set if other instances of this application are running
+- Bit 7: set if this application is starting for the very first time since it was installed
+
+The execution context is especially important as it determines what the application should do (e.g. uninstall itself, run as a command...) but also if it should output data through its CMDRAW in case it was called by a command.
 
 ## Data structure
 

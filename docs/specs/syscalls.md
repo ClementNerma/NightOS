@@ -408,7 +408,7 @@ Allocate a linear block of memory.
 
 - `0x30`: The kernel could not find a linear block of memory of the requested size
 
-## `0x31` MEM_UNALLOC
+## `0x31` MEM_FREE
 
 Unallocate a linear block of memory.
 

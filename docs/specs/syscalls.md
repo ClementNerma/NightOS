@@ -432,6 +432,7 @@ _None_
 - `0x20`: The provided start address is out of the process' range
 - `0x21`: The provided size, added to the start address, would exceed the process' range
 - `0x22`: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)
+- `0x23`: One or more of the provided pages are shared with another process
 
 ## `0x32` SHARE_MEM
 

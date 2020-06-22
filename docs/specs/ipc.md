@@ -23,9 +23,9 @@ The process receiving an SC or RC receives another identifier for it, unique to 
 
 ### Opening pipes
 
-A process can open a pipe with another process using the [`OPEN_WRITE_PIPE`](syscalls.md#0x20-open_write_pipe) (it send data) or the [`OPEN_READ_PIPE`](syscalls.md#0x21-open_read_pipe) (to receive data) syscall.
+A process can open a pipe with another process using the [`OPEN_PIPE`](syscalls.md#0x20-open_pipe) syscall.
 
-The other process will then respectively receive either the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) or the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal. If no handler is set when the signal is sent, the opening syscall fails.
+The other process will then receive the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal. If no handler is set when the signal is sent, the opening syscall fails.
 
 ### Pipes' pending data
 
@@ -41,7 +41,7 @@ When a pipe is being written to or read from, it is _locked_, which means no oth
 
 ### Closing pipes
 
-Any of the two processes (be it the receiver or the sender) can close a pipe using the [`CLOSE_PIPE`](syscalls.md#0x26-close_pipe) syscall, providing its SC or RC identifier. The pipe is immediatly closed on both sides, and the other process receives the [`PIPE_CLOSED`](signals.md#0x22-pipe_closed) signal.
+Any of the two processes (be it the receiver or the sender) can close a pipe using the [`CLOSE_PIPE`](syscalls.md#0x26-close_pipe) syscall, providing its SC or RC identifier. The pipe is immediatly closed on both sides, and the other process receives the [`PIPE_CLOSED`](signals.md#0x21-pipe_closed) signal.
 
 ### Message pipes
 

@@ -165,15 +165,16 @@ Kill the current process.
 A [`SERVICE_CLIENT_CLOSED`](signals.md#0x2d-service_client_closed) signal is sent to all services connection the process has.  
 If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x2a-service_closed) signal is sent to all active clients.
 
-## `0x20` OPEN_WRITE_PIPE
+## `0x20` OPEN_PIPE
 
 **Arguments:**
 
 - Target process' PID (8 bytes)
 - Command code (2 bytes)
+- Pipe type (1 byte): `0x00` to create a write pipe, `0x01` to create a read pipe
 - Buffer size multiplier (1 byte)
 - Transmission mode (1 byte): `0x00` to create a raw pipe, `0x01` to create a message pipe
-- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal, `0x01` to skip it
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal, `0x01` to skip it
 
 **Return value:**
 
@@ -186,44 +187,37 @@ If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x2a-servic
 - `0x20`: The provided PID does not exist
 - `0x21`: The target process is not part of this application
 - `0x22`: The target process runs under another user
-- `0x23`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal
+- `0x23`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal
 
 **Description:**
 
 Open a pipe with a process of the same application and running under the same user and get its SC.  
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
-The target process will receive the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal with the provided command code, unless notification mode tells otherwise.
+The target process will receive the SC/RC's counterpart through the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal, unless notification mode states otherwise.
 
-## `0x21` OPEN_READ_PIPE
+## `0x21` SEND_PIPE
 
 **Arguments:**
 
-- Target process' PID (8 bytes)
-- Command code (2 bytes)
-- Buffer size multiplier (1 byte)
-- Transmission mode (1 byte): `0x00` to create a raw pipe, `0x01` to create a message pipe
-- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal, `0x01` to skip the signal
+- [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)
+- Target PID (8 bytes)
+- Notification mode (1 byte): `0x00` to notify the process with a pipe reception signal, `0x01` to skip the signal
 
 **Return value:**
 
-- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
+_None_
 
 **Errors:**
 
-- `0x10`: Invalid transmission mode provided
-- `0x11`: Invalid notification mode provided
-- `0x20`: The provided PID does not exist
-- `0x21`: The target process is not part of this application
-- `0x22`: The target process runs under another user
-- `0x23`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal
+- `0x10`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal
 
 **Description:**
 
-Open a pipe with a process of the same application and running under the same user and get its RC.  
-The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
-The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
-The target process will receive the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal with the provided command code, unless notification mode tells otherwise.
+Share an RC or SC identifier with another process.  
+This will trigger in the target process the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal, unless the notification mode tells otherwise.
+
+When the target process writes through the received SC or read from the received RC, the performance will be equal to writing or reading through the original RC/SC identifier.
 
 ## `0x22` PIPE_WRITE
 
@@ -344,7 +338,7 @@ _None_
 **Description:**
 
 Close a pipe properly. The RC and SC parts will be immediatly closed.  
-The other process this pipe was shared with will receive the [`PIPE_CLOSED`](signals.md#0x22-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
+The other process this pipe was shared with will receive the [`PIPE_CLOSED`](signals.md#0x21-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
 If this syscall is not performed on a pipe before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
 
 ## `0x27` PIPE_INFO
@@ -372,29 +366,6 @@ _None_
 **Description:**
 
 Get informations on a pipe from its RC or SC identifier.
-
-## `0x28` SEND_PIPE
-
-**Arguments:**
-
-- [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)
-- Target PID (8 bytes)
-- Notification mode (1 byte): `0x00` to notify the process with a pipe reception signal, `0x01` to skip the signal
-
-**Return value:**
-
-_None_
-
-**Errors:**
-
-- `0x10`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal
-
-**Description:**
-
-Share an RC or SC identifier with another process.  
-This will trigger in the target process the [`RECV_READ_PIPE`](signals.md#0x20-recv_read_pipe) signal (if an RC is provided) or the [`RECV_WRITE_PIPE`](signals.md#0x21-recv_write_pipe) signal (if an SC is provided), unless the notification mode tells otherwise.
-
-When the target process writes through the received SC or read from the received RC, the performance will be equal to writing or reading through the original RC/SC identifier.
 
 ## `0x2A` CONNECT_SERVICE
 

@@ -63,35 +63,22 @@ Sent when the process is asked to terminate. If it does not terminate by itself 
 
 If no handler is registered for this signal, it will kill the process when received.
 
-## `0x20` RECV_READ_PIPE
+## `0x20` RECV_PIPE
 
 | Datafield description                                                                                  | Size               | Value                                                    |
 | ------------------------------------------------------------------------------------------------------ | ------------------ | -------------------------------------------------------- |
-| Sender PID                                                                                             | 8 bytes            |
-| Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier) | CPU-dependent size |
+| Pipe creator's PID                                                                                     | 8 bytes            |
+| Pointer to its null-terminated application's [AID](../concepts/applications.md#application-identifier) | CPU-dependent size |
 | Length of the AID                                                                                      | 1 byte             |
-| [Pipe](ipc.md#pipes) SC identifier                                                                     | 8 bytes            |
+| [Pipe](ipc.md#pipes) SC or RC identifier                                                               | 8 bytes            |
 | Command code                                                                                           | 2 bytes            |
+| Pipe identifier type                                                                                   | 1 byte             | `0x00` if it's an RC, `0x01` if it's an SC               |
 | Mode                                                                                                   | 1 byte             | `0x01` if it's a raw pipe, `0x02` if it's a message pipe |
 
-Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the readable part.  
+Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.  
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
 
-## `0x21` RECV_WRITE_PIPE
-
-| Datafield description                                                                                  | Size               | Value                                                    |
-| ------------------------------------------------------------------------------------------------------ | ------------------ | -------------------------------------------------------- |
-| Receiver PID                                                                                           | 8 bytes            |
-| Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier) | CPU-dependent size |
-| Length of the AID                                                                                      | 1 byte             |
-| [Pipe](ipc.md#pipes) RC identifier                                                                     | 8 bytes            |
-| Command code                                                                                           | 2 bytes            |
-| Mode                                                                                                   | 1 byte             | `0x01` if it's a raw pipe, `0x02` if it's a message pipe |
-
-Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the writable part.  
-The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
-
-## `0x22` PIPE_CLOSED
+## `0x21` PIPE_CLOSED
 
 | Datafield description | Size    |
 | --------------------- | ------- |

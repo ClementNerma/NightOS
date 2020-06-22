@@ -398,19 +398,14 @@ Allocate a linear block of memory.
 
 **Arguments:**
 
-- Pointer to the start address to map the allocated memory to (CPU-dependent size)
 - The number of [pages](kernel/memory.md#pages) to allocate (8 bytes)
 
 **Return value:**
 
-_None_
+- Pointer to the newly-allocated block of memory (CPU-dependent size)
 
 **Errors:**
 
-- `0x10`: The provided start address is not aligned with a page
-- `0x20`: The provided start address is out of the process' range
-- `0x21`: The provided size, added to the start address, would exceed the process' range
-- `0x22`: The current process does not have write permissions for one of more of the provided pages
 - `0x30`: The kernel could not find a linear block of memory of the requested size
 
 ## `0x31` MEM_UNALLOC

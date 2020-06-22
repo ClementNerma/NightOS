@@ -12,6 +12,7 @@ For more informations about low-level concepts these documents refer to, you can
 - [Permissions](permissions.md) - complete list of user and application permissions
 - [The registry](registry.md) - exhaustive specification of the registry's content
 - [Vocabulary](vocabulary.md) - the list of NightOS-related terms
+- [The shell](shell.md) - how [Hydre](../technical/shell.md) works
 - [Shell scripting](shell-scripting.md) - [Hydre](../technical/shell.md)'s scripting language
 - [Signals](signals.md) - complete specification of [signals](kernel/kpc.md)
 - [System calls](syscalls.md) - complete specification of [system calls](kernel/kpc.md)

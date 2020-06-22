@@ -59,6 +59,7 @@ The list of default applications and their description can be found [here](appli
 - [Permissions](specs/permissions.md) - complete list of user and application permissions
 - [The registry](specs/registry.md) - exhaustive specification of the registry's content
 - [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms
+- [The shell](specs/shell.md) - the native shell of NightOS
 - [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
 - [Signals](specs/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
 - [System calls](specs/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)

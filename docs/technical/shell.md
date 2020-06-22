@@ -20,6 +20,6 @@ When a command is run from [Pluton](../applications/Pluton.md), the command proc
 - The command's return value (from CMDOUT) is printed after the command completes
 - Data written to CMDRAW is not shown, as they don't have to be UTF-8 encoded, or even to be a string. They can be redirected through pipes, though
 
-## Scripting language
+## Specifications
 
-You can find more about the script language in the [related document](../specs/shell-scripting.md).
+Hydre's specifications can be found in the [related document](../specs/shell.md).

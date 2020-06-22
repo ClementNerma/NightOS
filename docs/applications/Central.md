@@ -8,6 +8,14 @@ The _Central_ application delivers the _Control Center_ which allows to configur
         > Set profile picture
         > Set nickname
 
+    > Change security level
+        | Basic
+        | Standard
+        | Restricted
+        | Extreme
+        | Total
+            ! Only available in developer mode
+
 > Applications management
     > Sideloading
         > Change sideloading mode

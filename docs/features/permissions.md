@@ -29,3 +29,13 @@ _NOTE:_ Permissions are specific to the current user (the AUC is not taken in ac
 ## From the control center
 
 Permissions can be revoked at anytime from the [control center](../applications/Central.md), allowing to revoke a specific permission for a given application, to revoke a specific permission to all applications (useful for microphone or webcam access, for example) or to revoke all permissions of a specific application.
+
+## Security level
+
+The permissions policy depends on the current user's _security level_, which can be set through the [control center](../applications/Central.md):
+
+- **Basic**: grant all permissions automatically, except privacy permissions
+- **Standard** (default): grant safe and implicit permissions automatically, but ask for most sensitive and all privacy permissions
+- **Restricted**: only grant implicit permissions but ask for all sensitive and privacy permissions
+- **Extreme**: only grant safe permissions, ask for every other type of permissions
+- **Total** (only available in developer mode): ask for every permissions, including safe ones

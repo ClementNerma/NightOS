@@ -67,7 +67,7 @@ Shared memory allows a process to share a part of its memory with another proces
 
 Its main disadvantage being that all data is shared at once, so there is no synchronization or "asynchronous sending" mechanism, which is the purpose of pipes.
 
-It works by asking the kernel to share the memory through the [`SHARE_MEM`](syscalls.md#0x32-share_mem) syscall, the target process receiving the [`RECV_SHARED_MEM`](signals.md#0x32-recv_shared_mem) signal.
+It works by asking the kernel to share the memory through the [`SHARE_MEM`](syscalls.md#0x34-share_mem) syscall, the target process receiving the [`RECV_SHARED_MEM`](signals.md#0x34-recv_shared_mem) signal.
 
 There are two types of sharing:
 
@@ -76,4 +76,4 @@ There are two types of sharing:
 
 Exclusive mode has several advantages: the sender process to not have to care about managing this memory and avoid overwriting it by accident, but it also ensures the receiving process that the sender will not perform malicious modifications on the shared buffer while the data is processed on its side.
 
-Mutual memory sharing can be stopped using the [`UNSHARE_MEM`](syscalls.md#0x33-unshare_mem) syscall, while exclusive sharing are left to the receiver process.
+Mutual memory sharing can be stopped using the [`UNSHARE_MEM`](syscalls.md#0x35-unshare_mem) syscall, while exclusive sharing are left to the receiver process.

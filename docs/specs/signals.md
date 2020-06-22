@@ -139,7 +139,7 @@ Sent to a process that previously established a connection with a service, to in
 
 - Connection's unique request ID (8 bytes)
 
-## `0x32` RECV_SHARED_MEM
+## `0x34` RECV_SHARED_MEM
 
 Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by another process.
 
@@ -154,12 +154,12 @@ Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by 
   - For mutual sharings: strongest bit for read, next for write, next for exec
   - For exclusive sharings: `0x00`
 
-## `0x33` UNSHARED_MEM
+## `0x35` UNSHARED_MEM
 
 Sent to a process when a [shared segment of memory](ipc.md#shared-memory) is unshared by the sharer process.
 
 **Datafield:**
 
 - Unsharing type (1 byte):
-  - `0x00` if the shared memory was unshared properly using the [UNSHARE_MEM](syscalls.md#0x33-unshare_mem) syscall
+  - `0x00` if the shared memory was unshared properly using the [UNSHARE_MEM](syscalls.md#0x35-unshare_mem) syscall
   - `0x01` if the other process brutally terminated

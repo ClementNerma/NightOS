@@ -412,8 +412,8 @@ Allocate a linear block of memory.
 
 Unallocate a linear block of memory.
 
-Shared memory pages must first be unshared through the [`MEM_UNSHARE`](#0x33-unshare_mem) syscall.  
-Mapped memory pages must be unmapped through the [`MEM_UNMAP`](#0x35-mem_unmap) syscall.
+Shared memory pages must first be unshared through the [`MEM_UNSHARE`](#0x35-unshare_mem) syscall.  
+Mapped memory pages must be unmapped through the [`MEM_UNMAP`](#0x33-mem_unmap) syscall.
 
 **Arguments:**
 
@@ -432,12 +432,29 @@ _None_
 - `0x22`: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)
 - `0x23`: One or more of the provided pages are shared with another process
 
-## `0x32` SHARE_MEM
+## `0x33` MEM_UNMAP
+
+Unmap memory pages shared by another process.
+
+**Arguments:**
+
+- Shared memory segment ID (8 bytes)
+
+**Return value:**
+
+_Empty_
+
+**Errors:**
+
+- `0x10`: Unknown shared memory segment ID provided
+- `0x20`: Current process is not the sharer of this memory segment
+
+## `0x34` SHARE_MEM
 
 Share memory pages of the current process with one or multiple external processes.  
 In mutual sharing mode, the memory is available to both the sharer and the receiver. In exclusive mode, the memory is unmapped from the sharer process.  
 The provided access permissions indicates how the receiver process will be able to access the shared memory when sharing in mutual mode.  
-This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x32-recv_shared_mem) with the provided command code, unless the notification mode states otherwise.
+This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x34-recv_shared_mem) with the provided command code, unless the notification mode states otherwise.
 
 When a process wants to transmit a set of data without getting it back later, the exclusive mode is to prefer. When the data needs to be accessed back by the sharer, the mutual mode should be used instead.
 
@@ -447,7 +464,7 @@ When a process wants to transmit a set of data without getting it back later, th
 - Pointer to the buffer to share (CPU-dependent size)
 - Number of bytes to share (CPU-dependent size)
 - Command code (2 bytes)
-- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_SHARED_MEM`](signals.md#0x32-recv_shared_mem) signal, `0x01` to skip it
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_SHARED_MEM`](signals.md#0x34-recv_shared_mem) signal, `0x01` to skip it
 - Sharing mode (1 byte): `0x00` to perform a mutual sharing, `0x01` to perform an exclusive sharing
 - Access permissions (1 byte): Strongest bit for read, next for write, next for exec - other bits are considered invalid when set
 
@@ -467,10 +484,10 @@ When a process wants to transmit a set of data without getting it back later, th
 - `0x17`: The buffer's size is null (0 bytes)
 - `0x30`: There is not enough contiguous space in the receiver process' memory space to map the shared memory
 
-## `0x33` UNSHARE_MEM
+## `0x35` UNSHARE_MEM
 
-Stop sharing a memory segment started by [`SHARE_MEM`](#0x32-share_mem). Note that only mutual sharing can be unmapped.  
-This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x33-unshared_mem) signal.
+Stop sharing a memory segment started by [`SHARE_MEM`](#0x34-share_mem). Note that only mutual sharing can be unmapped.  
+This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x35-unshared_mem) signal.
 
 **Arguments:**
 
@@ -485,7 +502,7 @@ _None_
 - `0x10`: Unknown shared memory segment ID provided
 - `0x20`: Provided sharing ID is exclusive
 
-## `0x34` MEM_SHARING_INFO
+## `0x36` MEM_SHARING_INFO
 
 Get informations about a shared memory segment.
 
@@ -506,20 +523,3 @@ Get informations about a shared memory segment.
 **Errors:**
 
 - `0x10`: Unknwon shared memory segment ID provided
-
-## `0x35` MEM_UNMAP
-
-Unmap memory pages shared by another process.
-
-**Arguments:**
-
-- Shared memory segment ID (8 bytes)
-
-**Return value:**
-
-_Empty_
-
-**Errors:**
-
-- `0x10`: Unknown shared memory segment ID provided
-- `0x20`: Current process is not the sharer of this memory segment

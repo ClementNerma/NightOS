@@ -83,7 +83,7 @@ The command code can be used to determine what the other process is expecting th
 **Datafield:**
 
 - Closing type (1 byte):
-  - `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x26-close_pipe) syscall
+  - `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x24-close_pipe) syscall
   - `0x01` if the other process brutally terminated |
 - Pipe identity (1 byte): `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte)
 - RC or SC identifier (8 bytes)

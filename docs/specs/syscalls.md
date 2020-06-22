@@ -252,26 +252,7 @@ Write data through a pipe.
 Messages will always be sent at once when writing to message pipes.  
 If the data is 0-byte long, this pipe will return successfully without waiting, even if the target pipe's buffer is full or locked.
 
-## `0x23` PIPE_COUNT_WRITE
-
-**Arguments:**
-
-- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
-
-**Return value:**
-
-- Number of bytes that can be written to a pipe (4 bytes)
-
-**Errors:**
-
-- `0x10`: The provided SC identifier does not exist
-- `0x11`: The provided SC was already closed
-
-**Description:**
-
-Count the pipe's pending data's free size, which is the number of bytes this process can currently write to the pipe without blocking.
-
-## `0x24` PIPE_READ
+## `0x23` PIPE_READ
 
 **Arguments:**
 
@@ -301,26 +282,7 @@ Encoded on 4 bytes:
 Read pending data or message from a pipe.  
 If the pipe was closed while the buffer was not empty, this syscall will still be able to read the remaining buffer's data - but the pipe will not be able to receive any additional data. Then, once the buffer is empty, the pipe will be made unavailable.
 
-## `0x25` PIPE_COUNT_READ
-
-**Arguments:**
-
-- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
-
-**Return value:**
-
-- Number of bytes that can be read from the pipe (4 bytes)
-
-**Errors:**
-
-- `0x10`: The provided RC identifier does not exist
-- `0x11`: The provided RC was already closed
-
-**Description:**
-
-Count the pipe's pending data's size, which is the number of bytes this process can currently read from the pipe without blocking.
-
-## `0x26` CLOSE_PIPE
+## `0x24` CLOSE_PIPE
 
 **Arguments:**
 
@@ -342,7 +304,7 @@ Close a pipe properly. The RC and SC parts will be immediatly closed.
 The other process this pipe was shared with will receive the [`PIPE_CLOSED`](signals.md#0x21-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
 If this syscall is not performed on a pipe before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
 
-## `0x27` PIPE_INFO
+## `0x25` PIPE_INFO
 
 **Arguments:**
 

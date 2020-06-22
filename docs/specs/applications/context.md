@@ -1,6 +1,7 @@
 # Application Context
 
-The _application context_ is a piece of data that is provided when the application starts.
+The _application context_ is a piece of data that is provided when the application starts.  
+It indicates why the application was started and so what it is supposed to do.
 
 ## Execution Context
 

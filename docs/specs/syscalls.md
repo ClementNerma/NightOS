@@ -31,6 +31,9 @@ _NOTE:_ _"CPU-dependent size"_ indicates a data that will be 16-bit long on a 16
 
 ## `0x01` HANDLE_SIGNAL
 
+Register a [signal handler](signals.md).  
+If the address pointed by this syscall's is not executable by the current process when this signal is sent to the process, the signal will be converted to an [`HANDLER_FAULT`](signals.md#0x01-handler_fault) signal instead.
+
 **Arguments:**
 
 - Code of the signal to handle (1 byte)
@@ -44,12 +47,9 @@ _Empty_
 
 - `0x10`: The requested signal does not exist
 
-**Description:**
-
-Register a [signal handler](signals.md).  
-If the address pointed by this syscall's is not executable by the current process when this signal is sent to the process, the signal will be converted to an [`HANDLER_FAULT`](signals.md#0x01-handler_fault) signal instead.
-
 ## `0x02` UNHANDLE_SIGNAL
+
+Unregister a signal handler, falling back to the default signal reception behaviour if this signal is sent to the process.
 
 **Arguments:**
 
@@ -64,11 +64,9 @@ _Empty_
 - `0x10`: The requested signal does not exist
 - `0x20`: The requested signal does not have an handler
 
-**Description:**
-
-Unregister a signal handler, falling back to the default signal reception behaviour if this signal is sent to the process.
-
 ## `0x03` IS_SIGNAL_HANDLED
+
+Check if a signal has a registered handler.
 
 **Arguments:**
 
@@ -82,11 +80,13 @@ Unregister a signal handler, falling back to the default signal reception behavi
 
 - `0x10`: The requested signal does not exist
 
-**Description:**
-
-Check if a signal has a registered handler.
-
 ## `0x04` READY
+
+Indicate the system this process has set up all its event listeners, so it can start dequeuing [signals](signals.md).
+
+**NOTE:** When this signal is sent, all queued signals will be treated at once, so the instructions following the sending of this signal may not be ran until quite a bit of time in the worst scenario.
+
+**WARNING:** Signals will not be treated until this syscall is sent by the process!
 
 **Arguments:**
 
@@ -100,15 +100,9 @@ _Empty_
 
 - `0x20`: The process already told it was ready
 
-**Description:**
-
-Indicate the system this process has set up all its event listeners, so it can start dequeuing [signals](signals.md).
-
-**NOTE:** When this signal is sent, all queued signals will be treated at once, so the instructions following the sending of this signal may not be ran until quite a bit of time in the worst scenario.
-
-**WARNING:** Signals will not be treated until this syscall is sent by the process!
-
 ## `0x10` GET_PID
+
+Get the current process' PID.
 
 **Arguments:**
 
@@ -122,11 +116,9 @@ _None_
 
 _None_
 
-**Description:**
-
-Get the current process' PID.
-
 ## `0x12` SUSPEND
+
+[Suspend](../features/balancer.md#application-processes-suspension) the current process.
 
 **Arguments:**
 
@@ -140,11 +132,12 @@ _None_
 
 - `0x20`: the current process is not an application process
 
-**Description:**
-
-[Suspend](../features/balancer.md#application-processes-suspension) the current process.
-
 ## `0x13` EXIT
+
+Kill the current process.
+
+A [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to all services connection the process has.  
+If the current process is a service, a [`SERVICE_SERVER_QUITTED`](signals.md#0x2d-service_server_quitted) signal is sent to all active clients.
 
 **Arguments:**
 
@@ -158,14 +151,12 @@ _None_ (never returns)
 
 _None_
 
-**Description:**
-
-Kill the current process.
-
-A [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to all services connection the process has.  
-If the current process is a service, a [`SERVICE_SERVER_QUITTED`](signals.md#0x2d-service_server_quitted) signal is sent to all active clients.
-
 ## `0x20` OPEN_PIPE
+
+Open a pipe with a process of the same application and running under the same user and get its SC.  
+The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
+The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
+The target process will receive the SC/RC's counterpart through the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal, unless notification mode states otherwise.
 
 **Arguments:**
 
@@ -190,14 +181,12 @@ If the current process is a service, a [`SERVICE_SERVER_QUITTED`](signals.md#0x2
 - `0x22`: The target process runs under another user
 - `0x23`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal
 
-**Description:**
-
-Open a pipe with a process of the same application and running under the same user and get its SC.  
-The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (`0`) falls back to a size of 64 KB.  
-The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.  
-The target process will receive the SC/RC's counterpart through the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal, unless notification mode states otherwise.
-
 ## `0x21` SEND_PIPE
+
+Share an RC or SC identifier with another process.  
+This will trigger in the target process the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal, unless the notification mode tells otherwise.
+
+When the target process writes through the received SC or read from the received RC, the performance will be equal to writing or reading through the original RC/SC identifier.
 
 **Arguments:**
 
@@ -213,14 +202,11 @@ _None_
 
 - `0x10`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal
 
-**Description:**
-
-Share an RC or SC identifier with another process.  
-This will trigger in the target process the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal, unless the notification mode tells otherwise.
-
-When the target process writes through the received SC or read from the received RC, the performance will be equal to writing or reading through the original RC/SC identifier.
-
 ## `0x22` PIPE_WRITE
+
+Write data through a pipe.  
+Messages will always be sent at once when writing to message pipes.  
+If the data is 0-byte long, this pipe will return successfully without waiting, even if the target pipe's buffer is full or locked.
 
 **Arguments:**
 
@@ -246,13 +232,10 @@ Encoded on 4 bytes:
 - `0x23`: The provided SC refers to a message pipe but the `0x02` mode was provided
 - `0x30`: There is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
 
-**Description:**
-
-Write data through a pipe.  
-Messages will always be sent at once when writing to message pipes.  
-If the data is 0-byte long, this pipe will return successfully without waiting, even if the target pipe's buffer is full or locked.
-
 ## `0x23` PIPE_READ
+
+Read pending data or message from a pipe.  
+If the pipe was closed while the buffer was not empty, this syscall will still be able to read the remaining buffer's data - but the pipe will not be able to receive any additional data. Then, once the buffer is empty, the pipe will be made unavailable.
 
 **Arguments:**
 
@@ -277,12 +260,9 @@ Encoded on 4 bytes:
 - `0x22`: There is no pending data in the pipe and the mode argument was set to `0x01`
 - `0x23`: The provided RC refers to a message pipe but the `0x02` mode was provided
 
-**Description:**
-
-Read pending data or message from a pipe.  
-If the pipe was closed while the buffer was not empty, this syscall will still be able to read the remaining buffer's data - but the pipe will not be able to receive any additional data. Then, once the buffer is empty, the pipe will be made unavailable.
-
 ## `0x24` PIPE_INFO
+
+Get informations on a pipe from its RC or SC identifier.
 
 **Arguments:**
 
@@ -306,11 +286,11 @@ If the pipe was closed while the buffer was not empty, this syscall will still b
 
 _None_
 
-**Description:**
-
-Get informations on a pipe from its RC or SC identifier.
-
 ## `0x25` CLOSE_PIPE
+
+Close a pipe properly. The RC and SC parts will be immediatly closed.  
+The other process this pipe was shared with will receive the [`PIPE_CLOSED`](signals.md#0x21-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
+If this syscall is not performed on a pipe before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
 
 **Arguments:**
 
@@ -326,13 +306,11 @@ _None_
 - `0x11`: The target process already terminated
 - `0x20`: The provided RC/SC identifier is part of a service pipe
 
-**Description:**
-
-Close a pipe properly. The RC and SC parts will be immediatly closed.  
-The other process this pipe was shared with will receive the [`PIPE_CLOSED`](signals.md#0x21-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
-If this syscall is not performed on a pipe before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
-
 ## `0x2A` CONNECT_SERVICE
+
+Ask a service to etablish connection. The current process is called the service's _client_.
+
+**NOTE:** When this signal is sent, the service's answer will be waited, so the instructions following the sending of this signal may not be ran until several seconds in the worst scenario.
 
 **Arguments:**
 
@@ -352,13 +330,9 @@ If this syscall is not performed on a pipe before the process exits, the other p
 - `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 - `0x31`: Service rejected the connection request
 
-**Description:**
-
-Ask a service to etablish connection. The current process is called the service's _client_.
-
-**NOTE:** When this signal is sent, the service's answer will be waited, so the instructions following the sending of this signal may not be ran until several seconds in the worst scenario.
-
 ## `0x2B` END_SERVICE_CONN
+
+Tell a service to properly close the connection. The associated [pipe](ipc.md#pipes) SC and RC channels will immediatly be closed.
 
 **Arguments:**
 
@@ -374,11 +348,15 @@ _None_
 - `0x20`: This connection was already closed
 - `0x21`: The associated service thread already terminated
 
-**Description:**
-
-Tell a service to properly close the connection. The associated [pipe](ipc.md#pipes) SC and RC channels will immediatly be closed.
-
 ## `0x2C` ACCEPT_SERVICE_CONN
+
+Confirm the current service accepts the connection with a client.  
+A dedicated message pipe's SC and another's RC will be provided to communicate with the client.
+
+This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
+The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
+
+When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to this thread.
 
 **Arguments:**
 
@@ -396,17 +374,9 @@ Tell a service to properly close the connection. The associated [pipe](ipc.md#pi
 - `0x20`: The process which requested the connection already terminated
 - `0x30`: Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
 
-**Description:**
-
-Confirm the current service accepts the connection with a client.  
-A dedicated message pipe's SC and another's RC will be provided to communicate with the client.
-
-This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
-The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
-
-When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to this thread.
-
 ## `0x2D` REJECT_SERVICE_CONN
+
+Reject a connection request to the current service.
 
 **Arguments:**
 
@@ -422,11 +392,9 @@ _None_
 - `0x20`: The process which requested the connection already terminated
 - `0x30`: Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
 
-**Description:**
-
-Reject a connection request to the current service.
-
 ## `0x30` MEM_ALLOC
+
+Allocate a linear block of memory.
 
 **Arguments:**
 
@@ -443,11 +411,9 @@ _None_
 - `0x11`: The provided size, added to the start address, would exceed the process' range
 - `0x30`: The kernel could not find a linear block of memory of the requested size
 
-**Description:**
-
-Allocate a linear block of memory.
-
 ## `0x31` MEM_UNALLOC
+
+Unallocate a linear block of memory.
 
 **Arguments:**
 
@@ -463,11 +429,14 @@ _None_
 - `0x10`: The provided start address is out of the process' range
 - `0x11`: The provided size, added to the start address, would exceed the process' range
 
-**Description:**
-
-Unallocate a linear block of memory.
-
 ## `0x32` SHARE_MEM
+
+Share memory pages of the current process with one or multiple external processes.  
+In mutual sharing mode, the memory is available to both the sharer and the receiver. In exclusive mode, the memory is unmapped from the sharer process.  
+The provided access permissions indicates how the receiver process will be able to access the shared memory when sharing in mutual mode.  
+This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x32-recv_shared_mem) with the provided command code, unless the notification mode states otherwise.
+
+When a process wants to transmit a set of data without getting it back later, the exclusive mode is to prefer. When the data needs to be accessed back by the sharer, the mutual mode should be used instead.
 
 **Arguments:**
 
@@ -495,16 +464,10 @@ Unallocate a linear block of memory.
 - `0x17`: The buffer's size is null (0 bytes)
 - `0x30`: There is not enough contiguous space in the receiver process' memory space to map the shared memory
 
-**Description:**
-
-Share memory pages of the current process with one or multiple external processes.  
-In mutual sharing mode, the memory is available to both the sharer and the receiver. In exclusive mode, the memory is unmapped from the sharer process.  
-The provided access permissions indicates how the receiver process will be able to access the shared memory when sharing in mutual mode.  
-This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x32-recv_shared_mem) with the provided command code, unless the notification mode states otherwise.
-
-When a process wants to transmit a set of data without getting it back later, the exclusive mode is to prefer. When the data needs to be accessed back by the sharer, the mutual mode should be used instead.
-
 ## `0x33` UNSHARE_MEM
+
+Stop sharing a memory segment started by [`SHARE_MEM`](#0x32-share_mem). Note that only mutual sharing can be unmapped.  
+This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x33-unshared_mem) signal.
 
 **Arguments:**
 
@@ -519,12 +482,9 @@ _None_
 - `0x10`: Unknown shared memory segment ID provided
 - `0x20`: Provided sharing ID is exclusive
 
-**Description:**
-
-Stop sharing a memory segment started by [`SHARE_MEM`](#0x32-share_mem). Note that only mutual sharing can be unmapped.  
-This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x33-unshared_mem) signal.
-
 ## `0x34` MEM_SHARING_INFO
+
+Get informations about a shared memory segment.
 
 **Arguments:**
 
@@ -543,7 +503,3 @@ This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x33-uns
 **Errors:**
 
 - `0x10`: Unknwon shared memory segment ID provided
-
-**Description:**
-
-Get informations about a shared memory segment.

@@ -39,4 +39,4 @@ The system is intended to be updated through the update section in the settings,
 
 They may contain one or several updates, and are only installable on a very specific version of the system, to avoid missing some other incremental updates.
 
-System update files have the `.nsu` (NightOS System Update) extension and are opened using [Central](../applications/Central.md).
+System update files have the `.nsu` (NightOS System Update) extension and are opened using the [control center](../applications/Central.md).

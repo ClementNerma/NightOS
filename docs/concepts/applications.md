@@ -39,7 +39,7 @@ Note that this mode only works while connected to internet, as the system needs 
 
 **Unsecure mode** allows sideloading without any checking, which is highly dangerous as it allows spoofing.
 
-The sideloading mode can be changed through [Central](../applications/Central.md#applications-related-options).
+The sideloading mode can be changed in the [control center](../applications/Central.md).
 
 ### Volatile applications
 

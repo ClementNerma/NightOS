@@ -37,6 +37,18 @@ If no handler is registered for this signal, it will kill the process when recei
 
 - Faulty signal ID (8 bytes)
 
+## `0x02` MEM_FAULT
+
+Sent when the process tried to perform an unauthorized access on a memory address.
+
+**Datafield:**
+
+- Faulty address (CPU-dependent size)
+- Access error (1 byte):
+  - `0x01`: tried to read memory
+  - `0x02`: tried to write memory
+  - `0x03`: tried to execute memory
+
 ## `0x10` SUSPEND
 
 Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the [`SUSPEND`](syscalls.md#0x12-suspend) syscall.

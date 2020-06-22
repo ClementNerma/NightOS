@@ -26,7 +26,7 @@ Else, it accepts it through the [`ACCEPT_SERVICE_CONN`](syscalls.md#0x2c-accept_
 
 ### Thread types
 
-A service process' threads are called _dispatcher threads_, except threads that are created using the [`ACCEPT_SERVICE_CONN`](syscalls.md#0x2c-accept_service_conn) syscall, which are called _client threads_.
+A service process' main thread is called its _dispatcher threads_, while threads created using the [`ACCEPT_SERVICE_CONN`](syscalls.md#0x2c-accept_service_conn) syscall are called _client threads_.
 
 ### Closing a connection
 

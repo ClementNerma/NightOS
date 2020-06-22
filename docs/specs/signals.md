@@ -101,7 +101,7 @@ Sent to a process when a [pipe](ipc.md#pipes) shared with another process is clo
 - Command code (2 bytes)
 - [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
 
-Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.
+Sent to a service process' [dispatcher thread](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.
 
 The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscalls.md#0x2c-accept_service_conn) under the provided delay, else it's considered as a rejection.
 

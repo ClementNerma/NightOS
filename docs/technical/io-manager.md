@@ -6,7 +6,7 @@ The _Input/Output Nano-manager_, formerly known as _Ion_, is a part of the syste
 
 When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired component.
 
-[System services](services.md) like [`sys:fs`](../specs/services.md#sysfs) or [`sys:net`](../specs/services.md#sysnet) use Ion to deal with the related hardware components.
+[System services](services.md) such as [`sys:fs`](../specs/services/fs.md) or [`sys:net`](../specs/services/net.md) use Ion to deal with the related hardware components.
 
 ## Requests
 

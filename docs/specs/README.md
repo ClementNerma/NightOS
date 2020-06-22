@@ -17,3 +17,4 @@ For more informations about low-level concepts these documents refer to, you can
 - [Signals](signals.md) - complete specification of [signals](kernel/kpc.md)
 - [System calls](syscalls.md) - complete specification of [system calls](kernel/kpc.md)
 - [Kernel](kernel/) - complete specifications of the kernel
+- [System services](services/) - complete list of system services

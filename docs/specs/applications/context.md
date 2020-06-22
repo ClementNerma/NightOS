@@ -15,7 +15,7 @@ It is one-byte long, and is made of the following bits (starting from the strong
   - `0x3`: the application was started by itself (from another process of the same application)
   - `0x4`: the application was started by another application
   - `0x5`: the application was started using one its exposed [shell commands](../../concepts/applications.md#commands)
-- Bit 4: set if the application was started automatically after an improper shutdown and should connect to the [`sys:crshsv`](../services.md#syscrshsv) service in order to get its crash save
+- Bit 4: set if the application was started automatically after an improper shutdown and should connect to the [`sys::crashsave`](../services/crashsave.md) service in order to get its crash save
 - Bit 5: set if the application's raw output (CMDRAW) will be read (e.g. through the use of a [shell operator](../shell-scripting.md#reading-a-commands-output))
 - Bit 6: set if other instances of this application are running
 - Bit 7: set if this application is starting for the very first time since it was installed

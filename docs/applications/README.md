@@ -45,3 +45,7 @@ Below is the list of applications that are installed (by default) during the ins
 
 - [_Vortex_](Vortex.md) : Firewall
 - [_Locky_](Locky.md) : System's encryption tool, with the ability to manage encrypted archives and volumes
+
+## System services
+
+System services are listed in their own [specifications directory](../specs/services/).

@@ -12,7 +12,7 @@ For instance, if a hard drive is connected to the computer, the DHF may be somet
 
 ## Interacting with a device
 
-Device handler files are not simple files ; they can only be used through the [`sys:hw`](../specs/services.md#syshw) service.
+Device handler files are not simple files ; they can only be used through the [`sys:hw`](../specs/services/hw.md) service.
 
 Different actions may happen depending on the device's type:
 
@@ -27,7 +27,7 @@ For uncategorized devices (in `/dev/etc`), a popup is shown to the user, to indi
 
 ## Device handler files persistence
 
-When a device is connected, its DHF is not removed. Instead, if a process tries to interact with the DHF, the [`sys:hw`](../specs/services.md#syshw) service will indicate the device is currently not connected.
+When a device is connected, its DHF is not removed. Instead, if a process tries to interact with the DHF, the [`sys:hw`](../specs/services/hw.md) service will indicate the device is currently not connected.
 
 When the device is connected again, it is associated to the same DHF again. This allows applications to persist the device's location and use it later on.
 

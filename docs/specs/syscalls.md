@@ -417,6 +417,9 @@ _None_
 
 Unallocate a linear block of memory.
 
+Shared memory pages must first be unshared through the [`MEM_UNSHARE`](#0x33-unshare_mem) syscall.  
+Mapped memory pages must be unmapped through the [`MEM_UNMAP`](#0x35-mem_unmap) syscall.
+
 **Arguments:**
 
 - Pointer to the start address to unallocate the memory from (CPU-dependent size)

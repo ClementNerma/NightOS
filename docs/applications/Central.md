@@ -18,7 +18,10 @@ This part shows settings that are related to how applications can be installed a
 
 ```
 > Sideloading
-    > Set sideloading mode (disabled, secure, unsecure)
+    > Set sideloading mode
+        | Disabled
+        | Secure
+        | Unsecure
 ```
 
 ## Computer-related options

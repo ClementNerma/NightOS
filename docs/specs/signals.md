@@ -18,9 +18,9 @@ Else, it checks in the SHT if the signal has a handler. If there is no handler, 
 
 If a handler is found, the kernel checks if the pointer points to a memory area that is executable by the current process. If it isn't, the signal is converted to an [`HANDLER_FAULT`](#0x01-handler_fault) one. If the signal that was being sent was already an `HANDLER_FAULT`, the process is killed.
 
-The kernel then makes the program jump to the handler's address, and resumes it.
+The kernel then switches the process to its [main thread](../technical/processes.md#main-thread) and makes it jump to the handler's address, then resumes it.
 
-When the handler returns (or the default behaviour completes), the kernel checks if the signals queue is empty. If it is, the kernel simply makes the process jump back to the address it was to before the signal was emitted.
+When the handler returns (or the default behaviour completes), the kernel checks if the signals queue is empty. If it is, the kernel simply makes the process jump back to the address it was to before the signal was emitted, and switch to the original thread.
 
 Else, it interrupts the process again and proceeds to treat the first signal on the queue after removing it.
 

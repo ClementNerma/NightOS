@@ -348,7 +348,7 @@ If this syscall is not performed on a pipe before the process exits, the other p
 **Errors:**
 
 - `0x10`: The provided ANID does not exist
-- `0x20`: Target application does not have a service
+- `0x20`: Target application does not [expose a service](../concepts/applications.md#services)
 - `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 - `0x31`: Service rejected the connection request
 

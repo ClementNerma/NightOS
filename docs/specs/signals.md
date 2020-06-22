@@ -107,6 +107,8 @@ The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscal
 
 If no handler is registered for this signal, it will kill the process when received.
 
+**NOTE:** This signal cannot be received if the application does not [expose a service](../concepts/applications.md#services).
+
 ## `0x2B` SERVICE_CLIENT_CLOSED
 
 Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.

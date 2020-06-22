@@ -53,17 +53,17 @@ Sent when the process tried to perform an unauthorized access on a memory addres
 
 Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the [`SUSPEND`](syscalls.md#0x12-suspend) syscall.
 
-## `0x11` TERMINATE
-
-Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the [`EXIT`](syscalls.md#0x13-exit) syscall).
-
-## `0x12` WILL_SUSPEND
+## `0x11` WILL_SUSPEND
 
 Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
 
 **Datafield:**
 
 - [Registry](registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
+
+## `0x12` TERMINATE
+
+Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the [`EXIT`](syscalls.md#0x13-exit) syscall).
 
 ## `0x13` WILL_TERMINATE
 

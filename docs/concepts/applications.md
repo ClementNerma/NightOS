@@ -76,9 +76,9 @@ By default, the slug is auto-generated from the name, but it can also be customi
 
 ## Application Identifier
 
-From the slug is generated the _Application's IDentifier_ (AID), which is prefixed by the developer's identifier (DID) specified in the application's manifest (it must match the publisher's identifier on the store). The DID is submitted to the same rules as the application's slug.
+From the slug is generated the _Application's IDentifier_ (AID), which is prefixed by the developer's identifier (DID) specified in the application's manifest (it must match the publisher's identifier on the store), and followed by two double points. The DID is submitted to the same rules as the application's slug.
 
-For instance, an application with a slug of `utils` made by a developer whose DID is `superdev` will get an AID of `utils.superdev`.
+For instance, an application with a slug of `utils` made by a developer whose DID is `superdev` will get an AID of `utils::superdev`.
 
 The AID is unique across the store as well as in a single NightOS installation. As malicious application may provide the DID and the slug of a legit application (which is called _AID spoofing_), sideloading is [verified by default](#sideloading).
 

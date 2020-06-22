@@ -43,7 +43,7 @@ When a client thread receives on these two signals, it is expected to end as soo
 
 ## System services
 
-You can find below the list of system services, as well as the list of their features.
+You can find below the list of system services, as well as the list of their features. Note that each system service is a system application, whose AID is `sys::<service name>`, such as `sys::fs`.
 
 **TODO**
 

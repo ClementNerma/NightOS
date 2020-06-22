@@ -31,10 +31,6 @@ Commands are evaluated one by one, as scripts cannot be run in a concurrent way.
 - Builtin commands are treated internally by the shell
 - Application commands will result in launching the requested application in a separate process
 
-## Scripting language
-
-You can find more about the script language in the language's [specifications document](../specs/shell-scripting.md).
-
 ## Command pipes
 
 When an application is started from a command, its [execution context](applications/context.md#execution-context) indicates it and the process gets access to several pipes called the _command pipes_:
@@ -147,3 +143,13 @@ Messages providing an invalid foreground and/or background color will _conventio
 Commands can get informations on the current session using the [`sys::hydre`](services/hydre.md) service.
 
 This allows the command to be notified of events like windows resizing. For more informations, see the service's [specifications document](services/hydre.md).
+
+## Scripting language
+
+You can find more about the script language in the language's [specifications document](../specs/shell-scripting.md).
+
+### Pre-evaluation checking
+
+Before executing a script, the shell looks for errors in it, such as unknown command, invalid argument, type mismatch and so on. If an error is foud, the script doesn't even start to run ; an error is directly reported and the command is considered as failed.
+
+This prevents errors from happening in the middle of a script, leaving it in an inconsistent state ; this also makes script errors easier to debug as they are reported at compile time.

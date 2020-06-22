@@ -64,6 +64,9 @@ content:
 # [OPT] Exposed commands (see the related document for additional informations)
 commands: {}
 
+# [OPT] Does the application expose a service?
+service: false
+
 # [OPT] Additional informations
 additional:
   # [OPT] Available languages (in a list of existing languages)

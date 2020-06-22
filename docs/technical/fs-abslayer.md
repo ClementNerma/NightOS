@@ -2,7 +2,9 @@
 
 A _filesystem_ is the way to deal with a storage device, for instance to store files and directories.
 
-NightOS supports many different filesystems, but as not all support all of the features we want them to, a _filesystem abstraction layer_ (FAL) is added to ensure the filesystem supports specific features. It's basically an interface that runs when dealing with the internal storage, that ensures its capabilities.
+NightOS supports almost all filesystems, but none support all of the required features, which is why a _filesystem abstraction layer_ (FAL) is added to ensure the filesystem supports specific features. It's basically an interface that runs when dealing with the internal storage, that ensures its capabilities.
+
+The layer works by storing the informations in a small file dedicated to this purpose.
 
 ## Structure
 

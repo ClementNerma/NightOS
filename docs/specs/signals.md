@@ -73,6 +73,7 @@ If no handler is registered for this signal, it will kill the process when recei
 - Command code (2 bytes)
 - Pipe identifier type (1 byte): `0x00` if the pipe identifier is an RC, `0x01` if it's an SC
 - Mode (1 byte): `0x00` if it's a raw pipe, `0x01` if it's a message pipe
+- Size hint in bytes (8 bytes), with `0` being the 'no size hint' value
 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.  
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.

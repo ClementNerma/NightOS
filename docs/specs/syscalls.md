@@ -175,6 +175,7 @@ If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x2a-servic
 - Buffer size multiplier (1 byte)
 - Transmission mode (1 byte): `0x00` to create a raw pipe, `0x01` to create a message pipe
 - Notification mode (1 byte): `0x00` to notify the process with the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal, `0x01` to skip it
+- Size hint in bytes (8 bytes), with `0` being the 'no size hint' value
 
 **Return value:**
 

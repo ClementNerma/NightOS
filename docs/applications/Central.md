@@ -18,7 +18,7 @@ This part shows settings that are related to how applications can be installed a
 
 ```
 > Sideloading
-    > Set sideloading mode
+    > Change sideloading mode
         | Disabled
         | Secure
         | Unsecure

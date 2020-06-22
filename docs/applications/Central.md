@@ -12,6 +12,15 @@ This part of the control center shows settings that are related to the current u
     > Set nickname
 ```
 
+## Applications-related options
+
+This part shows settings that are related to how applications can be installed and managed, as well as how they behave.
+
+```
+> Sideloading
+    > Set sideloading mode (disabled, secure, unsecure)
+```
+
 ## Computer-related options
 
 This part shows settings that are related to the whole computer, affecting all users on it. Administrator privileges are required to access and change them.

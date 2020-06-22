@@ -788,14 +788,27 @@ import system::fs
 fs::read_file # ...
 ```
 
+### Aliases
+
+Imported commands can also be aliased:
+
+```hydre
+import system::fs as sysfs
+
+sysfs::read_file # ...
+```
+
 ### Volatile imports
 
 As [volatile applications](../concepts/applications.md#volatile-applications)' commands [are not exposed globally](applications/commands.md#volatile-applications), there is a special import syntax for such applications, allowing to import their commands directly from their [application package](applications/package.md):
 
 ```hydre
 import ./app.nva::super_command
-
 super_command # ...
+
+# OR
+import ./app.nva as app
+app::super_command # ...
 ```
 
 ## Commands input & output

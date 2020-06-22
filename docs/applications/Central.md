@@ -17,7 +17,10 @@ The _Central_ application delivers the _Control Center_ which allows to configur
 
 > Global settings
     > Date & Time
-        > Set Date & Time
+        > Set date
+        > Set time
+        > Change timezone
+        > Synchronize time
 
     > Encryption
         > Manage storage encryption

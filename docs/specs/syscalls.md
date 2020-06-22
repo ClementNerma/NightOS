@@ -508,3 +508,20 @@ Get informations about a shared memory segment.
 **Errors:**
 
 - `0x10`: Unknwon shared memory segment ID provided
+
+## `0x35` MEM_UNMAP
+
+Unmap memory pages shared by another process.
+
+**Arguments:**
+
+- Shared memory segment ID (8 bytes)
+
+**Return value:**
+
+_Empty_
+
+**Errors:**
+
+- `0x10`: Unknown shared memory segment ID provided
+- `0x20`: Current process is not the sharer of this memory segment

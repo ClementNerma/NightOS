@@ -398,7 +398,7 @@ Tell a service to properly close the connection. The associated [pipe](ipc.md#pi
 **Description:**
 
 Confirm the current service accepts the connection with a client.  
-A dedicated pipe's SC and another's RC will be provided to communicate with the client.
+A dedicated message pipe's SC and another's RC will be provided to communicate with the client.
 
 This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
 The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x2b-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.

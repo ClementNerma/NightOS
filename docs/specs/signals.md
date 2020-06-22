@@ -8,7 +8,7 @@ When a process is created, the kernel associates it:
 - A _signals queue_ ;
 - A _readiness indicator_
 
-Each signal has a 8-bit code that identifies it, as well as a 8 bytes _datafield_ which is used to attach additional informations about the signal.
+Each signal has a 8-bit code that identifies it, as well as a 32 bytes _datafield_ which is used to attach additional informations about the signal.
 
 When the kernel sends a signal to a process, it first checks if an handler is already running. If so, it simply pushes the signal to the queue.
 

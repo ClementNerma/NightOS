@@ -407,8 +407,10 @@ _None_
 
 **Errors:**
 
-- `0x10`: The provided start address is out of the process' range
-- `0x11`: The provided size, added to the start address, would exceed the process' range
+- `0x10`: The provided start address is not aligned with a page
+- `0x20`: The provided start address is out of the process' range
+- `0x21`: The provided size, added to the start address, would exceed the process' range
+- `0x22`: The current process does not have write permissions for one of more of the provided pages
 - `0x30`: The kernel could not find a linear block of memory of the requested size
 
 ## `0x31` MEM_UNALLOC
@@ -426,8 +428,10 @@ _None_
 
 **Errors:**
 
-- `0x10`: The provided start address is out of the process' range
-- `0x11`: The provided size, added to the start address, would exceed the process' range
+- `0x10`: The provided start address it not aligned with a page
+- `0x20`: The provided start address is out of the process' range
+- `0x21`: The provided size, added to the start address, would exceed the process' range
+- `0x22`: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)
 
 ## `0x32` SHARE_MEM
 

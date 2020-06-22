@@ -371,7 +371,7 @@ Get informations on a pipe from its RC or SC identifier.
 
 **Arguments:**
 
-- Pointer to the null-terminated application's [AID](../concepts/applications.md#application-identifier) (8 bytes)
+- Target application's [ANID](../concepts/applications.md#application-identifier) (4 bytes)
 
 **Return value:**
 
@@ -381,7 +381,7 @@ Get informations on a pipe from its RC or SC identifier.
 
 **Errors:**
 
-- `0x10`: The provided AID does not exist
+- `0x10`: The provided ANID does not exist
 - `0x20`: Target application does not have a service
 - `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2b-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 - `0x31`: Service rejected the connection request

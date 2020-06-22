@@ -68,8 +68,7 @@ If no handler is registered for this signal, it will kill the process when recei
 **Datafield:**
 
 - Pipe creator's PID (8 bytes)
-- Pointer to its null-terminated application's [AID](../concepts/applications.md#application-identifier) (CPU-dependent size)
-- Length of the AID (1 byte)
+- Pipe creator's application's [ANID](../concepts/applications.md#application-identifier) (4 bytes)
 - [Pipe](ipc.md#pipes) SC or RC identifier (8 bytes)
 - Command code (2 bytes)
 - Pipe identifier type (1 byte): `0x00` if the pipe identifier is an RC, `0x01` if it's an SC

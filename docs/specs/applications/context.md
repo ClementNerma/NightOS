@@ -21,6 +21,7 @@ It is one-byte long and is one the following values:
 The context is stored as a single block of data, consisting of:
 
 - The execution context (1 byte)
+- The application's [ANID](../../concepts/applications.md#application-identifier) (4 bytes)
 - The number of arguments the process was started with (1 byte)
 - The cumulated size of all arguments, in bytes - up to 63.5 KB (2 bytes)
 - _Future-proof shift space_ (252 bytes)

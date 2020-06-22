@@ -350,15 +350,17 @@ If this syscall is not performed on a pipe before the process exits, the other p
 
 **Return value:**
 
-Encoded on 1 byte:
-
-- Bit 0 (strongest): indicates if the pipe is opened
-- Bit 1: indicates if the pipe is a message pipe
-- Bit 2: indicates if the pipe's buffer is full
-- Bit 3: indicates if the pipe is locked
-- Bit 4: indicates if a writing request is pending (waiting for the pipe to be unlocked)
-- Bit 5: indicates if a reading request is pending (waiting for the pipe to be unlocked)
-- Bit 6: indicates if the provided identifier is an SC
+- Status (1 byte):
+  - Bit 0 (strongest): indicates if the pipe is opened
+  - Bit 1: indicates if the pipe is a message pipe
+  - Bit 2: indicates if the pipe's buffer is full
+  - Bit 3: indicates if the pipe is locked
+  - Bit 4: indicates if a writing request is pending (waiting for the pipe to be unlocked)
+  - Bit 5: indicates if a reading request is pending (waiting for the pipe to be unlocked)
+  - Bit 6: indicates if the provided identifier is an SC
+- Pipe's buffer's capacity (8 bytes)
+- Remaining data before the pipe's buffer is full (8 bytes)
+- Pipe's creator's PID (8 bytes)
 
 **Errors:**
 

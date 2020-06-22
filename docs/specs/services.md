@@ -24,6 +24,10 @@ If the service refuses the connection, it provides its answer through the [`REJE
 
 Else, it accepts it through the [`ACCEPT_SERVICE_CONN`](syscalls.md#0x2c-accept_service_conn) syscall. A new thread is then created in the service's process, and the signal returns with a code indicating if the current thread is the one that was just created.
 
+### Communication
+
+The service and its client(s) communicate through the two uni-direction pipes created during the connection. Both are message pipes.
+
 ### Thread types
 
 A service process' main thread is called its _dispatcher threads_, while threads created using the [`ACCEPT_SERVICE_CONN`](syscalls.md#0x2c-accept_service_conn) syscall are called _client threads_.

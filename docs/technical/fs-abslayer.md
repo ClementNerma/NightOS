@@ -59,7 +59,7 @@ Processes are based on [pipes](ipc.md).
 
 When a process wants to create a flow, it follows the following procedure:
 
-1. The process asks the [`sys:flow`](../specs/services/flow.md) service to create a flow
+1. The process asks the [`sys::flow`](../specs/services/flow.md) service to create a flow
 2. The service creates the related flow file in `/fl`
 3. When a process reads from the (readable) flow file, all data is continuely retrieved from the creator's SC (until the flow is closed)
 4. When a process writes to the (writable) flow file, all data is continuely written to the creator's RC (the flow is not closed after that though)
@@ -67,4 +67,4 @@ When a process wants to create a flow, it follows the following procedure:
 
 ### Connecting to a flow
 
-When a process wants to read from or write to a file, it first asks the [`sys:flow`](../specs/services/flow.md) service to connect to this file. If accepted, it receives a [SC or RC](../specs/ipc.md#pipes) to interact with the flow.
+When a process wants to read from or write to a file, it first asks the [`sys::flow`](../specs/services/flow.md) service to connect to this file. If accepted, it receives a [SC or RC](../specs/ipc.md#pipes) to interact with the flow.

@@ -28,9 +28,9 @@ You can find below the exhaustive list of signals.
 
 ## `0x01` HANDLER_FAULT
 
-| Datafield description | Size    |
-| --------------------- | ------- |
-| Faulty signal ID      | 8 bytes |
+**Datafield:**
+
+- Faulty signal ID (8 bytes)
 
 Sent when a signal is sent to a process but the registered handler points to a memory zone that is not executable by the current process.
 If the sending of this signal to the process results to another fault, it's called a _double handler fault_ and the process is immediatly killed.
@@ -47,17 +47,17 @@ Sent when the process is asked to terminate. It's up to the process to either ig
 
 ## `0x12` WILL_SUSPEND
 
-| Datafield description                                                         | Size    |
-| ----------------------------------------------------------------------------- | ------- |
-| [Registry](registry.md)'s `system.signals.suspend_delay` key (default: 500ms) | 2 bytes |
+**Datafield:**
+
+- [Registry](registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
 
 Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
 
 ## `0x13` WILL_TERMINATE
 
-| Datafield description                            | Size    |
-| ------------------------------------------------ | ------- |
-| Delay before forced termination, in milliseconds | 2 bytes |
+**Datafield:**
+
+- Delay before forced termination, in milliseconds (2 bytes)
 
 Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.
 
@@ -65,26 +65,28 @@ If no handler is registered for this signal, it will kill the process when recei
 
 ## `0x20` RECV_PIPE
 
-| Datafield description                                                                                  | Size               | Value                                                    |
-| ------------------------------------------------------------------------------------------------------ | ------------------ | -------------------------------------------------------- |
-| Pipe creator's PID                                                                                     | 8 bytes            |
-| Pointer to its null-terminated application's [AID](../concepts/applications.md#application-identifier) | CPU-dependent size |
-| Length of the AID                                                                                      | 1 byte             |
-| [Pipe](ipc.md#pipes) SC or RC identifier                                                               | 8 bytes            |
-| Command code                                                                                           | 2 bytes            |
-| Pipe identifier type                                                                                   | 1 byte             | `0x00` if it's an RC, `0x01` if it's an SC               |
-| Mode                                                                                                   | 1 byte             | `0x01` if it's a raw pipe, `0x02` if it's a message pipe |
+**Datafield:**
+
+- Pipe creator's PID (8 bytes)
+- Pointer to its null-terminated application's [AID](../concepts/applications.md#application-identifier) (CPU-dependent size)
+- Length of the AID (1 byte)
+- [Pipe](ipc.md#pipes) SC or RC identifier (8 bytes)
+- Command code (2 bytes)
+- Pipe identifier type (1 byte)
+- Mode (1 byte): `0x01` if it's a raw pipe, `0x02` if it's a message pipe
 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.  
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
 
 ## `0x21` PIPE_CLOSED
 
-| Datafield description | Size    |
-| --------------------- | ------- |
-| Closing type          | 1 byte  | `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x26-close_pipe) syscall, or `0x01` if the other process brutally terminated |
-| Pipe identity         | 1 byte  | `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte) |
-| RC/SC identifier      | 8 bytes |
+**Datafield:**
+
+- Closing type (1 byte):
+  - `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x26-close_pipe) syscall
+  - `0x01` if the other process brutally terminated |
+- Pipe identity (1 byte): `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte)
+- RC or SC identifier (8 bytes)
 
 Sent to a process when a [pipe](ipc.md#pipes) shared with another process is closed.
 
@@ -92,19 +94,19 @@ Sent to a process when a [pipe](ipc.md#pipes) shared with another process is clo
 
 ## `0x2A` SERVICE_CLOSED
 
-| Datafield description          | Size    |
-| ------------------------------ | ------- |
-| Connection's unique request ID | 8 bytes |
+**Datafield:**
+
+- Connection's unique request ID (8 bytes)
 
 Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
 
 ## `0x2B` SERVICE_CONN_REQUEST
 
-| Datafield description                                                                 | Size    |
-| ------------------------------------------------------------------------------------- | ------- |
-| Callee process' ID                                                                    | 8 bytes |
-| Connection's unique request ID                                                        | 8 bytes |
-| [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) | 2 bytes |
+**Datafield:**
+
+- Callee process' ID (8 bytes)
+- Connection's unique request ID (8 bytes)
+- [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
 
 Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.
 
@@ -124,21 +126,25 @@ The thread is expected to terminate as soon as possible (there is no time limit 
 
 ## `0x32` RECV_SHARED_MEM
 
-| Datafield description                                 | Size               | Value                                                                                                       |
-| ----------------------------------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------- |
-| Sender PID                                            | 8 bytes            |
-| Command code                                          | 2 bytes            |
-| Mapped segment's start address in the current process | CPU-dependent size |
-| Mapped segment's length                               | CPU-dependent size |
-| Sharing mode                                          | 1 byte             | `0x00` for mutual sharing, `0x01` for exclusive sharing                                                     |
-| Access permissions                                    | 1 byte             | For mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, `0x00` |
+**Datafield:**
+
+- Sender PID (8 bytes)
+- Command code (2 bytes)
+- Mapped segment's start address in the current process (CPU-dependent size)
+- Mapped segment's length (CPU-dependent size)
+- Sharing mode (1 byte): `0x00` for mutual sharing, `0x01` for exclusive sharing
+- Access permissions (1 byte):
+  - For mutual sharings: strongest bit for read, next for write, next for exec
+  - For exclusive sharings: `0x00`
 
 Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by another process.
 
 ## `0x33` UNSHARED_MEM
 
-| Datafield description | Size   |
-| --------------------- | ------ |
-| Unsharing type        | 1 byte | `0x00` if the shared memory was unshared properly using the [UNSHARE_MEM](syscalls.md#0x33-unshare_mem) syscall, or `0x01` if the other process brutally terminated |
+**Datafield:**
+
+- Unsharing type (1 byte):
+  - `0x00` if the shared memory was unshared properly using the [UNSHARE_MEM](syscalls.md#0x33-unshare_mem) syscall
+  - `0x01` if the other process brutally terminated
 
 Sent to a process when a [shared segment of memory](ipc.md#shared-memory) is unshared by the sharer process.

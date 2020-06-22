@@ -594,6 +594,11 @@ It can be used like this:
 retry_cmd(@{ read "file.txt" }, 10)
 ```
 
+#### Global failing
+
+A whole script can fail using this keyword, which will result in displaying the error message in CMDERR and exiting immediatly.  
+The failure may be handled using `fallible` in the caller script.
+
 ## Optional types
 
 Sometimes, it's useful to be able to represent a value that may be either _something_ or _nothing_. In many programming languages, "nothing" is represented as the `null`, `nil` or `()` value.
@@ -1111,13 +1116,13 @@ Fails if the shell is not interactive.
 Run a command and retry it a given number of times if it fails.
 Fails if the command still fails after all allowed tries.
 
-#### `exit(code = 0)`
+#### `exit()`
 
-Make the program exit. Any code other than `0` means the program failed.
+Make the program exit.
 
-#### `status() -> num`
+#### `last_failed() -> bool`
 
-Get the exit code of the previous command.
+Check if the previous command failed.  
 Returns `0` if no command was ran since the beginning of the script.
 
 #### `rand() -> float`

@@ -34,7 +34,7 @@ Applications sideloading (installing an application directly from its [package](
 
 **Disable mode** prevents all sideloading ; it's not possible to install applications from their package in this mode. [Volatile applications](#volatile-applications) can stil be run, though.
 
-**Secure mode** allows sideloading but will first make the system check if the application's AID matches an existing application on the Store. If so, it compares the application's signature to the Store application's one. If they don't match, the application is considered malicious and won't be installed.  
+**Secure mode** allows sideloading but will first make the system check if the application's [AID](#application-identifier) matches an existing application on the Store. If so, it compares the application's signature to the Store application's one. If they don't match, the application is considered malicious and won't be installed.  
 Note that this mode only works while connected to internet, as the system needs to check the Store to ensure the application is not malicious. If the computer is offline, sideloading will be disabled.
 
 **Unsecure mode** allows sideloading without any checking, which is highly dangerous as it allows spoofing.

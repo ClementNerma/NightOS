@@ -282,29 +282,7 @@ Encoded on 4 bytes:
 Read pending data or message from a pipe.  
 If the pipe was closed while the buffer was not empty, this syscall will still be able to read the remaining buffer's data - but the pipe will not be able to receive any additional data. Then, once the buffer is empty, the pipe will be made unavailable.
 
-## `0x24` CLOSE_PIPE
-
-**Arguments:**
-
-- [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)
-
-**Return value:**
-
-_None_
-
-**Errors:**
-
-- `0x10`: The provided RC/SC identifier does not exist
-- `0x11`: The target process already terminated
-- `0x20`: The provided RC/SC identifier is part of a service pipe
-
-**Description:**
-
-Close a pipe properly. The RC and SC parts will be immediatly closed.  
-The other process this pipe was shared with will receive the [`PIPE_CLOSED`](signals.md#0x21-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
-If this syscall is not performed on a pipe before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
-
-## `0x25` PIPE_INFO
+## `0x24` PIPE_INFO
 
 **Arguments:**
 
@@ -331,6 +309,28 @@ _None_
 **Description:**
 
 Get informations on a pipe from its RC or SC identifier.
+
+## `0x25` CLOSE_PIPE
+
+**Arguments:**
+
+- [Pipe](ipc.md#pipes) RC or SC identifier (8 bytes)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x10`: The provided RC/SC identifier does not exist
+- `0x11`: The target process already terminated
+- `0x20`: The provided RC/SC identifier is part of a service pipe
+
+**Description:**
+
+Close a pipe properly. The RC and SC parts will be immediatly closed.  
+The other process this pipe was shared with will receive the [`PIPE_CLOSED`](signals.md#0x21-pipe_closed) signal unless this pipe was created during a [service connection](#0x2c-accept_service_conn).  
+If this syscall is not performed on a pipe before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.
 
 ## `0x2A` CONNECT_SERVICE
 

@@ -31,11 +31,11 @@ A service process' threads are called _dispatcher threads_, except threads that 
 ### Closing a connection
 
 The service cannot terminate a connection by itself.
-If a client thread terminates brutally, the [`SERVICE_CLOSED`](signals.md#0x2d-service_closed) signal will be sent to its client.
+If a client thread terminates brutally, the [`SERVICE_SERVER_QUITTED`](signals.md#0x2d-service_server_quitted) signal will be sent to its client.
 
 Only clients can properly close a connection to a service, using the [`END_SERVICE_CONN`](syscalls.md#0x2b-end_service_conn) syscall. The pipe communication channels immediatly close (on both the client and the thread's sides).
 
-The service then receives the [`SERVICE_CLIENT_CONN_END`](signals.md#0x2c-service_client_conn_end) signal.
+The service then receives the [`SERVICE_CLIENT_QUITTED`](signals.md#0x2c-service_client_quitted) signal.
 
 If the client terminates brutally (before the connection was properly ended), the client thread receives the [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal.
 

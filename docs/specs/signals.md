@@ -112,12 +112,12 @@ If no handler is registered for this signal, it will kill the process when recei
 Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
 The thread is expected to terminate as soon as possible (there is no time limit though).
 
-## `0x2C` SERVICE_CLIENT_CONN_END
+## `0x2C` SERVICE_CLIENT_QUITTED
 
 Sent to a [client thread](services.md#thread-types) to indicate its client asked to close the connection.
 The associated RC and SC are immediatly closed.
 
-## `0x2D` SERVICE_CLOSED
+## `0x2D` SERVICE_SERVER_QUITTED
 
 **Datafield:**
 

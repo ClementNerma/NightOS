@@ -163,7 +163,7 @@ _None_
 Kill the current process.
 
 A [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to all services connection the process has.  
-If the current process is a service, a [`SERVICE_CLOSED`](signals.md#0x2d-service_closed) signal is sent to all active clients.
+If the current process is a service, a [`SERVICE_SERVER_QUITTED`](signals.md#0x2d-service_server_quitted) signal is sent to all active clients.
 
 ## `0x20` OPEN_PIPE
 

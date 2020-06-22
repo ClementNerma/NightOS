@@ -73,7 +73,7 @@ If no handler is registered for this signal, it will kill the process when recei
 
 **Datafield:**
 
-- Delay before forced termination, in milliseconds (2 bytes)
+- [Registry](registry.md)'s `system.signals.terminate_delay` key (default: 2s) (2 bytes)
 
 ## `0x20` RECV_PIPE
 

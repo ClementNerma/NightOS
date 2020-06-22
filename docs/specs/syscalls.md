@@ -337,6 +337,7 @@ If this syscall is not performed on a pipe before the process exits, the other p
 **Arguments:**
 
 - Target application's [ANID](../concepts/applications.md#application-identifier) (4 bytes)
+- Command code (2 bytes)
 
 **Return value:**
 

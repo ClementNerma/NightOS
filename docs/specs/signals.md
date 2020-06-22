@@ -106,6 +106,7 @@ Sent to a process that previously established a connection with a service, to in
 
 - Callee process' ID (8 bytes)
 - Connection's unique request ID (8 bytes)
+- Command code (2 bytes)
 - [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
 
 Sent to a service process' [dispatcher threads](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.

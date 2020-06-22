@@ -28,13 +28,22 @@ The context is stored as a single block of data, consisting of:
 
 - The execution context (1 byte)
 - The application's [ANID](../../concepts/applications.md#application-identifier) (4 bytes)
+
+If the command was not started a command, the context ends here. Else, it also contains the following informations:
+
+- The ANID of the caller application (4 bytes)
 - The number of arguments the process was started with (1 byte)
 - The cumulated size of all arguments, in bytes - up to 63.5 KB (2 bytes)
-- _Future-proof shift space_ (252 bytes)
-- The null-terminated name of the exposed command the process was started for, filled with zeros if the process was not created from a command (256 bytes)
+- RC identifier for the CMDIN pipe (8 bytes)
+- RC identifier for the CMDUSR pipe (8 bytes)
+- SC identifier for the CMDMSG pipe (8 bytes)
+- SC identifier for the CMDERR pipe (8 bytes)
+- SC identifier for the CMDRAW pipe (8 bytes)
+- SC identifier for the CMDOUT pipe (8 bytes)
+- _Future-proof shift space_ (196 bytes)
 - The value of command-line arguments (up to 63.5 KB)
 
-The context's size may vary depending on the provided command-line arguments from 512 bytes to 64 KB.
+The context's size may so vary from 512 bytes to 64 KB.
 
 ## Arguments structure
 

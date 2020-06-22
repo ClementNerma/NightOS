@@ -29,6 +29,18 @@ When a process exits, all its child processes are immediatly killed. It's up to 
 
 A process can create _threads_, which are still a part of the process. Threads allow to run multiple part of a process concurrently, as the kernel may run several threads in different processor cores.
 
+All threads share the same address space and memory, although they all have a reserved space called the [_thread-local storage_](#thread-local-storage).
+
+Threads work as a hierarchy ; when a thread creates another, it is called the new thread's _parent_, while the new thread is its _child_. When a thread terminates, all its children are instantly destroyed.
+
+### Main thread
+
+When a process starts, its instruction run its _main thread_. Due to threads being hierarchised, exiting the main thread will result in all other threads being closed immediatly, which is why the main thread should always first terminate its children properly to ensure all data are synchronized for instance.
+
+### Thread-local storage
+
+Threads have a reserved portion of memory in their address space called the _thread-local storage_ (TLS).
+
 ## Automatic permissions inheritance
 
 When an application process gets a new permission, all other processes from the same application inherit it, unless this permission is granted only for this instance of the application.

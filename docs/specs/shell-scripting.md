@@ -1414,3 +1414,13 @@ while true
   end
 end
 ```
+
+### Streams
+
+#### `stream.pending() -> bool`
+
+Check if the stream is still pending. If the pipe is complete (which means if its pipe is closed), `false` will be returned.
+
+#### `stream.size_hint() -> int?`
+
+Get the stream's size hint. If no size hint was provided for this stream, `null` will be returned.

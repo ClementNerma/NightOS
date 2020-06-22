@@ -80,7 +80,7 @@ Application can expose [shell commands](../technical/shell.md). Multiple command
 
 For instance, if an application with AID `superdev.utils` exposes an `get_time` command, the final usable command will be `:superdev.utils.get_time`.
 
-This is quite a long name but allows to prevent any clashing between commands. It's common for shell scripts to define aliases at the beginning of the script to refer more easily to applications' commands.
+This is quite a long name but allows to prevent any clashing between commands. It's common for shell scripts to use imports at the beginning of the script to refer more easily to applications' commands.
 
 Commands work by launching the application with a specific [context](#application-context).
 

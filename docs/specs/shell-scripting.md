@@ -762,22 +762,28 @@ wait validated
 echo "Thanks for validating your choice :D"
 ```
 
-## Aliases
+## Imports
 
-As you may already know, command names can be [quite long and complicated](../concepts/applications.md#commands). In order to prevent from having to repeat very long names that are not really readable, it's recommanded to use _aliases_ which are declared at the beginning of script:
+As you may already know, command names can be [quite long and complicated](../concepts/applications.md#commands). In order to prevent from having to repeat very long names that are not really readable, it's recommanded to use _imports_ which are declared at the beginning of script with the form `<dev>::<app>::<command>`:
 
 ```hydre
-system::fs::read_file as read_file
+import system::fs::read_file
 
 read_file # ...
 ```
 
-The `read_file` command is then made available.
+It's then possible to use the `read_file` without prefixing.
+
+To perform multiple imports at once:
+
+```hydre
+import system::fs::{read_file, write_file}
+```
 
 It's also possible to only bind the application itself:
 
 ```hydre
-system::fs as fs
+import system::fs
 
 fs::read_file # ...
 ```

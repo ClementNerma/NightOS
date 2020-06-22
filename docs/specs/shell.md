@@ -1,6 +1,6 @@
 # Hydre
 
-The _shell_ is the part responsible for running _scripts_, which are small text-based programs that are natively available on every NightOS installation. It is called _Hydre_ and is part of the system.
+The _shell_ is the part responsible for running _scripts_, which are small text-based programs that are natively available on every NightOS installation. It is called _Hydre_ and is part of the system under the form of the [`sys:hydre`](services.md#syshydre) service.
 
 You can get a quick overview of Hydre in its [technical document](../technical/shell.md).
 
@@ -18,6 +18,11 @@ A session has the following properties:
 Commands can then be run inside the created session, and once they are all finished the same session can be closed using the same service. This simplify execution chaining, but also enables commands to be notified through the [service's pipes](services.md#communication) when the session is resized.
 
 For instance, when using the [Pluton](../applications/Pluton.md) terminal, it creates on opening a shell session to run the commands in. When a new tab is opened, another shell session is opened for that tab.
+
+### Sessions security
+
+When a command is run, the command's PID is registered as the session's _actor_. When the command ends, the actor is reset.  
+When a process contacts the [`sys:hydre`](services.md#syshydre) service to access the session it runs in, Hydre gets the session where this process' PID is the actor, and returns the corresponding session. If the PID is not associated to any session, the access is refused and the command won't be able to get any information on any session.
 
 ## Commands evaluation
 
@@ -139,6 +144,6 @@ Messages providing an invalid foreground and/or background color will _conventio
 
 ## Events handling
 
-Commands can use the _shell session identifier_ provided in their [context](applications/context.md) to get informations on the current session using the [`sys:hydre`](services.md#syshydre) service.
+Commands can get informations on the current session using the [`sys:hydre`](services.md#syshydre) service.
 
 This allows the command to be notified of events like windows resizing. For more informations, see the service's [specifications document](services.md#syshydre).

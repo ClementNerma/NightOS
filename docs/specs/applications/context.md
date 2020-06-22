@@ -34,7 +34,6 @@ If the command was not started a command, the context ends here. Else, it also c
 - The ANID of the caller application (4 bytes)
 - The number of arguments the process was started with (1 byte)
 - The cumulated size of all arguments, in bytes - up to 63.5 KB (2 bytes)
-- Shell session identifier (8 bytes)
 - RC identifier for the CMDIN pipe (8 bytes)
 - RC identifier for the CMDUSR pipe (8 bytes)
 - SC identifier for the CMDMSG pipe (8 bytes)

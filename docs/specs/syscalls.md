@@ -396,6 +396,8 @@ _None_
 
 Allocate a linear block of memory.
 
+**WARNING:** Allocated memory will not be rewritten, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.
+
 **Arguments:**
 
 - The number of [pages](kernel/memory.md#pages) to allocate (8 bytes)
@@ -414,6 +416,8 @@ Unallocate a linear block of memory.
 
 Shared memory pages must first be unshared through the [`MEM_UNSHARE`](#0x35-unshare_mem) syscall.  
 Mapped memory pages must be unmapped through the [`MEM_UNMAP`](#0x33-mem_unmap) syscall.
+
+**WARNING:** Memory will not be zeroed, therefore the caller process shall ensure critical informations are zeroed or randomized before freeing the memory.
 
 **Arguments:**
 

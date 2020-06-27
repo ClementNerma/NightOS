@@ -17,12 +17,16 @@ A session has the following properties:
 
 Commands can then be run inside the created session, and once they are all finished the same session can be closed using the same service. This simplify execution chaining, but also enables commands to be notified through the [service's pipes](services.md#communication) when the session is resized.
 
-For instance, when using the [Pluton](../applications/Pluton.md) terminal, it creates on opening a shell session to run the commands in. When a new tab is opened, another shell session is opened for that tab.
+Only one [shell instruction](shell-scripting.md) can be run at a time, but as it may be made of multiple commands (e.g. `cmd1 | cmd2`), multiple processes may be binded to the same shell session. Also, [background commands](shell-scripting.md#running-in-background) may be running in parallel of the running command.
+
+For instance, when using the [Pluton](../applications/Pluton.md) terminal, it creates on opening a shell session to run the commands in. When a new tab is opened, another shell session is opened for that tab. When the tab is destroyed, the session is destroyed as well, which means all commands running in it (including pipe and background commands) are killed.
 
 ### Sessions security
 
-When a command is run, the command's PID is registered as the session's _actor_. When the command ends, the actor is reset.  
-When a process contacts the [`sys::hydre`](services/hydre.md) service to access the session it runs in, Hydre gets the session where this process' PID is the actor, and returns the corresponding session. If the PID is not associated to any session, the access is refused and the command won't be able to get any information on any session.
+When a command is run, the command's PID is registered in the session's _actors_ list. When the command ends, it is removed from the list.  
+When a process contacts the [`sys::hydre`](services/hydre.md) service to access the session it runs in, Hydre gets the session associated to this process' PID, and returns it. If the PID is not associated to any session, the access is refused and the command won't be able to get any information on any session.
+
+This prevents processes from accessing sessions they aren't part of.
 
 ## Commands evaluation
 

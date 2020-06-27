@@ -1368,6 +1368,22 @@ var names = [ "Jack", "John" ]
 names.get(2, "Third item was not found")
 ```
 
+#### `list[T].unshift(value: T)`
+
+Insert a new value at the beginning of the list.
+
+#### `list[T].push(value: T)`
+
+Push a new value at the end of the list.
+
+#### `list[T].unshift() -> T?`
+
+Remove the first value from the list and return it.
+
+#### `list[T].pop() -> T?`
+
+Remove the last value from the list and return it.
+
 #### `list[T].sort(asc = true) -> list[T]`
 
 Sorts a list.

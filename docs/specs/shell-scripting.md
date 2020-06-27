@@ -1061,6 +1061,78 @@ echo $(length < ./somefile.txt) # Prints: 24
 
 For commands that only accept `string` inputs, the file is automatically decoded and converted to a string. Else, it's kept as a `stream`.
 
+## Running in background
+
+It's possible to run multiple commands in parallel by using _background commands_. A background command runs, as the name suggests, in the background, and so its output isn't visible. If it fails, it won't generate any error nor affect the `status()` code.
+
+To run a command in backgroud, we use the `bg` keyword:
+
+```hydre
+bg hello = sleep 5 -x { i -> echo "Counter: ${i}" }
+```
+
+This will declare an `hello` variable and put an `int` value inside it, which is the background command's _identifier_ (BGID). The command will be started and run in parallel of the current program. For instance, the following program:
+
+```hydre
+bg hello = sleep 5 -x { i -> echo "Counter: ${i}" } --end { -> echo "Counter completed!" }
+
+for i in 1..=5
+  sleep 1
+  echo "Loop: ${i}"
+end
+
+echo "Loop completed!"
+```
+
+Will print:
+
+```plaintext
+Counter: 1
+Loop: 1
+Counter: 2
+Loop: 2
+Counter: 3
+Loop: 3
+Counter: 4
+Loop: 4
+Counter: 5
+Loop: 5
+Counter completed!
+Loop completed!
+```
+
+It's possible to wait for a background command by making it run back in the foreground:
+
+```hydre
+bg hello = sleep 5 # The command runs in background
+fg hello # The commands comes back to the foreground
+         # The program pauses until it completes like for a normal command
+```
+
+It's also possible to let the command run even when the program finishes with `detach`:
+
+```hydre
+bg hello = sleep 5
+detach hello
+```
+
+Or to stop the background command with `kill`:
+
+```hydre
+bg hello = sleep 5 -x { i -> echo "Counter: ${i}" }
+
+sleep 3
+kill hello
+echo "Killed."
+
+### Output:
+Counter: 1
+Counter: 2
+Counter: 3
+Killed.
+<Program stops>###
+```
+
 ## Commands typing
 
 For script files to be called as commands, they must define a `main` function and declare a _command description_.

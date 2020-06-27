@@ -1490,3 +1490,146 @@ Check if the stream is still pending. If the pipe is complete (which means if it
 #### `stream.size_hint() -> int?`
 
 Get the stream's size hint. If no size hint was provided for this stream, `null` will be returned.
+
+## Native commands
+
+The native commands are commands that are available in every program without import.
+
+### `echo`: display a value
+
+Display a value to CMDOUT.
+
+```hydre
+# echo [-n] { <anystr> | -b <stream>}
+#
+# "-b": print a stream as UTF-8
+# "-n": don't put a newline break at the end of the content
+
+echo "Hello world"
+echo -n "Hello world!"
+echo -b $(streamify "Hello world!")
+```
+
+### `wt`: write a file
+
+Write a content to a file.
+
+```hydre
+# wt [-a] [-n] [-c] <path> <anystr>
+#
+# "-a": append to the end of the file
+# "-n": don't append a newline symbol at the end of the content
+# "-c": fail if the file doesn't exist instead of creating it
+```
+
+Note that sometimes it can be clearer to use a redirection pipe:
+
+```hydre
+# Overwrite file
+echo "Hello world!" > ./test.txt
+
+# Append to file
+echo "Hello world!" >> ./test.txt
+```
+
+### `rd": read a file
+
+Read a file as a `string` value.
+
+```hydre
+# rd [-s] [--stream-size <int>] <path>
+#
+# "-s": read a stream instead of reading the full content
+# "--stream-size": specify the size of the stream when "-s" is provided (rounded to higher pipe buffer multiplier)
+```
+
+### `mkd`: create a directory
+
+Create a new directory.
+
+```hydre
+# mkd [-s] <path>
+#
+# "-s": fail if the directory already exists
+```
+
+### `re`: rename a filesystem item
+
+Rename a filesystem item.
+
+```hydre
+# re [-m] <oldname: path> <newname: path>
+#
+# "-m": move if the 'newname' is located inside another directory
+```
+
+### `mv`: move a filesystem item
+
+```hydre
+# mv [-n] <file: path> <dest_dir: path>
+#
+# "-n": create the target directory if it does not exist
+```
+
+### `rm`: remove a filesystem item
+
+Remove a filesystem item.
+
+```hydre
+# rm [-r | --recursive] [-n | --non-empty] [-t | --trash] {<path> | -l <list[path]>}
+#
+# "-r": allow removing empty directory
+# "-n": allow removing even non-empty directories
+# "-l": remove a list of paths
+# "-t": move the item to the user's trash
+```
+
+### `ls`: list filesystem items
+
+List filesystem items.
+
+```hydre
+# ls [-t | --tree] [-r | --recursive] [-h | --hidden] [--file-only | --dir-only] [<path>]
+#
+# "-t": display as a tree (implies "-r")
+# "-r": list recursively
+# "-h": list hidden files
+# "--file-only": only display files
+# "--dir-only": only display directories
+```
+
+### `fd`: find filesystem items
+
+Find filesystem items matching provided criterias.
+
+```hydre
+# fd [-t | --types list["dir" | "file" | "symlink" | "device"]]
+#    [-a | --absolute]
+#    [-L | --follow]
+#    [-e | --extension <string>]
+#    [-n | --name <string>]
+#    [-r | --regex <string>]
+#    [-i | --ignore-case]
+#    [-x | --exec <command>] <path>
+#
+# "-t": only list items of a given type (by default, only files and symlinks are shown)
+# "-a": list absolute file paths instead of relative ones
+# "-L": follow symbolic links
+# "-e": only list files with the provided extension (directory will be excluded)
+# "-n": only list items whose name contain the provided string (`^` and `$` can be used for indicating items must start or end by it)
+# "-r": only list items matching a provided POSIX regex
+# "-i": ignore case (requires "-n" or "-r")
+# "-x": execute a command for each found item
+```
+
+### `sl`: manage symlinks
+
+Manage symbolic links.
+
+```hydre
+# sl {-r | --read} <path>: check a symlink's target
+#
+# sl [-u | --update] <srcpath> <targetpath>: create a symlink
+#
+# "-u": update the symlink to the new target path if it already exists instead of failing
+```

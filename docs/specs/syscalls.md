@@ -310,6 +310,8 @@ _None_
 
 Ask a service to etablish connection. The current process is called the service's _client_.
 
+If the current process already has an active connection (a connection that hasn't been closed) to the target service, it will fail unless the flexible mode argument is set.
+
 **NOTE:** When this signal is sent, the service's answer will be waited, so the instructions following the sending of this signal may not be ran until several seconds in the worst scenario.
 
 **Arguments:**
@@ -322,11 +324,14 @@ Ask a service to etablish connection. The current process is called the service'
 - Unique connection ID (8 bytes)
 - [Pipe](ipc.md#pipes) SC identifier (8 bytes)
 - [Pipe](ipc.md#pipes) RC identifier (8 bytes)
+- Flexible mode (1 byte): `0x00` by default, `0x01` returns the existing connection ID an active connection is already in place with the service
 
 **Errors:**
 
-- `0x10`: The provided ANID does not exist
-- `0x20`: Target application does not [expose a service](../concepts/applications.md#services)
+- `0x10`: Invalid flexible mode provided
+- `0x20`: The provided ANID does not exist
+- `0x21`: Target application does not [expose a service](../concepts/applications.md#services)
+- `0x22`: Current process already has an active connection to the target service and flexible mode is not set
 - `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 - `0x31`: Service rejected the connection request
 

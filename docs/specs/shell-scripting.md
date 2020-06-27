@@ -143,14 +143,14 @@ command "pos1" --pres "pos2" --val 2
 To use a variable, we can directly use it like this::
 
 ```hydre
-tellage age
+tellage ${age}
 ```
 
 So this code:
 
 ```hydre
 var age = 20
-tellage age
+tellage ${age}
 ```
 
 Is equivalent to this one:

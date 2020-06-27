@@ -1,5 +1,7 @@
 # Permissions
 
+**WARNING:** This document is **FAR** from being complete!
+
 This document describes all [application and user permissions](../features/permissions.md).
 
 For applications, these are named _permissions_, while for users their are called _privileges_.

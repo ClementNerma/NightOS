@@ -348,9 +348,9 @@ Note that, for blocks that only contain a single instruction, we can shorten thi
 
 ```hydre
 switch rand_int(0, 10)
-  when 0 -> echo "It's zero!"
-  when 1 -> echo "It's one!"
-  else   -> echo "It's something else!"
+  when 0 => echo "It's zero!"
+  when 1 => echo "It's one!"
+  else   => echo "It's something else!"
 end
 ```
 
@@ -552,8 +552,8 @@ This keyword also allows to catch errors from commands:
 ```hydre
 # Run a command and get error messages from CMDERR instead if the command fails
 catch $(somecommand)
-  ok data -> echo "Success: ${data}"
-  err msg -> echo "Errors: ${msg.join("; ")}"
+  ok data => echo "Success: ${data}"
+  err msg => echo "Errors: ${msg.join("; ")}"
 end
 ```
 
@@ -1101,8 +1101,8 @@ Also, know that scripts can `fail` too. This allows errors to be handled when th
 # main(names: list[string], repeat: int?) -> fallible
 
 catch $(myscript ["Jack", "John"])
-  ok  _ -> echo "Everything went fine :)"
-  err _ -> echo "Something went wrong :("
+  ok  _ => echo "Everything went fine :)"
+  err _ => echo "Something went wrong :("
 end
 ```
 

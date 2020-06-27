@@ -108,8 +108,6 @@ _ = /tmp
 @{ command "pos1" -s --long }
 ```
 
-One usual type is not listed here: `stream`, which is notably used by commands which manipulate potentially long and/or asynchronous data.
-
 A `string` is composed of multiple `char`s, which are made of single codepoints. This means a _grapheme cluster_ made of multiple codepoints will need to be encoded in a `string`.  
 There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.  
 Finally, there is the `void` type which cannot be written 'as is' but is used in special contexts like [commands return values](#commands-typing). It's a type that contains no data at all.
@@ -439,6 +437,12 @@ for file in (**/*.txt)
   echo "Found a text file: ${file}"
 end
 ```
+
+## Advanced types
+
+### Streams
+
+An usual type for manipulating large data is `stream`, which is notably used to treat a chunk of data that is either too large for the memory or is more easier to treat as things progress.
 
 ## Functions
 

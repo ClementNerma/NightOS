@@ -9,7 +9,7 @@ Hydre uses an intuitive syntax. Commands are written like they would be in \*-sh
 Arugments can either be positional (they are written directly), shorts (prefixed by a `-` symbol and one-character long), or longs (prefixed by two `-` symbols). Here is an example:
 
 ```hydre
-cmdname pos1 pos2 -a --arg1
+cmdname "pos1" "pos2" -a --arg1
 ```
 
 This line runs the command called `cmdname`, provides two positional arguments `pos1` and `pos2`, a short one `a` and a long one `arg1`.
@@ -58,70 +58,6 @@ comment
 ###
 ```
 
-## Value types
-
-All arguments must match their expected _type_: if the command is expecting a number, we can't give it a list for instance.
-
-Here is the list of all types and how they are written:
-
-```hydre
-# Booleans (bool) (`true` or `false`)
-true
-
-# Integers (int)
-3
-
-# Floating-point numbers (float)
-3.14
-
-# Characters (char)
-'a'
-
-# Strings (string)
-"abc"
-
-# Lists of a given type (list[type])
-[ 3, 3.14 ]
-
-# Paths (path) - must contain at least one `/` to indicate clearly that it's a path and not a string or something else
-dir/file.ext
-./file.ext
-/tmp
-
-# Commands (used to run custom commands later in functions)
-@{ command pos1 -s --long }
-```
-
-One usual type is not listed here: `stream`, which is notably used by commands which manipulate potentially long and/or asynchronous data.
-
-The `char` type contains a _grapheme cluster_, which may be composed of multiple Unicode codepoints. A `string` is composed of multiple `char`s.  
-There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.  
-Finally, there is the `void` type which cannot be written 'as is' but is used in special contexts like [commands return values](#commands-typing). It's a type that contains no data at all.
-
-There are also _presential arguments_, which are dash arguments that take no value. The command will simply check if the argument was provided or not.
-
-**NOTE:** In order to avoid writing errors, positional arguments cannot be provided after a presential argument.
-
-For instance, considering `pos1` and `pos2` are positional arguments, `--pres` a presential argument and `--val` a non-presential long argument:
-
-```hydre
-# VALID
-command pos1 pos2 --pres --val 2
-
-# VALID
-command pos1 --val 2 pos2 --pres
-
-# VALID
-command pos1 --pres --val 2 pos2
-
-# VALID
-command --press --val 2 pos1 pos2
-
-# INVALID (we could think by reading this that "pos2" is the
-#          value of the non-presential argument "--pres")
-command pos1 --pres pos2 --val 2
-```
-
 ## Variables
 
 Variables are declared with the `var` keyword:
@@ -138,6 +74,70 @@ And to assign a new value to it:
 age = 20
 ```
 
+## Value types
+
+All arguments must match their expected _type_: if the command is expecting a number, we can't give it a list for instance.
+
+Here is the list of all types and how they are written:
+
+```hydre
+# Booleans (bool) (`true` or `false`)
+_ = true
+
+# Integers (int)
+_ = 3
+
+# Floating-point numbers (float)
+_ = 3.14
+
+# Characters (char)
+_ = 'a'
+
+# Strings (string)
+_ = "abc"
+
+# Lists of a given type (list[type])
+_ = [ 3, 3.14 ]
+
+# Paths (path) - must contain at least one `/` to indicate clearly that it's a path and not a string or something else
+_ = dir/file.ext
+_ = ./file.ext
+_ = /tmp
+
+# Commands (used to run custom commands later in functions)
+@{ command "pos1" -s --long }
+```
+
+One usual type is not listed here: `stream`, which is notably used by commands which manipulate potentially long and/or asynchronous data.
+
+The `char` type contains a _grapheme cluster_, which may be composed of multiple Unicode codepoints. A `string` is composed of multiple `char`s.  
+There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.  
+Finally, there is the `void` type which cannot be written 'as is' but is used in special contexts like [commands return values](#commands-typing). It's a type that contains no data at all.
+
+There are also _presential arguments_, which are dash arguments that take no value. The command will simply check if the argument was provided or not.
+
+**NOTE:** In order to avoid writing errors, positional arguments cannot be provided after a presential argument.
+
+For instance, considering `pos1` and `pos2` are positional arguments, `--pres` a presential argument and `--val` a non-presential long argument:
+
+```hydre
+# VALID
+command "pos1" "pos2" --pres --val 2
+
+# VALID
+command "pos1" --val 2 "pos2" --pres
+
+# VALID
+command "pos1" --pres --val 2 "pos2"
+
+# VALID
+command --press --val 2 "pos1" "pos2"
+
+# INVALID (we could think by reading this that "pos2" is the
+#          value of the non-presential argument "--pres")
+command "pos1" --pres "pos2" --val 2
+```
+
 ## Expressions
 
 To use a variable, we can directly use it like this::
@@ -149,7 +149,7 @@ tellage age
 So this code:
 
 ```hydre
-age = 20
+var age = 20
 tellage age
 ```
 
@@ -162,8 +162,8 @@ tellage 20
 It's also possible to perform computations using expressions:
 
 ```hydre
-age = 20
-add = 12
+var age = 20
+var add = 12
 tellage ${age + add}
 ```
 
@@ -280,7 +280,7 @@ Blocks allow to run a piece of code multiple times or if a specific condition is
 Conditionals uses the following syntax:
 
 ```hydre
-if condition
+if # condition
   command1
 end
 ```
@@ -377,6 +377,8 @@ This will run `command 0` to `command 10`.
 We can also iterate on a list:
 
 ```hydre
+var str = "Jack"
+
 var list = [ "Jack", "John" ]
 
 for name in list
@@ -399,7 +401,7 @@ This will display `0: Jack` and `1: John`.
 There is another type of loop, which runs a piece of code while a condition is met:
 
 ```hydre
-while condition
+while # condition
   command
 end
 ```
@@ -425,7 +427,7 @@ This will run `command 0`, `command 1` and `command 2` only.
 It's possible to iterate on a list of files and directories:
 
 ```hydre
-for file in (*.txt)
+for file in (./*.txt)
   echo "Found a text file: ${file}"
 end
 ```
@@ -443,7 +445,7 @@ end
 Functions allow to split the code in several parts to make it more readable, as well as to re-use similar pieces of code across the script.
 
 ```hydre
-fn hello
+fn hello()
   echo "Hello!"
 end
 ```
@@ -469,9 +471,9 @@ hello("Jack") # Will print "Hello, Jack!"
 Arguments can be made optional by providing default values. This also allows to get rid of their explicit type as it's now implicit:
 
 ```hydre
-fn hello (name = "Unknown") {
+fn hello (name = "Unknown")
   echo "Hello, ${name}!"
-}
+end
 
 hello()       # Will print "Hello, Unknown!"
 hello("Jack") # Will print "Hello, Jack!"
@@ -487,7 +489,7 @@ hello(name) # Prints: "Hello, Jack!"
 We can also combine functions and blocks, for instance:
 
 ```hydre
-fn greet (names: list[string])
+fn greet (names: list[string]) -> int
   # .len() is called an _extension_, we will see more about that later
   if names.len() == 0
     echo "No one to greet :|"
@@ -574,13 +576,13 @@ This will run `may_fail`, and run it again if it fails, until it succeeds.
 It's also possible to specify a maximum number of retries:
 
 ```hydre
-retry(5) may_fail
+retry(5) may_fail()
 ```
 
 For information, here is the declaration of the native `retry_cmd` command, which allows to try to run a command until it succeeds:
 
 ```hydre
-fn retry_cmd(cmd: command, retries: int) -> fallible
+fn retry_cmd(cmd: command, retries: string) -> fallible
   retry(retries) cmd.fallible()
   if status() != 0
     fail "Command did not suceed after ${retries} retries."
@@ -617,17 +619,23 @@ fn custom_rand() -> int?
 end
 ```
 
-To declare a variable with an optional type, we either suffix it by `?` to make the value nullable:
+To declare a variable with an optional type, we wrap its initialization value in the optional operator `?(...)`:
 
 ```hydre
-var a = 1  # int
-var b = 1? # int?
+var a = 1 # int
+var b = ?(1) # int?
 ```
 
-Or using the `null.<type>()` function to declare the variable as nullable with the `null` value:
+Or we explicitly give the variable a nullable type:
 
 ```hydre
-var c = null.int() # int?
+var b: int? = 1 # int?
+```
+
+To initialize the variable with the `null` value instead, we must use the explicit version:
+
+```hydre
+var c: int? = null # int?
 ```
 
 Note that imbricated types are not supported, which means we cannot create `int??` values for instance.
@@ -637,7 +645,7 @@ Note that imbricated types are not supported, which means we cannot create `int?
 If we try to access an optional value "as is", we will get a type error:
 
 ```hydre
-var a = 1?
+var a = ?(1)
 
 var b = 0
 b = a # ERROR: Cannot use an `int?` value where `int` is expected
@@ -646,7 +654,7 @@ b = a # ERROR: Cannot use an `int?` value where `int` is expected
 We then have multiple options. We can use one of the nullable types' function:
 
 ```hydre
-var a = 1?
+var a = ?(1)
 
 var b = 0
 
@@ -660,8 +668,8 @@ b = a.expect("'a' should not be null :(")
 We can also detect if a value is `null` by using the `.isNull()` method:
 
 ```hydre
-var a = 1?
-var b = null.int()
+var a = ?(1)
+var b: int? = null
 
 echo ${a.isNull()} # false
 echo ${b.isNull()} # true
@@ -670,8 +678,8 @@ echo ${b.isNull()} # true
 There is also the `.default(T)` method that allows to use a fallback value in case of `null`:
 
 ```hydre
-var a = 1?
-var b = null.int()
+var a = ?(1)
+var b: int? = null
 
 echo ${a.default(3)} # 1
 echo ${b.default(3)} # 3
@@ -680,7 +688,7 @@ echo ${b.default(3)} # 3
 We can also use special syntaxes in blocks:
 
 ```hydre
-var a = 1?
+var a = ?(1)
 
 if some a
   # While we are in this block, 'a' is considered as an 'int'
@@ -691,14 +699,6 @@ end
 while some a
   # Same here
 end
-
-# Wait until 'a' is not null
-# The type of 'a' will not change, though
-wait some a
-
-# Wait until 'a' is not null, then assign the result to 'b'
-# 'b' will have a non-nullable type
-wait some a -> b
 ```
 
 ### The case of optional arguments
@@ -706,7 +706,7 @@ wait some a -> b
 When a command takes an optional argument, it's possible to provide a nullable value of the same type instead:
 
 ```hydre
-var no_newline = false?
+var no_newline = ?(false)
 
 echo "Hello!" -n ${no_newline}
 ```
@@ -730,11 +730,13 @@ If the event listener is registered in a function, the is automatically unregist
 ```hydre
 fn test()
   on keypress as keycode # (1)
+    # Do something
   end
   # Event listener (1) is unregistered here
 end
 
 on keypress as keycode # (2)
+  # Do something
 end
 
 echo "Hello world!"
@@ -765,6 +767,22 @@ end
 wait validated
 
 echo "Thanks for validating your choice :D"
+```
+
+It's also possible to wait for a variable to not be `null`:
+
+```hydre
+echo "Please press a key"
+
+var key: int? = null
+
+on keypress as keycode
+  key = keycode
+end
+
+wait some key
+
+echo "You pressed key: ${key}"
 ```
 
 ## Imports
@@ -830,7 +848,7 @@ Commands output data through _pipes_. There are several output pipes that can be
 There is a specific syntax to get the output from each pipe. To get the (typed) output from CMDOUT:
 
 ```hydre
-$(echo "Hello!")
+_ = $(echo "Hello!") # Contains: "Hello!"
 ```
 
 This is called the _typed reception operator_. It can be used like this for instance:
@@ -928,11 +946,11 @@ The `cmdraw` command takes a `stream` value and writes it to the shell script's 
 Some commands accept _inputs_ through the command pipe `|` operator. They can be used this way:
 
 ```hydre
-echo "Hello world!" > somefile.txt
+echo "Hello world!" > ./somefile.txt
 
-read somefile.txt # Prints: "Hello world!"
+read ./somefile.txt # Prints: "Hello world!"
 
-read somefile.txt | length # Prints: 12
+read ./somefile.txt | length # Prints: 12
 ```
 
 How does this work exactly? First, `read` reads the file and outputs it to CMDOUT as a `string`, which is then passed to `length` which happens to accept strings as an input. It then computes the length of the provided input and writes it to CMDOUT, as a `number`. Which means we can do that:
@@ -965,20 +983,21 @@ Here is an example of command description:
 
 ```hydre
 cmd
-  help "A program that repeats the name of a list of person"
   author "Me <my@email>" # Optional
   license "MIT" # Optional
+  help "A program that repeats the name of a list of person"
   return void
   args
     # Declare a positional argument named 'names' with a help text
     pos "names"
       type list[string]
       help "List of names to display"
-      optional true
+      optional
 
       # If this argument is omitted, the command will expect the list of names to be provided through CMDIN
-      if absent()
+      if absent
         cmdin list[string]
+      end
 
     # Declare a dash argument named 'repeat'
     dash "repeat"
@@ -994,8 +1013,9 @@ cmd
 
       # Conditional return type
       # 'present()' also accepts an optional argument name to check if another argument is present
-      if present()
+      if present
         return int
+      end
 end
 ```
 
@@ -1029,23 +1049,31 @@ The options for each argument are:
 For dash arguments, at least `short` or `long` must be provided. Also, `optional` and `default` cannot be provided at the same time.
 For presential arguments, at least `short` or `long` must be provided. Also, `type`, `optional`, `default` and `enum` are not accepted.
 
+### Conditionals
+
 Conditions can also use the `elif` and `else` keywords, and use the `present()` and `absent()` operators as well as usual relational operators like `==` or `<` for constant values like enums.
+
+### Example
 
 Here is an example that uses all these options:
 
 ```hydre
-  # ...
-  dash "repeat"
-    type int
-    help "How many times to repeat the names"
-    short "r"
-    long "repeat"
-    default 1
-    requires "arg1"
-    conflicts "arg2" "arg3"
-    enum 1, 2, 3, 4
+cmd
+  args
+    # ...
+    dash "repeat"
+      type int
+      help "How many times to repeat the names"
+      short "r"
+      long "repeat"
+      default 1
+      requires "arg1"
+      conflicts "arg2" "arg3"
+      enum 1, 2, 3, 4
+    end
   end
   # ...
+end
 ```
 
 The `main` function takes arguments with the same name as described in the `cmd` block, and in the same order:
@@ -1072,7 +1100,7 @@ Also, know that scripts can `fail` too. This allows errors to be handled when th
 # main(names: list[string], repeat: int?) -> fallible
 
 catch $(myscript ["Jack", "John"])
-  ok _ -> echo "Everything went fine :)"
+  ok  _ -> echo "Everything went fine :)"
   err _ -> echo "Something went wrong :("
 end
 ```
@@ -1146,14 +1174,15 @@ Fails if `low` is not strictly less than `up`.
 Turns the provided value into a string, depending on the value's type:
 
 ```hydre
-(true).str() # true
-(3).str(3)   # 3
-(3.14).str() # 3.14
-'B'.str()    # B
-"Yoh".str()  # Yoh
-@{ command --arg1 -c 2 -d=4 } # command --arg1 -c 2 -d 4
+_ = (true).str()    # true
+_ = (3).str(3)      # 3
+_ = (3.14).str()    # 3.14
+_ = ('B').str()     # B
+_ = ("Yoh").str()   # Yoh
+_ = @{ command --arg1 -c 2 -d=4 }.str() # command --arg1 -c 2 -d 4
 
-["a","b"].str()   # [ "a", "b" ]
+_ = ["a","b"].str() # [ "a", "b" ]
+_ = @{ streamify "Hello world!" }.str() # "<stream>"
 ```
 
 ### Optional types
@@ -1163,8 +1192,8 @@ Turns the provided value into a string, depending on the value's type:
 Check if the value is `null`.
 
 ```hydre
-var a = 1?
-var b = null.int()
+var a: int? = 1
+var b: int? = null
 
 echo ${a.isNull()} # false
 echo ${b.isNull()} # true
@@ -1175,8 +1204,8 @@ echo ${b.isNull()} # true
 Use a fallback value in case of `null`:
 
 ```hydre
-var a = 1?
-var b = null.int()
+var a: int? = 1
+var b: int? = null
 
 echo ${a.default(3)} # 1
 echo ${b.default(3)}
@@ -1187,8 +1216,8 @@ echo ${b.default(3)}
 Make the program exit with an error message if the value is null.
 
 ```hydre
-var a = 0?
-var b = a.unwrap()
+var a = ?(0) # int?
+var b = a.unwrap() # int
 ```
 
 #### `T?.expect(message: string) -> T`
@@ -1196,8 +1225,8 @@ var b = a.unwrap()
 Make the program exit with a custom error message if 'a' is null
 
 ```hydre
-var a = 0?
-var b = a.expect("'a' should not be null :(")
+var a = ?(0) # INt?
+var b = a.expect("'a' should not be null :(") # int
 ```
 
 ### Numbers
@@ -1208,8 +1237,8 @@ Represent the provided number in a given base.
 Fails if the base is not between 2 and 36.
 
 ```hydre
-(11).to_radix_str(16, false) # "A"
-(11).to_radix_str(16, true)  # "0xA"
+_ = (11).to_radix_str(16, false) # "A"
+_ = (11).to_radix_str(16, true)  # "0xA"
 ```
 
 ### Characters
@@ -1256,9 +1285,9 @@ Leading zeroes are accepted.
 Fails if the string does not represent a number in this base.
 
 ```hydre
-"2".parse_int()   # 2
-"A".parse_int()   # <FAIL>
-"A".parse_int(16) # 11
+_ = ("2").parse_int()   # 2
+_ = ("A").parse_int()   # <FAIL>
+_ = ("A").parse_int(16) # 11
 ```
 
 #### `string.parse_float(base = 10) -> fallible float`
@@ -1270,7 +1299,7 @@ Identical to `string.parse_int(base)` but with floats.
 Convert a string to uppercase.
 
 ```hydre
-"aBc".upper_case() # "ABC"
+_ = ("aBc").upper_case() # "ABC"
 ```
 
 #### `string.lower_case() -> string`
@@ -1278,7 +1307,7 @@ Convert a string to uppercase.
 Convert a string to lowercase.
 
 ```hydre
-"aBc".lower_case() # "abc"
+_ = ("aBc").lower_case() # "abc"
 ```
 
 #### `string.reverse() -> string`
@@ -1286,7 +1315,7 @@ Convert a string to lowercase.
 Reverse a string.
 
 ```hydre
-"abc".reverse() # "cba"
+_ = ("abc").reverse() # "cba"
 ```
 
 #### `string.concat(right: string) -> string`
@@ -1294,7 +1323,7 @@ Reverse a string.
 Concatenate two strings (equivalent to `"${left}${right}"`).
 
 ```hydre
-"a".concat("b") # "ab"
+_ = ("a").concat("b") # "ab"
 ```
 
 #### `string.split(str: string, sep: string) -> string`
@@ -1313,7 +1342,7 @@ split("a b", " ") # [ "a", "b" ]
 Turns a list of characters to a string.
 
 ```hydre
-[ 'a', 'b', 'c' ].str() == "abc"
+_ = ([ 'a', 'b', 'c' ].str() == "abc") # true
 ```
 
 #### `list[T].get(index: int) -> T?`
@@ -1343,8 +1372,8 @@ names.get(2, "Third item was not found")
 Sorts a list.
 
 ```hydre
-[ 2, 8, 4 ].sort()      # [ 2, 4, 8 ]
-[ 2, 8, 4 ].sort(false) # [ 8, 4, 2 ]
+_ = [ 2, 8, 4 ].sort()      # [ 2, 4, 8 ]
+_ = [ 2, 8, 4 ].sort(false) # [ 8, 4, 2 ]
 ```
 
 #### `list[T].reverse() -> list[T]`
@@ -1352,7 +1381,7 @@ Sorts a list.
 Reverse a list.
 
 ```hydre
-[ 2, 8, 4 ].reverse() # [ 4, 8, 2 ]
+_ = [ 2, 8, 4 ].reverse() # [ 4, 8, 2 ]
 ```
 
 #### `list[T].len() -> int`
@@ -1360,7 +1389,7 @@ Reverse a list.
 Count the number of entries in a list.
 
 ```hydre
-[ 2, 8, 4 ].len() # 3
+_ = [ 2, 8, 4 ].len() # 3
 ```
 
 #### `list[string].join(sep = ",") -> string`
@@ -1377,7 +1406,7 @@ join([ "a", "b" ], "; ") # "a; b"
 Concatenate two lists.
 
 ```hydre
-[ 1, 2 ].concat([ 3, 4 ]) # [ 1, 2, 3, 4 ]
+_ = [ 1, 2 ].concat([ 3, 4 ]) # [ 1, 2, 3, 4 ]
 ```
 
 #### `list[T].concat(lists: list[list[T]]) -> list[T]`
@@ -1385,7 +1414,7 @@ Concatenate two lists.
 Concatenate multiple lists.
 
 ```hydre
-[ 1, 2 ].concat([ [ 3, 4 ], [ 5, 6 ] ]) # [ 1, 2, 3, 4, 5, 6 ]
+_ = [ 1, 2 ].concat([ [ 3, 4 ], [ 5, 6 ] ]) # [ 1, 2, 3, 4, 5, 6 ]
 ```
 
 ### Commands
@@ -1442,7 +1471,9 @@ while true
     end
   end
 
-  if !(retry confirm("Do you want to play again?"))
+  tries = retry(5) confirm("Do you want to play again?")
+
+  if !(retry(5) confirm("Do you want to play again?"))
     echo "Goodbye!"
     break
   end

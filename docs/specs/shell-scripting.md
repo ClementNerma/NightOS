@@ -1029,6 +1029,8 @@ Arguments type can be any existing type, or:
 
 The `enum` type for arguments indicate the argument only accepts a subset of values (whose type is inferred), which must be specified as a constant. This means the caller cannot use a variable as this argument's value, because the return type may depend on it.
 
+It may also be used as a list of custom values by wrapping the enumeration into a `list[...]`.
+
 ### Return type
 
 The command's return type can be any existing type.
@@ -1068,7 +1070,7 @@ cmd
       default 1
       requires "arg1"
       conflicts "arg2" "arg3"
-      enum 1, 2, 3, 4
+      enum list[1, 2, 3, 4]
     end
   end
   # ...

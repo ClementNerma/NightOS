@@ -760,10 +760,15 @@ Closures are anonymous functions which are generally used to repeat the same gro
 
 ```hydre
 var test: fn (string, int) = { a, b -> echo "${a.repeat(b)}" }
-echo (test("Hello world! ", 3)) # Prints: "Hello world! Hello world! Hello world! "
+test("Hello world! ", 3) # Prints: "Hello world! Hello world! Hello world! "
 ```
 
-Note that closures cannot return values.
+Note that closures can also return values implicitly:
+
+```hydre
+var test: fn (string, int) -> string = { a, b -> a.repeat(b) }
+echo ${test("Hello world!", 3)} # Prints: "Hello world! Hello world! Hello world! "
+```
 
 Here is a concrete usage example:
 

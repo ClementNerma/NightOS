@@ -759,7 +759,7 @@ end
 Closures are anonymous functions which are generally used to repeat the same group of operations.
 
 ```hydre
-var test: fn (string, int) = fn (a, b) { a.repeat(b) }
+var test: fn (string, int) = { a, b -> echo "${a.repeat(b)}" }
 echo (test("Hello world! ", 3)) # Prints: "Hello world! Hello world! Hello world! "
 ```
 
@@ -776,7 +776,7 @@ fn forEachFile(dir: path, callback: fn (path))
   end
 end
 
-forEachFile(./, fn (path) { echo "File: ${path}" })
+forEachFile(./, { file -> echo "File: ${file}" })
 ```
 
 ### Streams

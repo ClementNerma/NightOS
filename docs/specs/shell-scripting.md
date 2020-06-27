@@ -438,55 +438,6 @@ for file in (**/*.txt)
 end
 ```
 
-## Advanced types
-
-### Structures
-
-_Structures_ map one or multiple _fields_ to as many _values_. Here is an example:
-
-```hydre
-fn sayHello(person: struct { firstName: string, lastName: string })
-  echo "Hello, ${person.firstName} ${person.lastName}!"
-end
-
-sayHello({ firstName: "Bat", lastName: "Man" }) # Prints: "Hello, Bat Man!"
-```
-
-In such a simple example, it's easier to directly use a `firstName` and `lastName` parameters instead of a `struct`, but they are useful when returning heterogenous sets of data, for example in a list:
-
-```hydre
-fn listRecursively(dir: path) -> list[struct { name: path, size: int }]
-  var list: list[struct { name: path, size: int }] = []
-
-  for item in $(readdir ${dir})
-    var stats = $(stats ${item})
-
-    if stats.isDirectory
-      listRecursively(dir)
-    else
-      list[] = { name: item, size: stats.sizeOf }
-    end
-  end
-
-  return list
-end
-```
-
-But, as this is not very readable, it's better to use a _type alias_:
-
-```hydre
-type fsItem = struct { name: path, size: int }
-
-fn listRecursively(dir: path) -> list[fsItem]
-  var list: list[fsItem] = []
-  # ...
-end
-```
-
-### Streams
-
-An usual type for manipulating large data is `stream`, which is notably used to treat a chunk of data that is either too large for the memory or is more easier to treat as things progress.
-
 ## Functions
 
 Functions allow to split the code in several parts to make it more readable, as well as to re-use similar pieces of code across the script.
@@ -759,6 +710,55 @@ echo "Hello!" -n ${no_newline}
 ```
 
 If the value is `null`, the argument will not be provided. Else, it will be provided with the non-null value.
+
+## Advanced types
+
+### Structures
+
+_Structures_ map one or multiple _fields_ to as many _values_. Here is an example:
+
+```hydre
+fn sayHello(person: struct { firstName: string, lastName: string })
+  echo "Hello, ${person.firstName} ${person.lastName}!"
+end
+
+sayHello({ firstName: "Bat", lastName: "Man" }) # Prints: "Hello, Bat Man!"
+```
+
+In such a simple example, it's easier to directly use a `firstName` and `lastName` parameters instead of a `struct`, but they are useful when returning heterogenous sets of data, for example in a list:
+
+```hydre
+fn listRecursively(dir: path) -> list[struct { name: path, size: int }]
+  var list: list[struct { name: path, size: int }] = []
+
+  for item in $(readdir ${dir})
+    var stats = $(stats ${item})
+
+    if stats.isDirectory
+      listRecursively(dir)
+    else
+      list[] = { name: item, size: stats.sizeOf }
+    end
+  end
+
+  return list
+end
+```
+
+But, as this is not very readable, it's better to use a _type alias_:
+
+```hydre
+type fsItem = struct { name: path, size: int }
+
+fn listRecursively(dir: path) -> list[fsItem]
+  var list: list[fsItem] = []
+  # ...
+end
+```
+
+### Streams
+
+An usual type for manipulating large data is `stream`, which is notably used to treat a chunk of data that is either too large for the memory or is more easier to treat as things progress.
 
 ## Event listeners
 

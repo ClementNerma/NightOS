@@ -754,6 +754,31 @@ fn listRecursively(dir: path) -> list[fsItem]
 end
 ```
 
+### Closures
+
+Closures are anonymous functions which are generally used to repeat the same group of operations.
+
+```hydre
+var test: fn (string, int) = fn (a, b) { a.repeat(b) }
+echo (test("Hello world! ", 3)) # Prints: "Hello world! Hello world! Hello world! "
+```
+
+Note that closures cannot return values.
+
+Here is a concrete usage example:
+
+```hydre
+fn forEachFile(dir: path, callback: fn (path))
+  for item in $(ls ${dir} --details)
+    if item.isFile
+      callback(item.fullPath)
+    end
+  end
+end
+
+forEachFile(./, fn (path) { echo "File: ${path}" })
+```
+
 ### Streams
 
 An usual type for manipulating large data is `stream`, which is notably used to treat a chunk of data that is either too large for the memory or is more easier to treat as things progress.

@@ -1023,8 +1023,8 @@ end
 
 Arguments type can be any existing type, or:
 
-- `any`: accepts any type of argument except `stream`, which will be converted to a `string` when the command is called (which means the argument will be a `string` from the command's point of view)
-- `stream_str`: accepts `string` as well as `stream` values, with streams being automatically fetched at once and converted to `string` values directly
+- `anystr`: accepts any type of argument except `stream`, which will be converted to a `string` when the command is called (which means the argument will be a `string` from the command's point of view)
+- `streamstr`: accepts `string` as well as `stream` values, with streams being automatically fetched at once and converted to `string` values directly
 
 ### Enumerations
 

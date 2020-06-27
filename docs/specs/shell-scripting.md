@@ -105,7 +105,7 @@ _ = ./file.ext
 _ = /tmp
 
 # Commands (used to run custom commands later in functions)
-@{ command "pos1" -s --long }
+_ = @{ command "pos1" -s --long }
 ```
 
 A `string` is composed of multiple `char`s, which are made of single codepoints. This means a _grapheme cluster_ made of multiple codepoints will need to be encoded in a `string`.  

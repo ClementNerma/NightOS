@@ -731,13 +731,11 @@ In such a simple example, it's easier to directly use a `firstName` and `lastNam
 fn listRecursively(dir: path) -> list[struct { name: path, size: int }]
   var list: list[struct { name: path, size: int }] = []
 
-  for item in $(readdir ${dir})
-    var stats = $(stats ${item})
-
-    if stats.isDirectory
+  for item in $(ls ${dir} --details)
+    if item.isDirectory
       listRecursively(dir)
     else
-      list[] = { name: item, size: stats.sizeOf }
+      list[] = { name: item.path, size: stats.sizeOf }
     end
   end
 

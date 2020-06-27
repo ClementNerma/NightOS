@@ -10,21 +10,29 @@ The rule being that applications cannot get permissions that the user running th
 
 ## List of permissions
 
-Below is the list of all permissions, with `<D>` indicating it's a default privilege for all users:
+Below is the list of all permissions, with `Adm?` referring to commands that are only available in administrator mode:
 
-```
-<D> `device.mount`: Mount an external device
-<D> `device.unmount`: Unmount an external device
-    `device.reserve`: Mount an external device and reserve its name to prevent other devices from using it
-<D> `runas.ask`: Ask to run a program as another user (except administrator)
-<D> `runas.admin`: Ask to run a program as administrator by using an administrator account's credentials
-    `users.create_non_admin`: Create a non-administrator user
-    `users.remove_created`: Remove a user this user previously created
-    `users.list`: See the list of all users on this computer
-    `groups.create_scoped`: Create a group whose privileges do not exceed the domain of this user
-    `groups.remove_created`: Remove a group this user previously created
-    `groups.remove_self`: Allow user to remove itself from a group
-<D> `private.microphone`: Allow user to use the microphone
-<D> `private.camera`: Allow user to use the camera
-<D> `homedir.encrypt`: Allow user to encrypt its homedir
-```
+| Adm? | Name                     | Description                                                                             |
+| ---- | ------------------------ | --------------------------------------------------------------------------------------- |
+|      | `device.mount`           | Mount an external device                                                                |
+|      | `device.unmount`         | Unmount an external device                                                              |
+| Yes  | `device.reserve`         | Mount an external device and reserve its name to prevent other devices from using it    |
+|      | `runas.admin`            | Ask to run a program as administrator by using an administrator account's credentials   |
+| Yes  | `users.create_non_admin` | Create a non-administrator user                                                         |
+| Yes  | `users.remove_created`   | Remove a user this user previously created                                              |
+| Yes  | `users.list`             | See the list of all users on this computer                                              |
+| Yes  | `groups.create_scoped`   | Create a group whose privileges do not exceed the domain of this user                   |
+| Yes  | `groups.remove_created`  | Remove a group this user previously created                                             |
+| Yes  | `groups.remove_self`     | Allow user to remove itself from a group                                                |
+|      | `private.microphone`     | Allow user to use the microphone                                                        |
+|      | `private.camera`         | Allow user to use the camera                                                            |
+|      | `homedir.encrypt`        | Allow user to encrypt its homedir                                                       |
+|      | `fs.check`               | Check if a path exists in the filesystem                                                |
+|      | `fs.infos`               | Get informations about a filesystem item                                                |
+|      | `fs.create`              | Create files, directories or symbolic links                                             |
+|      | `fs.readdir`             | List all items inside a directory                                                       |
+|      | `fs.readfile`            | Read a file                                                                             |
+|      | `fs.move`                | Move and rename filesystem items                                                        |
+|      | `fs.remove`              | Remove filesystem items                                                                 |
+|      | `net.access`             | Send network requests                                                                   |
+|      | `net.listen`             | Listen to a network port (goes through the [firewall](../applications/Vortex.md) first) |

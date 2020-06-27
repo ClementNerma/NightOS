@@ -110,7 +110,7 @@ _ = /tmp
 
 One usual type is not listed here: `stream`, which is notably used by commands which manipulate potentially long and/or asynchronous data.
 
-The `char` type contains a _grapheme cluster_, which may be composed of multiple Unicode codepoints. A `string` is composed of multiple `char`s.  
+A `string` is composed of multiple `char`s, which are made of single codepoints. This means a _grapheme cluster_ made of multiple codepoints will need to be encoded in a `string`.  
 There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.  
 Finally, there is the `void` type which cannot be written 'as is' but is used in special contexts like [commands return values](#commands-typing). It's a type that contains no data at all.
 

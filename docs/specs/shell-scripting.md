@@ -770,6 +770,17 @@ var test: fn (string, int) -> string = { a, b -> a.repeat(b) }
 echo ${test("Hello world!", 3)} # Prints: "Hello world! Hello world! Hello world! "
 ```
 
+Also, closures are not forced to take their declared parameters:
+
+```hydre
+type testType = fn (string, int)
+
+var test: testType = { a, b, c -> ### ... ### } # NOT VALID
+var test: testType = { a, b    -> ### ... ### } # Valid
+var test: testType = { a       -> ### ... ### } # Valid
+var test: testType = {         -> ### ... ### } # Valid
+```
+
 Here is a concrete usage example:
 
 ```hydre

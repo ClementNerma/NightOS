@@ -90,6 +90,17 @@ The easiest way to understand the format is to look at the default registry stru
 Here is the content of the default registry file (when installing NightOS with all default settings), converted to the [HFRR format](#hffr-format):
 
 ```yaml
+# Kernel configuration (only editable in developer mode)
+kernel(struct):
+  # Signals configuration
+  signals(struct):
+    # Delay before forced suspension after WILL_SUSPEND signal
+    suspend_delay(time(ms)): 500ms
+    # Delay before forced termination (kill) after WILL_TERMINATE signal
+    terminate_delay(time(ms)): 500ms
+    # Delay for a service to answer a connection request
+    service_answer_delay(ntime(ms,100ms)): 500ms
+
 # System configuration
 system(struct):
   # Debugging options

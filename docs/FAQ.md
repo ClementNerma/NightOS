@@ -4,9 +4,9 @@ Welcome to NightOS' FAQ. Please note that several questions are already answered
 
 ## This project seems too good to be true
 
-Well, it is in a way. NightOS can be designed as such a secure and robus O.S. because we consider there is no backward compatibility to assure - understand that existing applications from Linux, MacOS or Windows will **not be compatible with NightOS**. This is why we can afford to introduce so many new features and requirements current operating systems cannot.
+Well, it is in a way. NightOS can be designed as such a secure and robust O.S. because we chose to not maintain any backward compatibility with existing software - understand that existing applications from Linux, MacOS or Windows will **not be compatible with NightOS**. This is why we can afford to introduce so many new features and requirements current operating systems cannot.
 
-The problem is that backward compatibility is absolutely mandatory when it comes to creating a general-purpose operating system. All applications would have to be developed again (in fact, they would just have to be _adapted_ for NightOS, but that's still quite a bit of work) which is of course impossible today.
+The problem is that backward compatibility is absolutely mandatory when it comes to creating a general-purpose operating system. All applications would have to be developed again (in fact, they would just have to be _adapted_ for NightOS, but that's still quite a bit of work) in order to run on this system, which is of course unfeasable today.
 
 This is why NightOS will probably never be completed. The current goal of this project is to build a **theorical O.S.** that demonstrates how good of an O.S. we could make if we hadn't to worry about backward compatibility.
 
@@ -26,15 +26,15 @@ This is why this project is for now purely _theorical_. It aims to describe how 
 
 ## How does this project relates to NightOS [v1](https://github.com/ClementNerma/NightOS-v1), [v2](https://github.com/ClementNerma/NightOS-v2) and [v3](https://github.com/ClementNerma/NightOS-v3)?
 
-The NightOS project is very different from the previous versions. Originally, the system intended to be a robust and secure while being written in JavaScript. Performances would of course be very bad, but it was more of a challenge than a serious project. Also, the project was meant to be a desktop environment, and use a Linux kernel under the hood to get rid of the "low-level part". I seriously lacked of knowledge about low-level concepts at this point in time.
+The current NightOS project is very different from its previous versions. Originally, it only intended to be a robust and secure _desktop environment_, written in JavaScript. Performances would of course be very bad, but it was more of a challenge than a serious project. Also, the project was meant to be a Linux kernel under the hood to get rid of the "low-level part". I seriously lacked of knowledge about low-level concepts at this point in time.
 
-This project does not use JavaScript anymore, but Rust, which is both performant and very robust to memory-related bugs (unless you use `unsafe` code). There is no "challenge" idea involved, only the aim to make the best possible (theorical) system.
+This project does not use JavaScript anymore, but Rust, which is both performant and very robust to the most common memory-related bugs (unless you use `unsafe` code). There is no more "challenge" idea involved in this new version, only the aim to make the best possible (theorical) system.
 
 In terms of similarities:
 
 - The [v1](https://github.com/ClementNerma/NightOS-v1) was more of a draft, which had a lot of problems up to its roots. It was a pretty bad version overall, and was created when I did not have a real knowledge about how an operating system actually worked ;
 - The [v2](https://github.com/ClementNerma/NightOS-v2) was a bit more realistic, but still far from being mature enough ;
-- The [v3](https://github.com/ClementNerma/NightOS-v3) was more serious and ambitious, but it was still a desktop environment and not designed to be a full operating system
+- The [v3](https://github.com/ClementNerma/NightOS-v3) was more serious and ambitious, but it was still a desktop environment and not designed to be a full operating system, plus it was not designed for optimal performances
 
 ## Who are you?
 

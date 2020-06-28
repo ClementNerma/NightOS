@@ -14,6 +14,8 @@ System calls always return two numbers: a 8-bit one (errcode) and a 8 bytes one 
 - `0x00`: cannot read syscall's code or arguments (error while reading memory)
 - `0x01`: the requested syscall does not exist
 - `0x02`: at least one argument is invalid (e.g. providing a pointer to the `0` address)
+- `0x03`: unmapped memory pointer (e.g. provided a pointer to a memory location that is not mapped yet)
+- `0x04`: memory permission error (e.g. provided a writable buffer to an allocated but non-writable memory address)
 
 Errors are encoded this way:
 

@@ -57,4 +57,4 @@ When a user is in a group, the group's privileges cannot be revoked for this use
 
 ## User privileges
 
-User privileges indicate the list of actions a user can perform or not. You can find more in the related [specifications document](../specs/permissions.md#list-of-permissions).
+User privileges indicate the list of actions a user can perform or not. You can find more in the related [specifications document](../specs/permissions.md#list-of-user-privileges).

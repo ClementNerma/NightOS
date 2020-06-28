@@ -12,6 +12,7 @@ Permissions are split across different _types_:
 
 - _Safe permissions_, like windows creation, are granted automatically by default ;
 - _Implicit permissions_, like reading filesystem opened by the application, are also granted automatically by default ;
+- _Interactive permissions_, like controlling the global volume, trigger a confirmation overlay visible by the user ;
 - _Sensitive permissions_, like filesystem or network access, trigger a confirmation overlay visible by the user ;
 - _Privacy permissions_, like microphone or webcam access, add an emphasized confirmation message to the same overlay ;
 

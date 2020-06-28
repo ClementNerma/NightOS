@@ -29,7 +29,7 @@ Note that there is always one and exactly one main administrator. This user acco
 
 ## Dangers of an admin. account
 
-The problem with administrators account is that they can do absolutely **anything**. They can change system settings, read and change other users' data, and even run background processes at startup. They also have all possible privileges as they can edit their own.
+The problem with administrators account is that they can do almost **anything** (except some very specific things like editing the system's files). They can change system settings, read and change other users' data, and even run background processes at startup. They also have all possible privileges as they can edit their own.
 
 This is why it's extremely discouraged to have two administrator users on the same computer, unless the two accounts are used by really trustworthy persons. As such, a large warning is shown if you try to create a new administrator user.
 

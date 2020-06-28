@@ -8,7 +8,7 @@ Well, it is in a way. NightOS can be designed as such a secure and robust O.S. b
 
 The problem is that backward compatibility is absolutely mandatory when it comes to creating a general-purpose operating system. All applications would have to be developed again (in fact, they would just have to be _adapted_ for NightOS, but that's still quite a bit of work) in order to run on this system, which is of course unfeasable today.
 
-This is why NightOS will probably never be completed. The current goal of this project is to build a **theorical O.S.** that demonstrates how good of an O.S. we could make if we hadn't to worry about backward compatibility.
+This is why NightOS will probably never be completed. The current goal of this project is to build a **theorical O.S.** that demonstrates how good of an O.S. we could make if we hadn't to worry about backward compatibility. When the theorical specifications will be complete, we shall start to develop the O.S. itself but that will require a lot of work beforehand.
 
 Still, we do all we can to maintain as much compatibility as we can. For instance, we are currently investigating how existing Linux applications may be ran on NightOS, with a system call wrapper that would allow them to run correctly on the system, without compromising security, but with lacking features of course.
 

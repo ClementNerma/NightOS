@@ -13,10 +13,10 @@ Administrator users can install global applications, which are available to ever
 
 ## Installation methods
 
-Applications are installed through an _application package_ via [Skyer](../applications/Skyer.md), the applications manager. There are several installation methods:
+Applications are installed through an [_application package_](../specs/applications/package.md) via [Skyer](../applications/Skyer.md), the applications manager. There are several installation methods:
 
 - From the store
-- Directly from the application's package (_sideloading_)
+- Directly from the application's package ([_sideloading_](#sideloading))
 - As a volatile application
 
 ### From the store

@@ -28,38 +28,16 @@ content:
   # Packages can either contain source code only, pre-compiled programs only, or both
   # <for source packages> [REQ]
   source:
-    # [REQ] Main source files
-    files:
-      # [REQ] Application's entrypoint
-      entrypoint: src/main.rs
-      # [REQ] Application's command-line entrypoint
-      command: src/command.rs
-      # [OPT] Application's installer
-      installer: src/installer.rs
-      # [OPT] Application's updater (ran before and after an update with specific command-line parameters)
-      updater: src/updater.rs
-      # [OPT] Application's uninstaller
-      uninstaller: src/uninstaller.rs
-    # [REQ] Build informations
-    build:
-      # [REQ] Build tool (must in the list of the toolchain's supported build tools)
-      tool: rust
-      # [OPT] Build tool-related options
-      options:
-        optimize: O3
+    # [REQ] Build tool (must in the list of the toolchain's supported build tools)
+    toolchain: rust
+    # [REQ] Required build tool-related options
+    build: {}
+    # [OPT] Build tool-related options
+    options:
+      optimize: O3
 
   # <for precomp packages> [REQ]
-  precomp:
-    # [REQ] Application's entrypoint
-    entrypoint: precomp/main.npp
-    # [REQ] Application's command-line entrypoint
-    command: precomp/command.npp
-    # [OPT] Application's installer
-    installer: precomp/installer.npp
-    # [OPT] Application's updater (ran before and after an update with specific command-line parameters)
-    updater: precomp/updater.npp
-    # [OPT] Application's uninstaller
-    uninstaller: precomp/uninstaller.npp
+  precomp: main.npp
 
 # [OPT] Exposed commands (see the related document for additional informations)
 commands: {}

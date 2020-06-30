@@ -39,6 +39,17 @@ content:
   # <for precomp packages> [REQ]
   precomp: main.npp
 
+# [OPT] Event triggers
+events:
+  # [OPT] Should the application start just after being installed?
+  postinstall: false
+  # [OPT] Should the application start just before being uninstalled?
+  preuninstall: false
+  # [OPT] Should the application start just before being updated?
+  preupdate: false
+  # [OPT] Should the application start just after being updated?
+  postupdate: false
+
 # [OPT] Exposed commands (see the related document for additional informations)
 commands: {}
 

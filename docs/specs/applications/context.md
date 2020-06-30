@@ -10,9 +10,10 @@ The most important information is the _startup reason_, which indicates _why_ th
 It is one-byte long, and is made of the following bits (starting from the strongest):
 
 - Bits 0-3:
-  - `0x1`: the application was started as part of its installation process and is expected to initialize whatever it needs to
-  - `0x2`: the application was started as part of its update process
-  - `0x3`: the application was started as part of its uninstallation process
+  - `0x1`: the application was started as part of its post-installation process
+  - `0x2`: the application was started as part of its pre-update process
+  - `0x3`: the application was started as part of its post-update process
+  - `0x4`: the application was started as part of its pre-uninstallation process
   - `0x4`: the application was started by the system as an [application service](../../concepts/applications.md#services)
   - `0x5`: the application was started by the desktop environment
   - `0x6`: the application was started by itself (from another process of the same application)

@@ -1,6 +1,6 @@
 # System calls
 
-_System calls_, abbreviated _syscalls_, are the first type of [KPC](kernel/kpc.md). They allow a process to ask the kernel to perform an action.
+_System calls_, abbreviated _syscalls_, are a type of [KPC](kernel/kpc.md). They allow a process to ask the kernel to perform an action.
 
 A syscall is made of a 8-bit code, as well as up to 8 arguments with up to 64-bit value each.  
 When performing a syscall, the process will put in a specific CPU register an address poiting to a memory address containing in a row the syscall's code and its arguments. For most syscalls, code and arguments will be not be longer than 128 bits, but some may use larger arguments.

@@ -1,6 +1,6 @@
 # Signals
 
-_Signals_ are the second type of [KPC](kernel/kpc.md). They are used by the kernel to send informations to processes about a specific event.
+_Signals_ are a type of [KPC](kernel/kpc.md). They are used by the kernel to send informations to processes about a specific event.
 
 When a process is created, the kernel associates it:
 

@@ -8,7 +8,7 @@ Unlike applications, libraries can be installed in multiple versions. This means
 
 When an application wants to use a library, it explicitly indicates the list of versions it is compatible with. The system then gets the related version and provides it to the application.
 
-A library by itself cannot do itself: no background process, no installation nor uninstallation script, no permission granting. Applications simply use libraries as helpers to achieve specific tasks.
+A library by itself cannot do itself: no background process, no commands exposure, no permission granting. Applications simply use libraries as helpers to achieve specific tasks.
 
 For instance, the system library `fs` which is natively available allows to manipulate files and directories easily.
 
@@ -19,13 +19,6 @@ Each application indicates in its [manifest](../specs/applications/manifest.md) 
 When the application is installed, the system will also check if the required libaries are already installed, and with the matching versions. If this is not the case, the library will be downloaded and installed as well (even if it's a volatile application).
 
 When an application is removed, the system looks for each of its dependencies. If the dependency is not used by any application anymore, it is removed by default.
-
-## Commands exposing
-
-Just like applications, libraries have a unique slug and an identifier equivalent to AID called LID (for _Library IDentifier_).
-Commands are exposed the same way ; if a library's LID is `utils` and the DID is `superdev`, the exposed commands will be prefixed by `:utils.superdev`.
-
-For more informations about this part, see how [applications expose commands](applications.md#commands).
 
 ## System libraries
 

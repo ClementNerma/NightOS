@@ -5,10 +5,10 @@ Here is an example of an application manifest (`REQ`: required, `OPT`: optional)
 ```yaml
 # [REQ] Informations about the application
 infos:
-  # [REQ] Application's name, as stored on the disk in the /apps directory
-  name: cloud-notepad-app
-  # [REQ] Application's title, as shown when installing it
-  title: Cloud Notepad App
+  # [REQ] Application's name, as shown when installing it
+  name: Cloud Notepad App
+  # [REQ] Application's slug, as stored on the disk in the /apps directory
+  slug: cloud-notepad-app
   # [REQ] Application's description, as shown when installing it
   description: A notepad application that allows syncing your files in the cloud
   # [REQ] Application's version, following semantic versioning

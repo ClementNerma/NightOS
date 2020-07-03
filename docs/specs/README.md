@@ -9,6 +9,7 @@ For more informations about low-level concepts these documents refer to, you can
 - [Applications manifest](applications/manifest.md) - how applications describe themselves in their package
 - [Filesystem structure](fs-structure.md) - list of file and directories and their meaning
 - [Inter-process communication](ipc.md) - communication between processes
+- [Libraries](libraries.md) - what are libraries
 - [Permissions](permissions.md) - complete list of user and application permissions
 - [The registry](registry.md) - exhaustive specification of the registry's content
 - [Vocabulary](vocabulary.md) - the list of NightOS-related terms

@@ -595,6 +595,7 @@ Number of written bytes.
 **Errors:**
 
 - `0x10`: Invalid attribute number provided
+- `0x20`: Caller process is not a system service
 
 ## `0xD1` SET_PRIORITY
 

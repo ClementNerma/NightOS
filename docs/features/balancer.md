@@ -1,6 +1,6 @@
 # Balancer
 
-The _balancer_ is a program that allows to get more performances out of most important applications.
+The _balancer_ is a kernel feature that allows to get more performances out of most important applications.
 
 ## How the balancer works
 

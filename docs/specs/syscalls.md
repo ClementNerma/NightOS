@@ -32,6 +32,7 @@ System calls' code are categorized as follows:
 - `0x20` to `0x29`: pipes
 - `0x2A` to `0x2F`: services communication
 - `0x30` to `0x3F`: memory management
+- `0xA0` to `0xAF`: applications-related syscalls
 
 Note that advanced actions like permissions management or filesystem access are achieved through the use of [IPC](ipc.md).
 
@@ -540,3 +541,26 @@ Get informations about a shared memory segment.
 **Errors:**
 
 - `0x10`: Unknwon shared memory segment ID provided
+
+## `0xA0` EXECUTION_CONTEXT
+
+Get informations from the application's [execution context](applications/context.md).
+
+**Arguments:**
+
+- Information to get (1 byte):
+  - `0x00`: all the context
+  - `0x01`: startup reason
+  - `0x02`: context header
+  - `0x03`: command-line arguments
+
+- Pointer to a writable buffer (8 bytes)
+
+**Return value:**
+
+- Number of written bytes (8 bytes)
+
+**Errors:**
+
+- `0x10`: invalid information number provided
+- `0x20`: caller process is a system service

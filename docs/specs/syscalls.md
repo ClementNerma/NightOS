@@ -33,6 +33,7 @@ System calls' code are categorized as follows:
 - `0x2A` to `0x2F`: services communication
 - `0x30` to `0x3F`: memory management
 - `0xA0` to `0xAF`: applications-related syscalls
+- `0xD0` to `0xDF`: reserved to system services
 
 Note that advanced actions like permissions management or filesystem access are achieved through the use of [IPC](ipc.md).
 
@@ -564,3 +565,53 @@ Get informations from the application's [execution context](applications/context
 
 - `0x10`: invalid information number provided
 - `0x20`: caller process is a system service
+
+## `0xD1` PROCESS_ATTRIBUTES
+
+System service-only syscall.  
+Get a process' [attributes](kernel/processes.md#process-attributes).
+
+**Arguments:**
+
+- Information to get (1 byte):
+  - `0x00`: PID
+  - `0x01`: Process' priority
+  - `0x02`: Running user's ID
+  - `0x03`: Parent application ID
+  - `0x04`: Permissions
+  - `0x05`: Memory mappings
+  - `0x06`: Execution context (startup reason)
+  - `0x07`: Execution context (header)
+  - `0x08`: Execution context (arguments)
+- Maximum number of entries to get for sets (like permissions and mappings) (4 bytes): `0` = no limit
+- Pointer to a writable buffer (8 bytes)
+
+**Return value:**
+
+Number of written bytes.
+
+**Errors:**
+
+- `0x10`: Invalid attribute number provided
+
+## `0xD1` SET_PRIORITY
+
+System service-only syscall.  
+Set the priority of a process.  
+If the set priority is different than `0`, the kernel won't adjust the priority automatically anymore.  
+Setting it to `0` will reset it to the kernel's choice.
+
+**Arguments:**
+
+- Process PID (8 bytes)
+- Priority to set (1 byte) with `0` to let the kernel set it automatically
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x10`: Provided priority is higher than `20`
+- `0x20`: Caller process is not a system service
+- `0x21`: Provided PID was not found

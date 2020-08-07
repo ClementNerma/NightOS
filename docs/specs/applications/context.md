@@ -24,9 +24,9 @@ It is one-byte long, and is made of the following bits (starting from the strong
 
 The startup reason is especially important as it determines what the application should do (e.g. uninstall itself, run as a command...) but also if it should output data through its CMDRAW in case it was called by a command.
 
-## Data structure
+## Context header
 
-The context is stored as a single block of data, consisting of:
+The context header is stored as a single block of data, consisting of:
 
 - The startup reason (1 byte)
 - Ambiant informations (1 byte)
@@ -48,10 +48,9 @@ If the command was not started a command, the context ends here. Else, it also c
 - SC identifier for the CMDRAW pipe (8 bytes)
 - SC identifier for the CMDOUT pipe (8 bytes)
 - _Future-proof shift space_ (196 bytes)
-- The value of command-line arguments (up to 63.5 KB)
-
-The context's size may so vary from 512 bytes to 64 KB.
 
 ## Arguments structure
+
+The context header is followed by the list of each command-line argument, taking up to 64 KB.
 
 Arguments are a simple concatenation of [encoded values](commands.md#values-encoding).

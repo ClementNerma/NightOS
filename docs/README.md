@@ -8,7 +8,7 @@ You can find the answer to [frequently-asked questions here](FAQ.md).
 
 - [Roadmap](project/roadmap.md) - the project's roadmap
 - [Development](project/development.md) - how the project will be developped
-- [Supported architectures](project/architectures.md) - the list of supported CPU architectures
+- [Hardware requirements](project/hw-requirements.md) - hardware required in order to install and run NightOS
 
 ## [Concepts](concepts/)
 

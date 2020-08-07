@@ -5,4 +5,4 @@ This folder contains the documentation about the project itself - how is will be
 
 - [Roadmap](roadmap.md) - the project's roadmap
 - [Development](development.md) - how the project will be developped
-- [Supported architectures](architectures.md) - the list of supported CPU architectures
+- [Hardware requirements](hw-requirements.md) - hardware required in order to install and run NightOS

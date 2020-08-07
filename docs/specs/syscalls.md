@@ -37,8 +37,6 @@ Note that advanced actions like permissions management or filesystem access are 
 
 You can find below the exhaustive list of system calls.
 
-_NOTE:_ _"CPU-dependent size"_ indicates a data that will be 16-bit long on a 16-bit CPU, 32-bit long on a 32-bit CPU, and so on.
-
 ## `0x01` HANDLE_SIGNAL
 
 Register a [signal handler](signals.md).  
@@ -47,7 +45,7 @@ If the address pointed by this syscall's is not executable by the current proces
 **Arguments:**
 
 - Code of the signal to handle (1 byte)
-- Pointer to the handler function (CPU-dependent size)
+- Pointer to the handler function (8 bytes)
 
 **Return value:**
 
@@ -221,8 +219,8 @@ If the data is 0-byte long, this pipe will return successfully without waiting, 
 **Arguments:**
 
 - [Pipe](ipc.md#pipes) SC identifier (8 bytes)
-- Number of bytes to write (CPU-dependent size)
-- Pointer to a readable buffer (CPU-dependent size)
+- Number of bytes to write (8 bytes)
+- Pointer to a readable buffer (8 bytes)
 - Mode (1 byte): `0x00` = block until there is enough space to write, `0x01` = fail if there is not enough space to write or if the pipe is locked, `0x02` = write as much as possible
 
 **Return value:**
@@ -252,7 +250,7 @@ If the pipe was closed while the buffer was not empty, this syscall will still b
 - [Pipe](ipc.md#pipes) RC identifier (8 byte)
 - Mode (1 byte): `0x00` = block until there are enough data to read, `0x01` = fail if there is not enough data to read or if the pipe is locked, `0x02` = read as much as possible
 - Number of bytes to read (4 bytes): `0` = read as much data as possible
-- Pointer to a writable buffer (CPU-dependent size)
+- Pointer to a writable buffer (8 bytes)
 
 **Return value:**
 
@@ -419,7 +417,7 @@ Allocate a linear block of memory.
 
 **Return value:**
 
-- Pointer to the newly-allocated block of memory (CPU-dependent size)
+- Pointer to the newly-allocated block of memory (8 bytes)
 
 **Errors:**
 
@@ -436,7 +434,7 @@ Mapped memory pages must be unmapped through the [`MEM_UNMAP`](#0x33-mem_unmap) 
 
 **Arguments:**
 
-- Pointer to the start address to unallocate the memory from (CPU-dependent size)
+- Pointer to the start address to unallocate the memory from (8 bytes)
 - The number of [pages](kernel/memory.md#pages) to unallocate (8 bytes)
 
 **Return value:**
@@ -480,8 +478,8 @@ When a process wants to transmit a set of data without getting it back later, th
 **Arguments:**
 
 - Target process' PID (8 bytes)
-- Pointer to the buffer to share (CPU-dependent size)
-- Number of bytes to share (CPU-dependent size)
+- Pointer to the buffer to share (8 bytes)
+- Number of bytes to share (8 bytes)
 - Command code (2 bytes)
 - Notification mode (1 byte): `0x00` to notify the process with the [`RECV_SHARED_MEM`](signals.md#0x34-recv_shared_mem) signal, `0x01` to skip it
 - Sharing mode (1 byte): `0x00` to perform a mutual sharing, `0x01` to perform an exclusive sharing
@@ -534,8 +532,8 @@ Get informations about a shared memory segment.
 - Sharer process' PID (8 bytes)
 - Receiver process' PID (8 bytes)
 - Sharing mode (1 byte): `0x00` for mutual mode, `0x01` for exclusive mode
-- Shared buffer's start address (CPU-dependent size)
-- Sharer buffer's length (CPU-dependent size)
+- Shared buffer's start address (8 bytes)
+- Sharer buffer's length (8 bytes)
 - Command code (2 bytes)
 - Access permissions (1 byte): for mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, `0x00`
 

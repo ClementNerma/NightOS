@@ -43,7 +43,7 @@ Sent when the process tried to perform an unauthorized access on a memory addres
 
 **Datafield:**
 
-- Faulty address (CPU-dependent size)
+- Faulty address (8 bytes)
 - Access error (1 byte):
   - `0x01`: tried to read memory
   - `0x02`: tried to write memory
@@ -147,8 +147,8 @@ Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by 
 
 - Sender PID (8 bytes)
 - Command code (2 bytes)
-- Mapped segment's start address in the current process (CPU-dependent size)
-- Mapped segment's length (CPU-dependent size)
+- Mapped segment's start address in the current process (8 bytes)
+- Mapped segment's length (8 bytes)
 - Sharing mode (1 byte): `0x00` for mutual sharing, `0x01` for exclusive sharing
 - Access permissions (1 byte):
   - For mutual sharings: strongest bit for read, next for write, next for exec

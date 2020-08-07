@@ -25,6 +25,14 @@ Errors are encoded this way:
 - `0x30` to `0x3F`: resource errors (e.g. file not found)
 - `0x40` to `0xFF`: other types of errors
 
+System calls' code are categorized as follows:
+
+- `0x00` to `0x0F`: signal handling
+- `0x10` to `0x1F`: process management
+- `0x20` to `0x29`: pipes
+- `0x2A` to `0x2F`: services communication
+- `0x30` to `0x3F`: memory management
+
 Note that advanced actions like permissions management or filesystem access are achieved through the use of [IPC](ipc.md).
 
 You can find below the exhaustive list of system calls.

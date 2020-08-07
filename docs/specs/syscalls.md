@@ -568,7 +568,7 @@ Get informations from the application's [execution context](applications/context
 - `0x10`: invalid information number provided
 - `0x20`: caller process is a system service
 
-## `0xD1` PROCESS_ATTRIBUTES
+## `0xD0` PROCESS_ATTRIBUTES
 
 System service-only syscall.  
 Get a process' [attributes](kernel/processes.md#process-attributes).

@@ -26,7 +26,7 @@ Else, it accepts it through the [`ACCEPT_SERVICE_CONN`](syscalls.md#0x2c-accept_
 
 ### Communication
 
-The service and its client(s) communicate through the two uni-direction pipes created during the connection. Both are message pipes.
+The service and its client(s) communicate through the two uni-direction pipes created during the connection. Both are message pipes, which means communication with services is asynchronous by design.
 
 The different message formats a client can send to a service are a called the service's _methods_, while the different message formats the service may send to a client are called the service's _notifications_.
 

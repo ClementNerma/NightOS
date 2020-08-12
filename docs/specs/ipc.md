@@ -57,6 +57,10 @@ It's not possible to send "non-message" data through a message pipe, as the acti
 
 You can find more informations on interactive usage in the [shell specifications](shell.md#interactivity).
 
+## Service sockets
+
+_Service sockets_ allow a process to communicate with a [service](services.md).
+
 ## Shared Memory
 
 Shared memory allows a process to share a part of its memory with another process. It has multiple advantages over pipes:

@@ -67,6 +67,7 @@ The list of default applications and their description can be found [here](appli
 
 ### [Kernel](specs/kernel/)
 
+- [Hardware](specs/kernel/hardware.md) - how the kernel interacts with hardware
 - [Kernel-process communication](specs/kernel/kpc.md) - how the kernel communicate with processes and vice-versa
 - [Memory](specs/kernel/memory.md) - memory organization and management
 - [Processes](specs/kernel/processes.md) - processes concept and management

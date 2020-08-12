@@ -618,3 +618,42 @@ _None_
 - `0x10`: Provided priority is higher than `20`
 - `0x20`: Caller process is not a system service
 - `0x21`: Provided PID was not found
+
+## `0xD2` ENUM_DEVICES
+
+System service-only syscall.  
+List devices matching a provided CII.
+
+For each device, its SDI (4 bytes) is written to the provided address.
+
+**Arguments:**
+
+- [CII](kernel/hardware.md#connection-interface-identifier) of the devices to list (4 bytes)
+  `0` will list all devices
+- Address of a writable buffer (8 bytes)
+
+**Return value:**
+
+- Number of devices found with the provided criterias (4 bytes)
+
+**Errors:**
+
+- `0x10`: Invalid connection type in CII
+
+## `0xD3` DEVICE_INFOS
+
+System service-only syscall.  
+Get the [raw device descriptor](kernel/hardware.md#raw-device-descriptor) of a single device.
+
+**Arguments:**
+
+- [SDI](kernel/hardware.md#device-identifier) of the device to get informations from (4 bytes)
+- Address of a writable buffer (8 bytes)
+
+**Return value:**
+
+- Number of written bytes (1 byte)
+
+**Errors:**
+
+- `0x20`: No device was found with this SDI

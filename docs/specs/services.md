@@ -28,6 +28,8 @@ Else, it accepts it through the [`ACCEPT_SERVICE_CONN`](syscalls.md#0x2c-accept_
 
 The service and its client(s) communicate through the two uni-direction pipes created during the connection. Both are message pipes.
 
+The different message formats a client can send to a service are a called the service's _methods_, while the different message formats the service may send to a client are called the service's _notifications_.
+
 ### Thread types
 
 A service process' main thread is called its _dispatcher threads_, while threads created using the [`ACCEPT_SERVICE_CONN`](syscalls.md#0x2c-accept_service_conn) syscall are called _client threads_.

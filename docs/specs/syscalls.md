@@ -223,7 +223,7 @@ If the data is 0-byte long, this pipe will return successfully without waiting, 
 **Arguments:**
 
 - [Pipe](ipc.md#pipes) SC identifier (8 bytes)
-- Number of bytes to write (8 bytes)
+- Number of bytes to write (4 bytes)
 - Pointer to a readable buffer (8 bytes)
 - Mode (1 byte): `0x00` = block until there is enough space to write, `0x01` = fail if there is not enough space to write or if the pipe is locked, `0x02` = write as much as possible
 

@@ -37,9 +37,9 @@ It also derives a _unique device identifier_ (UDI) encoded on 265 bytes, which i
 
 A _device descriptor_ is a data structure with the following format:
 
-- Bytes 000-139: Device's UDI
-- Bytes 140-147: Device's mappable length
-- Bytes 148-255: _Future-proof_
+- Bytes 000-264: Device's UDI
+- Bytes 265-272: Device's mappable length
+- Bytes 273-512: _Future-proof_
 
 ## Drivers
 

@@ -20,11 +20,11 @@ All hardware components (devices) expose a normalized identifier whose format de
 
 This descriptor is then used by the [`sys::hw`](../services/hw.md) service to expose the device to the rest of the operating system.
 
-Its size can vary up to 96 bytes.
+Its size can vary up to 256 bytes.
 
 ## Connection interface identifier
 
-The connection interface identifier (CII) is a 4-byte number describing what a component is connected to:
+The *connection interface identifier* (CII) is a 4-byte number describing what a component is connected to:
 
 - Connection type (1 byte):
   - `0x01`: PCI-Express

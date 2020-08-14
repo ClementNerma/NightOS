@@ -104,6 +104,49 @@ Sent to a process when a [pipe](ipc.md#pipes) shared with another process is clo
 - Pipe identity (1 byte): `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte)
 - RC or SC identifier (8 bytes)
 
+## `0x26` RECV_SERV_SOCK
+
+Sent to a process when another process opened a [service socket](ipc.md#service-sockets) with this one.
+
+**Datafield:**
+
+- Service socket creator's PID (8 bytes)
+- Service socket creator's application's [ANID](../concepts/applications.md#application-identifier) (4 bytes)
+- Service socket identifier (8 bytes)
+- Size of the buffer, multiplied by 4KB (2 bytes)
+
+## `0x27` RECV_SOCK_MSG
+
+Sent to a process when a message has been sent through a [service socket](ipc.md#service-sockets).  
+To read the message, the process must use the [`READ_SOCK_MSG`](syscalls.md#0x28-read_sock_msg) syscall.
+
+**Datafield:**
+
+- Servive socket identifier (8 bytes)
+- Exchange identifier (8 bytes)
+- Exchange method (1 byte)
+- Size of the message (4 bytes)
+- Status (1 byte):
+  - Bit 0: set if this message did create a new exchange
+  - Bit 1: set if this message is an error message
+  - Bit 2: set if this message closed the socket
+
+## `0x29` SERV_SOCK_CLOSED
+
+(was there a message sent before that closed the socket)
+
+Sent to a process when a [pipe](ipc.md#pipes) shared with another process is closed.
+
+**NOTE:** This does not apply to service pipes.
+
+**Datafield:**
+
+- Closing type (1 byte):
+  - `0x00` if the pipe was closed properly using the [CLOSE_PIPE](syscalls.md#0x25-close_pipe) syscall
+  - `0x01` if the other process brutally terminated |
+- Pipe identity (1 byte): `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte)
+- RC or SC identifier (8 bytes)
+
 ## `0x2A` SERVICE_CONN_REQUEST
 
 Sent to a service process' [dispatcher thread](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.

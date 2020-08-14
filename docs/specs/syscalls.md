@@ -318,6 +318,89 @@ _None_
 - `0x11`: The target process already terminated
 - `0x20`: The provided RC/SC identifier is part of a service pipe
 
+## `0x26` OPEN_SERV_SOCK
+
+Open a [service socket](ipc.md#service-sockets).  
+Triggers the [`RECV_SERV_SOCK`](signals.md#0x26-recv_serv_sock) signal on the receiver process' side.
+
+**Arguments:**
+
+- Client process PID (8 bytes)
+- Buffer size multiplier by 4 KB (2 bytes) - `0` fall backs to 4KB
+
+**Return value:**
+
+- Socket identifier (8 bytes)
+
+## `0x27` SEND_SOCK_MSG
+
+Send a message through a [service socket exchange](ipc.md#exchanges-and-messages).  
+This syscall can also be used to create a new exchange.
+
+**Arguments:**
+
+- Socket identifier (8 bytes)
+- Exchange identifier (8 bytes) - `0` creates a new exchange
+- Method or notification code (1 byte) - non-zero value if not creating an exchange to close it with a non-error message
+- Error code (2 bytes)
+- Number of bytes to write (4 bytes)
+- Pointer to the message's content (8 bytes)
+
+**Return value:**
+
+- Exchange identifier (8 bytes)
+- Message counter for this exchange (4 bytes)
+
+**Errors:**
+
+- `0x20`: Unknown socket identifier
+- `0x21`: Socket is already closed
+- `0x22`: Unknown exchange identifier
+- `0x23`: Exchange has already been concluded
+
+## `0x28` READ_SOCK_MSG
+
+Read the pending message of a [service socket](ipc.md#service-sockets).
+
+**Arguments:**
+
+- Socket identifier (8 bytes)
+- Address of a writable buffer (8 bytes)
+
+**Return value:**
+
+- Number of written bytes (4 bytes)
+- `0x01` if a message was retrieved, `0x00` if none was pending (1 byte)
+- Status (1 byte):
+  - Bit 0: set if this message did create a new exchange
+  - Bit 1: set if this message is an error message
+  - Bit 2: set if this message closed the socket
+
+**Errors:**
+
+- `0x20`: Unknown socket identifier
+- `0x21`: Socket is already closed
+- `0x22`: Unknown exchange identifier
+- `0x23`: Exchange has already been concluded
+
+## `0x29` CLOSE_SERV_SOCK
+
+Close a [service socket](ipc.md#service-sockets).  
+Triggers the [`SERV_SOCK_CLOSED`](signals.md#0x29-serv_sock_closed) signal on the receiver process' side.
+
+**Arguments:**
+
+- Socket identifier (8 bytes)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x20`: Unknown socket identifier
+- `0x21`: Socket is already closed
+
 ## `0x2A` CONNECT_SERVICE
 
 Ask a service to etablish connection. The current process is called the service's _client_.

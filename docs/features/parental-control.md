@@ -2,6 +2,17 @@
 
 _Parental control_ allows to manage a child's access to a computer running NightOS.
 
+- [How it works](#how-it-works)
+- [Integration](#integration)
+- [Features](#features)
+  - [Restrict usage hours](#restrict-usage-hours)
+  - [Restrict session duration](#restrict-session-duration)
+  - [Restrict access to applications](#restrict-access-to-applications)
+  - [Restrict access to websites](#restrict-access-to-websites)
+  - [Restrict mature contents](#restrict-mature-contents)
+  - [Restrict installation of applications](#restrict-installation-of-applications)
+  - [Controlling session remotely](#controlling-session-remotely)
+
 ## How it works
 
 Parental control works using (at least) two accounts: the parent's account, and the child's user account, which is related to as a _child user_. Note that multiple child users can be managed using parental control.

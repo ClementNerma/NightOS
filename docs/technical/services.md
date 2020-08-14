@@ -2,6 +2,9 @@
 
 A _service_ is a process that launches at startup and may receive [IPC](ipc.md) messages from any process.
 
+- [System services](#system-services)
+- [Application services](#application-services)
+
 ## System services
 
 System services are native [applications](../concepts/applications.md). They have system permissions and as such are allowed to perform any task.

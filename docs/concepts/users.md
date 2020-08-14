@@ -1,5 +1,14 @@
 # Users
 
+- [The concept](#the-concept)
+- [Users type](#users-type)
+- [Dangers of an admin. account](#dangers-of-an-admin-account)
+- [Alternative User Control (AUC)](#alternative-user-control-auc)
+- [Users' data encryption](#users-data-encryption)
+- [Child and supervised users](#child-and-supervised-users)
+- [Groups](#groups)
+- [User privileges](#user-privileges)
+
 ## The concept
 
 Many computers are intended to be shared by multiple persons. In such case, it is useful to separate the data of each user and to prevent other users from accesing another's.

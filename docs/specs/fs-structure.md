@@ -2,6 +2,9 @@
 
 This document presents the filesystem's hierarchy.
 
+- [Hierarchy](#hierarchy)
+- [Notes](#notes)
+
 ## Hierarchy
 
 _NOTE:_ `<F>` indicates the item is a file.

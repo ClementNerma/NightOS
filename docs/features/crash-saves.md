@@ -2,6 +2,12 @@
 
 _Crash saves_ prevent most data loss caused by a crash, in all applications supporting it.
 
+- [How crash saves work](#how-crash-saves-work)
+- [Crashes detection](#crashes-detection)
+  - [Invalid shutdown indicator](#invalid-shutdown-indicator)
+  - [Application's crash indicator](#applications-crash-indicator)
+- [Restoration process](#restoration-process)
+
 ## How crash saves work
 
 Every minute (this delay can be changed in the registry), a `SYS_CRASHSAVE_COLLECT` answerable signal is sent to all running applications.

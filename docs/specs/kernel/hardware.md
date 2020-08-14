@@ -2,6 +2,12 @@
 
 This document describes how the kernel interacts with hardware.
 
+- [Hardware detection](#hardware-detection)
+- [Raw device descriptor](#raw-device-descriptor)
+- [Connection interface identifier](#connection-interface-identifier)
+- [Device identifier](#device-identifier)
+- [Drivers](#drivers)
+
 ## Hardware detection
 
 Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional components afterwards.

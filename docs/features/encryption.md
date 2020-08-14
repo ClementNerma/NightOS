@@ -2,6 +2,10 @@
 
 Encryption allows to prevent unauthorized access to a data with a password.
 
+- [Global encryption](#global-encryption)
+- [Per-user encryption](#per-user-encryption)
+- [Combining global and per-user encryptions](#combining-global-and-per-user-encryptions)
+
 ## Global encryption
 
 By default, the whole storage can be encrypted using the computer's master password, which is prompted on startup.

@@ -2,6 +2,10 @@
 
 The _controller_ is a system library that manages permissions of processes. The [_I/O manager_](io-manager.md) relies on it to accept or reject requests.
 
+- [Notion of scope](#notion-of-scope)
+- [The `grid` system library](#the-grid-system-library)
+- [Permissions extension](#permissions-extension)
+
 ## Notion of scope
 
 Permissions are split into several scopes:

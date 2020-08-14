@@ -8,6 +8,11 @@ The format is the same as the [shell's command typing](../shell-scripting.md#com
 - The `optional` indicator becomes a boolean that must be set to `true`
 - The `void` type is forbidden
 
+- [Example](#example)
+- [Values encoding](#values-encoding)
+- [Returning and failing](#returning-and-failing)
+- [Volatile applications](#volatile-applications)
+
 ## Example
 
 ```yaml

@@ -2,6 +2,11 @@
 
 This document describes the format of the [system registy](../technical/registry.md) as well as its content.
 
+- [Format](#format)
+  - [Notes about types](#notes-about-types)
+- [HFFR Format](#hffr-format)
+- [Structure](#structure)
+
 ## Format
 
 The registry is located in the `/etc/sys/registry` file. It's basically a nested B-Tree map.

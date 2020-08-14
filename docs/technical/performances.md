@@ -1,5 +1,9 @@
 # Performances
 
+- [Cycle and phases](#cycle-and-phases)
+- [Processes' priority](#processes-priority)
+- [Balancing performances](#balancing-performances)
+
 ## Cycle and phases
 
 Because processes' instructions cannot always be processed parallely, the system will let each application run a fixed amount of instructions, before going to the next one. This short period of time is called a _phase_ and generally lasts a few milliseconds. The treatment of a single phase for all running processes is called a _run cycle_. When a process isn't in a phase, it is "paused" until the next one.

@@ -3,6 +3,10 @@
 An application's _execution context_ is a piece of data that is provided when the application starts.  
 It indicates why the application was started and so what it is supposed to do.
 
+- [Startup Reason](#startup-reason)
+- [Context header](#context-header)
+- [Arguments structure](#arguments-structure)
+
 ## Startup Reason
 
 The most important information is the _startup reason_, which indicates _why_ the application was started.

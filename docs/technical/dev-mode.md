@@ -2,6 +2,10 @@
 
 The _developer mode_ enables several features that are not available to default users. Only administrator users get access to them when they are enabled.
 
+- [How to enable](#how-to-enable)
+- [Features](#features)
+- [Application proxies](#application-proxies)
+
 ## How to enable
 
 Developer mode can be enabled either by typing the following command in the terminal:

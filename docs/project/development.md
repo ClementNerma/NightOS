@@ -2,6 +2,8 @@
 
 **WARNING: This document is only a draft and as such far from being complete. All informations described here are subject to change anytime.**
 
+- [Languages](#languages)
+
 ## Languages
 
 The project will be developped in [Rust](https://rust-lang.org/), with first-class support for this language.

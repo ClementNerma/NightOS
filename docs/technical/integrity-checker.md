@@ -1,5 +1,9 @@
 # Integrity checker
 
+- [System immutability](#system-immutability)
+- [Hashes computing](#hashes-computing)
+- [Checking hashes at startup](#checking-hashes-at-startup)
+
 ## System immutability
 
 The `/sys` directory is immutable, which means it cannot be modified, even by the main administrator. The only process where this directory may be affected is during a repair process or during an update, which are both processes that are handled by the system directly.

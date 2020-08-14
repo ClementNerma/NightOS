@@ -2,6 +2,10 @@
 
 The _Inter-Process Communication_ (IPC) is the way processes communicate with other ones.
 
+- [Communication permissions](#communication-permissions)
+- [IPC modes](#ipc-modes)
+- [Implementation details](#implementation-details)
+
 ## Communication permissions
 
 A non-administrator process can communicate with another through IPC if the target process is either:

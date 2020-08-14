@@ -4,6 +4,10 @@ On traditional operating systems, programs are provided as binary and so are onl
 
 In order to prevent this, and in order to bring more stability and security to native programs, NightOS programs are shipped as _NightOS Pre-compiled Programs_ (NPP) using a specific language called _CommonAssembly_.
 
+- [How it works](#how-it-works)
+- [Compatibility](#compatibility)
+- [Usage](#usage)
+
 ## How it works
 
 CommonAssembly is very similar to WebAssembly: compressed very low-level source-files that are built ahead of time on the machine that will run it. This enables several advantages:

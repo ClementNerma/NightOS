@@ -2,6 +2,11 @@
 
 The _Input/Output Nano-manager_, formerly known as _Ion_, is a part of the system which treats input/output requests from processes.
 
+- [Hardware access](#hardware-access)
+- [Requests](#requests)
+- [Permissions](#permissions)
+- [Requests priority](#requests-priority)
+
 ## Hardware access
 
 When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired component.

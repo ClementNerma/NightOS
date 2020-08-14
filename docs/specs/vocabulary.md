@@ -2,6 +2,16 @@
 
 This document introduces all vocabulary related to NightOS;
 
+- [Graphics-related terms](#graphics-related-terms)
+- [Surface](#surface)
+- [Interaction](#interaction)
+  - [Windows](#windows)
+    - [Window](#window)
+    - [Borderless windows](#borderless-windows)
+    - [Resizable windows](#resizable-windows)
+    - [Windows' title bar](#windows-title-bar)
+    - [Windows' resizing lines](#windows-resizing-lines)
+
 ## Graphics-related terms
 
 ## Surface

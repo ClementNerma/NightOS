@@ -2,6 +2,14 @@
 
 Welcome to NightOS' FAQ. Please note that several questions are already answered in the [project's README](../README.md).
 
+- [This project seems too good to be true](#this-project-seems-too-good-to-be-true)
+- [What's the current state of the project?](#whats-the-current-state-of-the-project)
+- [Will this project replace Windows/MacOS/Linux/... one day?](#will-this-project-replace-windowsmacoslinux-one-day)
+- [How does this project relates to NightOS v1, [v2](https://github.com/ClementNerma/NightOS-v2) and [v3](https://github.com/ClementNerma/NightOS-v3)?](#how-does-this-project-relates-to-nightos-v1-v2-and-v3)
+- [Who are you?](#who-are-you)
+- [Why did you create NightOS?](#why-did-you-create-nightos)
+- [How can I help?](#how-can-i-help)
+
 ## This project seems too good to be true
 
 Well, it is in a way. NightOS can be designed as such a secure and robust O.S. because we chose to not maintain any backward compatibility with existing software - understand that existing applications from Linux, MacOS or Windows will **not be compatible with NightOS**. This is why we can afford to introduce so many new features and requirements current operating systems cannot.

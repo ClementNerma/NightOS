@@ -2,6 +2,10 @@
 
 _Libraries_ allow to share a program between multiple applications.
 
+- [How libraries work](#how-libraries-work)
+- [Dependencies management and resolving](#dependencies-management-and-resolving)
+- [System libraries](#system-libraries)
+
 ## How libraries work
 
 Unlike applications, libraries can be installed in multiple versions. This means you can have three versions of the same library installed at the same time on your computer.

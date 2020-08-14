@@ -2,6 +2,11 @@
 
 This document presents the file formats natively handled by NightOS. Some files are only handled by optional first-party applications that may not be installed on the computer, so some formats may not be supported in specific installs where such applications have been removed/were never installed.
 
+- [Common formats](#common-formats)
+- [Virtual storages](#virtual-storages)
+- [Application packages](#application-packages)
+- [System updates](#system-updates)
+
 ## Common formats
 
 Common file formats are natively handled:

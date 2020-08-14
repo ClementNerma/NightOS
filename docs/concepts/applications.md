@@ -4,6 +4,19 @@ _Applications_ are the system's way to handle software.
 
 **NOTE :** This document is only an _introduction_ to how applications work.
 
+- [How applications work](#how-applications-work)
+- [Installation methods](#installation-methods)
+  - [From the store](#from-the-store)
+  - [Sideloading](#sideloading)
+  - [Volatile applications](#volatile-applications)
+- [Permissions](#permissions)
+- [Name and slug](#name-and-slug)
+- [Application Identifier](#application-identifier)
+- [Application Context](#application-context)
+- [Commands](#commands)
+- [System applications](#system-applications)
+- [Services](#services)
+
 ## How applications work
 
 An application is a set of executable files and resources. They are the only way to execute code, as direct binary programs are not supported.

@@ -6,6 +6,19 @@ You can get a quick overview of Hydre in its [technical document](../technical/s
 
 **NOTE:** The behaviours described here only apply when using the [Pluton](../applications/Pluton.md) terminal application. Although all terminals are expected to follow these specifications as they act as a standard for terminals, they are technically not forced to and so misbehaviours may appear when using an alternative terminal application.
 
+- [Shell sessions](#shell-sessions)
+  - [Sessions security](#sessions-security)
+- [Commands evaluation](#commands-evaluation)
+- [Command pipes](#command-pipes)
+- [Interactivity](#interactivity)
+  - [Input data](#input-data)
+  - [User inputs](#user-inputs)
+  - [Text output](#text-output)
+    - [Invalid messages](#invalid-messages)
+- [Events handling](#events-handling)
+- [Scripting language](#scripting-language)
+  - [Pre-evaluation checking](#pre-evaluation-checking)
+
 ## Shell sessions
 
 Before evaluating commands, a _shell session_ needs to be created using the [`sys::hydre`](services/hydre.md) service.

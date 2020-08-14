@@ -4,6 +4,9 @@ _Domains_ are a set of computers running NightOS which are linked to each other.
 
 It behaves like an extension of the [parental control](parental-control.md), though they are two completely distinct features and domains offer a lot more features, while being made not to manage a child's access to a computer but to manage thousands of comupters at once.
 
+- [The concept](#the-concept)
+- [Domain supervisor](#domain-supervisor)
+
 ## The concept
 
 Domains enable all features of [parental control](parental-control.md) (without the dedicated application though), as well as the following ones:

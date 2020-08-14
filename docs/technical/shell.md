@@ -2,6 +2,10 @@
 
 The _shell_, called _Hydre_, is the part that interprets scripts.
 
+- [Commands](#commands)
+- [Pipes](#pipes)
+- [Specifications](#specifications)
+
 ## Commands
 
 Hydre works using _commands_, which can take _arguments_.

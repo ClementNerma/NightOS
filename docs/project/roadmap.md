@@ -4,6 +4,15 @@
 
 The project will be cut in the four phases described below.
 
+- [Conception](#conception)
+- [Validation](#validation)
+- [Implementation](#implementation)
+  - [Phase 1: Unoptimized kernel](#phase-1-unoptimized-kernel)
+  - [Phase 2: Low-level implementation](#phase-2-low-level-implementation)
+  - [Phase 3: Applications & System optimization](#phase-3-applications--system-optimization)
+  - [Phase 4: Completion](#phase-4-completion)
+- [Evolution, Optimization & Maintenance](#evolution-optimization--maintenance)
+
 ## Conception
 
 The first part is to write conception documents about how the system work, both at a high-level (concepts, features, native applications etc.) and low-level (processes management, kernel design...).

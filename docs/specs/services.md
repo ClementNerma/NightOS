@@ -2,6 +2,13 @@
 
 This document describes the architecture of [services](../technical/services.md), as well as the list of all system services and their main features.
 
+- [Architecture of a service](#architecture-of-a-service)
+  - [Connections](#connections)
+  - [Communication](#communication)
+  - [Thread types](#thread-types)
+  - [Closing a connection](#closing-a-connection)
+- [System services](#system-services)
+
 ## Architecture of a service
 
 Application services have exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.

@@ -1,5 +1,10 @@
 # Devices
 
+- [Connecting a new device](#connecting-a-new-device)
+- [Interacting with a device](#interacting-with-a-device)
+- [Device handler files persistence](#device-handler-files-persistence)
+- [Custom device handler filename](#custom-device-handler-filename)
+
 ## Connecting a new device
 
 When a new device is connected to the computer, a _device handler file_ (DHF) is created in the `/dev` directory (see [filesystem structure](../specs/fs-structure.md)).

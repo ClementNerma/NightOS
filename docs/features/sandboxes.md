@@ -2,6 +2,10 @@
 
 _Sandboxes_ allow to test an application without applying modifications to the system.
 
+- [How sandboxes work](#how-sandboxes-work)
+- [Persistent sandboxes](#persistent-sandboxes)
+- [Puppet sandbox](#puppet-sandbox)
+
 ## How sandboxes work
 
 A sandbox is an execution mode where an application's modifications to the disk are not applied directly to it, but instead to a virtual drive stored in its `sandboxes` folder. When the app. exits, a confirmation overlay proposes to apply the modifications to the real storage - it's also possible to see the changes before applying them.

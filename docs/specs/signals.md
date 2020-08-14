@@ -2,6 +2,27 @@
 
 _Signals_ are a type of [KPC](kernel/kpc.md). They are used by the kernel to send informations to processes about a specific event.
 
+- [Technical overview](#technical-overview)
+- [`0x01` HANDLER_FAULT](#0x01-handler_fault)
+- [`0x02` MEM_FAULT](#0x02-mem_fault)
+- [`0x10` SUSPEND](#0x10-suspend)
+- [`0x11` WILL_SUSPEND](#0x11-will_suspend)
+- [`0x12` TERMINATE](#0x12-terminate)
+- [`0x13` WILL_TERMINATE](#0x13-will_terminate)
+- [`0x20` RECV_PIPE](#0x20-recv_pipe)
+- [`0x21` PIPE_CLOSED](#0x21-pipe_closed)
+- [`0x26` RECV_SERV_SOCK](#0x26-recv_serv_sock)
+- [`0x27` RECV_SOCK_MSG](#0x27-recv_sock_msg)
+- [`0x29` SERV_SOCK_CLOSED](#0x29-serv_sock_closed)
+- [`0x2A` SERVICE_CONN_REQUEST](#0x2a-service_conn_request)
+- [`0x2B` SERVICE_CLIENT_CLOSED](#0x2b-service_client_closed)
+- [`0x2C` SERVICE_CLIENT_QUITTED](#0x2c-service_client_quitted)
+- [`0x2D` SERVICE_SERVER_QUITTED](#0x2d-service_server_quitted)
+- [`0x34` RECV_SHARED_MEM](#0x34-recv_shared_mem)
+- [`0x35` UNSHARED_MEM](#0x35-unshared_mem)
+
+## Technical overview
+
 When a process is created, the kernel associates it:
 
 - A _signals handler table_ (SHT) ;

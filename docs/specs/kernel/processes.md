@@ -2,6 +2,12 @@
 
 Apart from the kernel itself, all programs run in _processes_.
 
+- [Why processes](#why-processes)
+- [Switching and cycles](#switching-and-cycles)
+- [Process attributes](#process-attributes)
+- [Performance balancing](#performance-balancing)
+  - [Automatic priority attribution](#automatic-priority-attribution)
+
 ## Why processes
 
 Separating programs in threads presents several advantages:

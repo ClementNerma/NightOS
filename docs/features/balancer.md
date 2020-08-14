@@ -2,6 +2,10 @@
 
 The _balancer_ is a kernel feature that allows to get more performances out of most important applications.
 
+- [How the balancer works](#how-the-balancer-works)
+- [Application processes suspension](#application-processes-suspension)
+- [Performance mode](#performance-mode)
+
 ## How the balancer works
 
 The balancer allows to manage the priority of userland processes - and only them. Here is the list of its features:

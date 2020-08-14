@@ -3,6 +3,8 @@
 _Freeze prevention_ prevents nearly all computer freezes, by reserving a little amount of resources to the system.
 It is enabled by default, but it can be disabled during installation process or from the control panel.
 
+- [How freeze prevention works](#how-freeze-prevention-works)
+
 ## How freeze prevention works
 
 The system forbids applications to access a fixed amount of RAM, called the _freeze prevention resource_ (FPR), which is by default the smallest between 1% of the total RAM and 8 megabytes.

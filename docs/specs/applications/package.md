@@ -2,6 +2,10 @@
 
 Application packages are files that have either the `.nap` (NightOS Application Package) or `.nva` (NightOS Volatile Application).
 
+- [Content](#content)
+- [Manifest](#manifest)
+- [Pre-compiled applications](#pre-compiled-applications)
+
 ## Content
 
 NAP and NVA files are ZStandard archives which only requirement is to contain, at the archive's root, a `manifest.toml` file describing the archive itself, a `hash.md5` ensuring the archive has not been corrupted.

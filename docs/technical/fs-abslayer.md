@@ -6,6 +6,15 @@ NightOS supports almost all filesystems, but none support all of the required fe
 
 The layer works by storing the informations in a small file dedicated to this purpose.
 
+- [Structure](#structure)
+- [Symbolic links](#symbolic-links)
+  - [Concept](#concept)
+  - [Cyclic symlinks](#cyclic-symlinks)
+- [Flows](#flows)
+  - [Concept](#concept-1)
+  - [Creating a flow](#creating-a-flow)
+  - [Connecting to a flow](#connecting-to-a-flow)
+
 ## Structure
 
 The filesystem structure of a NightOS installation can be found in the related [specifications document](../specs/fs-structure.md).

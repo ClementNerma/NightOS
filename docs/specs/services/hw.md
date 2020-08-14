@@ -2,6 +2,19 @@
 
 The `sys::hw` service is in charge of hardware devices. It coordinates and manages communications with the hardware.
 
+- [Hardware detection](#hardware-detection)
+- [Device formats](#device-formats)
+  - [Device type descriptor](#device-type-descriptor)
+  - [Device identifier](#device-identifier)
+  - [Device descriptor](#device-descriptor)
+  - [Patterns](#patterns)
+- [Drivers](#drivers)
+- [Methods](#methods)
+  - [`0x01` ENUM_DEVICES](#0x01-enum_devices)
+  - [`0x02` SUBSCRIBE_DEVICES](#0x02-subscribe_devices)
+- [Notifications](#notifications)
+  - [DEVICE_EVENT](#device_event)
+
 ## Hardware detection
 
 Hardware detection is handled by [the kernel itself](../kernel/hardware.md#hardware-detection), which then exposes a [_raw device descriptor_ (RDD)](../kernel/hardware.md#raw-device-descriptor) as well as a [_connection interface identifier_ (CII)](../kernel/hardware.md#connection-interface-identifier).

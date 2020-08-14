@@ -2,6 +2,20 @@
 
 This document describes the way [Inter-Process Communication (IPC)](../technical/ipc.md) works.
 
+- [Pipes](#pipes)
+  - [Opening pipes](#opening-pipes)
+  - [Pipes' pending data](#pipes-pending-data)
+  - [Pipes locking](#pipes-locking)
+  - [Closing pipes](#closing-pipes)
+  - [Message pipes](#message-pipes)
+  - [Interactive usage](#interactive-usage)
+- [Service sockets](#service-sockets)
+  - [Opening](#opening)
+  - [Exchanges and messages](#exchanges-and-messages)
+  - [Methods and notifications](#methods-and-notifications)
+  - [Closing](#closing)
+- [Shared Memory](#shared-memory)
+
 ## Pipes
 
 _Inter-process Uni-directional Channels_ (IUC), also called _pipes_, allow two distinct processes to communicate.

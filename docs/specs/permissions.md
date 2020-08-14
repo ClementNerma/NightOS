@@ -8,6 +8,9 @@ For applications, these are named _permissions_, while for users their are calle
 
 The rule being that applications cannot get permissions that the user running them has not.
 
+- [List of user privileges](#list-of-user-privileges)
+- [List of application permissions](#list-of-application-permissions)
+
 ## List of user privileges
 
 Below is the list of all user privileges, with `Adm?` referring to commands that are only available in administrator mode:

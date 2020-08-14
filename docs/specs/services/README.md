@@ -6,6 +6,18 @@ Each service is a system application, with the `sys` [DID](../../concepts/applic
 
 They are referred to as `sys::` services.
 
+## Nomenclature
+
+All [methods and notifications](../ipc.md#methods-and-notifications) describe the required permissions to use them, their arguments.
+
+They also use common error codes:
+
+- `0x00`: Insufficient permissions
+- `0x10` to `0x1F`: invalid arguments provided (e.g. value is too high)
+- `0x20` to `0x2F`: arguments are not valid in the current context (e.g. provided ID does not exist)
+- `0x30` to `0x3F`: resource errors (e.g. file not found)
+- `0x40` to `0xFF`: other types of errors
+
 ## List of system services
 
 - [`sys::fs`](fs.md): filesystem management

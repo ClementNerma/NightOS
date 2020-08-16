@@ -18,6 +18,8 @@ They also use common error codes:
 - `0x30` to `0x3F`: resource errors (e.g. file not found)
 - `0x40` to `0xFF`: other types of errors
 
+All methods return an answer, though it may be empty (indicated by a _None_). System services' answers always [conclude the exchange](../ipc.md#concluding-exchanges).
+
 ## List of system services
 
 - [`sys::fs`](fs.md): filesystem management

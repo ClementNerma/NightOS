@@ -4,6 +4,16 @@ Here is all the documentation about NightOS. Each file describes a specific thin
 
 You can find the answer to [frequently-asked questions here](FAQ.md).
 
+## Foreword
+
+**Before reading this documentation, please note that** I'm developing this project on my own and I'm by no mean an operating system expert. I do not even as a professional low-level developer though I have some knowledge on how low-level software and hardware work to some extent.
+
+This means there are surely many flaws in the very low-level aspects, especially in the microkernel, like the way hardware devices are handled and mapped in memory. If you find a flaw, feel free to fill an [issue](https://github.com/ClementNerma/NightOS/issues/new).
+
+The main point of this project is the many middle-level/high-level aspects, not the very low-level ones which will take quite a lot of time to design completely and surely require the knowledge of people more experimented in this field than I am.
+
+Also, this project is far from being finished, so many things are still missing from the documentation. I frequently add new design documents and complete existing ones, but feel free to create a new issue if you think something should be added to the project :).
+
 ## [Project](project/)
 
 - [Roadmap](project/roadmap.md) - the project's roadmap

@@ -148,11 +148,16 @@ Sent for devices a process subscribed to with [`SUBSCRIBE_DEVICES`](#0x02-subscr
 **Datafield:**
 
 - Device descriptor (512 bytes)
-- Event (1 byte):
-  - `0x01`: device was just connected
-  - `0x02`: device was just disconnected
-  - `0x03`: device was just put to sleep
-  - `0x04`: device was just awoken from sleep
+- Event code (1 byte):
+  - `0x10`: device was just connected
+  - `0x11`: a driver was just selected for the device
+  - `0x12`: the device is ready to use
+  - `0x20`: device was disconnected (software)
+  - `0x21`: the device is being disconnected by its driver
+  - `0x22`: the device has been disconnected by the driver
+  - `0x23`: the device was brutally disconnected (hardware)
+  - `0x30`: device was just put to sleep
+  - `0x31`: device was just awoken from sleep
 - Indicator (1 byte):
   - Bit 0: set if this device is connected for the first time
   - Bit 1: set if this device was disconnected brutally (not by the system itself)

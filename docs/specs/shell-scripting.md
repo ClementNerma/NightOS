@@ -121,7 +121,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
 - [Native commands](#native-commands)
   - [`echo`: display a value](#echo-display-a-value)
   - [`wt`: write a file](#wt-write-a-file)
-  - [`rd": read a file](#rd-read-a-file)
+  - [`rd`: read a file](#rd-read-a-file)
   - [`mkd`: create a directory](#mkd-create-a-directory)
   - [`re`: rename a filesystem item](#re-rename-a-filesystem-item)
   - [`mv`: move a filesystem item](#mv-move-a-filesystem-item)
@@ -1834,7 +1834,7 @@ echo "Hello world!" > ./test.txt
 echo "Hello world!" >> ./test.txt
 ```
 
-### `rd": read a file
+### `rd`: read a file
 
 Read a file as a `string` value.
 

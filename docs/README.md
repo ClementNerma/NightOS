@@ -1,8 +1,6 @@
 # Documentation
 
-Here is all the documentation about NightOS. Each file describes a specific thing ; you can find the list below.
-
-You can find the answer to [frequently-asked questions here](FAQ.md).
+Welcome to the documentation of NightOS. This directory contains all design and specification documents of the project.
 
 ## Foreword
 
@@ -12,7 +10,11 @@ This means there are surely many flaws in the very low-level aspects, especially
 
 The main point of this project is the many middle-level/high-level aspects, not the very low-level ones which will take quite a lot of time to design completely and surely require the knowledge of people more experimented in this field than I am.
 
-Also, this project is far from being finished, so many things are still missing from the documentation. I frequently add new design documents and complete existing ones, but feel free to create a new issue if you think something should be added to the project :).
+On the other hand, specification documents are not like specification documents you may have seen from, let's say, WhatWG or other consortiums. As NightOS is only a prototypal O.S., the documents you will find here are meant to be easily understandable. Specification documents are meant to describe completely a specific concept or part of the system, but without being hard to read. Some will argue it's not close enough to a "real" specification, but I think it's enough for now, regarding the very early state of the project.
+
+Also, this project is far from being finished, so many things are still missing from the documentation. I frequently add new design documents and complete existing ones, but feel free to create a new issue if you think something should be added to the project :)
+
+By the way, you can also find answers to the most [frequently-asked questions here](FAQ.md).
 
 ## [Project](project/)
 

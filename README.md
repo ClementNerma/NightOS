@@ -4,7 +4,9 @@
 
 NightOS is an general-purpose operating system aiming to provide maximum security to the average user.
 
-Current documentation can be found in the [`docs`](docs/) directory of this repository.
+## Documentation
+
+Design and specification documents can be found in the [`docs`](docs/) directory.
 
 ## How does it work?
 

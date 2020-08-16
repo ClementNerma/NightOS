@@ -16,10 +16,6 @@ You can find the answer to [frequently-asked questions here](FAQ.md).
 - [What are libraries?](concepts/libraries.md) - sharing identical behaviours between multiple applications
 - [What are users?](concepts/users.md) - sharing a computer between multiple persons
 
-## [Applications](applications/)
-
-The list of default applications and their description can be found [here](applications/README.md).
-
 ## [Features](features/)
 
 - [The balancer](features/balancer.md) - improve performances by balancing processes' priority
@@ -31,6 +27,10 @@ The list of default applications and their description can be found [here](appli
 - [Permissions system](features/permissions.md) - prevent applications and users from doing whatever they want
 - [Sandboxes](features/sandboxes.md) - isolate applications to prevent them from harming important data
 - [Synchronization](features/synchronization.md) - synchronize settings between multiple computers
+
+## [Applications](applications/)
+
+The list of default applications and their description can be found [here](applications/README.md).
 
 ## [Technical](technical/)
 

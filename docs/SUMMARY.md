@@ -1,5 +1,7 @@
 # [mdBook](https://github.com/rust-lang/mdBook) Summary
 
+- [Foreword](FOREWORD.md)
+- [Frequently-asked questions](FAQ.md)
 - [Project](project/README.md)
   - [Roadmap](project/roadmap.md) - the project's roadmap
   - [Development](project/development.md) - how the project will be developped

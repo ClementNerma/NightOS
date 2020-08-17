@@ -3,9 +3,10 @@
 This document describes how the kernel interacts with hardware.
 
 - [Hardware detection](#hardware-detection)
-- [Raw device descriptor](#raw-device-descriptor)
+- [Connection-specific device descriptor](#connection-specific-device-descriptor)
 - [Connection interface identifier](#connection-interface-identifier)
 - [Session device identifier](#session-device-identifier)
+- [Raw device descriptor](#raw-device-descriptor)
 - [Drivers](#drivers)
 
 ## Hardware detection
@@ -20,11 +21,9 @@ As all components do not use the same connection protocols, the detection proces
 
 Some components may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.
 
-## Raw device descriptor
+## Connection-specific device descriptor
 
-All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the _raw device descriptor_ (RDD).
-
-This descriptor is then used by the [`sys::hw`](../services/hw.md) service to expose the device to the rest of the operating system.
+All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the _connection-specific device descriptor_ (CSDD).
 
 Its size can vary up to 256 bytes.
 
@@ -47,6 +46,18 @@ For instance, the seventh USB port on the second bus will have the `0x05010006` 
 ## Session device identifier
 
 The kernel generates for each device a _session device identifier_ (SDI), which is a random 4-byte number specific to the current session, allowing to plug up to 4 billion devices in a single session.
+
+## Raw device descriptor
+
+The _raw device descriptor_ (RDD) is a data structure of 20 to 274 bytes made of the followings:
+
+- [SDI](#session-device-identifier) (4 bytes)
+- [CII](#connection-interface-identifier) (4 bytes)
+- [CSDD](#connection-specific-device-descriptor) (up to 256 bytes)
+- Start mappable address of the device (8 bytes)
+- Mappable size of the device (8 bytes)
+
+This descriptor is then used by the [`sys::hw`](../services/hw.md) service to expose the device to the rest of the operating system.
 
 ## Drivers
 

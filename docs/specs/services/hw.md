@@ -18,7 +18,7 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
   - [`0x02` SUBSCRIBE_DEVICES](#0x02-subscribe_devices)
   - [`0x10` REGISTER_DRIVER](#0x10-register_driver)
   - [`0x11` UNREGISTER_DRIVER](#0x11-unregister_driver)
-  - [`0x12` DRIVE_DEVICE](#0x12-drive_device)
+  - [`0x12` MAP_DEVICE_MEM](#0x12-map_device_mem)
   - [`0x20` NOTIFY_PROCESS](#0x20-notify_process)
   - [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
 - [Notifications](#notifications)
@@ -230,9 +230,9 @@ _None_
 
 - `0x30`: Current process is not registered as a driver for this pattern
 
-### `0x12` DRIVE_DEVICE
+### `0x12` MAP_DEVICE_MEM
 
-Drive a device this service is [registered as a driver](#0x10-register_driver) for.  
+Map a device's memory after this service was selected as a [driver](#drivers) for it.  
 As the driver may not be chosen as the main driver for a device in case of patterns collision with another driver, this method should not be used before the driver process receives the related [notification](#device_event).
 
 Before calling this method, it's recommanded to create a thread in the driver process to allow concurrent handling of the different devices, though this behaviour is not enforced.

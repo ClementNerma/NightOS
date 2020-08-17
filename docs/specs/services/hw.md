@@ -21,7 +21,6 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
 - [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
 - [Notifications](#notifications)
   - [DEVICE_EVENT](#device_event)
-  - [DRIVER_EVENT](#driver_event)
   - [DRIVER_METHOD_REQUEST](#driver_method_request)
 
 ## Hardware detection
@@ -115,7 +114,7 @@ For instance, providing the DTD `0x0100B2` with the DTD pattern indicator set to
 
 From a higher level point of view, drivers are [services](../services.md) that declare themselves as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
 
-When a device is connected, using multiple criterias **which are yet to be determined**, a driver is selected from the list of drivers able to handle this specific device. This driver receives the [`DRIVER_EVENT`](#driver_event) notification, which then allows it to drive the device using the [`DRIVE_DEVICE`](#0x12-drive_device) method.
+When a device is connected, using multiple criterias **which are yet to be determined**, a driver is selected from the list of drivers able to handle this specific device. This driver receives the [`DEVICE_EVENT`](#device_event) notification, which then allows it to drive the device using the [`DRIVE_DEVICE`](#0x12-drive_device) method.
 
 ## Methods
 
@@ -180,7 +179,7 @@ _None_
 Set up a service as a driver for all devices matching a pattern.  
 If multiple drivers have colliding patterns, the final user will be prompted to choose a driver.  
 
-The driver process will receive [`DRIVER_EVENT`](#driver_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
+The driver process will receive [`DEVICE_EVENT`](#device_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
 Notifications are also retroactive, which means they will be sent for already-connected devices.
 
 **Required permissions:**
@@ -219,7 +218,7 @@ _None_
 ## `0x12` DRIVE_DEVICE
 
 Drive a device this service is [registered as a driver](#0x10-register_driver) for.  
-As the driver may not be chosen as the main driver for a device in case of patterns collision with another driver, this method should not be used before the driver process receives the related [notification](#driver_event).
+As the driver may not be chosen as the main driver for a device in case of patterns collision with another driver, this method should not be used before the driver process receives the related [notification](#device_event).
 
 Before calling this method, it's recommanded to create a thread in the driver process to allow concurrent handling of the different devices, though this behaviour is not enforced.
 
@@ -296,7 +295,10 @@ _Expected answer format for this method_
 
 ### DEVICE_EVENT
 
-Sent for devices a process subscribed to with [`SUBSCRIBE_DEVICES`](#0x02-subscribe_devices).
+Sent for a specific device to processes that either:
+
+- [Drive](#drivers) this specific device
+- Subscribed to it using the [`SUBSCRIBE_DEVICES`](#0x02-subscribe_devices) method
 
 **Datafield:**
 
@@ -315,18 +317,6 @@ Sent for devices a process subscribed to with [`SUBSCRIBE_DEVICES`](#0x02-subscr
   - Bit 0: set if this device is connected for the first time
   - Bit 1: set if this device was disconnected brutally (not by the system itself)
   - Bit 2: set if this device is connected for the first time on this specific port
-
-### DRIVER_EVENT
-
-Sent for devices a process registered itself as a driver of with [`REGISTER_DRIVER`](#0x10-register_driver).
-
-**Datafield:**
-
-_Identical to [`DEVICE_EVENT`](#device_event)_
-
-**Expected answer:**
-
-- [DDT](#driven-device-type) (4 bytes)
 
 ### DRIVER_METHOD_REQUEST
 

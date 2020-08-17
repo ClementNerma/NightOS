@@ -37,6 +37,7 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kernel/kpc.md). They
   - [`0xD1` SET_PRIORITY](#0xd1-set_priority)
   - [`0xD2` ENUM_DEVICES](#0xd2-enum_devices)
   - [`0xD3` DEVICE_INFOS](#0xd3-device_infos)
+  - [`0xD4` MAP_DEVICE_MEM](#0xd4-map_device_mem)
 
 ## Technical overview
 
@@ -578,7 +579,7 @@ _None_
 
 ### `0x33` MEM_UNMAP
 
-Unmap memory pages shared by another process.
+Unmap memory pages shared by another process or [mapped from devices](#0xd4-map_device_mem).
 
 **Arguments:**
 
@@ -718,27 +719,51 @@ Get a process' [attributes](kernel/processes.md#process-attributes).
 
 **Arguments:**
 
-- Information to get (1 byte):
+_For value-based attributes:_
+
+- Attribute code (1 byte):
   - `0x00`: PID
   - `0x01`: Process' priority
   - `0x02`: Running user's ID
   - `0x03`: Parent application ID
-  - `0x04`: Permissions
-  - `0x05`: Memory mappings
-  - `0x06`: Execution context (startup reason)
-  - `0x07`: Execution context (header)
-  - `0x08`: Execution context (arguments)
-- Maximum number of entries to get for sets (like permissions and mappings) (4 bytes): `0` = no limit
-- Pointer to a writable buffer (8 bytes)
+  - `0x04`: Execution context (startup reason)
+  - `0x05`: Execution context (header)
+  - `0x06`: Execution context (arguments)
+
+- Action code:
+  - `0x00`: Read the information (followed by a writable address on 8 bytes)
+  - `0x01`: Write the information (followed by the value to write)
+
+_For list-based attributes:_
+
+- Attribute code (1 byte):
+  - `0x00`: Memory mappings
+  - `0x01`: Permissions
+  - `0x02`: Drivable devices
+
+- Action code (1 byte) followed by its optional arguments:
+  - `0x00`: Get the number of elements
+  - `0x01`: Get the value at a given index => index (4 bytes)
+  - `0x02`: Update the value at a given index => index (4 bytes) + value (? bytes)
+  - `0x03`: Insert a value at a given index => index (4 bytes) + value (? bytes)
+  - `0x04`: Push a value at the end of the list => value (? bytes)
+  - `0x05`: Remove a value from the list => index (4 bytes)
+  - `0x06`: Remove the last value from the list
+  - `0x10`: Check if the list contains a given item => value to look for (? bytes)
+
+- Address to a writable buffer (8 bytes)
 
 **Return value:**
 
-Number of written bytes.
+- Number of written bytes (if applies) (8 bytes)
 
 **Errors:**
 
-- `0x10`: Invalid attribute number provided
+- `0x10`: Invalid action code provided
+- `0x11`: Invalid attribute number provided
 - `0x20`: Caller process is not a system service
+- `0x21`: This system service is not allowed to access or edit this attribute
+- `0x22`: Provided index is out-of-bounds
 
 ### `0xD1` SET_PRIORITY
 
@@ -800,3 +825,32 @@ Get the [raw device descriptor](kernel/hardware.md#raw-device-descriptor) of a s
 **Errors:**
 
 - `0x20`: No device was found with this SDI
+
+### `0xD4` MAP_DEVICE_MEM
+
+System service-only syscall.  
+Map a device's memory in the current process' address space.
+
+Requires the current process to have the device in its [drivable devices attribute](kernel/processes.md#drivable-devices).
+
+Memory can be unmapped using the [`MEM_UNMAP`](#0x33-mem_unmap) syscall, just like for sharing memory.
+
+**Arguments:**
+
+- [SDI](kernel/hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
+- Start address in the device's memory (8 bytes)
+- Number of bytes to map (8 bytes)
+- Start address to map in this process' memory (8 bytes)
+
+**Return value:**
+
+- Shared memory segment ID (8 bytes)
+
+**Errors:**
+
+- `0x10`: The mapping's start address is not aligned with a page
+- `0x11`: The mapping's length is not a multiple of a page's size
+- `0x12`: The mapping's size is null (0 bytes)
+- `0x20`: The provided device SDI was not found
+- `0x21`: The provided device is not compatible with memory0 mapping
+- `0x22`: This device is not registered in this process' [drivable devices attribute](kernel/processes.md#drivable-devices)

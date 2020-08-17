@@ -7,6 +7,7 @@ Apart from the kernel itself, all programs run in _processes_.
 - [Process attributes](#process-attributes)
 - [Performance balancing](#performance-balancing)
   - [Automatic priority attribution](#automatic-priority-attribution)
+- [Drivable devices](#drivable-devices)
 
 ## Why processes
 
@@ -42,6 +43,7 @@ Each process has a set of _attributes_ which contains critical informations on i
 - Parent application ID (8 bytes) - `0` for system services
 - Pointer to the [execution context](../applications/context.md) (8 bytes) - `0` for system services
 - `PLL(e=32)` for memory mappings
+- `PLL(e=32)` for [drivable devices](#drivable-devices)
 
 ## Performance balancing
 
@@ -66,3 +68,11 @@ The priority is determined based on multiple factors:
 - Does the process owns the active window?
 - Does the process owns a visible window?
 - Is the process a driver or service? If so, how much is it used?
+
+## Drivable devices
+
+The drivable devices attribute contains the list of all devices' [SDI](hardware.md#session-device-identifier) the current process can drive.
+
+The goal of this attribute is to determine if the process is allowed to map a device's memory using the [`MAP_DEVICE_MEM`](../syscalls.md#0xd4-map_device_mem) syscall.
+
+This attribute is managed by the [`sys::hw`](../services/hw.md) service and can only be updated by this service.

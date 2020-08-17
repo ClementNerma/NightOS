@@ -12,8 +12,12 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
 - [Methods](#methods)
   - [`0x01` ENUM_DEVICES](#0x01-enum_devices)
   - [`0x02` SUBSCRIBE_DEVICES](#0x02-subscribe_devices)
+  - [`0x10` REGISTER_DRIVER](#0x10-register_driver)
+  - [`0x11` UNREGISTER_DRIVER](#0x11-unregister_driver)
+- [`0x12` DRIVE_DEVICE](#0x12-drive_device)
 - [Notifications](#notifications)
   - [DEVICE_EVENT](#device_event)
+  - [DRIVER_EVENT](#driver_event)
 
 ## Hardware detection
 
@@ -139,6 +143,74 @@ _None_
 
 - `0x20`: Asked to unsubscribe but no subscription is active for this pattern
 
+### `0x10` REGISTER_DRIVER
+
+Set up a service as a driver for all devices matching a pattern.  
+If multiple drivers have colliding patterns, the final user will be prompted to choose a driver.  
+
+The driver process will receive [`DRIVER_EVENT`](#driver_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
+Notifications are also retroactive, which means they will be sent for already-connected devices.
+
+**Required permissions:**
+
+- `devices.register_driver`
+
+**Arguments:**
+
+- [Pattern](#patterns) of the devices to drive (277 bytes)
+
+**Answer:**
+
+_None_
+
+**Errors:**
+
+- `0x20`: Current process is not a service
+- `0x30`: Current process is already registered as a driver for this pattern
+
+### `0x11` UNREGISTER_DRIVER
+
+Unregister a service [previously registered as a driver](#0x10-register_driver).
+
+**Required permissions:**
+
+- [Pattern](#patterns) to unsubscribe from (277 bytes)
+
+**Arguments:**
+
+_None_
+
+**Errors:**
+
+- `0x30`: Current process is not registered as a driver for this pattern
+
+## `0x12` DRIVE_DEVICE
+
+Drive a device this service is [registered as a driver](#0x10-register_driver) for.  
+As the driver may not be chosen as the main driver for a device in case of patterns collision with another driver, this method should not be used before the driver process receives the related [notification](#driver_event).
+
+Before calling this method, it's recommanded to create a thread in the driver process to allow concurrent handling of the different devices, though this behaviour is not enforced.
+
+Mapping can exceed the device's mappable size up to one page less one byte, which means if the size of a page is 4 KB and the device's mappable size is 15 KB, it's possible to map 4 pages, which the last bytes being unavailable (causing page faults if accessed).
+
+**Required permissions:**
+
+_None_
+
+**Arguments:**
+
+- Device's SDI (4 bytes)
+- Relative device address to map (8 bytes)
+- Number of memory pages to map from this device (8 bytes)
+- Address in the driver process's memory space to map the driver at (8 bytes)
+
+**Answer:**
+
+- `0x10`: Number of pages is zero
+- `0x30`: Current process was not selected as the main driver for this pattern
+- `0x31`: Cannot perform the mapping (device addresses out of range)
+- `0x32`: Cannot perform the mapping (process addresses out of range)
+
 ## Notifications
 
 ### DEVICE_EVENT
@@ -162,3 +234,11 @@ Sent for devices a process subscribed to with [`SUBSCRIBE_DEVICES`](#0x02-subscr
   - Bit 0: set if this device is connected for the first time
   - Bit 1: set if this device was disconnected brutally (not by the system itself)
   - Bit 2: set if this device is connected for the first time on this specific port
+
+### DRIVER_EVENT
+
+Sent for devices a process registered itself as a driver of with [`REGISTER_DRIVER`](#0x10-register_driver).
+
+**Datafield:**
+
+_Identical to [`DEVICE_EVENT`](#device_event)_

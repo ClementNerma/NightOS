@@ -109,17 +109,17 @@ kernel(struct):
 # System configuration
 system(struct):
   # Debugging options
-  debugging:
+  debugging(struct):
     # Is development mode enabled?
     dev_mode(bool): true
 
   # Encryption
-  encryption:
+  encryption(struct):
     # Is the global storage encrypted?
     global_encrypted(bool): false
 
   # Date and time
-  datetime:
+  datetime(struct):
     # Is it based on the internet? (if not, it's a custom one)
     internet_based(bool): true
     # In the case the date is not internet-based, provide a timestamp which indicates the difference between the computer's

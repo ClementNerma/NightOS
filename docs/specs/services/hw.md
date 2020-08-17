@@ -21,9 +21,9 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
 - [`0x20` NOTIFY_PROCESS](#0x20-notify_process)
 - [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
 - [Notifications](#notifications)
-  - [DEVICE_EVENT](#device_event)
-  - [DEVICE_INTERRUPT](#device_interrupt)
-  - [DRIVER_METHOD_REQUEST](#driver_method_request)
+  - [`DEVICE_EVENT`](#device_event)
+  - [`DEVICE_INTERRUPT`](#device_interrupt)
+  - [`DRIVER_METHOD_REQUEST`](#driver_method_request)
 
 ## Hardware detection
 
@@ -305,7 +305,7 @@ _Expected answer format for this method_
 
 ## Notifications
 
-### DEVICE_EVENT
+### `DEVICE_EVENT`
 
 Sent for a specific device to processes that either:
 
@@ -330,7 +330,7 @@ Sent for a specific device to processes that either:
   - Bit 1: set if this device was disconnected brutally (not by the system itself)
   - Bit 2: set if this device is connected for the first time on this specific port
 
-### DEVICE_INTERRUPT
+### `DEVICE_INTERRUPT`
 
 Sent to a [driver](#drivers) after a device it's currently driving raised an interrupt.
 
@@ -339,7 +339,7 @@ Sent to a [driver](#drivers) after a device it's currently driving raised an int
 - Device's SDI (4 bytes)
 - [Normalized interrupt](#normalized-interrupts)
 
-### DRIVER_METHOD_REQUEST
+### `DRIVER_METHOD_REQUEST`
 
 Sent to a [driver](#drivers) after receiving a valid [normalized method request](#0xa0-ask_driver).
 

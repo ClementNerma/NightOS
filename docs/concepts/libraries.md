@@ -34,7 +34,7 @@ Note that's it's possible to use signals directly to deal with the system and th
 - `ipm` : Inter-process management (create processes, workers, IPC, shared memory, ...)
 - `gui` : Graphical user interface library (relies on `desktop`)
 - `apps` : Applications management
-- `grid` : Permissions controller
+- `perm` : Permissions controller
 - `shell` : Shell interface (run commands, ...)
 - `input` : Input interface (keyboard, mouse, microphone, ...)
 - `sound` : Sound interface

@@ -66,4 +66,4 @@ When a user is in a group, the group's privileges cannot be revoked for this use
 
 ## User privileges
 
-User privileges indicate the list of actions a user can perform or not. You can find more in the specifications of the [`sys::grid`](../specs/services/grid.md) system service.
+User privileges indicate the list of actions a user can perform or not. You can find more in the specifications of the [`sys::perm`](../specs/services/perm.md) system service.

@@ -55,7 +55,7 @@
   - [System services](specs/services/README.md)
     - [`sys::fs`](specs/services/fs.md)
     - [`sys::hw`](specs/services/hw.md)
-    - [`sys::grid`](specs/services/grid.md)
+    - [`sys::perm`](specs/services/perm.md)
     - [`sys::net`](specs/services/net.md)
     - [`sys::crypto`](specs/services/crypto.md)
     - [`sys::crashsave`](specs/services/crashsave.md)

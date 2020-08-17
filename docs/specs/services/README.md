@@ -31,7 +31,7 @@ All methods return an answer, though it may be empty (indicated by a _None_). Sy
 
 - [`sys::fs`](fs.md): filesystem management
 - [`sys::hw`](hw.md): hardware communication
-- [`sys::grid`](grid.md): permissions management
+- [`sys::perm`](perm.md): permissions management
 - [`sys::net`](net.md): network communications
 - [`sys::crypto`](crypto.md): cryptography utilities
 - [`sys::crashsave`](crashsave.md): [crash saves](../../features/crash-saves.md) management

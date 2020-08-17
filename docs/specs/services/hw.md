@@ -237,6 +237,10 @@ _None_
 
 **Answer:**
 
+_None_
+
+**Errors:**
+
 - `0x10`: Number of pages is zero
 - `0x30`: Current process was not selected as the main driver for this pattern
 - `0x31`: Cannot perform the mapping (device addresses out of range)

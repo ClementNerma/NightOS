@@ -13,16 +13,16 @@ The base and system processes are called _low-level processes_, while applicatio
 
 You can find the implementation details of processes in the [kernel document](../specs/kernel/processes.md).
 
-- [User permissions](#user-permissions)
+- [User privileges](#user-privileges)
 - [Child processes](#child-processes)
 - [Threading](#threading)
   - [Main thread](#main-thread)
   - [Thread-local storage](#thread-local-storage)
 - [Automatic permissions inheritance](#automatic-permissions-inheritance)
 
-## User permissions
+## User privileges
 
-Each process is ran as a specific user, which determines the maximum allowed scope for [controller requests](controller.md), and with a list of initial permissions (the ones given to the application).
+Each process is ran as a specific user, which determines the maximum allowed scope for [controller requests](controller.md), and with a list of initial privileges (the ones given to the application).
 
 ## Child processes
 

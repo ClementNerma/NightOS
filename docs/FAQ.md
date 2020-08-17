@@ -5,7 +5,7 @@ Welcome to NightOS' FAQ. Please note that several questions are already answered
 - [This project seems too good to be true](#this-project-seems-too-good-to-be-true)
 - [What's the current state of the project?](#whats-the-current-state-of-the-project)
 - [Will this project replace Windows/MacOS/Linux/... one day?](#will-this-project-replace-windowsmacoslinux-one-day)
-- [How does this project relates to NightOS v1, [v2](https://github.com/ClementNerma/NightOS-v2) and [v3](https://github.com/ClementNerma/NightOS-v3)?](#how-does-this-project-relates-to-nightos-v1-v2-and-v3)
+- [How does this project relates to NightOS v1, v2 and v3?](#how-does-this-project-relates-to-nightos-v1-v2-and-v3)
 - [Who are you?](#who-are-you)
 - [Why did you create NightOS?](#why-did-you-create-nightos)
 - [How can I help?](#how-can-i-help)
@@ -32,9 +32,9 @@ Imagine someone introducing the perfect operating system, but with almost no app
 
 This is why this project is for now purely _theorical_. It aims to describe how great an OS could be if we did not have to care about backward compatibility. Changes to see it in a usable state one day are like very low.
 
-## How does this project relates to NightOS [v1](https://github.com/ClementNerma/NightOS-v1), [v2](https://github.com/ClementNerma/NightOS-v2) and [v3](https://github.com/ClementNerma/NightOS-v3)?
+## How does this project relates to NightOS v1, v2 and v3?
 
-The current NightOS project is very different from its previous versions. Originally, it only intended to be a robust and secure _desktop environment_, written in JavaScript. Performances would of course be very bad, but it was more of a challenge than a serious project. Also, the project was meant to be a Linux kernel under the hood to get rid of the "low-level part". I seriously lacked of knowledge about low-level concepts at this point in time.
+The current NightOS project is very different from its previous versions ([v1](https://github.com/ClementNerma/NightOS-v1), [v2](https://github.com/ClementNerma/NightOS-v2) and [v3](https://github.com/ClementNerma/NightOS-v3)). Originally, it only intended to be a robust and secure _desktop environment_, written in JavaScript. Performances would of course be very bad, but it was more of a challenge than a serious project. Also, the project was meant to be a Linux kernel under the hood to get rid of the "low-level part". I seriously lacked of knowledge about low-level concepts at this point in time.
 
 This project does not use JavaScript anymore, but Rust, which is both performant and very robust to the most common memory-related bugs (unless you use `unsafe` code). There is no more "challenge" idea involved in this new version, only the aim to make the best possible (theorical) system.
 

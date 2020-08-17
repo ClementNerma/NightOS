@@ -5,7 +5,7 @@ This document describes how the kernel interacts with hardware.
 - [Hardware detection](#hardware-detection)
 - [Raw device descriptor](#raw-device-descriptor)
 - [Connection interface identifier](#connection-interface-identifier)
-- [Device identifier](#device-identifier)
+- [Session device identifier](#session-device-identifier)
 - [Drivers](#drivers)
 
 ## Hardware detection
@@ -44,7 +44,7 @@ The *connection interface identifier* (CII) is a 4-byte number describing what a
 
 For instance, the seventh USB port on the second bus will have the `0x05010006` CII.
 
-## Device identifier
+## Session device identifier
 
 The kernel generates for each device a _session device identifier_ (SDI), which is a random 4-byte number specific to the current session, allowing to plug up to 4 billion devices in a single session.
 

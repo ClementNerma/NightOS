@@ -790,7 +790,7 @@ Get the [raw device descriptor](kernel/hardware.md#raw-device-descriptor) of a s
 
 **Arguments:**
 
-- [SDI](kernel/hardware.md#device-identifier) of the device to get informations from (4 bytes)
+- [SDI](kernel/hardware.md#session-device-identifier) of the device to get informations from (4 bytes)
 - Address of a writable buffer (8 bytes)
 
 **Return value:**

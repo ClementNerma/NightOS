@@ -17,9 +17,9 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
   - [`0x02` SUBSCRIBE_DEVICES](#0x02-subscribe_devices)
   - [`0x10` REGISTER_DRIVER](#0x10-register_driver)
   - [`0x11` UNREGISTER_DRIVER](#0x11-unregister_driver)
-- [`0x12` DRIVE_DEVICE](#0x12-drive_device)
-- [`0x20` NOTIFY_PROCESS](#0x20-notify_process)
-- [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
+  - [`0x12` DRIVE_DEVICE](#0x12-drive_device)
+  - [`0x20` NOTIFY_PROCESS](#0x20-notify_process)
+  - [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
 - [Notifications](#notifications)
   - [`DEVICE_EVENT`](#device_event)
   - [`DEVICE_INTERRUPT`](#device_interrupt)
@@ -227,7 +227,7 @@ _None_
 
 - `0x30`: Current process is not registered as a driver for this pattern
 
-## `0x12` DRIVE_DEVICE
+### `0x12` DRIVE_DEVICE
 
 Drive a device this service is [registered as a driver](#0x10-register_driver) for.  
 As the driver may not be chosen as the main driver for a device in case of patterns collision with another driver, this method should not be used before the driver process receives the related [notification](#device_event).
@@ -258,7 +258,7 @@ _None_
 - `0x31`: Cannot perform the mapping (device addresses out of range)
 - `0x32`: Cannot perform the mapping (process addresses out of range)
 
-## `0x20` NOTIFY_PROCESS
+### `0x20` NOTIFY_PROCESS
 
 Send a notification to a process that registered itself for specific notifications through a [normalized method](#normalized-methods).
 
@@ -279,7 +279,7 @@ _Expected answer by the notified process for this method if any_
 
 - `0x20`: Unknown notification ID
 
-## `0xA0` ASK_DRIVER
+### `0xA0` ASK_DRIVER
 
 Ask a [driver](#drivers) to use a [normalized method](#normalized-methods) on a device it drives.
 

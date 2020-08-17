@@ -1,0 +1,87 @@
+# [mdBook](https://github.com/rust-lang/mdBook) Summary
+
+- [Project](project/README.md)
+  - [Roadmap](project/roadmap.md) - the project's roadmap
+  - [Development](project/development.md) - how the project will be developped
+  - [Hardware requirements](project/hw-requirements.md) - hardware required in order to install and run NightOS
+- [Concepts](concepts/README.md)
+  - [What are applications?](concepts/applications.md) - the way to run software on NightOS
+  - [What are libraries?](concepts/libraries.md) - sharing identical behaviours between multiple applications
+  - [What are users?](concepts/users.md) - sharing a computer between multiple persons
+- [Features](features/README.md)
+  - [The balancer](features/balancer.md) - improve performances by balancing processes' priority
+  - [Crash saves](features/crash-saves.md) - prevent data loss at maximum with crash-proof data saving
+  - [Domains](features/domains.md) - manage a network of computers
+  - [Encryption](features/encryption.md) - encrypt the whole storage and individual user accounts
+  - [Freeze-prevention system](features/freeze-prevention.md) - prevent the system from freezing when all RAM and CPU power are used
+  - [Parental control](features/parental-control.md) - manage children access to the computer
+  - [Permissions system](features/permissions.md) - prevent applications and users from doing whatever they want
+  - [Sandboxes](features/sandboxes.md) - isolate applications to prevent them from harming important data
+  - [Synchronization](features/synchronization.md) - synchronize settings between multiple computers
+- [Technical](technical/README.md)
+  - [The controller](technical/controller.md) - permissions management system
+  - [Developer mode](technical/dev-mode.md) - enable powerful development options
+  - [Devices](technical/devices.md) - manage hardware devices
+  - [File formats](technical/file-formats.md) - description of all native file formats
+  - [Filesystem Abstraction Layer](technical/fs-abslayer.md) - how the system ensures specific features on less powerful filesystems
+  - [Integrity checker](technical/integrity-checker.md) - ensure the system hasn't been corrupted
+  - [I/O manager](technical/io-manager.md) - manage input/output requests
+  - [Multi-platform management](technical/multi-platform.md) - how the NightOS ecosystem can be used on other operating systems
+  - [Performances](technical/performances.md) - system tweaks used to optimize general and specific-case performances
+  - [Pre-compiling applications](technical/pre-compiling.md) - pre-compiling applications to improve installation time and size
+  - [Processes](technical/processes.md) - low-level view of how code runs in a concurrent way
+  - [The registry](technical/registry.md) - configure the system's behaviour and features
+  - [Services](technical/services.md) - special processes that run in the background and allow other applications to perform specific tasks
+  - [The shell](technical/shell.md) - the de-facto way to run complex and/or automatized tasks on NightOS
+- [Specifications](specs/README.md)
+  - [Application context](specs/applications/context.md) - launch an application to directly perform a specific task
+  - [Applications package](specs/applications/package.md) - files representing a whole application
+  - [Applications manifest](specs/applications/manifest.md) - how applications describe themselves in their package
+  - [Filesystem structure](specs/fs-structure.md) - list of file and directories and their meaning
+  - [Inter-process communication](specs/ipc.md) - communication between processes
+  - [Libraries](specs/libraries.md) - what are libraries
+  - [Permissions](specs/permissions.md) - complete list of user and application permissions
+  - [The registry](specs/registry.md) - exhaustive specification of the registry's content
+  - [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms
+  - [The shell](specs/shell.md) - the native shell of NightOS
+  - [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
+  - [Signals](specs/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
+  - [System calls](specs/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
+  - [Kernel](specs/kernel/README.md)
+    - [Hardware](specs/kernel/hardware.md) - how the kernel interacts with hardware
+    - [Kernel-process communication](specs/kernel/kpc.md) - how the kernel communicate with processes and vice-versa
+    - [Memory](specs/kernel/memory.md) - memory organization and management
+    - [Processes](specs/kernel/processes.md) - processes concept and management
+  - [System services](specs/services/README.md)
+    - [`sys::fs`](specs/services/fs.md)
+    - [`sys::hw`](specs/services/hw.md)
+    - [`sys::grid`](specs/services/grid.md)
+    - [`sys::net`](specs/services/net.md)
+    - [`sys::crypto`](specs/services/crypto.md)
+    - [`sys::crashsave`](specs/services/crashsave.md)
+    - [`sys::flow`](specs/services/flow.md)
+    - [`sys::hydre`](specs/services/hydre.md)
+- [Applications](applications/README.md)
+    - [Astral](applications/Astral.md) : The complete toolchain allowing to build applications
+    - [Blackhole](applications/Blackhole.md) : Archives manager
+    - [Central](applications/Central.md) : Settings
+    - [Cloudy](applications/Cloudy.md) : Backup & Sync manager
+    - [Comet](applications/Comet.md) : File manager
+    - [Gravity](applications/Gravity.md) : Text editor
+    - [Locky](applications/Locky.md) : System's encryption tool, with the ability to manage encrypted archives and volumes
+    - [Milkshake](applications/Milkshake.md) : Video player
+    - [Monitor](applications/Monitor.md) : Monitor opened applications, processes, CPU/RAM usage, etc.
+    - [Nova](applications/Nova.md) : Desktop environment
+    - [Particle](applications/Particle.md) : A complete IDE to make applications
+    - [Pluton](applications/Pluton.md) : Terminal
+    - [Postal](applications/Postal.md) : An e-mail client
+    - [Reader](applications/Reader.md) : A complete e-book reader with many supported formats and options
+    - [Registry](applications/Registry.md) : View and edit the registry (for advanced users)
+    - [Rocket](applications/Rocket.md) : Web browser
+    - [ShootingStar](applications/ShootingStar.md) : Pictures viewer and simple editor
+    - [Skyer](applications/Skyer.md) : Applications manager
+    - [Sonata](applications/Sonata.md) : Music player (with Hi-Res support and options)
+    - [Stellar](applications/Stellar.md) : Application store
+    - [Thinker](applications/Thinker.md) : Notes and task lists manager
+    - [TimeTravel](applications/TimeTravel.md) : Backup and versioning program
+    - [Vortex](applications/Vortex.md) : Firewall

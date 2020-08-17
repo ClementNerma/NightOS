@@ -1,0 +1,13 @@
+[book]
+title = "NightOS documentation"
+author = "Clément Nerma"
+description = "Design and specification documents for NightOS"
+src = "docs"
+language = "en"
+
+[rust]
+edition = "2018"
+
+[build]
+build-dir = "book"
+create-missing = false

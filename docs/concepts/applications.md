@@ -73,7 +73,7 @@ Note that the store has an option for installing applications as volatile.
 
 ## Permissions
 
-See the [permissions document](../features/permissions.md).
+See the [permissions feature document](../features/permissions.md).
 
 ## Name and slug
 

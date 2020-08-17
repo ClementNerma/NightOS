@@ -17,7 +17,6 @@
   - [Encryption](features/encryption.md) - encrypt the whole storage and individual user accounts
   - [Freeze-prevention system](features/freeze-prevention.md) - prevent the system from freezing when all RAM and CPU power are used
   - [Parental control](features/parental-control.md) - manage children access to the computer
-  - [Permissions system](features/permissions.md) - prevent applications and users from doing whatever they want
   - [Sandboxes](features/sandboxes.md) - isolate applications to prevent them from harming important data
   - [Synchronization](features/synchronization.md) - synchronize settings between multiple computers
 - [Technical](technical/README.md)
@@ -42,7 +41,6 @@
   - [Filesystem structure](specs/fs-structure.md) - list of file and directories and their meaning
   - [Inter-process communication](specs/ipc.md) - communication between processes
   - [Libraries](specs/libraries.md) - what are libraries
-  - [Permissions](specs/permissions.md) - complete list of user and application permissions
   - [The registry](specs/registry.md) - exhaustive specification of the registry's content
   - [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms
   - [The shell](specs/shell.md) - the native shell of NightOS

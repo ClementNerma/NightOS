@@ -42,3 +42,10 @@ The goal of NightOS is to provide an operating system that is far more **secure,
 ## What license is this project distributed under?
 
 The NightOS project uses the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
+
+## Special thanks
+
+Thanks to **[Joe Parks](https://www.flickr.com/people/34450190@N08)** for providing the image that served as a base for this [project's logo](https://raw.githubusercontent.com/ClementNerma/NightOS/master/logo.png).
+You can find the original photo [here](https://www.flickr.com/photos/parksjd/9253056182/).
+
+Thanks to **[Netlify](https://www.netlify.com)** for hosting this documentation.

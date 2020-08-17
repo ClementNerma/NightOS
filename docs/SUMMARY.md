@@ -65,6 +65,7 @@
     - [`sys::hydre`](specs/services/hydre.md)
 - [Applications](applications/README.md)
     - [Astral](applications/Astral.md) : The complete toolchain allowing to build applications
+    - [BareEnv](applications/BareEnv.md) : Text-based desktop environment
     - [Blackhole](applications/Blackhole.md) : Archives manager
     - [Central](applications/Central.md) : Settings
     - [Cloudy](applications/Cloudy.md) : Backup & Sync manager
@@ -74,7 +75,6 @@
     - [Milkshake](applications/Milkshake.md) : Video player
     - [Monitor](applications/Monitor.md) : Monitor opened applications, processes, CPU/RAM usage, etc.
     - [Nova](applications/Nova.md) : Desktop environment
-    - [_BareEnv_](applications/BareEnv.md) : Text-based desktop environment
     - [Particle](applications/Particle.md) : A complete IDE to make applications
     - [Pluton](applications/Pluton.md) : Terminal
     - [Postal](applications/Postal.md) : An e-mail client

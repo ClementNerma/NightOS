@@ -31,6 +31,7 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kernel/kpc.md). They
   - [`0x34` SHARE_MEM](#0x34-share_mem)
   - [`0x35` UNSHARE_MEM](#0x35-unshare_mem)
   - [`0x36` MEM_SHARING_INFO](#0x36-mem_sharing_info)
+  - [`0x37` MOVE_SHARED_MEM](#0x37-move_shared_mem)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` PROCESS_ATTRIBUTES](#0xd0-process_attributes)
   - [`0xD1` SET_PRIORITY](#0xd1-set_priority)
@@ -666,6 +667,26 @@ Get informations about a shared memory segment.
 **Errors:**
 
 - `0x10`: Unknwon shared memory segment ID provided
+
+### `0x37` MOVE_SHARED_MEM
+
+Move a memory segment shared by another process to a given memory page in the current process.
+
+**Arguments:**
+
+- Shared memory segment ID (8 bytes)
+- Address of a memory page to move the shared memory segment to (8 bytes)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x20`: Provided address is out-of-range
+- `0x21`: Provided address overlaps an existing mapping
+- `0x22`: Provided address overlaps an already-mapped memory page
+- `0x23`: Provided address points to a page that does have inferior permissions to the shared memory segment's ones
 
 ### `0xA0` EXECUTION_CONTEXT
 

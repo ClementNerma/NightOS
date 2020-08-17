@@ -49,13 +49,11 @@ The kernel generates for each device a _session device identifier_ (SDI), which 
 
 ## Raw device descriptor
 
-The _raw device descriptor_ (RDD) is a data structure of 20 to 274 bytes made of the followings:
+The _raw device descriptor_ (RDD) is a data structure (up to 264 bytes) made of the followings:
 
 - [SDI](#session-device-identifier) (4 bytes)
 - [CII](#connection-interface-identifier) (4 bytes)
 - [CSDD](#connection-specific-device-descriptor) (up to 256 bytes)
-- Start mappable address of the device (8 bytes)
-- Mappable size of the device (8 bytes)
 
 This descriptor is then used by the [`sys::hw`](../services/hw.md) service to expose the device to the rest of the operating system.
 

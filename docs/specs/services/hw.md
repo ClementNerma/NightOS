@@ -13,6 +13,7 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
   - [Normalized interrupts](#normalized-interrupts)
   - [Normalized notifications](#normalized-notifications)
   - [Patterns](#patterns)
+- [Address space](#address-space)
 - [Drivers](#drivers)
 - [Methods](#methods)
   - [`0x01` ENUM_DEVICES](#0x01-enum_devices)
@@ -64,8 +65,7 @@ It also derives a _unique device identifier_ (UDI) encoded on 265 bytes, which i
 A _driver device descriptor_ (DDD) is a data structure meant to be used by [drivers](#drivers). It uses the following format:
 
 - Bytes 000-264: Device's UDI
-- Bytes 265-272: Device's mappable length
-- Bytes 273-512: _Future-proof_
+- Bytes 265-512: _Future-proof_
 
 ### Driven device type
 
@@ -256,8 +256,6 @@ Map a device's memory after this service was selected as a [driver](#drivers) fo
 As the driver may not be chosen as the main driver for a device in case of patterns collision with another driver, this method should not be used before the driver process receives the related [notification](#device_event).
 
 Before calling this method, it's recommanded to create a thread in the driver process to allow concurrent handling of the different devices, though this behaviour is not enforced.
-
-Mapping can exceed the device's mappable size up to one page less one byte, which means if the size of a page is 4 KB and the device's mappable size is 15 KB, it's possible to map 4 pages, which the last bytes being unavailable (causing page faults if accessed).
 
 **Required permissions:**
 

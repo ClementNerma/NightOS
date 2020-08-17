@@ -2,6 +2,43 @@
 
 _System calls_, abbreviated _syscalls_, are a type of [KPC](kernel/kpc.md). They allow a process to ask the kernel to perform an action.
 
+- [Technical overview](#technical-overview)
+- [`0x01` HANDLE_SIGNAL](#0x01-handle_signal)
+- [`0x02` UNHANDLE_SIGNAL](#0x02-unhandle_signal)
+- [`0x03` IS_SIGNAL_HANDLED](#0x03-is_signal_handled)
+- [`0x04` READY](#0x04-ready)
+- [`0x10` GET_PID](#0x10-get_pid)
+- [`0x12` SUSPEND](#0x12-suspend)
+- [`0x13` EXIT](#0x13-exit)
+- [`0x20` OPEN_PIPE](#0x20-open_pipe)
+- [`0x21` SEND_PIPE](#0x21-send_pipe)
+- [`0x22` PIPE_WRITE](#0x22-pipe_write)
+- [`0x23` PIPE_READ](#0x23-pipe_read)
+- [`0x24` PIPE_INFO](#0x24-pipe_info)
+- [`0x25` CLOSE_PIPE](#0x25-close_pipe)
+- [`0x26` OPEN_SERV_SOCK](#0x26-open_serv_sock)
+- [`0x27` SEND_SOCK_MSG](#0x27-send_sock_msg)
+- [`0x28` READ_SOCK_MSG](#0x28-read_sock_msg)
+- [`0x29` CLOSE_SERV_SOCK](#0x29-close_serv_sock)
+- [`0x2A` CONNECT_SERVICE](#0x2a-connect_service)
+- [`0x2B` END_SERVICE_CONN](#0x2b-end_service_conn)
+- [`0x2C` ACCEPT_SERVICE_CONN](#0x2c-accept_service_conn)
+- [`0x2D` REJECT_SERVICE_CONN](#0x2d-reject_service_conn)
+- [`0x30` MEM_ALLOC](#0x30-mem_alloc)
+- [`0x31` MEM_FREE](#0x31-mem_free)
+- [`0x33` MEM_UNMAP](#0x33-mem_unmap)
+- [`0x34` SHARE_MEM](#0x34-share_mem)
+- [`0x35` UNSHARE_MEM](#0x35-unshare_mem)
+- [`0x36` MEM_SHARING_INFO](#0x36-mem_sharing_info)
+- [`0x37` MOVE_SHARED_MEM](#0x37-move_shared_mem)
+- [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
+- [`0xD0` PROCESS_ATTRIBUTES](#0xd0-process_attributes)
+- [`0xD1` SET_PRIORITY](#0xd1-set_priority)
+- [`0xD2` ENUM_DEVICES](#0xd2-enum_devices)
+- [`0xD3` DEVICE_INFOS](#0xd3-device_infos)
+
+## Technical overview
+
 Syscalls are performed using CPU interruptions to notify the kernel.
 
 A syscall is made of a 8-bit code, as well as up to 8 arguments with up to 64-bit value each.  

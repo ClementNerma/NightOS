@@ -14,6 +14,7 @@ create-missing = false
 
 [output.html]
 git-repository-url="https://github.com/ClementNerma/NightOS"
+site-url="https://nightos.netlify.app"
 
 [output.html.fold]
 enable = true

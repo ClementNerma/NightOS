@@ -11,6 +11,7 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
 - [Normalization](#normalization)
   - [Normalized methods](#normalized-methods)
   - [Normalized interrupts](#normalized-interrupts)
+  - [Normalized notifications](#normalized-notifications)
   - [Patterns](#patterns)
 - [Drivers](#drivers)
 - [Methods](#methods)
@@ -25,6 +26,7 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
   - [`DEVICE_EVENT`](#device_event)
   - [`DEVICE_INTERRUPT`](#device_interrupt)
   - [`DRIVER_METHOD_REQUEST`](#driver_method_request)
+  - [`DEVICE_NORM_NOTIF`](#device_norm_notif)
 
 ## Hardware detection
 
@@ -84,7 +86,7 @@ The following list contains all possible values for DDTs, but is **far from bein
 
 ### Normalized methods
 
-When a device is driven, other processes can ask this service to use _normalized methods_. These are methods that allow to perform a specific action or to receive notifications about specific events of a specific device.
+When a device is driven, other processes can ask this service to use _normalized methods_. These are methods that allow to perform a specific action or to receive [_normalized notifications_](#normalized-notifications) about specific events of a specific device.
 
 There are several methods, depending on the [device's type (DDT)](#driven-device-type). Notifications differ as well.
 
@@ -99,6 +101,16 @@ Some devices use interrupts to notify the system of a particular event. In such 
 The normalized interrupt format depends on the [device's type (DDT)](#driven-device-type).
 
 The following list contains all normalized interrupts for all DDTs, but is **far from being complete yet**. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.
+
+**TODO**
+
+### Normalized notifications
+
+The _normalized notifications_ are a type of notifications sent by a [driver](#drivers) to processes that subscribed to them using [normalized methods](#normalized-methods). They are derived from the device's interrupts and events pulled from its memory, after a translation by the driver itself.
+
+The normalized notification format depends on the [device's type (DDT)](#driven-device-type).
+
+The following list contains all normalized notifications for all DDTs, but is **far from being complete yet**. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.
 
 **TODO**
 
@@ -129,7 +141,15 @@ For instance, providing the DTD `0x0100B2` with the DTD pattern indicator set to
 
 From a higher level point of view, drivers are [services](../services.md) that declare themselves as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
 
-When a device is connected, using multiple criterias **which are yet to be determined**, a driver is selected from the list of drivers able to handle this specific device. This driver receives the [`DEVICE_EVENT`](#device_event) notification, which then allows it to drive the device using the [`DRIVE_DEVICE`](#0x12-drive_device) method.
+When a device is connected, using multiple criterias **which are yet to be determined**, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#device_event) notification.
+
+From this point, the driver can map the device's memory in its own address space using the [`MAP_DEVICE_MEM`](#0x12-map_device_mem) method.
+
+It can also get informed of interrupts the device raises through the [`DEVICE_INTERRUPT`](#device_interrupt) notification.
+
+Other processes can then ask the driver to perform specific actions depending on the type of device, using [normalized methods](#normalized-methods) which can be sent to the driver using the [`ASK_DRIVER`](#0xa0-ask_driver) method. The driver receives these informations through the [`DRIVER_METHOD_REQUEST`](#driver_method_request) notification.
+
+The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to [normalized notifications](#normalized-notifications) which can then be sent to processes that subscribed to them using the related [normalized methods](#normalized-methods).
 
 ## Methods
 
@@ -263,7 +283,7 @@ _None_
 
 ### `0x20` NOTIFY_PROCESS
 
-Send a notification to a process that registered itself for specific notifications through a [normalized method](#normalized-methods).
+Send a notification to a process that registered itself for [normalized methods](#normalized-methods) through a [normalized method](#normalized-methods).
 
 **Required permissions:**
 
@@ -272,7 +292,7 @@ _None_
 **Arguments:**
 
 - Notification ID (8 bytes)
-- _Normalized notification for the provided method_
+- [_Normalized notification's content_](#normalized-notifications)
 
 **Answer:**
 
@@ -360,3 +380,13 @@ The _notification ID_ is generated by this service to allow the driver to [send 
 **Expected answer:**
 
 _Expected answer format for this method if any_
+
+### `DEVICE_NORM_NOTIF`
+
+Sent to a process that subscribed to [normalized notifications](#normalized-methods) of a device.  
+This notification is transferred by the `sys::hw` service after the driver sent it its content through the [`NOTIFY_PROCESS`](#0x20-notify_process) method.
+
+**Datafield:**
+
+- Device's SDI (4 bytes)
+- [_Normalized notification's content_](#normalized-notifications)

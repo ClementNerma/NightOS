@@ -34,15 +34,14 @@ These steps are known as a _cycle_.
 
 ## Process attributes
 
-Each process has a set of _attributes_ which contains critical informations on it:
+Each process has a set of _attributes_ which contains critical informations on it (lists are usually [PLL](data-structures.md#packed-linked-lists)):
 
 - PID (8 bytes)
 - Priority (1 byte)
 - Running user's ID (8 bytes)
 - Parent application ID (8 bytes) - `0` for system services
-- Pointer to permissions list (8 bytes)
-- Pointer to memory mappings (8 bytes)
-- Pointer to [execution context](../applications/context.md) (8 bytes) - `0` for system services
+- Pointer to the [execution context](../applications/context.md) (8 bytes) - `0` for system services
+- `PLL(e=32)` for memory mappings
 
 ## Performance balancing
 

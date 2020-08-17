@@ -52,6 +52,7 @@
     - [Kernel-process communication](specs/kernel/kpc.md) - how the kernel communicate with processes and vice-versa
     - [Memory](specs/kernel/memory.md) - memory organization and management
     - [Processes](specs/kernel/processes.md) - processes concept and management
+    - [Data structures](specs/kernel/data-structures.md) - data structures used by the kernel to represent things in memory
   - [System services](specs/services/README.md)
     - [`sys::fs`](specs/services/fs.md)
     - [`sys::hw`](specs/services/hw.md)

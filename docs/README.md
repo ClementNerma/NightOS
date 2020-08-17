@@ -2,19 +2,7 @@
 
 Welcome to the documentation of NightOS. This directory contains all design and specification documents of the project.
 
-## Foreword
-
-**Before reading this documentation, please note that** I'm developing this project on my own and I'm by no mean an operating system expert. I do not even as a professional low-level developer though I have some knowledge on how low-level software and hardware work to some extent.
-
-This means there are surely many flaws in the very low-level aspects, especially in the microkernel, like the way hardware devices are handled and mapped in memory. If you find a flaw, feel free to fill an [issue](https://github.com/ClementNerma/NightOS/issues/new).
-
-The main point of this project is the many middle-level/high-level aspects, not the very low-level ones which will take quite a lot of time to design completely and surely require the knowledge of people more experimented in this field than I am.
-
-On the other hand, specification documents are not like specification documents you may have seen from, let's say, WhatWG or other consortiums. As NightOS is only a prototypal O.S., the documents you will find here are meant to be easily understandable. Specification documents are meant to describe completely a specific concept or part of the system, but without being hard to read. Some will argue it's not close enough to a "real" specification, but I think it's enough for now, regarding the very early state of the project.
-
-Also, this project is far from being finished, so many things are still missing from the documentation. I frequently add new design documents and complete existing ones, but feel free to create a new issue if you think something should be added to the project :)
-
-By the way, you can also find answers to the most [frequently-asked questions here](FAQ.md).
+## [Foreword](FOREWORD.md)
 
 ## [Project](project/)
 

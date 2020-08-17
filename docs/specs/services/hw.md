@@ -8,6 +8,7 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
   - [Device identifier](#device-identifier)
   - [Driver device descriptor](#driver-device-descriptor)
   - [Driven device type](#driven-device-type)
+- [Normalization](#normalization)
   - [Normalized methods](#normalized-methods)
   - [Normalized interrupts](#normalized-interrupts)
   - [Patterns](#patterns)
@@ -78,6 +79,8 @@ The following list contains all possible values for DDTs, but is **far from bein
   - `0x0003`: USB flash drive
   - `0x0004`: SD flash memory card
 - ...
+
+## Normalization
 
 ### Normalized methods
 

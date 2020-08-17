@@ -6,6 +6,8 @@ Each service is a system application, with the `sys` [DID](../../concepts/applic
 
 They are referred to as `sys::` services.
 
+**NOTE:** A large part of how the system works can be found in the different services' documentation, such as the exact way hardware devices and network communications are handled, or how the filesystem is managed.
+
 ## Nomenclature
 
 All [methods and notifications](../ipc.md#methods-and-notifications) describe the required permissions to use them, their arguments.

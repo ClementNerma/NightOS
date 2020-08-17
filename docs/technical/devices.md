@@ -28,6 +28,8 @@ Different actions may happen depending on the device's type:
 - Other supported wireless devices: depends on the type (Bluetooth adapter, ...)
 - Basic/persistent storage devices: when possible, the device will be automatically mounted in `/mnt` and visible in the files explorer
 
+There are many different types of devices, all can be found in the specifications of the [`sys::hw`](../specs/services/hw.md) service under the ["Driven device type" (DDT) section](../specs/services/hw.md#driven-device-type).
+
 For uncategorized devices (in `/dev/etc`), a popup is shown to the user, to indicate the connected device is not recognized. Some applications may still be able to interact with it (for instance, a storage device using an unsupported protocol).
 
 ## Device handler files persistence

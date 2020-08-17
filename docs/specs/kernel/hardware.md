@@ -51,3 +51,5 @@ The kernel generates for each device a _session device identifier_ (SDI), which 
 ## Drivers
 
 Drivers and software <-> hardware devices communications are handled by the [`sys::hw`](../services/hw.md) system service.
+
+You can find more about how drivers work in [this section](../services/hw.md#drivers).

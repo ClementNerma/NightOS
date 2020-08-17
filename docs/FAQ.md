@@ -1,6 +1,6 @@
 # Frequently-Asked Questions
 
-Welcome to NightOS' FAQ. Please note that several questions are already answered in the [project's README](../README.md).
+Welcome to NightOS' FAQ. This document answers to common questions about the project, completing the [foreword](FOREWORD.md).
 
 - [This project seems too good to be true](#this-project-seems-too-good-to-be-true)
 - [What's the current state of the project?](#whats-the-current-state-of-the-project)

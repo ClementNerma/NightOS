@@ -74,6 +74,7 @@
     - [Milkshake](applications/Milkshake.md) : Video player
     - [Monitor](applications/Monitor.md) : Monitor opened applications, processes, CPU/RAM usage, etc.
     - [Nova](applications/Nova.md) : Desktop environment
+    - [_BareEnv_](applications/BareEnv.md) : Text-based desktop environment
     - [Particle](applications/Particle.md) : A complete IDE to make applications
     - [Pluton](applications/Pluton.md) : Terminal
     - [Postal](applications/Postal.md) : An e-mail client

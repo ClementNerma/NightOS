@@ -11,6 +11,7 @@ Below is the list of applications that are installed (by default) during the ins
 ### Basics
 
 - [_Nova_](Nova.md) : Desktop environment
+- [_BareEnv_](BareEnv.md) : Text-based desktop environment
 - [_Comet_](Comet.md) : File manager
 - [_Stellar_](Stellar.md) : Application store
 - [_Rocket_](Rocket.md) : Web browser

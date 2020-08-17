@@ -49,7 +49,7 @@ Some syscalls require the process to send a buffer of data. In such case, the pr
 
 After preparing the syscall's code and arguments, the process raises a specific exception that is caught by the kernel. When the syscall is complete, the kernel puts the result values in specific registers and resumes the process. This means that **all syscalls are synchronous**.
 
-System calls always return two numbers: a 8-bit one (errcode) and a 8 bytes one (result code). If the errcode is not null, then an error occured during the syscall. The specific value indicate the encountered type of error:
+System calls always return two numbers: a 8-bit one (errcode) and a 8 bytes one (return value). If the errcode is not null, then an error occured during the syscall. The specific value indicate the encountered type of error:
 
 - `0x00`: cannot read syscall's code or arguments (error while reading memory)
 - `0x01`: the requested syscall does not exist

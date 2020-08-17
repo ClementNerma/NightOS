@@ -46,7 +46,7 @@ In terms of similarities:
 
 ## Who are you?
 
-My name is Clément Nerma (my last name is a pseudonym). I'm a back-end developer that loves to touch everything related to low-level things, like operating systems.
+My name is Clément Nerma (my last name is a pseudonym). I'm a back-end developer that makes stuff since I'm 10-year old and I love to touch to low-level concepts, like operating systems.
 
 ## Why did you create NightOS?
 

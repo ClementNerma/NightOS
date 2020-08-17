@@ -12,13 +12,13 @@ The goal of a PLL is to provide a blazing fast read and iteration speed, while c
 
 ## Caracteristics
 
-A PLL is caracterized by its _item size_, _length_ (the number of items in the list) and the _number of items per entry_ (NIE) (up to 255), which is the number of items which can be stored per entry. It is noted `PLL(e=<number of items per entry>[, i=<item size in bytes>][, l=<number of elements currently in the list>])`.
+A PLL is caracterized by its _item size_, _length_ (the number of items in the list) and the _number of items per entry_ (NIE) (up to 255), which is the number of items which can be stored per entry. It is noted `PLL(e=<number of items per entry>[, s=<item size in bytes>][, l=<number of elements currently in the list>])`.
 
 ## Structure in memory
 
 Each entry is a contiguous suite of bytes which can store up to `NIE` items contiguously. It starts by either a pointer to the next entry (on 8 bytes), or the number of items actually initialized in the current entry (pre-filled with zeros to be stored on 8 bytes).
 
-For instance, let's take a `PLL(e=3, i=2, l=4)`. Its content is the four following items:
+For instance, let's take a `PLL(e=3, s=2, l=4)`. Its content is the four following items:
 
 * `0xDEADBEEF`
 * `0x01234567`

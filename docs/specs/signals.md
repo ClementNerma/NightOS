@@ -3,23 +3,24 @@
 _Signals_ are a type of [KPC](kernel/kpc.md). They are used by the kernel to send informations to processes about a specific event.
 
 - [Technical overview](#technical-overview)
-- [`0x01` HANDLER_FAULT](#0x01-handler_fault)
-- [`0x02` MEM_FAULT](#0x02-mem_fault)
-- [`0x10` SUSPEND](#0x10-suspend)
-- [`0x11` WILL_SUSPEND](#0x11-will_suspend)
-- [`0x12` TERMINATE](#0x12-terminate)
-- [`0x13` WILL_TERMINATE](#0x13-will_terminate)
-- [`0x20` RECV_PIPE](#0x20-recv_pipe)
-- [`0x21` PIPE_CLOSED](#0x21-pipe_closed)
-- [`0x26` RECV_SERV_SOCK](#0x26-recv_serv_sock)
-- [`0x27` RECV_SOCK_MSG](#0x27-recv_sock_msg)
-- [`0x29` SERV_SOCK_CLOSED](#0x29-serv_sock_closed)
-- [`0x2A` SERVICE_CONN_REQUEST](#0x2a-service_conn_request)
-- [`0x2B` SERVICE_CLIENT_CLOSED](#0x2b-service_client_closed)
-- [`0x2C` SERVICE_CLIENT_QUITTED](#0x2c-service_client_quitted)
-- [`0x2D` SERVICE_SERVER_QUITTED](#0x2d-service_server_quitted)
-- [`0x34` RECV_SHARED_MEM](#0x34-recv_shared_mem)
-- [`0x35` UNSHARED_MEM](#0x35-unshared_mem)
+- [List of signals](#list-of-signals)
+  - [`0x01` HANDLER_FAULT](#0x01-handler_fault)
+  - [`0x02` MEM_FAULT](#0x02-mem_fault)
+  - [`0x10` SUSPEND](#0x10-suspend)
+  - [`0x11` WILL_SUSPEND](#0x11-will_suspend)
+  - [`0x12` TERMINATE](#0x12-terminate)
+  - [`0x13` WILL_TERMINATE](#0x13-will_terminate)
+  - [`0x20` RECV_PIPE](#0x20-recv_pipe)
+  - [`0x21` PIPE_CLOSED](#0x21-pipe_closed)
+  - [`0x26` RECV_SERV_SOCK](#0x26-recv_serv_sock)
+  - [`0x27` RECV_SOCK_MSG](#0x27-recv_sock_msg)
+  - [`0x29` SERV_SOCK_CLOSED](#0x29-serv_sock_closed)
+  - [`0x2A` SERVICE_CONN_REQUEST](#0x2a-service_conn_request)
+  - [`0x2B` SERVICE_CLIENT_CLOSED](#0x2b-service_client_closed)
+  - [`0x2C` SERVICE_CLIENT_QUITTED](#0x2c-service_client_quitted)
+  - [`0x2D` SERVICE_SERVER_QUITTED](#0x2d-service_server_quitted)
+  - [`0x34` RECV_SHARED_MEM](#0x34-recv_shared_mem)
+  - [`0x35` UNSHARED_MEM](#0x35-unshared_mem)
 
 ## Technical overview
 
@@ -45,9 +46,11 @@ When the handler returns (or the default behaviour completes), the kernel checks
 
 Else, it interrupts the process again and proceeds to treat the first signal on the queue after removing it.
 
+## List of signals
+
 You can find below the exhaustive list of signals.
 
-## `0x01` HANDLER_FAULT
+### `0x01` HANDLER_FAULT
 
 Sent when a signal is sent to a process but the registered handler points to a memory zone that is not executable by the current process.
 If the sending of this signal to the process results to another fault, it's called a _double handler fault_ and the process is immediatly killed.
@@ -58,7 +61,7 @@ If no handler is registered for this signal, it will kill the process when recei
 
 - Faulty signal ID (8 bytes)
 
-## `0x02` MEM_FAULT
+### `0x02` MEM_FAULT
 
 Sent when the process tried to perform an unauthorized access on a memory address.
 
@@ -70,11 +73,11 @@ Sent when the process tried to perform an unauthorized access on a memory addres
   - `0x02`: tried to write memory
   - `0x03`: tried to execute memory
 
-## `0x10` SUSPEND
+### `0x10` SUSPEND
 
 Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the [`SUSPEND`](syscalls.md#0x12-suspend) syscall.
 
-## `0x11` WILL_SUSPEND
+### `0x11` WILL_SUSPEND
 
 Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
 
@@ -82,11 +85,11 @@ Sent when the process is asked to suspend. If it is not suspended after the prov
 
 - [Registry](registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
 
-## `0x12` TERMINATE
+### `0x12` TERMINATE
 
 Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the [`EXIT`](syscalls.md#0x13-exit) syscall).
 
-## `0x13` WILL_TERMINATE
+### `0x13` WILL_TERMINATE
 
 Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.
 
@@ -96,7 +99,7 @@ If no handler is registered for this signal, it will kill the process when recei
 
 - [Registry](registry.md)'s `system.signals.terminate_delay` key (default: 2s) (2 bytes)
 
-## `0x20` RECV_PIPE
+### `0x20` RECV_PIPE
 
 Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.  
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.
@@ -111,7 +114,7 @@ The command code can be used to determine what the other process is expecting th
 - Mode (1 byte): `0x00` if it's a raw pipe, `0x01` if it's a message pipe
 - Size hint in bytes (8 bytes), with `0` being the 'no size hint' value
 
-## `0x21` PIPE_CLOSED
+### `0x21` PIPE_CLOSED
 
 Sent to a process when a [pipe](ipc.md#pipes) shared with another process is closed.
 
@@ -125,7 +128,7 @@ Sent to a process when a [pipe](ipc.md#pipes) shared with another process is clo
 - Pipe identity (1 byte): `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte)
 - RC or SC identifier (8 bytes)
 
-## `0x26` RECV_SERV_SOCK
+### `0x26` RECV_SERV_SOCK
 
 Sent to a process when another process opened a [service socket](ipc.md#service-sockets) with this one.
 
@@ -136,7 +139,7 @@ Sent to a process when another process opened a [service socket](ipc.md#service-
 - Service socket identifier (8 bytes)
 - Size of the buffer, multiplied by 4KB (2 bytes)
 
-## `0x27` RECV_SOCK_MSG
+### `0x27` RECV_SOCK_MSG
 
 Sent to a process when a message has been sent through a [service socket](ipc.md#service-sockets).  
 To read the message, the process must use the [`READ_SOCK_MSG`](syscalls.md#0x28-read_sock_msg) syscall.
@@ -152,7 +155,7 @@ To read the message, the process must use the [`READ_SOCK_MSG`](syscalls.md#0x28
   - Bit 1: set if this message is an error message
   - Bit 2: set if this message closed the socket
 
-## `0x29` SERV_SOCK_CLOSED
+### `0x29` SERV_SOCK_CLOSED
 
 (was there a message sent before that closed the socket)
 
@@ -168,7 +171,7 @@ Sent to a process when a [pipe](ipc.md#pipes) shared with another process is clo
 - Pipe identity (1 byte): `0x00` if this process contained the RC part, `0x01` if it contained the SC part (1 byte)
 - RC or SC identifier (8 bytes)
 
-## `0x2A` SERVICE_CONN_REQUEST
+### `0x2A` SERVICE_CONN_REQUEST
 
 Sent to a service process' [dispatcher thread](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.
 
@@ -185,17 +188,17 @@ If no handler is registered for this signal, it will kill the process when recei
 - Command code (2 bytes)
 - [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
 
-## `0x2B` SERVICE_CLIENT_CLOSED
+### `0x2B` SERVICE_CLIENT_CLOSED
 
 Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
 The thread is expected to terminate as soon as possible (there is no time limit though).
 
-## `0x2C` SERVICE_CLIENT_QUITTED
+### `0x2C` SERVICE_CLIENT_QUITTED
 
 Sent to a [client thread](services.md#thread-types) to indicate its client asked to close the connection.
 The associated RC and SC are immediatly closed.
 
-## `0x2D` SERVICE_SERVER_QUITTED
+### `0x2D` SERVICE_SERVER_QUITTED
 
 Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.
 
@@ -203,7 +206,7 @@ Sent to a process that previously established a connection with a service, to in
 
 - Connection's unique request ID (8 bytes)
 
-## `0x34` RECV_SHARED_MEM
+### `0x34` RECV_SHARED_MEM
 
 Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by another process.
 
@@ -218,7 +221,7 @@ Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by 
   - For mutual sharings: strongest bit for read, next for write, next for exec
   - For exclusive sharings: `0x00`
 
-## `0x35` UNSHARED_MEM
+### `0x35` UNSHARED_MEM
 
 Sent to a process when a [shared segment of memory](ipc.md#shared-memory) is unshared by the sharer process.
 

@@ -14,3 +14,7 @@ create-missing = false
 
 [output.html]
 git-repository-url="https://github.com/ClementNerma/NightOS"
+
+[output.html.fold]
+enable = true
+level = 1

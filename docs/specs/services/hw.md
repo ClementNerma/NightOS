@@ -9,6 +9,7 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
   - [Driver device descriptor](#driver-device-descriptor)
   - [Driven device type](#driven-device-type)
   - [Normalized methods](#normalized-methods)
+  - [Normalized interrupts](#normalized-interrupts)
   - [Patterns](#patterns)
 - [Drivers](#drivers)
 - [Methods](#methods)
@@ -21,6 +22,7 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
 - [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
 - [Notifications](#notifications)
   - [DEVICE_EVENT](#device_event)
+  - [DEVICE_INTERRUPT](#device_interrupt)
   - [DRIVER_METHOD_REQUEST](#driver_method_request)
 
 ## Hardware detection
@@ -84,6 +86,16 @@ When a device is driven, other processes can ask this service to use _normalized
 There are several methods, depending on the [device's type (DDT)](#driven-device-type). Notifications differ as well.
 
 The following list contains all methods and related notifications for all DDTs, but is **far from being complete yet**. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.
+
+**TODO**
+
+### Normalized interrupts
+
+Some devices use interrupts to notify the system of a particular event. In such case, the interrupt is normalized to a format called the _normalized interrupt format_, which is then sent to the driver process using the [`DEVICE_EVENT`](#device_event) notification.
+
+The normalized interrupt format depends on the [device's type (DDT)](#driven-device-type).
+
+The following list contains all normalized interrupts for all DDTs, but is **far from being complete yet**. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.
 
 **TODO**
 
@@ -317,6 +329,15 @@ Sent for a specific device to processes that either:
   - Bit 0: set if this device is connected for the first time
   - Bit 1: set if this device was disconnected brutally (not by the system itself)
   - Bit 2: set if this device is connected for the first time on this specific port
+
+### DEVICE_INTERRUPT
+
+Sent to a [driver](#drivers) after a device it's currently driving raised an interrupt.
+
+**Datafield:**
+
+- Device's SDI (4 bytes)
+- [Normalized interrupt](#normalized-interrupts)
 
 ### DRIVER_METHOD_REQUEST
 

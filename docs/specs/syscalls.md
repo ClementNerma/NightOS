@@ -601,7 +601,7 @@ Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segme
 
 ### `0x33` BACKED_AMS
 
-Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) backed by the [`READ_VIRT_MEM`](signals.md#0x33-read_backed_ams) and [`WRITE_backed_ams`](signals.md#0x34-write_backed_ams) signals.
+Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) backed by the [`READ_BACKED_AMS`](signals.md#0x33-read_backed_ams) and [`WRITE_BACKED_AMS`](signals.md#0x34-write_backed_ams) signals.
 
 **Arguments:**
 

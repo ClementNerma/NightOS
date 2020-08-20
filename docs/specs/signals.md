@@ -46,6 +46,8 @@ When the handler returns (or the default behaviour completes), the kernel checks
 
 Else, it interrupts the process again and proceeds to treat the first signal on the queue after removing it.
 
+On a technical level, signals use interrupts, meaning the process' current tasks are instantly interrupted to let it handle the signal without delay.
+
 ## List of signals
 
 You can find below the exhaustive list of signals.

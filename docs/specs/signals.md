@@ -46,7 +46,7 @@ When the handler returns (or the default behaviour completes), if the signal was
 
 Else, it interrupts the process again and proceeds to treat the first signal on the queue after removing it.
 
-On a technical level, signals use interrupts, meaning the process' current tasks are instantly interrupted to let it handle the signal without delay.
+On the performances side, signals use interrupts, meaning the process' current tasks are instantly interrupted to let it handle the signal without delay. Also, the datafield and answer are provided through CPU registers, avoiding memory accesses.
 
 ## List of signals
 

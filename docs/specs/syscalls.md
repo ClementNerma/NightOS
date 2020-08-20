@@ -32,12 +32,12 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kernel/kpc.md). They
   - [`0x35` UNSHARE_MEM](#0x35-unshare_mem)
   - [`0x36` MEM_SHARING_INFO](#0x36-mem_sharing_info)
   - [`0x37` MOVE_SHARED_MEM](#0x37-move_shared_mem)
+  - [`0x3A` MAP_DEVICE_MEM](#0x3a-map_device_mem)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` PROCESS_ATTRIBUTES](#0xd0-process_attributes)
   - [`0xD1` SET_PRIORITY](#0xd1-set_priority)
   - [`0xD2` ENUM_DEVICES](#0xd2-enum_devices)
   - [`0xD3` DEVICE_INFOS](#0xd3-device_infos)
-  - [`0xD4` MAP_DEVICE_MEM](#0xd4-map_device_mem)
 
 ## Technical overview
 
@@ -579,7 +579,7 @@ _None_
 
 ### `0x33` MEM_UNMAP
 
-Unmap memory pages shared by another process or [mapped from devices](#0xd4-map_device_mem).
+Unmap memory pages shared by another process or [mapped from devices](#0x3a-map_device_mem).
 
 **Arguments:**
 
@@ -688,6 +688,34 @@ _None_
 - `0x21`: Provided address overlaps an existing mapping
 - `0x22`: Provided address overlaps an already-mapped memory page
 - `0x23`: Provided address points to a page that does have inferior permissions to the shared memory segment's ones
+
+### `0x3A` MAP_DEVICE_MEM
+
+Map a device's memory in the current process' address space.
+
+Requires the current process to have the device in its [drivable devices attribute](kernel/processes.md#drivable-devices).
+
+Memory can be unmapped using the [`MEM_UNMAP`](#0x33-mem_unmap) syscall, just like for sharing memory.
+
+**Arguments:**
+
+- [SDI](kernel/hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
+- Start address in the device's memory (8 bytes)
+- Number of bytes to map (8 bytes)
+- Start address to map in this process' memory (8 bytes)
+
+**Return value:**
+
+- Shared memory segment ID (8 bytes)
+
+**Errors:**
+
+- `0x10`: The mapping's start address is not aligned with a page
+- `0x11`: The mapping's length is not a multiple of a page's size
+- `0x12`: The mapping's size is null (0 bytes)
+- `0x20`: The provided device SDI was not found
+- `0x21`: The provided device is not compatible with memory0 mapping
+- `0x22`: This device is not registered in this process' [drivable devices attribute](kernel/processes.md#drivable-devices)
 
 ### `0xA0` EXECUTION_CONTEXT
 
@@ -825,32 +853,3 @@ Get the [raw device descriptor](kernel/hardware.md#raw-device-descriptor) of a s
 **Errors:**
 
 - `0x20`: No device was found with this SDI
-
-### `0xD4` MAP_DEVICE_MEM
-
-System service-only syscall.  
-Map a device's memory in the current process' address space.
-
-Requires the current process to have the device in its [drivable devices attribute](kernel/processes.md#drivable-devices).
-
-Memory can be unmapped using the [`MEM_UNMAP`](#0x33-mem_unmap) syscall, just like for sharing memory.
-
-**Arguments:**
-
-- [SDI](kernel/hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
-- Start address in the device's memory (8 bytes)
-- Number of bytes to map (8 bytes)
-- Start address to map in this process' memory (8 bytes)
-
-**Return value:**
-
-- Shared memory segment ID (8 bytes)
-
-**Errors:**
-
-- `0x10`: The mapping's start address is not aligned with a page
-- `0x11`: The mapping's length is not a multiple of a page's size
-- `0x12`: The mapping's size is null (0 bytes)
-- `0x20`: The provided device SDI was not found
-- `0x21`: The provided device is not compatible with memory0 mapping
-- `0x22`: This device is not registered in this process' [drivable devices attribute](kernel/processes.md#drivable-devices)

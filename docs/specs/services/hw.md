@@ -141,7 +141,7 @@ From a higher level point of view, drivers are [services](../services.md) that d
 
 When a device is connected, using multiple criterias **which are yet to be determined**, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#device_event) notification.
 
-From this point, the driver can map the device's memory in its own address space using the [`MAP_DEVICE_MEM`](../syscalls.md#0xd4-map_device_mem) syscall.
+From this point, the driver can map the device's memory in its own address space using the [`MAP_DEVICE_MEM`](../syscalls.md#0x3a-map_device_mem) syscall.
 
 It can also get informed of interrupts the device raises through the [`DEVICE_INTERRUPT`](#device_interrupt) notification.
 
@@ -215,7 +215,7 @@ If multiple drivers have colliding patterns, the final user will be prompted to 
 The driver process will receive [`DEVICE_EVENT`](#device_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
 Notifications are also retroactive, which means they will be sent for already-connected devices.
 
-The driver will also have the device registered in its [drivable devices attribute](../kernel/processes.md#drivable-devices), allowing it to use the [`MAP_DEVICE_MEM`](../syscalls.md#0xd4-map_device_mem) syscall to map the device's memory in its own through MMIO or DMA.
+The driver will also have the device registered in its [drivable devices attribute](../kernel/processes.md#drivable-devices), allowing it to use the [`MAP_DEVICE_MEM`](../syscalls.md#0x3a-map_device_mem) syscall to map the device's memory in its own through MMIO or DMA.
 
 **Required permissions:**
 

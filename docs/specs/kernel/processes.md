@@ -73,6 +73,6 @@ The priority is determined based on multiple factors:
 
 The drivable devices attribute contains the list of all devices' [SDI](hardware.md#session-device-identifier) the current process can drive.
 
-The goal of this attribute is to determine if the process is allowed to map a device's memory using the [`MAP_DEVICE_MEM`](../syscalls.md#0xd4-map_device_mem) syscall.
+The goal of this attribute is to determine if the process is allowed to map a device's memory using the [`MAP_DEVICE_MEM`](../syscalls.md#0x3a-map_device_mem) syscall.
 
 This attribute is managed by the [`sys::hw`](../services/hw.md) service and can only be updated by this service.

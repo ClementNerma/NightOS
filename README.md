@@ -28,5 +28,5 @@ This project is released under the [Apache-2.0](LICENSE.md) license terms.
 
 ## Credits
 
-The [project's logo](logo.png) was created using a night sky picture from [Joe Parks](https://www.flickr.com/people/34450190@N08), who owns the original image's rights.
-You can find the original photo [here](https://www.flickr.com/photos/parksjd/9253056182/).
+The [project's logo](logo.png) was created using an original picture from [rmRander](https://www.deviantart.com/rmradev), who owns the original image's rights.
+You can find the original picture [here](https://www.deviantart.com/rmradev/art/Moon-sunset-landscape-825321054).

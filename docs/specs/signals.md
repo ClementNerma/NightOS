@@ -19,8 +19,10 @@ _Signals_ are a type of [KPC](kernel/kpc.md). They are used by the kernel to sen
   - [`0x2B` SERVICE_CLIENT_CLOSED](#0x2b-service_client_closed)
   - [`0x2C` SERVICE_CLIENT_QUITTED](#0x2c-service_client_quitted)
   - [`0x2D` SERVICE_SERVER_QUITTED](#0x2d-service_server_quitted)
-  - [`0x34` RECV_SHARED_MEM](#0x34-recv_shared_mem)
-  - [`0x35` UNSHARED_MEM](#0x35-unshared_mem)
+  - [`0x33` READ_BACKED_AMS](#0x33-read_backed_ams)
+  - [`0x34` WRITE_BACKED_AMS](#0x34-write_backed_ams)
+  - [`0x35` RECV_SHARED_AMS](#0x35-recv_shared_ams)
+  - [`0x37` UNSHARED_AMS](#0x37-unshared_ams)
 
 ## Technical overview
 
@@ -208,27 +210,61 @@ Sent to a process that previously established a connection with a service, to in
 
 - Connection's unique request ID (8 bytes)
 
-### `0x34` RECV_SHARED_MEM
+### `0x33` READ_BACKED_AMS
 
-Sent to a process when a segment of memory is [shared](ipc.md#shared-memory) by another process.
+Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) is accessed in read mode.
+
+**Datafield:**
+
+- AMS ID (8 bytes)
+- Relative address accessed in the segment (8 bytes)
+- Access mode (1 byte): `0x00` for read, `0x01` for execution
+
+**Expected answer:**
+
+- Associated data for this file (4 bytes)
+- Page fault (1 byte):
+  - `0x00`: no page fault
+  - `0x01`: address is out-of-range
+  - `0x02`: hardware fault
+
+### `0x34` WRITE_BACKED_AMS
+
+Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) is accessed in write mode.
+
+**Datafield:**
+
+- AMS ID (8 bytes)
+- Relative address accessed in the segment (8 bytes)
+- Data to write (4 bytes)
+
+**Expected answer:**
+
+- Page fault (1 byte):
+  - `0x00`: no page fault
+  - `0x01`: address is out-of-range
+  - `0x02`: hardware fault
+
+### `0x35` RECV_SHARED_AMS
+
+Sent to a process when an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) is [shared](ipc.md#shared-memory) by another process.
 
 **Datafield:**
 
 - Sender PID (8 bytes)
 - Command code (2 bytes)
-- Mapped segment's start address in the current process (8 bytes)
-- Mapped segment's length (8 bytes)
+- AMS ID (8 bytes)
 - Sharing mode (1 byte): `0x00` for mutual sharing, `0x01` for exclusive sharing
 - Access permissions (1 byte):
   - For mutual sharings: strongest bit for read, next for write, next for exec
-  - For exclusive sharings: `0x00`
+  - For exclusive sharings: `0b11100000`
 
-### `0x35` UNSHARED_MEM
+### `0x37` UNSHARED_AMS
 
-Sent to a process when a [shared segment of memory](ipc.md#shared-memory) is unshared by the sharer process.
+Sent to a process when an[abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) is unshared by the sharer process.
 
 **Datafield:**
 
 - Unsharing type (1 byte):
-  - `0x00` if the shared memory was unshared properly using the [UNSHARE_MEM](syscalls.md#0x35-unshare_mem) syscall
+  - `0x00` if the shared memory was unshared properly using the [UNSHARE_AMS](syscalls.md#0x37-unshare_ams) syscall
   - `0x01` if the other process brutally terminated

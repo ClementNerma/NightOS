@@ -27,12 +27,15 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kernel/kpc.md). They
   - [`0x2D` REJECT_SERVICE_CONN](#0x2d-reject_service_conn)
   - [`0x30` MEM_ALLOC](#0x30-mem_alloc)
   - [`0x31` MEM_FREE](#0x31-mem_free)
-  - [`0x33` MEM_UNMAP](#0x33-mem_unmap)
-  - [`0x34` SHARE_MEM](#0x34-share_mem)
-  - [`0x35` UNSHARE_MEM](#0x35-unshare_mem)
-  - [`0x36` MEM_SHARING_INFO](#0x36-mem_sharing_info)
-  - [`0x37` MOVE_SHARED_MEM](#0x37-move_shared_mem)
-  - [`0x3A` MAP_DEVICE_MEM](#0x3a-map_device_mem)
+  - [`0x32` VIRT_MEM_AMS](#0x32-virt_mem_ams)
+  - [`0x33` BACKED_AMS](#0x33-backed_ams)
+  - [`0x34` DEVICE_AMS](#0x34-device_ams)
+  - [`0x35` SHARE_AMS](#0x35-share_ams)
+  - [`0x36` AMS_SHARING_INFO](#0x36-ams_sharing_info)
+  - [`0x37` UNSHARE_AMS](#0x37-unshare_ams)
+  - [`0x38` MAP_AMS](#0x38-map_ams)
+  - [`0x39` UNMAP_AMS](#0x39-unmap_ams)
+  - [`0x3A` SET_DMA_MEM_ACCESS](#0x3a-set_dma_mem_access)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` PROCESS_ATTRIBUTES](#0xd0-process_attributes)
   - [`0xD1` SET_PRIORITY](#0xd1-set_priority)
@@ -555,8 +558,8 @@ Allocate a linear block of memory.
 
 Unallocate a linear block of memory.
 
-Shared memory pages must first be unshared through the [`MEM_UNSHARE`](#0x35-unshare_mem) syscall.  
-Mapped memory pages must be unmapped through the [`MEM_UNMAP`](#0x33-mem_unmap) syscall.
+Shared memory pages must first be unshared through the [`UNSHARE_AMS`](#0x37-unshare_ams) syscall.  
+Mapped memory pages must be unmapped through the [`UNMAP_AMS`](#0x39-unmap_ams) syscall.
 
 **WARNING:** Memory will not be zeroed, therefore the caller process shall ensure critical informations are zeroed or randomized before freeing the memory.
 
@@ -577,125 +580,42 @@ _None_
 - `0x22`: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)
 - `0x23`: One or more of the provided pages are shared with another process
 
-### `0x33` MEM_UNMAP
+### `0x32` VIRT_MEM_AMS
 
-Unmap memory pages shared by another process or [mapped from devices](#0x3a-map_device_mem).
-
-**Arguments:**
-
-- Shared memory segment ID (8 bytes)
-
-**Return value:**
-
-_Empty_
-
-**Errors:**
-
-- `0x10`: Unknown shared memory segment ID provided
-- `0x20`: Current process is not the sharer of this memory segment
-
-### `0x34` SHARE_MEM
-
-Share memory pages of the current process with one or multiple external processes.  
-In mutual sharing mode, the memory is available to both the sharer and the receiver. In exclusive mode, the memory is unmapped from the sharer process.  
-The provided access permissions indicates how the receiver process will be able to access the shared memory when sharing in mutual mode.  
-This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x34-recv_shared_mem) with the provided command code, unless the notification mode states otherwise.
-
-When a process wants to transmit a set of data without getting it back later, the exclusive mode is to prefer. When the data needs to be accessed back by the sharer, the mutual mode should be used instead.
+Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) from a part of the current process' address space.
 
 **Arguments:**
 
-- Target process' PID (8 bytes)
-- Pointer to the buffer to share (8 bytes)
-- Number of bytes to share (8 bytes)
-- Command code (2 bytes)
-- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_SHARED_MEM`](signals.md#0x34-recv_shared_mem) signal, `0x01` to skip it
-- Sharing mode (1 byte): `0x00` to perform a mutual sharing, `0x01` to perform an exclusive sharing
-- Access permissions (1 byte): Strongest bit for read, next for write, next for exec - other bits are considered invalid when set
+- Address of the first page to register in the AMS (8 bytes)
+- Number of bytes to register (8 bytes)
 
 **Return value:**
 
-- Shared memory segment ID (8 bytes)
+- AMS ID (4 bytes)
 
 **Errors:**
 
-- `0x10`: Invalid notification mode provided
-- `0x11`: Invalid sharing mode provided
-- `0x12`: Invalid access permissions provided
-- `0x13`: Access permissions were not set but the sharing mode is set to mutual
-- `0x14`: Access permissions were provided but the sharing mode is set to exclusive
-- `0x15`: The buffer's start address is not aligned with a page
-- `0x16`: The buffer's length is not a multiple of a page's size
-- `0x17`: The buffer's size is null (0 bytes)
-- `0x30`: There is not enough contiguous space in the receiver process' memory space to map the shared memory
+- `0x10`: Start address is unaligned
+- `0x11`: Number of bytes is unaligned
+- `0x22`: Address is out of range
 
-### `0x35` UNSHARE_MEM
+### `0x33` BACKED_AMS
 
-Stop sharing a memory segment started by [`SHARE_MEM`](#0x34-share_mem). Note that only mutual sharing can be unmapped.  
-This will trigger in the target process the [`UNSHARED_MEM`](signals.md#0x35-unshared_mem) signal.
+Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) backed by the [`READ_VIRT_MEM`](signals.md#0x33-read_backed_ams) and [`WRITE_backed_ams`](signals.md#0x34-write_backed_ams) signals.
 
 **Arguments:**
 
-- Shared memory segment ID (8 bytes)
-
-**Return value:**
-
-_None_
+- Length of the AMS (8 bytes)
 
 **Errors:**
 
-- `0x10`: Unknown shared memory segment ID provided
-- `0x20`: Provided sharing ID is exclusive
+- `0x10`: Provided length is unaligned
 
-### `0x36` MEM_SHARING_INFO
+### `0x34` DEVICE_AMS
 
-Get informations about a shared memory segment.
-
-**Arguments:**
-
-- Shared memory segment ID (8 bytes)
-
-**Return value:**
-
-- Sharer process' PID (8 bytes)
-- Receiver process' PID (8 bytes)
-- Sharing mode (1 byte): `0x00` for mutual mode, `0x01` for exclusive mode
-- Shared buffer's start address (8 bytes)
-- Sharer buffer's length (8 bytes)
-- Command code (2 bytes)
-- Access permissions (1 byte): for mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, `0x00`
-
-**Errors:**
-
-- `0x10`: Unknwon shared memory segment ID provided
-
-### `0x37` MOVE_SHARED_MEM
-
-Move a memory segment shared by another process to a given memory page in the current process.
-
-**Arguments:**
-
-- Shared memory segment ID (8 bytes)
-- Address of a memory page to move the shared memory segment to (8 bytes)
-
-**Return value:**
-
-_None_
-
-**Errors:**
-
-- `0x20`: Provided address is out-of-range
-- `0x21`: Provided address overlaps an existing mapping
-- `0x22`: Provided address overlaps an already-mapped memory page
-- `0x23`: Provided address points to a page that does have inferior permissions to the shared memory segment's ones
-
-### `0x3A` MAP_DEVICE_MEM
-
-Map a device's memory in the current process' address space.
+Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) from a device's memory through _Mapped Memory Input/Output_ (MMIO).
 
 Requires the current process to have the device in its [drivable devices attribute](kernel/processes.md#drivable-devices).
-
-Memory can be unmapped using the [`MEM_UNMAP`](#0x33-mem_unmap) syscall, just like for sharing memory.
 
 **Arguments:**
 
@@ -714,7 +634,145 @@ Memory can be unmapped using the [`MEM_UNMAP`](#0x33-mem_unmap) syscall, just li
 - `0x11`: The mapping's length is not a multiple of a page's size
 - `0x12`: The mapping's size is null (0 bytes)
 - `0x20`: The provided device SDI was not found
-- `0x21`: The provided device is not compatible with memory0 mapping
+- `0x21`: The provided device is not compatible with MMIO
+- `0x22`: This device is not registered in this process' [drivable devices attribute](kernel/processes.md#drivable-devices)
+
+### `0x35` SHARE_AMS
+
+Share an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) with another process.
+
+This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x35-recv_shared_ams) with the provided command code, unless the notification mode states otherwise.
+
+The _exclusive mode_ byte allows, only when sharing AMS [made from existing memory pages](#0x32-virt_mem_ams) from its original process, to unmap the original pages from the said process to let the exclusive access to the target process. This is useful when transferring temporarily large chunks of data to another process. Also, access permissions are ignored when using exclusive mode.
+
+**Arguments:**
+
+- Target process' PID (8 bytes)
+- Command code (2 bytes)
+- Notification mode (1 byte): `0x00` to notify the process with the [`RECV_SHARED_AMS`](signals.md#0x35-recv_shared_ams) signal, `0x01` to skip it
+- Access permissions (1 byte): Strongest bit for read, next for write, next for exec - other bits are considered invalid when set
+- Exclusive mode (1 byte): `0x00` by default, `0x01` to unmap original memory pages
+
+**Return value:**
+
+- Shared memory segment ID (8 bytes)
+
+**Errors:**
+
+- `0x10`: Invalid notification mode provided
+- `0x11`: Invalid access permissions provided
+- `0x12`: Access permissions were not set but the sharing mode is set to mutual
+- `0x13`: Access permissions were provided but the sharing mode is set to exclusive
+- `0x14`: Invalid exclusive mode provided
+- `0x30`: There is not enough contiguous space in the receiver process' memory space to map the shared memory
+
+### `0x36` AMS_SHARING_INFO
+
+Get informations about a [shared](#0x35-share_ams) [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments).
+
+**Arguments:**
+
+- AMS ID (8 bytes)
+
+**Return value:**
+
+- Sharer process' PID (8 bytes)
+- Receiver process' PID (8 bytes)
+- Sharing mode (1 byte): `0x00` for mutual mode, `0x01` for exclusive mode
+- Shared buffer's start address (8 bytes)
+- Sharer buffer's length (8 bytes)
+- Command code (2 bytes)
+- Access permissions (1 byte): for mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, `0x00`
+
+**Errors:**
+
+- `0x10`: Unknwon AMS ID provided
+
+### `0x37` UNSHARE_AMS
+
+Stop sharing an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) started by [`SHARE_AMS`](#0x35-share_ams). Note that exlusive sharings cannot be unmapped.
+
+This will trigger in the target process the [`UNSHARED_AMS`](signals.md#0x37-unshared_ams) signal.
+
+**Arguments:**
+
+- AMS ID (8 bytes)
+- PID to stop sharing with (8 bytes) - `0` to stop sharing with all processes
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x10`: Unknown AMS ID provided
+- `0x20`: Provided AMS ID is exclusive
+- `0x21`: Provided AMS was not shared with the provided process
+
+### `0x38` MAP_AMS
+
+Map an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) in the current process' address space.
+
+**Arguments:**
+
+- AMS ID (8 bytes)
+- Start mapping address in the AMS (8 bytes)
+- Address to map the AMS (8 bytes)
+- Number of bytes to map (8 bytes)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x10`: Unknown AMS ID provided
+- `0x20`: Provided mapping address or address+length is out-of-range in the AMS
+- `0x21`: Provided address to map or address+length is out-of-orange in this process' address space
+
+### `0x39` UNMAP_AMS
+
+Unmap an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) from the current process' address space.  
+If the AMS is mapped at multiple addresses of this process, only one of the mappings will be unmapped by default.
+
+**Arguments:**
+
+- AMS ID (8 bytes)
+- Mapping address (8 bytes) - `0` to unmap from all addresses
+
+**Return value:**
+
+_Empty_
+
+**Errors:**
+
+- `0x10`: Unknown AMS ID provided
+- `0x20`: Provided AMS it not mapped at this address
+
+### `0x3A` SET_DMA_MEM_ACCESS
+
+Allow or disallow a device to access a range of addresses through _Direct Memory Access_ (DMA) in the current process' address space.
+
+Requires the current process to have the device in its [drivable devices attribute](kernel/processes.md#drivable-devices).
+
+**Arguments:**
+
+- [SDI](kernel/hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
+- Start address in the current process' address space (8 bytes)
+- Length (8 bytes)
+- Authorization (1 byte): `0x00` to allow the device to use this range, `0x01` to cancel an authorization
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x10`: The range's start address is not aligned with a page
+- `0x11`: The range's length is not a multiple of a page's size
+- `0x12`: The range's size is null (0 bytes)
+- `0x20`: The provided device SDI was not found
+- `0x21`: The provided device is not compatible with DMA
 - `0x22`: This device is not registered in this process' [drivable devices attribute](kernel/processes.md#drivable-devices)
 
 ### `0xA0` EXECUTION_CONTEXT

@@ -14,6 +14,7 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
   - [Normalized notifications](#normalized-notifications)
   - [Patterns](#patterns)
 - [Drivers](#drivers)
+  - [A note on performances](#a-note-on-performances)
 - [Methods](#methods)
   - [`0x01` ENUM_DEVICES](#0x01-enum_devices)
   - [`0x02` SUBSCRIBE_DEVICES](#0x02-subscribe_devices)
@@ -148,6 +149,10 @@ It can also get informed of interrupts the device raises through the [`DEVICE_IN
 Other processes can then ask the driver to perform specific actions depending on the type of device, using [normalized methods](#normalized-methods) which can be sent to the driver using the [`ASK_DRIVER`](#0xa0-ask_driver) method. The driver receives these informations through the [`DRIVER_METHOD_REQUEST`](#driver_method_request) notification.
 
 The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to [normalized notifications](#normalized-notifications) which can then be sent to processes that subscribed to them using the related [normalized methods](#normalized-methods).
+
+### A note on performances
+
+Although hardware devices' interrupts are notified to the driver through [service socket notifications](../ipc.md#methods-and-notifications), the latency is still minimal as soon as the driver listens to the [`RECV_SOCK_MSG`](../signals.md#0x27-recv_sock_msg) signal, which like all signals uses interrupts and so guarantees a very low latency.
 
 ## Methods
 

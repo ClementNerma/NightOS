@@ -603,13 +603,17 @@ Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segme
 
 Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) backed by the [`READ_BACKED_AMS`](signals.md#0x33-read_backed_ams) and [`WRITE_BACKED_AMS`](signals.md#0x34-write_backed_ams) signals.
 
+Copy-on-write support can be enabled to allow the receiver process to write data in its own memory space. Written pages will be allocated by the kernel and won't be backed anymore by the [`READ_BACKED_AMS`](signals.md#0x33-read_backed_ams) signal. The backer process won't be able to see these changes, and the [`WRITE_BACKEND_AMS`](signals.md#0x34-write_backed_ams) signal won't be trigerred on its side.
+
 **Arguments:**
 
 - Length of the AMS (8 bytes)
+- Copy-on-write mode (1 byte): `0x00` to disable, `0x01` to enable
 
 **Errors:**
 
-- `0x10`: Provided length is unaligned
+- `0x10`: Invalid COW mode provided
+- `0x11`: Provided length is unaligned
 
 ### `0x34` DEVICE_AMS
 

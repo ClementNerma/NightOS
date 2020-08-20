@@ -19,7 +19,7 @@ Once a service process indicates it's ready using the [`READY`](syscalls.md#0x04
 
 ### Connections
 
-A _connection_ is the opening of two communication [pipes](ipc.md#pipes) (one for reading and one for writing) between a service and another process called its _client_.
+A _connection_ essentially consists of a [service socket](ipc.md#service-sockets) between a service and another process called its _client_.
 
 When a process wants to connect to a service, it uses the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) to send a _connection request_ to this service.
 
@@ -33,7 +33,7 @@ Else, it accepts it through the [`ACCEPT_SERVICE_CONN`](syscalls.md#0x2c-accept_
 
 ### Communication
 
-The service and its client(s) communicate through the two uni-direction pipes created during the connection. Both are message pipes, which means communication with services is asynchronous by design.
+The service and its client(s) communicate through the service socket created during the connection.
 
 The different message formats a client can send to a service are a called the service's _methods_, while the different message formats the service may send to a client are called the service's _notifications_.
 
@@ -46,7 +46,7 @@ A service process' main thread is called its _dispatcher threads_, while threads
 The service cannot terminate a connection by itself.
 If a client thread terminates brutally, the [`SERVICE_SERVER_QUITTED`](signals.md#0x2d-service_server_quitted) signal will be sent to its client.
 
-Only clients can properly close a connection to a service, using the [`END_SERVICE_CONN`](syscalls.md#0x2b-end_service_conn) syscall. The pipe communication channels immediatly close (on both the client and the thread's sides).
+Only clients can properly close a connection to a service, using the [`END_SERVICE_CONN`](syscalls.md#0x2b-end_service_conn) syscall. The service socket is then immediatly closed (on both the client and the thread's side).
 
 The service then receives the [`SERVICE_CLIENT_QUITTED`](signals.md#0x2c-service_client_quitted) signal.
 

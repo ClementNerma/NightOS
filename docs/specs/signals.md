@@ -42,7 +42,7 @@ If a handler is found, the kernel checks if the pointer points to a memory area 
 
 The kernel then switches the process to its [main thread](../technical/processes.md#main-thread) and makes it jump to the handler's address, then resumes it.
 
-When the handler returns (or the default behaviour completes), the kernel checks if the signals queue is empty. If it is, the kernel simply makes the process jump back to the address it was to before the signal was emitted, and switch to the original thread.
+When the handler returns (or the default behaviour completes), if the signal was expecting an answer, the kernel reads it from specific registries and does whatever it needs to do. Then, itchecks if the signals queue is empty. If it is, the kernel simply makes the process jump back to the address it was to before the signal was emitted, and switch to the original thread.
 
 Else, it interrupts the process again and proceeds to treat the first signal on the queue after removing it.
 

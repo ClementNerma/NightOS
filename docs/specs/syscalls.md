@@ -647,15 +647,18 @@ Share an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segmen
 
 This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x35-recv_shared_ams) with the provided command code, unless the notification mode states otherwise.
 
-The _exclusive mode_ byte allows, only when sharing AMS [made from existing memory pages](#0x32-virt_mem_ams) from its original process, to unmap the original pages from the said process to let the exclusive access to the target process. This is useful when transferring temporarily large chunks of data to another process. Also, access permissions are ignored when using exclusive mode.
+The _mutual mode_ allows both processes to access the memory, with the sharer setting the permissions for the receiver to limit its access. Copy-on-write can also be enabled to allow the receiver process to write data without affecting the sharer process' memory.
+
+The _exclusive mode_ allows, only when sharing AMS [made from existing memory pages](#0x32-virt_mem_ams) from its original process, to unmap the original pages from the said process to let the exclusive access to the target process. This is useful when transferring temporarily large chunks of data to another process. Also, access permissions are ignored when using exclusive mode.
 
 **Arguments:**
 
 - Target process' PID (8 bytes)
 - Command code (2 bytes)
 - Notification mode (1 byte): `0x00` to notify the process with the [`RECV_SHARED_AMS`](signals.md#0x35-recv_shared_ams) signal, `0x01` to skip it
-- Access permissions (1 byte): Strongest bit for read, next for write, next for exec - other bits are considered invalid when set
-- Exclusive mode (1 byte): `0x00` by default, `0x01` to unmap original memory pages
+- Mode (1 byte):
+  - Mutual: `0 b 0 0 0 0 <1 to enable copy-on-write> <1 to enable read> <1 to enable write> <1 to enable exec>`
+  - Exclusive: `0 b 0 0 0 0 1 0 0 <1 to unmap original pages>`
 
 **Return value:**
 
@@ -664,7 +667,7 @@ The _exclusive mode_ byte allows, only when sharing AMS [made from existing memo
 **Errors:**
 
 - `0x10`: Invalid notification mode provided
-- `0x11`: Invalid access permissions provided
+- `0x11`: Invalid mode provided
 - `0x12`: Access permissions were not set but the sharing mode is set to mutual
 - `0x13`: Access permissions were provided but the sharing mode is set to exclusive
 - `0x14`: Invalid exclusive mode provided

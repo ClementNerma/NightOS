@@ -630,7 +630,7 @@ Requires the current process to have the device in its [drivable devices attribu
 
 **Return value:**
 
-- Shared memory segment ID (8 bytes)
+- AMS ID (8 bytes)
 
 **Errors:**
 
@@ -662,7 +662,7 @@ The _exclusive mode_ allows, only when sharing AMS [made from existing memory pa
 
 **Return value:**
 
-- Shared memory segment ID (8 bytes)
+- AMS ID (8 bytes)
 
 **Errors:**
 

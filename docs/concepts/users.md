@@ -3,7 +3,7 @@
 - [The concept](#the-concept)
 - [Users type](#users-type)
 - [Dangers of an admin. account](#dangers-of-an-admin-account)
-- [Alternative User Control (AUC)](#alternative-user-control-auc)
+- [User Privileges Elevation (UPE)](#user-privileges-elevation-upe)
 - [Users' data encryption](#users-data-encryption)
 - [Child and supervised users](#child-and-supervised-users)
 - [Groups](#groups)
@@ -42,10 +42,15 @@ The problem with administrators account is that they can do almost **anything** 
 
 This is why it's extremely discouraged to have two administrator users on the same computer, unless the two accounts are used by really trustworthy persons. As such, a large warning is shown if you try to create a new administrator user.
 
-## Alternative User Control (AUC)
+## User Privileges Elevation (UPE)
 
-When a user asks to perform a task as another user, an _Alternative User Control_ (AUC) dialog is shown, asking for the other user's credentials.
-Each request, even not successful, is logged in the log file at `/etc/logs/auc`.
+Users can ask to perform a task with the privileges of another user, such as running a program as administrator. This uses the _User Privileges Elevation_ (UPE) system, builtin the [`sys::perm`](../specs/services/perm.md) service.
+
+In such case, the program is still run as the current user, but with the privileges of both the running user and the user specified to the UPE.
+
+Running a program with UPE requires to know either the other account's password, or to have an _authorization_ from this user. For instance, admin. users have an _authorization_ to use the Administrator account, without providing any password, although a human confirmation is required.
+
+Each request, successful or not, is logged in the log file at `/etc/logs/auc`.
 
 ## Users' data encryption
 

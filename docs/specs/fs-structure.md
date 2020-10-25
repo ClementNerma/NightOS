@@ -33,7 +33,7 @@ _NOTE:_ `<F>` indicates the item is a file.
 │   ├── hosts <F>                  Hosts overriding (e.g. 'localhost')
 │   ├── lock                       Opened lock files
 │   ├── logs                       Log files
-│   |   └── auc                    History of AUC requests (2)
+│   |   └── upe                    History of UPE requests (2)
 │   ├── public                     Public data, readable and writable by everyone
 │   └── sys                        System's mutable data - available to system only
 │       ├── registry               System's registry
@@ -70,7 +70,7 @@ _NOTE:_ `<F>` indicates the item is a file.
 Links:
 
 - (1) Informations used by the [Filesystem Abstraction Layer](../technical/fs-abslayer.md)
-- (2) [AUC requests](../concepts/users.md#alternative-user-control-auc)
+- (2) [UPE requests](../concepts/users.md#user-privileges-elevation-upe)
 - (3) The [integrity checker](../technical/integrity-checker.md)
 - (4) Global storage's [encryption key](../features/encryption.md#global-encryption)
 

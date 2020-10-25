@@ -17,7 +17,7 @@ adm central --enable dev-mode
 Or, while holding the `Ctrl` `Alt` and `Maj` key, type `DEV` (three letters).
 
 A warning dialog will appear.
-If you confirm, it will display an [AUC](../concepts/users.md#alternative-user-control-auc) for the administrator account.
+If you confirm, it will display an [UPE dialog](../concepts/users.md#user-privileges-elevation-upe) for the administrator account.
 Then a final confirmation dialog will ensure you're sure about what you're doing. Then development mode will be enabled (no reboot is required).
 
 ## Features

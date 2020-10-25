@@ -8,15 +8,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Cache unpublished "broken-md-links" dependency
+      - name: Cache Cargo dependencies
         uses: actions/cache@v1.1.2
         with:
           path: ~/.cargo/bin
-          key: broken-md-links-tool
+          key: cargo-deps
       - name: Get "broken-md-links"  tool
-        run: |
-          if ! type broken-md-links > /dev/null; then
-            cargo install --git https://github.com/ClementNerma/broken-md-links.git
-          fi
+        run: cargo install broken-md-links
       - name: Look for broken MD links
         run: broken-md-links ${GITHUB_WORKSPACE}/docs --recursive

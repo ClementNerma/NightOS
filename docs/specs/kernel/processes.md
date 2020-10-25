@@ -43,6 +43,7 @@ Each process has a set of _attributes_ which contains critical informations on i
 - Parent application ID (8 bytes) - `0` for system services
 - Pointer to the [execution context](../applications/context.md) (8 bytes) - `0` for system services
 - `PLL(e=32)` for memory mappings
+- `PLL(e=32)` for [raw permissions](#raw-permissions)
 - `PLL(e=32)` for [drivable devices](#drivable-devices)
 
 ## Performance balancing
@@ -76,3 +77,11 @@ The drivable devices attribute contains the list of all devices' [SDI](hardware.
 The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an [AMS](memory.md#abstract-memory-segments) from it using the [`DEVICE_AMS`](../syscalls.md#0x34-device_ams) syscall, as well as using DMA-related instructions in the CPU.
 
 This attribute is managed by the [`sys::hw`](../services/hw.md) service and can only be updated by this service.
+
+# Raw permissions
+
+_Raw permissions_ are used by system services to determine the permissions of a process without [sending a message](../ipc.md#exchanges-and-messages) to the [`sys::perm`](../services/perm.md) service and waiting for its answer, which would be costly in terms of performance.
+
+These permissions use a specific structure, specified in the [related service's specifications document](../services/perm.md#list-of-permissions).
+
+Permissions can be managed using the [`sys::perm`](../services/perm.md) service.

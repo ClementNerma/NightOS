@@ -139,10 +139,10 @@ Control characters use the following format:
   - `0x02`: move cursor left X times
   - `0x03`: move cursor right X times
   - `0x04`: move cursor down X times
-  - `0x05`: reset cursor's position
+  - `0x05`: move the cursor to the beginning of the line
 - Weakest byte: data byte
 
-For instance, an `0x0305` control character is decomposable in the `0x03` code and the `0x05` data byte, which means moving the cursor right `0x05` times.
+For instance, an `0x0305` control character is decomposable in the `0x03` code and the `0x05` data byte, which means moving the cursor to the right 5 times.
 
 #### Invalid messages
 

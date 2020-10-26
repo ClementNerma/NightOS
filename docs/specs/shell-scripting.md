@@ -122,13 +122,13 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
   - [`echo`: display a value](#echo-display-a-value)
   - [`wt`: write a file](#wt-write-a-file)
   - [`rd`: read a file](#rd-read-a-file)
-  - [`mkd`: create a directory](#mkd-create-a-directory)
-  - [`re`: rename a filesystem item](#re-rename-a-filesystem-item)
+  - [`mkdir`: create a directory](#mkdir-create-a-directory)
+  - [`ren`: rename a filesystem item](#ren-rename-a-filesystem-item)
   - [`mv`: move a filesystem item](#mv-move-a-filesystem-item)
   - [`rm`: remove a filesystem item](#rm-remove-a-filesystem-item)
   - [`ls`: list filesystem items](#ls-list-filesystem-items)
   - [`fd`: find filesystem items](#fd-find-filesystem-items)
-  - [`sl`: manage symlinks](#sl-manage-symlinks)
+  - [`syml`: manage symlinks](#syml-manage-symlinks)
 
 ## Running a command
 
@@ -1845,7 +1845,7 @@ Read a file as a `string` value.
 # "--stream-size": specify the size of the stream when "-s" is provided (rounded to higher pipe buffer multiplier)
 ```
 
-### `mkd`: create a directory
+### `mkdir`: create a directory
 
 Create a new directory.
 
@@ -1855,7 +1855,7 @@ Create a new directory.
 # "-s": fail if the directory already exists
 ```
 
-### `re`: rename a filesystem item
+### `ren`: rename a filesystem item
 
 Rename a filesystem item.
 
@@ -1924,7 +1924,7 @@ Find filesystem items matching provided criterias.
 # "-x": execute a command for each found item
 ```
 
-### `sl`: manage symlinks
+### `syml`: manage symlinks
 
 Manage symbolic links.
 

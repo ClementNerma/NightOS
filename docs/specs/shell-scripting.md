@@ -36,6 +36,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
   - [Waiting](#waiting)
 - [Imports](#imports)
   - [Aliases](#aliases)
+  - [Import expansions](#import-expansions)
   - [Volatile imports](#volatile-imports)
 - [Commands input & output](#commands-input--output)
   - [Reading a command's output](#reading-a-commands-output)
@@ -1034,6 +1035,26 @@ import system::fs as sysfs
 
 sysfs::read_file # ...
 ```
+
+### Import expansions
+
+It's possible to import all commands from an application, with:
+
+```hydre
+import system::fs::*
+
+read_file # ...
+```
+
+But also to import all applications from a developer, with:
+
+```hydre
+import system::*
+
+fs::read_file # ...
+```
+
+Note that, if a name clash occurs - if two applications or commands with the same name are imported -, the script won't be able to run.
 
 ### Volatile imports
 

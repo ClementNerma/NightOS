@@ -32,6 +32,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
   - [Structures](#structures)
   - [Closures](#closures)
   - [Streams](#streams)
+- [Data validation](#data-validation)
 - [Event listeners](#event-listeners)
   - [Waiting](#waiting)
 - [Imports](#imports)
@@ -928,6 +929,72 @@ forEachFile(./, { file -> echo "File: ${file}" })
 ### Streams
 
 An usual type for manipulating large data is `stream`, which is notably used to treat a chunk of data that is either too large for the memory or is more easier to treat as things progress.
+
+## Data validation
+
+Some commands may return a value whose type cannot be predicted before runtime. For instance, a command fetching a JSON object from a remote server will, in case of success, return a value but whose type cannot be known beforehand.
+
+_Data validation_ is a feature allowing to scripts to check the type of an unknown value at runtime, using _type assertions_.
+
+Here is an example:
+
+```hydre
+var test: any = [ 2, 3, 4 ]
+
+# 1. Here, "test" is considered to be of type "any"
+
+if test is list[num]
+  # 2. Here, "test" is considered to be of type "list[num]"
+else
+  # 3. Here, "test" is considered to be of type "any"
+end
+```
+
+The `isnt` keyword can also be used:
+
+```hydre
+var test: any = [ 2, 3, 4 ]
+
+# 1. Here, "test" is considered to be of type "any"
+
+if test isnt list[num]
+  # 2. Here, "test" is considered to be of type "any"
+else
+  # 3. Here, "test" is considered to be of type "list[num]"
+end
+```
+
+If, in an "isnt" conditional, the script exits/fails in all cases (or returns if we're in a function), the value is considered with the asserted type for the rest of the script:
+
+```hydre
+var test: any = [ 2, 3, 4 ]
+
+# 1. Here, "test" is considered to be of type "any"
+
+if test isnt list[num]
+  # 2. Here, "test" is considered to be of type "any"
+  exit
+end
+
+# 3. Here, "test" is considered to be of type "list[num]"
+# > Because it's impossible for "test" to not be "list[num]" as in that case the program would have exited
+```
+
+This can be used to check complex structures as well:
+
+```hydre
+# Considering we have a `fn fetchJson(url: string) -> any' function that fetches a JSON value from the web
+
+type User = struct { id: num, firstName: string, lastName: string, email: string }
+
+var json = fetchJson("https://mysuperapi.../users/all")
+
+if json isnt User
+  fail "JSON doesn't have the correct structure"
+end
+
+# "json" is considered as a "User" here
+```
 
 ## Event listeners
 

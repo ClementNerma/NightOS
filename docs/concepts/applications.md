@@ -112,6 +112,8 @@ For instance, if an application with AID `superdev.utils` exposes an `get_time` 
 
 This is quite a long name but allows to prevent any clashing between commands. It's common for shell scripts to use imports at the beginning of the script to refer more easily to applications' commands.
 
+Note that, by default, shell prompts (not scripts) will allow to directly use commands such as `get_time` in the short form if no other application exposes a command with the same name.
+
 Commands work by launching the application with a specific [context](#application-context).
 
 ## System applications

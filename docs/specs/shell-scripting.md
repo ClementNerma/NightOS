@@ -37,6 +37,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
 - [Imports](#imports)
   - [Aliases](#aliases)
   - [Import expansions](#import-expansions)
+  - [Non-clashing namespace](#non-clashing-namespace)
   - [Volatile imports](#volatile-imports)
 - [Commands input & output](#commands-input--output)
   - [Reading a command's output](#reading-a-commands-output)
@@ -1055,6 +1056,35 @@ fs::read_file # ...
 ```
 
 Note that, if a name clash occurs - if two applications or commands with the same name are imported -, the script won't be able to run.
+
+### Non-clashing namespace
+
+The _non-clashing namespace_ is a namespace that can be imported, where live all commands whose name is unique across all applications.
+
+For instance, let's imagine we have two applications:
+
+- `AppA` by `DevA`, which exposes a `cmd_a` and a `cmd_z` command ;
+- `AppB` by `DevB`, which exposes a `cmd_b` and a `cmd_z` command
+
+What happens here? While the `cmd_z` command has a name clash between `AppA` and `AppB`, the `cmd_a` and `cmd_b` commands don't. This results in these last two commands being also put in the `nonclashing` namespace, which can then be imported like a traditional application:
+
+```hydre
+import shell::nonclashing
+
+nonclashing::cmd_a # OK
+nonclashing::cmd_b # OK
+nonclashing::cmd_z # ERROR (not in namespace)
+```
+
+This means we can also import all commands that don't clash with other ones:
+
+```hydre
+import shell::nonclashing::*
+
+cmd_a # OK
+cmd_b # ...
+cmd_z # ERROR (not in namespace)
+```
 
 ### Volatile imports
 

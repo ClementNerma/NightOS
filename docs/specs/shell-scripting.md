@@ -734,7 +734,7 @@ For information, here is the declaration of the native `retry_cmd` command, whic
 
 ```hydre
 fn retry_cmd(cmd: command, retries: string) -> fallible
-  retry(retries) cmd.fallible()
+  retry(retries) cmd()
   if status() != 0
     fail "Command did not suceed after ${retries} retries."
   end
@@ -1868,7 +1868,8 @@ Run the command and gets its status code after exit.
 
 #### `command.fallible()`
 
-Run the command and fail if the status code after exit is not 0.
+Run the command and fail if the status code after exit is not 0.  
+Equivalent to calling the command with simple parenthesis like `cmd()`.
 
 #### `command.ret_str() -> string`
 

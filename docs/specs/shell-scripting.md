@@ -719,7 +719,7 @@ fn may_fail ()
   end
 end
 
-retry may_fail
+retry may_fail()
 ```
 
 This will run `may_fail`, and run it again if it fails, until it succeeds.

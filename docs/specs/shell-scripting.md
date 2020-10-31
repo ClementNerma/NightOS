@@ -8,6 +8,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
 - [Comments](#comments)
 - [Variables](#variables)
 - [Value types](#value-types)
+  - [Variables shadowing](#variables-shadowing)
 - [Expressions](#expressions)
 - [Computing values](#computing-values)
   - [Mathematical operators](#mathematical-operators)
@@ -267,6 +268,20 @@ command --press --val 2 "pos1" "pos2"
 #          value of the non-presential argument "--pres")
 command "pos1" --pres "pos2" --val 2
 ```
+
+### Variables shadowing
+
+Any variable can, inside a program, be replaced by a new variable with a same name but with a different type. This is called _shadowing_.
+
+It can be useful when converting data from a type to another, such as:
+
+```hydre
+var names: list[string] = [ "Jack", "John" ]
+
+var names: string = names.join(",") # this is called a _method_, we'll talk about them later
+```
+
+Here, we _shadowed_ the `names` variable to create a new one with a different type from the data we had before, which means we cannot access the original `names` variable anymore.
 
 ## Expressions
 

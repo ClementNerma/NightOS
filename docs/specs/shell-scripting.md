@@ -16,8 +16,8 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
   - [Assignment operators](#assignment-operators)
 - [Blocks](#blocks)
   - [Conditionals](#conditionals)
-- [Switches](#switches)
-- [Loops](#loops)
+  - [Switches](#switches)
+  - [Loops](#loops)
   - [Filesystem iteration](#filesystem-iteration)
 - [Functions](#functions)
   - [Arguments](#arguments)
@@ -456,7 +456,7 @@ else
 end
 ```
 
-## Switches
+### Switches
 
 A _switch_ allows to perform actions depending on a value. It's roughly equivalent to a combination of multiple `if` and `elif` statements.
 
@@ -483,7 +483,7 @@ switch rand_int(0, 10)
 end
 ```
 
-## Loops
+### Loops
 
 Loops allow to run a piece of code for a while. The most common loop is the range loop:
 

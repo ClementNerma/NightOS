@@ -19,6 +19,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
   - [Switches](#switches)
   - [Loops](#loops)
   - [Filesystem iteration](#filesystem-iteration)
+  - [Variables scoping](#variables-scoping)
 - [Functions](#functions)
   - [Arguments](#arguments)
   - [Return types](#return-types)
@@ -568,6 +569,27 @@ for file in (**/*.txt)
   echo "Found a text file: ${file}"
 end
 ```
+
+### Variables scoping
+
+When a variable is declared, it is _scoped_ to the current block, meaning it doesn't exist outside of the current block:
+
+```hydre
+# This variable is declared in the "global" block
+# so it's available everywhere in the current script
+var firstName = "Jack"
+
+if firstName == "Jack"
+  # This variable is declared in an "if" block
+  # so it's not available outside of it
+  var lastName = "Sparrow"
+end
+
+echo ${firstName} # Prints: "Jack"
+echo ${lastName} # ERROR ("lastName" is not in scope)
+```
+
+Also, variables are not shared between scripts.
 
 ## Functions
 

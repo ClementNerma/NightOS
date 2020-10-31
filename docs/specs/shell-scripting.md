@@ -24,6 +24,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
 - [Functions](#functions)
   - [Arguments](#arguments)
   - [Return types](#return-types)
+  - [Methods](#methods)
   - [Failing](#failing)
     - [Retries](#retries)
     - [Global failing](#global-failing)
@@ -679,6 +680,17 @@ fn add (a: num, b: num) -> num
   return a + b
 end
 ```
+
+### Methods
+
+All value types expose specific functions that can be used with a dot after a variable of the given type, called _methods_:
+
+```hydre
+var letters = "abcdef"
+var letters = letter.split(",")
+```
+
+Here, we use the `split` _method_ of the `string` type, which returns a `list[string]`.
 
 ### Failing
 

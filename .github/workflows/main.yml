@@ -11,8 +11,8 @@ jobs:
       - name: Cache Cargo dependencies
         uses: actions/cache@v1.1.2
         with:
-          path: ~/.cargo/bin
-          key: cargo-deps
+          path: ~/.cargo
+          key: cargo-data
       - name: Get "broken-md-links"  tool
         run: cargo install broken-md-links
       - name: Look for broken MD links

@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The shell - NightOS documentation</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Design and specification documents for NightOS">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../FOREWORD.html"><strong aria-hidden="true">1.</strong> Foreword</a></li><li class="chapter-item expanded "><a href="../FAQ.html"><strong aria-hidden="true">2.</strong> Frequently-asked questions</a></li><li class="chapter-item expanded "><a href="../project/index.html"><strong aria-hidden="true">3.</strong> Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../project/roadmap.html"><strong aria-hidden="true">3.1.</strong> Roadmap</a></li><li class="chapter-item expanded "><a href="../project/development.html"><strong aria-hidden="true">3.2.</strong> Development</a></li><li class="chapter-item expanded "><a href="../project/hw-requirements.html"><strong aria-hidden="true">3.3.</strong> Hardware requirements</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/applications.html"><strong aria-hidden="true">4.1.</strong> What are applications?</a></li><li class="chapter-item expanded "><a href="../concepts/libraries.html"><strong aria-hidden="true">4.2.</strong> What are libraries?</a></li><li class="chapter-item expanded "><a href="../concepts/users.html"><strong aria-hidden="true">4.3.</strong> What are users?</a></li></ol></li><li class="chapter-item expanded "><a href="../features/index.html"><strong aria-hidden="true">5.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../features/balancer.html"><strong aria-hidden="true">5.1.</strong> The balancer</a></li><li class="chapter-item expanded "><a href="../features/crash-saves.html"><strong aria-hidden="true">5.2.</strong> Crash saves</a></li><li class="chapter-item expanded "><a href="../features/domains.html"><strong aria-hidden="true">5.3.</strong> Domains</a></li><li class="chapter-item expanded "><a href="../features/encryption.html"><strong aria-hidden="true">5.4.</strong> Encryption</a></li><li class="chapter-item expanded "><a href="../features/freeze-prevention.html"><strong aria-hidden="true">5.5.</strong> Freeze-prevention system</a></li><li class="chapter-item expanded "><a href="../features/parental-control.html"><strong aria-hidden="true">5.6.</strong> Parental control</a></li><li class="chapter-item expanded "><a href="../features/sandboxes.html"><strong aria-hidden="true">5.7.</strong> Sandboxes</a></li><li class="chapter-item expanded "><a href="../features/synchronization.html"><strong aria-hidden="true">5.8.</strong> Synchronization</a></li></ol></li><li class="chapter-item expanded "><a href="../technical/index.html"><strong aria-hidden="true">6.</strong> Technical</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../technical/controller.html"><strong aria-hidden="true">6.1.</strong> The controller</a></li><li class="chapter-item expanded "><a href="../technical/dev-mode.html"><strong aria-hidden="true">6.2.</strong> Developer mode</a></li><li class="chapter-item expanded "><a href="../technical/devices.html"><strong aria-hidden="true">6.3.</strong> Devices</a></li><li class="chapter-item expanded "><a href="../technical/file-formats.html"><strong aria-hidden="true">6.4.</strong> File formats</a></li><li class="chapter-item expanded "><a href="../technical/fs-abslayer.html"><strong aria-hidden="true">6.5.</strong> Filesystem Abstraction Layer</a></li><li class="chapter-item expanded "><a href="../technical/integrity-checker.html"><strong aria-hidden="true">6.6.</strong> Integrity checker</a></li><li class="chapter-item expanded "><a href="../technical/io-manager.html"><strong aria-hidden="true">6.7.</strong> I/O manager</a></li><li class="chapter-item expanded "><a href="../technical/multi-platform.html"><strong aria-hidden="true">6.8.</strong> Multi-platform management</a></li><li class="chapter-item expanded "><a href="../technical/performances.html"><strong aria-hidden="true">6.9.</strong> Performances</a></li><li class="chapter-item expanded "><a href="../technical/pre-compiling.html"><strong aria-hidden="true">6.10.</strong> Pre-compiling applications</a></li><li class="chapter-item expanded "><a href="../technical/processes.html"><strong aria-hidden="true">6.11.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../technical/registry.html"><strong aria-hidden="true">6.12.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../technical/services.html"><strong aria-hidden="true">6.13.</strong> Services</a></li><li class="chapter-item expanded "><a href="../technical/shell.html"><strong aria-hidden="true">6.14.</strong> The shell</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/index.html"><strong aria-hidden="true">7.</strong> Specifications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/applications/context.html"><strong aria-hidden="true">7.1.</strong> Application context</a></li><li class="chapter-item expanded "><a href="../specs/applications/package.html"><strong aria-hidden="true">7.2.</strong> Applications package</a></li><li class="chapter-item expanded "><a href="../specs/applications/manifest.html"><strong aria-hidden="true">7.3.</strong> Applications manifest</a></li><li class="chapter-item expanded "><a href="../specs/fs-structure.html"><strong aria-hidden="true">7.4.</strong> Filesystem structure</a></li><li class="chapter-item expanded "><a href="../specs/ipc.html"><strong aria-hidden="true">7.5.</strong> Inter-process communication</a></li><li class="chapter-item expanded "><a href="../specs/libraries.html"><strong aria-hidden="true">7.6.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../specs/registry.html"><strong aria-hidden="true">7.7.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../specs/vocabulary.html"><strong aria-hidden="true">7.8.</strong> Vocabulary</a></li><li class="chapter-item expanded "><a href="../specs/shell.html" class="active"><strong aria-hidden="true">7.9.</strong> The shell</a></li><li class="chapter-item expanded "><a href="../specs/shell-scripting.html"><strong aria-hidden="true">7.10.</strong> Shell scripting</a></li><li class="chapter-item expanded "><a href="../specs/signals.html"><strong aria-hidden="true">7.11.</strong> Signals</a></li><li class="chapter-item expanded "><a href="../specs/syscalls.html"><strong aria-hidden="true">7.12.</strong> System calls</a></li><li class="chapter-item expanded "><a href="../specs/kernel/index.html"><strong aria-hidden="true">7.13.</strong> Kernel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/kernel/hardware.html"><strong aria-hidden="true">7.13.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="../specs/kernel/kpc.html"><strong aria-hidden="true">7.13.2.</strong> Kernel-process communication</a></li><li class="chapter-item expanded "><a href="../specs/kernel/memory.html"><strong aria-hidden="true">7.13.3.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../specs/kernel/processes.html"><strong aria-hidden="true">7.13.4.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../specs/kernel/data-structures.html"><strong aria-hidden="true">7.13.5.</strong> Data structures</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/index.html"><strong aria-hidden="true">7.14.</strong> System services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/fs.html"><strong aria-hidden="true">7.14.1.</strong> sys::fs</a></li><li class="chapter-item expanded "><a href="../specs/services/hw.html"><strong aria-hidden="true">7.14.2.</strong> sys::hw</a></li><li class="chapter-item expanded "><a href="../specs/services/perm.html"><strong aria-hidden="true">7.14.3.</strong> sys::perm</a></li><li class="chapter-item expanded "><a href="../specs/services/net.html"><strong aria-hidden="true">7.14.4.</strong> sys::net</a></li><li class="chapter-item expanded "><a href="../specs/services/crypto.html"><strong aria-hidden="true">7.14.5.</strong> sys::crypto</a></li><li class="chapter-item expanded "><a href="../specs/services/crashsave.html"><strong aria-hidden="true">7.14.6.</strong> sys::crashsave</a></li><li class="chapter-item expanded "><a href="../specs/services/flow.html"><strong aria-hidden="true">7.14.7.</strong> sys::flow</a></li><li class="chapter-item expanded "><a href="../specs/services/hydre.html"><strong aria-hidden="true">7.14.8.</strong> sys::hydre</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../applications/index.html"><strong aria-hidden="true">8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../applications/Astral.html"><strong aria-hidden="true">8.1.</strong> Astral</a></li><li class="chapter-item expanded "><a href="../applications/BareEnv.html"><strong aria-hidden="true">8.2.</strong> BareEnv</a></li><li class="chapter-item expanded "><a href="../applications/Blackhole.html"><strong aria-hidden="true">8.3.</strong> Blackhole</a></li><li class="chapter-item expanded "><a href="../applications/Central.html"><strong aria-hidden="true">8.4.</strong> Central</a></li><li class="chapter-item expanded "><a href="../applications/Cloudy.html"><strong aria-hidden="true">8.5.</strong> Cloudy</a></li><li class="chapter-item expanded "><a href="../applications/Comet.html"><strong aria-hidden="true">8.6.</strong> Comet</a></li><li class="chapter-item expanded "><a href="../applications/Gravity.html"><strong aria-hidden="true">8.7.</strong> Gravity</a></li><li class="chapter-item expanded "><a href="../applications/Locky.html"><strong aria-hidden="true">8.8.</strong> Locky</a></li><li class="chapter-item expanded "><a href="../applications/Milkshake.html"><strong aria-hidden="true">8.9.</strong> Milkshake</a></li><li class="chapter-item expanded "><a href="../applications/Monitor.html"><strong aria-hidden="true">8.10.</strong> Monitor</a></li><li class="chapter-item expanded "><a href="../applications/Nova.html"><strong aria-hidden="true">8.11.</strong> Nova</a></li><li class="chapter-item expanded "><a href="../applications/Particle.html"><strong aria-hidden="true">8.12.</strong> Particle</a></li><li class="chapter-item expanded "><a href="../applications/Pluton.html"><strong aria-hidden="true">8.13.</strong> Pluton</a></li><li class="chapter-item expanded "><a href="../applications/Postal.html"><strong aria-hidden="true">8.14.</strong> Postal</a></li><li class="chapter-item expanded "><a href="../applications/Reader.html"><strong aria-hidden="true">8.15.</strong> Reader</a></li><li class="chapter-item expanded "><a href="../applications/Registry.html"><strong aria-hidden="true">8.16.</strong> Registry</a></li><li class="chapter-item expanded "><a href="../applications/Rocket.html"><strong aria-hidden="true">8.17.</strong> Rocket</a></li><li class="chapter-item expanded "><a href="../applications/ShootingStar.html"><strong aria-hidden="true">8.18.</strong> ShootingStar</a></li><li class="chapter-item expanded "><a href="../applications/Skyer.html"><strong aria-hidden="true">8.19.</strong> Skyer</a></li><li class="chapter-item expanded "><a href="../applications/Sonata.html"><strong aria-hidden="true">8.20.</strong> Sonata</a></li><li class="chapter-item expanded "><a href="../applications/Stellar.html"><strong aria-hidden="true">8.21.</strong> Stellar</a></li><li class="chapter-item expanded "><a href="../applications/Thinker.html"><strong aria-hidden="true">8.22.</strong> Thinker</a></li><li class="chapter-item expanded "><a href="../applications/TimeTravel.html"><strong aria-hidden="true">8.23.</strong> TimeTravel</a></li><li class="chapter-item expanded "><a href="../applications/Vortex.html"><strong aria-hidden="true">8.24.</strong> Vortex</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NightOS documentation</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#hydre" id="hydre">Hydre</a></h1>
+<p>The <em>shell</em> is the part responsible for running <em>scripts</em>, which are small text-based programs that are natively available on every NightOS installation. It is called <em>Hydre</em> and is part of the system under the form of the <a href="services/hydre.html"><code>sys::hydre</code></a> service.</p>
+<p>You can get a quick overview of Hydre in its <a href="../technical/shell.html">technical document</a>.</p>
+<p><strong>NOTE:</strong> The behaviours described here only apply when using the <a href="../applications/Pluton.html">Pluton</a> terminal application. Although all terminals are expected to follow these specifications as they act as a standard for terminals, they are technically not forced to and so misbehaviours may appear when using an alternative terminal application.</p>
+<ul>
+<li><a href="#shell-sessions">Shell sessions</a>
+<ul>
+<li><a href="#sessions-security">Sessions security</a></li>
+</ul>
+</li>
+<li><a href="#commands-evaluation">Commands evaluation</a></li>
+<li><a href="#command-pipes">Command pipes</a></li>
+<li><a href="#interactivity">Interactivity</a>
+<ul>
+<li><a href="#input-data">Input data</a></li>
+<li><a href="#user-inputs">User inputs</a></li>
+<li><a href="#text-output">Text output</a>
+<ul>
+<li><a href="#invalid-messages">Invalid messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#events-handling">Events handling</a></li>
+<li><a href="#scripting-language">Scripting language</a>
+<ul>
+<li><a href="#pre-evaluation-checking">Pre-evaluation checking</a></li>
+</ul>
+</li>
+</ul>
+<h2><a class="header" href="#shell-sessions" id="shell-sessions">Shell sessions</a></h2>
+<p>Before evaluating commands, a <em>shell session</em> needs to be created using the <a href="services/hydre.html"><code>sys::hydre</code></a> service.</p>
+<p>A session has the following properties:</p>
+<ul>
+<li>A (changeable) width and height, in number of characters</li>
+<li>Commands output are concatenated</li>
+</ul>
+<p>Commands can then be run inside the created session, and once they are all finished the same session can be closed using the same service. This simplify execution chaining, but also enables commands to be notified through the <a href="services.html#communication">service's pipes</a> when the session is resized.</p>
+<p>Only one <a href="shell-scripting.html">shell instruction</a> can be run at a time, but as it may be made of multiple commands (e.g. <code>cmd1 | cmd2</code>), multiple processes may be binded to the same shell session. Also, <a href="shell-scripting.html#running-in-background">background commands</a> may be running in parallel of the running command.</p>
+<p>For instance, when using the <a href="../applications/Pluton.html">Pluton</a> terminal, it creates on opening a shell session to run the commands in. When a new tab is opened, another shell session is opened for that tab. When the tab is destroyed, the session is destroyed as well, which means all commands running in it (including pipe and background commands) are killed.</p>
+<h3><a class="header" href="#sessions-security" id="sessions-security">Sessions security</a></h3>
+<p>When a command is run, the command's PID is registered in the session's <em>actors</em> list. When the command ends, it is removed from the list.<br />
+When a process contacts the <a href="services/hydre.html"><code>sys::hydre</code></a> service to access the session it runs in, Hydre gets the session associated to this process' PID, and returns it. If the PID is not associated to any session, the access is refused and the command won't be able to get any information on any session.</p>
+<p>This prevents processes from accessing sessions they aren't part of.</p>
+<h2><a class="header" href="#commands-evaluation" id="commands-evaluation">Commands evaluation</a></h2>
+<p>Commands are evaluated one by one, as scripts cannot be run in a concurrent way. They are handled as follows:</p>
+<ul>
+<li>Builtin commands are treated internally by the shell</li>
+<li>Application commands will result in launching the requested application in a separate process</li>
+</ul>
+<h2><a class="header" href="#command-pipes" id="command-pipes">Command pipes</a></h2>
+<p>When an application is started from a command, its <a href="applications/context.html#execution-context">execution context</a> indicates it and the process gets access to several pipes called the <em>command pipes</em>:</p>
+<table><thead><tr><th>Pipe identifier</th><th>Standard pipe name</th><th>Pipe type</th><th>Format</th><th>Description</th></tr></thead><tbody>
+<tr><td>CMDIN</td><td>Typed input</td><td>Raw</td><td><em>typed</em></td><td>Data coming either from a command pipe (`</td></tr>
+<tr><td>CMDUSR</td><td>Interactive input</td><td>Message</td><td>UTF-8</td><td>Data coming from a terminal session (e.g. user inputs)</td></tr>
+<tr><td>CMDMSG</td><td>Messages output</td><td>Message</td><td>UTF-8</td><td>Messages to display in the console, which won't be redirected by default</td></tr>
+<tr><td>CMDERR</td><td>Errors output</td><td>Message</td><td>UTF-8</td><td>Messages to display as errors in the console, which won't be redirected by default</td></tr>
+<tr><td>CMDRAW</td><td>Raw bytes</td><td>Raw</td><td>Raw</td><td>Output data, which will be redirected if an output pipe (<code>&gt;</code>) is used</td></tr>
+<tr><td>CMDOUT</td><td>Typed output</td><td>Raw</td><td><em>typed</em></td><td>Typed output data, which will be used by <a href="shell-scripting.html">shell scripts</a>)</td></tr>
+</tbody></table>
+<p>The SC/RC identifiers of these pipes are available in the application's <a href="applications/context.html">context</a>.</p>
+<p>The process that launched the command gets the ability to:</p>
+<ul>
+<li>Send data to the callee's CMDIN/CMDUSR pipe ;</li>
+<li>Read data from the callee's CMDMSG/CMDERR/CMDRAW/CMDOUT pipes</li>
+</ul>
+<p>As this only applies to processes that can be started from commands, this only applies to <em>application processes</em> ; system processes not being linked to commands and worker processes being started from application processes (and so not directly from commands).</p>
+<p>Technically speaking, commands are started by the <a href="services/hydre.html"><code>sys::hydre</code></a> service and so by a system process. This same service creates the pipes and handles them. For more informations on this, please check the service's <a href="services/hydre.html">documentation</a>.</p>
+<p>If the process terminates before the return value has been fully transmitted through CMDOUT or if it closes the CMDOUT pipe before fully transmitting the value, the process is considered as faulty and killed immediatly (if still alive). The calling script (if any) exits with an error message, unless the error is caught with <code>catch</code>, the error message being generated by the system.</p>
+<p>Even if the process closes its CMDMSG or CMDRAW pipe properly (by calling the <a href="syscalls.html#0x25-close_pipe"><code>CLOSE_PIPE</code></a>), the command is not considered as finished until the process itself did not terminate.</p>
+<p>Note that when a return value has been fully transmitted through CMDOUT, all pipes are closed and the command is considered as finished.</p>
+<h2><a class="header" href="#interactivity" id="interactivity">Interactivity</a></h2>
+<p>When an application command is run, the pipes are handled as follows.</p>
+<h3><a class="header" href="#input-data" id="input-data">Input data</a></h3>
+<p>All data coming from a command pipe (<code>|</code>) or from an input pipe (<code>&lt;</code>) (if the command's input type is <code>stream</code>) are transmitted through CMDIN.
+Once the input data have been fully transmitted, the CMDIN pipe is closed.</p>
+<h3><a class="header" href="#user-inputs" id="user-inputs">User inputs</a></h3>
+<p>All user inputs (including raw keystrokes) are transmitted to CMDUSR, except a few ones:</p>
+<ul>
+<li><code>Ctrl-.</code>, which asks the process to suspend (triggers the <a href="signals.html#0x10-suspend"><code>SUSPEND</code></a> signal)</li>
+<li><code>Ctrl-Shift-.</code>, which forces the process to suspend (triggers the <a href="signals.html#0x11-will_suspend"><code>WILL_SUSPEND</code></a> signal)</li>
+<li><code>Ctrl-C</code>, which asks the process to terminate (triggers the <a href="signals.html#0x12-terminate"><code>TERMINATE</code></a> signal)</li>
+<li><code>Ctrl-Shift-C</code>, which forces the process to terminate (triggers the <a href="signals.html#0x13-will_terminate"><code>WILL_TERMINATE</code></a> signal)</li>
+<li>Custom GUI keystrokes like <code>Alt-F4</code></li>
+<li>System-handled keystrokes like <code>Ctrl+Alt+Del</code></li>
+</ul>
+<p>User input messages use the following format (always starting from the strongest byte/bit):</p>
+<ul>
+<li>Byte 0: modifier keys
+<ul>
+<li>Bit 0: set if the <code>Command</code> or <code>Windows</code> key is pressed</li>
+<li>Bit 1: set if the <code>Ctrl</code> key is pressed</li>
+<li>Bit 2: set if the <code>Alt</code> key is pressed</li>
+<li>Bit 3: set if the <code>Shift</code> key is pressed</li>
+<li>Bit 4: set if the <code>Fn</code> key is pressed</li>
+<li>Bit 5: set if Numeric Lock is enabled</li>
+<li>Bit 6: set if Caps Lock is enabled</li>
+<li>Bit 7: set if Scroll Lock is enabled</li>
+</ul>
+</li>
+<li>Byte 1: keycode</li>
+<li>Bytes 2-5: UTF-8 printable character on 4 bytes, or <code>0x00</code> if the character is not printable</li>
+</ul>
+<h3><a class="header" href="#text-output" id="text-output">Text output</a></h3>
+<p>Commands may output either simple text messages (via CMDMSG) or error text messages (via CMDERR).<br />
+<em>Conventionnally</em> (but it's up to the terminal application), text messages are displayed by default in white while error messages are displayed in red.</p>
+<p>Messages must use the following format (always starting from the strongest byte/bit):</p>
+<ul>
+<li>Byte 0-2: RGB foreground color (<code>0</code> will use the current one)</li>
+<li>Byte 3-5: RGB background color (<code>0</code> will use the current one)</li>
+<li>Byte 6: style
+<ul>
+<li>Bit 0: if set, the message will be displayed in bold</li>
+<li>Bit 1: if set, the message will be displayed in italic</li>
+<li>Bit 2: if set, the message will be displayed with a line below it</li>
+<li>Bit 3: if set, the message will be displayed with a line above it</li>
+<li>Bit 4: if set, the message will be displayed reversed</li>
+</ul>
+</li>
+<li>Byte 7: number of control characters</li>
+<li>Byte 7-(N): control characters on 2 bytes each</li>
+<li>Bytes (N+1)-(END): The message itself, encoded in UTF-8 (can be empty)</li>
+</ul>
+<p>Control characters use the following format:</p>
+<ul>
+<li>Strongest byte: control character code
+<ul>
+<li><code>0x00</code>: no control character</li>
+<li><code>0x01</code>: move cursor up X times</li>
+<li><code>0x02</code>: move cursor left X times</li>
+<li><code>0x03</code>: move cursor right X times</li>
+<li><code>0x04</code>: move cursor down X times</li>
+<li><code>0x05</code>: move the cursor to the beginning of the line</li>
+</ul>
+</li>
+<li>Weakest byte: data byte</li>
+</ul>
+<p>For instance, an <code>0x0305</code> control character is decomposable in the <code>0x03</code> code and the <code>0x05</code> data byte, which means moving the cursor to the right 5 times.</p>
+<h4><a class="header" href="#invalid-messages" id="invalid-messages">Invalid messages</a></h4>
+<p>A message is considered invalid if at least one of the following conditions is verified:</p>
+<ul>
+<li>The message's length is lower than 8 bytes + 2 * (number of control characters)</li>
+<li>The provided control character is invalid</li>
+</ul>
+<p>Messages that do not follow this format will result in displaying Unicode's replacement character (<code>0xFFFD</code>: �) instead.</p>
+<p>Messages providing an invalid foreground and/or background color will <em>conventionnally</em> (but it's up to the terminal application) in a specific color to indicate no right color could be determined.</p>
+<h2><a class="header" href="#events-handling" id="events-handling">Events handling</a></h2>
+<p>Commands can get informations on the current session using the <a href="services/hydre.html"><code>sys::hydre</code></a> service.</p>
+<p>This allows the command to be notified of events like windows resizing. For more informations, see the service's <a href="services/hydre.html">specifications document</a>.</p>
+<h2><a class="header" href="#scripting-language" id="scripting-language">Scripting language</a></h2>
+<p>You can find more about the script language in the language's <a href="../specs/shell-scripting.html">specifications document</a>.</p>
+<h3><a class="header" href="#pre-evaluation-checking" id="pre-evaluation-checking">Pre-evaluation checking</a></h3>
+<p>Before executing a script, the shell looks for errors in it, such as unknown command, invalid argument, type mismatch and so on. If an error is foud, the script doesn't even start to run ; an error is directly reported and the command is considered as failed.</p>
+<p>This prevents errors from happening in the middle of a script, leaving it in an inconsistent state ; this also makes script errors easier to debug as they are reported at compile time.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../specs/vocabulary.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../specs/shell-scripting.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../specs/vocabulary.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../specs/shell-scripting.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Signals - NightOS documentation</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Design and specification documents for NightOS">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../FOREWORD.html"><strong aria-hidden="true">1.</strong> Foreword</a></li><li class="chapter-item expanded "><a href="../FAQ.html"><strong aria-hidden="true">2.</strong> Frequently-asked questions</a></li><li class="chapter-item expanded "><a href="../project/index.html"><strong aria-hidden="true">3.</strong> Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../project/roadmap.html"><strong aria-hidden="true">3.1.</strong> Roadmap</a></li><li class="chapter-item expanded "><a href="../project/development.html"><strong aria-hidden="true">3.2.</strong> Development</a></li><li class="chapter-item expanded "><a href="../project/hw-requirements.html"><strong aria-hidden="true">3.3.</strong> Hardware requirements</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/applications.html"><strong aria-hidden="true">4.1.</strong> What are applications?</a></li><li class="chapter-item expanded "><a href="../concepts/libraries.html"><strong aria-hidden="true">4.2.</strong> What are libraries?</a></li><li class="chapter-item expanded "><a href="../concepts/users.html"><strong aria-hidden="true">4.3.</strong> What are users?</a></li></ol></li><li class="chapter-item expanded "><a href="../features/index.html"><strong aria-hidden="true">5.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../features/balancer.html"><strong aria-hidden="true">5.1.</strong> The balancer</a></li><li class="chapter-item expanded "><a href="../features/crash-saves.html"><strong aria-hidden="true">5.2.</strong> Crash saves</a></li><li class="chapter-item expanded "><a href="../features/domains.html"><strong aria-hidden="true">5.3.</strong> Domains</a></li><li class="chapter-item expanded "><a href="../features/encryption.html"><strong aria-hidden="true">5.4.</strong> Encryption</a></li><li class="chapter-item expanded "><a href="../features/freeze-prevention.html"><strong aria-hidden="true">5.5.</strong> Freeze-prevention system</a></li><li class="chapter-item expanded "><a href="../features/parental-control.html"><strong aria-hidden="true">5.6.</strong> Parental control</a></li><li class="chapter-item expanded "><a href="../features/sandboxes.html"><strong aria-hidden="true">5.7.</strong> Sandboxes</a></li><li class="chapter-item expanded "><a href="../features/synchronization.html"><strong aria-hidden="true">5.8.</strong> Synchronization</a></li></ol></li><li class="chapter-item expanded "><a href="../technical/index.html"><strong aria-hidden="true">6.</strong> Technical</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../technical/controller.html"><strong aria-hidden="true">6.1.</strong> The controller</a></li><li class="chapter-item expanded "><a href="../technical/dev-mode.html"><strong aria-hidden="true">6.2.</strong> Developer mode</a></li><li class="chapter-item expanded "><a href="../technical/devices.html"><strong aria-hidden="true">6.3.</strong> Devices</a></li><li class="chapter-item expanded "><a href="../technical/file-formats.html"><strong aria-hidden="true">6.4.</strong> File formats</a></li><li class="chapter-item expanded "><a href="../technical/fs-abslayer.html"><strong aria-hidden="true">6.5.</strong> Filesystem Abstraction Layer</a></li><li class="chapter-item expanded "><a href="../technical/integrity-checker.html"><strong aria-hidden="true">6.6.</strong> Integrity checker</a></li><li class="chapter-item expanded "><a href="../technical/io-manager.html"><strong aria-hidden="true">6.7.</strong> I/O manager</a></li><li class="chapter-item expanded "><a href="../technical/multi-platform.html"><strong aria-hidden="true">6.8.</strong> Multi-platform management</a></li><li class="chapter-item expanded "><a href="../technical/performances.html"><strong aria-hidden="true">6.9.</strong> Performances</a></li><li class="chapter-item expanded "><a href="../technical/pre-compiling.html"><strong aria-hidden="true">6.10.</strong> Pre-compiling applications</a></li><li class="chapter-item expanded "><a href="../technical/processes.html"><strong aria-hidden="true">6.11.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../technical/registry.html"><strong aria-hidden="true">6.12.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../technical/services.html"><strong aria-hidden="true">6.13.</strong> Services</a></li><li class="chapter-item expanded "><a href="../technical/shell.html"><strong aria-hidden="true">6.14.</strong> The shell</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/index.html"><strong aria-hidden="true">7.</strong> Specifications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/applications/context.html"><strong aria-hidden="true">7.1.</strong> Application context</a></li><li class="chapter-item expanded "><a href="../specs/applications/package.html"><strong aria-hidden="true">7.2.</strong> Applications package</a></li><li class="chapter-item expanded "><a href="../specs/applications/manifest.html"><strong aria-hidden="true">7.3.</strong> Applications manifest</a></li><li class="chapter-item expanded "><a href="../specs/fs-structure.html"><strong aria-hidden="true">7.4.</strong> Filesystem structure</a></li><li class="chapter-item expanded "><a href="../specs/ipc.html"><strong aria-hidden="true">7.5.</strong> Inter-process communication</a></li><li class="chapter-item expanded "><a href="../specs/libraries.html"><strong aria-hidden="true">7.6.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../specs/registry.html"><strong aria-hidden="true">7.7.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../specs/vocabulary.html"><strong aria-hidden="true">7.8.</strong> Vocabulary</a></li><li class="chapter-item expanded "><a href="../specs/shell.html"><strong aria-hidden="true">7.9.</strong> The shell</a></li><li class="chapter-item expanded "><a href="../specs/shell-scripting.html"><strong aria-hidden="true">7.10.</strong> Shell scripting</a></li><li class="chapter-item expanded "><a href="../specs/signals.html" class="active"><strong aria-hidden="true">7.11.</strong> Signals</a></li><li class="chapter-item expanded "><a href="../specs/syscalls.html"><strong aria-hidden="true">7.12.</strong> System calls</a></li><li class="chapter-item expanded "><a href="../specs/kernel/index.html"><strong aria-hidden="true">7.13.</strong> Kernel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/kernel/hardware.html"><strong aria-hidden="true">7.13.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="../specs/kernel/kpc.html"><strong aria-hidden="true">7.13.2.</strong> Kernel-process communication</a></li><li class="chapter-item expanded "><a href="../specs/kernel/memory.html"><strong aria-hidden="true">7.13.3.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../specs/kernel/processes.html"><strong aria-hidden="true">7.13.4.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../specs/kernel/data-structures.html"><strong aria-hidden="true">7.13.5.</strong> Data structures</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/index.html"><strong aria-hidden="true">7.14.</strong> System services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/fs.html"><strong aria-hidden="true">7.14.1.</strong> sys::fs</a></li><li class="chapter-item expanded "><a href="../specs/services/hw.html"><strong aria-hidden="true">7.14.2.</strong> sys::hw</a></li><li class="chapter-item expanded "><a href="../specs/services/perm.html"><strong aria-hidden="true">7.14.3.</strong> sys::perm</a></li><li class="chapter-item expanded "><a href="../specs/services/net.html"><strong aria-hidden="true">7.14.4.</strong> sys::net</a></li><li class="chapter-item expanded "><a href="../specs/services/crypto.html"><strong aria-hidden="true">7.14.5.</strong> sys::crypto</a></li><li class="chapter-item expanded "><a href="../specs/services/crashsave.html"><strong aria-hidden="true">7.14.6.</strong> sys::crashsave</a></li><li class="chapter-item expanded "><a href="../specs/services/flow.html"><strong aria-hidden="true">7.14.7.</strong> sys::flow</a></li><li class="chapter-item expanded "><a href="../specs/services/hydre.html"><strong aria-hidden="true">7.14.8.</strong> sys::hydre</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../applications/index.html"><strong aria-hidden="true">8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../applications/Astral.html"><strong aria-hidden="true">8.1.</strong> Astral</a></li><li class="chapter-item expanded "><a href="../applications/BareEnv.html"><strong aria-hidden="true">8.2.</strong> BareEnv</a></li><li class="chapter-item expanded "><a href="../applications/Blackhole.html"><strong aria-hidden="true">8.3.</strong> Blackhole</a></li><li class="chapter-item expanded "><a href="../applications/Central.html"><strong aria-hidden="true">8.4.</strong> Central</a></li><li class="chapter-item expanded "><a href="../applications/Cloudy.html"><strong aria-hidden="true">8.5.</strong> Cloudy</a></li><li class="chapter-item expanded "><a href="../applications/Comet.html"><strong aria-hidden="true">8.6.</strong> Comet</a></li><li class="chapter-item expanded "><a href="../applications/Gravity.html"><strong aria-hidden="true">8.7.</strong> Gravity</a></li><li class="chapter-item expanded "><a href="../applications/Locky.html"><strong aria-hidden="true">8.8.</strong> Locky</a></li><li class="chapter-item expanded "><a href="../applications/Milkshake.html"><strong aria-hidden="true">8.9.</strong> Milkshake</a></li><li class="chapter-item expanded "><a href="../applications/Monitor.html"><strong aria-hidden="true">8.10.</strong> Monitor</a></li><li class="chapter-item expanded "><a href="../applications/Nova.html"><strong aria-hidden="true">8.11.</strong> Nova</a></li><li class="chapter-item expanded "><a href="../applications/Particle.html"><strong aria-hidden="true">8.12.</strong> Particle</a></li><li class="chapter-item expanded "><a href="../applications/Pluton.html"><strong aria-hidden="true">8.13.</strong> Pluton</a></li><li class="chapter-item expanded "><a href="../applications/Postal.html"><strong aria-hidden="true">8.14.</strong> Postal</a></li><li class="chapter-item expanded "><a href="../applications/Reader.html"><strong aria-hidden="true">8.15.</strong> Reader</a></li><li class="chapter-item expanded "><a href="../applications/Registry.html"><strong aria-hidden="true">8.16.</strong> Registry</a></li><li class="chapter-item expanded "><a href="../applications/Rocket.html"><strong aria-hidden="true">8.17.</strong> Rocket</a></li><li class="chapter-item expanded "><a href="../applications/ShootingStar.html"><strong aria-hidden="true">8.18.</strong> ShootingStar</a></li><li class="chapter-item expanded "><a href="../applications/Skyer.html"><strong aria-hidden="true">8.19.</strong> Skyer</a></li><li class="chapter-item expanded "><a href="../applications/Sonata.html"><strong aria-hidden="true">8.20.</strong> Sonata</a></li><li class="chapter-item expanded "><a href="../applications/Stellar.html"><strong aria-hidden="true">8.21.</strong> Stellar</a></li><li class="chapter-item expanded "><a href="../applications/Thinker.html"><strong aria-hidden="true">8.22.</strong> Thinker</a></li><li class="chapter-item expanded "><a href="../applications/TimeTravel.html"><strong aria-hidden="true">8.23.</strong> TimeTravel</a></li><li class="chapter-item expanded "><a href="../applications/Vortex.html"><strong aria-hidden="true">8.24.</strong> Vortex</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NightOS documentation</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#signals" id="signals">Signals</a></h1>
+<p><em>Signals</em> are a type of <a href="kernel/kpc.html">KPC</a>. They are used by the kernel to send informations to processes about a specific event.</p>
+<ul>
+<li><a href="#technical-overview">Technical overview</a></li>
+<li><a href="#list-of-signals">List of signals</a>
+<ul>
+<li><a href="#0x01-handler_fault"><code>0x01</code> HANDLER_FAULT</a></li>
+<li><a href="#0x02-mem_fault"><code>0x02</code> MEM_FAULT</a></li>
+<li><a href="#0x10-suspend"><code>0x10</code> SUSPEND</a></li>
+<li><a href="#0x11-will_suspend"><code>0x11</code> WILL_SUSPEND</a></li>
+<li><a href="#0x12-terminate"><code>0x12</code> TERMINATE</a></li>
+<li><a href="#0x13-will_terminate"><code>0x13</code> WILL_TERMINATE</a></li>
+<li><a href="#0x20-recv_pipe"><code>0x20</code> RECV_PIPE</a></li>
+<li><a href="#0x21-pipe_closed"><code>0x21</code> PIPE_CLOSED</a></li>
+<li><a href="#0x26-recv_serv_sock"><code>0x26</code> RECV_SERV_SOCK</a></li>
+<li><a href="#0x27-recv_sock_msg"><code>0x27</code> RECV_SOCK_MSG</a></li>
+<li><a href="#0x29-serv_sock_closed"><code>0x29</code> SERV_SOCK_CLOSED</a></li>
+<li><a href="#0x2a-service_conn_request"><code>0x2A</code> SERVICE_CONN_REQUEST</a></li>
+<li><a href="#0x2b-service_client_closed"><code>0x2B</code> SERVICE_CLIENT_CLOSED</a></li>
+<li><a href="#0x2c-service_client_quitted"><code>0x2C</code> SERVICE_CLIENT_QUITTED</a></li>
+<li><a href="#0x2d-service_server_quitted"><code>0x2D</code> SERVICE_SERVER_QUITTED</a></li>
+<li><a href="#0x33-read_backed_ams"><code>0x33</code> READ_BACKED_AMS</a></li>
+<li><a href="#0x34-write_backed_ams"><code>0x34</code> WRITE_BACKED_AMS</a></li>
+<li><a href="#0x35-recv_shared_ams"><code>0x35</code> RECV_SHARED_AMS</a></li>
+<li><a href="#0x37-unshared_ams"><code>0x37</code> UNSHARED_AMS</a></li>
+</ul>
+</li>
+</ul>
+<h2><a class="header" href="#technical-overview" id="technical-overview">Technical overview</a></h2>
+<p>When a process is created, the kernel associates it:</p>
+<ul>
+<li>A <em>signals handler table</em> (SHT) ;</li>
+<li>A <em>signals queue</em> ;</li>
+<li>A <em>readiness indicator</em></li>
+</ul>
+<p>Each signal has a 8-bit code that identifies it, as well as a 32 bytes <em>datafield</em> which is used to attach additional informations about the signal.</p>
+<p>When the kernel sends a signal to a process, it first checks if an handler is already running. If so, it simply pushes the signal to the queue.</p>
+<p>Else, it checks the readiness indicator. If it is <code>false</code> (so if the process did not sent the <a href="syscalls.html#0x04-ready"><code>READY</code></a> syscall yet), the signal is pushed to the queue.</p>
+<p>Else, it checks in the SHT if the signal has a handler. If there is no handler, depending on the specific signal, it may either be ignored or use a default behaviour (this is documented for each signal).</p>
+<p>If a handler is found, the kernel checks if the pointer points to a memory area that is executable by the current process. If it isn't, the signal is converted to an <a href="#0x01-handler_fault"><code>HANDLER_FAULT</code></a> one. If the signal that was being sent was already an <code>HANDLER_FAULT</code>, the process is killed.</p>
+<p>The kernel then switches the process to its <a href="../technical/processes.html#main-thread">main thread</a> and makes it jump to the handler's address, then resumes it.</p>
+<p>When the handler returns (or the default behaviour completes), if the signal was expecting an answer, the kernel reads it from specific registries and does whatever it needs to do. Then, itchecks if the signals queue is empty. If it is, the kernel simply makes the process jump back to the address it was to before the signal was emitted, and switch to the original thread.</p>
+<p>Else, it interrupts the process again and proceeds to treat the first signal on the queue after removing it.</p>
+<p>On the performances side, signals use interrupts, meaning the process' current tasks are instantly interrupted to let it handle the signal without delay. Also, the datafield and answer are provided through CPU registers, avoiding memory accesses.</p>
+<h2><a class="header" href="#list-of-signals" id="list-of-signals">List of signals</a></h2>
+<p>You can find below the exhaustive list of signals.</p>
+<h3><a class="header" href="#0x01-handler_fault" id="0x01-handler_fault"><code>0x01</code> HANDLER_FAULT</a></h3>
+<p>Sent when a signal is sent to a process but the registered handler points to a memory zone that is not executable by the current process.
+If the sending of this signal to the process results to another fault, it's called a <em>double handler fault</em> and the process is immediatly killed.</p>
+<p>If no handler is registered for this signal, it will kill the process when received.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Faulty signal ID (8 bytes)</li>
+</ul>
+<h3><a class="header" href="#0x02-mem_fault" id="0x02-mem_fault"><code>0x02</code> MEM_FAULT</a></h3>
+<p>Sent when the process tried to perform an unauthorized access on a memory address.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Faulty address (8 bytes)</li>
+<li>Access error (1 byte):
+<ul>
+<li><code>0x01</code>: tried to read memory</li>
+<li><code>0x02</code>: tried to write memory</li>
+<li><code>0x03</code>: tried to execute memory</li>
+</ul>
+</li>
+</ul>
+<h3><a class="header" href="#0x10-suspend" id="0x10-suspend"><code>0x10</code> SUSPEND</a></h3>
+<p>Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the <a href="syscalls.html#0x12-suspend"><code>SUSPEND</code></a> syscall.</p>
+<h3><a class="header" href="#0x11-will_suspend" id="0x11-will_suspend"><code>0x11</code> WILL_SUSPEND</a></h3>
+<p>Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="registry.html">Registry</a>'s <code>system.signals.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
+</ul>
+<h3><a class="header" href="#0x12-terminate" id="0x12-terminate"><code>0x12</code> TERMINATE</a></h3>
+<p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="syscalls.html#0x13-exit"><code>EXIT</code></a> syscall).</p>
+<h3><a class="header" href="#0x13-will_terminate" id="0x13-will_terminate"><code>0x13</code> WILL_TERMINATE</a></h3>
+<p>Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.</p>
+<p>If no handler is registered for this signal, it will kill the process when received.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="registry.html">Registry</a>'s <code>system.signals.terminate_delay</code> key (default: 2s) (2 bytes)</li>
+</ul>
+<h3><a class="header" href="#0x20-recv_pipe" id="0x20-recv_pipe"><code>0x20</code> RECV_PIPE</a></h3>
+<p>Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.<br />
+The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Pipe creator's PID (8 bytes)</li>
+<li>Pipe creator's application's <a href="../concepts/applications.html#application-identifier">ANID</a> (4 bytes)</li>
+<li><a href="ipc.html#pipes">Pipe</a> SC or RC identifier (8 bytes)</li>
+<li>Command code (2 bytes)</li>
+<li>Pipe identifier type (1 byte): <code>0x00</code> if the pipe identifier is an RC, <code>0x01</code> if it's an SC</li>
+<li>Mode (1 byte): <code>0x00</code> if it's a raw pipe, <code>0x01</code> if it's a message pipe</li>
+<li>Size hint in bytes (8 bytes), with <code>0</code> being the 'no size hint' value</li>
+</ul>
+<h3><a class="header" href="#0x21-pipe_closed" id="0x21-pipe_closed"><code>0x21</code> PIPE_CLOSED</a></h3>
+<p>Sent to a process when a <a href="ipc.html#pipes">pipe</a> shared with another process is closed.</p>
+<p><strong>NOTE:</strong> This does not apply to service pipes.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Closing type (1 byte):
+<ul>
+<li><code>0x00</code> if the pipe was closed properly using the <a href="syscalls.html#0x25-close_pipe">CLOSE_PIPE</a> syscall</li>
+<li><code>0x01</code> if the other process brutally terminated |</li>
+</ul>
+</li>
+<li>Pipe identity (1 byte): <code>0x00</code> if this process contained the RC part, <code>0x01</code> if it contained the SC part (1 byte)</li>
+<li>RC or SC identifier (8 bytes)</li>
+</ul>
+<h3><a class="header" href="#0x26-recv_serv_sock" id="0x26-recv_serv_sock"><code>0x26</code> RECV_SERV_SOCK</a></h3>
+<p>Sent to a process when another process opened a <a href="ipc.html#service-sockets">service socket</a> with this one.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Service socket creator's PID (8 bytes)</li>
+<li>Service socket creator's application's <a href="../concepts/applications.html#application-identifier">ANID</a> (4 bytes)</li>
+<li>Service socket identifier (8 bytes)</li>
+<li>Size of the buffer, multiplied by 4KB (2 bytes)</li>
+</ul>
+<h3><a class="header" href="#0x27-recv_sock_msg" id="0x27-recv_sock_msg"><code>0x27</code> RECV_SOCK_MSG</a></h3>
+<p>Sent to a process when a message has been sent through a <a href="ipc.html#service-sockets">service socket</a>.<br />
+To read the message, the process must use the <a href="syscalls.html#0x28-read_sock_msg"><code>READ_SOCK_MSG</code></a> syscall.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Servive socket identifier (8 bytes)</li>
+<li>Exchange identifier (8 bytes)</li>
+<li>Exchange method (1 byte)</li>
+<li>Size of the message (4 bytes)</li>
+<li>Status (1 byte):
+<ul>
+<li>Bit 0: set if this message did create a new exchange</li>
+<li>Bit 1: set if this message is an error message</li>
+<li>Bit 2: set if this message closed the socket</li>
+</ul>
+</li>
+</ul>
+<h3><a class="header" href="#0x29-serv_sock_closed" id="0x29-serv_sock_closed"><code>0x29</code> SERV_SOCK_CLOSED</a></h3>
+<p>(was there a message sent before that closed the socket)</p>
+<p>Sent to a process when a <a href="ipc.html#pipes">pipe</a> shared with another process is closed.</p>
+<p><strong>NOTE:</strong> This does not apply to service pipes.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Closing type (1 byte):
+<ul>
+<li><code>0x00</code> if the pipe was closed properly using the <a href="syscalls.html#0x25-close_pipe">CLOSE_PIPE</a> syscall</li>
+<li><code>0x01</code> if the other process brutally terminated |</li>
+</ul>
+</li>
+<li>Pipe identity (1 byte): <code>0x00</code> if this process contained the RC part, <code>0x01</code> if it contained the SC part (1 byte)</li>
+<li>RC or SC identifier (8 bytes)</li>
+</ul>
+<h3><a class="header" href="#0x2a-service_conn_request" id="0x2a-service_conn_request"><code>0x2A</code> SERVICE_CONN_REQUEST</a></h3>
+<p>Sent to a service process' <a href="services.html#thread-types">dispatcher thread</a> when another process tries to etablish a connection through the <a href="syscalls.html#0x2a-connect_service"><code>CONNECT_SERVICE</code></a> syscall.</p>
+<p>The process is expected to answer using the <a href="syscalls.html#0x2c-accept_service_conn"><code>ACCEPT_SERVICE_CONNECTION</code></a> under the provided delay, else it's considered as a rejection.</p>
+<p>If no handler is registered for this signal, it will kill the process when received.</p>
+<p><strong>NOTE:</strong> This signal cannot be received if the application does not <a href="../concepts/applications.html#services">expose a service</a>.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Callee process' ID (8 bytes)</li>
+<li>Connection's unique request ID (8 bytes)</li>
+<li>Command code (2 bytes)</li>
+<li><a href="registry.html">Registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms) (2 bytes)</li>
+</ul>
+<h3><a class="header" href="#0x2b-service_client_closed" id="0x2b-service_client_closed"><code>0x2B</code> SERVICE_CLIENT_CLOSED</a></h3>
+<p>Sent to a <a href="services.html#thread-types">client thread</a> to indicate its client closed before the connection was properly terminated.
+The thread is expected to terminate as soon as possible (there is no time limit though).</p>
+<h3><a class="header" href="#0x2c-service_client_quitted" id="0x2c-service_client_quitted"><code>0x2C</code> SERVICE_CLIENT_QUITTED</a></h3>
+<p>Sent to a <a href="services.html#thread-types">client thread</a> to indicate its client asked to close the connection.
+The associated RC and SC are immediatly closed.</p>
+<h3><a class="header" href="#0x2d-service_server_quitted" id="0x2d-service_server_quitted"><code>0x2D</code> SERVICE_SERVER_QUITTED</a></h3>
+<p>Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Connection's unique request ID (8 bytes)</li>
+</ul>
+<h3><a class="header" href="#0x33-read_backed_ams" id="0x33-read_backed_ams"><code>0x33</code> READ_BACKED_AMS</a></h3>
+<p>Sent to a process when a <a href="syscalls.html#0x33-backed_ams">signal-backed</a> <a href="kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is accessed in read mode.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>AMS ID (8 bytes)</li>
+<li>Relative address accessed in the segment (8 bytes)</li>
+<li>Access mode (1 byte): <code>0x00</code> for read, <code>0x01</code> for execution</li>
+</ul>
+<p><strong>Expected answer:</strong></p>
+<ul>
+<li>Associated data for this file (4 bytes)</li>
+<li>Page fault (1 byte):
+<ul>
+<li><code>0x00</code>: no page fault</li>
+<li><code>0x01</code>: address is out-of-range</li>
+<li><code>0x02</code>: hardware fault</li>
+</ul>
+</li>
+</ul>
+<h3><a class="header" href="#0x34-write_backed_ams" id="0x34-write_backed_ams"><code>0x34</code> WRITE_BACKED_AMS</a></h3>
+<p>Sent to a process when a <a href="syscalls.html#0x33-backed_ams">signal-backed</a> <a href="kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is accessed in write mode.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>AMS ID (8 bytes)</li>
+<li>Relative address accessed in the segment (8 bytes)</li>
+<li>Data to write (4 bytes)</li>
+</ul>
+<p><strong>Expected answer:</strong></p>
+<ul>
+<li>Page fault (1 byte):
+<ul>
+<li><code>0x00</code>: no page fault</li>
+<li><code>0x01</code>: address is out-of-range</li>
+<li><code>0x02</code>: hardware fault</li>
+</ul>
+</li>
+</ul>
+<h3><a class="header" href="#0x35-recv_shared_ams" id="0x35-recv_shared_ams"><code>0x35</code> RECV_SHARED_AMS</a></h3>
+<p>Sent to a process when an <a href="kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is <a href="ipc.html#shared-memory">shared</a> by another process.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Sender PID (8 bytes)</li>
+<li>Command code (2 bytes)</li>
+<li>AMS ID (8 bytes)</li>
+<li>Sharing mode (1 byte): <code>0x00</code> for mutual sharing, <code>0x01</code> for exclusive sharing</li>
+<li>Access permissions (1 byte):
+<ul>
+<li>For mutual sharings: strongest bit for read, next for write, next for exec</li>
+<li>For exclusive sharings: <code>0b11100000</code></li>
+</ul>
+</li>
+</ul>
+<h3><a class="header" href="#0x37-unshared_ams" id="0x37-unshared_ams"><code>0x37</code> UNSHARED_AMS</a></h3>
+<p>Sent to a process when an<a href="kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is unshared by the sharer process.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Unsharing type (1 byte):
+<ul>
+<li><code>0x00</code> if the shared memory was unshared properly using the <a href="syscalls.html#0x37-unshare_ams">UNSHARE_AMS</a> syscall</li>
+<li><code>0x01</code> if the other process brutally terminated</li>
+</ul>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../specs/shell-scripting.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../specs/syscalls.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../specs/shell-scripting.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../specs/syscalls.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,554 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>sys::hw - NightOS documentation</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Design and specification documents for NightOS">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../FOREWORD.html"><strong aria-hidden="true">1.</strong> Foreword</a></li><li class="chapter-item expanded "><a href="../../FAQ.html"><strong aria-hidden="true">2.</strong> Frequently-asked questions</a></li><li class="chapter-item expanded "><a href="../../project/index.html"><strong aria-hidden="true">3.</strong> Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../project/roadmap.html"><strong aria-hidden="true">3.1.</strong> Roadmap</a></li><li class="chapter-item expanded "><a href="../../project/development.html"><strong aria-hidden="true">3.2.</strong> Development</a></li><li class="chapter-item expanded "><a href="../../project/hw-requirements.html"><strong aria-hidden="true">3.3.</strong> Hardware requirements</a></li></ol></li><li class="chapter-item expanded "><a href="../../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/applications.html"><strong aria-hidden="true">4.1.</strong> What are applications?</a></li><li class="chapter-item expanded "><a href="../../concepts/libraries.html"><strong aria-hidden="true">4.2.</strong> What are libraries?</a></li><li class="chapter-item expanded "><a href="../../concepts/users.html"><strong aria-hidden="true">4.3.</strong> What are users?</a></li></ol></li><li class="chapter-item expanded "><a href="../../features/index.html"><strong aria-hidden="true">5.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../features/balancer.html"><strong aria-hidden="true">5.1.</strong> The balancer</a></li><li class="chapter-item expanded "><a href="../../features/crash-saves.html"><strong aria-hidden="true">5.2.</strong> Crash saves</a></li><li class="chapter-item expanded "><a href="../../features/domains.html"><strong aria-hidden="true">5.3.</strong> Domains</a></li><li class="chapter-item expanded "><a href="../../features/encryption.html"><strong aria-hidden="true">5.4.</strong> Encryption</a></li><li class="chapter-item expanded "><a href="../../features/freeze-prevention.html"><strong aria-hidden="true">5.5.</strong> Freeze-prevention system</a></li><li class="chapter-item expanded "><a href="../../features/parental-control.html"><strong aria-hidden="true">5.6.</strong> Parental control</a></li><li class="chapter-item expanded "><a href="../../features/sandboxes.html"><strong aria-hidden="true">5.7.</strong> Sandboxes</a></li><li class="chapter-item expanded "><a href="../../features/synchronization.html"><strong aria-hidden="true">5.8.</strong> Synchronization</a></li></ol></li><li class="chapter-item expanded "><a href="../../technical/index.html"><strong aria-hidden="true">6.</strong> Technical</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../technical/controller.html"><strong aria-hidden="true">6.1.</strong> The controller</a></li><li class="chapter-item expanded "><a href="../../technical/dev-mode.html"><strong aria-hidden="true">6.2.</strong> Developer mode</a></li><li class="chapter-item expanded "><a href="../../technical/devices.html"><strong aria-hidden="true">6.3.</strong> Devices</a></li><li class="chapter-item expanded "><a href="../../technical/file-formats.html"><strong aria-hidden="true">6.4.</strong> File formats</a></li><li class="chapter-item expanded "><a href="../../technical/fs-abslayer.html"><strong aria-hidden="true">6.5.</strong> Filesystem Abstraction Layer</a></li><li class="chapter-item expanded "><a href="../../technical/integrity-checker.html"><strong aria-hidden="true">6.6.</strong> Integrity checker</a></li><li class="chapter-item expanded "><a href="../../technical/io-manager.html"><strong aria-hidden="true">6.7.</strong> I/O manager</a></li><li class="chapter-item expanded "><a href="../../technical/multi-platform.html"><strong aria-hidden="true">6.8.</strong> Multi-platform management</a></li><li class="chapter-item expanded "><a href="../../technical/performances.html"><strong aria-hidden="true">6.9.</strong> Performances</a></li><li class="chapter-item expanded "><a href="../../technical/pre-compiling.html"><strong aria-hidden="true">6.10.</strong> Pre-compiling applications</a></li><li class="chapter-item expanded "><a href="../../technical/processes.html"><strong aria-hidden="true">6.11.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../../technical/registry.html"><strong aria-hidden="true">6.12.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../../technical/services.html"><strong aria-hidden="true">6.13.</strong> Services</a></li><li class="chapter-item expanded "><a href="../../technical/shell.html"><strong aria-hidden="true">6.14.</strong> The shell</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/index.html"><strong aria-hidden="true">7.</strong> Specifications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/applications/context.html"><strong aria-hidden="true">7.1.</strong> Application context</a></li><li class="chapter-item expanded "><a href="../../specs/applications/package.html"><strong aria-hidden="true">7.2.</strong> Applications package</a></li><li class="chapter-item expanded "><a href="../../specs/applications/manifest.html"><strong aria-hidden="true">7.3.</strong> Applications manifest</a></li><li class="chapter-item expanded "><a href="../../specs/fs-structure.html"><strong aria-hidden="true">7.4.</strong> Filesystem structure</a></li><li class="chapter-item expanded "><a href="../../specs/ipc.html"><strong aria-hidden="true">7.5.</strong> Inter-process communication</a></li><li class="chapter-item expanded "><a href="../../specs/libraries.html"><strong aria-hidden="true">7.6.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../../specs/registry.html"><strong aria-hidden="true">7.7.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../../specs/vocabulary.html"><strong aria-hidden="true">7.8.</strong> Vocabulary</a></li><li class="chapter-item expanded "><a href="../../specs/shell.html"><strong aria-hidden="true">7.9.</strong> The shell</a></li><li class="chapter-item expanded "><a href="../../specs/shell-scripting.html"><strong aria-hidden="true">7.10.</strong> Shell scripting</a></li><li class="chapter-item expanded "><a href="../../specs/signals.html"><strong aria-hidden="true">7.11.</strong> Signals</a></li><li class="chapter-item expanded "><a href="../../specs/syscalls.html"><strong aria-hidden="true">7.12.</strong> System calls</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/index.html"><strong aria-hidden="true">7.13.</strong> Kernel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/kernel/hardware.html"><strong aria-hidden="true">7.13.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/kpc.html"><strong aria-hidden="true">7.13.2.</strong> Kernel-process communication</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/memory.html"><strong aria-hidden="true">7.13.3.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/processes.html"><strong aria-hidden="true">7.13.4.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/data-structures.html"><strong aria-hidden="true">7.13.5.</strong> Data structures</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/services/index.html"><strong aria-hidden="true">7.14.</strong> System services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/services/fs.html"><strong aria-hidden="true">7.14.1.</strong> sys::fs</a></li><li class="chapter-item expanded "><a href="../../specs/services/hw.html" class="active"><strong aria-hidden="true">7.14.2.</strong> sys::hw</a></li><li class="chapter-item expanded "><a href="../../specs/services/perm.html"><strong aria-hidden="true">7.14.3.</strong> sys::perm</a></li><li class="chapter-item expanded "><a href="../../specs/services/net.html"><strong aria-hidden="true">7.14.4.</strong> sys::net</a></li><li class="chapter-item expanded "><a href="../../specs/services/crypto.html"><strong aria-hidden="true">7.14.5.</strong> sys::crypto</a></li><li class="chapter-item expanded "><a href="../../specs/services/crashsave.html"><strong aria-hidden="true">7.14.6.</strong> sys::crashsave</a></li><li class="chapter-item expanded "><a href="../../specs/services/flow.html"><strong aria-hidden="true">7.14.7.</strong> sys::flow</a></li><li class="chapter-item expanded "><a href="../../specs/services/hydre.html"><strong aria-hidden="true">7.14.8.</strong> sys::hydre</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../applications/index.html"><strong aria-hidden="true">8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../applications/Astral.html"><strong aria-hidden="true">8.1.</strong> Astral</a></li><li class="chapter-item expanded "><a href="../../applications/BareEnv.html"><strong aria-hidden="true">8.2.</strong> BareEnv</a></li><li class="chapter-item expanded "><a href="../../applications/Blackhole.html"><strong aria-hidden="true">8.3.</strong> Blackhole</a></li><li class="chapter-item expanded "><a href="../../applications/Central.html"><strong aria-hidden="true">8.4.</strong> Central</a></li><li class="chapter-item expanded "><a href="../../applications/Cloudy.html"><strong aria-hidden="true">8.5.</strong> Cloudy</a></li><li class="chapter-item expanded "><a href="../../applications/Comet.html"><strong aria-hidden="true">8.6.</strong> Comet</a></li><li class="chapter-item expanded "><a href="../../applications/Gravity.html"><strong aria-hidden="true">8.7.</strong> Gravity</a></li><li class="chapter-item expanded "><a href="../../applications/Locky.html"><strong aria-hidden="true">8.8.</strong> Locky</a></li><li class="chapter-item expanded "><a href="../../applications/Milkshake.html"><strong aria-hidden="true">8.9.</strong> Milkshake</a></li><li class="chapter-item expanded "><a href="../../applications/Monitor.html"><strong aria-hidden="true">8.10.</strong> Monitor</a></li><li class="chapter-item expanded "><a href="../../applications/Nova.html"><strong aria-hidden="true">8.11.</strong> Nova</a></li><li class="chapter-item expanded "><a href="../../applications/Particle.html"><strong aria-hidden="true">8.12.</strong> Particle</a></li><li class="chapter-item expanded "><a href="../../applications/Pluton.html"><strong aria-hidden="true">8.13.</strong> Pluton</a></li><li class="chapter-item expanded "><a href="../../applications/Postal.html"><strong aria-hidden="true">8.14.</strong> Postal</a></li><li class="chapter-item expanded "><a href="../../applications/Reader.html"><strong aria-hidden="true">8.15.</strong> Reader</a></li><li class="chapter-item expanded "><a href="../../applications/Registry.html"><strong aria-hidden="true">8.16.</strong> Registry</a></li><li class="chapter-item expanded "><a href="../../applications/Rocket.html"><strong aria-hidden="true">8.17.</strong> Rocket</a></li><li class="chapter-item expanded "><a href="../../applications/ShootingStar.html"><strong aria-hidden="true">8.18.</strong> ShootingStar</a></li><li class="chapter-item expanded "><a href="../../applications/Skyer.html"><strong aria-hidden="true">8.19.</strong> Skyer</a></li><li class="chapter-item expanded "><a href="../../applications/Sonata.html"><strong aria-hidden="true">8.20.</strong> Sonata</a></li><li class="chapter-item expanded "><a href="../../applications/Stellar.html"><strong aria-hidden="true">8.21.</strong> Stellar</a></li><li class="chapter-item expanded "><a href="../../applications/Thinker.html"><strong aria-hidden="true">8.22.</strong> Thinker</a></li><li class="chapter-item expanded "><a href="../../applications/TimeTravel.html"><strong aria-hidden="true">8.23.</strong> TimeTravel</a></li><li class="chapter-item expanded "><a href="../../applications/Vortex.html"><strong aria-hidden="true">8.24.</strong> Vortex</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NightOS documentation</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#syshw-service" id="syshw-service"><code>sys::hw</code> service</a></h1>
+<p>The <code>sys::hw</code> service is in charge of hardware devices. It coordinates and manages communications with the hardware.</p>
+<ul>
+<li><a href="#hardware-detection">Hardware detection</a></li>
+<li><a href="#device-formats">Device formats</a>
+<ul>
+<li><a href="#device-type-descriptor">Device type descriptor</a></li>
+<li><a href="#device-identifier">Device identifier</a></li>
+<li><a href="#driver-device-descriptor">Driver device descriptor</a></li>
+<li><a href="#driven-device-type">Driven device type</a></li>
+</ul>
+</li>
+<li><a href="#normalization">Normalization</a>
+<ul>
+<li><a href="#normalized-methods">Normalized methods</a></li>
+<li><a href="#normalized-interrupts">Normalized interrupts</a></li>
+<li><a href="#normalized-notifications">Normalized notifications</a></li>
+<li><a href="#patterns">Patterns</a></li>
+</ul>
+</li>
+<li><a href="#drivers">Drivers</a>
+<ul>
+<li><a href="#a-note-on-performances">A note on performances</a></li>
+</ul>
+</li>
+<li><a href="#methods">Methods</a>
+<ul>
+<li><a href="#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></li>
+<li><a href="#0x02-subscribe_devices"><code>0x02</code> SUBSCRIBE_DEVICES</a></li>
+<li><a href="#0x10-register_driver"><code>0x10</code> REGISTER_DRIVER</a></li>
+<li><a href="#0x11-unregister_driver"><code>0x11</code> UNREGISTER_DRIVER</a></li>
+<li><a href="#0x20-notify_process"><code>0x20</code> NOTIFY_PROCESS</a></li>
+<li><a href="#0xa0-ask_driver"><code>0xA0</code> ASK_DRIVER</a></li>
+</ul>
+</li>
+<li><a href="#notifications">Notifications</a>
+<ul>
+<li><a href="#device_event"><code>DEVICE_EVENT</code></a></li>
+<li><a href="#device_interrupt"><code>DEVICE_INTERRUPT</code></a></li>
+<li><a href="#driver_method_request"><code>DRIVER_METHOD_REQUEST</code></a></li>
+<li><a href="#device_norm_notif"><code>DEVICE_NORM_NOTIF</code></a></li>
+</ul>
+</li>
+</ul>
+<h2><a class="header" href="#hardware-detection" id="hardware-detection">Hardware detection</a></h2>
+<p>Hardware detection is handled by <a href="../kernel/hardware.html#hardware-detection">the kernel itself</a>, which then exposes a <a href="../kernel/hardware.html#raw-device-descriptor"><em>raw device descriptor</em> (RDD)</a> as well as a <a href="../kernel/hardware.html#connection-interface-identifier"><em>connection interface identifier</em> (CII)</a> and a <a href="../kernel/hardware.html#session-device-identifier"><em>session device identifier</em> (SDI)</a>.</p>
+<h2><a class="header" href="#device-formats" id="device-formats">Device formats</a></h2>
+<p>This section describes the multiple formats used by this service to deal with devices.</p>
+<h3><a class="header" href="#device-type-descriptor" id="device-type-descriptor">Device type descriptor</a></h3>
+<p>From the RDD and CII is derived the <em>device type descriptor</em> (DTD), which describes the device's type. Its composition and size depends on the connection type, but it varies from empty (0 byte) if the connection type guarantees no information, up to 256 bytes.</p>
+<p><em><strong>The format remains to be determined but should be along the lines of a number-based equivalent of ModAlias, like :</strong></em></p>
+<ul>
+<li>PCI-Express:
+<ul>
+<li>Vendor (8 bytes)</li>
+<li>Sub-vendor (8 bytes)</li>
+<li>Type (8 bytes)</li>
+<li>Sub-type (8 bytes)</li>
+<li>...</li>
+</ul>
+</li>
+<li>...</li>
+</ul>
+<h3><a class="header" href="#device-identifier" id="device-identifier">Device identifier</a></h3>
+<p>It also derives a <em>unique device identifier</em> (UDI) encoded on 265 bytes, which is made of:</p>
+<ul>
+<li>SDI (4 bytes)</li>
+<li>CII (4 bytes)</li>
+<li>Size of the DTD (1 byte)</li>
+<li>DTD (256 bytes, weakest bits filled with zeros)</li>
+</ul>
+<h3><a class="header" href="#driver-device-descriptor" id="driver-device-descriptor">Driver device descriptor</a></h3>
+<p>A <em>driver device descriptor</em> (DDD) is a data structure meant to be used by <a href="#drivers">drivers</a>. It uses the following format:</p>
+<ul>
+<li>Bytes 000-264: Device's UDI</li>
+<li>Bytes 265-512: <em>Future-proof</em></li>
+</ul>
+<h3><a class="header" href="#driven-device-type" id="driven-device-type">Driven device type</a></h3>
+<p>A <em>driven device type</em> (DDT), usually referred to as the <em>device type</em>, is generated by the <a href="#drivers">driver</a> for each device is drives. This is a normalized value, used by the system to determine which actions can be performed through this device.</p>
+<p>It's a 4-byte value, the strongest two bytes describing the <em>category</em> and the weakest two the <em>sub-category</em>.</p>
+<p>The following list contains all possible values for DDTs, but is <strong>far from being complete yet</strong>. It will also grow over time as new device types appear on the market.</p>
+<ul>
+<li><code>0x0001</code>: Storage
+<ul>
+<li><code>0x0001</code>: Hard drive</li>
+<li><code>0x0002</code>: SSD</li>
+<li><code>0x0003</code>: USB flash drive</li>
+<li><code>0x0004</code>: SD flash memory card</li>
+</ul>
+</li>
+<li>...</li>
+</ul>
+<h2><a class="header" href="#normalization" id="normalization">Normalization</a></h2>
+<h3><a class="header" href="#normalized-methods" id="normalized-methods">Normalized methods</a></h3>
+<p>When a device is driven, other processes can ask this service to use <em>normalized methods</em>. These are methods that allow to perform a specific action or to receive <a href="#normalized-notifications"><em>normalized notifications</em></a> about specific events of a specific device.</p>
+<p>There are several methods, depending on the <a href="#driven-device-type">device's type (DDT)</a>. Notifications differ as well.</p>
+<p>The following list contains all methods and related notifications for all DDTs, but is <strong>far from being complete yet</strong>. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.</p>
+<p><strong>TODO</strong></p>
+<h3><a class="header" href="#normalized-interrupts" id="normalized-interrupts">Normalized interrupts</a></h3>
+<p>Some devices use interrupts to notify the system of a particular event. In such case, the interrupt is normalized to a format called the <em>normalized interrupt format</em>, which is then sent to the driver process using the <a href="#device_event"><code>DEVICE_EVENT</code></a> notification.</p>
+<p>The normalized interrupt format depends on the <a href="#driven-device-type">device's type (DDT)</a>.</p>
+<p>The following list contains all normalized interrupts for all DDTs, but is <strong>far from being complete yet</strong>. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.</p>
+<p><strong>TODO</strong></p>
+<h3><a class="header" href="#normalized-notifications" id="normalized-notifications">Normalized notifications</a></h3>
+<p>The <em>normalized notifications</em> are a type of notifications sent by a <a href="#drivers">driver</a> to processes that subscribed to them using <a href="#normalized-methods">normalized methods</a>. They are derived from the device's interrupts and events pulled from its memory, after a translation by the driver itself.</p>
+<p>The normalized notification format depends on the <a href="#driven-device-type">device's type (DDT)</a>.</p>
+<p>The following list contains all normalized notifications for all DDTs, but is <strong>far from being complete yet</strong>. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.</p>
+<p><strong>TODO</strong></p>
+<h3><a class="header" href="#patterns" id="patterns">Patterns</a></h3>
+<p>Several methods of this service use <em>patterns</em>, which allow to match devices depending on several criterias.</p>
+<p>A pattern is a data structure whose size varies from 5 to 277 bytes made of the following:</p>
+<ul>
+<li>Pattern (1 byte)
+<ul>
+<li>Bit 0: match all connection types</li>
+<li>Bit 2: match all buses</li>
+<li>Bit 3: match all ports</li>
+</ul>
+</li>
+<li>Connection type (1 byte)</li>
+<li>Bus number (1 byte)</li>
+<li>Port number (1 byte)</li>
+<li>DTD length (1 byte) - <code>0</code> to omit DTD</li>
+<li>DTD pattern indicator (16 bytes, only if DTD) - indicates which bytes of the DTD must be used as patterns</li>
+<li>DTD (up to 256 bytes)</li>
+</ul>
+<p>It's possible to match only devices that use a given connection type, and more specifically on a given bus and/or port.</p>
+<p>It's also possible to list only devices that match a specific DTD pattern. For that, the bit corresponding to the byte number in the DTD pattern indicator must be set.</p>
+<p>For instance, providing the DTD <code>0x0100B2</code> with the DTD pattern indicator set to <code>0b01000000</code>, the second byte will match all devices.</p>
+<h2><a class="header" href="#drivers" id="drivers">Drivers</a></h2>
+<p>From a higher level point of view, drivers are <a href="../services.html">services</a> that declare themselves as being able to handle certain type of devices through the <a href="#0x10-register_driver"><code>REGISTER_DRIVER</code></a> method, using <a href="#patterns">patterns</a>.</p>
+<p>When a device is connected, using multiple criterias <strong>which are yet to be determined</strong>, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the <a href="#device_event"><code>DEVICE_EVENT</code></a> notification.</p>
+<p>From this point, the driver can create an <a href="../kernel/memory.html#abstract-memory-segments">AMS</a> from the device's memory using the <a href="../syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall.</p>
+<p>It can also get informed of interrupts the device raises through the <a href="#device_interrupt"><code>DEVICE_INTERRUPT</code></a> notification.</p>
+<p>Other processes can then ask the driver to perform specific actions depending on the type of device, using <a href="#normalized-methods">normalized methods</a> which can be sent to the driver using the <a href="#0xa0-ask_driver"><code>ASK_DRIVER</code></a> method. The driver receives these informations through the <a href="#driver_method_request"><code>DRIVER_METHOD_REQUEST</code></a> notification.</p>
+<p>The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to <a href="#normalized-notifications">normalized notifications</a> which can then be sent to processes that subscribed to them using the related <a href="#normalized-methods">normalized methods</a>.</p>
+<h3><a class="header" href="#a-note-on-performances" id="a-note-on-performances">A note on performances</a></h3>
+<p>Although hardware devices' interrupts are notified to the driver through <a href="../ipc.html#methods-and-notifications">service socket notifications</a>, the latency is still minimal as soon as the driver listens to the <a href="../signals.html#0x27-recv_sock_msg"><code>RECV_SOCK_MSG</code></a> signal, which like all signals uses interrupts and so guarantees a very low latency.</p>
+<h2><a class="header" href="#methods" id="methods">Methods</a></h2>
+<h3><a class="header" href="#0x01-enum_devices" id="0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></h3>
+<p>Enumerate connected devices.</p>
+<p>It's also possible to only count the number of devices matching the provided criterias by providing a start index and end index of <code>0</code>.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>devices.enum</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Start index (4 bytes)</li>
+<li>End index (4 bytes)</li>
+<li><a href="#patterns">Pattern</a> (277 bytes)</li>
+</ul>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>Number of found devices globally (4 bytes)</li>
+<li>Number of devices listed in this answer (4 bytes)</li>
+<li><a href="#driver-device-descriptor">DDD</a> of each device (512 bytes * number of devices)</li>
+<li><code>0x01</code> if some devices were masked due to insufficient permissions, <code>0x00</code> else (1 byte)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Start index is lower than the end index</li>
+<li><code>0x11</code>: Invalid connection type</li>
+<li><code>0x12</code>: Bus number was provided without a connection type</li>
+<li><code>0x13</code>: Port number was provided without a connection type</li>
+<li><code>0x14</code>: Both bus number and port number were provided</li>
+<li><code>0x15</code>: Invalid DTD</li>
+<li><code>0x20</code>: Range is greater than the available answer size</li>
+<li><code>0x21</code>: Provided bus was not found</li>
+<li><code>0x22</code>: Provided port was not found</li>
+</ul>
+<h3><a class="header" href="#0x02-subscribe_devices" id="0x02-subscribe_devices"><code>0x02</code> SUBSCRIBE_DEVICES</a></h3>
+<p>Subscribe to events related to devices matching a patterns.<br />
+All current and future devices matching this pattern will cause a <a href="#device_event"><code>DEVICE_EVENT</code></a> notification.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>devices.subscribe</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>0x00</code> to subscribe, any other value to unsubscribe</li>
+<li><a href="#patterns">Pattern</a> (277 bytes)</li>
+</ul>
+<p><strong>Answer:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Asked to unsubscribe but no subscription is active for this pattern</li>
+</ul>
+<h3><a class="header" href="#0x10-register_driver" id="0x10-register_driver"><code>0x10</code> REGISTER_DRIVER</a></h3>
+<p>Set up a service as a driver for all devices matching a pattern.<br />
+If multiple drivers have colliding patterns, the final user will be prompted to choose a driver.</p>
+<p>The driver process will receive <a href="#device_event"><code>DEVICE_EVENT</code></a> notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.<br />
+Notifications are also retroactive, which means they will be sent for already-connected devices.</p>
+<p>The driver will also have the device registered in its <a href="../kernel/processes.html#drivable-devices">drivable devices attribute</a>, allowing it to use the <a href="../syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall to map the device's memory in its own.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>devices.register_driver</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="#patterns">Pattern</a> of the devices to drive (277 bytes)</li>
+</ul>
+<p><strong>Answer:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Current process is not a service</li>
+<li><code>0x30</code>: Current process is already registered as a driver for this pattern</li>
+</ul>
+<h3><a class="header" href="#0x11-unregister_driver" id="0x11-unregister_driver"><code>0x11</code> UNREGISTER_DRIVER</a></h3>
+<p>Unregister a service <a href="#0x10-register_driver">previously registered as a driver</a>.</p>
+<p><strong>Required permissions:</strong></p>
+<p><em>None</em></p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="#patterns">Pattern</a> to unsubscribe from (277 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Current process is not registered as a driver for this pattern</li>
+</ul>
+<h3><a class="header" href="#0x20-notify_process" id="0x20-notify_process"><code>0x20</code> NOTIFY_PROCESS</a></h3>
+<p>Send a notification to a process that registered itself for <a href="#normalized-methods">normalized methods</a> through a <a href="#normalized-methods">normalized method</a>.</p>
+<p><strong>Required permissions:</strong></p>
+<p><em>None</em></p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Notification ID (8 bytes)</li>
+<li><a href="#normalized-notifications"><em>Normalized notification's content</em></a></li>
+</ul>
+<p><strong>Answer:</strong></p>
+<p><em>Expected answer by the notified process for this method if any</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Unknown notification ID</li>
+</ul>
+<h3><a class="header" href="#0xa0-ask_driver" id="0xa0-ask_driver"><code>0xA0</code> ASK_DRIVER</a></h3>
+<p>Ask a <a href="#drivers">driver</a> to use a <a href="#normalized-methods">normalized method</a> on a device it drives.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>devices.ask_driver</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Device's SDI (4 bytes)</li>
+<li>Method's code (4 bytes)</li>
+<li>Method's arguments (size depends on the method)</li>
+</ul>
+<p><strong>Answer:</strong></p>
+<p><em>Expected answer format for this method</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Unknown device SDI provided</li>
+<li><code>0x21</code>: Provided method code is invalid for this device</li>
+<li><code>0x22</code>: Invalid arguments provided for this method</li>
+</ul>
+<h2><a class="header" href="#notifications" id="notifications">Notifications</a></h2>
+<h3><a class="header" href="#device_event" id="device_event"><code>DEVICE_EVENT</code></a></h3>
+<p>Sent for a specific device to processes that either:</p>
+<ul>
+<li><a href="#drivers">Drive</a> this specific device</li>
+<li>Subscribed to it using the <a href="#0x02-subscribe_devices"><code>SUBSCRIBE_DEVICES</code></a> method</li>
+</ul>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="#driver-device-descriptor">DDD</a> (512 bytes)</li>
+<li>Event code (1 byte):
+<ul>
+<li><code>0x10</code>: device was just connected</li>
+<li><code>0x11</code>: a driver was just selected for the device</li>
+<li><code>0x12</code>: the device is ready to use</li>
+<li><code>0x20</code>: device was disconnected (software)</li>
+<li><code>0x21</code>: the device is being disconnected by its driver</li>
+<li><code>0x22</code>: the device has been disconnected by the driver</li>
+<li><code>0x23</code>: the device was brutally disconnected (hardware)</li>
+<li><code>0x30</code>: device was just put to sleep</li>
+<li><code>0x31</code>: device was just awoken from sleep</li>
+</ul>
+</li>
+<li>Indicator (1 byte):
+<ul>
+<li>Bit 0: set if this device is connected for the first time</li>
+<li>Bit 1: set if this device was disconnected brutally (not by the system itself)</li>
+<li>Bit 2: set if this device is connected for the first time on this specific port</li>
+</ul>
+</li>
+</ul>
+<h3><a class="header" href="#device_interrupt" id="device_interrupt"><code>DEVICE_INTERRUPT</code></a></h3>
+<p>Sent to a <a href="#drivers">driver</a> after a device it's currently driving raised an interrupt.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Device's SDI (4 bytes)</li>
+<li><a href="#normalized-interrupts">Normalized interrupt</a></li>
+</ul>
+<h3><a class="header" href="#driver_method_request" id="driver_method_request"><code>DRIVER_METHOD_REQUEST</code></a></h3>
+<p>Sent to a <a href="#drivers">driver</a> after receiving a valid <a href="#0xa0-ask_driver">normalized method request</a>.</p>
+<p>The driver is expected to answer using the relevant answer format for the provided <a href="#normalized-methods">normalized method and arguments</a>.</p>
+<p>The <em>notification ID</em> is generated by this service to allow the driver to <a href="#0x20-notify_process">send normalized notifications</a> to a process that registers for it through this method without showing the caller process' PID to the driver process.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="#driven-device-type">DDT</a> (4 bytes)</li>
+<li>Notification ID (8 bytes)</li>
+<li>Method's code (4 bytes)</li>
+<li>Method's arguments (size depends on the method)</li>
+</ul>
+<p><strong>Expected answer:</strong></p>
+<p><em>Expected answer format for this method if any</em></p>
+<h3><a class="header" href="#device_norm_notif" id="device_norm_notif"><code>DEVICE_NORM_NOTIF</code></a></h3>
+<p>Sent to a process that subscribed to <a href="#normalized-methods">normalized notifications</a> of a device.<br />
+This notification is transferred by the <code>sys::hw</code> service after the driver sent it its content through the <a href="#0x20-notify_process"><code>NOTIFY_PROCESS</code></a> method.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Device's SDI (4 bytes)</li>
+<li><a href="#normalized-notifications"><em>Normalized notification's content</em></a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../specs/services/fs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../specs/services/perm.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../specs/services/fs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../specs/services/perm.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

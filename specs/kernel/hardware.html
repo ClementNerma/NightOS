@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Hardware - NightOS documentation</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Design and specification documents for NightOS">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../FOREWORD.html"><strong aria-hidden="true">1.</strong> Foreword</a></li><li class="chapter-item expanded "><a href="../../FAQ.html"><strong aria-hidden="true">2.</strong> Frequently-asked questions</a></li><li class="chapter-item expanded "><a href="../../project/index.html"><strong aria-hidden="true">3.</strong> Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../project/roadmap.html"><strong aria-hidden="true">3.1.</strong> Roadmap</a></li><li class="chapter-item expanded "><a href="../../project/development.html"><strong aria-hidden="true">3.2.</strong> Development</a></li><li class="chapter-item expanded "><a href="../../project/hw-requirements.html"><strong aria-hidden="true">3.3.</strong> Hardware requirements</a></li></ol></li><li class="chapter-item expanded "><a href="../../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/applications.html"><strong aria-hidden="true">4.1.</strong> What are applications?</a></li><li class="chapter-item expanded "><a href="../../concepts/libraries.html"><strong aria-hidden="true">4.2.</strong> What are libraries?</a></li><li class="chapter-item expanded "><a href="../../concepts/users.html"><strong aria-hidden="true">4.3.</strong> What are users?</a></li></ol></li><li class="chapter-item expanded "><a href="../../features/index.html"><strong aria-hidden="true">5.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../features/balancer.html"><strong aria-hidden="true">5.1.</strong> The balancer</a></li><li class="chapter-item expanded "><a href="../../features/crash-saves.html"><strong aria-hidden="true">5.2.</strong> Crash saves</a></li><li class="chapter-item expanded "><a href="../../features/domains.html"><strong aria-hidden="true">5.3.</strong> Domains</a></li><li class="chapter-item expanded "><a href="../../features/encryption.html"><strong aria-hidden="true">5.4.</strong> Encryption</a></li><li class="chapter-item expanded "><a href="../../features/freeze-prevention.html"><strong aria-hidden="true">5.5.</strong> Freeze-prevention system</a></li><li class="chapter-item expanded "><a href="../../features/parental-control.html"><strong aria-hidden="true">5.6.</strong> Parental control</a></li><li class="chapter-item expanded "><a href="../../features/sandboxes.html"><strong aria-hidden="true">5.7.</strong> Sandboxes</a></li><li class="chapter-item expanded "><a href="../../features/synchronization.html"><strong aria-hidden="true">5.8.</strong> Synchronization</a></li></ol></li><li class="chapter-item expanded "><a href="../../technical/index.html"><strong aria-hidden="true">6.</strong> Technical</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../technical/controller.html"><strong aria-hidden="true">6.1.</strong> The controller</a></li><li class="chapter-item expanded "><a href="../../technical/dev-mode.html"><strong aria-hidden="true">6.2.</strong> Developer mode</a></li><li class="chapter-item expanded "><a href="../../technical/devices.html"><strong aria-hidden="true">6.3.</strong> Devices</a></li><li class="chapter-item expanded "><a href="../../technical/file-formats.html"><strong aria-hidden="true">6.4.</strong> File formats</a></li><li class="chapter-item expanded "><a href="../../technical/fs-abslayer.html"><strong aria-hidden="true">6.5.</strong> Filesystem Abstraction Layer</a></li><li class="chapter-item expanded "><a href="../../technical/integrity-checker.html"><strong aria-hidden="true">6.6.</strong> Integrity checker</a></li><li class="chapter-item expanded "><a href="../../technical/io-manager.html"><strong aria-hidden="true">6.7.</strong> I/O manager</a></li><li class="chapter-item expanded "><a href="../../technical/multi-platform.html"><strong aria-hidden="true">6.8.</strong> Multi-platform management</a></li><li class="chapter-item expanded "><a href="../../technical/performances.html"><strong aria-hidden="true">6.9.</strong> Performances</a></li><li class="chapter-item expanded "><a href="../../technical/pre-compiling.html"><strong aria-hidden="true">6.10.</strong> Pre-compiling applications</a></li><li class="chapter-item expanded "><a href="../../technical/processes.html"><strong aria-hidden="true">6.11.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../../technical/registry.html"><strong aria-hidden="true">6.12.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../../technical/services.html"><strong aria-hidden="true">6.13.</strong> Services</a></li><li class="chapter-item expanded "><a href="../../technical/shell.html"><strong aria-hidden="true">6.14.</strong> The shell</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/index.html"><strong aria-hidden="true">7.</strong> Specifications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/applications/context.html"><strong aria-hidden="true">7.1.</strong> Application context</a></li><li class="chapter-item expanded "><a href="../../specs/applications/package.html"><strong aria-hidden="true">7.2.</strong> Applications package</a></li><li class="chapter-item expanded "><a href="../../specs/applications/manifest.html"><strong aria-hidden="true">7.3.</strong> Applications manifest</a></li><li class="chapter-item expanded "><a href="../../specs/fs-structure.html"><strong aria-hidden="true">7.4.</strong> Filesystem structure</a></li><li class="chapter-item expanded "><a href="../../specs/ipc.html"><strong aria-hidden="true">7.5.</strong> Inter-process communication</a></li><li class="chapter-item expanded "><a href="../../specs/libraries.html"><strong aria-hidden="true">7.6.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../../specs/registry.html"><strong aria-hidden="true">7.7.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../../specs/vocabulary.html"><strong aria-hidden="true">7.8.</strong> Vocabulary</a></li><li class="chapter-item expanded "><a href="../../specs/shell.html"><strong aria-hidden="true">7.9.</strong> The shell</a></li><li class="chapter-item expanded "><a href="../../specs/shell-scripting.html"><strong aria-hidden="true">7.10.</strong> Shell scripting</a></li><li class="chapter-item expanded "><a href="../../specs/signals.html"><strong aria-hidden="true">7.11.</strong> Signals</a></li><li class="chapter-item expanded "><a href="../../specs/syscalls.html"><strong aria-hidden="true">7.12.</strong> System calls</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/index.html"><strong aria-hidden="true">7.13.</strong> Kernel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/kernel/hardware.html" class="active"><strong aria-hidden="true">7.13.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/kpc.html"><strong aria-hidden="true">7.13.2.</strong> Kernel-process communication</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/memory.html"><strong aria-hidden="true">7.13.3.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/processes.html"><strong aria-hidden="true">7.13.4.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/data-structures.html"><strong aria-hidden="true">7.13.5.</strong> Data structures</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/services/index.html"><strong aria-hidden="true">7.14.</strong> System services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/services/fs.html"><strong aria-hidden="true">7.14.1.</strong> sys::fs</a></li><li class="chapter-item expanded "><a href="../../specs/services/hw.html"><strong aria-hidden="true">7.14.2.</strong> sys::hw</a></li><li class="chapter-item expanded "><a href="../../specs/services/perm.html"><strong aria-hidden="true">7.14.3.</strong> sys::perm</a></li><li class="chapter-item expanded "><a href="../../specs/services/net.html"><strong aria-hidden="true">7.14.4.</strong> sys::net</a></li><li class="chapter-item expanded "><a href="../../specs/services/crypto.html"><strong aria-hidden="true">7.14.5.</strong> sys::crypto</a></li><li class="chapter-item expanded "><a href="../../specs/services/crashsave.html"><strong aria-hidden="true">7.14.6.</strong> sys::crashsave</a></li><li class="chapter-item expanded "><a href="../../specs/services/flow.html"><strong aria-hidden="true">7.14.7.</strong> sys::flow</a></li><li class="chapter-item expanded "><a href="../../specs/services/hydre.html"><strong aria-hidden="true">7.14.8.</strong> sys::hydre</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../applications/index.html"><strong aria-hidden="true">8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../applications/Astral.html"><strong aria-hidden="true">8.1.</strong> Astral</a></li><li class="chapter-item expanded "><a href="../../applications/BareEnv.html"><strong aria-hidden="true">8.2.</strong> BareEnv</a></li><li class="chapter-item expanded "><a href="../../applications/Blackhole.html"><strong aria-hidden="true">8.3.</strong> Blackhole</a></li><li class="chapter-item expanded "><a href="../../applications/Central.html"><strong aria-hidden="true">8.4.</strong> Central</a></li><li class="chapter-item expanded "><a href="../../applications/Cloudy.html"><strong aria-hidden="true">8.5.</strong> Cloudy</a></li><li class="chapter-item expanded "><a href="../../applications/Comet.html"><strong aria-hidden="true">8.6.</strong> Comet</a></li><li class="chapter-item expanded "><a href="../../applications/Gravity.html"><strong aria-hidden="true">8.7.</strong> Gravity</a></li><li class="chapter-item expanded "><a href="../../applications/Locky.html"><strong aria-hidden="true">8.8.</strong> Locky</a></li><li class="chapter-item expanded "><a href="../../applications/Milkshake.html"><strong aria-hidden="true">8.9.</strong> Milkshake</a></li><li class="chapter-item expanded "><a href="../../applications/Monitor.html"><strong aria-hidden="true">8.10.</strong> Monitor</a></li><li class="chapter-item expanded "><a href="../../applications/Nova.html"><strong aria-hidden="true">8.11.</strong> Nova</a></li><li class="chapter-item expanded "><a href="../../applications/Particle.html"><strong aria-hidden="true">8.12.</strong> Particle</a></li><li class="chapter-item expanded "><a href="../../applications/Pluton.html"><strong aria-hidden="true">8.13.</strong> Pluton</a></li><li class="chapter-item expanded "><a href="../../applications/Postal.html"><strong aria-hidden="true">8.14.</strong> Postal</a></li><li class="chapter-item expanded "><a href="../../applications/Reader.html"><strong aria-hidden="true">8.15.</strong> Reader</a></li><li class="chapter-item expanded "><a href="../../applications/Registry.html"><strong aria-hidden="true">8.16.</strong> Registry</a></li><li class="chapter-item expanded "><a href="../../applications/Rocket.html"><strong aria-hidden="true">8.17.</strong> Rocket</a></li><li class="chapter-item expanded "><a href="../../applications/ShootingStar.html"><strong aria-hidden="true">8.18.</strong> ShootingStar</a></li><li class="chapter-item expanded "><a href="../../applications/Skyer.html"><strong aria-hidden="true">8.19.</strong> Skyer</a></li><li class="chapter-item expanded "><a href="../../applications/Sonata.html"><strong aria-hidden="true">8.20.</strong> Sonata</a></li><li class="chapter-item expanded "><a href="../../applications/Stellar.html"><strong aria-hidden="true">8.21.</strong> Stellar</a></li><li class="chapter-item expanded "><a href="../../applications/Thinker.html"><strong aria-hidden="true">8.22.</strong> Thinker</a></li><li class="chapter-item expanded "><a href="../../applications/TimeTravel.html"><strong aria-hidden="true">8.23.</strong> TimeTravel</a></li><li class="chapter-item expanded "><a href="../../applications/Vortex.html"><strong aria-hidden="true">8.24.</strong> Vortex</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NightOS documentation</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#hardware-management" id="hardware-management">Hardware management</a></h1>
+<p>This document describes how the kernel interacts with hardware.</p>
+<ul>
+<li><a href="#hardware-detection">Hardware detection</a></li>
+<li><a href="#connection-specific-device-descriptor">Connection-specific device descriptor</a></li>
+<li><a href="#connection-interface-identifier">Connection interface identifier</a></li>
+<li><a href="#session-device-identifier">Session device identifier</a></li>
+<li><a href="#raw-device-descriptor">Raw device descriptor</a></li>
+<li><a href="#drivers">Drivers</a></li>
+</ul>
+<h2><a class="header" href="#hardware-detection" id="hardware-detection">Hardware detection</a></h2>
+<p>Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional components afterwards.</p>
+<p>As all components do not use the same connection protocols, the detection process depends on the connection:</p>
+<ul>
+<li>PCI-Express components are detected through their Configuration Space</li>
+<li>IDE/SATA components are detected through the IDE/SATA controller</li>
+<li>USB components are enumerated through the USB protocol stack</li>
+</ul>
+<p>Some components may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.</p>
+<h2><a class="header" href="#connection-specific-device-descriptor" id="connection-specific-device-descriptor">Connection-specific device descriptor</a></h2>
+<p>All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the <em>connection-specific device descriptor</em> (CSDD).</p>
+<p>Its size can vary up to 256 bytes.</p>
+<h2><a class="header" href="#connection-interface-identifier" id="connection-interface-identifier">Connection interface identifier</a></h2>
+<p>The <em>connection interface identifier</em> (CII) is a 4-byte number describing what a component is connected to:</p>
+<ul>
+<li>Connection type (1 byte):
+<ul>
+<li><code>0x01</code>: PCI-Express</li>
+<li><code>0x02</code>: IDE</li>
+<li><code>0x03</code>: SATA</li>
+<li><code>0x04</code>: M.2</li>
+<li><code>0x05</code>: USB</li>
+<li><code>0x06</code>: RGB</li>
+</ul>
+</li>
+<li>Bus number (1 byte)</li>
+<li>Port number (2 bytes)</li>
+</ul>
+<p>For instance, the seventh USB port on the second bus will have the <code>0x05010006</code> CII.</p>
+<h2><a class="header" href="#session-device-identifier" id="session-device-identifier">Session device identifier</a></h2>
+<p>The kernel generates for each device a <em>session device identifier</em> (SDI), which is a random 4-byte number specific to the current session, allowing to plug up to 4 billion devices in a single session.</p>
+<h2><a class="header" href="#raw-device-descriptor" id="raw-device-descriptor">Raw device descriptor</a></h2>
+<p>The <em>raw device descriptor</em> (RDD) is a data structure (up to 264 bytes) made of the followings:</p>
+<ul>
+<li><a href="#session-device-identifier">SDI</a> (4 bytes)</li>
+<li><a href="#connection-interface-identifier">CII</a> (4 bytes)</li>
+<li><a href="#connection-specific-device-descriptor">CSDD</a> (up to 256 bytes)</li>
+</ul>
+<p>This descriptor is then used by the <a href="../services/hw.html"><code>sys::hw</code></a> service to expose the device to the rest of the operating system.</p>
+<h2><a class="header" href="#drivers" id="drivers">Drivers</a></h2>
+<p>Drivers and software &lt;-&gt; hardware devices communications are handled by the <a href="../services/hw.html"><code>sys::hw</code></a> system service.</p>
+<p>You can find more about how drivers work in <a href="../services/hw.html#drivers">this section</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../specs/kernel/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../specs/kernel/kpc.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../specs/kernel/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../specs/kernel/kpc.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

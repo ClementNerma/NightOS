@@ -12,7 +12,7 @@ NightOS is an **highly experimental** general-purpose operating system aiming to
 
 Design and specification documents can be found in the [`docs`](docs/) directory.
 
-The documentation is also live at [`https://nightos.onrender.com`](https://nightos.onrender.com).
+The documentation is also live at [`https://clementnerma.github.io/NightOS`](https://clementnerma.github.io/NightOS).
 
 ## What is NightOS?
 

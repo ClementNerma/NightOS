@@ -14,4 +14,4 @@ create-missing = false
 
 [output.html]
 git-repository-url="https://github.com/ClementNerma/NightOS"
-site-url="https://nightos.onrender.com"
+site-url="https://clementnerma.github.io/NightOS"

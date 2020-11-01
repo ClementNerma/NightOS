@@ -1,0 +1,34 @@
+name: docs
+
+on: [push]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+
+      - name: Cache Cargo dependencies
+        uses: actions/cache@v1.1.2
+        with:
+          path: ~/.cargo
+          key: cargo-data
+
+      - name: Get "broken-md-links" and "mdbook" tools
+        run: cargo install broken-md-links mdbook
+
+      - name: Look for broken markdown links
+        run: broken-md-links ${GITHUB_WORKSPACE}/docs --recursive
+
+      - name: Build the docs
+        run: mdbook build
+
+      - name: Deploy the docs
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: book
+          CLEAN: true

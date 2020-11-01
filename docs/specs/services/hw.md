@@ -246,11 +246,11 @@ Unregister a service [previously registered as a driver](#0x10-register_driver).
 
 **Required permissions:**
 
-- [Pattern](#patterns) to unsubscribe from (277 bytes)
+_None_
 
 **Arguments:**
 
-_None_
+- [Pattern](#patterns) to unsubscribe from (277 bytes)
 
 **Errors:**
 

@@ -283,7 +283,7 @@ Ask a [driver](#drivers) to use a [normalized method](#normalized-methods) on a 
 
 **Required permissions:**
 
-- `devices.perform_method`
+- `devices.ask_driver`
 
 **Arguments:**
 

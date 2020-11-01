@@ -4,6 +4,7 @@
 - [Users type](#users-type)
 - [Dangers of an admin. account](#dangers-of-an-admin-account)
 - [User Privileges Elevation (UPE)](#user-privileges-elevation-upe)
+- [Complexity level](#complexity-level)
 - [Users' data encryption](#users-data-encryption)
 - [Child and supervised users](#child-and-supervised-users)
 - [Groups](#groups)
@@ -51,6 +52,19 @@ In such case, the program is still run as the current user, but with the privile
 Running a program with UPE requires to know either the other account's password, or to have an _authorization_ from this user. For instance, admin. users have an _authorization_ to use the Administrator account, without providing any password, although a human confirmation is required.
 
 Each request, successful or not, is logged in the log file at `/etc/logs/auc`.
+
+## Complexity level
+
+Each user can define a _complexity_ level, which will affect its default settings.
+
+A higher level of complexity will make the system display more informations, give more details about errors that may require some technical knowledge but providing additional features and informations in exchange.
+
+The levels are:
+
+- **Beginner**: only show basic informations, make the permission popups as simple as possible
+- **Standard**: the default complexity level
+- **Advanced**: shows additional informations, displays some error reports, makes the permission popups more precise and verbose
+- **Power**: shows very detailed informations, displays all error reports, makes the permission popups display exhaustive informations
 
 ## Users' data encryption
 

@@ -45,7 +45,7 @@ The NightOS project uses the [Apache 2.0 license](https://www.apache.org/license
 
 ## Special thanks
 
-Thanks to **[rmRander](https://www.deviantart.com/rmradev)** for providing the image that served as a base for this [project's logo](https://raw.githubusercontent.com/ClementNerma/NightOS/master/logo.png).
+Thanks to **[rmRander](https://www.deviantart.com/rmradev)** for providing the image that served as a base for this [project's logo](https://raw.githubusercontent.com/ClementNerma/NightOS/main/logo.png).
 You can find the original picture [here](https://www.deviantart.com/rmradev/art/Moon-sunset-landscape-825321054).
 
 Thanks to **[Render](https://render.com)** for hosting this documentation.

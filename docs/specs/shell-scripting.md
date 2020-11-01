@@ -879,6 +879,26 @@ while some a
 end
 ```
 
+Also, if the program exits in all cases when the argument is considered as null or non-null, the opposite type will be applied to the rest of the program:
+
+```hydre
+var a = ?(1)
+
+if some a
+  exit
+end
+
+# 'a' is considered as 'null' here
+
+var b = ?(1)
+
+if none b
+  exit
+end
+
+# 'b' is considered as 'int' here
+```
+
 ### The case of optional arguments
 
 When a command takes an optional argument, it's possible to provide a nullable value of the same type instead:

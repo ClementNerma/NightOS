@@ -123,11 +123,11 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
     - [`command.cmdmsg() -> list[string]`](#commandcmdmsg---liststring)
     - [`command.cmderr() -> list[string]`](#commandcmderr---liststring)
     - [`command.output() -> list[string]`](#commandoutput---liststring)
-- [Examples](#examples)
-  - [Guess The Number](#guess-the-number)
   - [Streams](#streams-1)
     - [`stream.pending() -> bool`](#streampending---bool)
     - [`stream.size_hint() -> int?`](#streamsize_hint---int)
+- [Examples](#examples)
+  - [Guess The Number](#guess-the-number)
 - [Native commands](#native-commands)
   - [`echo`: display a value](#echo-display-a-value)
   - [`wt`: write a file](#wt-write-a-file)
@@ -2023,6 +2023,16 @@ Run the command and get its CMDERR output.
 
 Run the command and get its CMDOUT and CMDERR outputs combined.
 
+### Streams
+
+#### `stream.pending() -> bool`
+
+Check if the stream is still pending. If the pipe is complete (which means if its pipe is closed), `false` will be returned.
+
+#### `stream.size_hint() -> int?`
+
+Get the stream's size hint. If no size hint was provided for this stream, `null` will be returned.
+
 ## Examples
 
 ### Guess The Number
@@ -2055,16 +2065,6 @@ while true
   end
 end
 ```
-
-### Streams
-
-#### `stream.pending() -> bool`
-
-Check if the stream is still pending. If the pipe is complete (which means if its pipe is closed), `false` will be returned.
-
-#### `stream.size_hint() -> int?`
-
-Get the stream's size hint. If no size hint was provided for this stream, `null` will be returned.
 
 ## Native commands
 

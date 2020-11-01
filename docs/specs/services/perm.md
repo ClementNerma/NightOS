@@ -13,7 +13,7 @@ In NightOS, executable instructions can run in three different contexts:
 The kernel doesn't have any limitation on what tasks it is allowed to perform, of course, as it is the one to decide.  
 System services communicate directly with the kernel and are trusted processes so they can do anything _in their domain_, which means for instance the [`sys::net`](net.md) cannot ask to manipulate the filesystem, as it's the role of [`sys::fs`](fs.md).
 
-But applications, who run [_userland processes_](../kernel/processes.md)
+But applications, who run [_userland processes_](../kernel/processes.md) **TODO**
 
 ## List of permissions
 

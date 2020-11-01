@@ -3,7 +3,7 @@
 _Permissions_ allow users to finely control what applications can access, and administrators to finely control what other users can do.
 
 - [How permissions work](#how-permissions-work)
-- [Permission levels](#permission-levels)
+- [Levels of permissions](#levels-of-permissions)
 - [From the control center](#from-the-control-center)
 - [Security level](#security-level)
 
@@ -13,32 +13,11 @@ By default, an application has for only right to run code. It cannot interact wi
 
 When an app wants to get a permission, it asks [the system to give it](../specs/services/perm.md).
 
-## Permission levels
+## Levels of permissions
 
-Permissions are split across different categories:
+Permissions are split across different level, some being granted automatically based on the circumstances or resulting in a popup being shown to the end user to decide if the permission should be granted or not.
 
-- _Safe_: basic permissions, like windows creation, which are granted automatically by default ;
-- _Implicit_: permissions implied by the usage of an application, like opening a file with an application grants it an access while the application is running ;
-- _Interactive_: modifying non-critical parts of the state of the system, like controlling the global volume or reading
-- _Sensitive_: accessing sensitive informations, like filesystem or network access ;
-- _Privacy_: accessing privacy-related data, like microphone or webcam access
-
-There are also [domain-controlled permissions](domains.md) as well as [application proxies](../technical/dev-mode.md#application-proxies)) which influence how permissions are granted.
-
-When using visual applications, requesting interactive, sensitive and privacy permissions will show a popup asking the user if they want to grant the permission:
-
-- Only one time
-- For the active application (until it stops)
-- For the current session (until the user logs out or the system is shutdown)
-- Forever
-
-By default, it is set to "forever". But for the privacy level, this choice is set by default to "forever while the application is active", which prevents the application from accessing them from background tasks.
-
-_NOTE:_ If the application is uninstalled and re-installed later, all the granted permissions will have been dropped, so confirmation will be required again.
-
-_NOTE:_ Permissions granted to volatile applications are saved using the application's hash, so while the exact same application is opened volatilely, permissions are kept in memory.
-
-_NOTE:_ Permissions are specific to the current user (the AUC is not taken in account here), so in the case of a global application, each user will have to approve the permission manually (unless the administrator set it otherwise).
+You can find the levels of permissions in the [specifications document](../specs/permissions.md#levels-of-permissions).
 
 ## From the control center
 

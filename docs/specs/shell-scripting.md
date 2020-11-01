@@ -53,6 +53,8 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
     - [Writing to CMDRAW](#writing-to-cmdraw)
   - [Input of a command](#input-of-a-command)
 - [Running in background](#running-in-background)
+- [Environment variables](#environment-variables)
+  - [Reading an environment variable](#reading-an-environment-variable)
 - [Commands typing](#commands-typing)
   - [Arguments type](#arguments-type)
   - [Enumerations](#enumerations)
@@ -61,6 +63,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
   - [Example](#example)
 - [Native library](#native-library)
   - [Utilities](#utilities)
+    - [`env(varname: string) -> any?`](#envvarname-string---any)
     - [`prompt(message: string) -> string`](#promptmessage-string---string)
     - [`prompt_int(message: string) -> fallible int`](#prompt_intmessage-string---fallible-int)
     - [`prompt_float(message: string) -> fallible float`](#prompt_floatmessage-string---fallible-float)
@@ -1453,6 +1456,78 @@ Killed.
 <Program stops>###
 ```
 
+## Environment variables
+
+While traditional variables are always [scoped](#variables-scoping), _environment variables_ are variables that are provided to the script when it starts, and are forwarded to all scripts the main scripts calls, recursively.
+
+They are mostly used to share configuration between programs.
+
+They are usually set:
+
+- Globally, using [Central](../applications/Central.md)
+- For the terminal, using the terminal application's settings
+- For the current script, by providing them when running the script
+
+The third case is the most common, here is what it looks like:
+
+```hydre
+# Without environment variables
+./myscript.ns
+
+# With environment variables
+with MESSAGE="Hello world!" run ./myscript.ns
+```
+
+The environment variable will then be provided to `./myscript.ns`, and will also be available in all scripts this script calls.
+
+### Reading an environment variable
+
+Environment variables cannot be accessed like traditional variables, they must be retrieved through the `env` builtin function:
+
+```hydre
+# In "myscript.ns"
+
+var message = env("MESSAGE") # any?
+```
+
+As the variable may not be defined, the function returns a nullable value, so we must check if the variable is indeed defined:
+
+```hydre
+var message = env("MESSAGE")
+
+if none message
+  fail "MESSAGE environment variable was not provided"
+end
+```
+
+Now we are sure that `message` is defined, we get an `any` value, because we don't know the type of the environment variable. So we must use [type assertions](#data-validation) for that:
+
+```hydre
+var message = env("MESSAGE")
+
+if none message
+  fail "MESSAGE environment variable was not provided"
+end
+
+if message isnt string
+  fail "MESSAGE environment variable is not a string"
+end
+
+# Here, "message" is a string
+```
+
+Perfect! Note that, if you want to check if the environment variable exists _and_ is of a specific type at the same time, you can skip the first checking, which is only here to perform specific actions in case the environment variable isn't even defined:
+
+```hydre
+var message = env("MESSAGE")
+
+if message isnt string
+  fail "MESSAGE environment variable was not provided or is not a string"
+end
+
+# Here, "message" is a string
+```
+
 ## Commands typing
 
 For script files to be called as commands, they must define a `main` function and declare a _command description_.
@@ -1591,6 +1666,11 @@ The native library is a list of functions that are provided by the shell.
 All types have _extensions_, which are functions that can be called using the `.` symbol, like `my_list.extension()`.
 
 ### Utilities
+
+#### `env(varname: string) -> any?`
+
+Get an [environment variable](#environment-variables).  
+Returns `null` if the environment variable cannot be found.
 
 #### `prompt(message: string) -> string`
 

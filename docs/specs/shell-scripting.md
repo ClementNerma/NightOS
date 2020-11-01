@@ -28,7 +28,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
   - [Failing](#failing)
     - [Retries](#retries)
     - [Global failing](#global-failing)
-- [Optional types](#optional-types)
+- [Nullable types](#nullable-types)
   - [Handle the `null` value](#handle-the-null-value)
   - [The case of optional arguments](#the-case-of-optional-arguments)
 - [Advanced types](#advanced-types)
@@ -73,7 +73,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
     - [`rand_float(low: float, up: float) -> fallible float`](#rand_floatlow-float-up-float---fallible-float)
   - [All types](#all-types)
     - [`any.str() -> string`](#anystr---string)
-  - [Optional types](#optional-types-1)
+  - [Nullable types](#nullable-types-1)
     - [`T?.isNull() -> T`](#tisnull---t)
     - [`T?.default(fallback: T) -> T`](#tdefaultfallback-t---t)
     - [`T?.unwrap() -> T`](#tunwrap---t)
@@ -779,11 +779,11 @@ retry_cmd(@{ read "file.txt" }, 10)
 A whole script can fail using this keyword, which will result in displaying the error message in CMDERR and exiting immediatly.  
 The failure may be handled using `fallible` in the caller script.
 
-## Optional types
+## Nullable types
 
 Sometimes, it's useful to be able to represent a value that may be either _something_ or _nothing_. In many programming languages, "nothing" is represented as the `null`, `nil` or `()` value.
 
-Optional types are suffixed by a `?` symbol, and may either contain a value of the provided type **or** `null`. Here is an example:
+Nullable types are suffixed by a `?` symbol, and may either contain a value of the provided type **or** `null`. Here is an example:
 
 ```hydre
 fn custom_rand() -> int?
@@ -797,7 +797,7 @@ fn custom_rand() -> int?
 end
 ```
 
-To declare a variable with an optional type, we wrap its initialization value in the optional operator `?(...)`:
+To declare a variable with an nullable type, we wrap its initialization value in the nullable operator `?(...)`:
 
 ```hydre
 var a = 1 # int
@@ -820,7 +820,7 @@ Note that imbricated types are not supported, which means we cannot create `int?
 
 ### Handle the `null` value
 
-If we try to access an optional value "as is", we will get a type error:
+If we try to access an nullable value "as is", we will get a type error:
 
 ```hydre
 var a = ?(1)
@@ -1490,12 +1490,12 @@ The command's return type can be any existing type.
 
 The options for each argument are:
 
-- `type`: Required, the type of the argument (optional types are forbidden)
+- `type`: Required, the type of the argument (nullable types are forbidden)
 - `help`: A help message indicating what the argument does
 - `short`: Short name for a dash argument
 - `long`: Long name for a dash argument
-- `optional`: Indicate the optional can be omitted (the type will be converted to an optional one)
-- `default`: Make the value optional, but with a default value (so the type will not be optional)
+- `optional`: Indicate the optional can be omitted (the type will be converted to a nullable one)
+- `default`: Make the value optional, but with a default value (so the type will not be nullable)
 - `requires`: Indicate one or several other arguments are required to use this dash one
 - `conflicts`: Indicate this dash argument cannot be used when one or several other specific arguments are already in use
 - `enum`: Allow only a subset of values
@@ -1639,7 +1639,7 @@ _ = ["a","b"].str() # [ "a", "b" ]
 _ = @{ streamify "Hello world!" }.str() # "<stream>"
 ```
 
-### Optional types
+### Nullable types
 
 #### `T?.isNull() -> T`
 

@@ -31,6 +31,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
 - [Nullable types](#nullable-types)
   - [Handle the `null` value](#handle-the-null-value)
   - [The case of optional arguments](#the-case-of-optional-arguments)
+  - [Nullable `any`](#nullable-any)
 - [Advanced types](#advanced-types)
   - [Structures](#structures)
   - [Closures](#closures)
@@ -910,6 +911,10 @@ echo "Hello!" -n ${no_newline}
 ```
 
 If the value is `null`, the argument will not be provided. Else, it will be provided with the non-null value.
+
+### Nullable `any`
+
+The `any` type covers any type of values, meaning it accepts absolutely every single value, _except_ the `null` value. Indeed, `any` is not nullable by default, so to make it accept `null` values we must use `any?` instead.
 
 ## Advanced types
 

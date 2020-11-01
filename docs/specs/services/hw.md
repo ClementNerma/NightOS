@@ -177,6 +177,7 @@ It's also possible to only count the number of devices matching the provided cri
 - Number of found devices globally (4 bytes)
 - Number of devices listed in this answer (4 bytes)
 - [DDD](#driver-device-descriptor) of each device (512 bytes * number of devices)
+- `0x01` if some devices were masked due to insufficient permissions, `0x00` else (1 byte)
 
 **Errors:**
 

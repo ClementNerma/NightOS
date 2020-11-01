@@ -3,6 +3,7 @@
 _Permissions_ allow users to finely control what applications can access, and administrators to finely control what other users can do.
 
 - [How permissions work](#how-permissions-work)
+- [Permission levels](#permission-levels)
 - [From the control center](#from-the-control-center)
 - [Security level](#security-level)
 
@@ -12,18 +13,26 @@ By default, an application has for only right to run code. It cannot interact wi
 
 When an app wants to get a permission, it asks [the system to give it](../specs/services/perm.md).
 
-Permissions are split across different _types_:
+## Permission levels
 
-- _Safe permissions_, like windows creation, are granted automatically by default ;
-- _Implicit permissions_, like reading filesystem opened by the application, are also granted automatically by default ;
-- _Interactive permissions_, like controlling the global volume, trigger a confirmation overlay visible by the user ;
-- _Sensitive permissions_, like filesystem or network access, trigger a confirmation overlay visible by the user ;
-- _Privacy permissions_, like microphone or webcam access, add an emphasized confirmation message to the same overlay ;
+Permissions are split across different categories:
 
-An exception to the above cases is for special rules permission rules (e.g. [application proxies](../technical/dev-mode.md#application-proxies)).
+- _Safe_: basic permissions, like windows creation, which are granted automatically by default ;
+- _Implicit_: permissions implied by the usage of an application, like opening a file with an application grants it an access while the application is running ;
+- _Interactive_: modifying non-critical parts of the state of the system, like controlling the global volume or reading
+- _Sensitive_: accessing sensitive informations, like filesystem or network access ;
+- _Privacy_: accessing privacy-related data, like microphone or webcam access
 
-A dropdown allows to set the grant duration (e.g: once, for the one minute, for the current instance, for the current session, forever while the application is active, forever).
-By default, it is set to "forever". But for important permissions like microphone access, this choice is set by default to "forever while the application is active", which prevents the application from accessing them from background tasks.
+There are also [domain-controlled permissions](domains.md) as well as [application proxies](../technical/dev-mode.md#application-proxies)) which influence how permissions are granted.
+
+When using visual applications, requesting interactive, sensitive and privacy permissions will show a popup asking the user if they want to grant the permission:
+
+- Only one time
+- For the active application (until it stops)
+- For the current session (until the user logs out or the system is shutdown)
+- Forever
+
+By default, it is set to "forever". But for the privacy level, this choice is set by default to "forever while the application is active", which prevents the application from accessing them from background tasks.
 
 _NOTE:_ If the application is uninstalled and re-installed later, all the granted permissions will have been dropped, so confirmation will be required again.
 

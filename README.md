@@ -2,7 +2,7 @@
 
 ![NightOS Logo](logo.png)
 
-NightOS is an general-purpose operating system aiming to :
+NightOS is an **highly experimental** general-purpose operating system aiming to :
 
 * Provide maximum security to the average user
 * Be easily extensible and customizable by the average user

@@ -17,7 +17,7 @@ But applications, who run [_userland processes_](../kernel/processes.md) **TODO*
 
 ## List of permissions
 
-**TODO**
+The list of permissions can be found in the [dedicated specifications document](../permissions.md).
 
 ## Methods
 

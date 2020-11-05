@@ -302,11 +302,6 @@
 <li><a href="#texpectmessage-string---t"><code>T?.expect(message: string) -&gt; T</code></a></li>
 </ul>
 </li>
-<li><a href="#numbers">Numbers</a>
-<ul>
-<li><a href="#numto_radix_strbase-num-leading--false---fallible-string"><code>num.to_radix_str(base: num, leading = false) -&gt; fallible string</code></a></li>
-</ul>
-</li>
 <li><a href="#characters">Characters</a>
 <ul>
 <li><a href="#charsingle---bool"><code>char.single() -&gt; bool</code></a></li>
@@ -456,7 +451,7 @@ _ = /tmp
 _ = @{ command &quot;pos1&quot; -s --long }
 </code></pre>
 <p>A <code>string</code> is composed of multiple <code>char</code>s, which are made of single codepoints. This means a <em>grapheme cluster</em> made of multiple codepoints will need to be encoded in a <code>string</code>.<br />
-There is also the <code>num</code> type which accepts integers and floating-point numbers, and <code>any</code> which allows values of all types.<br />
+There is also the <code>any</code> type which accepts values of all types, and <code>stream</code> which we'll talk about later as it's a special type.<br />
 Finally, there is the <code>void</code> type which cannot be written 'as is' but is used in special contexts like <a href="#commands-typing">commands return values</a>. It's a type that contains no data at all.</p>
 <p>There are also <em>presential arguments</em>, which are dash arguments that take no value. The command will simply check if the argument was provided or not.</p>
 <p><strong>NOTE:</strong> In order to avoid writing errors, positional arguments cannot be provided after a presential argument.</p>
@@ -750,7 +745,7 @@ hello([&quot;John&quot;, &quot;Jack&quot;]) # Hello, John! Hello, Jack!
 </code></pre>
 <h3><a class="header" href="#return-types" id="return-types">Return types</a></h3>
 <p>Functions can also return values. In such case, they must specify the type of values they return, and ensure all code paths will return a value of this type:</p>
-<pre><code class="language-hydre">fn add (a: num, b: num) -&gt; num
+<pre><code class="language-hydre">fn add (a: float, b: float) -&gt; float
   return a + b
 end
 </code></pre>
@@ -762,7 +757,7 @@ var letters = letter.split(&quot;,&quot;)
 <p>Here, we use the <code>split</code> <em>method</em> of the <code>string</code> type, which returns a <code>list[string]</code>.</p>
 <h3><a class="header" href="#failing" id="failing">Failing</a></h3>
 <p>Functions can also <em>fail</em> to indicate something went wrong:</p>
-<pre><code class="language-hydre">fn divide (a: num, b: num) -&gt; fallible num
+<pre><code class="language-hydre">fn divide (a: float, b: float) -&gt; fallible float
   if b == 0
     fail &quot;Cannot divide by 0!&quot;
   else
@@ -772,7 +767,7 @@ end
 </code></pre>
 <p>The <code>fallible</code> keyword must be present before the return type to indicate the function may fail (even if the function doesn't return anything).</p>
 <p>When a function fails, the program stops and print the provided error message. But it's also possible to handle the error:</p>
-<pre><code class="language-hydre">fn handle_bad_div (a: num, b: num) -&gt; num
+<pre><code class="language-hydre">fn handle_bad_div (a: float, b: float) -&gt; float
   catch divide(a, b)
     ok result
       echo &quot;Divided successfully: ${a} / ${b} = ${result}&quot;
@@ -802,7 +797,7 @@ end
 retry may_fail()
 </code></pre>
 <p>This will run <code>may_fail</code>, and run it again if it fails, until it succeeds.</p>
-<p>It's also possible to specify a maximum number of retries:</p>
+<p>It's also possible to specify a maximum  of retries:</p>
 <pre><code class="language-hydre">retry(5) may_fail()
 </code></pre>
 <p>For information, here is the declaration of the native <code>retry_cmd</code> command, which allows to try to run a command until it succeeds:</p>
@@ -984,8 +979,8 @@ forEachFile(./, { file -&gt; echo &quot;File: ${file}&quot; })
 
 # 1. Here, &quot;test&quot; is considered to be of type &quot;any&quot;
 
-if test is list[num]
-  # 2. Here, &quot;test&quot; is considered to be of type &quot;list[num]&quot;
+if test is list[int]
+  # 2. Here, &quot;test&quot; is considered to be of type &quot;list[int]&quot;
 else
   # 3. Here, &quot;test&quot; is considered to be of type &quot;any&quot;
 end
@@ -995,10 +990,10 @@ end
 
 # 1. Here, &quot;test&quot; is considered to be of type &quot;any&quot;
 
-if test isnt list[num]
+if test isnt list[int]
   # 2. Here, &quot;test&quot; is considered to be of type &quot;any&quot;
 else
-  # 3. Here, &quot;test&quot; is considered to be of type &quot;list[num]&quot;
+  # 3. Here, &quot;test&quot; is considered to be of type &quot;list[int]&quot;
 end
 </code></pre>
 <p>If, in an &quot;isnt&quot; conditional, the script exits/fails in all cases (or returns if we're in a function), the value is considered with the asserted type for the rest of the script:</p>
@@ -1006,18 +1001,18 @@ end
 
 # 1. Here, &quot;test&quot; is considered to be of type &quot;any&quot;
 
-if test isnt list[num]
+if test isnt list[int]
   # 2. Here, &quot;test&quot; is considered to be of type &quot;any&quot;
   exit
 end
 
-# 3. Here, &quot;test&quot; is considered to be of type &quot;list[num]&quot;
-# &gt; Because it's impossible for &quot;test&quot; to not be &quot;list[num]&quot; as in that case the program would have exited
+# 3. Here, &quot;test&quot; is considered to be of type &quot;list[int]&quot;
+# &gt; Because it's impossible for &quot;test&quot; to not be &quot;list[int]&quot; as in that case the program would have exited
 </code></pre>
 <p>This can be used to check complex structures as well:</p>
 <pre><code class="language-hydre"># Considering we have a `fn fetchJson(url: string) -&gt; any' function that fetches a JSON value from the web
 
-type User = struct { id: num, firstName: string, lastName: string, email: string }
+type User = struct { id: int, firstName: string, lastName: string, email: string }
 
 var json = fetchJson(&quot;https://mysuperapi.../users/all&quot;)
 
@@ -1215,13 +1210,13 @@ read ./somefile.txt # Prints: &quot;Hello world!&quot;
 
 read ./somefile.txt | length # Prints: 12
 </code></pre>
-<p>How does this work exactly? First, <code>read</code> reads the file and outputs it to CMDOUT as a <code>string</code>, which is then passed to <code>length</code> which happens to accept strings as an input. It then computes the length of the provided input and writes it to CMDOUT, as a <code>number</code>. Which means we can do that:</p>
+<p>How does this work exactly? First, <code>read</code> reads the file and outputs it to CMDOUT as a <code>string</code>, which is then passed to <code>length</code> which happens to accept strings as an input. It then computes the length of the provided input and writes it to CMDOUT, as an <code>int</code>. Which means we can do that:</p>
 <pre><code class="language-hydre">echo ${ $(read ./somefile.txt | length) * 2 } # Prints: 24
 </code></pre>
 <p>The input may be typed and only accept specific types of values. For instance <code>length</code> only accepts strings, so if we try to give it something else:</p>
 <pre><code class="language-hydre">echo $(pass 2 | length) # ERROR
 </code></pre>
-<p>What happens here is that we use the builtin <code>pass</code> command which writes to CMDOUT the exact same value we gave it as an input. Then we give it to <code>length</code>, which fails because it doesn't accept <code>number</code>s.</p>
+<p>What happens here is that we use the builtin <code>pass</code> command which writes to CMDOUT the exact same value we gave it as an input. Then we give it to <code>length</code>, which fails because it doesn't accept <code>int</code>s.</p>
 <p>There's also a shorthand syntax for providing a file's content as CMDIN to a command:</p>
 <pre><code class="language-hydre">echo $(length &lt; ./somefile.txt) # Prints: 24
 </code></pre>
@@ -1512,13 +1507,6 @@ var b = a.unwrap() # int
 <p>Make the program exit with a custom error message if 'a' is null</p>
 <pre><code class="language-hydre">var a = ?(0) # INt?
 var b = a.expect(&quot;'a' should not be null :(&quot;) # int
-</code></pre>
-<h3><a class="header" href="#numbers" id="numbers">Numbers</a></h3>
-<h4><a class="header" href="#numto_radix_strbase-num-leading--false---fallible-string" id="numto_radix_strbase-num-leading--false---fallible-string"><code>num.to_radix_str(base: num, leading = false) -&gt; fallible string</code></a></h4>
-<p>Represent the provided number in a given base.
-Fails if the base is not between 2 and 36.</p>
-<pre><code class="language-hydre">_ = (11).to_radix_str(16, false) # &quot;A&quot;
-_ = (11).to_radix_str(16, true)  # &quot;0xA&quot;
 </code></pre>
 <h3><a class="header" href="#characters" id="characters">Characters</a></h3>
 <h4><a class="header" href="#charsingle---bool" id="charsingle---bool"><code>char.single() -&gt; bool</code></a></h4>

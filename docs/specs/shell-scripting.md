@@ -82,8 +82,6 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
     - [`T?.default(fallback: T) -> T`](#tdefaultfallback-t---t)
     - [`T?.unwrap() -> T`](#tunwrap---t)
     - [`T?.expect(message: string) -> T`](#texpectmessage-string---t)
-  - [Numbers](#numbers)
-    - [`num.to_radix_str(base: num, leading = false) -> fallible string`](#numto_radix_strbase-num-leading--false---fallible-string)
   - [Characters](#characters)
     - [`char.single() -> bool`](#charsingle---bool)
     - [`char.codepoints() -> list[int]`](#charcodepoints---listint)
@@ -247,7 +245,7 @@ _ = @{ command "pos1" -s --long }
 ```
 
 A `string` is composed of multiple `char`s, which are made of single codepoints. This means a _grapheme cluster_ made of multiple codepoints will need to be encoded in a `string`.  
-There is also the `num` type which accepts integers and floating-point numbers, and `any` which allows values of all types.  
+There is also the `any` type which accepts values of all types.  
 Finally, there is the `void` type which cannot be written 'as is' but is used in special contexts like [commands return values](#commands-typing). It's a type that contains no data at all.
 
 There are also _presential arguments_, which are dash arguments that take no value. The command will simply check if the argument was provided or not.
@@ -680,7 +678,7 @@ hello(["John", "Jack"]) # Hello, John! Hello, Jack!
 Functions can also return values. In such case, they must specify the type of values they return, and ensure all code paths will return a value of this type:
 
 ```hydre
-fn add (a: num, b: num) -> num
+fn add (a: float, b: float) -> float
   return a + b
 end
 ```
@@ -701,7 +699,7 @@ Here, we use the `split` _method_ of the `string` type, which returns a `list[st
 Functions can also _fail_ to indicate something went wrong:
 
 ```hydre
-fn divide (a: num, b: num) -> fallible num
+fn divide (a: float, b: float) -> fallible float
   if b == 0
     fail "Cannot divide by 0!"
   else
@@ -715,7 +713,7 @@ The `fallible` keyword must be present before the return type to indicate the fu
 When a function fails, the program stops and print the provided error message. But it's also possible to handle the error:
 
 ```hydre
-fn handle_bad_div (a: num, b: num) -> num
+fn handle_bad_div (a: float, b: float) -> float
   catch divide(a, b)
     ok result
       echo "Divided successfully: ${a} / ${b} = ${result}"
@@ -755,7 +753,7 @@ retry may_fail()
 
 This will run `may_fail`, and run it again if it fails, until it succeeds.
 
-It's also possible to specify a maximum number of retries:
+It's also possible to specify a maximum  of retries:
 
 ```hydre
 retry(5) may_fail()
@@ -1020,8 +1018,8 @@ var test: any = [ 2, 3, 4 ]
 
 # 1. Here, "test" is considered to be of type "any"
 
-if test is list[num]
-  # 2. Here, "test" is considered to be of type "list[num]"
+if test is list[int]
+  # 2. Here, "test" is considered to be of type "list[int]"
 else
   # 3. Here, "test" is considered to be of type "any"
 end
@@ -1034,10 +1032,10 @@ var test: any = [ 2, 3, 4 ]
 
 # 1. Here, "test" is considered to be of type "any"
 
-if test isnt list[num]
+if test isnt list[int]
   # 2. Here, "test" is considered to be of type "any"
 else
-  # 3. Here, "test" is considered to be of type "list[num]"
+  # 3. Here, "test" is considered to be of type "list[int]"
 end
 ```
 
@@ -1048,13 +1046,13 @@ var test: any = [ 2, 3, 4 ]
 
 # 1. Here, "test" is considered to be of type "any"
 
-if test isnt list[num]
+if test isnt list[int]
   # 2. Here, "test" is considered to be of type "any"
   exit
 end
 
-# 3. Here, "test" is considered to be of type "list[num]"
-# > Because it's impossible for "test" to not be "list[num]" as in that case the program would have exited
+# 3. Here, "test" is considered to be of type "list[int]"
+# > Because it's impossible for "test" to not be "list[int]" as in that case the program would have exited
 ```
 
 This can be used to check complex structures as well:
@@ -1062,7 +1060,7 @@ This can be used to check complex structures as well:
 ```hydre
 # Considering we have a `fn fetchJson(url: string) -> any' function that fetches a JSON value from the web
 
-type User = struct { id: num, firstName: string, lastName: string, email: string }
+type User = struct { id: int, firstName: string, lastName: string, email: string }
 
 var json = fetchJson("https://mysuperapi.../users/all")
 
@@ -1362,7 +1360,7 @@ read ./somefile.txt # Prints: "Hello world!"
 read ./somefile.txt | length # Prints: 12
 ```
 
-How does this work exactly? First, `read` reads the file and outputs it to CMDOUT as a `string`, which is then passed to `length` which happens to accept strings as an input. It then computes the length of the provided input and writes it to CMDOUT, as a `number`. Which means we can do that:
+How does this work exactly? First, `read` reads the file and outputs it to CMDOUT as a `string`, which is then passed to `length` which happens to accept strings as an input. It then computes the length of the provided input and writes it to CMDOUT, as an `int`. Which means we can do that:
 
 ```hydre
 echo ${ $(read ./somefile.txt | length) * 2 } # Prints: 24
@@ -1374,7 +1372,7 @@ The input may be typed and only accept specific types of values. For instance `l
 echo $(pass 2 | length) # ERROR
 ```
 
-What happens here is that we use the builtin `pass` command which writes to CMDOUT the exact same value we gave it as an input. Then we give it to `length`, which fails because it doesn't accept `number`s.
+What happens here is that we use the builtin `pass` command which writes to CMDOUT the exact same value we gave it as an input. Then we give it to `length`, which fails because it doesn't accept `int`s.
 
 There's also a shorthand syntax for providing a file's content as CMDIN to a command:
 
@@ -1786,18 +1784,6 @@ Make the program exit with a custom error message if 'a' is null
 ```hydre
 var a = ?(0) # INt?
 var b = a.expect("'a' should not be null :(") # int
-```
-
-### Numbers
-
-#### `num.to_radix_str(base: num, leading = false) -> fallible string`
-
-Represent the provided number in a given base.
-Fails if the base is not between 2 and 36.
-
-```hydre
-_ = (11).to_radix_str(16, false) # "A"
-_ = (11).to_radix_str(16, true)  # "0xA"
 ```
 
 ### Characters

@@ -245,7 +245,7 @@ _ = @{ command "pos1" -s --long }
 ```
 
 A `string` is composed of multiple `char`s, which are made of single codepoints. This means a _grapheme cluster_ made of multiple codepoints will need to be encoded in a `string`.  
-There is also the `any` type which accepts values of all types.  
+There is also the `any` type which accepts values of all types, and `stream` which we'll talk about later as it's a special type.  
 Finally, there is the `void` type which cannot be written 'as is' but is used in special contexts like [commands return values](#commands-typing). It's a type that contains no data at all.
 
 There are also _presential arguments_, which are dash arguments that take no value. The command will simply check if the argument was provided or not.

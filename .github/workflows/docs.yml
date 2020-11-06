@@ -11,13 +11,16 @@ jobs:
           persist-credentials: false
 
       - name: Cache Cargo dependencies
-        uses: actions/cache@v1.1.2
+        uses: actions/cache@v2.1.3
         with:
-          path: ~/.cargo
-          key: cargo-data
+          path: /usr/share/rust
+          key: ${{ runner.OS }}-cargo-cache
 
-      - name: Get "broken-md-links" and "mdbook" tools
-        run: cargo install broken-md-links mdbook
+      - name: Get "broken-md-links" tool
+        run: cargo install broken-md-links
+
+      - name: Get "mdBook" tool
+        run: cargo install mdbook
 
       - name: Look for broken markdown links
         run: broken-md-links ${GITHUB_WORKSPACE}/docs --recursive

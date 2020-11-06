@@ -7,7 +7,7 @@
 
 ## Connecting a new device
 
-When a new device is connected to the computer, a _device handler file_ (DHF) is created in the `/dev` directory (see [filesystem structure](../specs/fs-structure.md)).
+When a new device is connected to the computer, a _device handler file_ (DHF) is created in the `/dev` directory (see [filesystem structure](../specs/filesystem.md#structure)).
 
 Depending on its type, it will be put in a different directory, as shown in the above document. Note that new category directories may be introduced later on.
 

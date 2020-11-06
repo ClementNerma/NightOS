@@ -38,7 +38,6 @@ The list of default applications and their description can be found [here](appli
 - [Developer mode](technical/dev-mode.md) - enable powerful development options
 - [Devices](technical/devices.md) - manage hardware devices
 - [File formats](technical/file-formats.md) - description of all native file formats
-- [Filesystem Abstraction Layer](technical/fs-abslayer.md) - how the system ensures specific features on less powerful filesystems
 - [Integrity checker](technical/integrity-checker.md) - ensure the system hasn't been corrupted
 - [I/O manager](technical/io-manager.md) - manage input/output requests
 - [Multi-platform management](technical/multi-platform.md) - how the NightOS ecosystem can be used on other operating systems
@@ -54,7 +53,7 @@ The list of default applications and their description can be found [here](appli
 - [Application context](specs/applications/context.md) - launch an application to directly perform a specific task
 - [Applications package](specs/applications/package.md) - files representing a whole application
 - [Applications manifest](specs/applications/manifest.md) - how applications describe themselves in their package
-- [Filesystem structure](specs/fs-structure.md) - list of file and directories and their meaning
+- [Filesystem](specs/filesystem.md) - how the filesystem works
 - [Inter-process communication](specs/ipc.md) - communication between processes
 - [Libraries](specs/libraries.md) - what are libraries
 - [The registry](specs/registry.md) - exhaustive specification of the registry's content

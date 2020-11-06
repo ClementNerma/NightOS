@@ -35,5 +35,5 @@ All methods return an answer, though it may be empty (indicated by a _None_). Sy
 - [`sys::net`](net.md): network communications
 - [`sys::crypto`](crypto.md): cryptography utilities
 - [`sys::crashsave`](crashsave.md): [crash saves](../../features/crash-saves.md) management
-- [`sys::flow`](flow.md): [flows](../../technical/fs-abslayer.md#flows) management
+- [`sys::flow`](flow.md): [flows](../../specs/filesystem.md#flows) management
 - [`sys::hydre`](hydre.md): [Hydre](../shell.md) shell service

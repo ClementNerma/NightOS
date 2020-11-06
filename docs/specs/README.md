@@ -7,7 +7,7 @@ For more informations about low-level concepts these documents refer to, you can
 - [Application context](applications/context.md) - launch an application to directly perform a specific task
 - [Applications package](applications/package.md) - files representing a whole application
 - [Applications manifest](applications/manifest.md) - how applications describe themselves in their package
-- [Filesystem structure](fs-structure.md) - list of file and directories and their meaning
+- [Filesystem](filesystem.md) - how the filesystem works
 - [Inter-process communication](ipc.md) - communication between processes
 - [Libraries](libraries.md) - what are libraries
 - [The registry](registry.md) - exhaustive specification of the registry's content

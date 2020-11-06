@@ -2,6 +2,8 @@
 
 Welcome to the documentation of NightOS. This directory contains all design and specification documents of the project.
 
+The rendered documentation can be found on [`https://clementnerma.github.io/NightOS`](https://clementnerma.github.io/NightOS).
+
 ## [Foreword](FOREWORD.md)
 
 ## [Project](project/)

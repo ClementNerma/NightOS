@@ -61,7 +61,7 @@ Comparatively, when a process has a high priority, other processes will run a ta
 
 ### Automatic priority attribution
 
-Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the [`SET_PRIORITY`](../syscalls.md#0xd1-set_priority) syscall.
+Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the [`SET_PRIORITY`](syscalls.md#0xd1-set_priority) syscall.
 
 The priority is determined based on multiple factors:
 
@@ -74,13 +74,13 @@ The priority is determined based on multiple factors:
 
 The drivable devices attribute contains the list of all devices' [SDI](hardware.md#session-device-identifier) the current process can drive.
 
-The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an [AMS](memory.md#abstract-memory-segments) from it using the [`DEVICE_AMS`](../syscalls.md#0x34-device_ams) syscall, as well as using DMA-related instructions in the CPU.
+The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an [AMS](memory.md#abstract-memory-segments) from it using the [`DEVICE_AMS`](syscalls.md#0x34-device_ams) syscall, as well as using DMA-related instructions in the CPU.
 
 This attribute is managed by the [`sys::hw`](../services/hw.md) service and can only be updated by this service.
 
 # Raw permissions
 
-_Raw permissions_ are used by system services to determine the permissions of a process without [sending a message](../ipc.md#exchanges-and-messages) to the [`sys::perm`](../services/perm.md) service and waiting for its answer, which would be costly in terms of performance.
+_Raw permissions_ are used by system services to determine the permissions of a process without [sending a message](ipc.md#exchanges-and-messages) to the [`sys::perm`](../services/perm.md) service and waiting for its answer, which would be costly in terms of performance.
 
 These permissions use a specific structure, specified in the [related service's specifications document](../services/perm.md#list-of-permissions).
 

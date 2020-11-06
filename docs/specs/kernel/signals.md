@@ -1,6 +1,6 @@
 # Signals
 
-_Signals_ are a type of [KPC](kernel/kpc.md). They are used by the kernel to send informations to processes about a specific event.
+_Signals_ are a type of [KPC](kpc.md). They are used by the kernel to send informations to processes about a specific event.
 
 - [Technical overview](#technical-overview)
 - [List of signals](#list-of-signals)
@@ -42,7 +42,7 @@ Else, it checks in the SHT if the signal has a handler. If there is no handler, 
 
 If a handler is found, the kernel checks if the pointer points to a memory area that is executable by the current process. If it isn't, the signal is converted to an [`HANDLER_FAULT`](#0x01-handler_fault) one. If the signal that was being sent was already an `HANDLER_FAULT`, the process is killed.
 
-The kernel then switches the process to its [main thread](../technical/processes.md#main-thread) and makes it jump to the handler's address, then resumes it.
+The kernel then switches the process to its [main thread](../../technical/processes.md#main-thread) and makes it jump to the handler's address, then resumes it.
 
 When the handler returns (or the default behaviour completes), if the signal was expecting an answer, the kernel reads it from specific registries and does whatever it needs to do. Then, itchecks if the signals queue is empty. If it is, the kernel simply makes the process jump back to the address it was to before the signal was emitted, and switch to the original thread.
 
@@ -87,7 +87,7 @@ Sent when the process is asked to suspend. If it is not suspended after the prov
 
 **Datafield:**
 
-- [Registry](registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
+- [Registry](../registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
 
 ### `0x12` TERMINATE
 
@@ -101,7 +101,7 @@ If no handler is registered for this signal, it will kill the process when recei
 
 **Datafield:**
 
-- [Registry](registry.md)'s `system.signals.terminate_delay` key (default: 2s) (2 bytes)
+- [Registry](../registry.md)'s `system.signals.terminate_delay` key (default: 2s) (2 bytes)
 
 ### `0x20` RECV_PIPE
 
@@ -111,7 +111,7 @@ The command code can be used to determine what the other process is expecting th
 **Datafield:**
 
 - Pipe creator's PID (8 bytes)
-- Pipe creator's application's [ANID](../concepts/applications.md#application-identifier) (4 bytes)
+- Pipe creator's application's [ANID](../../concepts/applications.md#application-identifier) (4 bytes)
 - [Pipe](ipc.md#pipes) SC or RC identifier (8 bytes)
 - Command code (2 bytes)
 - Pipe identifier type (1 byte): `0x00` if the pipe identifier is an RC, `0x01` if it's an SC
@@ -139,7 +139,7 @@ Sent to a process when another process opened a [service socket](ipc.md#service-
 **Datafield:**
 
 - Service socket creator's PID (8 bytes)
-- Service socket creator's application's [ANID](../concepts/applications.md#application-identifier) (4 bytes)
+- Service socket creator's application's [ANID](../../concepts/applications.md#application-identifier) (4 bytes)
 - Service socket identifier (8 bytes)
 - Size of the buffer, multiplied by 4KB (2 bytes)
 
@@ -177,29 +177,29 @@ Sent to a process when a [pipe](ipc.md#pipes) shared with another process is clo
 
 ### `0x2A` SERVICE_CONN_REQUEST
 
-Sent to a service process' [dispatcher thread](services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.
+Sent to a service process' [dispatcher thread](../services.md#thread-types) when another process tries to etablish a connection through the [`CONNECT_SERVICE`](syscalls.md#0x2a-connect_service) syscall.
 
 The process is expected to answer using the [`ACCEPT_SERVICE_CONNECTION`](syscalls.md#0x2c-accept_service_conn) under the provided delay, else it's considered as a rejection.
 
 If no handler is registered for this signal, it will kill the process when received.
 
-**NOTE:** This signal cannot be received if the application does not [expose a service](../concepts/applications.md#services).
+**NOTE:** This signal cannot be received if the application does not [expose a service](../../concepts/applications.md#services).
 
 **Datafield:**
 
 - Callee process' ID (8 bytes)
 - Connection's unique request ID (8 bytes)
 - Command code (2 bytes)
-- [Registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
+- [Registry](../registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
 
 ### `0x2B` SERVICE_CLIENT_CLOSED
 
-Sent to a [client thread](services.md#thread-types) to indicate its client closed before the connection was properly terminated.
+Sent to a [client thread](../services.md#thread-types) to indicate its client closed before the connection was properly terminated.
 The thread is expected to terminate as soon as possible (there is no time limit though).
 
 ### `0x2C` SERVICE_CLIENT_QUITTED
 
-Sent to a [client thread](services.md#thread-types) to indicate its client asked to close the connection.
+Sent to a [client thread](../services.md#thread-types) to indicate its client asked to close the connection.
 The associated RC and SC are immediatly closed.
 
 ### `0x2D` SERVICE_SERVER_QUITTED
@@ -212,7 +212,7 @@ Sent to a process that previously established a connection with a service, to in
 
 ### `0x33` READ_BACKED_AMS
 
-Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) is accessed in read mode.
+Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments) is accessed in read mode.
 
 **Datafield:**
 
@@ -230,7 +230,7 @@ Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract 
 
 ### `0x34` WRITE_BACKED_AMS
 
-Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) is accessed in write mode.
+Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments) is accessed in write mode.
 
 **Datafield:**
 
@@ -247,7 +247,7 @@ Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract 
 
 ### `0x35` RECV_SHARED_AMS
 
-Sent to a process when an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) is [shared](ipc.md#shared-memory) by another process.
+Sent to a process when an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) is [shared](ipc.md#shared-memory) by another process.
 
 **Datafield:**
 
@@ -261,7 +261,7 @@ Sent to a process when an [abstract memory segment (AMS)](kernel/memory.md#abstr
 
 ### `0x37` UNSHARED_AMS
 
-Sent to a process when an[abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) is unshared by the sharer process.
+Sent to a process when an[abstract memory segment (AMS)](memory.md#abstract-memory-segments) is unshared by the sharer process.
 
 **Datafield:**
 

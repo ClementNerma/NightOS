@@ -1,6 +1,6 @@
 # Inter-Process Communication
 
-This document describes the way [Inter-Process Communication (IPC)](../technical/ipc.md) works.
+This document describes the way [Inter-Process Communication (IPC)](../../technical/ipc.md) works.
 
 - [Pipes](#pipes)
   - [Opening pipes](#opening-pipes)
@@ -70,13 +70,13 @@ It's not possible to send "non-message" data through a message pipe, as the acti
 
 ### Interactive usage
 
-You can find more informations on interactive usage in the [shell specifications](shell.md#interactivity).
+You can find more informations on interactive usage in the [shell specifications](../shell.md#interactivity).
 
 ## Service sockets
 
 The downside of message pipes is that they are not designed to handle responses from the receiver process, and they also don't have built-in errors handling.
 
-To solve this, it's possible to use _service sockets_, which as their name indicate are mainly used to communicate with [services](services.md). A socket is caracterized by the process opening it, called the _service_, and the process receiving it, the _client_.
+To solve this, it's possible to use _service sockets_, which as their name indicate are mainly used to communicate with [services](../services.md). A socket is caracterized by the process opening it, called the _service_, and the process receiving it, the _client_.
 
 ### Opening
 

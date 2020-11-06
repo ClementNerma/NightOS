@@ -142,7 +142,7 @@ From a higher level point of view, drivers are [services](../services.md) that d
 
 When a device is connected, using multiple criterias **which are yet to be determined**, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#device_event) notification.
 
-From this point, the driver can create an [AMS](../kernel/memory.md#abstract-memory-segments) from the device's memory using the [`DEVICE_AMS`](../syscalls.md#0x34-device_ams) syscall.
+From this point, the driver can create an [AMS](../kernel/memory.md#abstract-memory-segments) from the device's memory using the [`DEVICE_AMS`](../kernel/syscalls.md#0x34-device_ams) syscall.
 
 It can also get informed of interrupts the device raises through the [`DEVICE_INTERRUPT`](#device_interrupt) notification.
 
@@ -152,7 +152,7 @@ The driver is also in charge of translating the interrupts of a device as well a
 
 ### A note on performances
 
-Although hardware devices' interrupts are notified to the driver through [service socket notifications](../ipc.md#methods-and-notifications), the latency is still minimal as soon as the driver listens to the [`RECV_SOCK_MSG`](../signals.md#0x27-recv_sock_msg) signal, which like all signals uses interrupts and so guarantees a very low latency.
+Although hardware devices' interrupts are notified to the driver through [service socket notifications](../kernel/ipc.md#methods-and-notifications), the latency is still minimal as soon as the driver listens to the [`RECV_SOCK_MSG`](../kernel/signals.md#0x27-recv_sock_msg) signal, which like all signals uses interrupts and so guarantees a very low latency.
 
 ## Methods
 
@@ -221,7 +221,7 @@ If multiple drivers have colliding patterns, the final user will be prompted to 
 The driver process will receive [`DEVICE_EVENT`](#device_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
 Notifications are also retroactive, which means they will be sent for already-connected devices.
 
-The driver will also have the device registered in its [drivable devices attribute](../kernel/processes.md#drivable-devices), allowing it to use the [`DEVICE_AMS`](../syscalls.md#0x34-device_ams) syscall to map the device's memory in its own.
+The driver will also have the device registered in its [drivable devices attribute](../kernel/processes.md#drivable-devices), allowing it to use the [`DEVICE_AMS`](../kernel/syscalls.md#0x34-device_ams) syscall to map the device's memory in its own.
 
 **Required permissions:**
 

@@ -56,19 +56,19 @@ The list of default applications and their description can be found [here](appli
 - [Applications package](specs/applications/package.md) - files representing a whole application
 - [Applications manifest](specs/applications/manifest.md) - how applications describe themselves in their package
 - [Filesystem](specs/filesystem.md) - how the filesystem works
-- [Inter-process communication](specs/ipc.md) - communication between processes
 - [Libraries](specs/libraries.md) - what are libraries
 - [The registry](specs/registry.md) - exhaustive specification of the registry's content
 - [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms
 - [The shell](specs/shell.md) - the native shell of NightOS
 - [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
-- [Signals](specs/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
-- [System calls](specs/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
 
 ### [Kernel](specs/kernel/)
 
 - [Hardware](specs/kernel/hardware.md) - how the kernel interacts with hardware
-- [Kernel-process communication](specs/kernel/kpc.md) - how the kernel communicate with processes and vice-versa
 - [Memory](specs/kernel/memory.md) - memory organization and management
 - [Processes](specs/kernel/processes.md) - processes concept and management
 - [Data structures](specs/kernel/data-structures.md) - data structures used by the kernel to represent things in memory
+- [Kernel-process communication](specs/kernel/kpc.md) - how the kernel communicate with processes and vice-versa
+- [Inter-process communication](specs/kernel/ipc.md) - communication between processes
+- [Signals](specs/kernel/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
+- [System calls](specs/kernel/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)

@@ -8,7 +8,7 @@ This document describes how the kernel organizes and manages the memory.
 
 ## Isolation
 
-Each [process](processes.md) has its own 64-bit address space, preventing it from accessing other processes' data. The memory is made of pages, which must be either be [allocated](../syscalls.md#0x30-mem_alloc) or mapped using [virtual memory segments](#abstract-memory-segments).
+Each [process](processes.md) has its own 64-bit address space, preventing it from accessing other processes' data. The memory is made of pages, which must be either be [allocated](syscalls.md#0x30-mem_alloc) or mapped using [virtual memory segments](#abstract-memory-segments).
 
 ## Abstract memory segments
 

@@ -1,6 +1,6 @@
 # System calls
 
-_System calls_, abbreviated _syscalls_, are a type of [KPC](kernel/kpc.md). They allow a process to ask the kernel to perform an action.
+_System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow a process to ask the kernel to perform an action.
 
 - [Technical overview](#technical-overview)
 - [List of syscalls](#list-of-syscalls)
@@ -174,7 +174,7 @@ _None_
 
 ### `0x12` SUSPEND
 
-[Suspend](../features/balancer.md#application-processes-suspension) the current process.
+[Suspend](../../features/balancer.md#application-processes-suspension) the current process.
 
 **Arguments:**
 
@@ -455,7 +455,7 @@ If the current process already has an active connection (a connection that hasn'
 
 **Arguments:**
 
-- Target application's [ANID](../concepts/applications.md#application-identifier) (4 bytes)
+- Target application's [ANID](../../concepts/applications.md#application-identifier) (4 bytes)
 - Command code (2 bytes)
 
 **Return value:**
@@ -469,7 +469,7 @@ If the current process already has an active connection (a connection that hasn'
 
 - `0x10`: Invalid flexible mode provided
 - `0x20`: The provided ANID does not exist
-- `0x21`: Target application does not [expose a service](../concepts/applications.md#services)
+- `0x21`: Target application does not [expose a service](../../concepts/applications.md#services)
 - `0x22`: Current process already has an active connection to the target service and flexible mode is not set
 - `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 - `0x31`: Service rejected the connection request
@@ -497,8 +497,8 @@ _None_
 Confirm the current service accepts the connection with a client.  
 A dedicated message pipe's SC and another's RC will be provided to communicate with the client.
 
-This will create a new [client thread](services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
-The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) signal, only [dispatcher thread](services.md#thread-types) will.
+This will create a new [client thread](../services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
+The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) signal, only [dispatcher thread](../services.md#thread-types) will.
 
 When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to this thread.
 
@@ -516,7 +516,7 @@ When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#
 
 - `0x10`: This request ID does not exist
 - `0x20`: The process which requested the connection already terminated
-- `0x30`: Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
+- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
 
 ### `0x2D` REJECT_SERVICE_CONN
 
@@ -534,7 +534,7 @@ _None_
 
 - `0x10`: This request ID does not exist
 - `0x20`: The process which requested the connection already terminated
-- `0x30`: Answer was given after the delay set in the [registry](registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
+- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
 
 ### `0x30` MEM_ALLOC
 
@@ -544,7 +544,7 @@ Allocate a linear block of memory.
 
 **Arguments:**
 
-- The number of [pages](kernel/memory.md#pages) to allocate (8 bytes)
+- The number of [pages](memory.md#pages) to allocate (8 bytes)
 
 **Return value:**
 
@@ -566,7 +566,7 @@ Mapped memory pages must be unmapped through the [`UNMAP_AMS`](#0x39-unmap_ams) 
 **Arguments:**
 
 - Pointer to the start address to unallocate the memory from (8 bytes)
-- The number of [pages](kernel/memory.md#pages) to unallocate (8 bytes)
+- The number of [pages](memory.md#pages) to unallocate (8 bytes)
 
 **Return value:**
 
@@ -582,7 +582,7 @@ _None_
 
 ### `0x32` VIRT_MEM_AMS
 
-Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) from a part of the current process' address space.
+Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) from a part of the current process' address space.
 
 **Arguments:**
 
@@ -601,7 +601,7 @@ Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segme
 
 ### `0x33` BACKED_AMS
 
-Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) backed by the [`READ_BACKED_AMS`](signals.md#0x33-read_backed_ams) and [`WRITE_BACKED_AMS`](signals.md#0x34-write_backed_ams) signals.
+Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) backed by the [`READ_BACKED_AMS`](signals.md#0x33-read_backed_ams) and [`WRITE_BACKED_AMS`](signals.md#0x34-write_backed_ams) signals.
 
 Copy-on-write support can be enabled to allow the receiver process to write data in its own memory space. Written pages will be allocated by the kernel and won't be backed anymore by the [`READ_BACKED_AMS`](signals.md#0x33-read_backed_ams) signal. The backer process won't be able to see these changes, and the [`WRITE_BACKEND_AMS`](signals.md#0x34-write_backed_ams) signal won't be trigerred on its side.
 
@@ -617,13 +617,13 @@ Copy-on-write support can be enabled to allow the receiver process to write data
 
 ### `0x34` DEVICE_AMS
 
-Create an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) from a device's memory through _Mapped Memory Input/Output_ (MMIO).
+Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) from a device's memory through _Mapped Memory Input/Output_ (MMIO).
 
-Requires the current process to have the device in its [drivable devices attribute](kernel/processes.md#drivable-devices).
+Requires the current process to have the device in its [drivable devices attribute](processes.md#drivable-devices).
 
 **Arguments:**
 
-- [SDI](kernel/hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
+- [SDI](hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
 - Start address in the device's memory (8 bytes)
 - Number of bytes to map (8 bytes)
 - Start address to map in this process' memory (8 bytes)
@@ -639,11 +639,11 @@ Requires the current process to have the device in its [drivable devices attribu
 - `0x12`: The mapping's size is null (0 bytes)
 - `0x20`: The provided device SDI was not found
 - `0x21`: The provided device is not compatible with MMIO
-- `0x22`: This device is not registered in this process' [drivable devices attribute](kernel/processes.md#drivable-devices)
+- `0x22`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
 
 ### `0x35` SHARE_AMS
 
-Share an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) with another process.
+Share an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) with another process.
 
 This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x35-recv_shared_ams) with the provided command code, unless the notification mode states otherwise.
 
@@ -675,7 +675,7 @@ The _exclusive mode_ allows, only when sharing AMS [made from existing memory pa
 
 ### `0x36` AMS_SHARING_INFO
 
-Get informations about a [shared](#0x35-share_ams) [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments).
+Get informations about a [shared](#0x35-share_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments).
 
 **Arguments:**
 
@@ -697,7 +697,7 @@ Get informations about a [shared](#0x35-share_ams) [abstract memory segment (AMS
 
 ### `0x37` UNSHARE_AMS
 
-Stop sharing an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) started by [`SHARE_AMS`](#0x35-share_ams). Note that exlusive sharings cannot be unmapped.
+Stop sharing an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) started by [`SHARE_AMS`](#0x35-share_ams). Note that exlusive sharings cannot be unmapped.
 
 This will trigger in the target process the [`UNSHARED_AMS`](signals.md#0x37-unshared_ams) signal.
 
@@ -718,7 +718,7 @@ _None_
 
 ### `0x38` MAP_AMS
 
-Map an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) in the current process' address space.
+Map an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) in the current process' address space.
 
 **Arguments:**
 
@@ -739,7 +739,7 @@ _None_
 
 ### `0x39` UNMAP_AMS
 
-Unmap an [abstract memory segment (AMS)](kernel/memory.md#abstract-memory-segments) from the current process' address space.  
+Unmap an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) from the current process' address space.  
 If the AMS is mapped at multiple addresses of this process, only one of the mappings will be unmapped by default.
 
 **Arguments:**
@@ -760,11 +760,11 @@ _Empty_
 
 Allow or disallow a device to access a range of addresses through _Direct Memory Access_ (DMA) in the current process' address space.
 
-Requires the current process to have the device in its [drivable devices attribute](kernel/processes.md#drivable-devices).
+Requires the current process to have the device in its [drivable devices attribute](processes.md#drivable-devices).
 
 **Arguments:**
 
-- [SDI](kernel/hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
+- [SDI](hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
 - Start address in the current process' address space (8 bytes)
 - Length (8 bytes)
 - Authorization (1 byte): `0x00` to allow the device to use this range, `0x01` to cancel an authorization
@@ -780,11 +780,11 @@ _None_
 - `0x12`: The range's size is null (0 bytes)
 - `0x20`: The provided device SDI was not found
 - `0x21`: The provided device is not compatible with DMA
-- `0x22`: This device is not registered in this process' [drivable devices attribute](kernel/processes.md#drivable-devices)
+- `0x22`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
 
 ### `0xA0` EXECUTION_CONTEXT
 
-Get informations from the application's [execution context](applications/context.md).
+Get informations from the application's [execution context](../applications/context.md).
 
 **Arguments:**
 
@@ -808,7 +808,7 @@ Get informations from the application's [execution context](applications/context
 ### `0xD0` PROCESS_ATTRIBUTES
 
 System service-only syscall.  
-Get a process' [attributes](kernel/processes.md#process-attributes).
+Get a process' [attributes](processes.md#process-attributes).
 
 **Arguments:**
 
@@ -889,7 +889,7 @@ For each device, its SDI (4 bytes) is written to the provided address.
 
 **Arguments:**
 
-- [CII](kernel/hardware.md#connection-interface-identifier) of the devices to list (4 bytes)
+- [CII](hardware.md#connection-interface-identifier) of the devices to list (4 bytes)
   `0` will list all devices
 - Address of a writable buffer (8 bytes)
 
@@ -904,11 +904,11 @@ For each device, its SDI (4 bytes) is written to the provided address.
 ### `0xD3` DEVICE_INFOS
 
 System service-only syscall.  
-Get the [raw device descriptor](kernel/hardware.md#raw-device-descriptor) of a single device.
+Get the [raw device descriptor](hardware.md#raw-device-descriptor) of a single device.
 
 **Arguments:**
 
-- [SDI](kernel/hardware.md#session-device-identifier) of the device to get informations from (4 bytes)
+- [SDI](hardware.md#session-device-identifier) of the device to get informations from (4 bytes)
 - Address of a writable buffer (8 bytes)
 
 **Return value:**

@@ -68,13 +68,13 @@ The application's startup arguments and output value use the following encoding:
 | `0x06`    | `list`    | Typed linear list                   | Type code of the list's number of items (1 byte), length in bytes (64 bits), encoded items |
 | `0x07`    | `path`    | Filesystem path                     | Represented as an UTF-8 string                                                             |
 | `0x08`    | `command` | Shell command                       | Represented as an UTF-8 string                                                             |
-| `0x09`    | `stream`  | [Pipe RC](../ipc.md#pipes)          | RC identifier (8 bytes)                                                                    |
+| `0x09`    | `stream`  | [Pipe RC](../kernel/ipc.md#pipes)   | RC identifier (8 bytes)                                                                    |
 
 The type code is present to avoid misinterpreting the value in case the command returned a value of the wrong type.
 
 ## Returning and failing
 
-The value must be returned using the [CMDOUT](../ipc.md#interactive-usage) pipe. The data sent through this pipe must follow the above [encoding](#values-encoding).
+The value must be returned using the [CMDOUT](../kernel/ipc.md#interactive-usage) pipe. The data sent through this pipe must follow the above [encoding](#values-encoding).
 
 A command may also fail. To indicate so, the process must send the `0xFF` value through the pipe, and the shell will consider the command as failed (but not invalid, so the process won't be abruptly killed).
 

@@ -13,7 +13,7 @@ When running a command which comes from an applications which [expose it](../con
 
 The special thing about running an application from one of its exposed commands is that its CMDIN, CMDUSR, CMDMSG, CMDERR, CMDOUT and CMDRAW pipes are exposed to the caller.
 
-You can find more informations about how a process can interact with a running command in the [IPC documentation](../specs/ipc.md#interactive-usage).
+You can find more informations about how a process can interact with a running command in the [IPC documentation](../specs/kernel/ipc.md#interactive-usage).
 
 ## Pipes
 

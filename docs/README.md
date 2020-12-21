@@ -61,6 +61,7 @@ The list of default applications and their description can be found [here](appli
 - [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms
 - [The shell](specs/shell.md) - the native shell of NightOS
 - [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
+- [Services](specs/services.md) - specifications about services work and behave
 
 ### [Kernel](specs/kernel/)
 

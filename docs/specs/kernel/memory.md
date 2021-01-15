@@ -14,8 +14,8 @@ Each [process](processes.md) has its own 64-bit address space, preventing it fro
 
 An _abstract memory segment_ (AMS) is an identifier which refers to a segment of memory which doesn't actually exist. To be used, they must be _mapped_ in a process' memory to be accessed like regular memory. The kernel then intercepts all memory accesses to these mappings and handle them, depending on their nature which cover three cases:
 
-- Mapping existing memory pages to others, or sharing them with other processes ;
-- Mapping a device's memory into the process' own memory space ;
-- Making a virtual memory space handled by signals
+- [Mapping existing memory pages to others, or sharing them with other processes](syscalls.md#0x32-virt_mem_ams) ;
+- [Mapping a device's memory into the process' own memory space](syscalls.md#0x34-device_ams) ;
+- [Making a virtual memory space handled by signals](syscalls.md#0x33-backed_ams)
 
 An AMS can then be mapped at multiple places in a process' memory, or shared with other processes. The kernel handles mappings to get optimal performances and reduce the number of memory accesses as much as possible.

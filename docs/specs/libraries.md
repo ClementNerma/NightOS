@@ -20,7 +20,6 @@ The library contains several _modules_, which act like language namespaces to ex
 - `ipm` : Inter-process management (create processes, workers, IPC, shared memory, ...)
 - `gui` : Graphical user interface library (relies on `desktop`)
 - `apps` : Applications management (installation, removal, ...)
-- `astral`: Applications building and debugging (building, debugging, ...)
 - `perm` : Permissions controller
 - `hydre` : Shell interface (run commands, ...)
 - `input` : Input interface (keyboard, mouse, microphone, ...)

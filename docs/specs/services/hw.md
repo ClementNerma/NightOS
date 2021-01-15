@@ -38,7 +38,7 @@ This section describes the multiple formats used by this service to deal with de
 
 ### Device type descriptor
 
-From the [RDD](../kernel/hardware.md#raw-device-descriptor) and [CII](../kernel/hardware.md#connection-interface-identifier) is derived the _device type descriptor_ (DTD), which describes the device's type. Its composition and size depends on the connection type, but it varies from empty (0 byte) if the connection type guarantees no information, up to 256 bytes.
+From the [RDD](../kernel/hardware.md#raw-device-descriptor) is derived the _device type descriptor_ (DTD), which describes the device's type. Its composition and size depends on the connection type, but it varies from empty (0 byte) if the connection type guarantees no information, up to 256 bytes.
 
 ***The format remains to be determined but should be along the lines of a number-based equivalent of ModAlias, like :***
 

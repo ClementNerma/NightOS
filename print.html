@@ -4739,7 +4739,7 @@ Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device de
 <li><a href="specs/services/hw.html#device-formats">Device formats</a>
 <ul>
 <li><a href="specs/services/hw.html#device-type-descriptor">Device type descriptor</a></li>
-<li><a href="specs/services/hw.html#device-identifier">Device identifier</a></li>
+<li><a href="specs/services/hw.html#unique-device-identifier">Unique device identifier</a></li>
 <li><a href="specs/services/hw.html#driver-device-descriptor">Driver device descriptor</a></li>
 <li><a href="specs/services/hw.html#driven-device-type">Driven device type</a></li>
 </ul>
@@ -4781,7 +4781,7 @@ Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device de
 <h2><a class="header" href="#device-formats" id="device-formats">Device formats</a></h2>
 <p>This section describes the multiple formats used by this service to deal with devices.</p>
 <h3><a class="header" href="#device-type-descriptor" id="device-type-descriptor">Device type descriptor</a></h3>
-<p>From the RDD and CII is derived the <em>device type descriptor</em> (DTD), which describes the device's type. Its composition and size depends on the connection type, but it varies from empty (0 byte) if the connection type guarantees no information, up to 256 bytes.</p>
+<p>From the <a href="specs/services/../kernel/hardware.html#raw-device-descriptor">RDD</a> and <a href="specs/services/../kernel/hardware.html#connection-interface-identifier">CII</a> is derived the <em>device type descriptor</em> (DTD), which describes the device's type. Its composition and size depends on the connection type, but it varies from empty (0 byte) if the connection type guarantees no information, up to 256 bytes.</p>
 <p><em><strong>The format remains to be determined but should be along the lines of a number-based equivalent of ModAlias, like :</strong></em></p>
 <ul>
 <li>PCI-Express:
@@ -4795,18 +4795,18 @@ Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device de
 </li>
 <li>...</li>
 </ul>
-<h3><a class="header" href="#device-identifier" id="device-identifier">Device identifier</a></h3>
+<h3><a class="header" href="#unique-device-identifier" id="unique-device-identifier">Unique device identifier</a></h3>
 <p>It also derives a <em>unique device identifier</em> (UDI) encoded on 265 bytes, which is made of:</p>
 <ul>
-<li>SDI (4 bytes)</li>
-<li>CII (4 bytes)</li>
-<li>Size of the DTD (1 byte)</li>
-<li>DTD (256 bytes, weakest bits filled with zeros)</li>
+<li><a href="specs/services/../kernel/hardware.html#session-device-identifier">SDI</a> (4 bytes)</li>
+<li><a href="specs/services/../kernel/hardware.html#connection-interface-identifier">CII</a> (4 bytes)</li>
+<li>Size of the <a href="specs/services/hw.html#device-type-descriptor">DTD</a> (1 byte)</li>
+<li><a href="specs/services/hw.html#device-type-descriptor">DTD</a> (256 bytes, weakest bits filled with zeros)</li>
 </ul>
 <h3><a class="header" href="#driver-device-descriptor" id="driver-device-descriptor">Driver device descriptor</a></h3>
 <p>A <em>driver device descriptor</em> (DDD) is a data structure meant to be used by <a href="specs/services/hw.html#drivers">drivers</a>. It uses the following format:</p>
 <ul>
-<li>Bytes 000-264: Device's UDI</li>
+<li>Bytes 000-264: Device's <a href="specs/services/hw.html#unique-device-identifier">UDI</a></li>
 <li>Bytes 265-512: <em>Future-proof</em></li>
 </ul>
 <h3><a class="header" href="#driven-device-type" id="driven-device-type">Driven device type</a></h3>

@@ -52,6 +52,7 @@ The list of default applications and their description can be found [here](appli
 
 ## [Specifications](specs/)
 
+- [Applications and libraries](specs/applications-libraries.md) - document describing common things between applications and libraries
 - [Application context](specs/applications/context.md) - launch an application to directly perform a specific task
 - [Applications package](specs/applications/package.md) - files representing a whole application
 - [Applications manifest](specs/applications/manifest.md) - how applications describe themselves in their package

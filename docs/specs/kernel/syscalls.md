@@ -455,7 +455,7 @@ If the current process already has an active connection (a connection that hasn'
 
 **Arguments:**
 
-- Target application's [ANID](../../concepts/applications.md#application-identifier) (4 bytes)
+- Target application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
 - Command code (2 bytes)
 
 **Return value:**

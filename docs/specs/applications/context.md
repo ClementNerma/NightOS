@@ -38,7 +38,7 @@ The context header is stored as a single block of data, consisting of:
   - Bit 1: set if the application is starting for the very first time for this specific user
   - Bit 2: set if the application is starting for the first time after an update
   - Bit 3: set if other instances of this application are running
-- The application's [ANID](../../concepts/applications.md#application-identifier) (4 bytes)
+- The application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
 
 If the command was not started a command, the context ends here. Else, it also contains the following informations:
 

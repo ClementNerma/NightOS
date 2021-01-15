@@ -111,7 +111,7 @@ The command code can be used to determine what the other process is expecting th
 **Datafield:**
 
 - Pipe creator's PID (8 bytes)
-- Pipe creator's application's [ANID](../../concepts/applications.md#application-identifier) (4 bytes)
+- Pipe creator's application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
 - [Pipe](ipc.md#pipes) SC or RC identifier (8 bytes)
 - Command code (2 bytes)
 - Pipe identifier type (1 byte): `0x00` if the pipe identifier is an RC, `0x01` if it's an SC
@@ -139,7 +139,7 @@ Sent to a process when another process opened a [service socket](ipc.md#service-
 **Datafield:**
 
 - Service socket creator's PID (8 bytes)
-- Service socket creator's application's [ANID](../../concepts/applications.md#application-identifier) (4 bytes)
+- Service socket creator's application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
 - Service socket identifier (8 bytes)
 - Size of the buffer, multiplied by 4KB (2 bytes)
 

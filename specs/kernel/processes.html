@@ -172,6 +172,7 @@
 <ul>
 <li><a href="#why-processes">Why processes</a></li>
 <li><a href="#switching-and-cycles">Switching and cycles</a></li>
+<li><a href="#process-identifier">Process identifier</a></li>
 <li><a href="#process-attributes">Process attributes</a></li>
 <li><a href="#performance-balancing">Performance balancing</a>
 <ul>
@@ -200,6 +201,8 @@
 <li>Go to step 1</li>
 </ol>
 <p>These steps are known as a <em>cycle</em>.</p>
+<h2><a class="header" href="#process-identifier" id="process-identifier">Process identifier</a></h2>
+<p>Each process is identified by a 64-bit number, which is guaranteed to be unique until the system restarts. When a process terminates, the PID is not freed. The PID is not randomly generated, but retrieved from a system-wide counter incremented when a new process starts. PID cannot be equal to 0.</p>
 <h2><a class="header" href="#process-attributes" id="process-attributes">Process attributes</a></h2>
 <p>Each process has a set of <em>attributes</em> which contains critical informations on it (lists are usually <a href="data-structures.html#packed-linked-lists">PLL</a>):</p>
 <ul>

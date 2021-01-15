@@ -168,7 +168,25 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#comet" id="comet">Comet</a></h1>
-<p>Comet is the default file manager of NightOS.</p>
+<p>Comet is the default file manager of NightOS. It embeds the <code>sys::comet</code> library.</p>
+<h2><a class="header" href="#compatible-filesystems" id="compatible-filesystems">Compatible filesystems</a></h2>
+<p>Comet can open and manage all filesystems natively supported by NightOS, meaning it also supports custom filesystems handled by the <a href="../specs/services/fs.html"><code>sys::fs</code></a> service as well as remote drives such as SSH and SFTP storages.</p>
+<p>Third-party application can also provide support for additional storage types (e.g. cloud).</p>
+<h2><a class="header" href="#usage" id="usage">Usage</a></h2>
+<p>Comet is meant to be used with both a keyboard and a tracking device, but it's also possible to use only the former or the latter.</p>
+<h2><a class="header" href="#features" id="features">Features</a></h2>
+<ul>
+<li>Listing</li>
+<li>Creation and deletion of items</li>
+<li>Copy and paste for all types of items</li>
+<li>Handles parallel operations (with queue management, pause/resume, priorization, forced throttling, ...)</li>
+<li>Encryption and deletion for files, folders and drives</li>
+<li>Items caching for remote drives</li>
+<li>Drag &amp; drop from and to other applications</li>
+<li>Customizable interface</li>
+<li>Tabs</li>
+<li>Real-time refresh</li>
+</ul>
 
                     </main>
 

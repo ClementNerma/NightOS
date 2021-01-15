@@ -169,6 +169,54 @@
                     <main>
                         <h1><a class="header" href="#monitor" id="monitor">Monitor</a></h1>
 <p>Monitor allows to see and manage running applications and processes, as well as to watch resources usage like CPU percentage or used RAM.</p>
+<h2><a class="header" href="#features" id="features">Features</a></h2>
+<p>Monitor can display as an instant, real-time label or as a graph multiple informations:</p>
+<ul>
+<li>Memory usage</li>
+<li>CPU usage (global and per core) for each CPU</li>
+<li>GPU usage (by type) for each GPU</li>
+<li>Storage usage (HDD, SSD, USB, ...) for each storage device</li>
+<li>Network usage for each available connection</li>
+</ul>
+<p>Usage can be expressed in percents, and when applicable in bandwidth (MB/s par default).</p>
+<p>Additional informations can also be displayed:</p>
+<ul>
+<li>Frequency of each CPU core</li>
+<li>Frequency of each GPU</li>
+<li>Number of concurrent reading and writing to each storage device</li>
+<li>Temperature for each device supporting it</li>
+<li>Memory usage (by type)</li>
+</ul>
+<p>Hardware informations can also be displayed:</p>
+<ul>
+<li>General : number of processes, number of threads, uptime, number of opened file handles</li>
+<li>CPU : model, frequency (total and per core), base frequency, boost frequency, physical cores, logical cores, number of used sockets, caches</li>
+<li>GPU : model</li>
+<li>Memory : capacity, in use, panigated, used slots, available slots, frequency</li>
+<li>Storage : model, capacity, used, locks, cached data, S.M.A.R.T. if applicable</li>
+<li>Network : type of connection, hardware speed, IPv4 and IPv6 address, used DNS</li>
+</ul>
+<p>It also displays informations on processes and services:</p>
+<ul>
+<li>Name</li>
+<li>Icon</li>
+<li>Application (+ icon)</li>
+<li><a href="../specs/applications-libraries.html#application-identifier">ANID</a></li>
+<li>CPU usage</li>
+<li>GPU usage</li>
+<li>Memory usage (percent and absolute amount)</li>
+<li>Storage usage (percent and absolute speed)</li>
+<li>Network usage (percent and absolute speed)</li>
+<li>Approximate battery consumption</li>
+<li><a href="../specs/kernel/processes.html#process-identifier">Process identifier</a></li>
+<li>Command-line arguments (when started as a command)</li>
+<li><a href="../specs/applications/context.html">Application context</a> (if applicable)</li>
+<li>Number of threads</li>
+<li>Number of file handles</li>
+<li>List of file handles</li>
+<li>List of permissions</li>
+<li>Number of clients (service only)</li>
+</ul>
 
                     </main>
 

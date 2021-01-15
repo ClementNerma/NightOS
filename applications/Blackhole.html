@@ -168,7 +168,26 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#blackhole" id="blackhole">Blackhole</a></h1>
-<p>Blackhole is the default archive manager of NightOS. It supports many different archives types (zip, 7z, gzip, etc.).</p>
+<p>Blackhole is the default archive manager of NightOS. It embeds the <code>sys::blackhole</code> library.</p>
+<p>It relies on <a href="Locky.html">Locky</a> for encrypted archives, filesystems and files.</p>
+<h2><a class="header" href="#features" id="features">Features</a></h2>
+<p>Blackhole can open, extract and create <a href="#supported-formats">different formats</a>. It supports compression as well as encryption.</p>
+<h2><a class="header" href="#supported-formats" id="supported-formats">Supported formats</a></h2>
+<ul>
+<li>7-Zip archives (<code>.7z</code>)</li>
+<li>BZip(2) archives (<code>.bz</code>, <code>.bz2</code>)</li>
+<li>GZip archives (<code>.gz</code>)</li>
+<li>ISO images (<code>.iso</code>)</li>
+<li>LZMA(2) archives (<code>.lz</code>, <code>.xz</code>)</li>
+<li>Unix compressed archives (<code>.z</code>)</li>
+<li>TAR archives (<code>.tar</code>)</li>
+</ul>
+<p>Are also supported all the archive formats specific to NightOS:</p>
+<ul>
+<li><a href="../technical/file-formats.html#virtual-storages">Virtual storage files</a> (<code>.vsf</code>, <code>.vad</code>)</li>
+<li><a href="../technical/file-formats.html#application-packages">NightOS application file</a> (<code>.nap</code>, <code>.nva</code>)</li>
+<li><a href="../technical/file-formats.html#system-updates">NightOS system updates</a> (<code>.nsu</code>)</li>
+</ul>
 
                     </main>
 

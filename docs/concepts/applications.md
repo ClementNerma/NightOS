@@ -95,6 +95,8 @@ Some [native applications](../applications/) are part of the system itself and a
 System applications cannot be removed in any way, as some of them are critical for the system to function properly.  
 Native applications which are _not_ system applications can be removed, though.
 
+These applications can be updated independently of the system itself, thus their version may differ from the system itself.
+
 ## Services
 
 Application can provide a [service](../technical/services.md) by specifying it in their [manifest](../specs/applications/manifest.md).

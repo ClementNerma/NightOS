@@ -1091,6 +1091,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <li><a href="specs/applications/package.html#content">Content</a></li>
 <li><a href="specs/applications/package.html#manifest">Manifest</a></li>
 <li><a href="specs/applications/package.html#pre-compiled-applications">Pre-compiled applications</a></li>
+<li><a href="specs/applications/package.html#libraries-embedding">Libraries embedding</a></li>
 </ul>
 <h2><a class="header" href="#content" id="content">Content</a></h2>
 <p>NAP and NVA files are ZStandard archives which only requirement is to contain, at the archive's root, a <code>manifest.toml</code> file describing the archive itself, a <code>hash.md5</code> ensuring the archive has not been corrupted.</p>
@@ -1098,6 +1099,15 @@ It indicates why the application was started and so what it is supposed to do.</
 <p>The manifest format can be found in the related <a href="specs/applications/manifest.html">specifications document</a>.</p>
 <h2><a class="header" href="#pre-compiled-applications" id="pre-compiled-applications">Pre-compiled applications</a></h2>
 <p>By default, and if possible, the system will always try to install <a href="specs/applications/../../technical/pre-compiling.html">pre-compiled programs</a> from applications' package. If the pre-compiled programs are not available, it will be built from source code - which takes a lot more time.</p>
+<h2><a class="header" href="#libraries-embedding" id="libraries-embedding">Libraries embedding</a></h2>
+<p>Although it's a better practice to split applications and libraries into different packages, sometimes it's more easy to embed both in the same package, especially in two cases:</p>
+<ul>
+<li>When the application is just a thin layer ahead of the library (e.g. CLI tool)</li>
+<li>When the library's API changes rapidly and the application relies on it</li>
+</ul>
+<p>For such scenarios, it's possible for an application package to embed one or more libraries, and publish them all at once.</p>
+<p>The application's and libraries' version may differ if required.</p>
+<p>If an another application or a library specifies one of the embedded libraries as a dependency, only the said library will be installed, not the application.</p>
 <h1><a class="header" href="#application-manifest" id="application-manifest">Application Manifest</a></h1>
 <p>Here is the specifications of the application manifest, in additional to the <a href="specs/applications/../applications-libraries.html#the-manifest">common manifest</a>:</p>
 <pre><code class="language-yaml"># [OPT] Event triggers

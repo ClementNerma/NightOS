@@ -168,7 +168,15 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#astral" id="astral">Astral</a></h1>
-<p>Astral is the toolchain required to build NightOS applications.</p>
+<p>Astral is the toolchain required to build NightOS applications. It's a command-line only application built on top of the <a href="../specs/libraries.html#the-system-library"><code>apps</code> system module</a>.</p>
+<h2><a class="header" href="#description" id="description">Description</a></h2>
+<p>Astral is made of several tools:</p>
+<ul>
+<li>A <em>builder</em>, which builds application packages from their manifest</li>
+<li>A <em>publisher</em>, which allows to sign the application and upload it to the <a href="Stellar.html">Store</a></li>
+<li>A <em>debugger</em>, which provides tools to run and debug an application (monitor <a href="../features/permissions.html">permissions</a>, create <a href="../features/sandboxes.html#puppet-sandbox">puppet sandboxes</a>, ...) </li>
+</ul>
+<p>It relies on several external compilers (Rust, TypeScript, ...) to build applications from source. Infrastructure for the main languages is installed by default, but additional toolchains can be installed manually.</p>
 
                     </main>
 

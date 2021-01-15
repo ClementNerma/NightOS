@@ -403,38 +403,12 @@ The service will be run at startup with the usual application's permissions.</p>
 <p><em>Libraries</em> allow to share a program between multiple applications.</p>
 <ul>
 <li><a href="concepts/libraries.html#how-libraries-work">How libraries work</a></li>
-<li><a href="concepts/libraries.html#dependencies-management-and-resolving">Dependencies management and resolving</a></li>
-<li><a href="concepts/libraries.html#system-libraries">System libraries</a></li>
 </ul>
 <h2><a class="header" href="#how-libraries-work" id="how-libraries-work">How libraries work</a></h2>
 <p>Unlike applications, libraries can be installed in multiple versions. This means you can have three versions of the same library installed at the same time on your computer.</p>
 <p>When an application wants to use a library, it explicitly indicates the list of versions it is compatible with. The system then gets the related version and provides it to the application.</p>
 <p>A library by itself cannot do itself: no background process, no commands exposure, no permission granting. Applications simply use libraries as helpers to achieve specific tasks.</p>
 <p>For instance, the system library <code>fs</code> which is natively available allows to manipulate files and directories easily.</p>
-<h2><a class="header" href="#dependencies-management-and-resolving" id="dependencies-management-and-resolving">Dependencies management and resolving</a></h2>
-<p>Each application indicates in its <a href="concepts/../specs/applications/manifest.html">manifest</a> the list of libraries it requires.</p>
-<p>When the application is installed, the system will also check if the required libaries are already installed, and with the matching versions. If this is not the case, the library will be downloaded and installed as well (even if it's a volatile application).</p>
-<p>When an application is removed, the system looks for each of its dependencies. If the dependency is not used by any application anymore, it is removed by default.</p>
-<h2><a class="header" href="#system-libraries" id="system-libraries">System libraries</a></h2>
-<p>The system provides several <em>system libraries</em>, which work are libraries that communicate with the system through signals to enable system-related and hardware-related features.
-Note that's it's possible to use signals directly to deal with the system and the hardware, but it's a lot more complicated than just using these system libaries.</p>
-<ul>
-<li><code>fs</code> : Filesystem management</li>
-<li><code>net</code> : Network communications</li>
-<li><code>ipm</code> : Inter-process management (create processes, workers, IPC, shared memory, ...)</li>
-<li><code>gui</code> : Graphical user interface library (relies on <code>desktop</code>)</li>
-<li><code>apps</code> : Applications management</li>
-<li><code>perm</code> : Permissions controller</li>
-<li><code>shell</code> : Shell interface (run commands, ...)</li>
-<li><code>input</code> : Input interface (keyboard, mouse, microphone, ...)</li>
-<li><code>sound</code> : Sound interface</li>
-<li><code>system</code> : System interface (control panel, low-level changes, updates, ...)</li>
-<li><code>sandbox</code> : Sandboxes management (run applications in sandboxes, ...)</li>
-<li><code>desktop</code> : Desktop management (desktop, windows, notifications, ...)</li>
-<li><code>hardware</code> : Hardware management (drivers and devices)</li>
-<li><code>reactive</code> : Reactive (relies on <code>reactive</code>, includes Reactive Markup Language, ...)</li>
-<li><code>sysver</code> : Exposes the system version, its main purpose to indicate which system version is required for an application</li>
-</ul>
 <h1><a class="header" href="#users" id="users">Users</a></h1>
 <ul>
 <li><a href="concepts/users.html#the-concept">The concept</a></li>
@@ -1273,9 +1247,29 @@ additional:
 <p>Libraries are NightOS' way to share code between multiple applications.</p>
 <ul>
 <li><a href="specs/libraries.html#manifest">Manifest</a></li>
+<li><a href="specs/libraries.html#the-system-library">The system library</a></li>
 </ul>
 <h2><a class="header" href="#manifest-1" id="manifest-1">Manifest</a></h2>
 <p>As libaries are only meant to share code, there manifest is a lot simplier than <a href="specs/applications/manifest.html">applications' manifest</a> as it is only made of the <a href="specs/applications-libraries.html#the-manifest">common fields</a>.</p>
+<h2><a class="header" href="#the-system-library" id="the-system-library">The system library</a></h2>
+<p>The system provides a single <em>system library</em> with the <code>sys::lib</code> <a href="specs/applications-libraries.html#application-identifier">AID</a>, which is built in the system and not removable. Apart from these points, it acts like a standard library. Its version is identical to the system itself, allowing applications and libraries to specify a minimum system version in their dependencies field.</p>
+<p>The library contains several <em>modules</em>, which act like language namespaces to expose specific features:</p>
+<ul>
+<li><code>fs</code> : Filesystem management</li>
+<li><code>net</code> : Network communications</li>
+<li><code>ipm</code> : Inter-process management (create processes, workers, IPC, shared memory, ...)</li>
+<li><code>gui</code> : Graphical user interface library (relies on <code>desktop</code>)</li>
+<li><code>apps</code> : Applications management (installation, removal, ...)</li>
+<li><code>astral</code>: Applications building and debugging (building, debugging, ...)</li>
+<li><code>perm</code> : Permissions controller</li>
+<li><code>hydre</code> : Shell interface (run commands, ...)</li>
+<li><code>input</code> : Input interface (keyboard, mouse, microphone, ...)</li>
+<li><code>sound</code> : Sound interface</li>
+<li><code>system</code> : System interface (low-level changes, updates, ...)</li>
+<li><code>sandbox</code> : Sandboxes management (run applications in sandboxes, ...)</li>
+<li><code>desktop</code> : Desktop management (desktop, windows, notifications, ...)</li>
+<li><code>hardware</code> : Hardware management (drivers and devices)</li>
+</ul>
 <h1><a class="header" href="#registry-1" id="registry-1">Registry</a></h1>
 <p>This document describes the format of the <a href="specs/../technical/registry.html">system registy</a> as well as its content.</p>
 <ul>
@@ -5041,7 +5035,15 @@ System services communicate directly with the kernel and are trusted processes s
 <h2><a class="header" href="#system-services-3" id="system-services-3">System services</a></h2>
 <p>System services are listed in their own <a href="applications/../specs/services/">specifications directory</a>.</p>
 <h1><a class="header" href="#astral" id="astral">Astral</a></h1>
-<p>Astral is the toolchain required to build NightOS applications.</p>
+<p>Astral is the toolchain required to build NightOS applications. It's a command-line only application built on top of the <a href="applications/../specs/libraries.html#the-system-library"><code>apps</code> system module</a>.</p>
+<h2><a class="header" href="#description" id="description">Description</a></h2>
+<p>Astral is made of several tools:</p>
+<ul>
+<li>A <em>builder</em>, which builds application packages from their manifest</li>
+<li>A <em>publisher</em>, which allows to sign the application and upload it to the <a href="applications/Stellar.html">Store</a></li>
+<li>A <em>debugger</em>, which provides tools to run and debug an application (monitor <a href="applications/../features/permissions.html">permissions</a>, create <a href="applications/../features/sandboxes.html#puppet-sandbox">puppet sandboxes</a>, ...) </li>
+</ul>
+<p>It relies on several external compilers (Rust, TypeScript, ...) to build applications from source. Infrastructure for the main languages is installed by default, but additional toolchains can be installed manually.</p>
 <h1><a class="header" href="#bareenv" id="bareenv">BareEnv</a></h1>
 <p><em>BareEnv</em>, for <em>bare environment</em>, is text-based desktop environment meant for servers as well as fallback when no graphical output is available or when the primary desktop environment does not work for any reason.</p>
 <h1><a class="header" href="#blackhole" id="blackhole">Blackhole</a></h1>

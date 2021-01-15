@@ -5,7 +5,7 @@ The `sys::hw` service is in charge of hardware devices. It coordinates and manag
 - [Hardware detection](#hardware-detection)
 - [Device formats](#device-formats)
   - [Device type descriptor](#device-type-descriptor)
-  - [Device identifier](#device-identifier)
+  - [Unique device identifier](#unique-device-identifier)
   - [Driver device descriptor](#driver-device-descriptor)
   - [Driven device type](#driven-device-type)
 - [Normalization](#normalization)
@@ -38,7 +38,7 @@ This section describes the multiple formats used by this service to deal with de
 
 ### Device type descriptor
 
-From the RDD and CII is derived the _device type descriptor_ (DTD), which describes the device's type. Its composition and size depends on the connection type, but it varies from empty (0 byte) if the connection type guarantees no information, up to 256 bytes.
+From the [RDD](../kernel/hardware.md#raw-device-descriptor) and [CII](../kernel/hardware.md#connection-interface-identifier) is derived the _device type descriptor_ (DTD), which describes the device's type. Its composition and size depends on the connection type, but it varies from empty (0 byte) if the connection type guarantees no information, up to 256 bytes.
 
 ***The format remains to be determined but should be along the lines of a number-based equivalent of ModAlias, like :***
 
@@ -50,20 +50,20 @@ From the RDD and CII is derived the _device type descriptor_ (DTD), which descri
   - ...
 - ...
 
-### Device identifier
+### Unique device identifier
 
 It also derives a _unique device identifier_ (UDI) encoded on 265 bytes, which is made of:
 
-- SDI (4 bytes)
-- CII (4 bytes)
-- Size of the DTD (1 byte)
-- DTD (256 bytes, weakest bits filled with zeros)
+- [SDI](../kernel/hardware.md#session-device-identifier) (4 bytes)
+- [CII](../kernel/hardware.md#connection-interface-identifier) (4 bytes)
+- Size of the [DTD](#device-type-descriptor) (1 byte)
+- [DTD](#device-type-descriptor) (256 bytes, weakest bits filled with zeros)
 
 ### Driver device descriptor
 
 A _driver device descriptor_ (DDD) is a data structure meant to be used by [drivers](#drivers). It uses the following format:
 
-- Bytes 000-264: Device's UDI
+- Bytes 000-264: Device's [UDI](#unique-device-identifier)
 - Bytes 265-512: _Future-proof_
 
 ### Driven device type

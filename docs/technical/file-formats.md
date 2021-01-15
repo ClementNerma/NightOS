@@ -28,7 +28,7 @@ The filesystems can be encrypted individually. The whole storage can also be enc
 
 They have multiple purposes: store encrypted files, virtual filesystems for sandboxed applications, etc.
 
-Virtual storage files have the `.vst` extension and are opened using [Blackhole](../applications/Blackhole.md).
+Virtual storage files have the `.vsf` extension and are opened using [Blackhole](../applications/Blackhole.md).
 
 ## Application packages
 

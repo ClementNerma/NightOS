@@ -26,6 +26,16 @@ As AID are text-based and can be quite long (up to 512 bytes), programs can inst
 
 System applications are registered under the reserved `sys` DID.
 
+## Features
+
+Applications as well as libraries can also declare _features_, which are opt-in parts of the program. They are described in [the manifest](#the-manifest) and can be enabled or disabled when installing the program.
+
+Each feature allows to embed additional assets and declare additional supported languages (e.g. language packs), and a specific build option is provided to the build tool to indicate at build time weither a feature is selected or not.
+
+This allows to save space and build time when a specific feature isn't required, but should still be embedded in the program itself instead of making an additional application or library.
+
+When the manifest declares one or more feature(s), it must also specify a set of _default features_ to enable, which are selected by default.
+
 ## The manifest
 
 A _manifest_ is a file describing the application or library. It is mandatory to build and distribute it. Its content differ for applications and libraries, but there are common fields (`REQ`: required, `OPT`: optional):
@@ -83,4 +93,17 @@ dependencies:
   # [OPT] Required fonts
   fonts:
     fonts:open-sans: true # Any version
+
+# [OPT] Features
+features:
+  # Describe each feature, by name
+  testing:
+    # [OPT] Additional assets
+    assets: []
+
+    # [OPT] Feature's dependencies
+    dependencies: {}
+
+    # [OPT] Additional languages (e.g. language pack)
+    languages: []
 ```

@@ -25,19 +25,26 @@ infos:
 
 # [REQ] Application package's content
 content:
-  # Packages can either contain source code only, pre-compiled programs only, or both
-  # <for source packages> [REQ]
-  source:
-    # [REQ] Build tool (must in the list of the toolchain's supported build tools)
-    toolchain: rust
-    # [REQ] Required build tool-related options
-    build: {}
-    # [OPT] Build tool-related options
-    options:
-      optimize: O3
+  # [REQ] Program
+  program:
+    # Packages can either contain source code only, pre-compiled programs only, or both
+    # <for source packages> [REQ]
+    source:
+      # [REQ] Build tool (must in the list of the toolchain's supported build tools)
+      toolchain: rust
+      # [REQ] Required build tool-related options
+      build: {}
+      # [OPT] Build tool-related options
+      options:
+        optimize: O3
 
-  # <for precomp packages> [REQ]
-  precomp: main.npp
+    # <for precomp packages> [REQ]
+    precomp: main.npp
+
+  # [OPT] Assets
+  assets:
+    # Set of path to assets
+    - ./assets/
 
 # [OPT] Event triggers
 events:

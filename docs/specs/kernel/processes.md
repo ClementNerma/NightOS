@@ -4,6 +4,7 @@ Apart from the kernel itself, all programs run in _processes_.
 
 - [Why processes](#why-processes)
 - [Switching and cycles](#switching-and-cycles)
+- [Process identifier](#process-identifier)
 - [Process attributes](#process-attributes)
 - [Performance balancing](#performance-balancing)
   - [Automatic priority attribution](#automatic-priority-attribution)
@@ -32,6 +33,10 @@ This happens as follows:
 7. Go to step 1
 
 These steps are known as a _cycle_.
+
+## Process identifier
+
+Each process is identified by a 64-bit number, which is guaranteed to be unique until the system restarts. When a process terminates, the PID is not freed. The PID is not randomly generated, but retrieved from a system-wide counter incremented when a new process starts. PID cannot be equal to 0.
 
 ## Process attributes
 

@@ -24,7 +24,7 @@ Common file formats are natively handled:
 
 Virtual storages are files that contain one or several virtual filesystems. Different filesystems can be put in, but all must be supported natively by NightOS in order to properly work without needing to install any additional application.
 
-The filesystems can be encrypted individually. The whole storage can also be encrypted.
+The filesystems can be encrypted individually. The whole storage can also be encrypted. They can also be compressed.
 
 They have multiple purposes: store encrypted files, virtual filesystems for sandboxed applications, etc.
 

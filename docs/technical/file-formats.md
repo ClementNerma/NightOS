@@ -19,7 +19,6 @@ Common file formats are natively handled:
 - E-book files (`.cbz`, `.cbr`, ...) with [Reader](../applications/Reader.md)
 - E-mail files (`.eml`, `.vcf`, ...) with [Postal](../applications/Postal.md)
 - Web files (`.html`, ...) with [Rocket](../applications/Rocket.md)
-- Virtual storage files (`.iso`, `.vfd`, ...) with [Locky](../applications/Locky.md)
 
 ## Virtual storages
 
@@ -29,7 +28,7 @@ The filesystems can be encrypted individually. The whole storage can also be enc
 
 They have multiple purposes: store encrypted files, virtual filesystems for sandboxed applications, etc.
 
-Virtual storage files have the `.vts` extension and are opened using [Locky](../applications/Locky.md).
+Virtual storage files have the `.vst` extension and are opened using [Blackhole](../applications/Blackhole.md).
 
 ## Application packages
 

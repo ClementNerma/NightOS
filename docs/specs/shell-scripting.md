@@ -248,28 +248,28 @@ A `string` is composed of multiple `char`s, which are made of single codepoints.
 There is also the `any` type which accepts values of all types, and `stream` which we'll talk about later as it's a special type.  
 Finally, there is the `void` type which cannot be written 'as is' but is used in special contexts like [commands return values](#commands-typing). It's a type that contains no data at all.
 
-There are also _presential arguments_, which are dash arguments that take no value. The command will simply check if the argument was provided or not.
+There are also _flag arguments_, which are dash arguments that take no value. The command will simply check if the argument was provided or not.
 
-**NOTE:** In order to avoid writing errors, positional arguments cannot be provided after a presential argument.
+**NOTE:** In order to avoid writing errors, positional arguments cannot be provided after a flag argument.
 
-For instance, considering `pos1` and `pos2` are positional arguments, `--pres` a presential argument and `--val` a non-presential long argument:
+For instance, considering `pos1` and `pos2` are positional arguments, `--flag` a flag argument and `--val` a non-flag long argument:
 
 ```hydre
 # VALID
-command "pos1" "pos2" --pres --val 2
+command "pos1" "pos2" --flag --val 2
 
 # VALID
-command "pos1" --val 2 "pos2" --pres
+command "pos1" --val 2 "pos2" --flag
 
 # VALID
-command "pos1" --pres --val 2 "pos2"
+command "pos1" --flag --val 2 "pos2"
 
 # VALID
-command --press --val 2 "pos1" "pos2"
+command --flags --val 2 "pos1" "pos2"
 
 # INVALID (we could think by reading this that "pos2" is the
-#          value of the non-presential argument "--pres")
-command "pos1" --pres "pos2" --val 2
+#          value of the non-flag argument "--flag")
+command "pos1" --flag "pos2" --val 2
 ```
 
 ### Variables shadowing
@@ -1558,7 +1558,7 @@ cmd
       optional
 
     # Get the time this command took to complete
-    presential "duration"
+    flag "duration"
       short "d"
       long "duration"
 
@@ -1599,7 +1599,7 @@ The options for each argument are:
 - `enum`: Allow only a subset of values
 
 For dash arguments, at least `short` or `long` must be provided. Also, `optional` and `default` cannot be provided at the same time.
-For presential arguments, at least `short` or `long` must be provided. Also, `type`, `optional`, `default` and `enum` are not accepted.
+For flag arguments, at least `short` or `long` must be provided. Also, `type`, `optional`, `default` and `enum` are not accepted.
 
 ### Conditionals
 

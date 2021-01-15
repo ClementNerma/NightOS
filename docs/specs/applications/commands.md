@@ -40,7 +40,7 @@ commands:
 
       # Return the time this command took to complete
       get-duration:
-        syntax: presential
+        syntax: flag
         short: d
         long: duration
         $if:

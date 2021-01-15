@@ -1994,24 +1994,24 @@ _ = @{ command &quot;pos1&quot; -s --long }
 <p>A <code>string</code> is composed of multiple <code>char</code>s, which are made of single codepoints. This means a <em>grapheme cluster</em> made of multiple codepoints will need to be encoded in a <code>string</code>.<br />
 There is also the <code>any</code> type which accepts values of all types, and <code>stream</code> which we'll talk about later as it's a special type.<br />
 Finally, there is the <code>void</code> type which cannot be written 'as is' but is used in special contexts like <a href="specs/shell-scripting.html#commands-typing">commands return values</a>. It's a type that contains no data at all.</p>
-<p>There are also <em>presential arguments</em>, which are dash arguments that take no value. The command will simply check if the argument was provided or not.</p>
-<p><strong>NOTE:</strong> In order to avoid writing errors, positional arguments cannot be provided after a presential argument.</p>
-<p>For instance, considering <code>pos1</code> and <code>pos2</code> are positional arguments, <code>--pres</code> a presential argument and <code>--val</code> a non-presential long argument:</p>
+<p>There are also <em>flag arguments</em>, which are dash arguments that take no value. The command will simply check if the argument was provided or not.</p>
+<p><strong>NOTE:</strong> In order to avoid writing errors, positional arguments cannot be provided after a flag argument.</p>
+<p>For instance, considering <code>pos1</code> and <code>pos2</code> are positional arguments, <code>--flag</code> a flag argument and <code>--val</code> a non-flag long argument:</p>
 <pre><code class="language-hydre"># VALID
-command &quot;pos1&quot; &quot;pos2&quot; --pres --val 2
+command &quot;pos1&quot; &quot;pos2&quot; --flag --val 2
 
 # VALID
-command &quot;pos1&quot; --val 2 &quot;pos2&quot; --pres
+command &quot;pos1&quot; --val 2 &quot;pos2&quot; --flag
 
 # VALID
-command &quot;pos1&quot; --pres --val 2 &quot;pos2&quot;
+command &quot;pos1&quot; --flag --val 2 &quot;pos2&quot;
 
 # VALID
-command --press --val 2 &quot;pos1&quot; &quot;pos2&quot;
+command --flags --val 2 &quot;pos1&quot; &quot;pos2&quot;
 
 # INVALID (we could think by reading this that &quot;pos2&quot; is the
-#          value of the non-presential argument &quot;--pres&quot;)
-command &quot;pos1&quot; --pres &quot;pos2&quot; --val 2
+#          value of the non-flag argument &quot;--flag&quot;)
+command &quot;pos1&quot; --flag &quot;pos2&quot; --val 2
 </code></pre>
 <h3><a class="header" href="#variables-shadowing" id="variables-shadowing">Variables shadowing</a></h3>
 <p>Any variable can, inside a program, be replaced by a new variable with a same name but with a different type. This is called <em>shadowing</em>.</p>
@@ -2894,7 +2894,7 @@ end
       optional
 
     # Get the time this command took to complete
-    presential &quot;duration&quot;
+    flag &quot;duration&quot;
       short &quot;d&quot;
       long &quot;duration&quot;
 
@@ -2928,7 +2928,7 @@ end
 <li><code>enum</code>: Allow only a subset of values</li>
 </ul>
 <p>For dash arguments, at least <code>short</code> or <code>long</code> must be provided. Also, <code>optional</code> and <code>default</code> cannot be provided at the same time.
-For presential arguments, at least <code>short</code> or <code>long</code> must be provided. Also, <code>type</code>, <code>optional</code>, <code>default</code> and <code>enum</code> are not accepted.</p>
+For flag arguments, at least <code>short</code> or <code>long</code> must be provided. Also, <code>type</code>, <code>optional</code>, <code>default</code> and <code>enum</code> are not accepted.</p>
 <h3><a class="header" href="#conditionals-1" id="conditionals-1">Conditionals</a></h3>
 <p>Conditions can also use the <code>elif</code> and <code>else</code> keywords, and use the <code>present()</code> and <code>absent()</code> operators as well as usual relational operators like <code>==</code> or <code>&lt;</code> for constant values like enums.</p>
 <h3><a class="header" href="#example" id="example">Example</a></h3>

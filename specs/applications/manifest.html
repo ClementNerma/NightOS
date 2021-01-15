@@ -168,44 +168,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#application-manifest" id="application-manifest">Application Manifest</a></h1>
-<p>Here is an example of an application manifest (<code>REQ</code>: required, <code>OPT</code>: optional):</p>
-<pre><code class="language-yaml"># [REQ] Informations about the application
-infos:
-  # [REQ] Application's name, as shown when installing it
-  name: Cloud Notepad App
-  # [REQ] Application's slug, as stored on the disk in the /apps directory
-  slug: cloud-notepad-app
-  # [REQ] Application's description, as shown when installing it
-  description: A notepad application that allows syncing your files in the cloud
-  # [REQ] Application's version, following semantic versioning
-  version: 1.0.0
-  # [REQ] Application's authors
-  authors:
-    - name: Clément Nerma
-      email: clement.nerma@gmail.com
-  # [REQ] Application's icons (in the archive)
-  # [REQ] &quot;%{}&quot;: either 16, 32, 64, 128 or 256 pixels (icons must be square)
-  icon: assets/icons/app/%{}.png
-  # [REQ] Application's license (must be in a list of available licenses)
-  license: Apache-2.0
-
-# [REQ] Application package's content
-content:
-  # Packages can either contain source code only, pre-compiled programs only, or both
-  # &lt;for source packages&gt; [REQ]
-  source:
-    # [REQ] Build tool (must in the list of the toolchain's supported build tools)
-    toolchain: rust
-    # [REQ] Required build tool-related options
-    build: {}
-    # [OPT] Build tool-related options
-    options:
-      optimize: O3
-
-  # &lt;for precomp packages&gt; [REQ]
-  precomp: main.npp
-
-# [OPT] Event triggers
+<p>Here is the specifications of the application manifest, in additional to the <a href="../applications-libraries.html#the-manifest">common manifest</a>:</p>
+<pre><code class="language-yaml"># [OPT] Event triggers
 events:
   # [OPT] Should the application start just after being installed?
   postinstall: false
@@ -226,16 +190,6 @@ service: false
 additional:
   # [OPT] Available languages (in a list of existing languages)
   languages: [&quot;en-US&quot;]
-
-# [REQ] Application's dependencies
-dependencies:
-  # [REQ] Required libaries
-  libraries:
-    sysver: ^1.0.0 # Any stable version
-
-  # [OPT] Required fonts
-  fonts:
-    fonts:open-sans: true # Any version
 </code></pre>
 <p>For more informations about exposed commands, see the <a href="commands.html">related document</a>.</p>
 

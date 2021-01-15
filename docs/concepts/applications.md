@@ -82,7 +82,7 @@ This is quite a long name but allows to prevent any clashing between commands. I
 
 Note that, by default, shell prompts (not scripts) will allow to directly use commands such as `get_time` in the short form if no other application exposes a command with the same name.
 
-Commands work by launching the application with a specific [context](../specs/applications-libraries.md#application-context).
+Commands work by launching the application with a specific [context](../specs/applications/context.md).
 
 ## System applications
 

@@ -171,13 +171,18 @@
 <p>Libraries are NightOS' way to share code between multiple applications.</p>
 <ul>
 <li><a href="#manifest">Manifest</a></li>
-<li><a href="#the-system-library">The system library</a></li>
+<li><a href="#the-system-library">The system library</a>
+<ul>
+<li><a href="#system-library-modules">System library modules</a></li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#manifest" id="manifest">Manifest</a></h2>
 <p>As libaries are only meant to share code, there manifest is a lot simplier than <a href="applications/manifest.html">applications' manifest</a> as it is only made of the <a href="applications-libraries.html#the-manifest">common fields</a>.</p>
 <h2><a class="header" href="#the-system-library" id="the-system-library">The system library</a></h2>
-<p>The system provides a single <em>system library</em> with the <code>sysl</code> <a href="applications-libraries.html#application-identifier">DID</a>, which is built in the system and not removable. Apart from these points, it acts like a standard library. Its version is identical to the system itself, allowing applications and libraries to specify a minimum system version in their dependencies field.</p>
-<p>The library contains several <em>modules</em>, which act like language namespaces to expose specific features:</p>
+<p>The system provides a single <em>system library</em> with the <code>sys::lib</code> <a href="applications-libraries.html#application-identifier">AID</a>, which is built in the system and not removable. Apart from these points, it acts like a standard library. Its version is identical to the system itself, allowing applications and libraries to specify a minimum system version in their dependencies field.</p>
+<h3><a class="header" href="#system-library-modules" id="system-library-modules">System library modules</a></h3>
+<p>The library contains several <em>modules</em> (called <strong>SLM</strong> for <em><strong>S</strong>ystem <strong>L</strong>ibrary <strong>M</strong>odule</em>), which act like language namespaces to expose specific features:</p>
 <ul>
 <li><code>fs</code> : Filesystem management</li>
 <li><code>net</code> : Network communications</li>
@@ -193,6 +198,7 @@
 <li><code>desktop</code> : Desktop management (desktop, windows, notifications, ...)</li>
 <li><code>hardware</code> : Hardware management (drivers and devices)</li>
 </ul>
+<p>Each <a href="../concepts/applications.html#system-applications">system application</a> also exposes a library with the <code>sysl::&lt;app name lowercased&gt;</code> AID which applications can rely on, as these applications are not removable.</p>
 
                     </main>
 

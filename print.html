@@ -5309,16 +5309,102 @@ System services communicate directly with the kernel and are trusted processes s
 </ul>
 <h1><a class="header" href="#reader" id="reader">Reader</a></h1>
 <p>Reader is an e-book reader with supports for comics. It can also manage libraries of books.</p>
+<h2><a class="header" href="#supported-e-books-formats" id="supported-e-books-formats">Supported e-books formats</a></h2>
+<p>Here is the list of the supported <em>e-book</em> formats, which act as containers. See also the <a href="applications/Reader.html#supported-image-formats">supported image formats</a>.</p>
+<ul>
+<li>E-Pub (<code>.epub</code>, <code>.epub3</code>)</li>
+<li>PDF (<code>.pdf</code>)</li>
+<li>MOBI (<code>.mobi</code>)</li>
+<li>Rich Text Format (<code>.rtf</code>)</li>
+<li>Compressed ZIPs (<code>.cbz</code>)</li>
+<li>Compressed RARs (<code>.cbr</code>)</li>
+</ul>
+<h2><a class="header" href="#supported-image-formats" id="supported-image-formats">Supported image formats</a></h2>
+<p>Same as <a href="applications/ShootingStar.html#supported-formats">ShootingStar</a> (uses <code>sys::shootingstar</code> to render pictures).</p>
 <h1><a class="header" href="#registry-2" id="registry-2">Registry</a></h1>
 <p>Registry allows to view and edit the <a href="applications/../technical/registry.html">registry</a>. It is reserved to advanced users.</p>
+<h2><a class="header" href="#features-10" id="features-10">Features</a></h2>
+<ul>
+<li>Display / edit everything in the registry</li>
+<li>Save current registry as a snapshot</li>
+<li>Restore snapshots</li>
+</ul>
+<h2><a class="header" href="#user-interface" id="user-interface">User Interface</a></h2>
+<p>The U.I. is made of a set of panes (one by default) containing a tree showing all structures and lists stored in the registry and allowing to edit them.</p>
 <h1><a class="header" href="#rocket" id="rocket">Rocket</a></h1>
 <p>Rocket is the default web browser of NightOS.</p>
 <h1><a class="header" href="#shootingstar" id="shootingstar">ShootingStar</a></h1>
 <p>ShootingStar is the default pictures viewer and editor of NightOS. Edition is limited to simple manipulations such as cropping and resizing.</p>
+<h2><a class="header" href="#library-usage" id="library-usage">Library usage</a></h2>
+<p>ShootingStar exposes the <code>sys::shootingstar</code> library to manipulate, perform basic manipulations and most of all render different image formats.</p>
+<h2><a class="header" href="#supported-formats-2" id="supported-formats-2">Supported formats</a></h2>
+<ul>
+<li>Joint Photographic Experts Group (<code>.jpg</code>, <code>.jpeg</code>)</li>
+<li>Joint Photographic Experts Group 2000 (<code>.jp2</code>, <code>.jpx</code>)</li>
+<li>Tagged Image File Format (<code>.tiff</code>, <code>.tif</code>)</li>
+<li>Graphics Interchange Format (<code>.gif</code>)</li>
+<li>Graphics Interchange Format Video (<code>.gifv</code>)</li>
+<li>Windows Bitmap (<code>.bmp</code>)</li>
+<li>Portable Networks Graphics (<code>.png</code>)</li>
+<li>Portable Pixmap Format (<code>.ppm</code>)</li>
+<li>Portable Graymap Format (<code>.pgm</code>)</li>
+<li>Portable Bitmap Format (<code>.pbm</code>)</li>
+<li>Windows Icon (<code>.ico</code>)</li>
+</ul>
+<h2><a class="header" href="#viewer-features" id="viewer-features">Viewer features</a></h2>
+<ul>
+<li>View pictures</li>
+<li>Zoom in/out</li>
+<li>Fullscreen</li>
+<li>Fit image to width / height / both</li>
+<li>Put images side by side</li>
+<li>View a set of pictures as a gallery</li>
+<li>View a set of pictures as a slideshow (multiple possible transitions)</li>
+<li>Display EXIF metadata</li>
+</ul>
+<h2><a class="header" href="#edition-features" id="edition-features">Edition features</a></h2>
+<ul>
+<li>Resize (keep or ignore ratio)</li>
+<li>Crop</li>
+<li>Edit/remove EXIF metadata</li>
+<li>Convert to black and white</li>
+</ul>
 <h1><a class="header" href="#skyer" id="skyer">Skyer</a></h1>
 <p>Skyer is the applications manager of NightOS. It allows to install and remove applications, as well as to manage their permissions and enable <a href="applications/../technical/dev-mode.html#application-proxies">application proxies</a> in developer mode.</p>
 <h1><a class="header" href="#sonata" id="sonata">Sonata</a></h1>
 <p>Sonata is the default music player of NightOS. It features support for Hi-Res audio files and can play many different formats (e.g. 32 bits / 384 kHz FLAC, DSD, ...). It also supports bit-to-bit playing to USB DACs.</p>
+<h2><a class="header" href="#features-11" id="features-11">Features</a></h2>
+<ul>
+<li>Audio library management</li>
+<li>Sorting and filtering by tag</li>
+<li>Tag edition for individual tracks, sets, albums and whole artists</li>
+<li>Bit-perfect playblack</li>
+<li>Optional fetching of informations about tracks, albums and artists (biographies, pictures, ...)</li>
+<li>Multiple playback queues</li>
+<li>Fully customizable keyboard shortcuts</li>
+<li>Support for themes</li>
+<li>Support for extensions</li>
+<li>Customizable tabs</li>
+<li>Discovery feature to play never-played tracks</li>
+<li>Smart playlists (auto-add and removal based on custom criterias)</li>
+<li>Playlists imports/exports</li>
+<li>Play counts for tracks</li>
+<li>Full database import/export</li>
+<li>Reduced player</li>
+<li>Play in background</li>
+</ul>
+<h2><a class="header" href="#supported-formats-3" id="supported-formats-3">Supported formats</a></h2>
+<ul>
+<li>Waveform Audio File Format (<code>.wave</code>, <code>.wav</code>)</li>
+<li>Free Lossless Audio Codec (<code>.flac</code>)</li>
+<li>Apple Lossless Audio Codec (<code>.alac</code>)</li>
+<li>Ogg (<code>.ogg</code>, <code>.oga</code>)</li>
+<li>Audio Interchange File Format (<code>.aiff</code>)</li>
+<li>Core Audio Format (<code>.caf</code>)</li>
+<li>MPEG-1/2 Audio Layer 3 / mp3PRO (<code>.mp3</code>)</li>
+<li>Windows Media Audio (<code>.wma</code>)</li>
+<li>Advanced Audio Coding (<code>.aac</code>)</li>
+</ul>
 <h1><a class="header" href="#stellar" id="stellar">Stellar</a></h1>
 <h1><a class="header" href="#thinker" id="thinker">Thinker</a></h1>
 <p>Thinker is a simple notes application.</p>

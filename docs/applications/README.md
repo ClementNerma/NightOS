@@ -2,7 +2,7 @@
 
 This folder contains documentation for each native application.
 
-**NOTE:** Some documents may not be available at the moment.
+**WARNING:** These documents act as a general list of features and technical overview of the applications. These may change at anytime, and are by no mean a final indication of what the application will consist of and what features it will have.
 
 Below is the list of applications that are installed (by default) during the installation process.
 

@@ -8,6 +8,7 @@ This document describes the architecture of [services](../technical/services.md)
   - [Thread types](#thread-types)
   - [Closing a connection](#closing-a-connection)
 - [System services](#system-services)
+- [Third-party communication](#third-party-communication)
 
 ## Architecture of a service
 
@@ -57,3 +58,13 @@ When a client thread receives on these two signals, it is expected to end as soo
 ## System services
 
 You can find the list of all system services in the [related directory](services/README.md).
+
+## Third-party communication
+
+An application can enable communication to and from other applications thanks to a service.
+
+For instance, let's consider two applications, A and B. If A wants to be able to be contacted by other applications (such as B), it sets up a service and subscribes to it. Then, when B sends a message to the service, it is forwarded to A through a notification by the service itself.
+
+It can also work the other way: B subscribes to the service, and when A wants to contact B, it simply sends a message to B.
+
+The downside of this structure is that latency is approximately doubled compared to a direct A-B communication. But as they use messages and notifications, which are based on hardware interrupts, the latency is extremely low, mainly composed of the time the kernel spends to ensure the communication between A and the service and then the service and B (or the other way around) is allowed.

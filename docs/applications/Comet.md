@@ -1,6 +1,6 @@
 # Comet
 
-Comet is the default file manager of NightOS. It embeds the `sys::comet` library.
+Comet is the default file manager of NightOS.
 
 ## Compatible filesystems
 

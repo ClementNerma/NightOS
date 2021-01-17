@@ -4,6 +4,7 @@ Libraries are NightOS' way to share code between multiple applications.
 
 - [Manifest](#manifest)
 - [The system library](#the-system-library)
+  - [System library modules](#system-library-modules)
 
 ## Manifest
 
@@ -13,7 +14,9 @@ As libaries are only meant to share code, there manifest is a lot simplier than 
 
 The system provides a single _system library_ with the `sys::lib` [AID](applications-libraries.md#application-identifier), which is built in the system and not removable. Apart from these points, it acts like a standard library. Its version is identical to the system itself, allowing applications and libraries to specify a minimum system version in their dependencies field.
 
-The library contains several _modules_, which act like language namespaces to expose specific features:
+### System library modules
+
+The library contains several _modules_ (called **SLM** for _**S**ystem **L**ibrary **M**odule_), which act like language namespaces to expose specific features:
 
 - `fs` : Filesystem management
 - `net` : Network communications
@@ -28,3 +31,5 @@ The library contains several _modules_, which act like language namespaces to ex
 - `sandbox` : Sandboxes management (run applications in sandboxes, ...)
 - `desktop` : Desktop management (desktop, windows, notifications, ...)
 - `hardware` : Hardware management (drivers and devices)
+
+Each [system application](../concepts/applications.md#system-applications) also exposes a library with the `sysl::<app name lowercased>` AID which applications can rely on, as these applications are not removable.

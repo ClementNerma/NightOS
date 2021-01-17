@@ -1,6 +1,6 @@
 # Blackhole
 
-Blackhole is the default archive manager of NightOS. It embeds the `sys::blackhole` library.
+Blackhole is the default archive manager of NightOS.
 
 It relies on [Locky](Locky.md) for encrypted archives, filesystems and files.
 

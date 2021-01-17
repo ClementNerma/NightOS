@@ -1,6 +1,6 @@
 # Astral
 
-Astral is the toolchain required to build NightOS applications. It's a command-line only application which also embeds the `sys::astral` library.
+Astral is the toolchain required to build NightOS applications. It's a command-line only application.
 
 ## Description
 

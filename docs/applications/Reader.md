@@ -15,4 +15,4 @@ Here is the list of the supported _e-book_ formats, which act as containers. See
 
 ## Supported image formats
 
-Same as [ShootingStar](ShootingStar.md#supported-formats) (uses the `shootingstar` [SLM](../specs/libraries.md#system-library-modules) to render pictures).
+Same as [ShootingStar](ShootingStar.md#supported-formats) (uses the `sysl::shootingstar` [SAL](../specs/libraries.md#system-applications-libraries) to render pictures).

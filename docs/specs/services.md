@@ -70,3 +70,5 @@ It can also work the other way: B subscribes to the service, and when A wants to
 The downside of this structure is that latency is approximately doubled compared to a direct A-B communication. But as they use messages and notifications, which are based on hardware interrupts, the latency is extremely low, mainly composed of the time the kernel spends to ensure the communication between A and the service and then the service and B (or the other way around) is allowed.
 
 This method works for small pieces of data though, and isn't suited for large chunks. For that purpose, A can [share a memory segment](kernel/memory.md#abstract-memory-segments) with the service, who shares it in turn to B (with restricted permissions if required).
+
+Note that this only applies to different applications ; processes from a same application can communicate directly through [IPC](kernel/ipc.md).

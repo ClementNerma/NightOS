@@ -1252,6 +1252,7 @@ additional:
 <li><a href="specs/libraries.html#system-library-modules">System library modules</a></li>
 </ul>
 </li>
+<li><a href="specs/libraries.html#system-applications-libraries">System applications' libraries</a></li>
 </ul>
 <h2><a class="header" href="#manifest-1" id="manifest-1">Manifest</a></h2>
 <p>As libaries are only meant to share code, there manifest is a lot simplier than <a href="specs/applications/manifest.html">applications' manifest</a> as it is only made of the <a href="specs/applications-libraries.html#the-manifest">common fields</a>.</p>
@@ -1274,7 +1275,8 @@ additional:
 <li><code>desktop</code> : Desktop management (desktop, windows, notifications, ...)</li>
 <li><code>hardware</code> : Hardware management (drivers and devices)</li>
 </ul>
-<p>Each <a href="specs/../concepts/applications.html#system-applications">system application</a> also exposes a library with the <code>sysl::&lt;app name lowercased&gt;</code> AID which applications can rely on, as these applications are not removable.</p>
+<h2><a class="header" href="#system-applications-libraries" id="system-applications-libraries">System applications' libraries</a></h2>
+<p>Each <a href="specs/../concepts/applications.html#system-applications">system application</a> also exposes a library with the <code>sysl::&lt;app name lowercased&gt;</code> AID which applications can rely on, as these applications are not removable. These are abbreviated SAL for <em><strong>S</strong>ystem <strong>A</strong>pplication <strong>L</strong>ibrary</em>.</p>
 <h1><a class="header" href="#registry-1" id="registry-1">Registry</a></h1>
 <p>This document describes the format of the <a href="specs/../technical/registry.html">system registy</a> as well as its content.</p>
 <ul>
@@ -5333,7 +5335,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Compressed RARs (<code>.cbr</code>)</li>
 </ul>
 <h2><a class="header" href="#supported-image-formats" id="supported-image-formats">Supported image formats</a></h2>
-<p>Same as <a href="applications/ShootingStar.html#supported-formats">ShootingStar</a> (uses the <code>shootingstar</code> <a href="applications/../specs/libraries.html#system-library-modules">SLM</a> to render pictures).</p>
+<p>Same as <a href="applications/ShootingStar.html#supported-formats">ShootingStar</a> (uses the <code>sysl::shootingstar</code> <a href="applications/../specs/libraries.html#system-applications-libraries">SAL</a> to render pictures).</p>
 <h1><a class="header" href="#registry-2" id="registry-2">Registry</a></h1>
 <p>Registry allows to view and edit the <a href="applications/../technical/registry.html">registry</a>. It is reserved to advanced users.</p>
 <h2><a class="header" href="#features-10" id="features-10">Features</a></h2>

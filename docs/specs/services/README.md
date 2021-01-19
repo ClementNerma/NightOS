@@ -37,3 +37,4 @@ All methods return an answer, though it may be empty (indicated by a _None_). Sy
 - [`sys::crashsave`](crashsave.md): [crash saves](../../features/crash-saves.md) management
 - [`sys::flow`](flow.md): [flows](../../specs/filesystem.md#flows) management
 - [`sys::hydre`](hydre.md): [Hydre](../shell.md) shell service
+- [`sys::ui`](ui.md): user interface service

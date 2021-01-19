@@ -74,3 +74,7 @@ The list of default applications and their description can be found [here](appli
 - [Inter-process communication](specs/kernel/ipc.md) - communication between processes
 - [Signals](specs/kernel/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
 - [System calls](specs/kernel/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
+
+## User Experience
+
+- [Desktop environments](ux/desktop-environment.md)

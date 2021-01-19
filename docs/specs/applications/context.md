@@ -23,6 +23,7 @@ It is one-byte long, and is made of the following bits (starting from the strong
   - `0x6`: the application was started by itself (from another process of the same application)
   - `0x7`: the application was started by another application
   - `0x8`: the application was started using one its exposed [shell commands](../../concepts/applications.md#commands)
+  - `0x9`: the application was started as a [desktop environment](../../ux/desktop-environment.md)
 - Bit 4: set if the application was started automatically after a crash/improver shutdown and should to the [`sys::crashsave`](../services/crashsave.md) service to get a crashsave
 - Bit 5: set if the application's raw output (CMDRAW) will be read (e.g. through the use of a [shell operator](../shell-scripting.md#reading-a-commands-output))
 

@@ -20,6 +20,9 @@ commands: {}
 # [OPT] Does the application expose a service?
 service: false
 
+# [OPT] Is the application a desktop environment?
+desktopenv: false
+
 # [OPT] Additional informations
 additional:
   # [OPT] Available languages (in a list of existing languages)

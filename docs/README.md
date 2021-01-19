@@ -79,3 +79,4 @@ The list of default applications and their description can be found [here](appli
 
 - [Desktop environments](ux/desktop-environment.md)
 - [Notifications](ux/notifications.md)
+- [Sound](ux/sound.md)

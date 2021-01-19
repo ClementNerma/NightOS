@@ -8,3 +8,4 @@ They only act as drafts and may change at anytime. They mainly contain global id
 
 - [Desktop environments](desktop-environment.md)
 - [Notifications](notifications.md)
+- [Sound](sound.md)

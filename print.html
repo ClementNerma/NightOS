@@ -1023,6 +1023,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <li><code>0x6</code>: the application was started by itself (from another process of the same application)</li>
 <li><code>0x7</code>: the application was started by another application</li>
 <li><code>0x8</code>: the application was started using one its exposed <a href="specs/applications/../../concepts/applications.html#commands">shell commands</a></li>
+<li><code>0x9</code>: the application was started as a <a href="specs/applications/../../ux/desktop-environment.html">desktop environment</a></li>
 </ul>
 </li>
 <li>Bit 4: set if the application was started automatically after a crash/improver shutdown and should to the <a href="specs/applications/../services/crashsave.html"><code>sys::crashsave</code></a> service to get a crashsave</li>
@@ -1100,6 +1101,9 @@ commands: {}
 
 # [OPT] Does the application expose a service?
 service: false
+
+# [OPT] Is the application a desktop environment?
+desktopenv: false
 
 # [OPT] Additional informations
 additional:
@@ -4641,6 +4645,7 @@ Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device de
 <li><a href="specs/services/crashsave.html"><code>sys::crashsave</code></a>: <a href="specs/services/../../features/crash-saves.html">crash saves</a> management</li>
 <li><a href="specs/services/flow.html"><code>sys::flow</code></a>: <a href="specs/services/../../specs/filesystem.html#flows">flows</a> management</li>
 <li><a href="specs/services/hydre.html"><code>sys::hydre</code></a>: <a href="specs/services/../shell.html">Hydre</a> shell service</li>
+<li><a href="specs/services/ui.html"><code>sys::ui</code></a>: user interface service</li>
 </ul>
 <h1><a class="header" href="#sysfs-service" id="sysfs-service"><code>sys::fs</code> service</a></h1>
 <h2><a class="header" href="#methods-1" id="methods-1">Methods</a></h2>

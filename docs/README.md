@@ -78,3 +78,4 @@ The list of default applications and their description can be found [here](appli
 ## User Experience
 
 - [Desktop environments](ux/desktop-environment.md)
+- [Notifications](ux/notifications.md)

@@ -7,3 +7,4 @@ They only act as drafts and may change at anytime. They mainly contain global id
 ## Documents
 
 - [Desktop environments](desktop-environment.md)
+- [Notifications](notifications.md)

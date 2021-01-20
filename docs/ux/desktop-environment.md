@@ -49,6 +49,7 @@ A window's state is made of its characteristics:
 - Buttons
 - Icon
 - Dimensions (width / height)
+- Coordinates (X and Y)
 - [Active attribute](#activeinactive-windows)
 - [Display layer](#display-layers)
 - [Display state](#window-display-state)

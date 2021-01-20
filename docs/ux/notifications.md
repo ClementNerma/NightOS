@@ -21,6 +21,8 @@ As well as optional fields:
 - A [persistent state](#persistent-notifications)
 - A [type-dependent](#notification-types) set of data
 - A timeout
+- A handler called when the notification is clicked
+- A context menu when the notification is right-clicked
 
 ## Display rules
 

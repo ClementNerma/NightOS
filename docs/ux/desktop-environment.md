@@ -53,6 +53,9 @@ A window's state is made of its characteristics:
 - [Active attribute](#activeinactive-windows)
 - [Display layer](#display-layers)
 - [Display state](#window-display-state)
+- Custom state attributes
+
+The custom attributes are handled by the DEA itself, and can contain any piece of information relevant to displaying the window, such as the virtual desktop number if the DE supports it.
 
 ### Window display state
 

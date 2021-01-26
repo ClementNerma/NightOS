@@ -33,6 +33,10 @@
   - [The registry](technical/registry.md) - configure the system's behaviour and features
   - [Services](technical/services.md) - special processes that run in the background and allow other applications to perform specific tasks
   - [The shell](technical/shell.md) - the de-facto way to run complex and/or automatized tasks on NightOS
+- [User Experience](ux/README.md)
+  - [Desktop environments](ux/desktop-environment.md)
+  - [Notifications](ux/notifications.md)
+  - [Sound](ux/sound.md)
 - [Specifications](specs/README.md)
   - [Application context](specs/applications/context.md) - launch an application to directly perform a specific task
   - [Applications package](specs/applications/package.md) - files representing a whole application

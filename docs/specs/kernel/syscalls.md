@@ -40,6 +40,12 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x44` SUSPEND](#0x44-suspend)
   - [`0x45` UNSUSPEND](#0x45-unsuspend)
   - [`0x4F` EXIT](#0x4f-exit)
+  - [`0x50` CREATE_THREAD](#0x50-create_thread)
+  - [`0x51` CREATE_TLS_SLOT](#0x51-create_tls_slot)
+  - [`0x52` READ_TLS_SLOT](#0x52-read_tls_slot)
+  - [`0x53` WRITE_TLS_SLOT](#0x53-write_tls_slot)
+  - [`0x54` DELETE_TLS_SLOT](#0x54-delete_tls_slot)
+  - [`0x5F` EXIT_THREAD](#0x5f-exit_thread)
   - [`0x90` RAND_INT](#0x90-rand_int)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` SYS_PROCESS_ATTRIBUTES](#0xd0-sys_process_attributes)
@@ -82,6 +88,7 @@ System calls' code are categorized as follows:
 - `0x2A` to `0x2F`: services communication
 - `0x30` to `0x3F`: memory management
 - `0x40` to `0x4F`: processes management
+- `0x50` to `0x5F`: threads management
 - `0xA0` to `0xAF`: applications-related syscalls
 - `0xD0` to `0xDF`: reserved to system services
 
@@ -852,6 +859,109 @@ If the current process is a service, a [`SERVICE_SERVER_QUITTED`](signals.md#0x2
 **Arguments:**
 
 - Exit data (8 bytes)
+
+**Return value:**
+
+_None_ (never returns)
+
+**Errors:**
+
+_None_
+
+### `0x50` CREATE_THREAD
+
+Create a thread from the current one. The new thread will share the current one's memory space.
+
+**Arguments:**
+
+- Initialization data (8 bytes)
+
+**Return value:**
+
+- Child thread identifier (8 bytes)
+- Identity (1 byte): `0x00` if the current thread is the parent, `0x01` for the child
+- Initialization data (8 bytes) - `0` for the parent
+
+**Errors:**
+
+- `0x30`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
+
+### `0x51` CREATE_TLS_SLOT
+
+Create a [TLS slot](../../technical/processes.md#thread-local-storage).
+
+**Arguments:**
+
+_None_
+
+**Return value:**
+
+- TLS slot identifier (8 bytes)
+
+**Errors:**
+
+_None_
+
+### `0x52` READ_TLS_SLOT
+
+Read from a [TLS slot](../../technical/processes.md#thread-local-storage).
+
+**Arguments:**
+
+- TLS slot identifier (8 bytes)
+- Writable buffer (8 bytes)
+- Number of bytes to read (8 bytes) - `0` to read everything
+
+**Return value:**
+
+- Number of bytes written (8 bytes)
+
+**Errors:**
+
+- `0x20`: Unknown TLS identifier
+
+### `0x53` WRITE_TLS_SLOT
+
+Write to a [TLS slot](../../technical/processes.md#thread-local-storage).
+
+**Arguments:**
+
+- TLS slot identifier (8 bytes)
+- Readable buffer (8 bytes)
+- Number of bytes to write (8 bytes)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x20`: Unknown TLS identifier
+- `0x30`: Failed to allocate enough memory for the written data
+
+### `0x54` DELETE_TLS_SLOT
+
+Delete a [TLS slot](../../technical/processes.md#thread-local-storage).
+
+**Arguments:**
+
+- TLS slot identifier (8 bytes)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x20`: Unknown TLS identifier
+
+### `0x5F` EXIT_THREAD
+
+Kill the current thread and all of its children threads.
+
+**Arguments:**
+
+- Exit data (4 bytes)
 
 **Return value:**
 

@@ -167,9 +167,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#sysperm-service" id="sysperm-service"><code>sys::perm</code> service</a></h1>
+                        <h1 id="sysperm-service"><a class="header" href="#sysperm-service"><code>sys::perm</code> service</a></h1>
 <p>The <code>sys::perm</code> service is used to manage the <a href="../../concepts/users.html#user-privileges">privileges</a> of <a href="../../concepts/users.html">users</a> and the <a href="../../features/permissions.html">permissions</a> of <a href="../kernel/processes.html">processes</a>.</p>
-<h2><a class="header" href="#the-purpose-of-user-privileges" id="the-purpose-of-user-privileges">The purpose of user privileges</a></h2>
+<h2 id="the-purpose-of-user-privileges"><a class="header" href="#the-purpose-of-user-privileges">The purpose of user privileges</a></h2>
 <p>In NightOS, executable instructions can run in three different contexts:</p>
 <ul>
 <li>In <a href="../../concepts/applications.html">applications</a></li>
@@ -179,11 +179,11 @@
 <p>The kernel doesn't have any limitation on what tasks it is allowed to perform, of course, as it is the one to decide.<br />
 System services communicate directly with the kernel and are trusted processes so they can do anything <em>in their domain</em>, which means for instance the <a href="net.html"><code>sys::net</code></a> cannot ask to manipulate the filesystem, as it's the role of <a href="fs.html"><code>sys::fs</code></a>.</p>
 <p>But applications, who run <a href="../kernel/processes.html"><em>userland processes</em></a> <strong>TODO</strong></p>
-<h2><a class="header" href="#list-of-permissions" id="list-of-permissions">List of permissions</a></h2>
+<h2 id="list-of-permissions"><a class="header" href="#list-of-permissions">List of permissions</a></h2>
 <p>The list of permissions can be found in the <a href="../permissions.html">dedicated specifications document</a>.</p>
-<h2><a class="header" href="#methods" id="methods">Methods</a></h2>
+<h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
 <p><strong>TODO</strong></p>
-<h2><a class="header" href="#notifications" id="notifications">Notifications</a></h2>
+<h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 
                     </main>

@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#processes" id="processes">Processes</a></h1>
+                        <h1 id="processes"><a class="header" href="#processes">Processes</a></h1>
 <p>Apart from the kernel itself, all programs run in <em>processes</em>.</p>
 <ul>
 <li><a href="#why-processes">Why processes</a></li>
@@ -181,14 +181,14 @@
 </li>
 <li><a href="#drivable-devices">Drivable devices</a></li>
 </ul>
-<h2><a class="header" href="#why-processes" id="why-processes">Why processes</a></h2>
+<h2 id="why-processes"><a class="header" href="#why-processes">Why processes</a></h2>
 <p>Separating programs in threads presents several advantages:</p>
 <ol>
 <li>This allows to take advantage of multi-core architectures by running multiple programs in parallel</li>
 <li>Each program has its own data space and does not share its data with other programs</li>
 <li>Each process has its own permissions and thus cannot bypass what the user chosen</li>
 </ol>
-<h2><a class="header" href="#switching-and-cycles" id="switching-and-cycles">Switching and cycles</a></h2>
+<h2 id="switching-and-cycles"><a class="header" href="#switching-and-cycles">Switching and cycles</a></h2>
 <p>To run processes, the kernel simply iterates over the list of existing processes, and allow them to run a given number of instructions. Then, the control is taken back by the kernel which runs the next process, and so goes on.</p>
 <p>This happens as follows:</p>
 <ol>
@@ -201,13 +201,14 @@
 <li>Go to step 1</li>
 </ol>
 <p>These steps are known as a <em>cycle</em>.</p>
-<h2><a class="header" href="#process-identifier" id="process-identifier">Process identifier</a></h2>
+<h2 id="process-identifier"><a class="header" href="#process-identifier">Process identifier</a></h2>
 <p>Each process is identified by a 64-bit number, which is guaranteed to be unique until the system restarts. When a process terminates, the PID is not freed. The PID is not randomly generated, but retrieved from a system-wide counter incremented when a new process starts. PID cannot be equal to 0.</p>
-<h2><a class="header" href="#process-attributes" id="process-attributes">Process attributes</a></h2>
+<h2 id="process-attributes"><a class="header" href="#process-attributes">Process attributes</a></h2>
 <p>Each process has a set of <em>attributes</em> which contains critical informations on it (lists are usually <a href="data-structures.html#packed-linked-lists">PLL</a>):</p>
 <ul>
 <li>PID (8 bytes)</li>
 <li>Priority (1 byte)</li>
+<li>System marker (1 byte) to indicate if the process comes from a system program</li>
 <li>Running user's ID (8 bytes)</li>
 <li>Parent application ID (8 bytes) - <code>0</code> for system services</li>
 <li>Pointer to the <a href="../applications/context.html">execution context</a> (8 bytes) - <code>0</code> for system services</li>
@@ -215,7 +216,7 @@
 <li><code>PLL(e=32)</code> for <a href="#raw-permissions">raw permissions</a></li>
 <li><code>PLL(e=32)</code> for <a href="#drivable-devices">drivable devices</a></li>
 </ul>
-<h2><a class="header" href="#performance-balancing" id="performance-balancing">Performance balancing</a></h2>
+<h2 id="performance-balancing"><a class="header" href="#performance-balancing">Performance balancing</a></h2>
 <p>Each process has a <em>priority</em> number, between 1 and 20, which indicates how much its performances must be prioritized compare to other processes.</p>
 <p>The basics can be found <a href="../../features/balancer.html">here</a>.</p>
 <p>More specifically, the higher the priority of a process is, the faster it will run. Here are the priority-dependant aspects of a process:</p>
@@ -224,7 +225,7 @@
 <li>Priority when accessing I/O through services</li>
 </ul>
 <p>Comparatively, when a process has a high priority, other processes will run a tad slower.</p>
-<h3><a class="header" href="#automatic-priority-attribution" id="automatic-priority-attribution">Automatic priority attribution</a></h3>
+<h3 id="automatic-priority-attribution"><a class="header" href="#automatic-priority-attribution">Automatic priority attribution</a></h3>
 <p>Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the <a href="syscalls.html#0xd1-set_priority"><code>SET_PRIORITY</code></a> syscall.</p>
 <p>The priority is determined based on multiple factors:</p>
 <ul>
@@ -233,11 +234,11 @@
 <li>Does the process owns a visible window?</li>
 <li>Is the process a driver or service? If so, how much is it used?</li>
 </ul>
-<h2><a class="header" href="#drivable-devices" id="drivable-devices">Drivable devices</a></h2>
+<h2 id="drivable-devices"><a class="header" href="#drivable-devices">Drivable devices</a></h2>
 <p>The drivable devices attribute contains the list of all devices' <a href="hardware.html#session-device-identifier">SDI</a> the current process can drive.</p>
 <p>The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an <a href="memory.html#abstract-memory-segments">AMS</a> from it using the <a href="syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall, as well as using DMA-related instructions in the CPU.</p>
 <p>This attribute is managed by the <a href="../services/hw.html"><code>sys::hw</code></a> service and can only be updated by this service.</p>
-<h1><a class="header" href="#raw-permissions" id="raw-permissions">Raw permissions</a></h1>
+<h1 id="raw-permissions"><a class="header" href="#raw-permissions">Raw permissions</a></h1>
 <p><em>Raw permissions</em> are used by system services to determine the permissions of a process without <a href="ipc.html#exchanges-and-messages">sending a message</a> to the <a href="../services/perm.html"><code>sys::perm</code></a> service and waiting for its answer, which would be costly in terms of performance.</p>
 <p>These permissions use a specific structure, specified in the <a href="../services/perm.html#list-of-permissions">related service's specifications document</a>.</p>
 <p>Permissions can be managed using the <a href="../services/perm.html"><code>sys::perm</code></a> service.</p>

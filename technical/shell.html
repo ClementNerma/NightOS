@@ -167,19 +167,19 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#shell" id="shell">Shell</a></h1>
+                        <h1 id="shell"><a class="header" href="#shell">Shell</a></h1>
 <p>The <em>shell</em>, called <em>Hydre</em>, is the part that interprets scripts.</p>
 <ul>
 <li><a href="#commands">Commands</a></li>
 <li><a href="#pipes">Pipes</a></li>
 <li><a href="#specifications">Specifications</a></li>
 </ul>
-<h2><a class="header" href="#commands" id="commands">Commands</a></h2>
+<h2 id="commands"><a class="header" href="#commands">Commands</a></h2>
 <p>Hydre works using <em>commands</em>, which can take <em>arguments</em>.
 When running a command which comes from an applications which <a href="../concepts/applications.html#commands">expose it</a>, the said application is run in a new process which uses its <a href="../specs/applications/context.html#execution-context">execution context</a>.</p>
 <p>The special thing about running an application from one of its exposed commands is that its CMDIN, CMDUSR, CMDMSG, CMDERR, CMDOUT and CMDRAW pipes are exposed to the caller.</p>
 <p>You can find more informations about how a process can interact with a running command in the <a href="../specs/kernel/ipc.html#interactive-usage">IPC documentation</a>.</p>
-<h2><a class="header" href="#pipes" id="pipes">Pipes</a></h2>
+<h2 id="pipes"><a class="header" href="#pipes">Pipes</a></h2>
 <p>When a command is run from <a href="../applications/Pluton.html">Pluton</a>, the command process' pipes are handled as follows:</p>
 <ul>
 <li>All user inputs are sent to the CMDUSR pipe</li>
@@ -187,7 +187,7 @@ When running a command which comes from an applications which <a href="../concep
 <li>The command's return value (from CMDOUT) is printed after the command completes</li>
 <li>Data written to CMDRAW is not shown, as they don't have to be UTF-8 encoded, or even to be a string. They can be redirected through pipes, though</li>
 </ul>
-<h2><a class="header" href="#specifications" id="specifications">Specifications</a></h2>
+<h2 id="specifications"><a class="header" href="#specifications">Specifications</a></h2>
 <p>Hydre's specifications can be found in the <a href="../specs/shell.html">related document</a>.</p>
 
                     </main>

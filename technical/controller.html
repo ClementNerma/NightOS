@@ -167,14 +167,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#controller" id="controller">Controller</a></h1>
+                        <h1 id="controller"><a class="header" href="#controller">Controller</a></h1>
 <p>The <em>controller</em> is a system library that manages permissions of processes. The <a href="io-manager.html"><em>I/O manager</em></a> relies on it to accept or reject requests.</p>
 <ul>
 <li><a href="#notion-of-scope">Notion of scope</a></li>
 <li><a href="#the-perm-system-library">The <code>perm</code> system library</a></li>
 <li><a href="#permissions-extension">Permissions extension</a></li>
 </ul>
-<h2><a class="header" href="#notion-of-scope" id="notion-of-scope">Notion of scope</a></h2>
+<h2 id="notion-of-scope"><a class="header" href="#notion-of-scope">Notion of scope</a></h2>
 <p>Permissions are split into several scopes:</p>
 <ul>
 <li>The <em>application scope</em> contains the permissions a given process is borned from ;</li>
@@ -183,9 +183,9 @@
 </ul>
 <p>The mode scope restricts the user scope, which itself restricts the application scope. This means that, if the application scope specify a permission that is not covered by the user scope, it is not applyable to the process. This allows to prevent applications and users from getting too high permissions.</p>
 <p>The mode scope prevents applications from performing harmful tasks such as writing the system. Only system applications, which run in system mode instead of userland mode, gets an unrestricted mode scope.</p>
-<h2><a class="header" href="#the-perm-system-library" id="the-perm-system-library">The <code>perm</code> system library</a></h2>
+<h2 id="the-perm-system-library"><a class="header" href="#the-perm-system-library">The <code>perm</code> system library</a></h2>
 <p>The <code>perm</code> system library is an interface for the controller which allows processes to check their own permissions, ensure they can make I/O requests before effectively making them, and extend their permissions (see below).</p>
-<h2><a class="header" href="#permissions-extension" id="permissions-extension">Permissions extension</a></h2>
+<h2 id="permissions-extension"><a class="header" href="#permissions-extension">Permissions extension</a></h2>
 <p>A process can, at any moment, send a <em>permission extension request</em> (PER) using the <code>perm</code> library. It allows to gain a new permission by showing an overlay the user can accept or decline. If the permission is accepted, the requested permission is added to the process' one - and sometimes to the application's one.</p>
 <p>If the requested permission is out of its maximum scope (e.g. asking for write access to <code>/etc</code> while being ran as standard user), the request is rejected.</p>
 

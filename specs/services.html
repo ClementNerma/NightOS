@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#services" id="services">Services</a></h1>
+                        <h1 id="services"><a class="header" href="#services">Services</a></h1>
 <p>This document describes the architecture of <a href="../technical/services.html">services</a>, as well as the list of all system services and their main features.</p>
 <ul>
 <li><a href="#architecture-of-a-service">Architecture of a service</a>
@@ -181,32 +181,32 @@
 <li><a href="#system-services">System services</a></li>
 <li><a href="#third-party-communication">Third-party communication</a></li>
 </ul>
-<h2><a class="header" href="#architecture-of-a-service" id="architecture-of-a-service">Architecture of a service</a></h2>
+<h2 id="architecture-of-a-service"><a class="header" href="#architecture-of-a-service">Architecture of a service</a></h2>
 <p>Application services have exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.</p>
 <p>An application process can tell if it was started as a service or not by looking at its <a href="applications/context.html#execution-context">execution context</a>.</p>
 <p>Once a service process indicates it's ready using the <a href="kernel/syscalls.html#0x04-ready"><code>READY</code></a> syscall, other processes will be able to <em>connect</em> to this service.</p>
-<h3><a class="header" href="#connections" id="connections">Connections</a></h3>
+<h3 id="connections"><a class="header" href="#connections">Connections</a></h3>
 <p>A <em>connection</em> essentially consists of a <a href="kernel/ipc.html#service-sockets">service socket</a> between a service and another process called its <em>client</em>.</p>
 <p>When a process wants to connect to a service, it uses the <a href="kernel/syscalls.html#0x2a-connect_service"><code>CONNECT_SERVICE</code></a> to send a <em>connection request</em> to this service.</p>
 <p>The service process then receives the request through the <a href="kernel/signals.html#0x2a-service_conn_request"><code>SERVICE_CONN_REQUEST</code></a>.</p>
 <p>It is expected to answer under a short delay specified in the <a href="registry.html">registry</a>'s <code>system.signals.service_answer_delay</code> key (1000 ms by default).</p>
 <p>If the service refuses the connection, it provides its answer through the <a href="kernel/syscalls.html#0x2d-reject_service_conn"><code>REJECT_SERVICE_CONN</code></a> syscall, and the procedure stops here.</p>
 <p>Else, it accepts it through the <a href="kernel/syscalls.html#0x2c-accept_service_conn"><code>ACCEPT_SERVICE_CONN</code></a> syscall. A new thread is then created in the service's process, and the signal returns with a code indicating if the current thread is the one that was just created.</p>
-<h3><a class="header" href="#communication" id="communication">Communication</a></h3>
+<h3 id="communication"><a class="header" href="#communication">Communication</a></h3>
 <p>The service and its client(s) communicate through the service socket created during the connection.</p>
 <p>The different message formats a client can send to a service are a called the service's <em>methods</em>, while the different message formats the service may send to a client are called the service's <em>notifications</em>.</p>
-<h3><a class="header" href="#thread-types" id="thread-types">Thread types</a></h3>
+<h3 id="thread-types"><a class="header" href="#thread-types">Thread types</a></h3>
 <p>A service process' main thread is called its <em>dispatcher threads</em>, while threads created using the <a href="kernel/syscalls.html#0x2c-accept_service_conn"><code>ACCEPT_SERVICE_CONN</code></a> syscall are called <em>client threads</em>.</p>
-<h3><a class="header" href="#closing-a-connection" id="closing-a-connection">Closing a connection</a></h3>
+<h3 id="closing-a-connection"><a class="header" href="#closing-a-connection">Closing a connection</a></h3>
 <p>The service cannot terminate a connection by itself.
 If a client thread terminates brutally, the <a href="kernel/signals.html#0x2d-service_server_quitted"><code>SERVICE_SERVER_QUITTED</code></a> signal will be sent to its client.</p>
 <p>Only clients can properly close a connection to a service, using the <a href="kernel/syscalls.html#0x2b-end_service_conn"><code>END_SERVICE_CONN</code></a> syscall. The service socket is then immediatly closed (on both the client and the thread's side).</p>
 <p>The service then receives the <a href="kernel/signals.html#0x2c-service_client_quitted"><code>SERVICE_CLIENT_QUITTED</code></a> signal.</p>
 <p>If the client terminates brutally (before the connection was properly ended), the client thread receives the <a href="kernel/signals.html#0x2b-service_client_closed"><code>SERVICE_CLIENT_CLOSED</code></a> signal.</p>
 <p>When a client thread receives on these two signals, it is expected to end as soon as possible (though there is no time limit).</p>
-<h2><a class="header" href="#system-services" id="system-services">System services</a></h2>
+<h2 id="system-services"><a class="header" href="#system-services">System services</a></h2>
 <p>You can find the list of all system services in the <a href="services/README.html">related directory</a>.</p>
-<h2><a class="header" href="#third-party-communication" id="third-party-communication">Third-party communication</a></h2>
+<h2 id="third-party-communication"><a class="header" href="#third-party-communication">Third-party communication</a></h2>
 <p>An application can enable communication to and from other applications thanks to a service.</p>
 <p>For instance, let's consider two applications, A and B. If A wants to be able to be contacted by other applications (such as B), it sets up a service and subscribes to it. Then, when B sends a message to the service, it is forwarded to A through a notification by the service itself.</p>
 <p>It can also work the other way: B subscribes to the service, and when A wants to contact B, it simply sends a message to B.</p>

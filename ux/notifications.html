@@ -167,9 +167,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#notifications" id="notifications">Notifications</a></h1>
+                        <h1 id="notifications"><a class="header" href="#notifications">Notifications</a></h1>
 <p>Notifications are the way for both the applications and the system itself to indicate when an event happens which the user should be notified of, or to indicate a persistent state.</p>
-<h2><a class="header" href="#structure" id="structure">Structure</a></h2>
+<h2 id="structure"><a class="header" href="#structure">Structure</a></h2>
 <p>A notification is made of:</p>
 <ul>
 <li>A title</li>
@@ -190,20 +190,20 @@
 <li>A handler called when the notification is clicked</li>
 <li>A context menu when the notification is right-clicked</li>
 </ul>
-<h2><a class="header" href="#display-rules" id="display-rules">Display rules</a></h2>
+<h2 id="display-rules"><a class="header" href="#display-rules">Display rules</a></h2>
 <p>The way notifications are displayed depends on the <a href="desktop-environment.html">desktop environment</a>, therefore the requested shaking effect, background color, and so on may not be respected by the DE, although it's highly recommanded for a DE to follow these attributes.</p>
 <p>Also, there is no rule indicating how elements are visually arranged inside a notification. Some DE may for instance put the icon on the left, while some others on the right. Additional elements may also be displayed, such as a cross to close the notification or an arrow to hide it to the <a href="desktop-environment.html#common-elements">notifications center</a>.</p>
-<h2><a class="header" href="#cover-image" id="cover-image">Cover image</a></h2>
+<h2 id="cover-image"><a class="header" href="#cover-image">Cover image</a></h2>
 <p>A notification can request to display a large image. Some desktop environments may decide to hide the application's icon in such case.</p>
-<h2><a class="header" href="#buttons" id="buttons">Buttons</a></h2>
+<h2 id="buttons"><a class="header" href="#buttons">Buttons</a></h2>
 <p>Notifications can have action buttons, which are then linked to the owner application's event system. Buttons are usually limited in size and colors.</p>
-<h2><a class="header" href="#persistent-notifications" id="persistent-notifications">Persistent notifications</a></h2>
+<h2 id="persistent-notifications"><a class="header" href="#persistent-notifications">Persistent notifications</a></h2>
 <p>Persistent notifications don't disappear after a timeout. They can for instance be used to indicate a pending state like the activation of a battery-consuming element like a GPS.</p>
-<h2><a class="header" href="#notification-types" id="notification-types">Notification types</a></h2>
+<h2 id="notification-types"><a class="header" href="#notification-types">Notification types</a></h2>
 <p>There are several notification types, which their own required sets of data.</p>
-<h3><a class="header" href="#free-notifications" id="free-notifications">Free notifications</a></h3>
+<h3 id="free-notifications"><a class="header" href="#free-notifications">Free notifications</a></h3>
 <p>This is the default type of notifications, which no particular constraint.</p>
-<h3><a class="header" href="#multimedia-notifications" id="multimedia-notifications">Multimedia notifications</a></h3>
+<h3 id="multimedia-notifications"><a class="header" href="#multimedia-notifications">Multimedia notifications</a></h3>
 <p>Multimedia notifications are used to indicate a <a href="sound.html#multimedia-playback">multimedia playback</a>. It must be composed of a cover image and six buttons (previous, rewind, play/pause, stop, fast-forward, next) whose appearance is decided by the <a href="desktop-environment.html">desktop environment</a>.</p>
 <p>They are always persistent, and disappear when the playback stops completely.</p>
 

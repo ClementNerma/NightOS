@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#frequently-asked-questions" id="frequently-asked-questions">Frequently-Asked Questions</a></h1>
+                        <h1 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently-Asked Questions</a></h1>
 <p>Welcome to NightOS' FAQ. This document answers to common questions about the project, completing the <a href="FOREWORD.html">foreword</a>.</p>
 <ul>
 <li><a href="#this-project-seems-too-good-to-be-true">This project seems too good to be true</a></li>
@@ -178,18 +178,18 @@
 <li><a href="#why-did-you-create-nightos">Why did you create NightOS?</a></li>
 <li><a href="#how-can-i-help">How can I help?</a></li>
 </ul>
-<h2><a class="header" href="#this-project-seems-too-good-to-be-true" id="this-project-seems-too-good-to-be-true">This project seems too good to be true</a></h2>
+<h2 id="this-project-seems-too-good-to-be-true"><a class="header" href="#this-project-seems-too-good-to-be-true">This project seems too good to be true</a></h2>
 <p>Well, it is in a way. NightOS can be designed as such a secure and robust O.S. because we chose to not maintain any backward compatibility with existing software - understand that existing applications from Linux, MacOS or Windows will <strong>not be compatible with NightOS</strong>. This is why we can afford to introduce so many new features and requirements current operating systems cannot.</p>
 <p>The problem is that backward compatibility is absolutely mandatory when it comes to creating a general-purpose operating system. All applications would have to be developed again (in fact, they would just have to be <em>adapted</em> for NightOS, but that's still quite a bit of work) in order to run on this system, which is of course unfeasable today.</p>
 <p>This is why NightOS will probably never be completed. The current goal of this project is to build a <strong>theorical O.S.</strong> that demonstrates how good of an O.S. we could make if we hadn't to worry about backward compatibility. When the theorical specifications will be complete, we shall start to develop the O.S. itself but that will require a lot of work beforehand.</p>
 <p>Still, we do all we can to maintain as much compatibility as we can. For instance, we are currently investigating how existing Linux applications may be ran on NightOS, with a system call wrapper that would allow them to run correctly on the system, without compromising security, but with lacking features of course.</p>
-<h2><a class="header" href="#whats-the-current-state-of-the-project" id="whats-the-current-state-of-the-project">What's the current state of the project?</a></h2>
+<h2 id="whats-the-current-state-of-the-project"><a class="header" href="#whats-the-current-state-of-the-project">What's the current state of the project?</a></h2>
 <p>The project is currently in its very early stages. You can find more informations about this in the <a href="project/roadmap.html">ROADMAP</a>.</p>
-<h2><a class="header" href="#will-this-project-replace-windowsmacoslinux-one-day" id="will-this-project-replace-windowsmacoslinux-one-day">Will this project replace Windows/MacOS/Linux/... one day?</a></h2>
+<h2 id="will-this-project-replace-windowsmacoslinux-one-day"><a class="header" href="#will-this-project-replace-windowsmacoslinux-one-day">Will this project replace Windows/MacOS/Linux/... one day?</a></h2>
 <p>No. Absolutely not. Because, as I said in sooner, it's not viable for an operating system today to just get rid of all backward compatibility with existing software, simply because what users are interested in is applications first, and <strong>then</strong> the system itself - is it secure, stable, performant, and so on.</p>
 <p>Imagine someone introducing the perfect operating system, but with almost no application on it. Would you get rid of your Windows/MacOS/Linux/... system for this one? Surely not, at least not as your everyday system.</p>
 <p>This is why this project is for now purely <em>theorical</em>. It aims to describe how great an OS could be if we did not have to care about backward compatibility. Changes to see it in a usable state one day are like very low.</p>
-<h2><a class="header" href="#how-does-this-project-relates-to-nightos-v1-v2-and-v3" id="how-does-this-project-relates-to-nightos-v1-v2-and-v3">How does this project relates to NightOS v1, v2 and v3?</a></h2>
+<h2 id="how-does-this-project-relates-to-nightos-v1-v2-and-v3"><a class="header" href="#how-does-this-project-relates-to-nightos-v1-v2-and-v3">How does this project relates to NightOS v1, v2 and v3?</a></h2>
 <p>The current NightOS project is very different from its previous versions (<a href="https://github.com/ClementNerma/NightOS-v1">v1</a>, <a href="https://github.com/ClementNerma/NightOS-v2">v2</a> and <a href="https://github.com/ClementNerma/NightOS-v3">v3</a>). Originally, it only intended to be a robust and secure <em>desktop environment</em>, written in JavaScript. Performances would of course be very bad, but it was more of a challenge than a serious project. Also, the project was meant to be a Linux kernel under the hood to get rid of the &quot;low-level part&quot;. I seriously lacked of knowledge about low-level concepts at this point in time.</p>
 <p>This project does not use JavaScript anymore, but Rust, which is both performant and very robust to the most common memory-related bugs (unless you use <code>unsafe</code> code). There is no more &quot;challenge&quot; idea involved in this new version, only the aim to make the best possible (theorical) system.</p>
 <p>In terms of similarities:</p>
@@ -198,12 +198,12 @@
 <li>The <a href="https://github.com/ClementNerma/NightOS-v2">v2</a> was a bit more realistic, but still far from being mature enough ;</li>
 <li>The <a href="https://github.com/ClementNerma/NightOS-v3">v3</a> was more serious and ambitious, but it was still a desktop environment and not designed to be a full operating system, plus it was not designed for optimal performances</li>
 </ul>
-<h2><a class="header" href="#who-are-you" id="who-are-you">Who are you?</a></h2>
+<h2 id="who-are-you"><a class="header" href="#who-are-you">Who are you?</a></h2>
 <p>My name is Clément Nerma (my last name is a pseudonym). I'm a back-end developer that makes stuff since I'm 10-year old and I love to touch to low-level concepts, like operating systems.</p>
-<h2><a class="header" href="#why-did-you-create-nightos" id="why-did-you-create-nightos">Why did you create NightOS?</a></h2>
+<h2 id="why-did-you-create-nightos"><a class="header" href="#why-did-you-create-nightos">Why did you create NightOS?</a></h2>
 <p>I created it as an answer to the frustration modern OSes provided me. All modern systems have many stability and security problems that cannot be resolved easily because they need to maintain backward compatibility with older pieces of software.
 This is where I had the idea of creating NightOS: an operating system that is both robust (understand stable, with mechanisms to minimize data loss in case something goes wrong) and secure, with many security features available to the average user and some more complex ones for advanced users.</p>
-<h2><a class="header" href="#how-can-i-help" id="how-can-i-help">How can I help?</a></h2>
+<h2 id="how-can-i-help"><a class="header" href="#how-can-i-help">How can I help?</a></h2>
 <p>Help is very welcome but there's not many things to help with currently, as the system is still being designed. You can still help by suggesting improvements or fixing an error (whatever it is, a design problem or a simple typo) by <a href="https://github.com/ClementNerma/NightOS/issues/new">submitting an issue</a>.</p>
 
                     </main>

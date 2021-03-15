@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#processes" id="processes">Processes</a></h1>
+                        <h1 id="processes"><a class="header" href="#processes">Processes</a></h1>
 <p><strong>WARNING: This document is far from being complete and may lack a good description of what processes are, and/or the features they offer.</strong></p>
 <p>NightOS <em>processes</em> are implemented a bit like Linux' ones, with additional features.
 There are several types of processes:</p>
@@ -189,21 +189,21 @@ There are several types of processes:</p>
 </li>
 <li><a href="#automatic-permissions-inheritance">Automatic permissions inheritance</a></li>
 </ul>
-<h2><a class="header" href="#user-privileges" id="user-privileges">User privileges</a></h2>
+<h2 id="user-privileges"><a class="header" href="#user-privileges">User privileges</a></h2>
 <p>Each process is ran as a specific user, which determines the maximum allowed scope for <a href="controller.html">controller requests</a>, and with a list of initial privileges (the ones given to the application).</p>
-<h2><a class="header" href="#child-processes" id="child-processes">Child processes</a></h2>
+<h2 id="child-processes"><a class="header" href="#child-processes">Child processes</a></h2>
 <p>A process can create <em>child processes</em> (it's called a <em>fork</em>). The child process will roughly be a 1:1 copy of the parent process, but with its own unique PID.</p>
 <p>Child processes automatically inherit their parent's permissions.</p>
 <p>When a process exits, all its child processes are immediatly killed. It's up to the process to ensure its children are properly terminated before it.</p>
-<h2><a class="header" href="#threading" id="threading">Threading</a></h2>
+<h2 id="threading"><a class="header" href="#threading">Threading</a></h2>
 <p>A process can create <em>threads</em>, which are still a part of the process. Threads allow to run multiple part of a process concurrently, as the kernel may run several threads in different processor cores.</p>
 <p>All threads share the same address space and memory, although they all have a reserved space called the <a href="#thread-local-storage"><em>thread-local storage</em></a>.</p>
 <p>Threads work as a hierarchy ; when a thread creates another, it is called the new thread's <em>parent</em>, while the new thread is its <em>child</em>. When a thread terminates, all its children are instantly destroyed.</p>
-<h3><a class="header" href="#main-thread" id="main-thread">Main thread</a></h3>
+<h3 id="main-thread"><a class="header" href="#main-thread">Main thread</a></h3>
 <p>When a process starts, its instruction run its <em>main thread</em>. Due to threads being hierarchised, exiting the main thread will result in all other threads being closed immediatly, which is why the main thread should always first terminate its children properly to ensure all data are synchronized for instance.</p>
-<h3><a class="header" href="#thread-local-storage" id="thread-local-storage">Thread-local storage</a></h3>
+<h3 id="thread-local-storage"><a class="header" href="#thread-local-storage">Thread-local storage</a></h3>
 <p>Threads have a reserved portion of memory in their address space called the <em>thread-local storage</em> (TLS).</p>
-<h2><a class="header" href="#automatic-permissions-inheritance" id="automatic-permissions-inheritance">Automatic permissions inheritance</a></h2>
+<h2 id="automatic-permissions-inheritance"><a class="header" href="#automatic-permissions-inheritance">Automatic permissions inheritance</a></h2>
 <p>When an application process gets a new permission, all other processes from the same application inherit it, unless this permission is granted only for this instance of the application.</p>
 
                     </main>

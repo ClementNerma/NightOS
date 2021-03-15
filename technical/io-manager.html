@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#io-nano-manager" id="io-nano-manager">I/O nano-manager</a></h1>
+                        <h1 id="io-nano-manager"><a class="header" href="#io-nano-manager">I/O nano-manager</a></h1>
 <p>The <em>Input/Output Nano-manager</em>, formerly known as <em>Ion</em>, is a part of the system which treats input/output requests from processes.</p>
 <ul>
 <li><a href="#hardware-access">Hardware access</a></li>
@@ -175,14 +175,14 @@
 <li><a href="#permissions">Permissions</a></li>
 <li><a href="#requests-priority">Requests priority</a></li>
 </ul>
-<h2><a class="header" href="#hardware-access" id="hardware-access">Hardware access</a></h2>
+<h2 id="hardware-access"><a class="header" href="#hardware-access">Hardware access</a></h2>
 <p>When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired component.</p>
 <p><a href="services.html">System services</a> such as <a href="../specs/services/fs.html"><code>sys::fs</code></a> or <a href="../specs/services/net.html"><code>sys::net</code></a> use Ion to deal with the related hardware components.</p>
-<h2><a class="header" href="#requests" id="requests">Requests</a></h2>
+<h2 id="requests"><a class="header" href="#requests">Requests</a></h2>
 <p>When a process tries to access, for instance, the filesystem, it sends an I/O request to the manager which is pushed in an internal queue. The manager sorts incoming requests and treat them depending on their arrival.</p>
-<h2><a class="header" href="#permissions" id="permissions">Permissions</a></h2>
+<h2 id="permissions"><a class="header" href="#permissions">Permissions</a></h2>
 <p>To ensure a process has the required permissions to make a specific I/O request, the manager asks the <a href="controller.html">controller</a> to verify its permissions. The controller's response makes the manager accept or reject the request.</p>
-<h2><a class="header" href="#requests-priority" id="requests-priority">Requests priority</a></h2>
+<h2 id="requests-priority"><a class="header" href="#requests-priority">Requests priority</a></h2>
 <p>Requests are treated by priority, which is made both of its arrival timestamp (first one, first out) but also of the process' priority: a process with an higher priority will see its I/O requests treated more quickly.</p>
 
                     </main>

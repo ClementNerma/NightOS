@@ -167,17 +167,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#sound" id="sound">Sound</a></h1>
+                        <h1 id="sound"><a class="header" href="#sound">Sound</a></h1>
 <p>This document describes how audio is implemented in NightOS.</p>
-<h2><a class="header" href="#audio-inputs" id="audio-inputs">Audio inputs</a></h2>
+<h2 id="audio-inputs"><a class="header" href="#audio-inputs">Audio inputs</a></h2>
 <p>Devices recognized as <a href="../specs/services/hw.html#driven-device-type">audio inputs</a> can act as global audio input devices. Multiple devices can be used at the same time, but only one default input can be selected.</p>
 <p>By default, each time a new audio input device is connected, it is selected as the new default device. When disconnected, the previous default device is selected again.</p>
 <p>It is also possible to set a device as always being the default one, even if other devices are connected afterwards.</p>
-<h2><a class="header" href="#playback-devices" id="playback-devices">Playback devices</a></h2>
+<h2 id="playback-devices"><a class="header" href="#playback-devices">Playback devices</a></h2>
 <p>Devices recognized as <a href="../specs/services/hw.html#driven-device-type">audio outputs</a> can act as global audio output devices. Multiple devices can be used at the same time, but only one default output can be selected.</p>
 <p>By default, each time a new audio input device is connected, it is selected as the new default device. When disconnected, the previous default device is selected again.</p>
 <p>It is also possible to set a device as always being the default one, even if other devices are connected afterwards.</p>
-<h2><a class="header" href="#multimedia-playback" id="multimedia-playback">Multimedia playback</a></h2>
+<h2 id="multimedia-playback"><a class="header" href="#multimedia-playback">Multimedia playback</a></h2>
 <p>When a sound is played, the process must specify the type of the audio resource, which is either &quot;standalone sound&quot; or &quot;multimedia sound&quot;. In the second case, a <a href="notifications.html#multimedia-notifications">multimedia notification</a> is emitted, which can then be controlled by the application but cannot be closed while the media is playing.</p>
 
                     </main>

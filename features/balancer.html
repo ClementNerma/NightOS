@@ -167,14 +167,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#balancer" id="balancer">Balancer</a></h1>
+                        <h1 id="balancer"><a class="header" href="#balancer">Balancer</a></h1>
 <p>The <em>balancer</em> is a kernel feature that allows to get more performances out of most important applications.</p>
 <ul>
 <li><a href="#how-the-balancer-works">How the balancer works</a></li>
 <li><a href="#application-processes-suspension">Application processes suspension</a></li>
 <li><a href="#performance-mode">Performance mode</a></li>
 </ul>
-<h2><a class="header" href="#how-the-balancer-works" id="how-the-balancer-works">How the balancer works</a></h2>
+<h2 id="how-the-balancer-works"><a class="header" href="#how-the-balancer-works">How the balancer works</a></h2>
 <p>The balancer allows to manage the priority of userland processes - and only them. Here is the list of its features:</p>
 <ul>
 <li>Increase priority of this application: gives a priority of 8 to the process linked to the active window ;</li>
@@ -183,12 +183,12 @@
 <li>Suspend/resume this application: see below ;</li>
 <li>Enter performance mode: see below</li>
 </ul>
-<h2><a class="header" href="#application-processes-suspension" id="application-processes-suspension">Application processes suspension</a></h2>
+<h2 id="application-processes-suspension"><a class="header" href="#application-processes-suspension">Application processes suspension</a></h2>
 <p>Application processes can be <em>suspended</em>, which is an equivalent of pause where they don't run at all.
 This is achieved by setting their priority to 0.</p>
 <p>A suspended application can then be <em>resumed</em>, and because it was just suspended it will instantly run again, without any data loss.</p>
 <p>When a process is suspended, all its <a href="../technical/processes.html#child-processes">child processes</a> are, too.</p>
-<h2><a class="header" href="#performance-mode" id="performance-mode">Performance mode</a></h2>
+<h2 id="performance-mode"><a class="header" href="#performance-mode">Performance mode</a></h2>
 <p>The <em>performance mode</em> performs the following actions:</p>
 <ul>
 <li>For all userland processes with a non-null priority, set their priority to 1 ;</li>

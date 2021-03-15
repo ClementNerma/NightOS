@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#file-formats" id="file-formats">File Formats</a></h1>
+                        <h1 id="file-formats"><a class="header" href="#file-formats">File Formats</a></h1>
 <p>This document presents the file formats natively handled by NightOS. Some files are only handled by optional first-party applications that may not be installed on the computer, so some formats may not be supported in specific installs where such applications have been removed/were never installed.</p>
 <ul>
 <li><a href="#common-formats">Common formats</a></li>
@@ -175,7 +175,7 @@
 <li><a href="#application-packages">Application packages</a></li>
 <li><a href="#system-updates">System updates</a></li>
 </ul>
-<h2><a class="header" href="#common-formats" id="common-formats">Common formats</a></h2>
+<h2 id="common-formats"><a class="header" href="#common-formats">Common formats</a></h2>
 <p>Common file formats are natively handled:</p>
 <ul>
 <li>Text files (<code>.txt</code>, <code>.md</code>, ...) with <a href="../applications/Gravity.html">Gravity</a></li>
@@ -187,16 +187,16 @@
 <li>E-mail files (<code>.eml</code>, <code>.vcf</code>, ...) with <a href="../applications/Postal.html">Postal</a></li>
 <li>Web files (<code>.html</code>, ...) with <a href="../applications/Rocket.html">Rocket</a></li>
 </ul>
-<h2><a class="header" href="#virtual-storages" id="virtual-storages">Virtual storages</a></h2>
+<h2 id="virtual-storages"><a class="header" href="#virtual-storages">Virtual storages</a></h2>
 <p>Virtual storages are files that contain one or several virtual filesystems. Different filesystems can be put in, but all must be supported natively by NightOS in order to properly work without needing to install any additional application.</p>
 <p>The filesystems can be encrypted individually. The whole storage can also be encrypted. They can also be compressed.</p>
 <p>They have multiple purposes: store encrypted files, virtual filesystems for sandboxed applications, etc.</p>
 <p>Virtual storage files have the <code>.vsf</code> extension and are opened using <a href="../applications/Blackhole.html">Blackhole</a>.</p>
-<h2><a class="header" href="#application-packages" id="application-packages">Application packages</a></h2>
+<h2 id="application-packages"><a class="header" href="#application-packages">Application packages</a></h2>
 <p>Applications can be installed from standalone files called <a href="../specs/applications/package.html">application packages</a>.
 Installable applications have the <code>.nap</code> (NightOS Application Package) extension, while volatile applications have the <code>.nva</code> (NightOS Volatile Application) one.</p>
 <p>They are opened using <a href="../applications/Skyer.html">Skyer</a>.</p>
-<h2><a class="header" href="#system-updates" id="system-updates">System updates</a></h2>
+<h2 id="system-updates"><a class="header" href="#system-updates">System updates</a></h2>
 <p>The system is intended to be updated through the update section in the settings, but sometimes it may be required to install updates offline for specific reasons (e.g. no network connection available at the moment). In such case, it is possible to download incremental updates as system update files.</p>
 <p>They may contain one or several updates, and are only installable on a very specific version of the system, to avoid missing some other incremental updates.</p>
 <p>System update files have the <code>.nsu</code> (NightOS System Update) extension and are opened using the <a href="../applications/Central.html">control center</a>.</p>

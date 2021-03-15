@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#projects-roadmap" id="projects-roadmap">Project's ROADMAP</a></h1>
+                        <h1 id="projects-roadmap"><a class="header" href="#projects-roadmap">Project's ROADMAP</a></h1>
 <p><strong>WARNING: This document is only a draft and as such far from being complete. All informations described here are subject to change anytime.</strong></p>
 <p>The project will be cut in the four phases described below.</p>
 <ul>
@@ -183,18 +183,18 @@
 </li>
 <li><a href="#evolution-optimization--maintenance">Evolution, Optimization &amp; Maintenance</a></li>
 </ul>
-<h2><a class="header" href="#conception" id="conception">Conception</a></h2>
+<h2 id="conception"><a class="header" href="#conception">Conception</a></h2>
 <p>The first part is to write conception documents about how the system work, both at a high-level (concepts, features, native applications etc.) and low-level (processes management, kernel design...).</p>
 <p>This project is currently in this state.</p>
-<h2><a class="header" href="#validation" id="validation">Validation</a></h2>
+<h2 id="validation"><a class="header" href="#validation">Validation</a></h2>
 <p>Once all conception documents are ready, they will be validated one by one, and frozen. Breaking changes after validation are still possible but should be avoided as much as possible.</p>
-<h2><a class="header" href="#implementation" id="implementation">Implementation</a></h2>
+<h2 id="implementation"><a class="header" href="#implementation">Implementation</a></h2>
 <p>Once all documents have been validated, the different project's pieces can be implemented.</p>
 <p>It may happen that, during implementation, some validated documents get modifications in order to improve or fix some specific points. Each modification will need to be validated in order to preserve the stability of these documents.</p>
 <p>Below are described the different phases of the implementation.</p>
-<h3><a class="header" href="#phase-1-unoptimized-kernel" id="phase-1-unoptimized-kernel">Phase 1: Unoptimized kernel</a></h3>
+<h3 id="phase-1-unoptimized-kernel"><a class="header" href="#phase-1-unoptimized-kernel">Phase 1: Unoptimized kernel</a></h3>
 <p>The first piece to be implemented will be the kernel. This is required as the kernel is needed in order to implement higher-level pieces like processes. Still, as not everything is needed right from the start, it will developed with no special matter of performances. In this state, it will be referred to as the name of <em>unoptimized kernel</em>.</p>
-<h3><a class="header" href="#phase-2-low-level-implementation" id="phase-2-low-level-implementation">Phase 2: Low-level implementation</a></h3>
+<h3 id="phase-2-low-level-implementation"><a class="header" href="#phase-2-low-level-implementation">Phase 2: Low-level implementation</a></h3>
 <p>Once the unoptimized kernel is ready, two implementations will start in parallel:</p>
 <ul>
 <li>Kernel optimization (as the unoptimized kernel will be really, really slow)</li>
@@ -207,14 +207,14 @@
 <li>The process manager</li>
 <li>The native process manager</li>
 </ol>
-<h3><a class="header" href="#phase-3-applications--system-optimization" id="phase-3-applications--system-optimization">Phase 3: Applications &amp; System optimization</a></h3>
+<h3 id="phase-3-applications--system-optimization"><a class="header" href="#phase-3-applications--system-optimization">Phase 3: Applications &amp; System optimization</a></h3>
 <p>The third phase consists in developing the <a href="../applications/">native applications</a>, which are meant to be used by the end user, as well as optimizing the system in parallel and improving its stability.</p>
 <p>Starting from this point, all conception documents are definitively validated, which means they cannot receive breaking changes anymore, only new points/features.</p>
 <p>This also coincides with the system's <strong>first alpha release</strong>, which will allow persons who are external to the project to test it and suggest improvements.</p>
-<h3><a class="header" href="#phase-4-completion" id="phase-4-completion">Phase 4: Completion</a></h3>
+<h3 id="phase-4-completion"><a class="header" href="#phase-4-completion">Phase 4: Completion</a></h3>
 <p>The last phase's purpose is to ensure the system is in a fully usable state, in other words to <em>stabilize</em> it.</p>
 <p>The kernel and system will also need to be properly optimized, and once all these things are done a <strong>first beta release</strong> will be deployed.</p>
-<h2><a class="header" href="#evolution-optimization--maintenance" id="evolution-optimization--maintenance">Evolution, Optimization &amp; Maintenance</a></h2>
+<h2 id="evolution-optimization--maintenance"><a class="header" href="#evolution-optimization--maintenance">Evolution, Optimization &amp; Maintenance</a></h2>
 <p>The <em>Evolution, Optimization &amp; Maintenance</em> (EPM) part is pretty explicit: it's all about improving NightOS' existing features, introducing new ones as needed, improving performances and stability, and fixing new bugs.</p>
 <p>This part will last forever, as for all operating systems - or until the project dies.</p>
 

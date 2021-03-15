@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#registry" id="registry">Registry</a></h1>
+                        <h1 id="registry"><a class="header" href="#registry">Registry</a></h1>
 <p>This document describes the format of the <a href="../technical/registry.html">system registy</a> as well as its content.</p>
 <ul>
 <li><a href="#format">Format</a>
@@ -178,7 +178,7 @@
 <li><a href="#hffr-format">HFFR Format</a></li>
 <li><a href="#structure">Structure</a></li>
 </ul>
-<h2><a class="header" href="#format" id="format">Format</a></h2>
+<h2 id="format"><a class="header" href="#format">Format</a></h2>
 <p>The registry is located in the <code>/etc/sys/registry</code> file. It's basically a nested B-Tree map.</p>
 <p>Each map has string keys and a value that describes the entry: its purpose, its type with optional constraints, and then the type-safe value.</p>
 <p>All types are described as a name, optionally followed by a maximum number of entries between brackets or a maximum number of bytes between braces. Here is the list, in <a href="#hffr-format">HFRR notation</a>:</p>
@@ -220,7 +220,7 @@
 </tbody></table>
 <p>The registry's root is a <code>struct</code>. Each key-value association in a struct is called a <em>node</em>. Nodes that are single values (neither a list, a map or a structure) or called <em>leafs</em>.</p>
 <p>All sizes that are exceptly provided in bytes must be a multiple of two.</p>
-<h3><a class="header" href="#notes-about-types" id="notes-about-types">Notes about types</a></h3>
+<h3 id="notes-about-types"><a class="header" href="#notes-about-types">Notes about types</a></h3>
 <ul>
 <li>
 <p>Durations (<code>time</code>, <code>tmin</code>, <code>tmax</code> and <code>tbtw</code> types) have a precision which indicate the smallest unit of time they accept. <code>1</code> is for years, <code>2</code> for months, <code>3</code> for weeks, <code>4</code> for days, <code>5</code> for hours, <code>6</code> for minutes, <code>7</code> for seconds, <code>8</code> for milliseconds, <code>9</code> for microseconds and <code>10</code> for nanoseconds.</p>
@@ -235,7 +235,7 @@
 <p>For map structures (<code>structmap</code> and <code>structmapc</code>), the first key when sorting using the default algorithm for each type is guaranteed to never be removed. Its mapped value acts as the model structure for all over values in the map.</p>
 </li>
 </ul>
-<h2><a class="header" href="#hffr-format" id="hffr-format">HFFR Format</a></h2>
+<h2 id="hffr-format"><a class="header" href="#hffr-format">HFFR Format</a></h2>
 <p>The registry can be converted for debugging to an HFRR text file (Human-Friendly Registry Format).</p>
 <p>In this format, structures' keys are described using the <code>key(type):</code> format. Each line following it describing its value is indented by a tabulation (<code>\t</code>). The tabulation is decreased when the value has been fully describes.</p>
 <p>Strings are describes using double quotes, with a <code>r</code> prefix symbol for ASCII strings. Floating-point numbers use a <code>.</code> symbol as their decimal separators, and an explicit <code>+</code> or <code>-</code> symbol indicates all numbers' sign.</p>
@@ -246,7 +246,7 @@
 <p>Sizes are represented just like times, but with different suffixes (<code>TB</code> for terabytes, <code>GB</code> for gigabytes, <code>MB</code> for megabytes, <code>KB</code> for kilobytes, <code>B</code> for bytes and <code>b</code> for bits), and without leading zeroes.</p>
 <p>So for instance a size of two terabytes and three kilobyte will be represented as <code>1TB 3KB</code>.</p>
 <p>The easiest way to understand the format is to look at the default registry structure presented below.</p>
-<h2><a class="header" href="#structure" id="structure">Structure</a></h2>
+<h2 id="structure"><a class="header" href="#structure">Structure</a></h2>
 <p><strong>NOTE: This section is under heavy development and is by no mean complete!</strong></p>
 <p>Here is the content of the default registry file (when installing NightOS with all default settings), converted to the <a href="#hffr-format">HFRR format</a>:</p>
 <pre><code class="language-yaml"># Kernel configuration (only editable in developer mode)

@@ -167,13 +167,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#freeze-prevention" id="freeze-prevention">Freeze prevention</a></h1>
+                        <h1 id="freeze-prevention"><a class="header" href="#freeze-prevention">Freeze prevention</a></h1>
 <p><em>Freeze prevention</em> prevents nearly all computer freezes, by reserving a little amount of resources to the system.
 It is enabled by default, but it can be disabled during installation process or from the control panel.</p>
 <ul>
 <li><a href="#how-freeze-prevention-works">How freeze prevention works</a></li>
 </ul>
-<h2><a class="header" href="#how-freeze-prevention-works" id="how-freeze-prevention-works">How freeze prevention works</a></h2>
+<h2 id="how-freeze-prevention-works"><a class="header" href="#how-freeze-prevention-works">How freeze prevention works</a></h2>
 <p>The system forbids applications to access a fixed amount of RAM, called the <em>freeze prevention resource</em> (FPR), which is by default the smallest between 1% of the total RAM and 8 megabytes.</p>
 <p>When more than 99% of CPU and/or RAM is used, the system puts itself in <em>freeze prevention mode</em> (FPM), which consists in listening to a specific keyboard shortcut (by default, <code>Ctrl+Alt+P</code>), controllable using the keyboard or the mouse (with a special block cursor, not changeable by applications) which asks user if they want to terminate gently the more resources-consuming application instance (by sending the <code>TERMINATE</code> signal), to kill it, to kill all instances of the application, or to see the list of running application instances with how much resources they consume, to make a choice on another one.</p>
 <p>If developer mode is enabled, another option is added to access a tiny shell containing a set of commands made to list and manage running applications in a more powerful way.</p>

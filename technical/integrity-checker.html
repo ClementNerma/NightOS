@@ -167,17 +167,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#integrity-checker" id="integrity-checker">Integrity checker</a></h1>
+                        <h1 id="integrity-checker"><a class="header" href="#integrity-checker">Integrity checker</a></h1>
 <ul>
 <li><a href="#system-immutability">System immutability</a></li>
 <li><a href="#hashes-computing">Hashes computing</a></li>
 <li><a href="#checking-hashes-at-startup">Checking hashes at startup</a></li>
 </ul>
-<h2><a class="header" href="#system-immutability" id="system-immutability">System immutability</a></h2>
+<h2 id="system-immutability"><a class="header" href="#system-immutability">System immutability</a></h2>
 <p>The <code>/sys</code> directory is immutable, which means it cannot be modified, even by the main administrator. The only process where this directory may be affected is during a repair process or during an update, which are both processes that are handled by the system directly.</p>
-<h2><a class="header" href="#hashes-computing" id="hashes-computing">Hashes computing</a></h2>
+<h2 id="hashes-computing"><a class="header" href="#hashes-computing">Hashes computing</a></h2>
 <p>When critical files are written, in <code>/sys</code> or <code>/etc/sys</code>, their hash is computed using the SHA-384 algorithm and stored in the system's <em>hash registry</em> (<code>/etc/sys/hashes</code> file).</p>
-<h2><a class="header" href="#checking-hashes-at-startup" id="checking-hashes-at-startup">Checking hashes at startup</a></h2>
+<h2 id="checking-hashes-at-startup"><a class="header" href="#checking-hashes-at-startup">Checking hashes at startup</a></h2>
 <p>When any of these files is read from the disk, their content is computed and compared to the hash registry. If the hashes don't match, the file is considered as corrupted. The consequences depend on the location of the file:</p>
 <ul>
 <li><em>System</em> (<code>/sys</code>): the system will check its backup integrity and then restore itself from the backup ;</li>

@@ -167,11 +167,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#system-services" id="system-services">System services</a></h1>
+                        <h1 id="system-services"><a class="header" href="#system-services">System services</a></h1>
 <p>As NightOS' <a href="../kernel/README.html">kernel</a> is not monolithic but a microkernel, it only handles the most fundamental tasks of the system, like memory and processes management, as well as direct hardware communication.</p>
 <p>The vast majority of its features can be found in the <a href="../services.html">system service</a>, which special services run by the system itself under the <code>sys</code> <a href="../applications-libraries.html#application-identifier">DID</a>.</p>
 <p>This splitting implies that most low-level features of the system are documented in the individual services' specifications documents, which you will find here.</p>
-<h2><a class="header" href="#nomenclature" id="nomenclature">Nomenclature</a></h2>
+<h2 id="nomenclature"><a class="header" href="#nomenclature">Nomenclature</a></h2>
 <p>System services are referred to as the <code>sys::</code> services.</p>
 <p>All <a href="../kernel/ipc.html#methods-and-notifications">methods and notifications</a> describe the required permissions to use them, their arguments.</p>
 <p>They also use common error codes:</p>
@@ -188,7 +188,7 @@
 <li><code>0x40</code> to <code>0xFF</code>: other types of errors</li>
 </ul>
 <p>All methods return an answer, though it may be empty (indicated by a <em>None</em>). System services' answers always <a href="../kernel/ipc.html#concluding-exchanges">conclude the exchange</a>.</p>
-<h2><a class="header" href="#list-of-system-services" id="list-of-system-services">List of system services</a></h2>
+<h2 id="list-of-system-services"><a class="header" href="#list-of-system-services">List of system services</a></h2>
 <ul>
 <li><a href="fs.html"><code>sys::fs</code></a>: filesystem management</li>
 <li><a href="hw.html"><code>sys::hw</code></a>: hardware communication</li>

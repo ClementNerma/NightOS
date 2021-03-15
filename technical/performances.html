@@ -167,20 +167,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#performances" id="performances">Performances</a></h1>
+                        <h1 id="performances"><a class="header" href="#performances">Performances</a></h1>
 <ul>
 <li><a href="#cycle-and-phases">Cycle and phases</a></li>
 <li><a href="#processes-priority">Processes' priority</a></li>
 <li><a href="#balancing-performances">Balancing performances</a></li>
 </ul>
-<h2><a class="header" href="#cycle-and-phases" id="cycle-and-phases">Cycle and phases</a></h2>
+<h2 id="cycle-and-phases"><a class="header" href="#cycle-and-phases">Cycle and phases</a></h2>
 <p>Because processes' instructions cannot always be processed parallely, the system will let each application run a fixed amount of instructions, before going to the next one. This short period of time is called a <em>phase</em> and generally lasts a few milliseconds. The treatment of a single phase for all running processes is called a <em>run cycle</em>. When a process isn't in a phase, it is &quot;paused&quot; until the next one.</p>
-<h2><a class="header" href="#processes-priority" id="processes-priority">Processes' priority</a></h2>
+<h2 id="processes-priority"><a class="header" href="#processes-priority">Processes' priority</a></h2>
 <p>Each process is started with a given <em>priority</em>, which is a number from 0 to 10, which can be modified during its execution. The more priority it has, the more instructions it will run in a single phase.</p>
 <p>A priority of 0 prevents the program from running any instruction at all. In this case, only an external process will be able to increase the priority to let the program run again.</p>
 <p>By default, a background process gets a priority of 2, a visible process gets a priority of 4, the process linked to the active window gets a priority of 6, and the process linked to a fullscreen window gets a priority of 7.</p>
 <p>When a process asks to set its priority to 9 or 10, a confirmation overlay is shown.</p>
-<h2><a class="header" href="#balancing-performances" id="balancing-performances">Balancing performances</a></h2>
+<h2 id="balancing-performances"><a class="header" href="#balancing-performances">Balancing performances</a></h2>
 <p>See the performances <a href="../features/balancer.html">balancer</a>.</p>
 
                     </main>

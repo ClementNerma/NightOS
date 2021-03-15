@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#system-calls" id="system-calls">System calls</a></h1>
+                        <h1 id="system-calls"><a class="header" href="#system-calls">System calls</a></h1>
 <p><em>System calls</em>, abbreviated <em>syscalls</em>, are a type of <a href="kpc.html">KPC</a>. They allow a process to ask the kernel to perform an action.</p>
 <ul>
 <li><a href="#technical-overview">Technical overview</a></li>
@@ -213,7 +213,7 @@
 </ul>
 </li>
 </ul>
-<h2><a class="header" href="#technical-overview" id="technical-overview">Technical overview</a></h2>
+<h2 id="technical-overview"><a class="header" href="#technical-overview">Technical overview</a></h2>
 <p>Syscalls are performed using CPU interruptions to notify the kernel.</p>
 <p>A syscall is made of a 8-bit code, as well as up to 8 arguments with up to 64-bit value each.<br />
 When performing a syscall, the process will put in a specific CPU register an address poiting to a memory address containing in a row the syscall's code and its arguments. For most syscalls, code and arguments will be not be longer than 128 bits, but some may use larger arguments.</p>
@@ -246,9 +246,9 @@ When performing a syscall, the process will put in a specific CPU register an ad
 <li><code>0xD0</code> to <code>0xDF</code>: reserved to system services</li>
 </ul>
 <p>Note that advanced actions like permissions management or filesystem access are achieved through the use of <a href="ipc.html">IPC</a>.</p>
-<h2><a class="header" href="#list-of-syscalls" id="list-of-syscalls">List of syscalls</a></h2>
+<h2 id="list-of-syscalls"><a class="header" href="#list-of-syscalls">List of syscalls</a></h2>
 <p>You can find below the exhaustive list of system calls.</p>
-<h3><a class="header" href="#0x01-handle_signal" id="0x01-handle_signal"><code>0x01</code> HANDLE_SIGNAL</a></h3>
+<h3 id="0x01-handle_signal"><a class="header" href="#0x01-handle_signal"><code>0x01</code> HANDLE_SIGNAL</a></h3>
 <p>Register a <a href="signals.html">signal handler</a>.<br />
 If the address pointed by this syscall's is not executable by the current process when this signal is sent to the process, the signal will be converted to an <a href="signals.html#0x01-handler_fault"><code>HANDLER_FAULT</code></a> signal instead.</p>
 <p><strong>Arguments:</strong></p>
@@ -262,7 +262,7 @@ If the address pointed by this syscall's is not executable by the current proces
 <ul>
 <li><code>0x10</code>: The requested signal does not exist</li>
 </ul>
-<h3><a class="header" href="#0x02-unhandle_signal" id="0x02-unhandle_signal"><code>0x02</code> UNHANDLE_SIGNAL</a></h3>
+<h3 id="0x02-unhandle_signal"><a class="header" href="#0x02-unhandle_signal"><code>0x02</code> UNHANDLE_SIGNAL</a></h3>
 <p>Unregister a signal handler, falling back to the default signal reception behaviour if this signal is sent to the process.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -275,7 +275,7 @@ If the address pointed by this syscall's is not executable by the current proces
 <li><code>0x10</code>: The requested signal does not exist</li>
 <li><code>0x20</code>: The requested signal does not have an handler</li>
 </ul>
-<h3><a class="header" href="#0x03-is_signal_handled" id="0x03-is_signal_handled"><code>0x03</code> IS_SIGNAL_HANDLED</a></h3>
+<h3 id="0x03-is_signal_handled"><a class="header" href="#0x03-is_signal_handled"><code>0x03</code> IS_SIGNAL_HANDLED</a></h3>
 <p>Check if a signal has a registered handler.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -289,7 +289,7 @@ If the address pointed by this syscall's is not executable by the current proces
 <ul>
 <li><code>0x10</code>: The requested signal does not exist</li>
 </ul>
-<h3><a class="header" href="#0x04-ready" id="0x04-ready"><code>0x04</code> READY</a></h3>
+<h3 id="0x04-ready"><a class="header" href="#0x04-ready"><code>0x04</code> READY</a></h3>
 <p>Indicate the system this process has set up all its event listeners, so it can start dequeuing <a href="signals.html">signals</a>.</p>
 <p><strong>NOTE:</strong> When this signal is sent, all queued signals will be treated at once, so the instructions following the sending of this signal may not be ran until quite a bit of time in the worst scenario.</p>
 <p><strong>WARNING:</strong> Signals will not be treated until this syscall is sent by the process!</p>
@@ -301,7 +301,7 @@ If the address pointed by this syscall's is not executable by the current proces
 <ul>
 <li><code>0x20</code>: The process already told it was ready</li>
 </ul>
-<h3><a class="header" href="#0x10-get_pid" id="0x10-get_pid"><code>0x10</code> GET_PID</a></h3>
+<h3 id="0x10-get_pid"><a class="header" href="#0x10-get_pid"><code>0x10</code> GET_PID</a></h3>
 <p>Get the current process' PID.</p>
 <p><strong>Arguments:</strong></p>
 <p><em>None</em></p>
@@ -311,7 +311,7 @@ If the address pointed by this syscall's is not executable by the current proces
 </ul>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3><a class="header" href="#0x12-suspend" id="0x12-suspend"><code>0x12</code> SUSPEND</a></h3>
+<h3 id="0x12-suspend"><a class="header" href="#0x12-suspend"><code>0x12</code> SUSPEND</a></h3>
 <p><a href="../../features/balancer.html#application-processes-suspension">Suspend</a> the current process.</p>
 <p><strong>Arguments:</strong></p>
 <p><em>None</em></p>
@@ -323,7 +323,7 @@ If the address pointed by this syscall's is not executable by the current proces
 <ul>
 <li><code>0x20</code>: the current process is not an application process</li>
 </ul>
-<h3><a class="header" href="#0x13-exit" id="0x13-exit"><code>0x13</code> EXIT</a></h3>
+<h3 id="0x13-exit"><a class="header" href="#0x13-exit"><code>0x13</code> EXIT</a></h3>
 <p>Kill the current process.</p>
 <p>A <a href="signals.html#0x2b-service_client_closed"><code>SERVICE_CLIENT_CLOSED</code></a> signal is sent to all services connection the process has.<br />
 If the current process is a service, a <a href="signals.html#0x2d-service_server_quitted"><code>SERVICE_SERVER_QUITTED</code></a> signal is sent to all active clients.</p>
@@ -333,7 +333,7 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><em>None</em> (never returns)</p>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3><a class="header" href="#0x20-open_pipe" id="0x20-open_pipe"><code>0x20</code> OPEN_PIPE</a></h3>
+<h3 id="0x20-open_pipe"><a class="header" href="#0x20-open_pipe"><code>0x20</code> OPEN_PIPE</a></h3>
 <p>Open a pipe with a process of the same application and running under the same user and get its SC.<br />
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (<code>0</code>) falls back to a size of 64 KB.<br />
 The command code can be used to indicate to the target process which action is expected from it. It does not follow any specific format.<br />
@@ -361,7 +361,7 @@ The target process will receive the SC/RC's counterpart through the <a href="sig
 <li><code>0x22</code>: The target process runs under another user</li>
 <li><code>0x23</code>: Notification mode is enabled but the target process does not have a handler registered for the <a href="signals.html#0x20-recv_pipe"><code>RECV_PIPE</code></a> signal</li>
 </ul>
-<h3><a class="header" href="#0x21-send_pipe" id="0x21-send_pipe"><code>0x21</code> SEND_PIPE</a></h3>
+<h3 id="0x21-send_pipe"><a class="header" href="#0x21-send_pipe"><code>0x21</code> SEND_PIPE</a></h3>
 <p>Share an RC or SC identifier with another process.<br />
 This will trigger in the target process the <a href="signals.html#0x20-recv_pipe"><code>RECV_PIPE</code></a> signal, unless the notification mode tells otherwise.</p>
 <p>When the target process writes through the received SC or read from the received RC, the performance will be equal to writing or reading through the original RC/SC identifier.</p>
@@ -377,7 +377,7 @@ This will trigger in the target process the <a href="signals.html#0x20-recv_pipe
 <ul>
 <li><code>0x10</code>: Notification mode is enabled but the target process does not have a handler registered for the <a href="signals.html#0x20-recv_pipe"><code>RECV_PIPE</code></a> signal</li>
 </ul>
-<h3><a class="header" href="#0x22-pipe_write" id="0x22-pipe_write"><code>0x22</code> PIPE_WRITE</a></h3>
+<h3 id="0x22-pipe_write"><a class="header" href="#0x22-pipe_write"><code>0x22</code> PIPE_WRITE</a></h3>
 <p>Write data through a pipe.<br />
 Messages will always be sent at once when writing to message pipes.<br />
 If the data is 0-byte long, this pipe will return successfully without waiting, even if the target pipe's buffer is full or locked.</p>
@@ -404,7 +404,7 @@ If the data is 0-byte long, this pipe will return successfully without waiting, 
 <li><code>0x23</code>: The provided SC refers to a message pipe but the <code>0x02</code> mode was provided</li>
 <li><code>0x30</code>: There is not enough space in the pipe to write all the provided data and the mode argument was set to <code>0x01</code></li>
 </ul>
-<h3><a class="header" href="#0x23-pipe_read" id="0x23-pipe_read"><code>0x23</code> PIPE_READ</a></h3>
+<h3 id="0x23-pipe_read"><a class="header" href="#0x23-pipe_read"><code>0x23</code> PIPE_READ</a></h3>
 <p>Read pending data or message from a pipe.<br />
 If the pipe was closed while the buffer was not empty, this syscall will still be able to read the remaining buffer's data - but the pipe will not be able to receive any additional data. Then, once the buffer is empty, the pipe will be made unavailable.</p>
 <p><strong>Arguments:</strong></p>
@@ -429,7 +429,7 @@ If the pipe was closed while the buffer was not empty, this syscall will still b
 <li><code>0x22</code>: There is no pending data in the pipe and the mode argument was set to <code>0x01</code></li>
 <li><code>0x23</code>: The provided RC refers to a message pipe but the <code>0x02</code> mode was provided</li>
 </ul>
-<h3><a class="header" href="#0x24-pipe_info" id="0x24-pipe_info"><code>0x24</code> PIPE_INFO</a></h3>
+<h3 id="0x24-pipe_info"><a class="header" href="#0x24-pipe_info"><code>0x24</code> PIPE_INFO</a></h3>
 <p>Get informations on a pipe from its RC or SC identifier.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -454,7 +454,7 @@ If the pipe was closed while the buffer was not empty, this syscall will still b
 </ul>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3><a class="header" href="#0x25-close_pipe" id="0x25-close_pipe"><code>0x25</code> CLOSE_PIPE</a></h3>
+<h3 id="0x25-close_pipe"><a class="header" href="#0x25-close_pipe"><code>0x25</code> CLOSE_PIPE</a></h3>
 <p>Close a pipe properly. The RC and SC parts will be immediatly closed.<br />
 The other process this pipe was shared with will receive the <a href="signals.html#0x21-pipe_closed"><code>PIPE_CLOSED</code></a> signal unless this pipe was created during a <a href="#0x2c-accept_service_conn">service connection</a>.<br />
 If this syscall is not performed on a pipe before the process exits, the other process will receive the same signal with a specific argument to indicate the communication was brutally interrupted.</p>
@@ -470,7 +470,7 @@ If this syscall is not performed on a pipe before the process exits, the other p
 <li><code>0x11</code>: The target process already terminated</li>
 <li><code>0x20</code>: The provided RC/SC identifier is part of a service pipe</li>
 </ul>
-<h3><a class="header" href="#0x26-open_serv_sock" id="0x26-open_serv_sock"><code>0x26</code> OPEN_SERV_SOCK</a></h3>
+<h3 id="0x26-open_serv_sock"><a class="header" href="#0x26-open_serv_sock"><code>0x26</code> OPEN_SERV_SOCK</a></h3>
 <p>Open a <a href="ipc.html#service-sockets">service socket</a>.<br />
 Triggers the <a href="signals.html#0x26-recv_serv_sock"><code>RECV_SERV_SOCK</code></a> signal on the receiver process' side.</p>
 <p><strong>Arguments:</strong></p>
@@ -482,7 +482,7 @@ Triggers the <a href="signals.html#0x26-recv_serv_sock"><code>RECV_SERV_SOCK</co
 <ul>
 <li>Socket identifier (8 bytes)</li>
 </ul>
-<h3><a class="header" href="#0x27-send_sock_msg" id="0x27-send_sock_msg"><code>0x27</code> SEND_SOCK_MSG</a></h3>
+<h3 id="0x27-send_sock_msg"><a class="header" href="#0x27-send_sock_msg"><code>0x27</code> SEND_SOCK_MSG</a></h3>
 <p>Send a message through a <a href="ipc.html#exchanges-and-messages">service socket exchange</a>.<br />
 This syscall can also be used to create a new exchange.</p>
 <p><strong>Arguments:</strong></p>
@@ -506,7 +506,7 @@ This syscall can also be used to create a new exchange.</p>
 <li><code>0x22</code>: Unknown exchange identifier</li>
 <li><code>0x23</code>: Exchange has already been concluded</li>
 </ul>
-<h3><a class="header" href="#0x28-read_sock_msg" id="0x28-read_sock_msg"><code>0x28</code> READ_SOCK_MSG</a></h3>
+<h3 id="0x28-read_sock_msg"><a class="header" href="#0x28-read_sock_msg"><code>0x28</code> READ_SOCK_MSG</a></h3>
 <p>Read the pending message of a <a href="ipc.html#service-sockets">service socket</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -532,7 +532,7 @@ This syscall can also be used to create a new exchange.</p>
 <li><code>0x22</code>: Unknown exchange identifier</li>
 <li><code>0x23</code>: Exchange has already been concluded</li>
 </ul>
-<h3><a class="header" href="#0x29-close_serv_sock" id="0x29-close_serv_sock"><code>0x29</code> CLOSE_SERV_SOCK</a></h3>
+<h3 id="0x29-close_serv_sock"><a class="header" href="#0x29-close_serv_sock"><code>0x29</code> CLOSE_SERV_SOCK</a></h3>
 <p>Close a <a href="ipc.html#service-sockets">service socket</a>.<br />
 Triggers the <a href="signals.html#0x29-serv_sock_closed"><code>SERV_SOCK_CLOSED</code></a> signal on the receiver process' side.</p>
 <p><strong>Arguments:</strong></p>
@@ -546,7 +546,7 @@ Triggers the <a href="signals.html#0x29-serv_sock_closed"><code>SERV_SOCK_CLOSED
 <li><code>0x20</code>: Unknown socket identifier</li>
 <li><code>0x21</code>: Socket is already closed</li>
 </ul>
-<h3><a class="header" href="#0x2a-connect_service" id="0x2a-connect_service"><code>0x2A</code> CONNECT_SERVICE</a></h3>
+<h3 id="0x2a-connect_service"><a class="header" href="#0x2a-connect_service"><code>0x2A</code> CONNECT_SERVICE</a></h3>
 <p>Ask a service to etablish connection. The current process is called the service's <em>client</em>.</p>
 <p>If the current process already has an active connection (a connection that hasn't been closed) to the target service, it will fail unless the flexible mode argument is set.</p>
 <p><strong>NOTE:</strong> When this signal is sent, the service's answer will be waited, so the instructions following the sending of this signal may not be ran until several seconds in the worst scenario.</p>
@@ -571,7 +571,7 @@ Triggers the <a href="signals.html#0x29-serv_sock_closed"><code>SERV_SOCK_CLOSED
 <li><code>0x30</code>: Failed to send the <a href="signals.html#0x2a-service_conn_request"><code>SERVICE_CONN_REQUEST</code></a> due to a <a href="signals.html#0x01-handler_fault">double handler fault</a></li>
 <li><code>0x31</code>: Service rejected the connection request</li>
 </ul>
-<h3><a class="header" href="#0x2b-end_service_conn" id="0x2b-end_service_conn"><code>0x2B</code> END_SERVICE_CONN</a></h3>
+<h3 id="0x2b-end_service_conn"><a class="header" href="#0x2b-end_service_conn"><code>0x2B</code> END_SERVICE_CONN</a></h3>
 <p>Tell a service to properly close the connection. The associated <a href="ipc.html#pipes">pipe</a> SC and RC channels will immediatly be closed.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -585,7 +585,7 @@ Triggers the <a href="signals.html#0x29-serv_sock_closed"><code>SERV_SOCK_CLOSED
 <li><code>0x20</code>: This connection was already closed</li>
 <li><code>0x21</code>: The associated service thread already terminated</li>
 </ul>
-<h3><a class="header" href="#0x2c-accept_service_conn" id="0x2c-accept_service_conn"><code>0x2C</code> ACCEPT_SERVICE_CONN</a></h3>
+<h3 id="0x2c-accept_service_conn"><a class="header" href="#0x2c-accept_service_conn"><code>0x2C</code> ACCEPT_SERVICE_CONN</a></h3>
 <p>Confirm the current service accepts the connection with a client.<br />
 A dedicated message pipe's SC and another's RC will be provided to communicate with the client.</p>
 <p>This will create a new <a href="../services.html#thread-types">client thread</a> in the current process, which is meant to be dedicated to this specific client.<br />
@@ -607,7 +607,7 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 <li><code>0x20</code>: The process which requested the connection already terminated</li>
 <li><code>0x30</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms)</li>
 </ul>
-<h3><a class="header" href="#0x2d-reject_service_conn" id="0x2d-reject_service_conn"><code>0x2D</code> REJECT_SERVICE_CONN</a></h3>
+<h3 id="0x2d-reject_service_conn"><a class="header" href="#0x2d-reject_service_conn"><code>0x2D</code> REJECT_SERVICE_CONN</a></h3>
 <p>Reject a connection request to the current service.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -621,7 +621,7 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 <li><code>0x20</code>: The process which requested the connection already terminated</li>
 <li><code>0x30</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms)</li>
 </ul>
-<h3><a class="header" href="#0x30-mem_alloc" id="0x30-mem_alloc"><code>0x30</code> MEM_ALLOC</a></h3>
+<h3 id="0x30-mem_alloc"><a class="header" href="#0x30-mem_alloc"><code>0x30</code> MEM_ALLOC</a></h3>
 <p>Allocate a linear block of memory.</p>
 <p><strong>WARNING:</strong> Allocated memory will not be rewritten, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.</p>
 <p><strong>Arguments:</strong></p>
@@ -636,7 +636,7 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 <ul>
 <li><code>0x30</code>: The kernel could not find a linear block of memory of the requested size</li>
 </ul>
-<h3><a class="header" href="#0x31-mem_free" id="0x31-mem_free"><code>0x31</code> MEM_FREE</a></h3>
+<h3 id="0x31-mem_free"><a class="header" href="#0x31-mem_free"><code>0x31</code> MEM_FREE</a></h3>
 <p>Unallocate a linear block of memory.</p>
 <p>Shared memory pages must first be unshared through the <a href="#0x37-unshare_ams"><code>UNSHARE_AMS</code></a> syscall.<br />
 Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code>UNMAP_AMS</code></a> syscall.</p>
@@ -656,7 +656,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x22</code>: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)</li>
 <li><code>0x23</code>: One or more of the provided pages are shared with another process</li>
 </ul>
-<h3><a class="header" href="#0x32-virt_mem_ams" id="0x32-virt_mem_ams"><code>0x32</code> VIRT_MEM_AMS</a></h3>
+<h3 id="0x32-virt_mem_ams"><a class="header" href="#0x32-virt_mem_ams"><code>0x32</code> VIRT_MEM_AMS</a></h3>
 <p>Create an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from a part of the current process' address space.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -673,7 +673,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x11</code>: Number of bytes is unaligned</li>
 <li><code>0x22</code>: Address is out of range</li>
 </ul>
-<h3><a class="header" href="#0x33-backed_ams" id="0x33-backed_ams"><code>0x33</code> BACKED_AMS</a></h3>
+<h3 id="0x33-backed_ams"><a class="header" href="#0x33-backed_ams"><code>0x33</code> BACKED_AMS</a></h3>
 <p>Create an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> backed by the <a href="signals.html#0x33-read_backed_ams"><code>READ_BACKED_AMS</code></a> and <a href="signals.html#0x34-write_backed_ams"><code>WRITE_BACKED_AMS</code></a> signals.</p>
 <p>Copy-on-write support can be enabled to allow the receiver process to write data in its own memory space. Written pages will be allocated by the kernel and won't be backed anymore by the <a href="signals.html#0x33-read_backed_ams"><code>READ_BACKED_AMS</code></a> signal. The backer process won't be able to see these changes, and the <a href="signals.html#0x34-write_backed_ams"><code>WRITE_BACKEND_AMS</code></a> signal won't be trigerred on its side.</p>
 <p><strong>Arguments:</strong></p>
@@ -686,7 +686,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x10</code>: Invalid COW mode provided</li>
 <li><code>0x11</code>: Provided length is unaligned</li>
 </ul>
-<h3><a class="header" href="#0x34-device_ams" id="0x34-device_ams"><code>0x34</code> DEVICE_AMS</a></h3>
+<h3 id="0x34-device_ams"><a class="header" href="#0x34-device_ams"><code>0x34</code> DEVICE_AMS</a></h3>
 <p>Create an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from a device's memory through <em>Mapped Memory Input/Output</em> (MMIO).</p>
 <p>Requires the current process to have the device in its <a href="processes.html#drivable-devices">drivable devices attribute</a>.</p>
 <p><strong>Arguments:</strong></p>
@@ -709,7 +709,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x21</code>: The provided device is not compatible with MMIO</li>
 <li><code>0x22</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
 </ul>
-<h3><a class="header" href="#0x35-share_ams" id="0x35-share_ams"><code>0x35</code> SHARE_AMS</a></h3>
+<h3 id="0x35-share_ams"><a class="header" href="#0x35-share_ams"><code>0x35</code> SHARE_AMS</a></h3>
 <p>Share an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> with another process.</p>
 <p>This will trigger in the target process the <a href="signals.html#0x35-recv_shared_ams"><code>RECV_SHARED_MEM</code></a> with the provided command code, unless the notification mode states otherwise.</p>
 <p>The <em>mutual mode</em> allows both processes to access the memory, with the sharer setting the permissions for the receiver to limit its access. Copy-on-write can also be enabled to allow the receiver process to write data without affecting the sharer process' memory.</p>
@@ -739,7 +739,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x14</code>: Invalid exclusive mode provided</li>
 <li><code>0x30</code>: There is not enough contiguous space in the receiver process' memory space to map the shared memory</li>
 </ul>
-<h3><a class="header" href="#0x36-ams_sharing_info" id="0x36-ams_sharing_info"><code>0x36</code> AMS_SHARING_INFO</a></h3>
+<h3 id="0x36-ams_sharing_info"><a class="header" href="#0x36-ams_sharing_info"><code>0x36</code> AMS_SHARING_INFO</a></h3>
 <p>Get informations about a <a href="#0x35-share_ams">shared</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -759,7 +759,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <ul>
 <li><code>0x10</code>: Unknwon AMS ID provided</li>
 </ul>
-<h3><a class="header" href="#0x37-unshare_ams" id="0x37-unshare_ams"><code>0x37</code> UNSHARE_AMS</a></h3>
+<h3 id="0x37-unshare_ams"><a class="header" href="#0x37-unshare_ams"><code>0x37</code> UNSHARE_AMS</a></h3>
 <p>Stop sharing an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> started by <a href="#0x35-share_ams"><code>SHARE_AMS</code></a>. Note that exlusive sharings cannot be unmapped.</p>
 <p>This will trigger in the target process the <a href="signals.html#0x37-unshared_ams"><code>UNSHARED_AMS</code></a> signal.</p>
 <p><strong>Arguments:</strong></p>
@@ -775,7 +775,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x20</code>: Provided AMS ID is exclusive</li>
 <li><code>0x21</code>: Provided AMS was not shared with the provided process</li>
 </ul>
-<h3><a class="header" href="#0x38-map_ams" id="0x38-map_ams"><code>0x38</code> MAP_AMS</a></h3>
+<h3 id="0x38-map_ams"><a class="header" href="#0x38-map_ams"><code>0x38</code> MAP_AMS</a></h3>
 <p>Map an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> in the current process' address space.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -792,7 +792,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x20</code>: Provided mapping address or address+length is out-of-range in the AMS</li>
 <li><code>0x21</code>: Provided address to map or address+length is out-of-orange in this process' address space</li>
 </ul>
-<h3><a class="header" href="#0x39-unmap_ams" id="0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></h3>
+<h3 id="0x39-unmap_ams"><a class="header" href="#0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></h3>
 <p>Unmap an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from the current process' address space.<br />
 If the AMS is mapped at multiple addresses of this process, only one of the mappings will be unmapped by default.</p>
 <p><strong>Arguments:</strong></p>
@@ -807,7 +807,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x10</code>: Unknown AMS ID provided</li>
 <li><code>0x20</code>: Provided AMS it not mapped at this address</li>
 </ul>
-<h3><a class="header" href="#0x3a-set_dma_mem_access" id="0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></h3>
+<h3 id="0x3a-set_dma_mem_access"><a class="header" href="#0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></h3>
 <p>Allow or disallow a device to access a range of addresses through <em>Direct Memory Access</em> (DMA) in the current process' address space.</p>
 <p>Requires the current process to have the device in its <a href="processes.html#drivable-devices">drivable devices attribute</a>.</p>
 <p><strong>Arguments:</strong></p>
@@ -828,7 +828,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x21</code>: The provided device is not compatible with DMA</li>
 <li><code>0x22</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
 </ul>
-<h3><a class="header" href="#0xa0-execution_context" id="0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></h3>
+<h3 id="0xa0-execution_context"><a class="header" href="#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></h3>
 <p>Get informations from the application's <a href="../applications/context.html">execution context</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -854,7 +854,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x10</code>: invalid information number provided</li>
 <li><code>0x20</code>: caller process is a system service</li>
 </ul>
-<h3><a class="header" href="#0xd0-process_attributes" id="0xd0-process_attributes"><code>0xD0</code> PROCESS_ATTRIBUTES</a></h3>
+<h3 id="0xd0-process_attributes"><a class="header" href="#0xd0-process_attributes"><code>0xD0</code> PROCESS_ATTRIBUTES</a></h3>
 <p>System service-only syscall.<br />
 Get a process' <a href="processes.html#process-attributes">attributes</a>.</p>
 <p><strong>Arguments:</strong></p>
@@ -919,7 +919,7 @@ Get a process' <a href="processes.html#process-attributes">attributes</a>.</p>
 <li><code>0x21</code>: This system service is not allowed to access or edit this attribute</li>
 <li><code>0x22</code>: Provided index is out-of-bounds</li>
 </ul>
-<h3><a class="header" href="#0xd1-set_priority" id="0xd1-set_priority"><code>0xD1</code> SET_PRIORITY</a></h3>
+<h3 id="0xd1-set_priority"><a class="header" href="#0xd1-set_priority"><code>0xD1</code> SET_PRIORITY</a></h3>
 <p>System service-only syscall.<br />
 Set the priority of a process.<br />
 If the set priority is different than <code>0</code>, the kernel won't adjust the priority automatically anymore.<br />
@@ -937,7 +937,7 @@ Setting it to <code>0</code> will reset it to the kernel's choice.</p>
 <li><code>0x20</code>: Caller process is not a system service</li>
 <li><code>0x21</code>: Provided PID was not found</li>
 </ul>
-<h3><a class="header" href="#0xd2-enum_devices" id="0xd2-enum_devices"><code>0xD2</code> ENUM_DEVICES</a></h3>
+<h3 id="0xd2-enum_devices"><a class="header" href="#0xd2-enum_devices"><code>0xD2</code> ENUM_DEVICES</a></h3>
 <p>System service-only syscall.<br />
 List devices matching a provided CII.</p>
 <p>For each device, its SDI (4 bytes) is written to the provided address.</p>
@@ -955,7 +955,7 @@ List devices matching a provided CII.</p>
 <ul>
 <li><code>0x10</code>: Invalid connection type in CII</li>
 </ul>
-<h3><a class="header" href="#0xd3-device_infos" id="0xd3-device_infos"><code>0xD3</code> DEVICE_INFOS</a></h3>
+<h3 id="0xd3-device_infos"><a class="header" href="#0xd3-device_infos"><code>0xD3</code> DEVICE_INFOS</a></h3>
 <p>System service-only syscall.<br />
 Get the <a href="hardware.html#raw-device-descriptor">raw device descriptor</a> of a single device.</p>
 <p><strong>Arguments:</strong></p>

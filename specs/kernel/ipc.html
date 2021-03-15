@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#inter-process-communication" id="inter-process-communication">Inter-Process Communication</a></h1>
+                        <h1 id="inter-process-communication"><a class="header" href="#inter-process-communication">Inter-Process Communication</a></h1>
 <p>This document describes the way <a href="../../technical/ipc.html">Inter-Process Communication (IPC)</a> works.</p>
 <ul>
 <li><a href="#pipes">Pipes</a>
@@ -191,7 +191,7 @@
 </li>
 <li><a href="#shared-memory">Shared Memory</a></li>
 </ul>
-<h2><a class="header" href="#pipes" id="pipes">Pipes</a></h2>
+<h2 id="pipes"><a class="header" href="#pipes">Pipes</a></h2>
 <p><em>Inter-process Uni-directional Channels</em> (IUC), also called <em>pipes</em>, allow two distinct processes to communicate.</p>
 <p>Pipes are made of two uni-directional parts:</p>
 <ul>
@@ -206,32 +206,32 @@
 <p>The process that creates the pipe gets both the SC and the RC, and is expected to provide one of them to another process.</p>
 <p>Each SC and RC has a unique identifier, which is binded to the process that created it.<br />
 The process receiving an SC or RC receives another identifier for it, unique to that process, which prevents IDs collisions.</p>
-<h3><a class="header" href="#opening-pipes" id="opening-pipes">Opening pipes</a></h3>
+<h3 id="opening-pipes"><a class="header" href="#opening-pipes">Opening pipes</a></h3>
 <p>A process can open a pipe with another process using the <a href="syscalls.html#0x20-open_pipe"><code>OPEN_PIPE</code></a> syscall.</p>
 <p>The other process will then receive the <a href="signals.html#0x20-recv_pipe"><code>RECV_PIPE</code></a> signal. If no handler is set when the signal is sent, the opening syscall fails.</p>
-<h3><a class="header" href="#pipes-pending-data" id="pipes-pending-data">Pipes' pending data</a></h3>
+<h3 id="pipes-pending-data"><a class="header" href="#pipes-pending-data">Pipes' pending data</a></h3>
 <p>When a pipe is written to, the data is written to a memory zone. This zone is called the <em>pipe's buffer</em> and it's content is called the <em>pending data</em>.<br />
 When a pipe is read from, the pending data is progressively retrieved, erased as the read progresses.</p>
 <p>The default size of the pipe's buffer is 64 KB, but this can be extended to up to 16 MB during its creation.
 When it is reached, no data can be written to the pipe anymore, meaning the other process must read data from it in order to free space to write it.</p>
-<h3><a class="header" href="#pipes-locking" id="pipes-locking">Pipes locking</a></h3>
+<h3 id="pipes-locking"><a class="header" href="#pipes-locking">Pipes locking</a></h3>
 <p>When a pipe is being written to or read from, it is <em>locked</em>, which means no other writing or reading can happen during this time. This prevents data races which are a common source of bugs which are complex to debug, while not compromising performances.</p>
-<h3><a class="header" href="#closing-pipes" id="closing-pipes">Closing pipes</a></h3>
+<h3 id="closing-pipes"><a class="header" href="#closing-pipes">Closing pipes</a></h3>
 <p>Any of the two processes (be it the receiver or the sender) can close a pipe using the <a href="syscalls.html#0x25-close_pipe"><code>CLOSE_PIPE</code></a> syscall, providing its SC or RC identifier. The pipe is immediatly closed on both sides, and the other process receives the <a href="signals.html#0x21-pipe_closed"><code>PIPE_CLOSED</code></a> signal.</p>
-<h3><a class="header" href="#message-pipes" id="message-pipes">Message pipes</a></h3>
+<h3 id="message-pipes"><a class="header" href="#message-pipes">Message pipes</a></h3>
 <p>Pipes are designed to transmit streams of data, but sometimes we need to use them to transmit messages. This is why there are specific <a href="syscalls.html">syscalls</a> and <a href="signals.html">signals</a> to deal with this problem.</p>
 <p>A <em>message pipe</em> is a pipe that only sends and receives dynamic-sized messages instead of a stream of bytes.<br />
 They have a maximum length of 64 KB, which is the pipes' buffer's minimal capacity. Messages must always be sent at once and cannot be sent partially.<br />
 Their length is determined when the message is sent which, coupled to <a href="#pipes-locking">pipes locking</a>, allows to retrieve complete messages directly.</p>
 <p>It's not possible to send &quot;non-message&quot; data through a message pipe, as the action of writing to a pipe will automatically check if it's a message pipe and ensure the size and &quot;send at once&quot; requirement are met.</p>
-<h3><a class="header" href="#interactive-usage" id="interactive-usage">Interactive usage</a></h3>
+<h3 id="interactive-usage"><a class="header" href="#interactive-usage">Interactive usage</a></h3>
 <p>You can find more informations on interactive usage in the <a href="../shell.html#interactivity">shell specifications</a>.</p>
-<h2><a class="header" href="#service-sockets" id="service-sockets">Service sockets</a></h2>
+<h2 id="service-sockets"><a class="header" href="#service-sockets">Service sockets</a></h2>
 <p>The downside of message pipes is that they are not designed to handle responses from the receiver process, and they also don't have built-in errors handling.</p>
 <p>To solve this, it's possible to use <em>service sockets</em>, which as their name indicate are mainly used to communicate with <a href="../services.html">services</a>. A socket is caracterized by the process opening it, called the <em>service</em>, and the process receiving it, the <em>client</em>.</p>
-<h3><a class="header" href="#opening" id="opening">Opening</a></h3>
+<h3 id="opening"><a class="header" href="#opening">Opening</a></h3>
 <p>Sockets are opened with the <a href="syscalls.html#0x26-open_serv_sock"><code>OPEN_SERV_SOCK</code></a> syscall. The other process receives the <a href="signals.html#0x26-recv_serv_sock"><code>RECV_SERV_SOCK</code></a> signal on its side.</p>
-<h3><a class="header" href="#exchanges-and-messages" id="exchanges-and-messages">Exchanges and messages</a></h3>
+<h3 id="exchanges-and-messages"><a class="header" href="#exchanges-and-messages">Exchanges and messages</a></h3>
 <p>Service sockets are based on <em>exchanges</em>, which are sets of messages. An exchange is described by a structure made of the following:</p>
 <ul>
 <li>Identifier (8 bytes)</li>
@@ -243,16 +243,16 @@ Their length is determined when the message is sent which, coupled to <a href="#
 <p>Messages can then be sent using the <a href="syscalls.html#0x27-send_sock_msg"><code>SEND_SOCK_MSG</code></a> syscall and received through the <a href="signals.html#0x27-recv_sock_msg"><code>RECV_SOCK_MSG</code></a> signal. To be read, the receiver process must use the <a href="syscalls.html#0x28-read_sock_msg"><code>READ_SOCK_MSG</code></a> syscall.</p>
 <p>They must be sent at once, like in message pipes. The maximum size is 4 KB by default, but can be extended through the opening syscall up to 256 MB.</p>
 <p>A message can either <em>initiate</em> an exchange or <em>answer</em> to an existing one: in the first case, an identifier will be generated by the kernel and returned by the sending syscall, and in the latter the message will receive an incremented identifier that allows to track where in the exchange the message is. This also prevents a process to send two messages before the other one answers.</p>
-<h3><a class="header" href="#concluding-exchanges" id="concluding-exchanges">Concluding exchanges</a></h3>
+<h3 id="concluding-exchanges"><a class="header" href="#concluding-exchanges">Concluding exchanges</a></h3>
 <p>Exchanges can be either be <em>concluded</em> either by sending an error message or by sending a message with a close indicator to indicate this message will be the last one in the socket and no answer will be accepted.</p>
 <p>Sending a message in a concluded exchange will result in a syscall error.</p>
-<h3><a class="header" href="#methods-and-notifications" id="methods-and-notifications">Methods and notifications</a></h3>
+<h3 id="methods-and-notifications"><a class="header" href="#methods-and-notifications">Methods and notifications</a></h3>
 <p>An exchange can be opened by a client to request something to the service, it is then called a <em>method</em>. In that case, the message's body is called the <em>arguments</em>.</p>
 <p>When the server opens itself an exchange with the client, it's called a <em>notification</em>. A notification message's body is called its <em>data</em>.</p>
-<h3><a class="header" href="#closing-service-sockets" id="closing-service-sockets">Closing service sockets</a></h3>
+<h3 id="closing-service-sockets"><a class="header" href="#closing-service-sockets">Closing service sockets</a></h3>
 <p>Service sockets can be closed with the <a href="syscalls.html#0x29-close_serv_sock"><code>CLOSE_SERV_SOCK</code></a> syscall, which triggers the <a href="signals.html#0x29-serv_sock_closed"><code>SERV_SOCK_CLOSED</code></a> signal on the other process' side.</p>
 <p>Although exchanges are based on signals which are asynchronous by design, the answer mechanism and messages tracking which ensures the receiver process answers before sending another message allows for simplier communications and synchronization between the two processes.</p>
-<h2><a class="header" href="#shared-memory" id="shared-memory">Shared Memory</a></h2>
+<h2 id="shared-memory"><a class="header" href="#shared-memory">Shared Memory</a></h2>
 <p>Shared memory allows a process to share a part of its memory with another process. It has multiple advantages over pipes:</p>
 <ul>
 <li>Data is not copied twice, as the sender process directly shares a part of its own memory</li>

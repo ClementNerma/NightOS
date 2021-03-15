@@ -167,19 +167,19 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#desktop-environment" id="desktop-environment">Desktop Environment</a></h1>
+                        <h1 id="desktop-environment"><a class="header" href="#desktop-environment">Desktop Environment</a></h1>
 <p>The <em>Desktop Environment</em> (DE) is an application that acts as the main graphical interface of NightOS.</p>
 <p>It is launched with the system, does never stop until the system itself stops, and handles most of the user interface.</p>
-<h2><a class="header" href="#desktop-environment-applications" id="desktop-environment-applications">Desktop Environment Applications</a></h2>
+<h2 id="desktop-environment-applications"><a class="header" href="#desktop-environment-applications">Desktop Environment Applications</a></h2>
 <p>A <em>desktop environment application</em> (DEA) can only be launched by the system, and is only launched once during the whole system's lifetime, except for their commands which can be launched by anyone. It is also the very first application to be run.</p>
 <p>There are two default DEA: <a href="../applications/Nova.html">Nova</a>, and <a href="../applications/BareEnv.html">BareEnv</a>.</p>
 <p>The former acts as the default, reference and recommanded DE of NightOS, while the latter is for servers and other computers without a graphical output. It only supports text-based workflows, which limits it to command-line usage.</p>
-<h2><a class="header" href="#permissions" id="permissions">Permissions</a></h2>
+<h2 id="permissions"><a class="header" href="#permissions">Permissions</a></h2>
 <p>A <a href="#desktop-environment-applications">DEA</a> does not require specific permissions in order to work ; it only requires a boolean field in its <a href="../specs/applications/manifest.html">manifest</a>.</p>
-<h2><a class="header" href="#display-layers" id="display-layers">Display layers</a></h2>
+<h2 id="display-layers"><a class="header" href="#display-layers">Display layers</a></h2>
 <p>The graphical interface is split into <em>layers</em>, which represent the display priority when two elements overlap. For instance, when two elements A and B overlap visually (= part of them is displayed at the same coordinate than the other), the element located in the highest layer will be displayed on top of the other element.</p>
 <p>Layers are indexed, starting from <code>0</code> with the lowest priority.</p>
-<h2><a class="header" href="#security-and-operation" id="security-and-operation">Security and operation</a></h2>
+<h2 id="security-and-operation"><a class="header" href="#security-and-operation">Security and operation</a></h2>
 <p>Unlike other operating systems, <a href="#desktop-environment-applications">DEA</a> can only access their own data and cannot manipulate the data inside other applications, even graphically.</p>
 <p>Desktop environments rely on the <a href="../specs/services/ui.html"><code>sys::ui</code></a> system service to control the data they display.</p>
 <p>This service provides them several <a href="../specs/services.html#communication">methods and events</a>, mainly to:</p>
@@ -193,7 +193,7 @@
 </ul>
 <p>At no moment can the desktop environment access the graphical content of a window, nor affect it, as windows are displayed starting from <a href="#display-layers">layer 1</a>.</p>
 <p>On the other hand, the desktop environment can force a window owner (the application process that created it) to resize, minimize, restore, put to fullscreen, etc. and can also hide some elements from the system as it is not forced to display a window's content.</p>
-<h2><a class="header" href="#window-states" id="window-states">Window states</a></h2>
+<h2 id="window-states"><a class="header" href="#window-states">Window states</a></h2>
 <p>A window's state is made of its characteristics:</p>
 <ul>
 <li>Title</li>
@@ -207,7 +207,7 @@
 <li>Custom state attributes</li>
 </ul>
 <p>The custom attributes are handled by the DEA itself, and can contain any piece of information relevant to displaying the window, such as the virtual desktop number if the DE supports it.</p>
-<h3><a class="header" href="#window-display-state" id="window-display-state">Window display state</a></h3>
+<h3 id="window-display-state"><a class="header" href="#window-display-state">Window display state</a></h3>
 <p>Windows have a <em>display state</em> which indicate how they are displayed on the screen. These states can be:</p>
 <ul>
 <li><strong>Restored</strong>: the default</li>
@@ -215,9 +215,9 @@
 <li><strong>Minimized:</strong> the window is hidden but still available</li>
 <li><strong>Fullscreenized:</strong> the windows takes all the screen, hiding all other windows and elements from the desktop environment, including its own titlebar</li>
 </ul>
-<h2><a class="header" href="#activeinactive-windows" id="activeinactive-windows">Active/inactive windows</a></h2>
+<h2 id="activeinactive-windows"><a class="header" href="#activeinactive-windows">Active/inactive windows</a></h2>
 <p>All windows are considered <em>inactive</em> unless they are <em>focused</em>, which on most desktop environments put them on the top layer. There are no specific difference between active and inactive windows, but this attribute is indicated to the owner application as this may impact the desired behaviour of the application.</p>
-<h2><a class="header" href="#common-elements" id="common-elements">Common elements</a></h2>
+<h2 id="common-elements"><a class="header" href="#common-elements">Common elements</a></h2>
 <p>Desktop environment are traditionally made of several elements:</p>
 <ul>
 <li>The <em>taskbar</em> lists all opened windows</li>

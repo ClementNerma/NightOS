@@ -167,22 +167,22 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#cloudy" id="cloudy">Cloudy</a></h1>
+                        <h1 id="cloudy"><a class="header" href="#cloudy">Cloudy</a></h1>
 <p>While the system and main data can be backed up using <a href="TimeTravel.html">TimeTravel</a>, it's not always handy to manage backups on an external hard drive and keep it safe.</p>
 <p>This is where Cloudy comes: it allows to synchronize data on the cloud, using a master password which is stored nowhere but in the user's mind.</p>
-<h2><a class="header" href="#how-it-works" id="how-it-works">How it works</a></h2>
+<h2 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h2>
 <p>In order to work, Cloudy needs a storage account where it can store its data. Multiple providers are supported: Dropbox, Google Drive, Amazon AWS, SFTP storages, etc.</p>
 <p>It will then store all data on this account, in a dedicated folder (the path can be customized). All data will be encrypted by a <em>master password</em> prompted when the application is opened for the first time, so no one will be able to access these date except the user who set it up itself.</p>
-<h2><a class="header" href="#integration" id="integration">Integration</a></h2>
+<h2 id="integration"><a class="header" href="#integration">Integration</a></h2>
 <p>Applications can ask to store and synchronize their own data through Cloudy. They will not be able to access any other application's data, though.</p>
-<h2><a class="header" href="#collected-data" id="collected-data">Collected data</a></h2>
+<h2 id="collected-data"><a class="header" href="#collected-data">Collected data</a></h2>
 <p>The data that can be backup-ed and synchronized by Cloudy are:</p>
 <ul>
 <li>User's settings, computer's settings if the user is administrator</li>
 <li>Installed applications and their data</li>
 <li>Applications can ask to store additional custom data (e.g. a password manager)</li>
 </ul>
-<h2><a class="header" href="#synchronization" id="synchronization">Synchronization</a></h2>
+<h2 id="synchronization"><a class="header" href="#synchronization">Synchronization</a></h2>
 <p>The synchronization process has two parts:</p>
 <ul>
 <li>The <strong>up-sync</strong> process, which sends new data to the cloud ;</li>
@@ -190,7 +190,7 @@
 </ul>
 <p>Up-sync can be performed manually at anytime, or scheduled to be performed frequently. It's also possible to ask, for instance, to update the list of applications when a new one is installed or removed, while only backuping applications' data once a day.</p>
 <p>Down-sync can be performed anytime, and a preview will show which items will be restored and what will be overridden. It's possible to only restore a few items. By default, down-sync will be performed in real-time: as soon as an up-sync process is performed, down-sync will happen on every other computer of the synchronization chain.</p>
-<h2><a class="header" href="#synchronization-chain" id="synchronization-chain">Synchronization chain</a></h2>
+<h2 id="synchronization-chain"><a class="header" href="#synchronization-chain">Synchronization chain</a></h2>
 <p>Data are synchronized through all computers of a single <em>synchronization chain</em>, which is simply a set of computers. Synchronization happens per user, which is why Cloudy doesn't backup every user of the computer, but only the one synchronization is enabled on. Of course, every user can enable synchronization for its account.</p>
 <p>When a user enabled Cloudy for its account, it must connect with a NightOS account, and it is then added to the synchronization chain consisting of every computer having Cloudy enabled with this NightOS account.</p>
 <p>For down-sync to happen, the username must be on the receiving computers than on the upload computer, else a specific setting will need to be changed in Cloudy.</p>

@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#applications" id="applications">Applications</a></h1>
+                        <h1 id="applications"><a class="header" href="#applications">Applications</a></h1>
 <p><em>Applications</em> are the system's way to handle software.</p>
 <p><strong>NOTE :</strong> This document is only an <em>introduction</em> to how applications work.</p>
 <ul>
@@ -184,32 +184,32 @@
 <li><a href="#system-applications">System applications</a></li>
 <li><a href="#services">Services</a></li>
 </ul>
-<h2><a class="header" href="#how-applications-work" id="how-applications-work">How applications work</a></h2>
+<h2 id="how-applications-work"><a class="header" href="#how-applications-work">How applications work</a></h2>
 <p>An application is a set of executable files and resources. They are the only way to execute code, as direct binary programs are not supported.</p>
 <p>Any user can install applications, which will only be available from his account.
 Administrator users can install global applications, which are available to every user.</p>
-<h2><a class="header" href="#installation-methods" id="installation-methods">Installation methods</a></h2>
+<h2 id="installation-methods"><a class="header" href="#installation-methods">Installation methods</a></h2>
 <p>Applications are installed through an <a href="../specs/applications/package.html"><em>application package</em></a> via <a href="../applications/Skyer.html">Skyer</a>, the applications manager. There are several installation methods:</p>
 <ul>
 <li>From the store</li>
 <li>Directly from the application's package (<a href="#sideloading"><em>sideloading</em></a>)</li>
 <li>As a volatile application</li>
 </ul>
-<h3><a class="header" href="#from-the-store" id="from-the-store">From the store</a></h3>
+<h3 id="from-the-store"><a class="header" href="#from-the-store">From the store</a></h3>
 <p>Applications can be downloaded from NightOS' official applications store (available via <a href="../applications/Stellar.html"><em>Stellar</em></a>).</p>
 <ul>
 <li>For closed-source applications, the store only provides <a href="../technical/pre-compiling.html"><em>pre-compiled programs</em></a></li>
 <li>For open-source applications, the store provides both pre-built programs as well as the source code</li>
 </ul>
 <p>For the latter, user can choose either to build the program from source, using the appropriated build tools in order to optimize performances, or to simply use the pre-built programs (which is the option by default).</p>
-<h3><a class="header" href="#sideloading" id="sideloading">Sideloading</a></h3>
+<h3 id="sideloading"><a class="header" href="#sideloading">Sideloading</a></h3>
 <p>Applications sideloading (installing an application directly from its <a href="../specs/applications/package.html">package</a>) follows strict rules determined by the <em>sideloading mode</em>, which is either &quot;disabled&quot;, &quot;secure&quot; or &quot;unsecure&quot;.</p>
 <p><strong>Disable mode</strong> prevents all sideloading ; it's not possible to install applications from their package in this mode. <a href="#volatile-applications">Volatile applications</a> can stil be run, though.</p>
 <p><strong>Secure mode</strong> allows sideloading but will first make the system check if the application's <a href="../specs/applications-libraries.html#application-identifier">AID</a> matches an existing application on the Store. If so, it compares the application's signature to the Store application's one. If they don't match, the application is considered malicious and won't be installed.<br />
 Note that this mode only works while connected to internet, as the system needs to check the Store to ensure the application is not malicious. If the computer is offline, sideloading will be disabled.</p>
 <p><strong>Unsecure mode</strong> allows sideloading without any checking, which is highly dangerous as it allows spoofing.</p>
 <p>The sideloading mode can be changed in the <a href="../applications/Central.html">control center</a>.</p>
-<h3><a class="header" href="#volatile-applications" id="volatile-applications">Volatile applications</a></h3>
+<h3 id="volatile-applications"><a class="header" href="#volatile-applications">Volatile applications</a></h3>
 <p>Applications can be also be ran as <em>volatile applications</em>, which means they are not installed on the disk. There are three methods:</p>
 <ul>
 <li><em>Full-volatile</em>: the app's data are removed when the application closes</li>
@@ -221,15 +221,15 @@ Note that this mode only works while connected to internet, as the system needs 
 <p>Note that VAD files are disguised <a href="../technical/file-formats.html#virtual-storages">VSF</a> files.</p>
 <p>Volatile applications running as persistent do not appear in the applications list and can only be managed through a specific option in the <em>Control Center</em>. Their executable files are not stored anywhere and stay in the application's package, while only their data are stored on the disk. This allows to run the same application several times without losing any data and without worrying about a data file. This also allows to store common data between users.</p>
 <p>Note that the store has an option for installing applications as volatile.</p>
-<h2><a class="header" href="#permissions" id="permissions">Permissions</a></h2>
+<h2 id="permissions"><a class="header" href="#permissions">Permissions</a></h2>
 <p>See the <a href="../features/permissions.html">permissions feature document</a>.</p>
-<h2><a class="header" href="#commands" id="commands">Commands</a></h2>
+<h2 id="commands"><a class="header" href="#commands">Commands</a></h2>
 <p>Application can expose <a href="../technical/shell.html">shell commands</a>. Multiple commands can be exposed without any risk of clashing as the command name must be prefixed by the AID first.</p>
 <p>For instance, if an application with AID <code>superdev.utils</code> exposes an <code>get_time</code> command, the final usable command will be <code>:superdev.utils.get_time</code>.</p>
 <p>This is quite a long name but allows to prevent any clashing between commands. It's common for shell scripts to use imports at the beginning of the script to refer more easily to applications' commands.</p>
 <p>Note that, by default, shell prompts (not scripts) will allow to directly use commands such as <code>get_time</code> in the short form if no other application exposes a command with the same name.</p>
 <p>Commands work by launching the application with a specific <a href="../specs/applications/context.html">context</a>.</p>
-<h2><a class="header" href="#system-applications" id="system-applications">System applications</a></h2>
+<h2 id="system-applications"><a class="header" href="#system-applications">System applications</a></h2>
 <p>Some <a href="../applications/">native applications</a> are part of the system itself and are called <em>system applications</em> as such. They get a few specific features:</p>
 <ul>
 <li>Access to system-reserved features</li>
@@ -239,7 +239,7 @@ Note that this mode only works while connected to internet, as the system needs 
 <p>System applications cannot be removed in any way, as some of them are critical for the system to function properly.<br />
 Native applications which are <em>not</em> system applications can be removed, though.</p>
 <p>These applications can be updated independently of the system itself, thus their version may differ from the system itself.</p>
-<h2><a class="header" href="#services" id="services">Services</a></h2>
+<h2 id="services"><a class="header" href="#services">Services</a></h2>
 <p>Application can provide a <a href="../technical/services.html">service</a> by specifying it in their <a href="../specs/applications/manifest.html">manifest</a>.
 The service will be run at startup with the usual application's permissions.</p>
 <p>When an application uses a service, there is exactly one service process running per active user.</p>

@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#hardware-management" id="hardware-management">Hardware management</a></h1>
+                        <h1 id="hardware-management"><a class="header" href="#hardware-management">Hardware management</a></h1>
 <p>This document describes how the kernel interacts with hardware.</p>
 <ul>
 <li><a href="#hardware-detection">Hardware detection</a></li>
@@ -177,7 +177,7 @@
 <li><a href="#raw-device-descriptor">Raw device descriptor</a></li>
 <li><a href="#drivers">Drivers</a></li>
 </ul>
-<h2><a class="header" href="#hardware-detection" id="hardware-detection">Hardware detection</a></h2>
+<h2 id="hardware-detection"><a class="header" href="#hardware-detection">Hardware detection</a></h2>
 <p>Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional components afterwards.</p>
 <p>As all components do not use the same connection protocols, the detection process depends on the connection:</p>
 <ul>
@@ -186,10 +186,10 @@
 <li>USB components are enumerated through the USB protocol stack</li>
 </ul>
 <p>Some components may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.</p>
-<h2><a class="header" href="#connection-specific-device-descriptor" id="connection-specific-device-descriptor">Connection-specific device descriptor</a></h2>
+<h2 id="connection-specific-device-descriptor"><a class="header" href="#connection-specific-device-descriptor">Connection-specific device descriptor</a></h2>
 <p>All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the <em>connection-specific device descriptor</em> (CSDD).</p>
 <p>Its size can vary up to 256 bytes.</p>
-<h2><a class="header" href="#connection-interface-identifier" id="connection-interface-identifier">Connection interface identifier</a></h2>
+<h2 id="connection-interface-identifier"><a class="header" href="#connection-interface-identifier">Connection interface identifier</a></h2>
 <p>The <em>connection interface identifier</em> (CII) is a 4-byte number describing what a component is connected to:</p>
 <ul>
 <li>Connection type (1 byte):
@@ -206,9 +206,9 @@
 <li>Port number (2 bytes)</li>
 </ul>
 <p>For instance, the seventh USB port on the second bus will have the <code>0x05010006</code> CII.</p>
-<h2><a class="header" href="#session-device-identifier" id="session-device-identifier">Session device identifier</a></h2>
+<h2 id="session-device-identifier"><a class="header" href="#session-device-identifier">Session device identifier</a></h2>
 <p>The kernel generates for each device a <em>session device identifier</em> (SDI), which is a random 4-byte number specific to the current session, allowing to plug up to 4 billion devices in a single session.</p>
-<h2><a class="header" href="#raw-device-descriptor" id="raw-device-descriptor">Raw device descriptor</a></h2>
+<h2 id="raw-device-descriptor"><a class="header" href="#raw-device-descriptor">Raw device descriptor</a></h2>
 <p>The <em>raw device descriptor</em> (RDD) is a data structure (up to 264 bytes) made of the followings:</p>
 <ul>
 <li><a href="#session-device-identifier">SDI</a> (4 bytes)</li>
@@ -216,7 +216,7 @@
 <li><a href="#connection-specific-device-descriptor">CSDD</a> (up to 256 bytes)</li>
 </ul>
 <p>This descriptor is then used by the <a href="../services/hw.html"><code>sys::hw</code></a> service to expose the device to the rest of the operating system.</p>
-<h2><a class="header" href="#drivers" id="drivers">Drivers</a></h2>
+<h2 id="drivers"><a class="header" href="#drivers">Drivers</a></h2>
 <p>Drivers and software &lt;-&gt; hardware devices communications are handled by the <a href="../services/hw.html"><code>sys::hw</code></a> system service.</p>
 <p>You can find more about how drivers work in <a href="../services/hw.html#drivers">this section</a>.</p>
 

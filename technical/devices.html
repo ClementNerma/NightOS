@@ -167,19 +167,19 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#devices" id="devices">Devices</a></h1>
+                        <h1 id="devices"><a class="header" href="#devices">Devices</a></h1>
 <ul>
 <li><a href="#connecting-a-new-device">Connecting a new device</a></li>
 <li><a href="#interacting-with-a-device">Interacting with a device</a></li>
 <li><a href="#device-handler-files-persistence">Device handler files persistence</a></li>
 <li><a href="#custom-device-handler-filename">Custom device handler filename</a></li>
 </ul>
-<h2><a class="header" href="#connecting-a-new-device" id="connecting-a-new-device">Connecting a new device</a></h2>
+<h2 id="connecting-a-new-device"><a class="header" href="#connecting-a-new-device">Connecting a new device</a></h2>
 <p>When a new device is connected to the computer, a <em>device handler file</em> (DHF) is created in the <code>/dev</code> directory (see <a href="../specs/filesystem.html#structure">filesystem structure</a>).</p>
 <p>Depending on its type, it will be put in a different directory, as shown in the above document. Note that new category directories may be introduced later on.</p>
 <p>The filename itself is a random unique identifier made of a single lowercase letter, a digit, another lowercase letter and finally another digit.</p>
 <p>For instance, if a hard drive is connected to the computer, the DHF may be something like <code>/dev/sst/f5t2</code>.</p>
-<h2><a class="header" href="#interacting-with-a-device" id="interacting-with-a-device">Interacting with a device</a></h2>
+<h2 id="interacting-with-a-device"><a class="header" href="#interacting-with-a-device">Interacting with a device</a></h2>
 <p>Device handler files are not simple files ; they can only be used through the <a href="../specs/services/hw.html"><code>sys::hw</code></a> service.</p>
 <p>Different actions may happen depending on the device's type:</p>
 <ul>
@@ -192,10 +192,10 @@
 </ul>
 <p>There are many different types of devices, all can be found in the specifications of the <a href="../specs/services/hw.html"><code>sys::hw</code></a> service under the <a href="../specs/services/hw.html#driven-device-type">&quot;Driven device type&quot; (DDT) section</a>.</p>
 <p>For uncategorized devices (in <code>/dev/etc</code>), a popup is shown to the user, to indicate the connected device is not recognized. Some applications may still be able to interact with it (for instance, a storage device using an unsupported protocol).</p>
-<h2><a class="header" href="#device-handler-files-persistence" id="device-handler-files-persistence">Device handler files persistence</a></h2>
+<h2 id="device-handler-files-persistence"><a class="header" href="#device-handler-files-persistence">Device handler files persistence</a></h2>
 <p>When a device is connected, its DHF is not removed. Instead, if a process tries to interact with the DHF, the <a href="../specs/services/hw.html"><code>sys::hw</code></a> service will indicate the device is currently not connected.</p>
 <p>When the device is connected again, it is associated to the same DHF again. This allows applications to persist the device's location and use it later on.</p>
-<h2><a class="header" href="#custom-device-handler-filename" id="custom-device-handler-filename">Custom device handler filename</a></h2>
+<h2 id="custom-device-handler-filename"><a class="header" href="#custom-device-handler-filename">Custom device handler filename</a></h2>
 <p>It's possible to give a custom handler filename for intuitivity. In such case, a new DHF is created in the related directory, but the old DHF is kept anyway. This allows to not break compatibility with applications that rely on the old DHF.</p>
 <p>The two DHF will point to the exact same device, without any difference. The custom DHF can be removed anytime, although this is discouraged as applications may rely on it.</p>
 <p>Also, custom DHF names must always be longer than 4 characters, to avoid confusion with automatically-generated DHFs.</p>

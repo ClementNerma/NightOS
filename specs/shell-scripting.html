@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#shell-scripting" id="shell-scripting">Shell scripting</a></h1>
+                        <h1 id="shell-scripting"><a class="header" href="#shell-scripting">Shell scripting</a></h1>
 <p>The scripting language of <a href="../technical/shell.html">Hydre</a> offers a lot of powerful easy-to-use features. This allows to create complex script that are still very readable and maintanable.</p>
 <ul>
 <li><a href="#running-a-command">Running a command</a>
@@ -381,27 +381,27 @@
 </ul>
 </li>
 </ul>
-<h2><a class="header" href="#running-a-command" id="running-a-command">Running a command</a></h2>
+<h2 id="running-a-command"><a class="header" href="#running-a-command">Running a command</a></h2>
 <p>Hydre uses an intuitive syntax. Commands are written like they would be in *-sh shells: the command name is followed by arguments, each separated by a space.</p>
 <p>Arugments can either be positional (they are written directly), shorts (prefixed by a <code>-</code> symbol and one-character long), or longs (prefixed by two <code>-</code> symbols). Here is an example:</p>
 <pre><code class="language-hydre">cmdname &quot;pos1&quot; &quot;pos2&quot; -a --arg1
 </code></pre>
 <p>This line runs the command called <code>cmdname</code>, provides two positional arguments <code>pos1</code> and <code>pos2</code>, a short one <code>a</code> and a long one <code>arg1</code>.
 Short and long arguments are called <em>dash arguments</em>.</p>
-<h3><a class="header" href="#combining-short-arguments" id="combining-short-arguments">Combining short arguments</a></h3>
+<h3 id="combining-short-arguments"><a class="header" href="#combining-short-arguments">Combining short arguments</a></h3>
 <p>It's possible to combine multiple short arguments in once by writing them one after the other:</p>
 <pre><code class="language-hydre">cmdname -abc
 </code></pre>
 <p>This line is strictly equivalent to:</p>
 <pre><code class="language-hydre">cmdname -a -b -c
 </code></pre>
-<h3><a class="header" href="#argument-values" id="argument-values">Argument values</a></h3>
+<h3 id="argument-values"><a class="header" href="#argument-values">Argument values</a></h3>
 <p>Short and long arguments can also require a value. This value must be provided using an <code>=</code> symbol or by simply using a space:</p>
 <pre><code class="language-hydre">cmdname -s=1 --long=2
 # or:
 cmdname -s 1 --long 2
 </code></pre>
-<h2><a class="header" href="#comments" id="comments">Comments</a></h2>
+<h2 id="comments"><a class="header" href="#comments">Comments</a></h2>
 <p>Comments can be written on a single line with the <code>#</code> symbol:</p>
 <pre><code class="language-hydre">cmdname # single-line comment
 </code></pre>
@@ -413,7 +413,7 @@ multi-line
 comment
 ###
 </code></pre>
-<h2><a class="header" href="#variables" id="variables">Variables</a></h2>
+<h2 id="variables"><a class="header" href="#variables">Variables</a></h2>
 <p>Variables are declared with the <code>var</code> keyword:</p>
 <pre><code class="language-hydre">var age = 19
 </code></pre>
@@ -421,7 +421,7 @@ comment
 <p>And to assign a new value to it:</p>
 <pre><code class="language-hydre">age = 20
 </code></pre>
-<h2><a class="header" href="#value-types" id="value-types">Value types</a></h2>
+<h2 id="value-types"><a class="header" href="#value-types">Value types</a></h2>
 <p>All arguments must match their expected <em>type</em>: if the command is expecting a number, we can't give it a list for instance.</p>
 <p>Here is the list of all types and how they are written:</p>
 <pre><code class="language-hydre"># Booleans (bool) (`true` or `false`)
@@ -472,7 +472,7 @@ command --flags --val 2 &quot;pos1&quot; &quot;pos2&quot;
 #          value of the non-flag argument &quot;--flag&quot;)
 command &quot;pos1&quot; --flag &quot;pos2&quot; --val 2
 </code></pre>
-<h3><a class="header" href="#variables-shadowing" id="variables-shadowing">Variables shadowing</a></h3>
+<h3 id="variables-shadowing"><a class="header" href="#variables-shadowing">Variables shadowing</a></h3>
 <p>Any variable can, inside a program, be replaced by a new variable with a same name but with a different type. This is called <em>shadowing</em>.</p>
 <p>It can be useful when converting data from a type to another, such as:</p>
 <pre><code class="language-hydre">var names: list[string] = [ &quot;Jack&quot;, &quot;John&quot; ]
@@ -480,7 +480,7 @@ command &quot;pos1&quot; --flag &quot;pos2&quot; --val 2
 var names: string = names.join(&quot;,&quot;) # this is called a _method_, we'll talk about them later
 </code></pre>
 <p>Here, we <em>shadowed</em> the <code>names</code> variable to create a new one with a different type from the data we had before, which means we cannot access the original <code>names</code> variable anymore.</p>
-<h2><a class="header" href="#expressions" id="expressions">Expressions</a></h2>
+<h2 id="expressions"><a class="header" href="#expressions">Expressions</a></h2>
 <p>To use a variable, we can directly use it like this::</p>
 <pre><code class="language-hydre">tellage ${age}
 </code></pre>
@@ -508,9 +508,9 @@ echo &quot;Hello, ${names[0]}!&quot; # Hello, Jack!
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot; ]
 echo &quot;Hello, ${names[1]}!&quot; # Panics
 </code></pre>
-<h2><a class="header" href="#computing-values" id="computing-values">Computing values</a></h2>
+<h2 id="computing-values"><a class="header" href="#computing-values">Computing values</a></h2>
 <p>It's also possible to compute values using operators. Each operator takes one or multiple operands, which can be either a variable or a literal value.</p>
-<h3><a class="header" href="#mathematical-operators" id="mathematical-operators">Mathematical operators</a></h3>
+<h3 id="mathematical-operators"><a class="header" href="#mathematical-operators">Mathematical operators</a></h3>
 <p>Mathematical operators all take two operands. If any of the operands is not a number, it will fail.
 If both operands are integers, the result will be an integer, but if at least one is a floating-point number, so will be the result.</p>
 <p>The operators are:</p>
@@ -523,7 +523,7 @@ If both operands are integers, the result will be an integer, but if at least on
 <li><code>//</code>: floating-point division (gives a floating-point number even if the two operands are integers)</li>
 <li><code>%</code>: remainder (works only with two integers)</li>
 </ul>
-<h3><a class="header" href="#bit-wise-operators" id="bit-wise-operators">Bit-wise operators</a></h3>
+<h3 id="bit-wise-operators"><a class="header" href="#bit-wise-operators">Bit-wise operators</a></h3>
 <p>Bit-wise operators only take integer operands and produce an integer result:</p>
 <ul>
 <li><code>&amp;</code> bit-by-bit and</li>
@@ -533,7 +533,7 @@ If both operands are integers, the result will be an integer, but if at least on
 <li><code>&gt;&gt;</code> binary right shift operator</li>
 <li><code>~</code> one's complement - takes a single number</li>
 </ul>
-<h3><a class="header" href="#logical-operators" id="logical-operators">Logical operators</a></h3>
+<h3 id="logical-operators"><a class="header" href="#logical-operators">Logical operators</a></h3>
 <p>Logical operators take two operands and return a boolean:</p>
 <table><thead><tr><th>Symbol</th><th>Name</th><th>Returns <code>true</code> if...</th></tr></thead><tbody>
 <tr><td><code>&amp;&amp;</code></td><td>and</td><td><code>a</code> and <code>b</code> are <code>true</code> booleans</td></tr>
@@ -546,7 +546,7 @@ If both operands are integers, the result will be an integer, but if at least on
 <tr><td><code>&lt;=</code></td><td>lower than or equal to</td><td><code>a</code> is lower than or equal to <code>b</code></td></tr>
 </tbody></table>
 <p>Finally, there is the <code>!</code> operator, which takes a single operand on its right, and simply reverts a boolean.</p>
-<h3><a class="header" href="#assignment-operators" id="assignment-operators">Assignment operators</a></h3>
+<h3 id="assignment-operators"><a class="header" href="#assignment-operators">Assignment operators</a></h3>
 <p>The neutral assignment operator <code>=</code> can be prefixed by any mathematical, bit-wise or logical operator's symbol(s). The operator's left operand will be the current variable's content, while the right one will be the value on the left of the assignment operator. The result will then be stored in the variable.</p>
 <p>Here is an example:</p>
 <pre><code class="language-hydre">var a = 3
@@ -571,9 +571,9 @@ a --
 
 echo ${a} # 1
 </code></pre>
-<h2><a class="header" href="#blocks" id="blocks">Blocks</a></h2>
+<h2 id="blocks"><a class="header" href="#blocks">Blocks</a></h2>
 <p>Blocks allow to run a piece of code multiple times or if a specific condition is met. They are useful combined to comparison operators.</p>
-<h3><a class="header" href="#conditionals" id="conditionals">Conditionals</a></h3>
+<h3 id="conditionals"><a class="header" href="#conditionals">Conditionals</a></h3>
 <p>Conditionals uses the following syntax:</p>
 <pre><code class="language-hydre">if # condition
   command1
@@ -608,7 +608,7 @@ else
   echo &quot;Normal.&quot;
 end
 </code></pre>
-<h3><a class="header" href="#switches" id="switches">Switches</a></h3>
+<h3 id="switches"><a class="header" href="#switches">Switches</a></h3>
 <p>A <em>switch</em> allows to perform actions depending on a value. It's roughly equivalent to a combination of multiple <code>if</code> and <code>elif</code> statements.</p>
 <pre><code class="language-hydre">switch rand_int(0, 10)
   when 0
@@ -628,7 +628,7 @@ end
   else   =&gt; echo &quot;It's something else!&quot;
 end
 </code></pre>
-<h3><a class="header" href="#loops" id="loops">Loops</a></h3>
+<h3 id="loops"><a class="header" href="#loops">Loops</a></h3>
 <p>Loops allow to run a piece of code for a while. The most common loop is the range loop:</p>
 <pre><code class="language-hydre">for i in 0..10
   command ${i}
@@ -672,7 +672,7 @@ end
 end
 </code></pre>
 <p>This will run <code>command 0</code>, <code>command 1</code> and <code>command 2</code> only.</p>
-<h3><a class="header" href="#filesystem-iteration" id="filesystem-iteration">Filesystem iteration</a></h3>
+<h3 id="filesystem-iteration"><a class="header" href="#filesystem-iteration">Filesystem iteration</a></h3>
 <p>It's possible to iterate on a list of files and directories:</p>
 <pre><code class="language-hydre">for file in (./*.txt)
   echo &quot;Found a text file: ${file}&quot;
@@ -683,7 +683,7 @@ end
   echo &quot;Found a text file: ${file}&quot;
 end
 </code></pre>
-<h3><a class="header" href="#variables-scoping" id="variables-scoping">Variables scoping</a></h3>
+<h3 id="variables-scoping"><a class="header" href="#variables-scoping">Variables scoping</a></h3>
 <p>When a variable is declared, it is <em>scoped</em> to the current block, meaning it doesn't exist outside of the current block:</p>
 <pre><code class="language-hydre"># This variable is declared in the &quot;global&quot; block
 # so it's available everywhere in the current script
@@ -699,7 +699,7 @@ echo ${firstName} # Prints: &quot;Jack&quot;
 echo ${lastName} # ERROR (&quot;lastName&quot; is not in scope)
 </code></pre>
 <p>Also, variables are not shared between scripts.</p>
-<h2><a class="header" href="#functions" id="functions">Functions</a></h2>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
 <p>Functions allow to split the code in several parts to make it more readable, as well as to re-use similar pieces of code across the script.</p>
 <pre><code class="language-hydre">fn hello()
   echo &quot;Hello!&quot;
@@ -708,7 +708,7 @@ end
 <p>Now we can call <code>hello</code> this way:</p>
 <pre><code class="language-hydre">hello() # Will print &quot;Hello !&quot;
 </code></pre>
-<h3><a class="header" href="#arguments" id="arguments">Arguments</a></h3>
+<h3 id="arguments"><a class="header" href="#arguments">Arguments</a></h3>
 <p>Function can also take arguments, which must have a type.</p>
 <pre><code class="language-hydre">fn hello (name: string)
   echo &quot;Hello, ${name}!&quot;
@@ -743,19 +743,19 @@ end
 hello([])               # No one to greet :|
 hello([&quot;John&quot;, &quot;Jack&quot;]) # Hello, John! Hello, Jack!
 </code></pre>
-<h3><a class="header" href="#return-types" id="return-types">Return types</a></h3>
+<h3 id="return-types"><a class="header" href="#return-types">Return types</a></h3>
 <p>Functions can also return values. In such case, they must specify the type of values they return, and ensure all code paths will return a value of this type:</p>
 <pre><code class="language-hydre">fn add (a: float, b: float) -&gt; float
   return a + b
 end
 </code></pre>
-<h3><a class="header" href="#methods" id="methods">Methods</a></h3>
+<h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
 <p>All value types expose specific functions that can be used with a dot after a variable of the given type, called <em>methods</em>:</p>
 <pre><code class="language-hydre">var letters = &quot;abcdef&quot;
 var letters = letter.split(&quot;,&quot;)
 </code></pre>
 <p>Here, we use the <code>split</code> <em>method</em> of the <code>string</code> type, which returns a <code>list[string]</code>.</p>
-<h3><a class="header" href="#failing" id="failing">Failing</a></h3>
+<h3 id="failing"><a class="header" href="#failing">Failing</a></h3>
 <p>Functions can also <em>fail</em> to indicate something went wrong:</p>
 <pre><code class="language-hydre">fn divide (a: float, b: float) -&gt; fallible float
   if b == 0
@@ -786,7 +786,7 @@ catch $(somecommand)
   err msg =&gt; echo &quot;Errors: ${msg.join(&quot;; &quot;)}&quot;
 end
 </code></pre>
-<h4><a class="header" href="#retries" id="retries">Retries</a></h4>
+<h4 id="retries"><a class="header" href="#retries">Retries</a></h4>
 <p>It's possible to retry a function until it succeeds using the <code>retry</code> keyword:</p>
 <pre><code class="language-hydre">fn may_fail ()
   if rand() &gt; 0.5
@@ -811,10 +811,10 @@ end
 <p>It can be used like this:</p>
 <pre><code class="language-hydre">retry_cmd(@{ read &quot;file.txt&quot; }, 10)
 </code></pre>
-<h4><a class="header" href="#global-failing" id="global-failing">Global failing</a></h4>
+<h4 id="global-failing"><a class="header" href="#global-failing">Global failing</a></h4>
 <p>A whole script can fail using this keyword, which will result in displaying the error message in CMDERR and exiting immediatly.<br />
 The failure may be handled using <code>fallible</code> in the caller script.</p>
-<h2><a class="header" href="#nullable-types" id="nullable-types">Nullable types</a></h2>
+<h2 id="nullable-types"><a class="header" href="#nullable-types">Nullable types</a></h2>
 <p>Sometimes, it's useful to be able to represent a value that may be either <em>something</em> or <em>nothing</em>. In many programming languages, &quot;nothing&quot; is represented as the <code>null</code>, <code>nil</code> or <code>()</code> value.</p>
 <p>Nullable types are suffixed by a <code>?</code> symbol, and may either contain a value of the provided type <strong>or</strong> <code>null</code>. Here is an example:</p>
 <pre><code class="language-hydre">fn custom_rand() -&gt; int?
@@ -838,7 +838,7 @@ var b = ?(1) # int?
 <pre><code class="language-hydre">var c: int? = null # int?
 </code></pre>
 <p>Note that imbricated types are not supported, which means we cannot create <code>int??</code> values for instance.</p>
-<h3><a class="header" href="#handle-the-null-value" id="handle-the-null-value">Handle the <code>null</code> value</a></h3>
+<h3 id="handle-the-null-value"><a class="header" href="#handle-the-null-value">Handle the <code>null</code> value</a></h3>
 <p>If we try to access an nullable value &quot;as is&quot;, we will get a type error:</p>
 <pre><code class="language-hydre">var a = ?(1)
 
@@ -900,17 +900,17 @@ end
 
 # 'b' is considered as 'int' here
 </code></pre>
-<h3><a class="header" href="#the-case-of-optional-arguments" id="the-case-of-optional-arguments">The case of optional arguments</a></h3>
+<h3 id="the-case-of-optional-arguments"><a class="header" href="#the-case-of-optional-arguments">The case of optional arguments</a></h3>
 <p>When a command takes an optional argument, it's possible to provide a nullable value of the same type instead:</p>
 <pre><code class="language-hydre">var no_newline = ?(false)
 
 echo &quot;Hello!&quot; -n ${no_newline}
 </code></pre>
 <p>If the value is <code>null</code>, the argument will not be provided. Else, it will be provided with the non-null value.</p>
-<h3><a class="header" href="#nullable-any" id="nullable-any">Nullable <code>any</code></a></h3>
+<h3 id="nullable-any"><a class="header" href="#nullable-any">Nullable <code>any</code></a></h3>
 <p>The <code>any</code> type covers any type of values, meaning it accepts absolutely every single value, <em>except</em> the <code>null</code> value. Indeed, <code>any</code> is not nullable by default, so to make it accept <code>null</code> values we must use <code>any?</code> instead.</p>
-<h2><a class="header" href="#advanced-types" id="advanced-types">Advanced types</a></h2>
-<h3><a class="header" href="#structures" id="structures">Structures</a></h3>
+<h2 id="advanced-types"><a class="header" href="#advanced-types">Advanced types</a></h2>
+<h3 id="structures"><a class="header" href="#structures">Structures</a></h3>
 <p><em>Structures</em> map one or multiple <em>fields</em> to as many <em>values</em>. Here is an example:</p>
 <pre><code class="language-hydre">fn sayHello(person: struct { firstName: string, lastName: string })
   echo &quot;Hello, ${person.firstName} ${person.lastName}!&quot;
@@ -941,7 +941,7 @@ fn listRecursively(dir: path) -&gt; list[fsItem]
   # ...
 end
 </code></pre>
-<h3><a class="header" href="#closures" id="closures">Closures</a></h3>
+<h3 id="closures"><a class="header" href="#closures">Closures</a></h3>
 <p>Closures are anonymous functions which are generally used to repeat the same group of operations.</p>
 <pre><code class="language-hydre">var test: fn (string, int) = { a, b -&gt; echo &quot;${a.repeat(b)}&quot; }
 test(&quot;Hello world! &quot;, 3) # Prints: &quot;Hello world! Hello world! Hello world! &quot;
@@ -969,9 +969,9 @@ end
 
 forEachFile(./, { file -&gt; echo &quot;File: ${file}&quot; })
 </code></pre>
-<h3><a class="header" href="#streams" id="streams">Streams</a></h3>
+<h3 id="streams"><a class="header" href="#streams">Streams</a></h3>
 <p>An usual type for manipulating large data is <code>stream</code>, which is notably used to treat a chunk of data that is either too large for the memory or is more easier to treat as things progress.</p>
-<h2><a class="header" href="#data-validation" id="data-validation">Data validation</a></h2>
+<h2 id="data-validation"><a class="header" href="#data-validation">Data validation</a></h2>
 <p>Some commands may return a value whose type cannot be predicted before runtime. For instance, a command fetching a JSON object from a remote server will, in case of success, return a value but whose type cannot be known beforehand.</p>
 <p><em>Data validation</em> is a feature allowing to scripts to check the type of an unknown value at runtime, using <em>type assertions</em>.</p>
 <p>Here is an example:</p>
@@ -1022,7 +1022,7 @@ end
 
 # &quot;json&quot; is considered as a &quot;User&quot; here
 </code></pre>
-<h2><a class="header" href="#event-listeners" id="event-listeners">Event listeners</a></h2>
+<h2 id="event-listeners"><a class="header" href="#event-listeners">Event listeners</a></h2>
 <p>Scripts can listen to events using the <code>on</code> keyword:</p>
 <pre><code class="language-hydre">on keypress as keycode
   echo &quot;A key was pressed: ${keycode}&quot;
@@ -1044,7 +1044,7 @@ end
 echo &quot;Hello world!&quot;
 # Event listener (2) is unregistered here
 </code></pre>
-<h3><a class="header" href="#waiting" id="waiting">Waiting</a></h3>
+<h3 id="waiting"><a class="header" href="#waiting">Waiting</a></h3>
 <p>Scripts may wait for a specific event before continuing. This can be achieved without a <code>while</code> loop that consumes a lot of CPU, using the <code>wait</code> keyword:</p>
 <pre><code class="language-hydre">wait condition
 </code></pre>
@@ -1076,7 +1076,7 @@ wait some key
 
 echo &quot;You pressed key: ${key}&quot;
 </code></pre>
-<h2><a class="header" href="#imports" id="imports">Imports</a></h2>
+<h2 id="imports"><a class="header" href="#imports">Imports</a></h2>
 <p>As you may already know, command names can be <a href="../concepts/applications.html#commands">quite long and complicated</a>. In order to prevent from having to repeat very long names that are not really readable, it's recommanded to use <em>imports</em> which are declared at the beginning of script with the form <code>&lt;dev&gt;::&lt;app&gt;::&lt;command&gt;</code>:</p>
 <pre><code class="language-hydre">import system::fs::read_file
 
@@ -1091,13 +1091,13 @@ read_file # ...
 
 fs::read_file # ...
 </code></pre>
-<h3><a class="header" href="#aliases" id="aliases">Aliases</a></h3>
+<h3 id="aliases"><a class="header" href="#aliases">Aliases</a></h3>
 <p>Imported commands can also be aliased:</p>
 <pre><code class="language-hydre">import system::fs as sysfs
 
 sysfs::read_file # ...
 </code></pre>
-<h3><a class="header" href="#import-expansions" id="import-expansions">Import expansions</a></h3>
+<h3 id="import-expansions"><a class="header" href="#import-expansions">Import expansions</a></h3>
 <p>It's possible to import all commands from an application, with:</p>
 <pre><code class="language-hydre">import system::fs::*
 
@@ -1109,7 +1109,7 @@ read_file # ...
 fs::read_file # ...
 </code></pre>
 <p>Note that, if a name clash occurs - if two applications or commands with the same name are imported -, the script won't be able to run.</p>
-<h3><a class="header" href="#non-clashing-namespace" id="non-clashing-namespace">Non-clashing namespace</a></h3>
+<h3 id="non-clashing-namespace"><a class="header" href="#non-clashing-namespace">Non-clashing namespace</a></h3>
 <p>The <em>non-clashing namespace</em> is a namespace that can be imported, where live all commands whose name is unique across all applications.</p>
 <p>For instance, let's imagine we have two applications:</p>
 <ul>
@@ -1130,7 +1130,7 @@ cmd_a # OK
 cmd_b # ...
 cmd_z # ERROR (not in namespace)
 </code></pre>
-<h3><a class="header" href="#volatile-imports" id="volatile-imports">Volatile imports</a></h3>
+<h3 id="volatile-imports"><a class="header" href="#volatile-imports">Volatile imports</a></h3>
 <p>As <a href="../concepts/applications.html#volatile-applications">volatile applications</a>' commands <a href="applications/commands.html#volatile-applications">are not exposed globally</a>, there is a special import syntax for such applications, allowing to import their commands directly from their <a href="applications/package.html">application package</a>:</p>
 <pre><code class="language-hydre">import ./app.nva::super_command
 super_command # ...
@@ -1139,8 +1139,8 @@ super_command # ...
 import ./app.nva as app
 app::super_command # ...
 </code></pre>
-<h2><a class="header" href="#commands-input--output" id="commands-input--output">Commands input &amp; output</a></h2>
-<h3><a class="header" href="#reading-a-commands-output" id="reading-a-commands-output">Reading a command's output</a></h3>
+<h2 id="commands-input--output"><a class="header" href="#commands-input--output">Commands input &amp; output</a></h2>
+<h3 id="reading-a-commands-output"><a class="header" href="#reading-a-commands-output">Reading a command's output</a></h3>
 <p>Commands output data through <em>pipes</em>. There are several output pipes that can be used:</p>
 <ul>
 <li>CMDOUT is the default output pipe, which returns typed values (the command declares its output type beforehand)</li>
@@ -1172,7 +1172,7 @@ echo -b $@(streamify &quot;Hello!&quot;) # Prints: &quot;Hello!&quot;
 <pre><code class="language-hydre">echo $*(echo &quot;Hello!&quot;) # Prints &quot;[&quot;Hello!&quot;]&quot;
 </code></pre>
 <p>Note that using the <code>$(...)</code> operator will make the program panic if the command exits with a non-zero status code.</p>
-<h3><a class="header" href="#redirecting-the-output-to-a-file" id="redirecting-the-output-to-a-file">Redirecting the output to a file</a></h3>
+<h3 id="redirecting-the-output-to-a-file"><a class="header" href="#redirecting-the-output-to-a-file">Redirecting the output to a file</a></h3>
 <p>It's also possible to redirect the output of a command to a file, using the <code>&gt;</code> operator. The values are converted to strings before being written, except <code>stream</code> values which are written as they are.</p>
 <pre><code class="language-hydre">echo &quot;Hello!&quot; &gt; ./test.txt
 </code></pre>
@@ -1187,10 +1187,10 @@ echo -b $@(streamify &quot;Hello!&quot;) # Prints: &quot;Hello!&quot;
 <li><code>!&gt;</code> for CMDERR</li>
 <li><code>*&gt;</code> for CMDMSG and CMDERR combined</li>
 </ul>
-<h3><a class="header" href="#output-data" id="output-data">Output data</a></h3>
+<h3 id="output-data"><a class="header" href="#output-data">Output data</a></h3>
 <p>If a script is <a href="#commands-typing">declared as a command</a>, it gets its own CMDIN, CMDOUT and CMDRAW pipes (the CMDUSR, CMDMSG and CMDERR pipes remain as usual).</p>
 <p>They can be accessed using three built-in commands: <code>cmdin</code>, <code>cmdout</code> and <code>cmdraw</code>.</p>
-<h4><a class="header" href="#reading-from-cmdin" id="reading-from-cmdin">Reading from CMDIN</a></h4>
+<h4 id="reading-from-cmdin"><a class="header" href="#reading-from-cmdin">Reading from CMDIN</a></h4>
 <p>The <code>cmdin</code> command simply writes in its CMDOUT the value provided in the shell's CMDIN. For instance:</p>
 <pre><code class="language-hydre"># Considering this shell script accepts `string` values as input.
 
@@ -1198,11 +1198,11 @@ echo -b $@(streamify &quot;Hello!&quot;) # Prints: &quot;Hello!&quot;
 echo $(cmdin | length) # Prints: 12
 </code></pre>
 <p>The original type is preserved, which means we can perform typed operations on the input value.</p>
-<h4><a class="header" href="#returning-with-cmdout" id="returning-with-cmdout">Returning with CMDOUT</a></h4>
+<h4 id="returning-with-cmdout"><a class="header" href="#returning-with-cmdout">Returning with CMDOUT</a></h4>
 <p>The <code>cmdout</code> command takes a typed value and writes it to the shell script's CMDOUT pipe. This also makes the program exit.</p>
-<h4><a class="header" href="#writing-to-cmdraw" id="writing-to-cmdraw">Writing to CMDRAW</a></h4>
+<h4 id="writing-to-cmdraw"><a class="header" href="#writing-to-cmdraw">Writing to CMDRAW</a></h4>
 <p>The <code>cmdraw</code> command takes a <code>stream</code> value and writes it to the shell script's CMDRAW pipe. Only one stream can be piped at a time, so if <code>cmdraw</code> is called while another is pending, the command will simply fail (this can be caught with <code>catch</code>).</p>
-<h3><a class="header" href="#input-of-a-command" id="input-of-a-command">Input of a command</a></h3>
+<h3 id="input-of-a-command"><a class="header" href="#input-of-a-command">Input of a command</a></h3>
 <p>Some commands accept <em>inputs</em> through the command pipe <code>|</code> operator. They can be used this way:</p>
 <pre><code class="language-hydre">echo &quot;Hello world!&quot; &gt; ./somefile.txt
 
@@ -1221,7 +1221,7 @@ read ./somefile.txt | length # Prints: 12
 <pre><code class="language-hydre">echo $(length &lt; ./somefile.txt) # Prints: 24
 </code></pre>
 <p>For commands that only accept <code>string</code> inputs, the file is automatically decoded and converted to a string. Else, it's kept as a <code>stream</code>.</p>
-<h2><a class="header" href="#running-in-background" id="running-in-background">Running in background</a></h2>
+<h2 id="running-in-background"><a class="header" href="#running-in-background">Running in background</a></h2>
 <p>It's possible to run multiple commands in parallel by using <em>background commands</em>. A background command runs, as the name suggests, in the background, and so its output isn't visible. If it fails, it won't generate any error nor affect the <code>status()</code> code.</p>
 <p>To run a command in backgroud, we use the <code>bg</code> keyword:</p>
 <pre><code class="language-hydre">bg hello = sleep 5 -x { i -&gt; echo &quot;Counter: ${i}&quot; }
@@ -1273,7 +1273,7 @@ Counter: 3
 Killed.
 &lt;Program stops&gt;###
 </code></pre>
-<h2><a class="header" href="#environment-variables" id="environment-variables">Environment variables</a></h2>
+<h2 id="environment-variables"><a class="header" href="#environment-variables">Environment variables</a></h2>
 <p>While traditional variables are always <a href="#variables-scoping">scoped</a>, <em>environment variables</em> are variables that are provided to the script when it starts, and are forwarded to all scripts the main scripts calls, recursively.</p>
 <p>They are mostly used to share configuration between programs.</p>
 <p>They are usually set:</p>
@@ -1290,7 +1290,7 @@ Killed.
 with MESSAGE=&quot;Hello world!&quot; run ./myscript.ns
 </code></pre>
 <p>The environment variable will then be provided to <code>./myscript.ns</code>, and will also be available in all scripts this script calls.</p>
-<h3><a class="header" href="#reading-an-environment-variable" id="reading-an-environment-variable">Reading an environment variable</a></h3>
+<h3 id="reading-an-environment-variable"><a class="header" href="#reading-an-environment-variable">Reading an environment variable</a></h3>
 <p>Environment variables cannot be accessed like traditional variables, they must be retrieved through the <code>env</code> builtin function:</p>
 <pre><code class="language-hydre"># In &quot;myscript.ns&quot;
 
@@ -1325,7 +1325,7 @@ end
 
 # Here, &quot;message&quot; is a string
 </code></pre>
-<h2><a class="header" href="#commands-typing" id="commands-typing">Commands typing</a></h2>
+<h2 id="commands-typing"><a class="header" href="#commands-typing">Commands typing</a></h2>
 <p>For script files to be called as commands, they must define a <code>main</code> function and declare a <em>command description</em>.</p>
 <p>Here is an example of command description:</p>
 <pre><code class="language-hydre">cmd
@@ -1364,15 +1364,15 @@ end
       end
 end
 </code></pre>
-<h3><a class="header" href="#arguments-type" id="arguments-type">Arguments type</a></h3>
+<h3 id="arguments-type"><a class="header" href="#arguments-type">Arguments type</a></h3>
 <p>Arguments type can be any existing type, or:</p>
 <ul>
 <li><code>anystr</code>: accepts any type of argument except <code>stream</code>, which will be converted to a <code>string</code> when the command is called (which means the argument will be a <code>string</code> from the command's point of view)</li>
 </ul>
-<h3><a class="header" href="#enumerations" id="enumerations">Enumerations</a></h3>
+<h3 id="enumerations"><a class="header" href="#enumerations">Enumerations</a></h3>
 <p>The <code>enum</code> type for arguments indicate the argument only accepts a subset of values (whose type is inferred), which must be specified as a constant. This means the caller cannot use a variable as this argument's value, because the return type may depend on it.</p>
 <p>It may also be used as a list of custom values by wrapping the enumeration into a <code>list[...]</code>.</p>
-<h3><a class="header" href="#return-type" id="return-type">Return type</a></h3>
+<h3 id="return-type"><a class="header" href="#return-type">Return type</a></h3>
 <p>The command's return type can be any existing type.</p>
 <p>The options for each argument are:</p>
 <ul>
@@ -1388,9 +1388,9 @@ end
 </ul>
 <p>For dash arguments, at least <code>short</code> or <code>long</code> must be provided. Also, <code>optional</code> and <code>default</code> cannot be provided at the same time.
 For flag arguments, at least <code>short</code> or <code>long</code> must be provided. Also, <code>type</code>, <code>optional</code>, <code>default</code> and <code>enum</code> are not accepted.</p>
-<h3><a class="header" href="#conditionals-1" id="conditionals-1">Conditionals</a></h3>
+<h3 id="conditionals-1"><a class="header" href="#conditionals-1">Conditionals</a></h3>
 <p>Conditions can also use the <code>elif</code> and <code>else</code> keywords, and use the <code>present()</code> and <code>absent()</code> operators as well as usual relational operators like <code>==</code> or <code>&lt;</code> for constant values like enums.</p>
-<h3><a class="header" href="#example" id="example">Example</a></h3>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
 <p>Here is an example that uses all these options:</p>
 <pre><code class="language-hydre">cmd
   args
@@ -1429,47 +1429,47 @@ catch $(myscript [&quot;Jack&quot;, &quot;John&quot;])
   err _ =&gt; echo &quot;Something went wrong :(&quot;
 end
 </code></pre>
-<h2><a class="header" href="#native-library" id="native-library">Native library</a></h2>
+<h2 id="native-library"><a class="header" href="#native-library">Native library</a></h2>
 <p>The native library is a list of functions that are provided by the shell.</p>
 <p>All types have <em>extensions</em>, which are functions that can be called using the <code>.</code> symbol, like <code>my_list.extension()</code>.</p>
-<h3><a class="header" href="#utilities" id="utilities">Utilities</a></h3>
-<h4><a class="header" href="#envvarname-string---any" id="envvarname-string---any"><code>env(varname: string) -&gt; any?</code></a></h4>
+<h3 id="utilities"><a class="header" href="#utilities">Utilities</a></h3>
+<h4 id="envvarname-string---any"><a class="header" href="#envvarname-string---any"><code>env(varname: string) -&gt; any?</code></a></h4>
 <p>Get an <a href="#environment-variables">environment variable</a>.<br />
 Returns <code>null</code> if the environment variable cannot be found.</p>
-<h4><a class="header" href="#promptmessage-string---string" id="promptmessage-string---string"><code>prompt(message: string) -&gt; string</code></a></h4>
+<h4 id="promptmessage-string---string"><a class="header" href="#promptmessage-string---string"><code>prompt(message: string) -&gt; string</code></a></h4>
 <p>Ask the user a string.</p>
-<h4><a class="header" href="#prompt_intmessage-string---fallible-int" id="prompt_intmessage-string---fallible-int"><code>prompt_int(message: string) -&gt; fallible int</code></a></h4>
+<h4 id="prompt_intmessage-string---fallible-int"><a class="header" href="#prompt_intmessage-string---fallible-int"><code>prompt_int(message: string) -&gt; fallible int</code></a></h4>
 <p>Ask the user an integer number.
 Fails if the provided input is not a number.
 Fails if the shell is not interactive.</p>
-<h4><a class="header" href="#prompt_floatmessage-string---fallible-float" id="prompt_floatmessage-string---fallible-float"><code>prompt_float(message: string) -&gt; fallible float</code></a></h4>
+<h4 id="prompt_floatmessage-string---fallible-float"><a class="header" href="#prompt_floatmessage-string---fallible-float"><code>prompt_float(message: string) -&gt; fallible float</code></a></h4>
 <p>Ask the user a floating-point number.
 Fails if the provided input is not a floating-point number.
 Fails if the shell is not interactive.</p>
-<h4><a class="header" href="#confirmmessage-string---fallible-bool" id="confirmmessage-string---fallible-bool"><code>confirm(message: string) -&gt; fallible bool</code></a></h4>
+<h4 id="confirmmessage-string---fallible-bool"><a class="header" href="#confirmmessage-string---fallible-bool"><code>confirm(message: string) -&gt; fallible bool</code></a></h4>
 <p>Ask the user to confirm a message using an <code>[Y/n]</code> prompt.
 Fails if the shell is not interactive.</p>
-<h4><a class="header" href="#chooseoptions-liststring---fallible-int" id="chooseoptions-liststring---fallible-int"><code>choose(options: list[string]) -&gt; fallible int</code></a></h4>
+<h4 id="chooseoptions-liststring---fallible-int"><a class="header" href="#chooseoptions-liststring---fallible-int"><code>choose(options: list[string]) -&gt; fallible int</code></a></h4>
 <p>Ask the user to pick a value from a list and get the index of the chosen value.
 Fails if the shell is not interactive.</p>
-<h4><a class="header" href="#retry_cmdcmd-command-retries-int---fallible" id="retry_cmdcmd-command-retries-int---fallible"><code>retry_cmd(cmd: command, retries: int) -&gt; fallible</code></a></h4>
+<h4 id="retry_cmdcmd-command-retries-int---fallible"><a class="header" href="#retry_cmdcmd-command-retries-int---fallible"><code>retry_cmd(cmd: command, retries: int) -&gt; fallible</code></a></h4>
 <p>Run a command and retry it a given number of times if it fails.
 Fails if the command still fails after all allowed tries.</p>
-<h4><a class="header" href="#exit" id="exit"><code>exit()</code></a></h4>
+<h4 id="exit"><a class="header" href="#exit"><code>exit()</code></a></h4>
 <p>Make the program exit.</p>
-<h4><a class="header" href="#last_failed---bool" id="last_failed---bool"><code>last_failed() -&gt; bool</code></a></h4>
+<h4 id="last_failed---bool"><a class="header" href="#last_failed---bool"><code>last_failed() -&gt; bool</code></a></h4>
 <p>Check if the previous command failed.<br />
 Returns <code>0</code> if no command was ran since the beginning of the script.</p>
-<h4><a class="header" href="#rand---float" id="rand---float"><code>rand() -&gt; float</code></a></h4>
+<h4 id="rand---float"><a class="header" href="#rand---float"><code>rand() -&gt; float</code></a></h4>
 <p>Generate a random floating-point number between 0 and 1.</p>
-<h4><a class="header" href="#rand_intlow-int-up-int---fallible-int" id="rand_intlow-int-up-int---fallible-int"><code>rand_int(low: int, up: int) -&gt; fallible int</code></a></h4>
+<h4 id="rand_intlow-int-up-int---fallible-int"><a class="header" href="#rand_intlow-int-up-int---fallible-int"><code>rand_int(low: int, up: int) -&gt; fallible int</code></a></h4>
 <p>Generate a random integer between <code>low</code> and <code>up</code>.
 Fails if <code>low</code> is not strictly less than <code>up</code>.</p>
-<h4><a class="header" href="#rand_floatlow-float-up-float---fallible-float" id="rand_floatlow-float-up-float---fallible-float"><code>rand_float(low: float, up: float) -&gt; fallible float</code></a></h4>
+<h4 id="rand_floatlow-float-up-float---fallible-float"><a class="header" href="#rand_floatlow-float-up-float---fallible-float"><code>rand_float(low: float, up: float) -&gt; fallible float</code></a></h4>
 <p>Generate a floating-point number between <code>low</code> and <code>up</code>.
 Fails if <code>low</code> is not strictly less than <code>up</code>.</p>
-<h3><a class="header" href="#all-types" id="all-types">All types</a></h3>
-<h4><a class="header" href="#anystr---string" id="anystr---string"><code>any.str() -&gt; string</code></a></h4>
+<h3 id="all-types"><a class="header" href="#all-types">All types</a></h3>
+<h4 id="anystr---string"><a class="header" href="#anystr---string"><code>any.str() -&gt; string</code></a></h4>
 <p>Turns the provided value into a string, depending on the value's type:</p>
 <pre><code class="language-hydre">_ = (true).str()    # true
 _ = (3).str(3)      # 3
@@ -1481,8 +1481,8 @@ _ = @{ command --arg1 -c 2 -d=4 }.str() # command --arg1 -c 2 -d 4
 _ = [&quot;a&quot;,&quot;b&quot;].str() # [ &quot;a&quot;, &quot;b&quot; ]
 _ = @{ streamify &quot;Hello world!&quot; }.str() # &quot;&lt;stream&gt;&quot;
 </code></pre>
-<h3><a class="header" href="#nullable-types-1" id="nullable-types-1">Nullable types</a></h3>
-<h4><a class="header" href="#tisnull---t" id="tisnull---t"><code>T?.isNull() -&gt; T</code></a></h4>
+<h3 id="nullable-types-1"><a class="header" href="#nullable-types-1">Nullable types</a></h3>
+<h4 id="tisnull---t"><a class="header" href="#tisnull---t"><code>T?.isNull() -&gt; T</code></a></h4>
 <p>Check if the value is <code>null</code>.</p>
 <pre><code class="language-hydre">var a: int? = 1
 var b: int? = null
@@ -1490,7 +1490,7 @@ var b: int? = null
 echo ${a.isNull()} # false
 echo ${b.isNull()} # true
 </code></pre>
-<h4><a class="header" href="#tdefaultfallback-t---t" id="tdefaultfallback-t---t"><code>T?.default(fallback: T) -&gt; T</code></a></h4>
+<h4 id="tdefaultfallback-t---t"><a class="header" href="#tdefaultfallback-t---t"><code>T?.default(fallback: T) -&gt; T</code></a></h4>
 <p>Use a fallback value in case of <code>null</code>:</p>
 <pre><code class="language-hydre">var a: int? = 1
 var b: int? = null
@@ -1498,35 +1498,35 @@ var b: int? = null
 echo ${a.default(3)} # 1
 echo ${b.default(3)}
 </code></pre>
-<h4><a class="header" href="#tunwrap---t" id="tunwrap---t"><code>T?.unwrap() -&gt; T</code></a></h4>
+<h4 id="tunwrap---t"><a class="header" href="#tunwrap---t"><code>T?.unwrap() -&gt; T</code></a></h4>
 <p>Make the program exit with an error message if the value is null.</p>
 <pre><code class="language-hydre">var a = ?(0) # int?
 var b = a.unwrap() # int
 </code></pre>
-<h4><a class="header" href="#texpectmessage-string---t" id="texpectmessage-string---t"><code>T?.expect(message: string) -&gt; T</code></a></h4>
+<h4 id="texpectmessage-string---t"><a class="header" href="#texpectmessage-string---t"><code>T?.expect(message: string) -&gt; T</code></a></h4>
 <p>Make the program exit with a custom error message if 'a' is null</p>
 <pre><code class="language-hydre">var a = ?(0) # INt?
 var b = a.expect(&quot;'a' should not be null :(&quot;) # int
 </code></pre>
-<h3><a class="header" href="#characters" id="characters">Characters</a></h3>
-<h4><a class="header" href="#charsingle---bool" id="charsingle---bool"><code>char.single() -&gt; bool</code></a></h4>
+<h3 id="characters"><a class="header" href="#characters">Characters</a></h3>
+<h4 id="charsingle---bool"><a class="header" href="#charsingle---bool"><code>char.single() -&gt; bool</code></a></h4>
 <p>Indicate if a character is made of a single codepoint.</p>
-<h4><a class="header" href="#charcodepoints---listint" id="charcodepoints---listint"><code>char.codepoints() -&gt; list[int]</code></a></h4>
+<h4 id="charcodepoints---listint"><a class="header" href="#charcodepoints---listint"><code>char.codepoints() -&gt; list[int]</code></a></h4>
 <p>Get the codepoints composing a character.</p>
-<h4><a class="header" href="#charlen---int" id="charlen---int"><code>char.len() -&gt; int</code></a></h4>
+<h4 id="charlen---int"><a class="header" href="#charlen---int"><code>char.len() -&gt; int</code></a></h4>
 <p>Get the number of codepoints composing a character.</p>
-<h4><a class="header" href="#charbytes---int" id="charbytes---int"><code>char.bytes() -&gt; int</code></a></h4>
+<h4 id="charbytes---int"><a class="header" href="#charbytes---int"><code>char.bytes() -&gt; int</code></a></h4>
 <p>Get the size of a character, in bytes.</p>
-<h3><a class="header" href="#strings" id="strings">Strings</a></h3>
-<h4><a class="header" href="#stringchars---listchar" id="stringchars---listchar"><code>string.chars() -&gt; list[char]</code></a></h4>
+<h3 id="strings"><a class="header" href="#strings">Strings</a></h3>
+<h4 id="stringchars---listchar"><a class="header" href="#stringchars---listchar"><code>string.chars() -&gt; list[char]</code></a></h4>
 <p>Get the characters composing a string.</p>
-<h4><a class="header" href="#stringcodepoints---listint" id="stringcodepoints---listint"><code>string.codepoints() -&gt; list[int]</code></a></h4>
+<h4 id="stringcodepoints---listint"><a class="header" href="#stringcodepoints---listint"><code>string.codepoints() -&gt; list[int]</code></a></h4>
 <p>Get the codepoints composing a string.</p>
-<h4><a class="header" href="#stringlen---int" id="stringlen---int"><code>string.len() -&gt; int</code></a></h4>
+<h4 id="stringlen---int"><a class="header" href="#stringlen---int"><code>string.len() -&gt; int</code></a></h4>
 <p>Get the number of codepoints composing a string.</p>
-<h4><a class="header" href="#stringbytes---int" id="stringbytes---int"><code>string.bytes() -&gt; int</code></a></h4>
+<h4 id="stringbytes---int"><a class="header" href="#stringbytes---int"><code>string.bytes() -&gt; int</code></a></h4>
 <p>Get the size of a string, in bytes.</p>
-<h4><a class="header" href="#stringparse_intbase--10---fallible-int" id="stringparse_intbase--10---fallible-int"><code>string.parse_int(base = 10) -&gt; fallible int</code></a></h4>
+<h4 id="stringparse_intbase--10---fallible-int"><a class="header" href="#stringparse_intbase--10---fallible-int"><code>string.parse_int(base = 10) -&gt; fallible int</code></a></h4>
 <p>Tries to parse the provided string as a number in the provided base.
 Leading zeroes are accepted.
 <code>0</code> symbol followed by <code>b</code>, <code>o</code>, <code>d</code> or <code>x</code> is accepted for bases 2, 8, 10 and 16 respectively.
@@ -1535,35 +1535,35 @@ Fails if the string does not represent a number in this base.</p>
 _ = (&quot;A&quot;).parse_int()   # &lt;FAIL&gt;
 _ = (&quot;A&quot;).parse_int(16) # 11
 </code></pre>
-<h4><a class="header" href="#stringparse_floatbase--10---fallible-float" id="stringparse_floatbase--10---fallible-float"><code>string.parse_float(base = 10) -&gt; fallible float</code></a></h4>
+<h4 id="stringparse_floatbase--10---fallible-float"><a class="header" href="#stringparse_floatbase--10---fallible-float"><code>string.parse_float(base = 10) -&gt; fallible float</code></a></h4>
 <p>Identical to <code>string.parse_int(base)</code> but with floats.</p>
-<h4><a class="header" href="#stringupper_case---string" id="stringupper_case---string"><code>string.upper_case() -&gt; string</code></a></h4>
+<h4 id="stringupper_case---string"><a class="header" href="#stringupper_case---string"><code>string.upper_case() -&gt; string</code></a></h4>
 <p>Convert a string to uppercase.</p>
 <pre><code class="language-hydre">_ = (&quot;aBc&quot;).upper_case() # &quot;ABC&quot;
 </code></pre>
-<h4><a class="header" href="#stringlower_case---string" id="stringlower_case---string"><code>string.lower_case() -&gt; string</code></a></h4>
+<h4 id="stringlower_case---string"><a class="header" href="#stringlower_case---string"><code>string.lower_case() -&gt; string</code></a></h4>
 <p>Convert a string to lowercase.</p>
 <pre><code class="language-hydre">_ = (&quot;aBc&quot;).lower_case() # &quot;abc&quot;
 </code></pre>
-<h4><a class="header" href="#stringreverse---string" id="stringreverse---string"><code>string.reverse() -&gt; string</code></a></h4>
+<h4 id="stringreverse---string"><a class="header" href="#stringreverse---string"><code>string.reverse() -&gt; string</code></a></h4>
 <p>Reverse a string.</p>
 <pre><code class="language-hydre">_ = (&quot;abc&quot;).reverse() # &quot;cba&quot;
 </code></pre>
-<h4><a class="header" href="#stringconcatright-string---string" id="stringconcatright-string---string"><code>string.concat(right: string) -&gt; string</code></a></h4>
+<h4 id="stringconcatright-string---string"><a class="header" href="#stringconcatright-string---string"><code>string.concat(right: string) -&gt; string</code></a></h4>
 <p>Concatenate two strings (equivalent to <code>&quot;${left}${right}&quot;</code>).</p>
 <pre><code class="language-hydre">_ = (&quot;a&quot;).concat(&quot;b&quot;) # &quot;ab&quot;
 </code></pre>
-<h4><a class="header" href="#stringsplitstr-string-sep-string---string" id="stringsplitstr-string-sep-string---string"><code>string.split(str: string, sep: string) -&gt; string</code></a></h4>
+<h4 id="stringsplitstr-string-sep-string---string"><a class="header" href="#stringsplitstr-string-sep-string---string"><code>string.split(str: string, sep: string) -&gt; string</code></a></h4>
 <p>Split a string into a list.</p>
 <pre><code class="language-hydre">split(&quot;ab&quot;, &quot;&quot;)  # [ &quot;a&quot;, &quot;b&quot; ]
 split(&quot;a b&quot;, &quot; &quot;) # [ &quot;a&quot;, &quot;b&quot; ]
 </code></pre>
-<h3><a class="header" href="#lists" id="lists">Lists</a></h3>
-<h4><a class="header" href="#listcharstringify---str" id="listcharstringify---str"><code>list[char].stringify() -&gt; str</code></a></h4>
+<h3 id="lists"><a class="header" href="#lists">Lists</a></h3>
+<h4 id="listcharstringify---str"><a class="header" href="#listcharstringify---str"><code>list[char].stringify() -&gt; str</code></a></h4>
 <p>Turns a list of characters to a string.</p>
 <pre><code class="language-hydre">_ = ([ 'a', 'b', 'c' ].str() == &quot;abc&quot;) # true
 </code></pre>
-<h4><a class="header" href="#listtgetindex-int---t" id="listtgetindex-int---t"><code>list[T].get(index: int) -&gt; T?</code></a></h4>
+<h4 id="listtgetindex-int---t"><a class="header" href="#listtgetindex-int---t"><code>list[T].get(index: int) -&gt; T?</code></a></h4>
 <p>Try to get an item from the list, without panicking if the index is out-of-bounds.</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot;, &quot;John&quot; ]
 
@@ -1571,69 +1571,69 @@ names.get(0) # &quot;Jack&quot;
 names.get(1) # &quot;John&quot;
 names.get(2) # null
 </code></pre>
-<h4><a class="header" href="#listtexpectindex-number-message-string---t" id="listtexpectindex-number-message-string---t"><code>list[T].expect(index: number, message: string) -&gt; T</code></a></h4>
+<h4 id="listtexpectindex-number-message-string---t"><a class="header" href="#listtexpectindex-number-message-string---t"><code>list[T].expect(index: number, message: string) -&gt; T</code></a></h4>
 <p>Get an item from the list, and panic with a custom error message if the index is out-of-bounds.</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot;, &quot;John&quot; ]
 
 names.get(2, &quot;Third item was not found&quot;)
 </code></pre>
-<h4><a class="header" href="#listtunshiftvalue-t" id="listtunshiftvalue-t"><code>list[T].unshift(value: T)</code></a></h4>
+<h4 id="listtunshiftvalue-t"><a class="header" href="#listtunshiftvalue-t"><code>list[T].unshift(value: T)</code></a></h4>
 <p>Insert a new value at the beginning of the list.</p>
-<h4><a class="header" href="#listtpushvalue-t" id="listtpushvalue-t"><code>list[T].push(value: T)</code></a></h4>
+<h4 id="listtpushvalue-t"><a class="header" href="#listtpushvalue-t"><code>list[T].push(value: T)</code></a></h4>
 <p>Push a new value at the end of the list.</p>
-<h4><a class="header" href="#listtunshift---t" id="listtunshift---t"><code>list[T].unshift() -&gt; T?</code></a></h4>
+<h4 id="listtunshift---t"><a class="header" href="#listtunshift---t"><code>list[T].unshift() -&gt; T?</code></a></h4>
 <p>Remove the first value from the list and return it.</p>
-<h4><a class="header" href="#listtpop---t" id="listtpop---t"><code>list[T].pop() -&gt; T?</code></a></h4>
+<h4 id="listtpop---t"><a class="header" href="#listtpop---t"><code>list[T].pop() -&gt; T?</code></a></h4>
 <p>Remove the last value from the list and return it.</p>
-<h4><a class="header" href="#listtsortasc--true---listt" id="listtsortasc--true---listt"><code>list[T].sort(asc = true) -&gt; list[T]</code></a></h4>
+<h4 id="listtsortasc--true---listt"><a class="header" href="#listtsortasc--true---listt"><code>list[T].sort(asc = true) -&gt; list[T]</code></a></h4>
 <p>Sorts a list.</p>
 <pre><code class="language-hydre">_ = [ 2, 8, 4 ].sort()      # [ 2, 4, 8 ]
 _ = [ 2, 8, 4 ].sort(false) # [ 8, 4, 2 ]
 </code></pre>
-<h4><a class="header" href="#listtreverse---listt" id="listtreverse---listt"><code>list[T].reverse() -&gt; list[T]</code></a></h4>
+<h4 id="listtreverse---listt"><a class="header" href="#listtreverse---listt"><code>list[T].reverse() -&gt; list[T]</code></a></h4>
 <p>Reverse a list.</p>
 <pre><code class="language-hydre">_ = [ 2, 8, 4 ].reverse() # [ 4, 8, 2 ]
 </code></pre>
-<h4><a class="header" href="#listtlen---int" id="listtlen---int"><code>list[T].len() -&gt; int</code></a></h4>
+<h4 id="listtlen---int"><a class="header" href="#listtlen---int"><code>list[T].len() -&gt; int</code></a></h4>
 <p>Count the number of entries in a list.</p>
 <pre><code class="language-hydre">_ = [ 2, 8, 4 ].len() # 3
 </code></pre>
-<h4><a class="header" href="#liststringjoinsep-----string" id="liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></h4>
+<h4 id="liststringjoinsep-----string"><a class="header" href="#liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></h4>
 <p>Join a list of strings with a separator.</p>
 <pre><code class="language-hydre">join([ &quot;a&quot;, &quot;b&quot; ])       # &quot;a,b&quot;
 join([ &quot;a&quot;, &quot;b&quot; ], &quot;; &quot;) # &quot;a; b&quot;
 </code></pre>
-<h4><a class="header" href="#listtconcatanother-listt---listt" id="listtconcatanother-listt---listt"><code>list[T].concat(another: list[T]) -&gt; list[T]</code></a></h4>
+<h4 id="listtconcatanother-listt---listt"><a class="header" href="#listtconcatanother-listt---listt"><code>list[T].concat(another: list[T]) -&gt; list[T]</code></a></h4>
 <p>Concatenate two lists.</p>
 <pre><code class="language-hydre">_ = [ 1, 2 ].concat([ 3, 4 ]) # [ 1, 2, 3, 4 ]
 </code></pre>
-<h4><a class="header" href="#listtconcatlists-listlistt---listt" id="listtconcatlists-listlistt---listt"><code>list[T].concat(lists: list[list[T]]) -&gt; list[T]</code></a></h4>
+<h4 id="listtconcatlists-listlistt---listt"><a class="header" href="#listtconcatlists-listlistt---listt"><code>list[T].concat(lists: list[list[T]]) -&gt; list[T]</code></a></h4>
 <p>Concatenate multiple lists.</p>
 <pre><code class="language-hydre">_ = [ 1, 2 ].concat([ [ 3, 4 ], [ 5, 6 ] ]) # [ 1, 2, 3, 4, 5, 6 ]
 </code></pre>
-<h3><a class="header" href="#commands" id="commands">Commands</a></h3>
-<h4><a class="header" href="#commandrun---int" id="commandrun---int"><code>command.run() -&gt; int</code></a></h4>
+<h3 id="commands"><a class="header" href="#commands">Commands</a></h3>
+<h4 id="commandrun---int"><a class="header" href="#commandrun---int"><code>command.run() -&gt; int</code></a></h4>
 <p>Run the command and gets its status code after exit.</p>
-<h4><a class="header" href="#commandfallible" id="commandfallible"><code>command.fallible()</code></a></h4>
+<h4 id="commandfallible"><a class="header" href="#commandfallible"><code>command.fallible()</code></a></h4>
 <p>Run the command and fail if the status code after exit is not 0.<br />
 Equivalent to calling the command with simple parenthesis like <code>cmd()</code>.</p>
-<h4><a class="header" href="#commandret_str---string" id="commandret_str---string"><code>command.ret_str() -&gt; string</code></a></h4>
+<h4 id="commandret_str---string"><a class="header" href="#commandret_str---string"><code>command.ret_str() -&gt; string</code></a></h4>
 <p>Run the command and get its stringified return value.</p>
-<h4><a class="header" href="#commandcmdraw---stream" id="commandcmdraw---stream"><code>command.cmdraw() -&gt; stream</code></a></h4>
+<h4 id="commandcmdraw---stream"><a class="header" href="#commandcmdraw---stream"><code>command.cmdraw() -&gt; stream</code></a></h4>
 <p>Run the command and get its CMDRAW output.</p>
-<h4><a class="header" href="#commandcmdmsg---liststring" id="commandcmdmsg---liststring"><code>command.cmdmsg() -&gt; list[string]</code></a></h4>
+<h4 id="commandcmdmsg---liststring"><a class="header" href="#commandcmdmsg---liststring"><code>command.cmdmsg() -&gt; list[string]</code></a></h4>
 <p>Run the command and get its CMDMSG output.</p>
-<h4><a class="header" href="#commandcmderr---liststring" id="commandcmderr---liststring"><code>command.cmderr() -&gt; list[string]</code></a></h4>
+<h4 id="commandcmderr---liststring"><a class="header" href="#commandcmderr---liststring"><code>command.cmderr() -&gt; list[string]</code></a></h4>
 <p>Run the command and get its CMDERR output.</p>
-<h4><a class="header" href="#commandoutput---liststring" id="commandoutput---liststring"><code>command.output() -&gt; list[string]</code></a></h4>
+<h4 id="commandoutput---liststring"><a class="header" href="#commandoutput---liststring"><code>command.output() -&gt; list[string]</code></a></h4>
 <p>Run the command and get its CMDOUT and CMDERR outputs combined.</p>
-<h3><a class="header" href="#streams-1" id="streams-1">Streams</a></h3>
-<h4><a class="header" href="#streampending---bool" id="streampending---bool"><code>stream.pending() -&gt; bool</code></a></h4>
+<h3 id="streams-1"><a class="header" href="#streams-1">Streams</a></h3>
+<h4 id="streampending---bool"><a class="header" href="#streampending---bool"><code>stream.pending() -&gt; bool</code></a></h4>
 <p>Check if the stream is still pending. If the pipe is complete (which means if its pipe is closed), <code>false</code> will be returned.</p>
-<h4><a class="header" href="#streamsize_hint---int" id="streamsize_hint---int"><code>stream.size_hint() -&gt; int?</code></a></h4>
+<h4 id="streamsize_hint---int"><a class="header" href="#streamsize_hint---int"><code>stream.size_hint() -&gt; int?</code></a></h4>
 <p>Get the stream's size hint. If no size hint was provided for this stream, <code>null</code> will be returned.</p>
-<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
-<h3><a class="header" href="#guess-the-number" id="guess-the-number">Guess The Number</a></h3>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<h3 id="guess-the-number"><a class="header" href="#guess-the-number">Guess The Number</a></h3>
 <pre><code class="language-hydre">while true
   var won = false
   var secret = rand_int(0, 100)
@@ -1661,9 +1661,9 @@ Equivalent to calling the command with simple parenthesis like <code>cmd()</code
   end
 end
 </code></pre>
-<h2><a class="header" href="#native-commands" id="native-commands">Native commands</a></h2>
+<h2 id="native-commands"><a class="header" href="#native-commands">Native commands</a></h2>
 <p>The native commands are commands that are available in every program without import.</p>
-<h3><a class="header" href="#echo-display-a-value" id="echo-display-a-value"><code>echo</code>: display a value</a></h3>
+<h3 id="echo-display-a-value"><a class="header" href="#echo-display-a-value"><code>echo</code>: display a value</a></h3>
 <p>Display a value to CMDOUT.</p>
 <pre><code class="language-hydre"># echo [-n] { &lt;anystr&gt; | -b &lt;stream&gt;}
 #
@@ -1674,7 +1674,7 @@ echo &quot;Hello world&quot;
 echo -n &quot;Hello world!&quot;
 echo -b $(streamify &quot;Hello world!&quot;)
 </code></pre>
-<h3><a class="header" href="#wt-write-a-file" id="wt-write-a-file"><code>wt</code>: write a file</a></h3>
+<h3 id="wt-write-a-file"><a class="header" href="#wt-write-a-file"><code>wt</code>: write a file</a></h3>
 <p>Write a content to a file.</p>
 <pre><code class="language-hydre"># wt [-a] [-n] [-c] &lt;path&gt; &lt;anystr&gt;
 #
@@ -1689,31 +1689,31 @@ echo &quot;Hello world!&quot; &gt; ./test.txt
 # Append to file
 echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 </code></pre>
-<h3><a class="header" href="#rd-read-a-file" id="rd-read-a-file"><code>rd</code>: read a file</a></h3>
+<h3 id="rd-read-a-file"><a class="header" href="#rd-read-a-file"><code>rd</code>: read a file</a></h3>
 <p>Read a file as a <code>string</code> value.</p>
 <pre><code class="language-hydre"># rd [-s] [--stream-size &lt;int&gt;] &lt;path&gt;
 #
 # &quot;-s&quot;: read a stream instead of reading the full content
 # &quot;--stream-size&quot;: specify the size of the stream when &quot;-s&quot; is provided (rounded to higher pipe buffer multiplier)
 </code></pre>
-<h3><a class="header" href="#mkdir-create-a-directory" id="mkdir-create-a-directory"><code>mkdir</code>: create a directory</a></h3>
+<h3 id="mkdir-create-a-directory"><a class="header" href="#mkdir-create-a-directory"><code>mkdir</code>: create a directory</a></h3>
 <p>Create a new directory.</p>
 <pre><code class="language-hydre"># mkd [-s] &lt;path&gt;
 #
 # &quot;-s&quot;: fail if the directory already exists
 </code></pre>
-<h3><a class="header" href="#ren-rename-a-filesystem-item" id="ren-rename-a-filesystem-item"><code>ren</code>: rename a filesystem item</a></h3>
+<h3 id="ren-rename-a-filesystem-item"><a class="header" href="#ren-rename-a-filesystem-item"><code>ren</code>: rename a filesystem item</a></h3>
 <p>Rename a filesystem item.</p>
 <pre><code class="language-hydre"># re [-m] &lt;oldname: path&gt; &lt;newname: path&gt;
 #
 # &quot;-m&quot;: move if the 'newname' is located inside another directory
 </code></pre>
-<h3><a class="header" href="#mv-move-a-filesystem-item" id="mv-move-a-filesystem-item"><code>mv</code>: move a filesystem item</a></h3>
+<h3 id="mv-move-a-filesystem-item"><a class="header" href="#mv-move-a-filesystem-item"><code>mv</code>: move a filesystem item</a></h3>
 <pre><code class="language-hydre"># mv [-n] &lt;file: path&gt; &lt;dest_dir: path&gt;
 #
 # &quot;-n&quot;: create the target directory if it does not exist
 </code></pre>
-<h3><a class="header" href="#rm-remove-a-filesystem-item" id="rm-remove-a-filesystem-item"><code>rm</code>: remove a filesystem item</a></h3>
+<h3 id="rm-remove-a-filesystem-item"><a class="header" href="#rm-remove-a-filesystem-item"><code>rm</code>: remove a filesystem item</a></h3>
 <p>Remove a filesystem item.</p>
 <pre><code class="language-hydre"># rm [-r | --recursive] [-n | --non-empty] [-t | --trash] {&lt;path&gt; | -l &lt;list[path]&gt;}
 #
@@ -1722,7 +1722,7 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 # &quot;-l&quot;: remove a list of paths
 # &quot;-t&quot;: move the item to the user's trash
 </code></pre>
-<h3><a class="header" href="#ls-list-filesystem-items" id="ls-list-filesystem-items"><code>ls</code>: list filesystem items</a></h3>
+<h3 id="ls-list-filesystem-items"><a class="header" href="#ls-list-filesystem-items"><code>ls</code>: list filesystem items</a></h3>
 <p>List filesystem items.</p>
 <pre><code class="language-hydre"># ls [-t | --tree] [-r | --recursive] [-h | --hidden] [--file-only | --dir-only] [&lt;path&gt;]
 #
@@ -1732,7 +1732,7 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 # &quot;--file-only&quot;: only display files
 # &quot;--dir-only&quot;: only display directories
 </code></pre>
-<h3><a class="header" href="#fd-find-filesystem-items" id="fd-find-filesystem-items"><code>fd</code>: find filesystem items</a></h3>
+<h3 id="fd-find-filesystem-items"><a class="header" href="#fd-find-filesystem-items"><code>fd</code>: find filesystem items</a></h3>
 <p>Find filesystem items matching provided criterias.</p>
 <pre><code class="language-hydre"># fd [-t | --types list[&quot;dir&quot; | &quot;file&quot; | &quot;symlink&quot; | &quot;device&quot;]]
 #    [-a | --absolute]
@@ -1752,7 +1752,7 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 # &quot;-i&quot;: ignore case (requires &quot;-n&quot; or &quot;-r&quot;)
 # &quot;-x&quot;: execute a command for each found item
 </code></pre>
-<h3><a class="header" href="#syml-manage-symlinks" id="syml-manage-symlinks"><code>syml</code>: manage symlinks</a></h3>
+<h3 id="syml-manage-symlinks"><a class="header" href="#syml-manage-symlinks"><code>syml</code>: manage symlinks</a></h3>
 <p>Manage symbolic links.</p>
 <pre><code class="language-hydre"># sl {-r | --read} &lt;path&gt;: check a symlink's target
 #

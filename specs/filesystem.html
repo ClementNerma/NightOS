@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#filesystem" id="filesystem">Filesystem</a></h1>
+                        <h1 id="filesystem"><a class="header" href="#filesystem">Filesystem</a></h1>
 <p>This document presents how files are stored in NightOS.</p>
 <ul>
 <li><a href="#presentation">Presentation</a></li>
@@ -190,7 +190,7 @@
 </ul>
 </li>
 </ul>
-<h2><a class="header" href="#presentation" id="presentation">Presentation</a></h2>
+<h2 id="presentation"><a class="header" href="#presentation">Presentation</a></h2>
 <p>NightOS uses the <strong>Btrfs</strong> filesystem for the main storage due to its robustness, performance, and features (e.g. snapshots).</p>
 <p>Three partitions are used to store the data:</p>
 <ul>
@@ -198,15 +198,15 @@
 <li>One <strong>Btrfs</strong> partition for the system (<code>/sys</code> and <code>/etc</code>) ;</li>
 <li>One <strong>Btrfs</strong> partition for users' data (<code>/apps</code> and <code>/home</code>)</li>
 </ul>
-<h2><a class="header" href="#symbolic-links" id="symbolic-links">Symbolic links</a></h2>
+<h2 id="symbolic-links"><a class="header" href="#symbolic-links">Symbolic links</a></h2>
 <p><em>Symbolic links</em>, abbreviated <em>symlinks</em>, are files that point to another location.</p>
-<h3><a class="header" href="#concept" id="concept">Concept</a></h3>
+<h3 id="concept"><a class="header" href="#concept">Concept</a></h3>
 <p>A symlink points to a specific item: file, folder, device, anything. It's just not a shortcut, though, as the symlink will still work if its target is moved.</p>
 <p>When a symlink is accessed, the system will transparently access its target item instead.</p>
 <p>When a symlink is removed, it does not affect the original target. Also, any number of symlinks can target the same item, and symlinks can target other symlinks to. When accessing a symlink, if its target item is a symlink itself, the latter's target will be accessed instead, and so on, until we do not encounter a symlink anymore.</p>
 <p>This can be explicitly disabled when interacting with the filesystem, or limited to a specific number of children.</p>
 <p>Also, symbolic links may point to a location on another storage.</p>
-<h3><a class="header" href="#cyclic-symlinks" id="cyclic-symlinks">Cyclic symlinks</a></h3>
+<h3 id="cyclic-symlinks"><a class="header" href="#cyclic-symlinks">Cyclic symlinks</a></h3>
 <p>Given the following situation:</p>
 <ol>
 <li>We create a symlink <code>A</code> which points to a random file</li>
@@ -214,9 +214,9 @@
 <li>We update the target of <code>A</code> to be <code>B</code></li>
 </ol>
 <p>When we will try to access <code>A</code>, the system will access <code>B</code>, then <code>A</code>, then <code>B</code>, and so on. This is called a <em>cyclic symlink chain</em>. In such case, the chain is reduced to the minimum (for instance, if we had <code>C</code> pointing to <code>A</code>, the minimum chain would not be <code>C</code> <code>A</code> <code>B</code> but just <code>A</code> <code>B</code>), and marked as erroneous. The process that tried to access the symlink will receive a specific error code to indicate a cyclic symlink chain was encountered.</p>
-<h2><a class="header" href="#flows" id="flows">Flows</a></h2>
+<h2 id="flows"><a class="header" href="#flows">Flows</a></h2>
 <p><em>Flows</em> are a simple and efficient way for processes (mostly <a href="services.html">services</a>) to allow treating flows of data.</p>
-<h3><a class="header" href="#concept-1" id="concept-1">Concept</a></h3>
+<h3 id="concept-1"><a class="header" href="#concept-1">Concept</a></h3>
 <p>A flow is a file without extension, located in the <code>/fl</code> directory, that can either send data to reader processes (<em>read-only</em>) or receive data from writer processes (<em>write-only</em>).</p>
 <p>To understand the concept better, here is the list of native flow files that are always available:</p>
 <table><thead><tr><th>Flow file</th><th>Type</th><th>Description</th></tr></thead><tbody>
@@ -226,7 +226,7 @@
 <tr><td><code>/fl/null</code></td><td>Write-only</td><td>Receives data but does nothing with them</td></tr>
 </tbody></table>
 <p>Processes are based on <a href="kernel/ipc.html">pipes</a>.</p>
-<h3><a class="header" href="#creating-a-flow" id="creating-a-flow">Creating a flow</a></h3>
+<h3 id="creating-a-flow"><a class="header" href="#creating-a-flow">Creating a flow</a></h3>
 <p>When a process wants to create a flow, it follows the following procedure:</p>
 <ol>
 <li>The process asks the <a href="services/flow.html"><code>sys::flow</code></a> service to create a flow</li>
@@ -235,9 +235,9 @@
 <li>When a process writes to the (writable) flow file, all data is continuely written to the creator's RC (the flow is not closed after that though)</li>
 <li>When the creator closes its SC/RC, the IPC channels duo is closed and the flow file is removed</li>
 </ol>
-<h3><a class="header" href="#connecting-to-a-flow" id="connecting-to-a-flow">Connecting to a flow</a></h3>
+<h3 id="connecting-to-a-flow"><a class="header" href="#connecting-to-a-flow">Connecting to a flow</a></h3>
 <p>When a process wants to read from or write to a file, it first asks the <a href="services/flow.html"><code>sys::flow</code></a> service to connect to this file. If accepted, it receives a <a href="kernel/ipc.html#pipes">SC or RC</a> to interact with the flow.</p>
-<h2><a class="header" href="#structure" id="structure">Structure</a></h2>
+<h2 id="structure"><a class="header" href="#structure">Structure</a></h2>
 <p>Below is the file tree indicating how elements are organized in NightOS.</p>
 <p><em>NOTE:</em> <code>&lt;F&gt;</code> indicates the item is a file.</p>
 <pre><code>/
@@ -301,7 +301,7 @@
 <li>(2) The <a href="../technical/integrity-checker.html">integrity checker</a></li>
 <li>(3) Global storage's <a href="../features/encryption.html#global-encryption">encryption key</a></li>
 </ul>
-<h3><a class="header" href="#notes" id="notes">Notes</a></h3>
+<h3 id="notes"><a class="header" href="#notes">Notes</a></h3>
 <p>Globally installed applications (located in <code>/apps</code>) can store user-specific data in <code>/home/[user]/appdata/[appname]</code>, which will only be made of the <code>data</code>, <code>crashsaves</code> and <code>sandboxes</code> folder.</p>
 
                     </main>

@@ -167,14 +167,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#encryption" id="encryption">Encryption</a></h1>
+                        <h1 id="encryption"><a class="header" href="#encryption">Encryption</a></h1>
 <p>Encryption allows to prevent unauthorized access to a data with a password.</p>
 <ul>
 <li><a href="#global-encryption">Global encryption</a></li>
 <li><a href="#per-user-encryption">Per-user encryption</a></li>
 <li><a href="#combining-global-and-per-user-encryptions">Combining global and per-user encryptions</a></li>
 </ul>
-<h2><a class="header" href="#global-encryption" id="global-encryption">Global encryption</a></h2>
+<h2 id="global-encryption"><a class="header" href="#global-encryption">Global encryption</a></h2>
 <p>By default, the whole storage can be encrypted using the computer's master password, which is prompted on startup.</p>
 <p>During installation, even if this feature is turned off by the user, a random encryption key is generated in the bootloader, which can be accessed through the <code>/etc/sys/gbpwd</code> file. This key will be used to encrypt the storage when global encryption is active.
 This process allows administrators to change the master password whenever they want to.</p>
@@ -182,7 +182,7 @@ This process allows administrators to change the master password whenever they w
 <p>On startup, the system will run a <em>bootloader</em> which is not encrypted (and thus vulnerable to attacks) which asks for the master password. This master password is then used to decrypt the master key in the bootloader. Then, the <code>/sys/valid</code> file is decrypted, and its content is compared to <code>ValidMasterKey</code>. If contents are equal, the provided master password is valid and the boot process starts normally. Else, the key is not the good one and the user is prompted a new one.</p>
 <p>The point of global encryption is that external persons cannot read the storage's data by just reading the storage ; they must either know the master key or put a malicious bootloader to spy on the user.</p>
 <p><strong>NOTE:</strong> The ability to encrypt the storage globally, change the master password or decrypt the storage is by default reserved to the main administrator, but this privilege can be given to normal administrators, though this is highly discouraged.</p>
-<h2><a class="header" href="#per-user-encryption" id="per-user-encryption">Per-user encryption</a></h2>
+<h2 id="per-user-encryption"><a class="header" href="#per-user-encryption">Per-user encryption</a></h2>
 <p>But any non-guest user can also use a built-in system tool to encrypt its data using its own password. This way, the user's data become unreadable without his password, making even administrators unable to read his data.</p>
 <p>The encryption/decryption key is generated automatically when the user account is created and stored in the user's profile data (in <code>/etc/sys/users</code>).</p>
 <p>When enabled, the encrypted directories are:</p>
@@ -191,7 +191,7 @@ This process allows administrators to change the master password whenever they w
 <li>The tempdir at <code>/tmp/[username]</code></li>
 </ul>
 <p>This feature is enabled by default, but can be disabled by the administrator. Also, it is disabled by default on <a href="domains.html">domains</a>.</p>
-<h2><a class="header" href="#combining-global-and-per-user-encryptions" id="combining-global-and-per-user-encryptions">Combining global and per-user encryptions</a></h2>
+<h2 id="combining-global-and-per-user-encryptions"><a class="header" href="#combining-global-and-per-user-encryptions">Combining global and per-user encryptions</a></h2>
 <p>When both a user enabled encryption for its user account and global encryption is active too, instead of having to encrypt and decrypt the data twice the user's data will be encrypted using a key derived from the master key as well as the user's encryption key.</p>
 <p>This allows to save a lot of time but still prevent unauthorized access if the user's password is weak.</p>
 

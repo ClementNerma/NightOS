@@ -167,19 +167,19 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#sandboxes" id="sandboxes">Sandboxes</a></h1>
+                        <h1 id="sandboxes"><a class="header" href="#sandboxes">Sandboxes</a></h1>
 <p><em>Sandboxes</em> allow to test an application without applying modifications to the system.</p>
 <ul>
 <li><a href="#how-sandboxes-work">How sandboxes work</a></li>
 <li><a href="#persistent-sandboxes">Persistent sandboxes</a></li>
 <li><a href="#puppet-sandbox">Puppet sandbox</a></li>
 </ul>
-<h2><a class="header" href="#how-sandboxes-work" id="how-sandboxes-work">How sandboxes work</a></h2>
+<h2 id="how-sandboxes-work"><a class="header" href="#how-sandboxes-work">How sandboxes work</a></h2>
 <p>A sandbox is an execution mode where an application's modifications to the disk are not applied directly to it, but instead to a virtual drive stored in its <code>sandboxes</code> folder. When the app. exits, a confirmation overlay proposes to apply the modifications to the real storage - it's also possible to see the changes before applying them.</p>
 <p>In developer mode, it is possible to export sandboxes and import them on other computers.</p>
-<h2><a class="header" href="#persistent-sandboxes" id="persistent-sandboxes">Persistent sandboxes</a></h2>
+<h2 id="persistent-sandboxes"><a class="header" href="#persistent-sandboxes">Persistent sandboxes</a></h2>
 <p>Sandboxes can also be created as <em>persistent</em>, which prevents them from being removed after the app. exited. Instead, the next time it will run, the same sandbox will be used again.</p>
-<h2><a class="header" href="#puppet-sandbox" id="puppet-sandbox">Puppet sandbox</a></h2>
+<h2 id="puppet-sandbox"><a class="header" href="#puppet-sandbox">Puppet sandbox</a></h2>
 <p>Sandboxes can be controlled by another application (this requires an administrator permission, though). This allows to automatically accept or decline every API usage, like permissions or I/O requests. Such sandboxes are called <em>puppet sandboxes</em>, and they can be especially useful for testing.</p>
 
                     </main>

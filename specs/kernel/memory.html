@@ -167,13 +167,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#memory" id="memory">Memory</a></h1>
+                        <h1 id="memory"><a class="header" href="#memory">Memory</a></h1>
 <p>This document describes how the kernel organizes and manages the memory.</p>
-<h2><a class="header" href="#pages" id="pages">Pages</a></h2>
+<h2 id="pages"><a class="header" href="#pages">Pages</a></h2>
 <p><strong>TODO</strong></p>
-<h2><a class="header" href="#isolation" id="isolation">Isolation</a></h2>
+<h2 id="isolation"><a class="header" href="#isolation">Isolation</a></h2>
 <p>Each <a href="processes.html">process</a> has its own 64-bit address space, preventing it from accessing other processes' data. The memory is made of pages, which must be either be <a href="syscalls.html#0x30-mem_alloc">allocated</a> or mapped using <a href="#abstract-memory-segments">virtual memory segments</a>.</p>
-<h2><a class="header" href="#abstract-memory-segments" id="abstract-memory-segments">Abstract memory segments</a></h2>
+<h2 id="abstract-memory-segments"><a class="header" href="#abstract-memory-segments">Abstract memory segments</a></h2>
 <p>An <em>abstract memory segment</em> (AMS) is an identifier which refers to a segment of memory which doesn't actually exist. To be used, they must be <em>mapped</em> in a process' memory to be accessed like regular memory. The kernel then intercepts all memory accesses to these mappings and handle them, depending on their nature which cover three cases:</p>
 <ul>
 <li><a href="syscalls.html#0x32-virt_mem_ams">Mapping existing memory pages to others, or sharing them with other processes</a> ;</li>

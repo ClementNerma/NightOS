@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#signals" id="signals">Signals</a></h1>
+                        <h1 id="signals"><a class="header" href="#signals">Signals</a></h1>
 <p><em>Signals</em> are a type of <a href="kpc.html">KPC</a>. They are used by the kernel to send informations to processes about a specific event.</p>
 <ul>
 <li><a href="#technical-overview">Technical overview</a></li>
@@ -195,7 +195,7 @@
 </ul>
 </li>
 </ul>
-<h2><a class="header" href="#technical-overview" id="technical-overview">Technical overview</a></h2>
+<h2 id="technical-overview"><a class="header" href="#technical-overview">Technical overview</a></h2>
 <p>When a process is created, the kernel associates it:</p>
 <ul>
 <li>A <em>signals handler table</em> (SHT) ;</li>
@@ -211,9 +211,9 @@
 <p>When the handler returns (or the default behaviour completes), if the signal was expecting an answer, the kernel reads it from specific registries and does whatever it needs to do. Then, itchecks if the signals queue is empty. If it is, the kernel simply makes the process jump back to the address it was to before the signal was emitted, and switch to the original thread.</p>
 <p>Else, it interrupts the process again and proceeds to treat the first signal on the queue after removing it.</p>
 <p>On the performances side, signals use interrupts, meaning the process' current tasks are instantly interrupted to let it handle the signal without delay. Also, the datafield and answer are provided through CPU registers, avoiding memory accesses.</p>
-<h2><a class="header" href="#list-of-signals" id="list-of-signals">List of signals</a></h2>
+<h2 id="list-of-signals"><a class="header" href="#list-of-signals">List of signals</a></h2>
 <p>You can find below the exhaustive list of signals.</p>
-<h3><a class="header" href="#0x01-handler_fault" id="0x01-handler_fault"><code>0x01</code> HANDLER_FAULT</a></h3>
+<h3 id="0x01-handler_fault"><a class="header" href="#0x01-handler_fault"><code>0x01</code> HANDLER_FAULT</a></h3>
 <p>Sent when a signal is sent to a process but the registered handler points to a memory zone that is not executable by the current process.
 If the sending of this signal to the process results to another fault, it's called a <em>double handler fault</em> and the process is immediatly killed.</p>
 <p>If no handler is registered for this signal, it will kill the process when received.</p>
@@ -221,7 +221,7 @@ If the sending of this signal to the process results to another fault, it's call
 <ul>
 <li>Faulty signal ID (8 bytes)</li>
 </ul>
-<h3><a class="header" href="#0x02-mem_fault" id="0x02-mem_fault"><code>0x02</code> MEM_FAULT</a></h3>
+<h3 id="0x02-mem_fault"><a class="header" href="#0x02-mem_fault"><code>0x02</code> MEM_FAULT</a></h3>
 <p>Sent when the process tried to perform an unauthorized access on a memory address.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
@@ -234,24 +234,24 @@ If the sending of this signal to the process results to another fault, it's call
 </ul>
 </li>
 </ul>
-<h3><a class="header" href="#0x10-suspend" id="0x10-suspend"><code>0x10</code> SUSPEND</a></h3>
+<h3 id="0x10-suspend"><a class="header" href="#0x10-suspend"><code>0x10</code> SUSPEND</a></h3>
 <p>Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the <a href="syscalls.html#0x12-suspend"><code>SUSPEND</code></a> syscall.</p>
-<h3><a class="header" href="#0x11-will_suspend" id="0x11-will_suspend"><code>0x11</code> WILL_SUSPEND</a></h3>
+<h3 id="0x11-will_suspend"><a class="header" href="#0x11-will_suspend"><code>0x11</code> WILL_SUSPEND</a></h3>
 <p>Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li><a href="../registry.html">Registry</a>'s <code>system.signals.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
 </ul>
-<h3><a class="header" href="#0x12-terminate" id="0x12-terminate"><code>0x12</code> TERMINATE</a></h3>
+<h3 id="0x12-terminate"><a class="header" href="#0x12-terminate"><code>0x12</code> TERMINATE</a></h3>
 <p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="syscalls.html#0x13-exit"><code>EXIT</code></a> syscall).</p>
-<h3><a class="header" href="#0x13-will_terminate" id="0x13-will_terminate"><code>0x13</code> WILL_TERMINATE</a></h3>
+<h3 id="0x13-will_terminate"><a class="header" href="#0x13-will_terminate"><code>0x13</code> WILL_TERMINATE</a></h3>
 <p>Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.</p>
 <p>If no handler is registered for this signal, it will kill the process when received.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li><a href="../registry.html">Registry</a>'s <code>system.signals.terminate_delay</code> key (default: 2s) (2 bytes)</li>
 </ul>
-<h3><a class="header" href="#0x20-recv_pipe" id="0x20-recv_pipe"><code>0x20</code> RECV_PIPE</a></h3>
+<h3 id="0x20-recv_pipe"><a class="header" href="#0x20-recv_pipe"><code>0x20</code> RECV_PIPE</a></h3>
 <p>Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.<br />
 The command code can be used to determine what the other process is expecting this one to do. This code does not follow any specific format.</p>
 <p><strong>Datafield:</strong></p>
@@ -264,7 +264,7 @@ The command code can be used to determine what the other process is expecting th
 <li>Mode (1 byte): <code>0x00</code> if it's a raw pipe, <code>0x01</code> if it's a message pipe</li>
 <li>Size hint in bytes (8 bytes), with <code>0</code> being the 'no size hint' value</li>
 </ul>
-<h3><a class="header" href="#0x21-pipe_closed" id="0x21-pipe_closed"><code>0x21</code> PIPE_CLOSED</a></h3>
+<h3 id="0x21-pipe_closed"><a class="header" href="#0x21-pipe_closed"><code>0x21</code> PIPE_CLOSED</a></h3>
 <p>Sent to a process when a <a href="ipc.html#pipes">pipe</a> shared with another process is closed.</p>
 <p><strong>NOTE:</strong> This does not apply to service pipes.</p>
 <p><strong>Datafield:</strong></p>
@@ -278,7 +278,7 @@ The command code can be used to determine what the other process is expecting th
 <li>Pipe identity (1 byte): <code>0x00</code> if this process contained the RC part, <code>0x01</code> if it contained the SC part (1 byte)</li>
 <li>RC or SC identifier (8 bytes)</li>
 </ul>
-<h3><a class="header" href="#0x26-recv_serv_sock" id="0x26-recv_serv_sock"><code>0x26</code> RECV_SERV_SOCK</a></h3>
+<h3 id="0x26-recv_serv_sock"><a class="header" href="#0x26-recv_serv_sock"><code>0x26</code> RECV_SERV_SOCK</a></h3>
 <p>Sent to a process when another process opened a <a href="ipc.html#service-sockets">service socket</a> with this one.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
@@ -287,7 +287,7 @@ The command code can be used to determine what the other process is expecting th
 <li>Service socket identifier (8 bytes)</li>
 <li>Size of the buffer, multiplied by 4KB (2 bytes)</li>
 </ul>
-<h3><a class="header" href="#0x27-recv_sock_msg" id="0x27-recv_sock_msg"><code>0x27</code> RECV_SOCK_MSG</a></h3>
+<h3 id="0x27-recv_sock_msg"><a class="header" href="#0x27-recv_sock_msg"><code>0x27</code> RECV_SOCK_MSG</a></h3>
 <p>Sent to a process when a message has been sent through a <a href="ipc.html#service-sockets">service socket</a>.<br />
 To read the message, the process must use the <a href="syscalls.html#0x28-read_sock_msg"><code>READ_SOCK_MSG</code></a> syscall.</p>
 <p><strong>Datafield:</strong></p>
@@ -304,7 +304,7 @@ To read the message, the process must use the <a href="syscalls.html#0x28-read_s
 </ul>
 </li>
 </ul>
-<h3><a class="header" href="#0x29-serv_sock_closed" id="0x29-serv_sock_closed"><code>0x29</code> SERV_SOCK_CLOSED</a></h3>
+<h3 id="0x29-serv_sock_closed"><a class="header" href="#0x29-serv_sock_closed"><code>0x29</code> SERV_SOCK_CLOSED</a></h3>
 <p>(was there a message sent before that closed the socket)</p>
 <p>Sent to a process when a <a href="ipc.html#pipes">pipe</a> shared with another process is closed.</p>
 <p><strong>NOTE:</strong> This does not apply to service pipes.</p>
@@ -319,7 +319,7 @@ To read the message, the process must use the <a href="syscalls.html#0x28-read_s
 <li>Pipe identity (1 byte): <code>0x00</code> if this process contained the RC part, <code>0x01</code> if it contained the SC part (1 byte)</li>
 <li>RC or SC identifier (8 bytes)</li>
 </ul>
-<h3><a class="header" href="#0x2a-service_conn_request" id="0x2a-service_conn_request"><code>0x2A</code> SERVICE_CONN_REQUEST</a></h3>
+<h3 id="0x2a-service_conn_request"><a class="header" href="#0x2a-service_conn_request"><code>0x2A</code> SERVICE_CONN_REQUEST</a></h3>
 <p>Sent to a service process' <a href="../services.html#thread-types">dispatcher thread</a> when another process tries to etablish a connection through the <a href="syscalls.html#0x2a-connect_service"><code>CONNECT_SERVICE</code></a> syscall.</p>
 <p>The process is expected to answer using the <a href="syscalls.html#0x2c-accept_service_conn"><code>ACCEPT_SERVICE_CONNECTION</code></a> under the provided delay, else it's considered as a rejection.</p>
 <p>If no handler is registered for this signal, it will kill the process when received.</p>
@@ -331,19 +331,19 @@ To read the message, the process must use the <a href="syscalls.html#0x28-read_s
 <li>Command code (2 bytes)</li>
 <li><a href="../registry.html">Registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms) (2 bytes)</li>
 </ul>
-<h3><a class="header" href="#0x2b-service_client_closed" id="0x2b-service_client_closed"><code>0x2B</code> SERVICE_CLIENT_CLOSED</a></h3>
+<h3 id="0x2b-service_client_closed"><a class="header" href="#0x2b-service_client_closed"><code>0x2B</code> SERVICE_CLIENT_CLOSED</a></h3>
 <p>Sent to a <a href="../services.html#thread-types">client thread</a> to indicate its client closed before the connection was properly terminated.
 The thread is expected to terminate as soon as possible (there is no time limit though).</p>
-<h3><a class="header" href="#0x2c-service_client_quitted" id="0x2c-service_client_quitted"><code>0x2C</code> SERVICE_CLIENT_QUITTED</a></h3>
+<h3 id="0x2c-service_client_quitted"><a class="header" href="#0x2c-service_client_quitted"><code>0x2C</code> SERVICE_CLIENT_QUITTED</a></h3>
 <p>Sent to a <a href="../services.html#thread-types">client thread</a> to indicate its client asked to close the connection.
 The associated RC and SC are immediatly closed.</p>
-<h3><a class="header" href="#0x2d-service_server_quitted" id="0x2d-service_server_quitted"><code>0x2D</code> SERVICE_SERVER_QUITTED</a></h3>
+<h3 id="0x2d-service_server_quitted"><a class="header" href="#0x2d-service_server_quitted"><code>0x2D</code> SERVICE_SERVER_QUITTED</a></h3>
 <p>Sent to a process that previously established a connection with a service, to indicate the associated service thread closed before the connection was properly terminated.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Connection's unique request ID (8 bytes)</li>
 </ul>
-<h3><a class="header" href="#0x33-read_backed_ams" id="0x33-read_backed_ams"><code>0x33</code> READ_BACKED_AMS</a></h3>
+<h3 id="0x33-read_backed_ams"><a class="header" href="#0x33-read_backed_ams"><code>0x33</code> READ_BACKED_AMS</a></h3>
 <p>Sent to a process when a <a href="syscalls.html#0x33-backed_ams">signal-backed</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is accessed in read mode.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
@@ -362,7 +362,7 @@ The associated RC and SC are immediatly closed.</p>
 </ul>
 </li>
 </ul>
-<h3><a class="header" href="#0x34-write_backed_ams" id="0x34-write_backed_ams"><code>0x34</code> WRITE_BACKED_AMS</a></h3>
+<h3 id="0x34-write_backed_ams"><a class="header" href="#0x34-write_backed_ams"><code>0x34</code> WRITE_BACKED_AMS</a></h3>
 <p>Sent to a process when a <a href="syscalls.html#0x33-backed_ams">signal-backed</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is accessed in write mode.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
@@ -380,7 +380,7 @@ The associated RC and SC are immediatly closed.</p>
 </ul>
 </li>
 </ul>
-<h3><a class="header" href="#0x35-recv_shared_ams" id="0x35-recv_shared_ams"><code>0x35</code> RECV_SHARED_AMS</a></h3>
+<h3 id="0x35-recv_shared_ams"><a class="header" href="#0x35-recv_shared_ams"><code>0x35</code> RECV_SHARED_AMS</a></h3>
 <p>Sent to a process when an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is <a href="ipc.html#shared-memory">shared</a> by another process.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
@@ -395,7 +395,7 @@ The associated RC and SC are immediatly closed.</p>
 </ul>
 </li>
 </ul>
-<h3><a class="header" href="#0x37-unshared_ams" id="0x37-unshared_ams"><code>0x37</code> UNSHARED_AMS</a></h3>
+<h3 id="0x37-unshared_ams"><a class="header" href="#0x37-unshared_ams"><code>0x37</code> UNSHARED_AMS</a></h3>
 <p>Sent to a process when an<a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is unshared by the sharer process.</p>
 <p><strong>Datafield:</strong></p>
 <ul>

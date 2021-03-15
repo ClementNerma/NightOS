@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#execution-context" id="execution-context">Execution Context</a></h1>
+                        <h1 id="execution-context"><a class="header" href="#execution-context">Execution Context</a></h1>
 <p>An application's <em>execution context</em> is a piece of data that is provided when the application starts.<br />
 It indicates why the application was started and so what it is supposed to do.</p>
 <ul>
@@ -175,7 +175,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <li><a href="#context-header">Context header</a></li>
 <li><a href="#arguments-structure">Arguments structure</a></li>
 </ul>
-<h2><a class="header" href="#startup-reason" id="startup-reason">Startup Reason</a></h2>
+<h2 id="startup-reason"><a class="header" href="#startup-reason">Startup Reason</a></h2>
 <p>The most important information is the <em>startup reason</em>, which indicates <em>why</em> the application was started.</p>
 <p>It is one-byte long, and is made of the following bits (starting from the strongest):</p>
 <ul>
@@ -197,7 +197,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <li>Bit 5: set if the application's raw output (CMDRAW) will be read (e.g. through the use of a <a href="../shell-scripting.html#reading-a-commands-output">shell operator</a>)</li>
 </ul>
 <p>The startup reason is especially important as it determines what the application should do (e.g. uninstall itself, run as a command...) but also if it should output data through its CMDRAW in case it was called by a command.</p>
-<h2><a class="header" href="#context-header" id="context-header">Context header</a></h2>
+<h2 id="context-header"><a class="header" href="#context-header">Context header</a></h2>
 <p>The context header is stored as a single block of data, consisting of:</p>
 <ul>
 <li>The startup reason (1 byte)</li>
@@ -224,7 +224,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <li>SC identifier for the CMDOUT pipe (8 bytes)</li>
 <li><em>Future-proof shift space</em> (196 bytes)</li>
 </ul>
-<h2><a class="header" href="#arguments-structure" id="arguments-structure">Arguments structure</a></h2>
+<h2 id="arguments-structure"><a class="header" href="#arguments-structure">Arguments structure</a></h2>
 <p>The context header is followed by the list of each command-line argument, taking up to 64 KB.</p>
 <p>Arguments are a simple concatenation of <a href="commands.html#values-encoding">encoded values</a>.</p>
 

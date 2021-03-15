@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#users" id="users">Users</a></h1>
+                        <h1 id="users"><a class="header" href="#users">Users</a></h1>
 <ul>
 <li><a href="#the-concept">The concept</a></li>
 <li><a href="#users-type">Users type</a></li>
@@ -179,7 +179,7 @@
 <li><a href="#groups">Groups</a></li>
 <li><a href="#user-privileges">User privileges</a></li>
 </ul>
-<h2><a class="header" href="#the-concept" id="the-concept">The concept</a></h2>
+<h2 id="the-concept"><a class="header" href="#the-concept">The concept</a></h2>
 <p>Many computers are intended to be shared by multiple persons. In such case, it is useful to separate the data of each user and to prevent other users from accesing another's.</p>
 <p>By default, there is two user accounts: the System and the Administrator. They are called <em>virtual users</em> because it's not possible to log in these accounts. Other users (the ones which are created manually) are called <em>custom users</em>.</p>
 <p>Each custom user has a dedicated data directory called the <em>homedir</em>, in <code>/home/[username]</code>, as well as a list of files and directories it can read and/or write. By default, each user gets access to:</p>
@@ -188,7 +188,7 @@
 <li>The mounted periphericals in <code>/media</code> ;</li>
 <li>Its temporary directory in <code>/tmp/[username]</code></li>
 </ul>
-<h2><a class="header" href="#users-type" id="users-type">Users type</a></h2>
+<h2 id="users-type"><a class="header" href="#users-type">Users type</a></h2>
 <p>Each user is of a specific type:</p>
 <ul>
 <li><em>Phantom</em>: the user's data are erased after the computer is turned off ;</li>
@@ -199,15 +199,15 @@
 <p>When a user wants to perform a task it does not have the privileges to, it can (by default) ask to run the task as <em>another user</em>. The other user's credentials are then required.</p>
 <p>It's not possible to ask to run a task as system or as administrator as these accounts are virtual and do not have passwords as such, <strong>except</strong> if an administrator user is tries to run a task as administrator.</p>
 <p>Note that there is always one and exactly one main administrator. This user account is created during the installation process, and can be transferred later on to another administrator account.</p>
-<h2><a class="header" href="#dangers-of-an-admin-account" id="dangers-of-an-admin-account">Dangers of an admin. account</a></h2>
+<h2 id="dangers-of-an-admin-account"><a class="header" href="#dangers-of-an-admin-account">Dangers of an admin. account</a></h2>
 <p>The problem with administrators account is that they can do almost <strong>anything</strong> (except some very specific things like editing the system's files). They can change system settings, read and change other users' data, and even run background processes at startup. They also have all possible privileges as they can edit their own.</p>
 <p>This is why it's extremely discouraged to have two administrator users on the same computer, unless the two accounts are used by really trustworthy persons. As such, a large warning is shown if you try to create a new administrator user.</p>
-<h2><a class="header" href="#user-privileges-elevation-upe" id="user-privileges-elevation-upe">User Privileges Elevation (UPE)</a></h2>
+<h2 id="user-privileges-elevation-upe"><a class="header" href="#user-privileges-elevation-upe">User Privileges Elevation (UPE)</a></h2>
 <p>Users can ask to perform a task with the privileges of another user, such as running a program as administrator. This uses the <em>User Privileges Elevation</em> (UPE) system, builtin the <a href="../specs/services/perm.html"><code>sys::perm</code></a> service.</p>
 <p>In such case, the program is still run as the current user, but with the privileges of both the running user and the user specified to the UPE.</p>
 <p>Running a program with UPE requires to know either the other account's password, or to have an <em>authorization</em> from this user. For instance, admin. users have an <em>authorization</em> to use the Administrator account, without providing any password, although a human confirmation is required.</p>
 <p>Each request, successful or not, is logged in the log file at <code>/etc/logs/auc</code>.</p>
-<h2><a class="header" href="#complexity-level" id="complexity-level">Complexity level</a></h2>
+<h2 id="complexity-level"><a class="header" href="#complexity-level">Complexity level</a></h2>
 <p>Each user can define a <em>complexity</em> level, which will affect its default settings.</p>
 <p>A higher level of complexity will make the system display more informations, give more details about errors that may require some technical knowledge but providing additional features and informations in exchange.</p>
 <p>The levels are:</p>
@@ -217,17 +217,17 @@
 <li><strong>Advanced</strong>: shows additional informations, displays some error reports, makes the permission popups more precise and verbose</li>
 <li><strong>Power</strong>: shows very detailed informations, displays all error reports, makes the permission popups display exhaustive informations</li>
 </ul>
-<h2><a class="header" href="#users-data-encryption" id="users-data-encryption">Users' data encryption</a></h2>
+<h2 id="users-data-encryption"><a class="header" href="#users-data-encryption">Users' data encryption</a></h2>
 <p>See <a href="../features/encryption.html">encryption</a>.</p>
-<h2><a class="header" href="#child-and-supervised-users" id="child-and-supervised-users">Child and supervised users</a></h2>
+<h2 id="child-and-supervised-users"><a class="header" href="#child-and-supervised-users">Child and supervised users</a></h2>
 <p><em>Child users</em> are users that are supervised by the <a href="../features/parental-control.html">parental control</a>.
 <em>Supervised users</em> are users that are part of a <a href="../features/domains.html">domain</a>.</p>
-<h2><a class="header" href="#groups" id="groups">Groups</a></h2>
+<h2 id="groups"><a class="header" href="#groups">Groups</a></h2>
 <p><em>Groups</em> are a set of privileges defined by the administrator. Access to some folders or application's permissions (e.g. microphone access) can be restricted to a specific group, for instance.
 When a user is created, it can be put in a group. It then automatically inherits all of the group's privileges, in addition to his own ones.
 The administrator can add and remove users from groups with the control panel.</p>
 <p>When a user is in a group, the group's privileges cannot be revoked for this user.</p>
-<h2><a class="header" href="#user-privileges" id="user-privileges">User privileges</a></h2>
+<h2 id="user-privileges"><a class="header" href="#user-privileges">User privileges</a></h2>
 <p>User privileges indicate the list of actions a user can perform or not. You can find more in the specifications of the <a href="../specs/services/perm.html"><code>sys::perm</code></a> system service.</p>
 
                     </main>

@@ -167,7 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#parental-control" id="parental-control">Parental Control</a></h1>
+                        <h1 id="parental-control"><a class="header" href="#parental-control">Parental Control</a></h1>
 <p><em>Parental control</em> allows to manage a child's access to a computer running NightOS.</p>
 <ul>
 <li><a href="#how-it-works">How it works</a></li>
@@ -184,14 +184,14 @@
 </ul>
 </li>
 </ul>
-<h2><a class="header" href="#how-it-works" id="how-it-works">How it works</a></h2>
+<h2 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h2>
 <p>Parental control works using (at least) two accounts: the parent's account, and the child's user account, which is related to as a <em>child user</em>. Note that multiple child users can be managed using parental control.</p>
 <p>The parent account then gets access to an application called &quot;Parental Control&quot;, which allows to access all parental control-related features for each child user.</p>
 <p>It is also possible to get important notifications by email, and even to install a smartphone application (iOS/Android) which brings the parental control application to phones, allowing to manage child users even when not at home.</p>
-<h2><a class="header" href="#integration" id="integration">Integration</a></h2>
+<h2 id="integration"><a class="header" href="#integration">Integration</a></h2>
 <p>Parental control's settings are available to third-party applications using specific permissions. This way, some applications can provide an additionally layer of security for child users, like preventing access to adult contents in a game store.</p>
-<h2><a class="header" href="#features" id="features">Features</a></h2>
-<h3><a class="header" href="#restrict-usage-hours" id="restrict-usage-hours">Restrict usage hours</a></h3>
+<h2 id="features"><a class="header" href="#features">Features</a></h2>
+<h3 id="restrict-usage-hours"><a class="header" href="#restrict-usage-hours">Restrict usage hours</a></h3>
 <p>This feature allows to restrict usage of the computer by the child user during specific hours in the day.
 These hours can be set independently for each day of the week, allowing for instance to set specific hours in the week-end.
 It's also possible to set specific hours for some specific weeks or periods of times (e.g. for four specific days in a row), allowing for instance to set specific hours for vacations.</p>
@@ -199,23 +199,23 @@ It's also possible to set specific hours for some specific weeks or periods of t
 <p>When this final minute comes, a pop-up shows telling the session is going to be closed in 60 seconds, and a cooldown is shown in a closable pop-up balloon in the taskbar. An option is also shown to extend the session by up to fifteen minutes, sending a notification to the parent's phone as well as an e-mail.</p>
 <p>The parent can then do nothing and the session will extend for a maximum of fifteen minutes, or reject it and the computer will shut down after 1 minute. Then another option shows to ask if the parent wants to permanently disable time extension.</p>
 <p>Session time extension can be enabled/disabled during the parental control installation process (enabled by default). If disabled, the time extension option will not be shown to the child user during the timeout.</p>
-<h3><a class="header" href="#restrict-session-duration" id="restrict-session-duration">Restrict session duration</a></h3>
+<h3 id="restrict-session-duration"><a class="header" href="#restrict-session-duration">Restrict session duration</a></h3>
 <p>This feature allows to restrict how much time a session can be active, allowing for instance to limit a child user's usage to one hour per day. Like the usage hours, it can be set independently for each day of the week, for specific weeks, and for specific periods.</p>
 <p>Session time extension applies here as well, and works the same way as for restricted usage hours. The related settings are independent though, allowing for instance to enable session time extension for usage hours but not for session duration, or the opposite.</p>
-<h3><a class="header" href="#restrict-access-to-applications" id="restrict-access-to-applications">Restrict access to applications</a></h3>
+<h3 id="restrict-access-to-applications"><a class="header" href="#restrict-access-to-applications">Restrict access to applications</a></h3>
 <p>This feature restricts access to some applications, either using a whitelist (listing all the <em>allowed</em> applications), or using a blacklist (listing all the <em>forbidden</em> applications).</p>
 <p>It's possible to automatically while/black-list new applications.</p>
-<h3><a class="header" href="#restrict-access-to-websites" id="restrict-access-to-websites">Restrict access to websites</a></h3>
+<h3 id="restrict-access-to-websites"><a class="header" href="#restrict-access-to-websites">Restrict access to websites</a></h3>
 <p>This feature restricts access to some websites, either using a whitelist or a blacklist. It's also possible to apply these restrictions only to compatible web browsers. Whitelist is strongly discouraged outside of web browsers-only usage, as it may prevent some applications to work properly.</p>
 <p>Whenever an application tries to access a forbidden website, the request will fail with a specific code indicating it's forbidden by parental control. Applications can still enforce this rule but this requires a specific permission that cannot be allowed by child users.</p>
 <p>These restrictions are enabled through the built-in firewall, <a href="../applications/Vortex.html">Vortex</a>.</p>
-<h3><a class="header" href="#restrict-mature-contents" id="restrict-mature-contents">Restrict mature contents</a></h3>
+<h3 id="restrict-mature-contents"><a class="header" href="#restrict-mature-contents">Restrict mature contents</a></h3>
 <p>The child user's birth date can be declared during setup, so its age (not its birth date) will be available to every application which asks for it (with a specific permission, which is by default automatically granted to all applications which ask it).</p>
 <p>This allows, for instance, for web browsers to block websites that declare themselves as showing adult contents. Or even more precise protection, like a movies store not showing movies whom age limit is beyond the child user's age.</p>
-<h3><a class="header" href="#restrict-installation-of-applications" id="restrict-installation-of-applications">Restrict installation of applications</a></h3>
+<h3 id="restrict-installation-of-applications"><a class="header" href="#restrict-installation-of-applications">Restrict installation of applications</a></h3>
 <p>This feature prevents child users from installing and running volatile applications.
 By default, installation is allowed but sends a notification to the parent user asking if the child user is allowed to install the requested application ; while running volatile applications is simply disabled.</p>
-<h3><a class="header" href="#controlling-session-remotely" id="controlling-session-remotely">Controlling session remotely</a></h3>
+<h3 id="controlling-session-remotely"><a class="header" href="#controlling-session-remotely">Controlling session remotely</a></h3>
 <p>This feature allows parents to log out the child user remotely. This will show a pop-up indicating the session will be closed in 60 seconds, behaving just like usage hours restriction. It may also provide session time extension based on how the log out was triggered (log out the child user <em>or</em> log out the child user and disable session time extension) and the setting selected during the setup process.</p>
 
                     </main>

@@ -167,15 +167,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#data-structures" id="data-structures">Data structures</a></h1>
+                        <h1 id="data-structures"><a class="header" href="#data-structures">Data structures</a></h1>
 <p>This documents describes the structures used by the kernel to represent the data it uses in memory.</p>
-<h2><a class="header" href="#packed-linked-lists" id="packed-linked-lists">Packed linked lists</a></h2>
+<h2 id="packed-linked-lists"><a class="header" href="#packed-linked-lists">Packed linked lists</a></h2>
 <p><em>Packed linked lists</em> (PLL) are linked lists used for items whose size is both small (usually &lt;= 32 bytes) and fixed for all items.</p>
 <p>It uses a system of same-size entries, each containing a micro bump allocator.</p>
 <p>The goal of a PLL is to provide a blazing fast read and iteration speed, while compromising on insertion and deletion speeds.</p>
-<h3><a class="header" href="#caracteristics" id="caracteristics">Caracteristics</a></h3>
+<h3 id="caracteristics"><a class="header" href="#caracteristics">Caracteristics</a></h3>
 <p>A PLL is caracterized by its <em>item size</em>, <em>length</em> (the number of items in the list) and the <em>number of items per entry</em> (NIE) (up to 255), which is the number of items which can be stored per entry. It is noted <code>PLL(e=&lt;number of items per entry&gt;[, s=&lt;item size in bytes&gt;][, l=&lt;number of elements currently in the list&gt;])</code>.</p>
-<h3><a class="header" href="#structure-in-memory" id="structure-in-memory">Structure in memory</a></h3>
+<h3 id="structure-in-memory"><a class="header" href="#structure-in-memory">Structure in memory</a></h3>
 <p>Each entry is a contiguous suite of bytes which can store up to <code>NIE</code> items contiguously. It starts by either a pointer to the next entry (on 8 bytes), or the number of items actually initialized in the current entry (pre-filled with zeros to be stored on 8 bytes).</p>
 <p>For instance, let's take a <code>PLL(e=3, s=2, l=4)</code>. Its content is the four following items:</p>
 <ul>
@@ -190,24 +190,24 @@
 </code></pre>
 <p>As you can see, the first entry contains the address to the next entry, followed by the content of the first three items (contiguously).<br />
 The second entry is the last one and so simply contains the number of initialized items, followed by the last item's content, and then garbage as this memory zone is not initialized yet.</p>
-<h3><a class="header" href="#checking-an-entrys-type" id="checking-an-entrys-type">Checking an entry's type</a></h3>
+<h3 id="checking-an-entrys-type"><a class="header" href="#checking-an-entrys-type">Checking an entry's type</a></h3>
 <p>To check if the first byte of an entry is the next entry's address or the number of initialized items, we simply have to perform a simple comparison: if the byte is greater than <code>0xFF</code> (255 in decimal, which is the maximum allowed number of items per entry), then it's an address, else it's a number of initialized elements.</p>
-<h3><a class="header" href="#the-ratio" id="the-ratio">The ratio</a></h3>
+<h3 id="the-ratio"><a class="header" href="#the-ratio">The ratio</a></h3>
 <p>A PLL also has a <em>ratio</em>, which is the number of bytes reserved for items in each entry, divided by the total number of bytes. So, in our example, 3 items per entry * 4 bytes = 12 bytes, while the total number of bytes per entry also takes into account the address itself, so 12 bytes + 8 bytes = 20 : our PLL's ratio is <code>0.6</code>.</p>
 <p>This is quite a low ratio, meaning we waste a lot of space. The ratio must be kept as near as <code>1.0</code> as possible, while maintaining a reasonable memory footprint for each entry.</p>
-<h3><a class="header" href="#performances-bottlenecks" id="performances-bottlenecks">Performances bottlenecks</a></h3>
+<h3 id="performances-bottlenecks"><a class="header" href="#performances-bottlenecks">Performances bottlenecks</a></h3>
 <p>A thing to keep in mind is that PLL have a considerable performances bottleneck: when an entry is filled, the next must be allocated with a size that's a lot larger than a single item's size. That's why, when an entry is full, it should be allocated on the moment time is the less critical.</p>
 <p>Performances are especially bad when inserting new items in the list or when removing ones, as many data needs to be moved around.</p>
 <p>Regarding updating elements, this requires to write both the item itself. Inserting elements in a not-yet full entry requires to write the element itself as well as incrementing the entry's counter.</p>
-<h3><a class="header" href="#performance-advantages" id="performance-advantages">Performance advantages</a></h3>
+<h3 id="performance-advantages"><a class="header" href="#performance-advantages">Performance advantages</a></h3>
 <p>As you can see in the above bottlenecks, PLL are not meant to be performant on writings. They are meant to be fast for reads, especially sequential reads. The higher the <code>NIE</code> of the list, the fastest it will be to find an element in it, or to read every element of the list one by one (iteration).</p>
 <p>Also, as the counter is packed with the other data of each entry, it presents a reduced risk of cache miss.</p>
 <p>Computing the length is reasonably fast.</p>
-<h3><a class="header" href="#length-first-variant" id="length-first-variant">Length-first variant</a></h3>
+<h3 id="length-first-variant"><a class="header" href="#length-first-variant">Length-first variant</a></h3>
 <p>There is a variant of the PLL that stores the total length of the list somewhere in the memory. In that case, the first byte of the last entry does not need to store the number of items in the entry.</p>
 <p>This variant is interesting being we can instantly get the number of items in the list, but the downside is that reading sequentially the list will also incur an additional reading to know where the last entry ends, and updating the total length incur a high risk of cache fault as the chances of the memory area where the length is as well as the entry itself be in the cache at the same time are pretty low.</p>
 <p>The length-first variant should only be used when accessing the length instantly is critical.</p>
-<h3><a class="header" href="#tricking-the-nie" id="tricking-the-nie">Tricking the <code>NIE</code></a></h3>
+<h3 id="tricking-the-nie"><a class="header" href="#tricking-the-nie">Tricking the <code>NIE</code></a></h3>
 <p>Increasing the NIE will:</p>
 <ul>
 <li>Reduce the needs of allocating</li>

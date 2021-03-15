@@ -167,14 +167,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#developer-mode" id="developer-mode">Developer mode</a></h1>
+                        <h1 id="developer-mode"><a class="header" href="#developer-mode">Developer mode</a></h1>
 <p>The <em>developer mode</em> enables several features that are not available to default users. Only administrator users get access to them when they are enabled.</p>
 <ul>
 <li><a href="#how-to-enable">How to enable</a></li>
 <li><a href="#features">Features</a></li>
 <li><a href="#application-proxies">Application proxies</a></li>
 </ul>
-<h2><a class="header" href="#how-to-enable" id="how-to-enable">How to enable</a></h2>
+<h2 id="how-to-enable"><a class="header" href="#how-to-enable">How to enable</a></h2>
 <p>Developer mode can be enabled either by typing the following command in the terminal:</p>
 <pre><code class="language-shellscript">adm central --enable dev-mode
 </code></pre>
@@ -182,12 +182,12 @@
 <p>A warning dialog will appear.
 If you confirm, it will display an <a href="../concepts/users.html#user-privileges-elevation-upe">UPE dialog</a> for the administrator account.
 Then a final confirmation dialog will ensure you're sure about what you're doing. Then development mode will be enabled (no reboot is required).</p>
-<h2><a class="header" href="#features" id="features">Features</a></h2>
+<h2 id="features"><a class="header" href="#features">Features</a></h2>
 <ul>
 <li>Additional features will appear in the control center (<a href="../applications/Central.html#development-related-options">see the options</a>)</li>
 <li>The registry can be <a href="registry.html#debugging">imported and exported</a></li>
 </ul>
-<h2><a class="header" href="#application-proxies" id="application-proxies">Application proxies</a></h2>
+<h2 id="application-proxies"><a class="header" href="#application-proxies">Application proxies</a></h2>
 <p><em>Application proxies</em> are applications that intercept all applications calls to the system on-the-fly. It is useful for applications debugging.</p>
 <p>When a proxy is set up for an application, all system calls sent to this application will be transferred to the proxy, which will be able to do whatever it wants with it. It's possible for the proxy to never answer the signal, to change its content before actually sending it to the system, etc.</p>
 <p>Basic usage of an application proxy is as a &quot;listener&quot;: it only listens to specific signals and logs them, without cancelling them and/or modifying them. This is useful to check all filesystem access requested by an application, in real time.</p>

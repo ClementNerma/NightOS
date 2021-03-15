@@ -99,7 +99,7 @@ These applications can be updated independently of the system itself, thus their
 
 ## Services
 
-Application can provide a [service](../technical/services.md) by specifying it in their [manifest](../specs/applications/manifest.md).
-The service will be run at startup with the usual application's permissions.
+Application can provide [services](../technical/services.md) by specifying them in their [manifest](../specs/applications/manifest.md).
+The services will be run at startup with the usual application's permissions.
 
-When an application uses a service, there is exactly one service process running per active user.
+There is exactly one process for the main service and one for each [domain](../specs/services.md#service-domains) service per active user.

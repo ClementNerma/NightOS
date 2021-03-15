@@ -37,8 +37,13 @@ The context header is stored as a single block of data, consisting of:
 - Ambiant informations (1 byte)
   - Bit 0: set if the application is starting for the very first time since it was installed
   - Bit 1: set if the application is starting for the very first time for this specific user
-  - Bit 2: set if the application is starting for the first time after an update
-  - Bit 3: set if other instances of this application are running
+  - Bit 2: set if the application is starting for the very first time as this main or domain service
+  - Bit 3: set if the application is starting for the first time after an update
+  - Bit 4: set if other instances of this application are running
+- Special assignment information (1 byte)
+  - Bit 0: set if the application is starting for the first time after being assigned as the new desktop environment
+  - Bit 1: set if the application is starting for the first time after being assigned as the new default file manager
+- Service name (8 bytes) - filled with zeroes if this is the default service or if the process is not a service
 - The application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
 
 If the command was started as a command, it also contains the following informations:

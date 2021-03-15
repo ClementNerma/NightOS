@@ -17,11 +17,12 @@ events:
 # [OPT] Exposed commands (see the related document for additional informations)
 commands: {}
 
-# [OPT] Does the application expose a service?
-service: false
-
-# [OPT] Is the application a desktop environment?
-desktopenv: false
+# [OPT] Does the application expose services?
+services:
+  # [REQ] Does the application expose a main service?
+  main: false
+  # [REQ] List of domain services
+  domains: []
 
 # [OPT] Additional informations
 additional:

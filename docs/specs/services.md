@@ -2,6 +2,7 @@
 
 This document describes the architecture of [services](../technical/services.md), as well as the list of all system services and their main features.
 
+- [Service domains](#service-domains)
 - [Architecture of a service](#architecture-of-a-service)
   - [Connections](#connections)
   - [Communication](#communication)
@@ -10,9 +11,17 @@ This document describes the architecture of [services](../technical/services.md)
 - [System services](#system-services)
 - [Third-party communication](#third-party-communication)
 
+## Service domains
+
+An application can expose a _main service_, which is used as the default one, but also _domain services_, which are used either by the system or between applications as a convention for exposing specific methods and notifications.
+
+A domain's name is made of up to 8 extended ASCII characters.
+
+Domains whose conventions are established by the system are prefixed by `SYS_`. Each application exposing such a service will be get special recognition for the tasks associated to this domain service. Also, this prefix is reserved for such domains and cannot be used for custom ones.
+
 ## Architecture of a service
 
-Application services have exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.
+Applications have exactly one running service per domain, and each service has exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.
 
 An application process can tell if it was started as a service or not by looking at its [execution context](applications/context.md#execution-context).
 

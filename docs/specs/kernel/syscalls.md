@@ -22,6 +22,7 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x2B` END_SERVICE_CONN](#0x2b-end_service_conn)
   - [`0x2C` ACCEPT_SERVICE_CONN](#0x2c-accept_service_conn)
   - [`0x2D` REJECT_SERVICE_CONN](#0x2d-reject_service_conn)
+  - [`0x2E` HAS_SERVICE_DOMAIN](#0x2e-has_service_domain)
   - [`0x30` MEM_ALLOC](#0x30-mem_alloc)
   - [`0x31` MEM_FREE](#0x31-mem_free)
   - [`0x32` VIRT_MEM_AMS](#0x32-virt_mem_ams)
@@ -418,6 +419,13 @@ If the current process already has an active connection (a connection that hasn'
 **Arguments:**
 
 - Target application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
+- Domain type (1 byte):
+  - `0x00` for the default domain
+  - `0x01` for a custom domain
+  - `0xA0` for the desktop environment domain
+  - `0xA1` for the filesystem manager domain
+  - `0xA2` for the filesystem items opener domain
+- [Domain name](../services.md#service-domains) if asking to connect to a custom domain (8 bytes)
 - Command code (2 bytes)
 
 **Return value:**
@@ -430,7 +438,7 @@ If the current process already has an active connection (a connection that hasn'
 
 - `0x10`: Invalid flexible mode provided
 - `0x20`: The provided ANID does not exist
-- `0x21`: Target application does not [expose a service](../../concepts/applications.md#services)
+- `0x21`: Target application does not [expose the provided service](../../concepts/applications.md#services)
 - `0x22`: Current process already has an active connection to the target service and flexible mode is not set
 - `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 - `0x31`: Service rejected the connection request
@@ -495,6 +503,22 @@ _None_
 - `0x10`: This request ID does not exist
 - `0x20`: The process which requested the connection already terminated
 - `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 2000ms)
+
+### `0x2E` HAS_SERVICE_DOMAIN
+
+**Arguments:**
+
+- Target application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
+- [Domain name](../services.md#service-domains) (8 bytes) - fill with zeroes for the default domain
+
+**Return value:**
+
+- `0x01` if the provided domain exists, `0x00` otherwise
+
+**Errors:**
+
+- `0x20`: The provided ANID does not exist
+- `0x21`: Target application does not [expose the provided service](../../concepts/applications.md#services)
 
 ### `0x30` MEM_ALLOC
 

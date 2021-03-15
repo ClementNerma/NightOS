@@ -21,8 +21,8 @@ commands: {}
 services:
   # [REQ] Does the application expose a main service?
   main: false
-  # [REQ] List of domain services
-  domains: []
+  # [REQ] List of scoped services
+  scoped: []
 
 # [OPT] Additional informations
 additional:

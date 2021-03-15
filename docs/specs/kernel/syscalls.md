@@ -22,7 +22,7 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x2B` END_SERVICE_CONN](#0x2b-end_service_conn)
   - [`0x2C` ACCEPT_SERVICE_CONN](#0x2c-accept_service_conn)
   - [`0x2D` REJECT_SERVICE_CONN](#0x2d-reject_service_conn)
-  - [`0x2E` HAS_SERVICE_DOMAIN](#0x2e-has_service_domain)
+  - [`0x2E` HAS_SCOPED_SERVICE](#0x2e-has_scoped_service)
   - [`0x30` MEM_ALLOC](#0x30-mem_alloc)
   - [`0x31` MEM_FREE](#0x31-mem_free)
   - [`0x32` VIRT_MEM_AMS](#0x32-virt_mem_ams)
@@ -418,13 +418,13 @@ If the current process already has an active connection (a connection that hasn'
 **Arguments:**
 
 - Target application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
-- Domain type (1 byte):
-  - `0x00` for the default domain
-  - `0x01` for a custom domain
-  - `0xA0` for the desktop environment domain
-  - `0xA1` for the filesystem manager domain
-  - `0xA2` for the filesystem items opener domain
-- [Domain name](../services.md#service-domains) if asking to connect to a custom domain (8 bytes)
+- Scope type (1 byte):
+  - `0x00` for the default service
+  - `0x01` for a scoped service
+  - `0xA0` for the desktop environment service
+  - `0xA1` for the filesystem manager service
+  - `0xA2` for the filesystem items opener service
+- [Scope name](../services.md#scoped-services) if asking to connect to a custom scoped (8 bytes)
 - Command code (2 bytes)
 
 **Return value:**
@@ -503,16 +503,16 @@ _None_
 - `0x20`: The process which requested the connection already terminated
 - `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 2000ms)
 
-### `0x2E` HAS_SERVICE_DOMAIN
+### `0x2E` HAS_SCOPED_SERVICE
 
 **Arguments:**
 
 - Target application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
-- [Domain name](../services.md#service-domains) (8 bytes) - fill with zeroes for the default domain
+- [Scope name](../services.md#scoped-services) (8 bytes) - fill with zeroes to check the default service
 
 **Return value:**
 
-- `0x01` if the provided domain exists, `0x00` otherwise
+- `0x01` if the application has a service for the provided scope, `0x00` otherwise
 
 **Errors:**
 

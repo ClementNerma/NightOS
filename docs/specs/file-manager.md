@@ -12,7 +12,7 @@
     - [`0x20` GENERATE_THUMBNAIL](#0x20-generate_thumbnail)
     - [`0x21` CAN_GENERATE_THUMBNAIL](#0x21-can_generate_thumbnail)
 
-A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose a domain service named `SYS_FMAN` with standardized methods.
+A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose a scoped service named `SYS_FMAN` with standardized methods.
 
 Applications can indicate themselves as file manager by specifying an `SYS_FMAN` service in their [manifest](applications/manifest.md).
 

@@ -4,6 +4,7 @@ This document presents how files are stored in NightOS.
 
 - [Presentation](#presentation)
 - [Naming](#naming)
+- [Paths' size limit](#paths-size-limit)
 - [Symbolic links](#symbolic-links)
   - [Concept](#concept)
   - [Cyclic symlinks](#cyclic-symlinks)
@@ -27,6 +28,12 @@ Three partitions are used to store the data:
 ## Naming
 
 Filenames can use absolutely any Unicode character, _except_ slahes and the `NULL` character (`U+0000`).
+
+## Paths' size limit
+
+Paths' length is encoded on 2 bytes, allowing up to 65 534 characters plus the `NULL` character.
+
+This limit exists to avoid too costly string copies on path manipulation, while being long enough for the very large majority of use cases.
 
 ## Symbolic links
 

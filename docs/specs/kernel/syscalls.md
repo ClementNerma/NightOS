@@ -36,6 +36,7 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x38` MAP_AMS](#0x38-map_ams)
   - [`0x39` UNMAP_AMS](#0x39-unmap_ams)
   - [`0x3A` SET_DMA_MEM_ACCESS](#0x3a-set_dma_mem_access)
+  - [`0x90` RAND_INT](#0x90-rand_int)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` PROCESS_ATTRIBUTES](#0xd0-process_attributes)
   - [`0xD1` SET_PRIORITY](#0xd1-set_priority)
@@ -781,6 +782,18 @@ _None_
 - `0x20`: The provided device SDI was not found
 - `0x21`: The provided device is not compatible with DMA
 - `0x22`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+
+### `0x90` RAND_INT
+
+Generate a random number. In the vast majority of cases, this should only be called once per process, to serve as the seed of a local random number generator (RNG).
+
+Unless entropy level is set to `0`, hardware sensors are used to add entropy during the number's generation, while remaining fast enough to be used when initializing a process. The higher the provided level is, the higher the entropy will be but the slower the generation will be. For most cases, the recommanded value is `127`.
+
+**Arguments:**
+
+- Lower bound (8 bytes)
+- Higher bound (8 bytes)
+- Entropy level (1 byte)
 
 ### `0xA0` EXECUTION_CONTEXT
 

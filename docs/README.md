@@ -75,6 +75,21 @@ The list of default applications and their description can be found [here](appli
 - [Signals](specs/kernel/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
 - [System calls](specs/kernel/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
 
+### [Scoped services](specs/scoped-services/)
+
+- [File managers](specs/scoped-services/file-manager.md) - how file managers are integrated into the system
+
+### [System services](specs/system-services/)
+
+- [`sys::fs`](specs/system-services/fs.md) - the filesystem service
+- [`sys::hw`](specs/system-services/hw.md) - the hardware service
+- [`sys::perm`](specs/system-services/perm.md) - the permissions service
+- [`sys::net`](specs/system-services/net.md) - the network service
+- [`sys::crypto`](specs/system-services/crypto.md) - the cryptography service
+- [`sys::crashsave`](specs/system-services/crashsave.md) - the [crash saves](features/crash-saves.md) service
+- [`sys::flow`](specs/system-services/flow.md) - the [flows](specs/filesystem.md#flows) service
+- [`sys::hydre`](specs/system-services/hydre.md) - the [shell (Hydre)](specs/shell.md) service
+
 ## User Experience
 
 - [Desktop environments](ux/desktop-environment.md)

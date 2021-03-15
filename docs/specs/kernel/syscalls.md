@@ -47,7 +47,6 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x53` WRITE_TLS_SLOT](#0x53-write_tls_slot)
   - [`0x54` DELETE_TLS_SLOT](#0x54-delete_tls_slot)
   - [`0x5F` EXIT_THREAD](#0x5f-exit_thread)
-  - [`0x90` RAND_INT](#0x90-rand_int)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` SYS_PROCESS_ATTRIBUTES](#0xd0-sys_process_attributes)
   - [`0xD1` SYS_SET_PRIORITY](#0xd1-sys_set_priority)
@@ -994,18 +993,6 @@ _None_ (never returns)
 **Errors:**
 
 _None_
-
-### `0x90` RAND_INT
-
-Generate a random number. In the vast majority of cases, this should only be called once per process, to serve as the seed of a local random number generator (RNG).
-
-Unless entropy level is set to `0`, hardware sensors are used to add entropy during the number's generation, while remaining fast enough to be used when initializing a process. The higher the provided level is, the higher the entropy will be but the slower the generation will be. For most cases, the recommanded value is `127`.
-
-**Arguments:**
-
-- Lower bound (8 bytes)
-- Higher bound (8 bytes)
-- Entropy level (1 byte)
 
 ### `0xA0` EXECUTION_CONTEXT
 

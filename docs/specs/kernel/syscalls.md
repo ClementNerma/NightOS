@@ -462,9 +462,8 @@ If the current process already has an active connection (a connection that hasn'
 **Return value:**
 
 - Unique connection ID (8 bytes)
-- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
+- [Service socket](ipc.md#service-sockets) identifier (8 bytes)
 - Flexible mode (1 byte): `0x00` by default, `0x01` returns the existing connection ID if an active connection is already in place with the service instead of failing
-- Flexible mode (1 byte): `0x00` by default, `0x01` returns the existing connection ID an active connection is already in place with the service
 
 **Errors:**
 
@@ -477,7 +476,7 @@ If the current process already has an active connection (a connection that hasn'
 
 ### `0x2B` END_SERVICE_CONN
 
-Tell a service to properly close the connection. The associated [pipe](ipc.md#pipes) SC and RC channels will immediatly be closed.
+Tell a service to properly close the connection. The associated [service socke](ipc.md#service-sockets) will immediatly be closed.
 
 **Arguments:**
 
@@ -496,7 +495,7 @@ _None_
 ### `0x2C` ACCEPT_SERVICE_CONN
 
 Confirm the current service accepts the connection with a client.  
-A dedicated message pipe's SC and another's RC will be provided to communicate with the client.
+A dedicated service socket identifier will be provided to communicate with the client.
 
 This will create a new [client thread](../services.md#thread-types) in the current process, which is meant to be dedicated to this specific client.  
 The client thread will not receive any [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) signal, only [dispatcher thread](../services.md#thread-types) will.
@@ -510,8 +509,7 @@ When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#
 **Return value:**
 
 - `0x00` if the current process is now the associated client's thread, `0x01` else
-- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
-- [Pipe](ipc.md#pipes) SC identifier (8 bytes)
+- [Service socket](ipc.md#service-sockets) identifier (8 bytes)
 
 **Errors:**
 

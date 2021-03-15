@@ -66,7 +66,7 @@ When a client thread receives on these two signals, it is expected to end as soo
 
 ## System services
 
-You can find the list of all system services in the [related directory](services/README.md).
+You can find the list of all system services in the [related directory](system-services/README.md).
 
 ## Third-party communication
 

@@ -11,7 +11,7 @@ _Permissions_ allow users to finely control what applications can access, and ad
 
 By default, an application has for only right to run code. It cannot interact with any external resource in any way (which means: no window creation, no filesystem/network access, ...).
 
-When an app wants to get a permission, it asks [the system to give it](../specs/services/perm.md).
+When an app wants to get a permission, it asks [the system to give it](../specs/system-services/perm.md).
 
 ## Levels of permissions
 

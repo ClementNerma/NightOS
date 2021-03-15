@@ -55,10 +55,10 @@ The _raw device descriptor_ (RDD) is a data structure (up to 264 bytes) made of 
 - [CII](#connection-interface-identifier) (4 bytes)
 - [CSDD](#connection-specific-device-descriptor) (up to 256 bytes)
 
-This descriptor is then used by the [`sys::hw`](../services/hw.md) service to expose the device to the rest of the operating system.
+This descriptor is then used by the [`sys::hw`](../system-services/hw.md) service to expose the device to the rest of the operating system.
 
 ## Drivers
 
-Drivers and software <-> hardware devices communications are handled by the [`sys::hw`](../services/hw.md) system service.
+Drivers and software <-> hardware devices communications are handled by the [`sys::hw`](../system-services/hw.md) system service.
 
-You can find more about how drivers work in [this section](../services/hw.md#drivers).
+You can find more about how drivers work in [this section](../system-services/hw.md#drivers).

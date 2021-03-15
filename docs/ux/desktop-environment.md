@@ -28,7 +28,7 @@ Layers are indexed, starting from `0` with the lowest priority.
 
 Unlike other operating systems, [DEA](#desktop-environment-applications) can only access their own data and cannot manipulate the data inside other applications, even graphically.
 
-Desktop environments rely on the [`sys::ui`](../specs/services/ui.md) system service to control the data they display.
+Desktop environments rely on the [`sys::ui`](../specs/system-services/ui.md) system service to control the data they display.
 
 This service provides them several [methods and events](../specs/services.md#communication), mainly to:
 

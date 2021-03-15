@@ -49,4 +49,4 @@ Below is the list of applications that are installed (by default) during the ins
 
 ## System services
 
-System services are listed in their own [specifications directory](../specs/services/).
+System services are listed in their own [specifications directory](../specs/system-services/).

@@ -170,7 +170,7 @@
                         <h1 id="services"><a class="header" href="#services">Services</a></h1>
 <p>This document describes the architecture of <a href="../technical/services.html">services</a>, as well as the list of all system services and their main features.</p>
 <ul>
-<li><a href="#service-domains">Service domains</a></li>
+<li><a href="#scoped-services">Scoped services</a></li>
 <li><a href="#architecture-of-a-service">Architecture of a service</a>
 <ul>
 <li><a href="#connections">Connections</a></li>
@@ -182,12 +182,12 @@
 <li><a href="#system-services">System services</a></li>
 <li><a href="#third-party-communication">Third-party communication</a></li>
 </ul>
-<h2 id="service-domains"><a class="header" href="#service-domains">Service domains</a></h2>
-<p>An application can expose a <em>main service</em>, which is used as the default one, but also <em>domain services</em>, which are used either by the system or between applications as a convention for exposing specific methods and notifications.</p>
-<p>A domain's name is made of up to 8 extended ASCII characters.</p>
-<p>Domains whose conventions are established by the system are prefixed by <code>SYS_</code>. Each application exposing such a service will be get special recognition for the tasks associated to this domain service. Also, this prefix is reserved for such domains and cannot be used for custom ones.</p>
+<h2 id="scoped-services"><a class="header" href="#scoped-services">Scoped services</a></h2>
+<p>An application can expose a <em>main service</em>, which is used as the default one, as well as <em>scoped services</em>, which are used either by the system or between applications as a convention for exposing specific methods and notifications.</p>
+<p>A scope's name is made of up to 8 extended ASCII characters.</p>
+<p>Scope whose conventions are established by the system are prefixed by <code>SYS_</code>. Each application exposing such a service will be get special recognition for the tasks associated to this scope service. Also, this prefix is reserved for such scopes and cannot be used for custom ones.</p>
 <h2 id="architecture-of-a-service"><a class="header" href="#architecture-of-a-service">Architecture of a service</a></h2>
-<p>Applications have exactly one running service per domain, and each service has exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.</p>
+<p>Applications have exactly one running service per scope, and each service has exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.</p>
 <p>An application process can tell if it was started as a service or not by looking at its <a href="applications/context.html#execution-context">execution context</a>.</p>
 <p>Once a service process indicates it's ready using the <a href="kernel/syscalls.html#0x04-ready"><code>READY</code></a> syscall, other processes will be able to <em>connect</em> to this service.</p>
 <h3 id="connections"><a class="header" href="#connections">Connections</a></h3>

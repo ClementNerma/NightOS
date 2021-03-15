@@ -399,7 +399,7 @@ Native applications which are <em>not</em> system applications can be removed, t
 <h2 id="services"><a class="header" href="#services">Services</a></h2>
 <p>Application can provide <a href="concepts/../technical/services.html">services</a> by specifying them in their <a href="concepts/../specs/applications/manifest.html">manifest</a>.
 The services will be run at startup with the usual application's permissions.</p>
-<p>There is exactly one process for the main service and one for each <a href="concepts/../specs/services.html#service-domains">domain</a> service per active user.</p>
+<p>There is exactly one process for the main service and one for each <a href="concepts/../specs/services.html#scoped-services">scope</a> service per active user.</p>
 <h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
 <p><em>Libraries</em> allow to share a program between multiple applications.</p>
 <ul>
@@ -1167,7 +1167,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <ul>
 <li>Bit 0: set if the application is starting for the very first time since it was installed</li>
 <li>Bit 1: set if the application is starting for the very first time for this specific user</li>
-<li>Bit 2: set if the application is starting for the very first time as this main or domain service</li>
+<li>Bit 2: set if the application is starting for the very first time as this main or scoped service</li>
 <li>Bit 3: set if the application is starting for the first time after an update</li>
 <li>Bit 4: set if other instances of this application are running</li>
 </ul>
@@ -1240,8 +1240,8 @@ commands: {}
 services:
   # [REQ] Does the application expose a main service?
   main: false
-  # [REQ] List of domain services
-  domains: []
+  # [REQ] List of scoped services
+  scoped: []
 
 # [OPT] Additional informations
 additional:
@@ -1272,7 +1272,7 @@ additional:
 </ul>
 </li>
 </ul>
-<p>A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose a domain service named <code>SYS_FMAN</code> with standardized methods.</p>
+<p>A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose a scoped service named <code>SYS_FMAN</code> with standardized methods.</p>
 <p>Applications can indicate themselves as file manager by specifying an <code>SYS_FMAN</code> service in their <a href="specs/applications/manifest.html">manifest</a>.</p>
 <p>The end user chooses a single file manager (called the <em>default</em> file manager) between all available ones, whose service will be used by other applications.</p>
 <h2 id="file-manager-paths"><a class="header" href="#file-manager-paths">File manager paths</a></h2>
@@ -3544,7 +3544,7 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 <h1 id="services-2"><a class="header" href="#services-2">Services</a></h1>
 <p>This document describes the architecture of <a href="specs/../technical/services.html">services</a>, as well as the list of all system services and their main features.</p>
 <ul>
-<li><a href="specs/services.html#service-domains">Service domains</a></li>
+<li><a href="specs/services.html#scoped-services">Scoped services</a></li>
 <li><a href="specs/services.html#architecture-of-a-service">Architecture of a service</a>
 <ul>
 <li><a href="specs/services.html#connections">Connections</a></li>
@@ -3556,12 +3556,12 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 <li><a href="specs/services.html#system-services">System services</a></li>
 <li><a href="specs/services.html#third-party-communication">Third-party communication</a></li>
 </ul>
-<h2 id="service-domains"><a class="header" href="#service-domains">Service domains</a></h2>
-<p>An application can expose a <em>main service</em>, which is used as the default one, but also <em>domain services</em>, which are used either by the system or between applications as a convention for exposing specific methods and notifications.</p>
-<p>A domain's name is made of up to 8 extended ASCII characters.</p>
-<p>Domains whose conventions are established by the system are prefixed by <code>SYS_</code>. Each application exposing such a service will be get special recognition for the tasks associated to this domain service. Also, this prefix is reserved for such domains and cannot be used for custom ones.</p>
+<h2 id="scoped-services"><a class="header" href="#scoped-services">Scoped services</a></h2>
+<p>An application can expose a <em>main service</em>, which is used as the default one, as well as <em>scoped services</em>, which are used either by the system or between applications as a convention for exposing specific methods and notifications.</p>
+<p>A scope's name is made of up to 8 extended ASCII characters.</p>
+<p>Scope whose conventions are established by the system are prefixed by <code>SYS_</code>. Each application exposing such a service will be get special recognition for the tasks associated to this scope service. Also, this prefix is reserved for such scopes and cannot be used for custom ones.</p>
 <h2 id="architecture-of-a-service"><a class="header" href="#architecture-of-a-service">Architecture of a service</a></h2>
-<p>Applications have exactly one running service per domain, and each service has exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.</p>
+<p>Applications have exactly one running service per scope, and each service has exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.</p>
 <p>An application process can tell if it was started as a service or not by looking at its <a href="specs/applications/context.html#execution-context">execution context</a>.</p>
 <p>Once a service process indicates it's ready using the <a href="specs/kernel/syscalls.html#0x04-ready"><code>READY</code></a> syscall, other processes will be able to <em>connect</em> to this service.</p>
 <h3 id="connections"><a class="header" href="#connections">Connections</a></h3>
@@ -4173,7 +4173,7 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0x2b-end_service_conn"><code>0x2B</code> END_SERVICE_CONN</a></li>
 <li><a href="specs/kernel/syscalls.html#0x2c-accept_service_conn"><code>0x2C</code> ACCEPT_SERVICE_CONN</a></li>
 <li><a href="specs/kernel/syscalls.html#0x2d-reject_service_conn"><code>0x2D</code> REJECT_SERVICE_CONN</a></li>
-<li><a href="specs/kernel/syscalls.html#0x2e-has_service_domain"><code>0x2E</code> HAS_SERVICE_DOMAIN</a></li>
+<li><a href="specs/kernel/syscalls.html#0x2e-has_scoped_service"><code>0x2E</code> HAS_SCOPED_SERVICE</a></li>
 <li><a href="specs/kernel/syscalls.html#0x30-mem_alloc"><code>0x30</code> MEM_ALLOC</a></li>
 <li><a href="specs/kernel/syscalls.html#0x31-mem_free"><code>0x31</code> MEM_FREE</a></li>
 <li><a href="specs/kernel/syscalls.html#0x32-virt_mem_ams"><code>0x32</code> VIRT_MEM_AMS</a></li>
@@ -4516,16 +4516,16 @@ Triggers the <a href="specs/kernel/signals.html#0x29-serv_sock_closed"><code>SER
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Target application's <a href="specs/kernel/../applications-libraries.html#application-identifier">ANID</a> (4 bytes)</li>
-<li>Domain type (1 byte):
+<li>Scope type (1 byte):
 <ul>
-<li><code>0x00</code> for the default domain</li>
-<li><code>0x01</code> for a custom domain</li>
-<li><code>0xA0</code> for the desktop environment domain</li>
-<li><code>0xA1</code> for the filesystem manager domain</li>
-<li><code>0xA2</code> for the filesystem items opener domain</li>
+<li><code>0x00</code> for the default service</li>
+<li><code>0x01</code> for a scoped service</li>
+<li><code>0xA0</code> for the desktop environment service</li>
+<li><code>0xA1</code> for the filesystem manager service</li>
+<li><code>0xA2</code> for the filesystem items opener service</li>
 </ul>
 </li>
-<li><a href="specs/kernel/../services.html#service-domains">Domain name</a> if asking to connect to a custom domain (8 bytes)</li>
+<li><a href="specs/kernel/../services.html#scoped-services">Scope name</a> if asking to connect to a custom scoped (8 bytes)</li>
 <li>Command code (2 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -4592,15 +4592,15 @@ The client thread will not receive any <a href="specs/kernel/signals.html#0x2a-s
 <li><code>0x20</code>: The process which requested the connection already terminated</li>
 <li><code>0x30</code>: Answer was given after the delay set in the <a href="specs/kernel/../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
 </ul>
-<h3 id="0x2e-has_service_domain"><a class="header" href="#0x2e-has_service_domain"><code>0x2E</code> HAS_SERVICE_DOMAIN</a></h3>
+<h3 id="0x2e-has_scoped_service"><a class="header" href="#0x2e-has_scoped_service"><code>0x2E</code> HAS_SCOPED_SERVICE</a></h3>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Target application's <a href="specs/kernel/../applications-libraries.html#application-identifier">ANID</a> (4 bytes)</li>
-<li><a href="specs/kernel/../services.html#service-domains">Domain name</a> (8 bytes) - fill with zeroes for the default domain</li>
+<li><a href="specs/kernel/../services.html#scoped-services">Scope name</a> (8 bytes) - fill with zeroes to check the default service</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
-<li><code>0x01</code> if the provided domain exists, <code>0x00</code> otherwise</li>
+<li><code>0x01</code> if the application has a service for the provided scope, <code>0x00</code> otherwise</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>

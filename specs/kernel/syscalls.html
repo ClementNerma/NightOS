@@ -191,7 +191,7 @@
 <li><a href="#0x2b-end_service_conn"><code>0x2B</code> END_SERVICE_CONN</a></li>
 <li><a href="#0x2c-accept_service_conn"><code>0x2C</code> ACCEPT_SERVICE_CONN</a></li>
 <li><a href="#0x2d-reject_service_conn"><code>0x2D</code> REJECT_SERVICE_CONN</a></li>
-<li><a href="#0x2e-has_service_domain"><code>0x2E</code> HAS_SERVICE_DOMAIN</a></li>
+<li><a href="#0x2e-has_scoped_service"><code>0x2E</code> HAS_SCOPED_SERVICE</a></li>
 <li><a href="#0x30-mem_alloc"><code>0x30</code> MEM_ALLOC</a></li>
 <li><a href="#0x31-mem_free"><code>0x31</code> MEM_FREE</a></li>
 <li><a href="#0x32-virt_mem_ams"><code>0x32</code> VIRT_MEM_AMS</a></li>
@@ -534,16 +534,16 @@ Triggers the <a href="signals.html#0x29-serv_sock_closed"><code>SERV_SOCK_CLOSED
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Target application's <a href="../applications-libraries.html#application-identifier">ANID</a> (4 bytes)</li>
-<li>Domain type (1 byte):
+<li>Scope type (1 byte):
 <ul>
-<li><code>0x00</code> for the default domain</li>
-<li><code>0x01</code> for a custom domain</li>
-<li><code>0xA0</code> for the desktop environment domain</li>
-<li><code>0xA1</code> for the filesystem manager domain</li>
-<li><code>0xA2</code> for the filesystem items opener domain</li>
+<li><code>0x00</code> for the default service</li>
+<li><code>0x01</code> for a scoped service</li>
+<li><code>0xA0</code> for the desktop environment service</li>
+<li><code>0xA1</code> for the filesystem manager service</li>
+<li><code>0xA2</code> for the filesystem items opener service</li>
 </ul>
 </li>
-<li><a href="../services.html#service-domains">Domain name</a> if asking to connect to a custom domain (8 bytes)</li>
+<li><a href="../services.html#scoped-services">Scope name</a> if asking to connect to a custom scoped (8 bytes)</li>
 <li>Command code (2 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -610,15 +610,15 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 <li><code>0x20</code>: The process which requested the connection already terminated</li>
 <li><code>0x30</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
 </ul>
-<h3 id="0x2e-has_service_domain"><a class="header" href="#0x2e-has_service_domain"><code>0x2E</code> HAS_SERVICE_DOMAIN</a></h3>
+<h3 id="0x2e-has_scoped_service"><a class="header" href="#0x2e-has_scoped_service"><code>0x2E</code> HAS_SCOPED_SERVICE</a></h3>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Target application's <a href="../applications-libraries.html#application-identifier">ANID</a> (4 bytes)</li>
-<li><a href="../services.html#service-domains">Domain name</a> (8 bytes) - fill with zeroes for the default domain</li>
+<li><a href="../services.html#scoped-services">Scope name</a> (8 bytes) - fill with zeroes to check the default service</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
-<li><code>0x01</code> if the provided domain exists, <code>0x00</code> otherwise</li>
+<li><code>0x01</code> if the application has a service for the provided scope, <code>0x00</code> otherwise</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>

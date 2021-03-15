@@ -4,6 +4,7 @@ This document presents how files are stored in NightOS.
 
 - [Presentation](#presentation)
 - [Naming](#naming)
+- [Element unique identifier](#element-unique-identifier)
 - [Paths' size limit](#paths-size-limit)
 - [Symbolic links](#symbolic-links)
   - [Concept](#concept)
@@ -28,6 +29,14 @@ Three partitions are used to store the data:
 ## Naming
 
 Filenames can use absolutely any Unicode character, _except_ slahes and the `NULL` character (`U+0000`).
+
+## Element unique identifier
+
+Each filesystem item has an 8-byte identifier, called the _**F**ilesystem **E**lement **Id**entifier_ (FEID).
+
+It is only unique in the filesystem the item is stored in.
+
+Note that some filesystem do not support this identifier.
 
 ## Paths' size limit
 

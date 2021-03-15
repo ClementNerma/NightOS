@@ -10,7 +10,7 @@ Permissions are split across different categories:
 
 - _Basic_ (B): basic permissions, like windows creation, which are granted automatically by default ;
 - _Implicit_ (I): permissions implied by the usage of an application, like opening a file with an application grants it an access while the application is running ;
-- _Global_ (G): modifying non-critical parts of the state of the system, like controlling the global volume or reading
+- _Global_ (G): accessing and modifying non-critical parts of the state of the system, like controlling the global volume or reading
 - _Sensitive_ (S): accessing sensitive informations, like filesystem or network access ;
 - _Privacy_ (P): accessing privacy-related data, like microphone or webcam access
 
@@ -97,3 +97,45 @@ For praticity purpose, the list of device patterns is converted to a human-reada
 - (B) `system.clock.uptime`: get the system's uptime
 - (S) `system.user.name.read`: get the current user's name
 - (S) `system.user.avatar.read`: get the current user's avatar
+
+- (B) `system.hw.cpu.count`: get the number of CPUs
+- (G) `system.hw.cpu.list`: list CPUs (model, frequency, etc.)
+- (B) `system.hw.mem.total`: get the amount of total memory
+- (B) `system.hw.mem.available`: get the amount of available memory
+- (G) `system.hw.mem.slots`: get the number of RAM slots
+- (G) `system.hw.mem.list`: list RAM slots (model, frequency, etc.)
+
+### Hardware interfaces
+
+- (S) `hwmid.keyboard.write`: simulate key presses
+- (P) `hwmid.keyboard.read`: read key presses from the keyboard
+- (S) `hwmid.pointer.write`: simulate actions from pointer devices
+- (P) `hwmid.pointer.read`: read actions from pointer devices
+- (P) `hwmid.video.read`: access video input streams (cameras, ...)
+- (P) `hwmid.audio.read`: access audio input streams (microphones, ...)
+- (P) `hwmid.screen.read`: read portions of the screen as image buffers (screenshots, ...)
+- (I) `hwmid.screen.read_self`: read portions of the current application's windows (screenshots, ...)
+
+### State
+
+- (B) `state.laptop.is`: check if the device is a laptop
+- (B) `state.laptop.is_open`: check if the laptop is physically opened
+- (B) `state.battery.has`: check if the device has a battery
+- (B) `state.battery.level`: check the battery level
+- (B) `state.battery.is_charging`: check if the battery is charging
+- (B) `state.battery.is_full`: check if the battery is considered full
+- (B) `state.battery.is_critical`: check if the battery is at a critically low level
+- (B) `state.battery.estimated_remaining`: get the remaining running time estimated by the system in minutes
+
+### Programs
+
+- (S) + {A} `programs.running.processes`: get the list of running processes
+- (S) + {A} `programs.running.windows`: get informations on each running application's windows
+- (S) `programs.running.apps`: get the list of running applications
+
+### System-reserved permissions
+
+These permissions are reserved to processes [marked as system](kernel/processes.md#process-attributes).
+
+- `sysapp.process.kill`: suspend or kill external processes
+- `sysapp.process.signal`: send a signal to an external process

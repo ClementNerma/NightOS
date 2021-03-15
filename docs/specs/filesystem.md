@@ -3,6 +3,7 @@
 This document presents how files are stored in NightOS.
 
 - [Presentation](#presentation)
+- [Naming](#naming)
 - [Symbolic links](#symbolic-links)
   - [Concept](#concept)
   - [Cyclic symlinks](#cyclic-symlinks)
@@ -22,6 +23,10 @@ Three partitions are used to store the data:
 * One **FAT32** partition for the bootloader ;
 * One **Btrfs** partition for the system (`/sys` and `/etc`) ;
 * One **Btrfs** partition for users' data (`/apps` and `/home`)
+
+## Naming
+
+Filenames can use absolutely any Unicode character, _except_ slahes and the `NULL` character (`U+0000`).
 
 ## Symbolic links
 

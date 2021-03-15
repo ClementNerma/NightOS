@@ -246,10 +246,10 @@ Once the input data have been fully transmitted, the CMDIN pipe is closed.</p>
 <h3 id="user-inputs"><a class="header" href="#user-inputs">User inputs</a></h3>
 <p>All user inputs (including raw keystrokes) are transmitted to CMDUSR, except a few ones:</p>
 <ul>
-<li><code>Ctrl-.</code>, which asks the process to suspend (triggers the <a href="kernel/signals.html#0x10-suspend"><code>SUSPEND</code></a> signal)</li>
-<li><code>Ctrl-Shift-.</code>, which forces the process to suspend (triggers the <a href="kernel/signals.html#0x11-will_suspend"><code>WILL_SUSPEND</code></a> signal)</li>
-<li><code>Ctrl-C</code>, which asks the process to terminate (triggers the <a href="kernel/signals.html#0x12-terminate"><code>TERMINATE</code></a> signal)</li>
-<li><code>Ctrl-Shift-C</code>, which forces the process to terminate (triggers the <a href="kernel/signals.html#0x13-will_terminate"><code>WILL_TERMINATE</code></a> signal)</li>
+<li><code>Ctrl-.</code>, which asks the process to suspend (triggers the <a href="kernel/signals.html#0x44-suspend"><code>SUSPEND</code></a> signal)</li>
+<li><code>Ctrl-Shift-.</code>, which forces the process to suspend (triggers the <a href="kernel/signals.html#0x45-will_suspend"><code>WILL_SUSPEND</code></a> signal)</li>
+<li><code>Ctrl-C</code>, which asks the process to terminate (triggers the <a href="kernel/signals.html#0x4e-terminate"><code>TERMINATE</code></a> signal)</li>
+<li><code>Ctrl-Shift-C</code>, which forces the process to terminate (triggers the <a href="kernel/signals.html#0x4f-will_terminate"><code>WILL_TERMINATE</code></a> signal)</li>
 <li>Custom GUI keystrokes like <code>Alt-F4</code></li>
 <li>System-handled keystrokes like <code>Ctrl+Alt+Del</code></li>
 </ul>

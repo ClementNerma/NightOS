@@ -226,7 +226,7 @@
 </ul>
 <p>Comparatively, when a process has a high priority, other processes will run a tad slower.</p>
 <h3 id="automatic-priority-attribution"><a class="header" href="#automatic-priority-attribution">Automatic priority attribution</a></h3>
-<p>Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the <a href="syscalls.html#0xd1-set_priority"><code>SET_PRIORITY</code></a> syscall.</p>
+<p>Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the <a href="syscalls.html#0xd1-sys_set_priority"><code>SYS_SET_PRIORITY</code></a> syscall.</p>
 <p>The priority is determined based on multiple factors:</p>
 <ul>
 <li>Does the process have a fullscreen window?</li>

@@ -1162,7 +1162,8 @@ It indicates why the application was started and so what it is supposed to do.</
 </li>
 <li>The application's <a href="specs/applications/../applications-libraries.html#application-identifier">ANID</a> (4 bytes)</li>
 </ul>
-<p>If the command was not started a command, the context ends here. Else, it also contains the following informations:</p>
+<p>If the application was started by itself, this block is followed by optional data communicated by the parent process called the <em>initialization data</em>, on 8 bytes.</p>
+<p>Else, if the command was started as a command, it also contains the following informations:</p>
 <ul>
 <li>The ANID of the caller application (4 bytes)</li>
 <li>The number of arguments the process was started with (1 byte)</li>
@@ -1659,10 +1660,10 @@ Once the input data have been fully transmitted, the CMDIN pipe is closed.</p>
 <h3 id="user-inputs"><a class="header" href="#user-inputs">User inputs</a></h3>
 <p>All user inputs (including raw keystrokes) are transmitted to CMDUSR, except a few ones:</p>
 <ul>
-<li><code>Ctrl-.</code>, which asks the process to suspend (triggers the <a href="specs/kernel/signals.html#0x10-suspend"><code>SUSPEND</code></a> signal)</li>
-<li><code>Ctrl-Shift-.</code>, which forces the process to suspend (triggers the <a href="specs/kernel/signals.html#0x11-will_suspend"><code>WILL_SUSPEND</code></a> signal)</li>
-<li><code>Ctrl-C</code>, which asks the process to terminate (triggers the <a href="specs/kernel/signals.html#0x12-terminate"><code>TERMINATE</code></a> signal)</li>
-<li><code>Ctrl-Shift-C</code>, which forces the process to terminate (triggers the <a href="specs/kernel/signals.html#0x13-will_terminate"><code>WILL_TERMINATE</code></a> signal)</li>
+<li><code>Ctrl-.</code>, which asks the process to suspend (triggers the <a href="specs/kernel/signals.html#0x44-suspend"><code>SUSPEND</code></a> signal)</li>
+<li><code>Ctrl-Shift-.</code>, which forces the process to suspend (triggers the <a href="specs/kernel/signals.html#0x45-will_suspend"><code>WILL_SUSPEND</code></a> signal)</li>
+<li><code>Ctrl-C</code>, which asks the process to terminate (triggers the <a href="specs/kernel/signals.html#0x4e-terminate"><code>TERMINATE</code></a> signal)</li>
+<li><code>Ctrl-Shift-C</code>, which forces the process to terminate (triggers the <a href="specs/kernel/signals.html#0x4f-will_terminate"><code>WILL_TERMINATE</code></a> signal)</li>
 <li>Custom GUI keystrokes like <code>Alt-F4</code></li>
 <li>System-handled keystrokes like <code>Ctrl+Alt+Del</code></li>
 </ul>
@@ -3512,7 +3513,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 </ul>
 <p>Comparatively, when a process has a high priority, other processes will run a tad slower.</p>
 <h3 id="automatic-priority-attribution"><a class="header" href="#automatic-priority-attribution">Automatic priority attribution</a></h3>
-<p>Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the <a href="specs/kernel/syscalls.html#0xd1-set_priority"><code>SET_PRIORITY</code></a> syscall.</p>
+<p>Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the <a href="specs/kernel/syscalls.html#0xd1-sys_set_priority"><code>SYS_SET_PRIORITY</code></a> syscall.</p>
 <p>The priority is determined based on multiple factors:</p>
 <ul>
 <li>Does the process have a fullscreen window?</li>
@@ -3698,10 +3699,6 @@ Their length is determined when the message is sent which, coupled to <a href="s
 <ul>
 <li><a href="specs/kernel/signals.html#0x01-handler_fault"><code>0x01</code> HANDLER_FAULT</a></li>
 <li><a href="specs/kernel/signals.html#0x02-mem_fault"><code>0x02</code> MEM_FAULT</a></li>
-<li><a href="specs/kernel/signals.html#0x10-suspend"><code>0x10</code> SUSPEND</a></li>
-<li><a href="specs/kernel/signals.html#0x11-will_suspend"><code>0x11</code> WILL_SUSPEND</a></li>
-<li><a href="specs/kernel/signals.html#0x12-terminate"><code>0x12</code> TERMINATE</a></li>
-<li><a href="specs/kernel/signals.html#0x13-will_terminate"><code>0x13</code> WILL_TERMINATE</a></li>
 <li><a href="specs/kernel/signals.html#0x20-recv_pipe"><code>0x20</code> RECV_PIPE</a></li>
 <li><a href="specs/kernel/signals.html#0x21-pipe_closed"><code>0x21</code> PIPE_CLOSED</a></li>
 <li><a href="specs/kernel/signals.html#0x26-recv_serv_sock"><code>0x26</code> RECV_SERV_SOCK</a></li>
@@ -3715,6 +3712,10 @@ Their length is determined when the message is sent which, coupled to <a href="s
 <li><a href="specs/kernel/signals.html#0x34-write_backed_ams"><code>0x34</code> WRITE_BACKED_AMS</a></li>
 <li><a href="specs/kernel/signals.html#0x35-recv_shared_ams"><code>0x35</code> RECV_SHARED_AMS</a></li>
 <li><a href="specs/kernel/signals.html#0x37-unshared_ams"><code>0x37</code> UNSHARED_AMS</a></li>
+<li><a href="specs/kernel/signals.html#0x44-suspend"><code>0x44</code> SUSPEND</a></li>
+<li><a href="specs/kernel/signals.html#0x45-will_suspend"><code>0x45</code> WILL_SUSPEND</a></li>
+<li><a href="specs/kernel/signals.html#0x4e-terminate"><code>0x4E</code> TERMINATE</a></li>
+<li><a href="specs/kernel/signals.html#0x4f-will_terminate"><code>0x4F</code> WILL_TERMINATE</a></li>
 </ul>
 </li>
 </ul>
@@ -3756,23 +3757,6 @@ If the sending of this signal to the process results to another fault, it's call
 <li><code>0x03</code>: tried to execute memory</li>
 </ul>
 </li>
-</ul>
-<h3 id="0x10-suspend"><a class="header" href="#0x10-suspend"><code>0x10</code> SUSPEND</a></h3>
-<p>Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the <a href="specs/kernel/syscalls.html#0x12-suspend"><code>SUSPEND</code></a> syscall.</p>
-<h3 id="0x11-will_suspend"><a class="header" href="#0x11-will_suspend"><code>0x11</code> WILL_SUSPEND</a></h3>
-<p>Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.</p>
-<p><strong>Datafield:</strong></p>
-<ul>
-<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.signals.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
-</ul>
-<h3 id="0x12-terminate"><a class="header" href="#0x12-terminate"><code>0x12</code> TERMINATE</a></h3>
-<p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="specs/kernel/syscalls.html#0x13-exit"><code>EXIT</code></a> syscall).</p>
-<h3 id="0x13-will_terminate"><a class="header" href="#0x13-will_terminate"><code>0x13</code> WILL_TERMINATE</a></h3>
-<p>Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.</p>
-<p>If no handler is registered for this signal, it will kill the process when received.</p>
-<p><strong>Datafield:</strong></p>
-<ul>
-<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.signals.terminate_delay</code> key (default: 2s) (2 bytes)</li>
 </ul>
 <h3 id="0x20-recv_pipe"><a class="header" href="#0x20-recv_pipe"><code>0x20</code> RECV_PIPE</a></h3>
 <p>Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.<br />
@@ -3929,6 +3913,23 @@ The associated RC and SC are immediatly closed.</p>
 </ul>
 </li>
 </ul>
+<h3 id="0x44-suspend"><a class="header" href="#0x44-suspend"><code>0x44</code> SUSPEND</a></h3>
+<p>Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the <a href="specs/kernel/syscalls.html#0x44-suspend"><code>SUSPEND</code></a> syscall.</p>
+<h3 id="0x45-will_suspend"><a class="header" href="#0x45-will_suspend"><code>0x45</code> WILL_SUSPEND</a></h3>
+<p>Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.signals.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
+</ul>
+<h3 id="0x4e-terminate"><a class="header" href="#0x4e-terminate"><code>0x4E</code> TERMINATE</a></h3>
+<p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="specs/kernel/syscalls.html#0x4f-exit"><code>EXIT</code></a> syscall).</p>
+<h3 id="0x4f-will_terminate"><a class="header" href="#0x4f-will_terminate"><code>0x4F</code> WILL_TERMINATE</a></h3>
+<p>Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.</p>
+<p>If no handler is registered for this signal, it will kill the process when received.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.signals.terminate_delay</code> key (default: 2s) (2 bytes)</li>
+</ul>
 <h1 id="system-calls"><a class="header" href="#system-calls">System calls</a></h1>
 <p><em>System calls</em>, abbreviated <em>syscalls</em>, are a type of <a href="specs/kernel/kpc.html">KPC</a>. They allow a process to ask the kernel to perform an action.</p>
 <ul>
@@ -3939,9 +3940,6 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0x02-unhandle_signal"><code>0x02</code> UNHANDLE_SIGNAL</a></li>
 <li><a href="specs/kernel/syscalls.html#0x03-is_signal_handled"><code>0x03</code> IS_SIGNAL_HANDLED</a></li>
 <li><a href="specs/kernel/syscalls.html#0x04-ready"><code>0x04</code> READY</a></li>
-<li><a href="specs/kernel/syscalls.html#0x10-get_pid"><code>0x10</code> GET_PID</a></li>
-<li><a href="specs/kernel/syscalls.html#0x12-suspend"><code>0x12</code> SUSPEND</a></li>
-<li><a href="specs/kernel/syscalls.html#0x13-exit"><code>0x13</code> EXIT</a></li>
 <li><a href="specs/kernel/syscalls.html#0x20-open_pipe"><code>0x20</code> OPEN_PIPE</a></li>
 <li><a href="specs/kernel/syscalls.html#0x21-send_pipe"><code>0x21</code> SEND_PIPE</a></li>
 <li><a href="specs/kernel/syscalls.html#0x22-pipe_write"><code>0x22</code> PIPE_WRITE</a></li>
@@ -3967,12 +3965,19 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0x38-map_ams"><code>0x38</code> MAP_AMS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x40-create_process"><code>0x40</code> CREATE_PROCESS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x41-wait_process"><code>0x41</code> WAIT_PROCESS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x42-kill_process"><code>0x42</code> KILL_PROCESS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x43-get_pid"><code>0x43</code> GET_PID</a></li>
+<li><a href="specs/kernel/syscalls.html#0x44-suspend"><code>0x44</code> SUSPEND</a></li>
+<li><a href="specs/kernel/syscalls.html#0x44-unsuspend"><code>0x44</code> UNSUSPEND</a></li>
+<li><a href="specs/kernel/syscalls.html#0x4f-exit"><code>0x4F</code> EXIT</a></li>
 <li><a href="specs/kernel/syscalls.html#0x90-rand_int"><code>0x90</code> RAND_INT</a></li>
 <li><a href="specs/kernel/syscalls.html#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></li>
-<li><a href="specs/kernel/syscalls.html#0xd0-process_attributes"><code>0xD0</code> PROCESS_ATTRIBUTES</a></li>
-<li><a href="specs/kernel/syscalls.html#0xd1-set_priority"><code>0xD1</code> SET_PRIORITY</a></li>
-<li><a href="specs/kernel/syscalls.html#0xd2-enum_devices"><code>0xD2</code> ENUM_DEVICES</a></li>
-<li><a href="specs/kernel/syscalls.html#0xd3-device_infos"><code>0xD3</code> DEVICE_INFOS</a></li>
+<li><a href="specs/kernel/syscalls.html#0xd0-sys_process_attributes"><code>0xD0</code> SYS_PROCESS_ATTRIBUTES</a></li>
+<li><a href="specs/kernel/syscalls.html#0xd1-sys_set_priority"><code>0xD1</code> SYS_SET_PRIORITY</a></li>
+<li><a href="specs/kernel/syscalls.html#0xd2-sys_enum_devices"><code>0xD2</code> SYS_ENUM_DEVICES</a></li>
+<li><a href="specs/kernel/syscalls.html#0xd3-sys_device_infos"><code>0xD3</code> SYS_DEVICE_INFOS</a></li>
 </ul>
 </li>
 </ul>
@@ -4005,6 +4010,7 @@ When performing a syscall, the process will put in a specific CPU register an ad
 <li><code>0x20</code> to <code>0x29</code>: pipes</li>
 <li><code>0x2A</code> to <code>0x2F</code>: services communication</li>
 <li><code>0x30</code> to <code>0x3F</code>: memory management</li>
+<li><code>0x40</code> to <code>0x4F</code>: processes management</li>
 <li><code>0xA0</code> to <code>0xAF</code>: applications-related syscalls</li>
 <li><code>0xD0</code> to <code>0xDF</code>: reserved to system services</li>
 </ul>
@@ -4064,38 +4070,6 @@ If the address pointed by this syscall's is not executable by the current proces
 <ul>
 <li><code>0x20</code>: The process already told it was ready</li>
 </ul>
-<h3 id="0x10-get_pid"><a class="header" href="#0x10-get_pid"><code>0x10</code> GET_PID</a></h3>
-<p>Get the current process' PID.</p>
-<p><strong>Arguments:</strong></p>
-<p><em>None</em></p>
-<p><strong>Return value:</strong></p>
-<ul>
-<li>Current process' PID (8 bytes)</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<p><em>None</em></p>
-<h3 id="0x12-suspend"><a class="header" href="#0x12-suspend"><code>0x12</code> SUSPEND</a></h3>
-<p><a href="specs/kernel/../../features/balancer.html#application-processes-suspension">Suspend</a> the current process.</p>
-<p><strong>Arguments:</strong></p>
-<p><em>None</em></p>
-<p><strong>Return value:</strong></p>
-<ul>
-<li>Amount of time the process was suspended, in milliseconds (8 bytes)</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x20</code>: the current process is not an application process</li>
-</ul>
-<h3 id="0x13-exit"><a class="header" href="#0x13-exit"><code>0x13</code> EXIT</a></h3>
-<p>Kill the current process.</p>
-<p>A <a href="specs/kernel/signals.html#0x2b-service_client_closed"><code>SERVICE_CLIENT_CLOSED</code></a> signal is sent to all services connection the process has.<br />
-If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-service_server_quitted"><code>SERVICE_SERVER_QUITTED</code></a> signal is sent to all active clients.</p>
-<p><strong>Arguments:</strong></p>
-<p><em>None</em></p>
-<p><strong>Return value:</strong></p>
-<p><em>None</em> (never returns)</p>
-<p><strong>Errors:</strong></p>
-<p><em>None</em></p>
 <h3 id="0x20-open_pipe"><a class="header" href="#0x20-open_pipe"><code>0x20</code> OPEN_PIPE</a></h3>
 <p>Open a pipe with a process of the same application and running under the same user and get its SC.<br />
 The buffer size multiplier indicates the size of the pipe's buffer, multiplied by 64 KB. The default (<code>0</code>) falls back to a size of 64 KB.<br />
@@ -4321,9 +4295,8 @@ Triggers the <a href="specs/kernel/signals.html#0x29-serv_sock_closed"><code>SER
 <p><strong>Return value:</strong></p>
 <ul>
 <li>Unique connection ID (8 bytes)</li>
-<li><a href="specs/kernel/ipc.html#pipes">Pipe</a> SC identifier (8 bytes)</li>
-<li><a href="specs/kernel/ipc.html#pipes">Pipe</a> RC identifier (8 bytes)</li>
-<li>Flexible mode (1 byte): <code>0x00</code> by default, <code>0x01</code> returns the existing connection ID an active connection is already in place with the service</li>
+<li><a href="specs/kernel/ipc.html#service-sockets">Service socket</a> identifier (8 bytes)</li>
+<li>Flexible mode (1 byte): <code>0x00</code> by default, <code>0x01</code> returns the existing connection ID if an active connection is already in place with the service instead of failing</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
@@ -4335,7 +4308,7 @@ Triggers the <a href="specs/kernel/signals.html#0x29-serv_sock_closed"><code>SER
 <li><code>0x31</code>: Service rejected the connection request</li>
 </ul>
 <h3 id="0x2b-end_service_conn"><a class="header" href="#0x2b-end_service_conn"><code>0x2B</code> END_SERVICE_CONN</a></h3>
-<p>Tell a service to properly close the connection. The associated <a href="specs/kernel/ipc.html#pipes">pipe</a> SC and RC channels will immediatly be closed.</p>
+<p>Tell a service to properly close the connection. The associated <a href="specs/kernel/ipc.html#service-sockets">service socke</a> will immediatly be closed.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Unique connection ID (8 bytes)</li>
@@ -4350,7 +4323,7 @@ Triggers the <a href="specs/kernel/signals.html#0x29-serv_sock_closed"><code>SER
 </ul>
 <h3 id="0x2c-accept_service_conn"><a class="header" href="#0x2c-accept_service_conn"><code>0x2C</code> ACCEPT_SERVICE_CONN</a></h3>
 <p>Confirm the current service accepts the connection with a client.<br />
-A dedicated message pipe's SC and another's RC will be provided to communicate with the client.</p>
+A dedicated service socket identifier will be provided to communicate with the client.</p>
 <p>This will create a new <a href="specs/kernel/../services.html#thread-types">client thread</a> in the current process, which is meant to be dedicated to this specific client.<br />
 The client thread will not receive any <a href="specs/kernel/signals.html#0x2a-service_conn_request"><code>SERVICE_CONN_REQUEST</code></a> signal, only <a href="specs/kernel/../services.html#thread-types">dispatcher thread</a> will.</p>
 <p>When the associated client terminates, the <a href="specs/kernel/signals.html#0x2b-service_client_closed"><code>SERVICE_CLIENT_CLOSED</code></a> signal is sent to this thread.</p>
@@ -4361,8 +4334,7 @@ The client thread will not receive any <a href="specs/kernel/signals.html#0x2a-s
 <p><strong>Return value:</strong></p>
 <ul>
 <li><code>0x00</code> if the current process is now the associated client's thread, <code>0x01</code> else</li>
-<li><a href="specs/kernel/ipc.html#pipes">Pipe</a> RC identifier (8 bytes)</li>
-<li><a href="specs/kernel/ipc.html#pipes">Pipe</a> SC identifier (8 bytes)</li>
+<li><a href="specs/kernel/ipc.html#service-sockets">Service socket</a> identifier (8 bytes)</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
@@ -4591,6 +4563,103 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x21</code>: The provided device is not compatible with DMA</li>
 <li><code>0x22</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
 </ul>
+<h3 id="0x40-create_process"><a class="header" href="#0x40-create_process"><code>0x40</code> CREATE_PROCESS</a></h3>
+<p>Create a child process from the current one. The new process gets a separate memory space.</p>
+<p>Communication can be done through <a href="specs/kernel/ipc.html">standard IPC</a>.</p>
+<p>The initialization data is joined as part of the <a href="specs/kernel/../applications/context.html">application's context</a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Initialization data (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Process identifier (PID) (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: The current process is not an application process</li>
+<li><code>0x30</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
+</ul>
+<h3 id="0x41-wait_process"><a class="header" href="#0x41-wait_process"><code>0x41</code> WAIT_PROCESS</a></h3>
+<p>Wait for a child process to terminate.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Process identifier (8 bytes)</li>
+<li>Timeout in milliseconds (2 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>Empty</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: The provided PID does not exist or does not belong to the current application</li>
+</ul>
+<h3 id="0x42-kill_process"><a class="header" href="#0x42-kill_process"><code>0x42</code> KILL_PROCESS</a></h3>
+<p>Kill a child process, which will first receive the <a href="specs/kernel/signals.html#0x4f-will_terminate"><code>WILL_TERMINATE</code></a> signal.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Process identifier (8 bytes)</li>
+<li>Timeout in milliseconds (2 bytes) - if <code>0</code>, will use the system's global default value (<a href="specs/kernel/../registry.html">registry's</a> <code>system.signals.terminate_delay</code>)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Process' return value (provided through <a href="specs/kernel/syscalls.html#0x4f-exit"><code>EXIT_PROCESS</code></a>, <code>0</code> otherwise)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
+</ul>
+<h3 id="0x43-get_pid"><a class="header" href="#0x43-get_pid"><code>0x43</code> GET_PID</a></h3>
+<p>Get the current process' PID.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Current process' PID (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x44-suspend-1"><a class="header" href="#0x44-suspend-1"><code>0x44</code> SUSPEND</a></h3>
+<p><a href="specs/kernel/../../features/balancer.html#application-processes-suspension">Suspend</a> the current process or a child process.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>PID to suspend (8 bytes) - <code>0</code> for the current process</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Amount of time the process was suspended, in milliseconds (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: the current process is not an application process</li>
+<li><code>0x21</code>: the current PID was not found or is not a child of the current process</li>
+</ul>
+<h3 id="0x44-unsuspend"><a class="header" href="#0x44-unsuspend"><code>0x44</code> UNSUSPEND</a></h3>
+<p><a href="specs/kernel/../../features/balancer.html#application-processes-suspension">Unsuspend</a> a child process.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>PID to unsuspend (8 bytes) - <code>0</code> for the current process</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Amount of time the process was suspended, in milliseconds (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: the current process is not an application process</li>
+<li><code>0x21</code>: the current PID was not found or is not a child of the current process</li>
+</ul>
+<h3 id="0x4f-exit"><a class="header" href="#0x4f-exit"><code>0x4F</code> EXIT</a></h3>
+<p>Kill the current process.</p>
+<p>A <a href="specs/kernel/signals.html#0x2b-service_client_closed"><code>SERVICE_CLIENT_CLOSED</code></a> signal is sent to all services connection the process has.<br />
+If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-service_server_quitted"><code>SERVICE_SERVER_QUITTED</code></a> signal is sent to all active clients.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Return value (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em> (never returns)</p>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
 <h3 id="0x90-rand_int"><a class="header" href="#0x90-rand_int"><code>0x90</code> RAND_INT</a></h3>
 <p>Generate a random number. In the vast majority of cases, this should only be called once per process, to serve as the seed of a local random number generator (RNG).</p>
 <p>Unless entropy level is set to <code>0</code>, hardware sensors are used to add entropy during the number's generation, while remaining fast enough to be used when initializing a process. The higher the provided level is, the higher the entropy will be but the slower the generation will be. For most cases, the recommanded value is <code>127</code>.</p>
@@ -4626,7 +4695,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x10</code>: invalid information number provided</li>
 <li><code>0x20</code>: caller process is a system service</li>
 </ul>
-<h3 id="0xd0-process_attributes"><a class="header" href="#0xd0-process_attributes"><code>0xD0</code> PROCESS_ATTRIBUTES</a></h3>
+<h3 id="0xd0-sys_process_attributes"><a class="header" href="#0xd0-sys_process_attributes"><code>0xD0</code> SYS_PROCESS_ATTRIBUTES</a></h3>
 <p>System service-only syscall.<br />
 Get a process' <a href="specs/kernel/processes.html#process-attributes">attributes</a>.</p>
 <p><strong>Arguments:</strong></p>
@@ -4691,7 +4760,7 @@ Get a process' <a href="specs/kernel/processes.html#process-attributes">attribut
 <li><code>0x21</code>: This system service is not allowed to access or edit this attribute</li>
 <li><code>0x22</code>: Provided index is out-of-bounds</li>
 </ul>
-<h3 id="0xd1-set_priority"><a class="header" href="#0xd1-set_priority"><code>0xD1</code> SET_PRIORITY</a></h3>
+<h3 id="0xd1-sys_set_priority"><a class="header" href="#0xd1-sys_set_priority"><code>0xD1</code> SYS_SET_PRIORITY</a></h3>
 <p>System service-only syscall.<br />
 Set the priority of a process.<br />
 If the set priority is different than <code>0</code>, the kernel won't adjust the priority automatically anymore.<br />
@@ -4709,7 +4778,7 @@ Setting it to <code>0</code> will reset it to the kernel's choice.</p>
 <li><code>0x20</code>: Caller process is not a system service</li>
 <li><code>0x21</code>: Provided PID was not found</li>
 </ul>
-<h3 id="0xd2-enum_devices"><a class="header" href="#0xd2-enum_devices"><code>0xD2</code> ENUM_DEVICES</a></h3>
+<h3 id="0xd2-sys_enum_devices"><a class="header" href="#0xd2-sys_enum_devices"><code>0xD2</code> SYS_ENUM_DEVICES</a></h3>
 <p>System service-only syscall.<br />
 List devices matching a provided CII.</p>
 <p>For each device, its SDI (4 bytes) is written to the provided address.</p>
@@ -4727,7 +4796,7 @@ List devices matching a provided CII.</p>
 <ul>
 <li><code>0x10</code>: Invalid connection type in CII</li>
 </ul>
-<h3 id="0xd3-device_infos"><a class="header" href="#0xd3-device_infos"><code>0xD3</code> DEVICE_INFOS</a></h3>
+<h3 id="0xd3-sys_device_infos"><a class="header" href="#0xd3-sys_device_infos"><code>0xD3</code> SYS_DEVICE_INFOS</a></h3>
 <p>System service-only syscall.<br />
 Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device descriptor</a> of a single device.</p>
 <p><strong>Arguments:</strong></p>

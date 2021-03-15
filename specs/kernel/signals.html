@@ -175,10 +175,6 @@
 <ul>
 <li><a href="#0x01-handler_fault"><code>0x01</code> HANDLER_FAULT</a></li>
 <li><a href="#0x02-mem_fault"><code>0x02</code> MEM_FAULT</a></li>
-<li><a href="#0x10-suspend"><code>0x10</code> SUSPEND</a></li>
-<li><a href="#0x11-will_suspend"><code>0x11</code> WILL_SUSPEND</a></li>
-<li><a href="#0x12-terminate"><code>0x12</code> TERMINATE</a></li>
-<li><a href="#0x13-will_terminate"><code>0x13</code> WILL_TERMINATE</a></li>
 <li><a href="#0x20-recv_pipe"><code>0x20</code> RECV_PIPE</a></li>
 <li><a href="#0x21-pipe_closed"><code>0x21</code> PIPE_CLOSED</a></li>
 <li><a href="#0x26-recv_serv_sock"><code>0x26</code> RECV_SERV_SOCK</a></li>
@@ -192,6 +188,10 @@
 <li><a href="#0x34-write_backed_ams"><code>0x34</code> WRITE_BACKED_AMS</a></li>
 <li><a href="#0x35-recv_shared_ams"><code>0x35</code> RECV_SHARED_AMS</a></li>
 <li><a href="#0x37-unshared_ams"><code>0x37</code> UNSHARED_AMS</a></li>
+<li><a href="#0x44-suspend"><code>0x44</code> SUSPEND</a></li>
+<li><a href="#0x45-will_suspend"><code>0x45</code> WILL_SUSPEND</a></li>
+<li><a href="#0x4e-terminate"><code>0x4E</code> TERMINATE</a></li>
+<li><a href="#0x4f-will_terminate"><code>0x4F</code> WILL_TERMINATE</a></li>
 </ul>
 </li>
 </ul>
@@ -233,23 +233,6 @@ If the sending of this signal to the process results to another fault, it's call
 <li><code>0x03</code>: tried to execute memory</li>
 </ul>
 </li>
-</ul>
-<h3 id="0x10-suspend"><a class="header" href="#0x10-suspend"><code>0x10</code> SUSPEND</a></h3>
-<p>Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the <a href="syscalls.html#0x12-suspend"><code>SUSPEND</code></a> syscall.</p>
-<h3 id="0x11-will_suspend"><a class="header" href="#0x11-will_suspend"><code>0x11</code> WILL_SUSPEND</a></h3>
-<p>Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.</p>
-<p><strong>Datafield:</strong></p>
-<ul>
-<li><a href="../registry.html">Registry</a>'s <code>system.signals.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
-</ul>
-<h3 id="0x12-terminate"><a class="header" href="#0x12-terminate"><code>0x12</code> TERMINATE</a></h3>
-<p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="syscalls.html#0x13-exit"><code>EXIT</code></a> syscall).</p>
-<h3 id="0x13-will_terminate"><a class="header" href="#0x13-will_terminate"><code>0x13</code> WILL_TERMINATE</a></h3>
-<p>Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.</p>
-<p>If no handler is registered for this signal, it will kill the process when received.</p>
-<p><strong>Datafield:</strong></p>
-<ul>
-<li><a href="../registry.html">Registry</a>'s <code>system.signals.terminate_delay</code> key (default: 2s) (2 bytes)</li>
 </ul>
 <h3 id="0x20-recv_pipe"><a class="header" href="#0x20-recv_pipe"><code>0x20</code> RECV_PIPE</a></h3>
 <p>Sent to a process when another process of the same application and running under the same user opened an pipe with this process, giving it the other part.<br />
@@ -405,6 +388,23 @@ The associated RC and SC are immediatly closed.</p>
 <li><code>0x01</code> if the other process brutally terminated</li>
 </ul>
 </li>
+</ul>
+<h3 id="0x44-suspend"><a class="header" href="#0x44-suspend"><code>0x44</code> SUSPEND</a></h3>
+<p>Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the <a href="syscalls.html#0x44-suspend"><code>SUSPEND</code></a> syscall.</p>
+<h3 id="0x45-will_suspend"><a class="header" href="#0x45-will_suspend"><code>0x45</code> WILL_SUSPEND</a></h3>
+<p>Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="../registry.html">Registry</a>'s <code>system.signals.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
+</ul>
+<h3 id="0x4e-terminate"><a class="header" href="#0x4e-terminate"><code>0x4E</code> TERMINATE</a></h3>
+<p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="syscalls.html#0x4f-exit"><code>EXIT</code></a> syscall).</p>
+<h3 id="0x4f-will_terminate"><a class="header" href="#0x4f-will_terminate"><code>0x4F</code> WILL_TERMINATE</a></h3>
+<p>Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.</p>
+<p>If no handler is registered for this signal, it will kill the process when received.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="../registry.html">Registry</a>'s <code>system.signals.terminate_delay</code> key (default: 2s) (2 bytes)</li>
 </ul>
 
                     </main>

@@ -463,7 +463,7 @@ If the current process already has an active connection (a connection that hasn'
 
 - Unique connection ID (8 bytes)
 - [Pipe](ipc.md#pipes) SC identifier (8 bytes)
-- [Pipe](ipc.md#pipes) RC identifier (8 bytes)
+- Flexible mode (1 byte): `0x00` by default, `0x01` returns the existing connection ID if an active connection is already in place with the service instead of failing
 - Flexible mode (1 byte): `0x00` by default, `0x01` returns the existing connection ID an active connection is already in place with the service
 
 **Errors:**

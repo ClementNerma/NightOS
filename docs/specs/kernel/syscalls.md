@@ -784,7 +784,7 @@ Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md
 
 **Return value:**
 
-- Process' return value (provided through [`EXIT_PROCESS`](#0x4f-exit), `0` otherwise)
+- Process' exit data (provided through [`EXIT_PROCESS`](#0x4f-exit), `0` otherwise)
 
 **Errors:**
 
@@ -849,7 +849,7 @@ If the current process is a service, a [`SERVICE_SERVER_QUITTED`](signals.md#0x2
 
 **Arguments:**
 
-- Return value (8 bytes)
+- Exit data (8 bytes)
 
 **Return value:**
 

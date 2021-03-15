@@ -59,6 +59,7 @@
     - [System calls](specs/kernel/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
   - [Scoped services](specs/scoped-services/README.md)
     - [File managers](specs/scoped-services/file-manager.md) - scoped service of file managers
+    - [Filesystem openers](specs/scoped-services/filesystem-opener.md) - scoped service of filesystem openers
   - [System services](specs/system-services/README.md)
     - [`sys::fs`](specs/system-services/fs.md)
     - [`sys::hw`](specs/system-services/hw.md)

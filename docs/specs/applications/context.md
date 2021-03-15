@@ -41,9 +41,7 @@ The context header is stored as a single block of data, consisting of:
   - Bit 3: set if other instances of this application are running
 - The application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
 
-If the application was started by itself, this block is followed by optional data communicated by the parent process called the _initialization data_, on 8 bytes.
-
-Else, if the command was started as a command, it also contains the following informations:
+If the command was started as a command, it also contains the following informations:
 
 - The ANID of the caller application (4 bytes)
 - The number of arguments the process was started with (1 byte)

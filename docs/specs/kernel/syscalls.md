@@ -34,11 +34,11 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x39` UNMAP_AMS](#0x39-unmap_ams)
   - [`0x3A` SET_DMA_MEM_ACCESS](#0x3a-set_dma_mem_access)
   - [`0x40` CREATE_PROCESS](#0x40-create_process)
-  - [`0x41` WAIT_PROCESS](#0x41-wait_process)
-  - [`0x42` KILL_PROCESS](#0x42-kill_process)
+  - [`0x41` WAIT_CHILD_PROCESS](#0x41-wait_child_process)
+  - [`0x42` KILL_CHILD_PROCESS](#0x42-kill_child_process)
   - [`0x43` GET_PID](#0x43-get_pid)
   - [`0x44` SUSPEND](#0x44-suspend)
-  - [`0x44` UNSUSPEND](#0x44-unsuspend)
+  - [`0x45` UNSUSPEND](#0x45-unsuspend)
   - [`0x4F` EXIT](#0x4f-exit)
   - [`0x90` RAND_INT](#0x90-rand_int)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
@@ -749,14 +749,16 @@ The initialization data is joined as part of the [application's context](../appl
 
 **Return value:**
 
-- Process identifier (PID) (8 bytes)
+- Child process identifier (8 bytes)
+- Identity (1 byte): `0x00` if the current thread is the parent, `0x01` for the child
+- Initialization data (8 bytes) - `0` for the parent
 
 **Errors:**
 
 - `0x20`: The current process is not an application process
 - `0x30`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
 
-### `0x41` WAIT_PROCESS
+### `0x41` WAIT_CHILD_PROCESS
 
 Wait for a child process to terminate.
 
@@ -773,7 +775,7 @@ _Empty_
 
 - `0x20`: The provided PID does not exist or does not belong to the current application
 
-### `0x42` KILL_PROCESS
+### `0x42` KILL_CHILD_PROCESS
 
 Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md#0x4f-will_terminate) signal.
 
@@ -823,7 +825,7 @@ _None_
 - `0x20`: the current process is not an application process
 - `0x21`: the current PID was not found or is not a child of the current process
 
-### `0x44` UNSUSPEND
+### `0x45` UNSUSPEND
 
 [Unsuspend](../../features/balancer.md#application-processes-suspension) a child process.
 

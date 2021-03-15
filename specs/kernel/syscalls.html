@@ -216,7 +216,6 @@
 <li><a href="#0x53-write_tls_slot"><code>0x53</code> WRITE_TLS_SLOT</a></li>
 <li><a href="#0x54-delete_tls_slot"><code>0x54</code> DELETE_TLS_SLOT</a></li>
 <li><a href="#0x5f-exit_thread"><code>0x5F</code> EXIT_THREAD</a></li>
-<li><a href="#0x90-rand_int"><code>0x90</code> RAND_INT</a></li>
 <li><a href="#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></li>
 <li><a href="#0xd0-sys_process_attributes"><code>0xD0</code> SYS_PROCESS_ATTRIBUTES</a></li>
 <li><a href="#0xd1-sys_set_priority"><code>0xD1</code> SYS_SET_PRIORITY</a></li>
@@ -1011,15 +1010,6 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><em>None</em> (never returns)</p>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3 id="0x90-rand_int"><a class="header" href="#0x90-rand_int"><code>0x90</code> RAND_INT</a></h3>
-<p>Generate a random number. In the vast majority of cases, this should only be called once per process, to serve as the seed of a local random number generator (RNG).</p>
-<p>Unless entropy level is set to <code>0</code>, hardware sensors are used to add entropy during the number's generation, while remaining fast enough to be used when initializing a process. The higher the provided level is, the higher the entropy will be but the slower the generation will be. For most cases, the recommanded value is <code>127</code>.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li>Lower bound (8 bytes)</li>
-<li>Higher bound (8 bytes)</li>
-<li>Entropy level (1 byte)</li>
-</ul>
 <h3 id="0xa0-execution_context"><a class="header" href="#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></h3>
 <p>Get informations from the application's <a href="../applications/context.html">execution context</a>.</p>
 <p><strong>Arguments:</strong></p>

@@ -3967,6 +3967,7 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0x38-map_ams"><code>0x38</code> MAP_AMS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x90-rand_int"><code>0x90</code> RAND_INT</a></li>
 <li><a href="specs/kernel/syscalls.html#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd0-process_attributes"><code>0xD0</code> PROCESS_ATTRIBUTES</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd1-set_priority"><code>0xD1</code> SET_PRIORITY</a></li>
@@ -4589,6 +4590,15 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x20</code>: The provided device SDI was not found</li>
 <li><code>0x21</code>: The provided device is not compatible with DMA</li>
 <li><code>0x22</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
+</ul>
+<h3 id="0x90-rand_int"><a class="header" href="#0x90-rand_int"><code>0x90</code> RAND_INT</a></h3>
+<p>Generate a random number. In the vast majority of cases, this should only be called once per process, to serve as the seed of a local random number generator (RNG).</p>
+<p>Unless entropy level is set to <code>0</code>, hardware sensors are used to add entropy during the number's generation, while remaining fast enough to be used when initializing a process. The higher the provided level is, the higher the entropy will be but the slower the generation will be. For most cases, the recommanded value is <code>127</code>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Lower bound (8 bytes)</li>
+<li>Higher bound (8 bytes)</li>
+<li>Entropy level (1 byte)</li>
 </ul>
 <h3 id="0xa0-execution_context"><a class="header" href="#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></h3>
 <p>Get informations from the application's <a href="specs/kernel/../applications/context.html">execution context</a>.</p>

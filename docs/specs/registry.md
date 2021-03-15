@@ -151,7 +151,7 @@ system(struct):
     # Delay before termination
     terminate_delay(time(ms)): 2000ms
     # Delay for services to answer connections
-    service_answer_delay(time(ms)): 1000ms
+    service_answer_delay(time(ms)): 2000ms
 
 # Users (keys = user's unique identifier, value = user's type with 0 = main admin., 1 = admin., 2 = standard, 3 = guest)
 # Detailed informations about each user (nickname, privileges, encryption password, ...) and groups are stored

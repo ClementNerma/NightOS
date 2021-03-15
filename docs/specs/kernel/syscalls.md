@@ -476,7 +476,7 @@ When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#
 
 - `0x10`: This request ID does not exist
 - `0x20`: The process which requested the connection already terminated
-- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 1000ms)
+- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 2000ms)
 
 ### `0x2D` REJECT_SERVICE_CONN
 
@@ -494,7 +494,7 @@ _None_
 
 - `0x10`: This request ID does not exist
 - `0x20`: The process which requested the connection already terminated
-- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 1000ms)
+- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 2000ms)
 
 ### `0x30` MEM_ALLOC
 

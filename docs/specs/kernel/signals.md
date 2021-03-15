@@ -164,7 +164,7 @@ If no handler is registered for this signal, it will kill the process when recei
 - Callee process' ID (8 bytes)
 - Connection's unique request ID (8 bytes)
 - Command code (2 bytes)
-- [Registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 1000ms) (2 bytes)
+- [Registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 2000ms) (2 bytes)
 
 ### `0x2B` SERVICE_CLIENT_CLOSED
 

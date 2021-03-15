@@ -26,7 +26,7 @@ When a process wants to connect to a service, it uses the [`CONNECT_SERVICE`](ke
 
 The service process then receives the request through the [`SERVICE_CONN_REQUEST`](kernel/signals.md#0x2a-service_conn_request).
 
-It is expected to answer under a short delay specified in the [registry](registry.md)'s `system.processes.service_answer_delay` key (1000 ms by default).
+It is expected to answer under a short delay specified in the [registry](registry.md)'s `system.processes.service_answer_delay` key (2000 ms by default).
 
 If the service refuses the connection, it provides its answer through the [`REJECT_SERVICE_CONN`](kernel/syscalls.md#0x2d-reject_service_conn) syscall, and the procedure stops here.
 

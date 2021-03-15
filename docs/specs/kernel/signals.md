@@ -164,7 +164,7 @@ If no handler is registered for this signal, it will kill the process when recei
 - Callee process' ID (8 bytes)
 - Connection's unique request ID (8 bytes)
 - Command code (2 bytes)
-- [Registry](../registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms) (2 bytes)
+- [Registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 1000ms) (2 bytes)
 
 ### `0x2B` SERVICE_CLIENT_CLOSED
 
@@ -253,7 +253,7 @@ Sent when the process is asked to suspend. If it is not suspended after the prov
 
 **Datafield:**
 
-- [Registry](../registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
+- [Registry](../registry.md)'s `system.processes.suspend_delay` key (default: 500ms) (2 bytes)
 
 ### `0x4E` TERMINATE
 
@@ -267,4 +267,4 @@ If no handler is registered for this signal, it will kill the process when recei
 
 **Datafield:**
 
-- [Registry](../registry.md)'s `system.signals.terminate_delay` key (default: 2s) (2 bytes)
+- [Registry](../registry.md)'s `system.processes.terminate_delay` key (default: 2s) (2 bytes)

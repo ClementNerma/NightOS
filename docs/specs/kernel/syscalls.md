@@ -476,7 +476,7 @@ When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#
 
 - `0x10`: This request ID does not exist
 - `0x20`: The process which requested the connection already terminated
-- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
+- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 1000ms)
 
 ### `0x2D` REJECT_SERVICE_CONN
 
@@ -494,7 +494,7 @@ _None_
 
 - `0x10`: This request ID does not exist
 - `0x20`: The process which requested the connection already terminated
-- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.signals.service_answer_delay` key (default: 1000ms)
+- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 1000ms)
 
 ### `0x30` MEM_ALLOC
 
@@ -789,7 +789,7 @@ Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md
 **Arguments:**
 
 - Process identifier (8 bytes)
-- Timeout in milliseconds (2 bytes) - if `0`, will use the system's global default value ([registry's](../registry.md) `system.signals.terminate_delay`)
+- Timeout in milliseconds (2 bytes) - if `0`, will use the system's global default value ([registry's](../registry.md) `system.processes.terminate_delay`)
 
 **Return value:**
 

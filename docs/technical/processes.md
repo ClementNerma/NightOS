@@ -28,6 +28,8 @@ Each process is ran as a specific user, which determines the maximum allowed sco
 
 A process can create _child processes_ (it's called a _fork_). The child process will roughly be a 1:1 copy of the parent process, but with its own unique PID.
 
+To avoid copying the whole memory, copy-on-write is used, which means that pages are identical and require no allocation until they are modified, in which case a new page is created and attached to the process in place of the original one.
+
 Child processes automatically inherit their parent's permissions.
 
 When a process exits, all its child processes are immediatly killed. It's up to the process to ensure its children are properly terminated before it.
@@ -36,7 +38,11 @@ When a process exits, all its child processes are immediatly killed. It's up to 
 
 A process can create _threads_, which are still a part of the process. Threads allow to run multiple part of a process concurrently, as the kernel may run several threads in different processor cores.
 
-All threads share the same address space and memory, although they all have a reserved space called the [_thread-local storage_](#thread-local-storage).
+All threads share the same address space and memory, although they also have a reserved space called the [_thread-local storage_](#thread-local-storage).
+
+To avoid copying the whole memory, copy-on-write is used, which means that pages are identical and require no allocation until they are modified, in which case a new page is created and attached to the process in place of the original one.
+
+Also, the stack is local to each thread.
 
 Threads work as a hierarchy ; when a thread creates another, it is called the new thread's _parent_, while the new thread is its _child_. When a thread terminates, all its children are instantly destroyed.
 
@@ -47,6 +53,10 @@ When a process starts, its instruction run its _main thread_. Due to threads bei
 ### Thread-local storage
 
 Threads have a reserved portion of memory in their address space called the _thread-local storage_ (TLS).
+
+It is split into _slots_, which can contain arbitrary amount of data.
+
+Each slot has a unique identifier, which can be used across threads to access TLS data from any thread of the process.
 
 ## Automatic permissions inheritance
 

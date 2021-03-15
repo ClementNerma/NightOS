@@ -20,6 +20,7 @@ Administrator processes can communicate freely with every [userland process](pro
 IPC can be performed through:
 
 - [Pipes](../specs/kernel/ipc.md#pipes)
+- [Service sockets](../specs/kernel/ipc.md#service-sockets)
 - [Shared memory](../specs/kernel/ipc.md#shared-memory)
 
 ## Implementation details

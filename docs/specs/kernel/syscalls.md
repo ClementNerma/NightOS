@@ -8,9 +8,6 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x02` UNHANDLE_SIGNAL](#0x02-unhandle_signal)
   - [`0x03` IS_SIGNAL_HANDLED](#0x03-is_signal_handled)
   - [`0x04` READY](#0x04-ready)
-  - [`0x10` GET_PID](#0x10-get_pid)
-  - [`0x12` SUSPEND](#0x12-suspend)
-  - [`0x13` EXIT](#0x13-exit)
   - [`0x20` OPEN_PIPE](#0x20-open_pipe)
   - [`0x21` SEND_PIPE](#0x21-send_pipe)
   - [`0x22` PIPE_WRITE](#0x22-pipe_write)
@@ -39,7 +36,10 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x40` CREATE_PROCESS](#0x40-create_process)
   - [`0x41` WAIT_PROCESS](#0x41-wait_process)
   - [`0x42` KILL_PROCESS](#0x42-kill_process)
-  - [`0x4F` EXIT_PROCESS](#0x4f-exit_process)
+  - [`0x43` GET_PID](#0x43-get_pid)
+  - [`0x44` SUSPEND](#0x44-suspend)
+  - [`0x44` UNSUSPEND](#0x44-unsuspend)
+  - [`0x4F` EXIT](#0x4f-exit)
   - [`0x90` RAND_INT](#0x90-rand_int)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` PROCESS_ATTRIBUTES](#0xd0-process_attributes)
@@ -161,57 +161,6 @@ _Empty_
 **Errors:**
 
 - `0x20`: The process already told it was ready
-
-### `0x10` GET_PID
-
-Get the current process' PID.
-
-**Arguments:**
-
-_None_
-
-**Return value:**
-
-- Current process' PID (8 bytes)
-
-**Errors:**
-
-_None_
-
-### `0x12` SUSPEND
-
-[Suspend](../../features/balancer.md#application-processes-suspension) the current process.
-
-**Arguments:**
-
-_None_
-
-**Return value:**
-
-- Amount of time the process was suspended, in milliseconds (8 bytes)
-
-**Errors:**
-
-- `0x20`: the current process is not an application process
-
-### `0x13` EXIT
-
-Kill the current process.
-
-A [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to all services connection the process has.  
-If the current process is a service, a [`SERVICE_SERVER_QUITTED`](signals.md#0x2d-service_server_quitted) signal is sent to all active clients.
-
-**Arguments:**
-
-_None_
-
-**Return value:**
-
-_None_ (never returns)
-
-**Errors:**
-
-_None_
 
 ### `0x20` OPEN_PIPE
 
@@ -804,6 +753,7 @@ The initialization data is joined as part of the [application's context](../appl
 
 **Errors:**
 
+- `0x20`: The current process is not an application process
 - `0x30`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
 
 ### `0x41` WAIT_PROCESS
@@ -825,7 +775,7 @@ _Empty_
 
 ### `0x42` KILL_PROCESS
 
-Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md#0x13-will_terminate) signal.
+Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md#0x4f-will_terminate) signal.
 
 **Arguments:**
 
@@ -834,15 +784,68 @@ Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md
 
 **Return value:**
 
-- Process' return value (provided through [`EXIT_PROCESS`](#0x4f-exit_process), `0` otherwise)
+- Process' return value (provided through [`EXIT_PROCESS`](#0x4f-exit), `0` otherwise)
 
 **Errors:**
 
 - `0x30`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
 
-### `0x4F` EXIT_PROCESS
+### `0x43` GET_PID
 
-Terminate the current process.
+Get the current process' PID.
+
+**Arguments:**
+
+_None_
+
+**Return value:**
+
+- Current process' PID (8 bytes)
+
+**Errors:**
+
+_None_
+
+### `0x44` SUSPEND
+
+[Suspend](../../features/balancer.md#application-processes-suspension) the current process or a child process.
+
+**Arguments:**
+
+- PID to suspend (8 bytes) - `0` for the current process
+
+**Return value:**
+
+- Amount of time the process was suspended, in milliseconds (8 bytes)
+
+**Errors:**
+
+- `0x20`: the current process is not an application process
+- `0x21`: the current PID was not found or is not a child of the current process
+
+### `0x44` UNSUSPEND
+
+[Unsuspend](../../features/balancer.md#application-processes-suspension) a child process.
+
+**Arguments:**
+
+- PID to unsuspend (8 bytes) - `0` for the current process
+
+**Return value:**
+
+- Amount of time the process was suspended, in milliseconds (8 bytes)
+
+**Errors:**
+
+- `0x20`: the current process is not an application process
+- `0x21`: the current PID was not found or is not a child of the current process
+
+### `0x4F` EXIT
+
+Kill the current process.
+
+A [`SERVICE_CLIENT_CLOSED`](signals.md#0x2b-service_client_closed) signal is sent to all services connection the process has.  
+If the current process is a service, a [`SERVICE_SERVER_QUITTED`](signals.md#0x2d-service_server_quitted) signal is sent to all active clients.
 
 **Arguments:**
 
@@ -850,7 +853,11 @@ Terminate the current process.
 
 **Return value:**
 
-_Never_
+_None_ (never returns)
+
+**Errors:**
+
+_None_
 
 ### `0x90` RAND_INT
 

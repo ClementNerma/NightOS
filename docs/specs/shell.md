@@ -91,10 +91,10 @@ Once the input data have been fully transmitted, the CMDIN pipe is closed.
 
 All user inputs (including raw keystrokes) are transmitted to CMDUSR, except a few ones:
 
-- `Ctrl-.`, which asks the process to suspend (triggers the [`SUSPEND`](kernel/signals.md#0x10-suspend) signal)
-- `Ctrl-Shift-.`, which forces the process to suspend (triggers the [`WILL_SUSPEND`](kernel/signals.md#0x11-will_suspend) signal)
-- `Ctrl-C`, which asks the process to terminate (triggers the [`TERMINATE`](kernel/signals.md#0x12-terminate) signal)
-- `Ctrl-Shift-C`, which forces the process to terminate (triggers the [`WILL_TERMINATE`](kernel/signals.md#0x13-will_terminate) signal)
+- `Ctrl-.`, which asks the process to suspend (triggers the [`SUSPEND`](kernel/signals.md#0x44-suspend) signal)
+- `Ctrl-Shift-.`, which forces the process to suspend (triggers the [`WILL_SUSPEND`](kernel/signals.md#0x45-will_suspend) signal)
+- `Ctrl-C`, which asks the process to terminate (triggers the [`TERMINATE`](kernel/signals.md#0x4e-terminate) signal)
+- `Ctrl-Shift-C`, which forces the process to terminate (triggers the [`WILL_TERMINATE`](kernel/signals.md#0x4f-will_terminate) signal)
 - Custom GUI keystrokes like `Alt-F4`
 - System-handled keystrokes like `Ctrl+Alt+Del`
 

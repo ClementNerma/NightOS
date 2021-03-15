@@ -6,10 +6,6 @@ _Signals_ are a type of [KPC](kpc.md). They are used by the kernel to send infor
 - [List of signals](#list-of-signals)
   - [`0x01` HANDLER_FAULT](#0x01-handler_fault)
   - [`0x02` MEM_FAULT](#0x02-mem_fault)
-  - [`0x10` SUSPEND](#0x10-suspend)
-  - [`0x11` WILL_SUSPEND](#0x11-will_suspend)
-  - [`0x12` TERMINATE](#0x12-terminate)
-  - [`0x13` WILL_TERMINATE](#0x13-will_terminate)
   - [`0x20` RECV_PIPE](#0x20-recv_pipe)
   - [`0x21` PIPE_CLOSED](#0x21-pipe_closed)
   - [`0x26` RECV_SERV_SOCK](#0x26-recv_serv_sock)
@@ -23,6 +19,10 @@ _Signals_ are a type of [KPC](kpc.md). They are used by the kernel to send infor
   - [`0x34` WRITE_BACKED_AMS](#0x34-write_backed_ams)
   - [`0x35` RECV_SHARED_AMS](#0x35-recv_shared_ams)
   - [`0x37` UNSHARED_AMS](#0x37-unshared_ams)
+  - [`0x44` SUSPEND](#0x44-suspend)
+  - [`0x45` WILL_SUSPEND](#0x45-will_suspend)
+  - [`0x4E` TERMINATE](#0x4e-terminate)
+  - [`0x4F` WILL_TERMINATE](#0x4f-will_terminate)
 
 ## Technical overview
 
@@ -76,32 +76,6 @@ Sent when the process tried to perform an unauthorized access on a memory addres
   - `0x01`: tried to read memory
   - `0x02`: tried to write memory
   - `0x03`: tried to execute memory
-
-### `0x10` SUSPEND
-
-Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the [`SUSPEND`](syscalls.md#0x12-suspend) syscall.
-
-### `0x11` WILL_SUSPEND
-
-Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
-
-**Datafield:**
-
-- [Registry](../registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
-
-### `0x12` TERMINATE
-
-Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the [`EXIT`](syscalls.md#0x13-exit) syscall).
-
-### `0x13` WILL_TERMINATE
-
-Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.
-
-If no handler is registered for this signal, it will kill the process when received.
-
-**Datafield:**
-
-- [Registry](../registry.md)'s `system.signals.terminate_delay` key (default: 2s) (2 bytes)
 
 ### `0x20` RECV_PIPE
 
@@ -268,3 +242,29 @@ Sent to a process when an[abstract memory segment (AMS)](memory.md#abstract-memo
 - Unsharing type (1 byte):
   - `0x00` if the shared memory was unshared properly using the [UNSHARE_AMS](syscalls.md#0x37-unshare_ams) syscall
   - `0x01` if the other process brutally terminated
+
+### `0x44` SUSPEND
+
+Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the [`SUSPEND`](syscalls.md#0x44-suspend) syscall.
+
+### `0x45` WILL_SUSPEND
+
+Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.
+
+**Datafield:**
+
+- [Registry](../registry.md)'s `system.signals.suspend_delay` key (default: 500ms) (2 bytes)
+
+### `0x4E` TERMINATE
+
+Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the [`EXIT`](syscalls.md#0x4f-exit) syscall).
+
+### `0x4F` WILL_TERMINATE
+
+Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.
+
+If no handler is registered for this signal, it will kill the process when received.
+
+**Datafield:**
+
+- [Registry](../registry.md)'s `system.signals.terminate_delay` key (default: 2s) (2 bytes)

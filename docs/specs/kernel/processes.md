@@ -9,6 +9,7 @@ Apart from the kernel itself, all programs run in _processes_.
 - [Performance balancing](#performance-balancing)
   - [Automatic priority attribution](#automatic-priority-attribution)
 - [Drivable devices](#drivable-devices)
+- [Raw permissions](#raw-permissions)
 
 ## Why processes
 
@@ -84,7 +85,7 @@ The goal of this attribute is to determine if the process is allowed to map a de
 
 This attribute is managed by the [`sys::hw`](../services/hw.md) service and can only be updated by this service.
 
-# Raw permissions
+## Raw permissions
 
 _Raw permissions_ are used by system services to determine the permissions of a process without [sending a message](ipc.md#exchanges-and-messages) to the [`sys::perm`](../services/perm.md) service and waiting for its answer, which would be costly in terms of performance.
 

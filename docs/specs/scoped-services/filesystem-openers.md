@@ -4,7 +4,7 @@ A filesystem opener is an application which can associate open specific items. I
 
 The list of openers can be viewed and modified through the [`sys::fs`](../system-services/fs.md).
 
-They are mostly used by the [default file manager](file-manager.md).
+They are mostly used by the [default file manager](file-managers.md).
 
 ## Methods
 
@@ -14,7 +14,7 @@ Open a filesystem item.
 
 **Arguments:**
 
-- [FMP](file-manager.md#file-manager-paths)
+- [FMP](file-managers.md#file-manager-paths)
 
 **Answer:**
 
@@ -37,7 +37,7 @@ The thumbnail should be generated using the [`sys::fs`](../system-services/fs.md
 
 **Arguments:**
 
-- [FMP](file-manager.md#file-manager-paths)
+- [FMP](file-managers.md#file-manager-paths)
 
 **Answer:**
 
@@ -58,7 +58,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 
 **Arguments:**
 
-- [FMP](file-manager.md#file-manager-paths)
+- [FMP](file-managers.md#file-manager-paths)
 
 **Answer:**
 

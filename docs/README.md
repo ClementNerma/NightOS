@@ -77,8 +77,8 @@ The list of default applications and their description can be found [here](appli
 
 ### [Scoped services](specs/scoped-services/)
 
-- [File managers](specs/scoped-services/file-manager.md) - how file managers are integrated into the system
-- [Filesystem openers](specs/scoped-services/filesystem-opener.md) - how files are associated to applications
+- [File managers](specs/scoped-services/file-managers.md) - how file managers are integrated into the system
+- [Filesystem openers](specs/scoped-services/filesystem-openers.md) - how files are associated to applications
 
 ### [System services](specs/system-services/)
 

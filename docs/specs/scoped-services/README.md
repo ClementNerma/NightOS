@@ -8,5 +8,5 @@ These scoped services' name start with a `SYS_` prefix to indicate their convent
 
 ## List of system-related scoped services
 
-* [File managers](file-manager.md)
-* [Filesystem openers](filesystem-opener.md)
+* [File managers](file-managers.md)
+* [Filesystem openers](filesystem-openers.md)

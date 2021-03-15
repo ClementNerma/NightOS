@@ -14,7 +14,7 @@ The desktop itself is visible in the background - it is fully visible when on wi
 
 It shows all items from `/home/[username]/desktop`.
 
-Right-clicking on an item shows the [default file manager's](../specs/scoped-services/file-manager.md) [context menu](../specs/scoped-services/file-manager.md#0xa0-context_menu).
+Right-clicking on an item shows the [default file manager's](../specs/scoped-services/file-managers.md) [context menu](../specs/scoped-services/file-managers.md#0xa0-context_menu).
 
 A background image called _wallpaper_ is also displayed under the desktop. The wallpaper can be replaced by a custom one.
 

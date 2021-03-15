@@ -5,6 +5,7 @@ This document presents how files are stored in NightOS.
 - [Presentation](#presentation)
 - [Naming](#naming)
 - [Element unique identifier](#element-unique-identifier)
+  - [Temporary FEID](#temporary-feid)
 - [Paths' size limit](#paths-size-limit)
 - [Symbolic links](#symbolic-links)
   - [Concept](#concept)
@@ -37,6 +38,10 @@ Each filesystem item has an 8-byte identifier, called the _**F**ilesystem **E**l
 It is only unique in the filesystem the item is stored in.
 
 Note that some filesystem do not support this identifier.
+
+### Temporary FEID
+
+A temporary FEID can be created to grant access to a resource to an application without giving actual access to the original item itself. A temporary FEID only lives in memory, and refers an existing filesystem item. If the original item is deleted, the temporary FEID is deleted too.
 
 ## Paths' size limit
 

@@ -168,7 +168,27 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="nova"><a class="header" href="#nova">Nova</a></h1>
-<p>Nova is the desktop environment of NightOS.</p>
+<p>Nova is the default desktop environment of NightOS.</p>
+<p>It has a highly-customizable user interface.</p>
+<p><strong>WARNING:</strong> This document is only a draft and is <strong>extremely far</strong> from being complete! Anything written in this document is subject to change at anytime.</p>
+<h2 id="user-interface"><a class="header" href="#user-interface">User interface</a></h2>
+<h3 id="the-desktop"><a class="header" href="#the-desktop">The desktop</a></h3>
+<p>The desktop itself is visible in the background - it is fully visible when on window on foreground.</p>
+<p>It shows all items from <code>/home/[username]/desktop</code>.</p>
+<p>Right-clicking on an item shows the <a href="../specs/file-manager.html">default file manager's</a> <a href="../specs/file-manager.html#0xa0-context_menu">context menu</a>.</p>
+<p>A background image called <em>wallpaper</em> is also displayed under the desktop. The wallpaper can be replaced by a custom one.</p>
+<h3 id="notification-center"><a class="header" href="#notification-center">Notification center</a></h3>
+<p>The notification center is a panel that slides in from one of the screen's side. The side can be customized.</p>
+<p>It has a vertical layout and contains the list of each notification.</p>
+<p>By default, it also shows a few quick settings as well as the date and hour of the day.</p>
+<h3 id="dock"><a class="header" href="#dock">Dock</a></h3>
+<p>An optional dock can be shown, made of a list of icons on one side of the screen. It also shows the list of opened windows, even if they are not pinned to the dock. An indicator also shows the number of opened windows (a dot for each window).</p>
+<p>Moving the mouse on top of one of the icon will by default show a preview of each opened window, side by side. If a high number of windows are opened (by default more than 4) the previews will be stacked on a grid. By default, previews are shown by recently used order, with a maximum of 16 windows (grid of 4 rows, 4 columns).</p>
+<p>Clicking on an icon will, if the application already has a window, show the grid, else open the application.</p>
+<p>For custom shortcuts, this will only trigger the selected shortcut.</p>
+<h2 id="user-experience"><a class="header" href="#user-experience">User experience</a></h2>
+<h3 id="removing-native-applications"><a class="header" href="#removing-native-applications">Removing native applications</a></h3>
+<p>When removing a native applications, a popup will suggest to hide the app instead of removing it, which allows other applications and scripts to still interact with them.</p>
 
                     </main>
 

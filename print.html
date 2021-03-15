@@ -1054,6 +1054,10 @@ When running a command which comes from an applications which <a href="technical
 <li>The <em>titlebar</em> is an element put on each window to see its title, icon and control <a href="ux/desktop-environment.html#window-states">its state</a></li>
 </ul>
 <p>These elements are common but are <strong><em>NOT</em></strong> required to be present in a desktop environment.</p>
+<h2 id="interface-windows"><a class="header" href="#interface-windows">Interface windows</a></h2>
+<p><em>Interface windows</em> are windows that are created by another application to be used in a specific part of the desktop environment. It results in the integration of an application with the current DEA.</p>
+<p>Interface windows are created the same way as usual windows, but do not usually have a titlebar and can often not be moved. They are mostly used to create widgets and display context menus on items.</p>
+<p>Typically, an interface windows created by an application is hidden by default, and the DEA shows it only after getting its identifier returned by the service it is communicating with.</p>
 <h1 id="notifications"><a class="header" href="#notifications">Notifications</a></h1>
 <p>Notifications are the way for both the applications and the system itself to indicate when an event happens which the user should be notified of, or to indicate a persistent state.</p>
 <h2 id="structure"><a class="header" href="#structure">Structure</a></h2>
@@ -1253,6 +1257,7 @@ additional:
 <li><a href="specs/file-manager.html#0x10-open_item"><code>0x10</code> OPEN_ITEM</a></li>
 <li><a href="specs/file-manager.html#0x11-is_item_openable"><code>0x11</code> IS_ITEM_OPENABLE</a></li>
 <li><a href="specs/file-manager.html#0x20-get_thumbnail"><code>0x20</code> GET_THUMBNAIL</a></li>
+<li><a href="specs/file-manager.html#0xa0-context_menu"><code>0xA0</code> CONTEXT_MENU</a></li>
 </ul>
 </li>
 <li><a href="specs/file-manager.html#filesystem-openers">Filesystem openers</a>
@@ -1332,6 +1337,25 @@ additional:
 <li><code>0x10</code>: Invalid FMP</li>
 <li><code>0x11</code>: Could not find the provided item</li>
 <li><code>0x30</code>: The thumbnail generator failed</li>
+<li><code>0xF0</code>: Unspecified error</li>
+</ul>
+<h3 id="0xa0-context_menu"><a class="header" href="#0xa0-context_menu"><code>0xA0</code> CONTEXT_MENU</a></h3>
+<p>Generate a context menu for a specific filesystem item. Used by the DEA.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/file-manager.html#file-manager-paths">FMP</a></li>
+</ul>
+<p><strong>Answer:</strong></p>
+<ul>
+<li><a href="specs/../ux/desktop-environment.html#interface-windows">Interface window</a> identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid FMP</li>
+<li><code>0x11</code>: Could not find the provided item</li>
+<li><code>0x30</code>: User cancelled the opening</li>
+<li><code>0x31</code>: Could not find an application to open the provided item</li>
+<li><code>0x32</code>: Failed to open the provided item due to an I/O error</li>
 <li><code>0xF0</code>: Unspecified error</li>
 </ul>
 <h2 id="filesystem-openers"><a class="header" href="#filesystem-openers">Filesystem openers</a></h2>
@@ -5815,7 +5839,27 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Number of threads (application only)</li>
 </ul>
 <h1 id="nova"><a class="header" href="#nova">Nova</a></h1>
-<p>Nova is the desktop environment of NightOS.</p>
+<p>Nova is the default desktop environment of NightOS.</p>
+<p>It has a highly-customizable user interface.</p>
+<p><strong>WARNING:</strong> This document is only a draft and is <strong>extremely far</strong> from being complete! Anything written in this document is subject to change at anytime.</p>
+<h2 id="user-interface"><a class="header" href="#user-interface">User interface</a></h2>
+<h3 id="the-desktop"><a class="header" href="#the-desktop">The desktop</a></h3>
+<p>The desktop itself is visible in the background - it is fully visible when on window on foreground.</p>
+<p>It shows all items from <code>/home/[username]/desktop</code>.</p>
+<p>Right-clicking on an item shows the <a href="applications/../specs/file-manager.html">default file manager's</a> <a href="applications/../specs/file-manager.html#0xa0-context_menu">context menu</a>.</p>
+<p>A background image called <em>wallpaper</em> is also displayed under the desktop. The wallpaper can be replaced by a custom one.</p>
+<h3 id="notification-center"><a class="header" href="#notification-center">Notification center</a></h3>
+<p>The notification center is a panel that slides in from one of the screen's side. The side can be customized.</p>
+<p>It has a vertical layout and contains the list of each notification.</p>
+<p>By default, it also shows a few quick settings as well as the date and hour of the day.</p>
+<h3 id="dock"><a class="header" href="#dock">Dock</a></h3>
+<p>An optional dock can be shown, made of a list of icons on one side of the screen. It also shows the list of opened windows, even if they are not pinned to the dock. An indicator also shows the number of opened windows (a dot for each window).</p>
+<p>Moving the mouse on top of one of the icon will by default show a preview of each opened window, side by side. If a high number of windows are opened (by default more than 4) the previews will be stacked on a grid. By default, previews are shown by recently used order, with a maximum of 16 windows (grid of 4 rows, 4 columns).</p>
+<p>Clicking on an icon will, if the application already has a window, show the grid, else open the application.</p>
+<p>For custom shortcuts, this will only trigger the selected shortcut.</p>
+<h2 id="user-experience-1"><a class="header" href="#user-experience-1">User experience</a></h2>
+<h3 id="removing-native-applications"><a class="header" href="#removing-native-applications">Removing native applications</a></h3>
+<p>When removing a native applications, a popup will suggest to hide the app instead of removing it, which allows other applications and scripts to still interact with them.</p>
 <h1 id="particle"><a class="header" href="#particle">Particle</a></h1>
 <p>Particle is a complete IDE for making NightOS applications. It uses the <a href="applications/Astral.html">Astral</a> toolchain.</p>
 <h2 id="features-8"><a class="header" href="#features-8">Features</a></h2>
@@ -5857,7 +5901,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Save current registry as a snapshot</li>
 <li>Restore snapshots</li>
 </ul>
-<h2 id="user-interface"><a class="header" href="#user-interface">User Interface</a></h2>
+<h2 id="user-interface-1"><a class="header" href="#user-interface-1">User Interface</a></h2>
 <p>The U.I. is made of a set of panes (one by default) containing a tree showing all structures and lists stored in the registry and allowing to edit them.</p>
 <h1 id="rocket"><a class="header" href="#rocket">Rocket</a></h1>
 <p>Rocket is the default web browser of NightOS.</p>
@@ -5934,6 +5978,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Advanced Audio Coding (<code>.aac</code>)</li>
 </ul>
 <h1 id="stellar"><a class="header" href="#stellar">Stellar</a></h1>
+<p>Stellar is the default application store of NightOS.</p>
 <h1 id="thinker"><a class="header" href="#thinker">Thinker</a></h1>
 <p>Thinker is a simple notes application.</p>
 <h1 id="timetravel"><a class="header" href="#timetravel">TimeTravel</a></h1>

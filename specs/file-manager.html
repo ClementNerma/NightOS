@@ -175,6 +175,7 @@
 <li><a href="#0x10-open_item"><code>0x10</code> OPEN_ITEM</a></li>
 <li><a href="#0x11-is_item_openable"><code>0x11</code> IS_ITEM_OPENABLE</a></li>
 <li><a href="#0x20-get_thumbnail"><code>0x20</code> GET_THUMBNAIL</a></li>
+<li><a href="#0xa0-context_menu"><code>0xA0</code> CONTEXT_MENU</a></li>
 </ul>
 </li>
 <li><a href="#filesystem-openers">Filesystem openers</a>
@@ -254,6 +255,25 @@
 <li><code>0x10</code>: Invalid FMP</li>
 <li><code>0x11</code>: Could not find the provided item</li>
 <li><code>0x30</code>: The thumbnail generator failed</li>
+<li><code>0xF0</code>: Unspecified error</li>
+</ul>
+<h3 id="0xa0-context_menu"><a class="header" href="#0xa0-context_menu"><code>0xA0</code> CONTEXT_MENU</a></h3>
+<p>Generate a context menu for a specific filesystem item. Used by the DEA.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="#file-manager-paths">FMP</a></li>
+</ul>
+<p><strong>Answer:</strong></p>
+<ul>
+<li><a href="../ux/desktop-environment.html#interface-windows">Interface window</a> identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid FMP</li>
+<li><code>0x11</code>: Could not find the provided item</li>
+<li><code>0x30</code>: User cancelled the opening</li>
+<li><code>0x31</code>: Could not find an application to open the provided item</li>
+<li><code>0x32</code>: Failed to open the provided item due to an I/O error</li>
 <li><code>0xF0</code>: Unspecified error</li>
 </ul>
 <h2 id="filesystem-openers"><a class="header" href="#filesystem-openers">Filesystem openers</a></h2>

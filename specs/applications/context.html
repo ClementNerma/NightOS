@@ -211,8 +211,7 @@ It indicates why the application was started and so what it is supposed to do.</
 </li>
 <li>The application's <a href="../applications-libraries.html#application-identifier">ANID</a> (4 bytes)</li>
 </ul>
-<p>If the application was started by itself, this block is followed by optional data communicated by the parent process called the <em>initialization data</em>, on 8 bytes.</p>
-<p>Else, if the command was started as a command, it also contains the following informations:</p>
+<p>If the command was started as a command, it also contains the following informations:</p>
 <ul>
 <li>The ANID of the caller application (4 bytes)</li>
 <li>The number of arguments the process was started with (1 byte)</li>

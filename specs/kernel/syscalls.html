@@ -203,12 +203,18 @@
 <li><a href="#0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></li>
 <li><a href="#0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></li>
 <li><a href="#0x40-create_process"><code>0x40</code> CREATE_PROCESS</a></li>
-<li><a href="#0x41-wait_process"><code>0x41</code> WAIT_PROCESS</a></li>
-<li><a href="#0x42-kill_process"><code>0x42</code> KILL_PROCESS</a></li>
+<li><a href="#0x41-wait_child_process"><code>0x41</code> WAIT_CHILD_PROCESS</a></li>
+<li><a href="#0x42-kill_child_process"><code>0x42</code> KILL_CHILD_PROCESS</a></li>
 <li><a href="#0x43-get_pid"><code>0x43</code> GET_PID</a></li>
 <li><a href="#0x44-suspend"><code>0x44</code> SUSPEND</a></li>
-<li><a href="#0x44-unsuspend"><code>0x44</code> UNSUSPEND</a></li>
+<li><a href="#0x45-unsuspend"><code>0x45</code> UNSUSPEND</a></li>
 <li><a href="#0x4f-exit"><code>0x4F</code> EXIT</a></li>
+<li><a href="#0x50-create_thread"><code>0x50</code> CREATE_THREAD</a></li>
+<li><a href="#0x51-create_tls_slot"><code>0x51</code> CREATE_TLS_SLOT</a></li>
+<li><a href="#0x52-read_tls_slot"><code>0x52</code> READ_TLS_SLOT</a></li>
+<li><a href="#0x53-write_tls_slot"><code>0x53</code> WRITE_TLS_SLOT</a></li>
+<li><a href="#0x54-delete_tls_slot"><code>0x54</code> DELETE_TLS_SLOT</a></li>
+<li><a href="#0x5f-exit_thread"><code>0x5F</code> EXIT_THREAD</a></li>
 <li><a href="#0x90-rand_int"><code>0x90</code> RAND_INT</a></li>
 <li><a href="#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></li>
 <li><a href="#0xd0-sys_process_attributes"><code>0xD0</code> SYS_PROCESS_ATTRIBUTES</a></li>
@@ -248,6 +254,7 @@ When performing a syscall, the process will put in a specific CPU register an ad
 <li><code>0x2A</code> to <code>0x2F</code>: services communication</li>
 <li><code>0x30</code> to <code>0x3F</code>: memory management</li>
 <li><code>0x40</code> to <code>0x4F</code>: processes management</li>
+<li><code>0x50</code> to <code>0x5F</code>: threads management</li>
 <li><code>0xA0</code> to <code>0xAF</code>: applications-related syscalls</li>
 <li><code>0xD0</code> to <code>0xDF</code>: reserved to system services</li>
 </ul>
@@ -810,14 +817,16 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
-<li>Process identifier (PID) (8 bytes)</li>
+<li>Child process identifier (8 bytes)</li>
+<li>Identity (1 byte): <code>0x00</code> if the current thread is the parent, <code>0x01</code> for the child</li>
+<li>Initialization data (8 bytes) - <code>0</code> for the parent</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x20</code>: The current process is not an application process</li>
 <li><code>0x30</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
 </ul>
-<h3 id="0x41-wait_process"><a class="header" href="#0x41-wait_process"><code>0x41</code> WAIT_PROCESS</a></h3>
+<h3 id="0x41-wait_child_process"><a class="header" href="#0x41-wait_child_process"><code>0x41</code> WAIT_CHILD_PROCESS</a></h3>
 <p>Wait for a child process to terminate.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -830,7 +839,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <ul>
 <li><code>0x20</code>: The provided PID does not exist or does not belong to the current application</li>
 </ul>
-<h3 id="0x42-kill_process"><a class="header" href="#0x42-kill_process"><code>0x42</code> KILL_PROCESS</a></h3>
+<h3 id="0x42-kill_child_process"><a class="header" href="#0x42-kill_child_process"><code>0x42</code> KILL_CHILD_PROCESS</a></h3>
 <p>Kill a child process, which will first receive the <a href="signals.html#0x4f-will_terminate"><code>WILL_TERMINATE</code></a> signal.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -839,7 +848,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
-<li>Process' return value (provided through <a href="#0x4f-exit"><code>EXIT_PROCESS</code></a>, <code>0</code> otherwise)</li>
+<li>Process' exit data (provided through <a href="#0x4f-exit"><code>EXIT_PROCESS</code></a>, <code>0</code> otherwise)</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
@@ -870,7 +879,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x20</code>: the current process is not an application process</li>
 <li><code>0x21</code>: the current PID was not found or is not a child of the current process</li>
 </ul>
-<h3 id="0x44-unsuspend"><a class="header" href="#0x44-unsuspend"><code>0x44</code> UNSUSPEND</a></h3>
+<h3 id="0x45-unsuspend"><a class="header" href="#0x45-unsuspend"><code>0x45</code> UNSUSPEND</a></h3>
 <p><a href="../../features/balancer.html#application-processes-suspension">Unsuspend</a> a child process.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -891,7 +900,86 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 If the current process is a service, a <a href="signals.html#0x2d-service_server_quitted"><code>SERVICE_SERVER_QUITTED</code></a> signal is sent to all active clients.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li>Return value (8 bytes)</li>
+<li>Exit data (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em> (never returns)</p>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x50-create_thread"><a class="header" href="#0x50-create_thread"><code>0x50</code> CREATE_THREAD</a></h3>
+<p>Create a thread from the current one. The new thread will share the current one's memory space.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Initialization data (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Child thread identifier (8 bytes)</li>
+<li>Identity (1 byte): <code>0x00</code> if the current thread is the parent, <code>0x01</code> for the child</li>
+<li>Initialization data (8 bytes) - <code>0</code> for the parent</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
+</ul>
+<h3 id="0x51-create_tls_slot"><a class="header" href="#0x51-create_tls_slot"><code>0x51</code> CREATE_TLS_SLOT</a></h3>
+<p>Create a <a href="../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>TLS slot identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x52-read_tls_slot"><a class="header" href="#0x52-read_tls_slot"><code>0x52</code> READ_TLS_SLOT</a></h3>
+<p>Read from a <a href="../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>TLS slot identifier (8 bytes)</li>
+<li>Writable buffer (8 bytes)</li>
+<li>Number of bytes to read (8 bytes) - <code>0</code> to read everything</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of bytes written (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Unknown TLS identifier</li>
+</ul>
+<h3 id="0x53-write_tls_slot"><a class="header" href="#0x53-write_tls_slot"><code>0x53</code> WRITE_TLS_SLOT</a></h3>
+<p>Write to a <a href="../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>TLS slot identifier (8 bytes)</li>
+<li>Readable buffer (8 bytes)</li>
+<li>Number of bytes to write (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Unknown TLS identifier</li>
+<li><code>0x30</code>: Failed to allocate enough memory for the written data</li>
+</ul>
+<h3 id="0x54-delete_tls_slot"><a class="header" href="#0x54-delete_tls_slot"><code>0x54</code> DELETE_TLS_SLOT</a></h3>
+<p>Delete a <a href="../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>TLS slot identifier (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Unknown TLS identifier</li>
+</ul>
+<h3 id="0x5f-exit_thread"><a class="header" href="#0x5f-exit_thread"><code>0x5F</code> EXIT_THREAD</a></h3>
+<p>Kill the current thread and all of its children threads.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Exit data (4 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <p><em>None</em> (never returns)</p>

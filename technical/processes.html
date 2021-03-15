@@ -193,16 +193,21 @@ There are several types of processes:</p>
 <p>Each process is ran as a specific user, which determines the maximum allowed scope for <a href="controller.html">controller requests</a>, and with a list of initial privileges (the ones given to the application).</p>
 <h2 id="child-processes"><a class="header" href="#child-processes">Child processes</a></h2>
 <p>A process can create <em>child processes</em> (it's called a <em>fork</em>). The child process will roughly be a 1:1 copy of the parent process, but with its own unique PID.</p>
+<p>To avoid copying the whole memory, copy-on-write is used, which means that pages are identical and require no allocation until they are modified, in which case a new page is created and attached to the process in place of the original one.</p>
 <p>Child processes automatically inherit their parent's permissions.</p>
 <p>When a process exits, all its child processes are immediatly killed. It's up to the process to ensure its children are properly terminated before it.</p>
 <h2 id="threading"><a class="header" href="#threading">Threading</a></h2>
 <p>A process can create <em>threads</em>, which are still a part of the process. Threads allow to run multiple part of a process concurrently, as the kernel may run several threads in different processor cores.</p>
-<p>All threads share the same address space and memory, although they all have a reserved space called the <a href="#thread-local-storage"><em>thread-local storage</em></a>.</p>
+<p>All threads share the same address space and memory, although they also have a reserved space called the <a href="#thread-local-storage"><em>thread-local storage</em></a>.</p>
+<p>To avoid copying the whole memory, copy-on-write is used, which means that pages are identical and require no allocation until they are modified, in which case a new page is created and attached to the process in place of the original one.</p>
+<p>Also, the stack is local to each thread.</p>
 <p>Threads work as a hierarchy ; when a thread creates another, it is called the new thread's <em>parent</em>, while the new thread is its <em>child</em>. When a thread terminates, all its children are instantly destroyed.</p>
 <h3 id="main-thread"><a class="header" href="#main-thread">Main thread</a></h3>
 <p>When a process starts, its instruction run its <em>main thread</em>. Due to threads being hierarchised, exiting the main thread will result in all other threads being closed immediatly, which is why the main thread should always first terminate its children properly to ensure all data are synchronized for instance.</p>
 <h3 id="thread-local-storage"><a class="header" href="#thread-local-storage">Thread-local storage</a></h3>
 <p>Threads have a reserved portion of memory in their address space called the <em>thread-local storage</em> (TLS).</p>
+<p>It is split into <em>slots</em>, which can contain arbitrary amount of data.</p>
+<p>Each slot has a unique identifier, which can be used across threads to access TLS data from any thread of the process.</p>
 <h2 id="automatic-permissions-inheritance"><a class="header" href="#automatic-permissions-inheritance">Automatic permissions inheritance</a></h2>
 <p>When an application process gets a new permission, all other processes from the same application inherit it, unless this permission is granted only for this instance of the application.</p>
 

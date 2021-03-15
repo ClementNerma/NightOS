@@ -923,16 +923,21 @@ There are several types of processes:</p>
 <p>Each process is ran as a specific user, which determines the maximum allowed scope for <a href="technical/controller.html">controller requests</a>, and with a list of initial privileges (the ones given to the application).</p>
 <h2 id="child-processes"><a class="header" href="#child-processes">Child processes</a></h2>
 <p>A process can create <em>child processes</em> (it's called a <em>fork</em>). The child process will roughly be a 1:1 copy of the parent process, but with its own unique PID.</p>
+<p>To avoid copying the whole memory, copy-on-write is used, which means that pages are identical and require no allocation until they are modified, in which case a new page is created and attached to the process in place of the original one.</p>
 <p>Child processes automatically inherit their parent's permissions.</p>
 <p>When a process exits, all its child processes are immediatly killed. It's up to the process to ensure its children are properly terminated before it.</p>
 <h2 id="threading"><a class="header" href="#threading">Threading</a></h2>
 <p>A process can create <em>threads</em>, which are still a part of the process. Threads allow to run multiple part of a process concurrently, as the kernel may run several threads in different processor cores.</p>
-<p>All threads share the same address space and memory, although they all have a reserved space called the <a href="technical/processes.html#thread-local-storage"><em>thread-local storage</em></a>.</p>
+<p>All threads share the same address space and memory, although they also have a reserved space called the <a href="technical/processes.html#thread-local-storage"><em>thread-local storage</em></a>.</p>
+<p>To avoid copying the whole memory, copy-on-write is used, which means that pages are identical and require no allocation until they are modified, in which case a new page is created and attached to the process in place of the original one.</p>
+<p>Also, the stack is local to each thread.</p>
 <p>Threads work as a hierarchy ; when a thread creates another, it is called the new thread's <em>parent</em>, while the new thread is its <em>child</em>. When a thread terminates, all its children are instantly destroyed.</p>
 <h3 id="main-thread"><a class="header" href="#main-thread">Main thread</a></h3>
 <p>When a process starts, its instruction run its <em>main thread</em>. Due to threads being hierarchised, exiting the main thread will result in all other threads being closed immediatly, which is why the main thread should always first terminate its children properly to ensure all data are synchronized for instance.</p>
 <h3 id="thread-local-storage"><a class="header" href="#thread-local-storage">Thread-local storage</a></h3>
 <p>Threads have a reserved portion of memory in their address space called the <em>thread-local storage</em> (TLS).</p>
+<p>It is split into <em>slots</em>, which can contain arbitrary amount of data.</p>
+<p>Each slot has a unique identifier, which can be used across threads to access TLS data from any thread of the process.</p>
 <h2 id="automatic-permissions-inheritance"><a class="header" href="#automatic-permissions-inheritance">Automatic permissions inheritance</a></h2>
 <p>When an application process gets a new permission, all other processes from the same application inherit it, unless this permission is granted only for this instance of the application.</p>
 <h1 id="registry"><a class="header" href="#registry">Registry</a></h1>
@@ -1162,8 +1167,7 @@ It indicates why the application was started and so what it is supposed to do.</
 </li>
 <li>The application's <a href="specs/applications/../applications-libraries.html#application-identifier">ANID</a> (4 bytes)</li>
 </ul>
-<p>If the application was started by itself, this block is followed by optional data communicated by the parent process called the <em>initialization data</em>, on 8 bytes.</p>
-<p>Else, if the command was started as a command, it also contains the following informations:</p>
+<p>If the command was started as a command, it also contains the following informations:</p>
 <ul>
 <li>The ANID of the caller application (4 bytes)</li>
 <li>The number of arguments the process was started with (1 byte)</li>
@@ -3467,6 +3471,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 </ul>
 </li>
 <li><a href="specs/kernel/processes.html#drivable-devices">Drivable devices</a></li>
+<li><a href="specs/kernel/processes.html#raw-permissions">Raw permissions</a></li>
 </ul>
 <h2 id="why-processes"><a class="header" href="#why-processes">Why processes</a></h2>
 <p>Separating programs in threads presents several advantages:</p>
@@ -3525,7 +3530,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <p>The drivable devices attribute contains the list of all devices' <a href="specs/kernel/hardware.html#session-device-identifier">SDI</a> the current process can drive.</p>
 <p>The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an <a href="specs/kernel/memory.html#abstract-memory-segments">AMS</a> from it using the <a href="specs/kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall, as well as using DMA-related instructions in the CPU.</p>
 <p>This attribute is managed by the <a href="specs/kernel/../services/hw.html"><code>sys::hw</code></a> service and can only be updated by this service.</p>
-<h1 id="raw-permissions"><a class="header" href="#raw-permissions">Raw permissions</a></h1>
+<h2 id="raw-permissions"><a class="header" href="#raw-permissions">Raw permissions</a></h2>
 <p><em>Raw permissions</em> are used by system services to determine the permissions of a process without <a href="specs/kernel/ipc.html#exchanges-and-messages">sending a message</a> to the <a href="specs/kernel/../services/perm.html"><code>sys::perm</code></a> service and waiting for its answer, which would be costly in terms of performance.</p>
 <p>These permissions use a specific structure, specified in the <a href="specs/kernel/../services/perm.html#list-of-permissions">related service's specifications document</a>.</p>
 <p>Permissions can be managed using the <a href="specs/kernel/../services/perm.html"><code>sys::perm</code></a> service.</p>
@@ -3966,12 +3971,18 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x40-create_process"><code>0x40</code> CREATE_PROCESS</a></li>
-<li><a href="specs/kernel/syscalls.html#0x41-wait_process"><code>0x41</code> WAIT_PROCESS</a></li>
-<li><a href="specs/kernel/syscalls.html#0x42-kill_process"><code>0x42</code> KILL_PROCESS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x41-wait_child_process"><code>0x41</code> WAIT_CHILD_PROCESS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x42-kill_child_process"><code>0x42</code> KILL_CHILD_PROCESS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x43-get_pid"><code>0x43</code> GET_PID</a></li>
 <li><a href="specs/kernel/syscalls.html#0x44-suspend"><code>0x44</code> SUSPEND</a></li>
-<li><a href="specs/kernel/syscalls.html#0x44-unsuspend"><code>0x44</code> UNSUSPEND</a></li>
+<li><a href="specs/kernel/syscalls.html#0x45-unsuspend"><code>0x45</code> UNSUSPEND</a></li>
 <li><a href="specs/kernel/syscalls.html#0x4f-exit"><code>0x4F</code> EXIT</a></li>
+<li><a href="specs/kernel/syscalls.html#0x50-create_thread"><code>0x50</code> CREATE_THREAD</a></li>
+<li><a href="specs/kernel/syscalls.html#0x51-create_tls_slot"><code>0x51</code> CREATE_TLS_SLOT</a></li>
+<li><a href="specs/kernel/syscalls.html#0x52-read_tls_slot"><code>0x52</code> READ_TLS_SLOT</a></li>
+<li><a href="specs/kernel/syscalls.html#0x53-write_tls_slot"><code>0x53</code> WRITE_TLS_SLOT</a></li>
+<li><a href="specs/kernel/syscalls.html#0x54-delete_tls_slot"><code>0x54</code> DELETE_TLS_SLOT</a></li>
+<li><a href="specs/kernel/syscalls.html#0x5f-exit_thread"><code>0x5F</code> EXIT_THREAD</a></li>
 <li><a href="specs/kernel/syscalls.html#0x90-rand_int"><code>0x90</code> RAND_INT</a></li>
 <li><a href="specs/kernel/syscalls.html#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd0-sys_process_attributes"><code>0xD0</code> SYS_PROCESS_ATTRIBUTES</a></li>
@@ -4011,6 +4022,7 @@ When performing a syscall, the process will put in a specific CPU register an ad
 <li><code>0x2A</code> to <code>0x2F</code>: services communication</li>
 <li><code>0x30</code> to <code>0x3F</code>: memory management</li>
 <li><code>0x40</code> to <code>0x4F</code>: processes management</li>
+<li><code>0x50</code> to <code>0x5F</code>: threads management</li>
 <li><code>0xA0</code> to <code>0xAF</code>: applications-related syscalls</li>
 <li><code>0xD0</code> to <code>0xDF</code>: reserved to system services</li>
 </ul>
@@ -4573,14 +4585,16 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
-<li>Process identifier (PID) (8 bytes)</li>
+<li>Child process identifier (8 bytes)</li>
+<li>Identity (1 byte): <code>0x00</code> if the current thread is the parent, <code>0x01</code> for the child</li>
+<li>Initialization data (8 bytes) - <code>0</code> for the parent</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x20</code>: The current process is not an application process</li>
 <li><code>0x30</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
 </ul>
-<h3 id="0x41-wait_process"><a class="header" href="#0x41-wait_process"><code>0x41</code> WAIT_PROCESS</a></h3>
+<h3 id="0x41-wait_child_process"><a class="header" href="#0x41-wait_child_process"><code>0x41</code> WAIT_CHILD_PROCESS</a></h3>
 <p>Wait for a child process to terminate.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -4593,7 +4607,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <ul>
 <li><code>0x20</code>: The provided PID does not exist or does not belong to the current application</li>
 </ul>
-<h3 id="0x42-kill_process"><a class="header" href="#0x42-kill_process"><code>0x42</code> KILL_PROCESS</a></h3>
+<h3 id="0x42-kill_child_process"><a class="header" href="#0x42-kill_child_process"><code>0x42</code> KILL_CHILD_PROCESS</a></h3>
 <p>Kill a child process, which will first receive the <a href="specs/kernel/signals.html#0x4f-will_terminate"><code>WILL_TERMINATE</code></a> signal.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -4602,7 +4616,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
-<li>Process' return value (provided through <a href="specs/kernel/syscalls.html#0x4f-exit"><code>EXIT_PROCESS</code></a>, <code>0</code> otherwise)</li>
+<li>Process' exit data (provided through <a href="specs/kernel/syscalls.html#0x4f-exit"><code>EXIT_PROCESS</code></a>, <code>0</code> otherwise)</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
@@ -4633,7 +4647,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x20</code>: the current process is not an application process</li>
 <li><code>0x21</code>: the current PID was not found or is not a child of the current process</li>
 </ul>
-<h3 id="0x44-unsuspend"><a class="header" href="#0x44-unsuspend"><code>0x44</code> UNSUSPEND</a></h3>
+<h3 id="0x45-unsuspend"><a class="header" href="#0x45-unsuspend"><code>0x45</code> UNSUSPEND</a></h3>
 <p><a href="specs/kernel/../../features/balancer.html#application-processes-suspension">Unsuspend</a> a child process.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -4654,7 +4668,86 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-service_server_quitted"><code>SERVICE_SERVER_QUITTED</code></a> signal is sent to all active clients.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li>Return value (8 bytes)</li>
+<li>Exit data (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em> (never returns)</p>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x50-create_thread"><a class="header" href="#0x50-create_thread"><code>0x50</code> CREATE_THREAD</a></h3>
+<p>Create a thread from the current one. The new thread will share the current one's memory space.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Initialization data (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Child thread identifier (8 bytes)</li>
+<li>Identity (1 byte): <code>0x00</code> if the current thread is the parent, <code>0x01</code> for the child</li>
+<li>Initialization data (8 bytes) - <code>0</code> for the parent</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
+</ul>
+<h3 id="0x51-create_tls_slot"><a class="header" href="#0x51-create_tls_slot"><code>0x51</code> CREATE_TLS_SLOT</a></h3>
+<p>Create a <a href="specs/kernel/../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>TLS slot identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x52-read_tls_slot"><a class="header" href="#0x52-read_tls_slot"><code>0x52</code> READ_TLS_SLOT</a></h3>
+<p>Read from a <a href="specs/kernel/../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>TLS slot identifier (8 bytes)</li>
+<li>Writable buffer (8 bytes)</li>
+<li>Number of bytes to read (8 bytes) - <code>0</code> to read everything</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of bytes written (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Unknown TLS identifier</li>
+</ul>
+<h3 id="0x53-write_tls_slot"><a class="header" href="#0x53-write_tls_slot"><code>0x53</code> WRITE_TLS_SLOT</a></h3>
+<p>Write to a <a href="specs/kernel/../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>TLS slot identifier (8 bytes)</li>
+<li>Readable buffer (8 bytes)</li>
+<li>Number of bytes to write (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Unknown TLS identifier</li>
+<li><code>0x30</code>: Failed to allocate enough memory for the written data</li>
+</ul>
+<h3 id="0x54-delete_tls_slot"><a class="header" href="#0x54-delete_tls_slot"><code>0x54</code> DELETE_TLS_SLOT</a></h3>
+<p>Delete a <a href="specs/kernel/../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>TLS slot identifier (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Unknown TLS identifier</li>
+</ul>
+<h3 id="0x5f-exit_thread"><a class="header" href="#0x5f-exit_thread"><code>0x5F</code> EXIT_THREAD</a></h3>
+<p>Kill the current thread and all of its children threads.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Exit data (4 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <p><em>None</em> (never returns)</p>

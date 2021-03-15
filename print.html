@@ -1535,6 +1535,15 @@ system(struct):
     # Reserved amount of CPU per virtual core (0 = disabled)
     reserved_cpu_vcore(uint{1}): 1
 
+  # Processes' lifecycle
+  processes(struct):
+    # Delay before suspension
+    suspend_delay(time(ms)): 500ms
+    # Delay before termination
+    terminate_delay(time(ms)): 2000ms
+    # Delay for services to answer connections
+    service_answer_delay(time(ms)): 2000ms
+
 # Users (keys = user's unique identifier, value = user's type with 0 = main admin., 1 = admin., 2 = standard, 3 = guest)
 # Detailed informations about each user (nickname, privileges, encryption password, ...) and groups are stored
 #   in the user profiles file at '/etc/sys/users'
@@ -3354,7 +3363,7 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 <p>A <em>connection</em> essentially consists of a <a href="specs/kernel/ipc.html#service-sockets">service socket</a> between a service and another process called its <em>client</em>.</p>
 <p>When a process wants to connect to a service, it uses the <a href="specs/kernel/syscalls.html#0x2a-connect_service"><code>CONNECT_SERVICE</code></a> to send a <em>connection request</em> to this service.</p>
 <p>The service process then receives the request through the <a href="specs/kernel/signals.html#0x2a-service_conn_request"><code>SERVICE_CONN_REQUEST</code></a>.</p>
-<p>It is expected to answer under a short delay specified in the <a href="specs/registry.html">registry</a>'s <code>system.signals.service_answer_delay</code> key (1000 ms by default).</p>
+<p>It is expected to answer under a short delay specified in the <a href="specs/registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (2000 ms by default).</p>
 <p>If the service refuses the connection, it provides its answer through the <a href="specs/kernel/syscalls.html#0x2d-reject_service_conn"><code>REJECT_SERVICE_CONN</code></a> syscall, and the procedure stops here.</p>
 <p>Else, it accepts it through the <a href="specs/kernel/syscalls.html#0x2c-accept_service_conn"><code>ACCEPT_SERVICE_CONN</code></a> syscall. A new thread is then created in the service's process, and the signal returns with a code indicating if the current thread is the one that was just created.</p>
 <h3 id="communication"><a class="header" href="#communication">Communication</a></h3>
@@ -3841,7 +3850,7 @@ To read the message, the process must use the <a href="specs/kernel/syscalls.htm
 <li>Callee process' ID (8 bytes)</li>
 <li>Connection's unique request ID (8 bytes)</li>
 <li>Command code (2 bytes)</li>
-<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms) (2 bytes)</li>
+<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms) (2 bytes)</li>
 </ul>
 <h3 id="0x2b-service_client_closed"><a class="header" href="#0x2b-service_client_closed"><code>0x2B</code> SERVICE_CLIENT_CLOSED</a></h3>
 <p>Sent to a <a href="specs/kernel/../services.html#thread-types">client thread</a> to indicate its client closed before the connection was properly terminated.
@@ -3924,7 +3933,7 @@ The associated RC and SC are immediatly closed.</p>
 <p>Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
-<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.signals.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
+<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.processes.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
 </ul>
 <h3 id="0x4e-terminate"><a class="header" href="#0x4e-terminate"><code>0x4E</code> TERMINATE</a></h3>
 <p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="specs/kernel/syscalls.html#0x4f-exit"><code>EXIT</code></a> syscall).</p>
@@ -3933,7 +3942,7 @@ The associated RC and SC are immediatly closed.</p>
 <p>If no handler is registered for this signal, it will kill the process when received.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
-<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.signals.terminate_delay</code> key (default: 2s) (2 bytes)</li>
+<li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.processes.terminate_delay</code> key (default: 2s) (2 bytes)</li>
 </ul>
 <h1 id="system-calls"><a class="header" href="#system-calls">System calls</a></h1>
 <p><em>System calls</em>, abbreviated <em>syscalls</em>, are a type of <a href="specs/kernel/kpc.html">KPC</a>. They allow a process to ask the kernel to perform an action.</p>
@@ -4352,7 +4361,7 @@ The client thread will not receive any <a href="specs/kernel/signals.html#0x2a-s
 <ul>
 <li><code>0x10</code>: This request ID does not exist</li>
 <li><code>0x20</code>: The process which requested the connection already terminated</li>
-<li><code>0x30</code>: Answer was given after the delay set in the <a href="specs/kernel/../registry.html">registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms)</li>
+<li><code>0x30</code>: Answer was given after the delay set in the <a href="specs/kernel/../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
 </ul>
 <h3 id="0x2d-reject_service_conn"><a class="header" href="#0x2d-reject_service_conn"><code>0x2D</code> REJECT_SERVICE_CONN</a></h3>
 <p>Reject a connection request to the current service.</p>
@@ -4366,7 +4375,7 @@ The client thread will not receive any <a href="specs/kernel/signals.html#0x2a-s
 <ul>
 <li><code>0x10</code>: This request ID does not exist</li>
 <li><code>0x20</code>: The process which requested the connection already terminated</li>
-<li><code>0x30</code>: Answer was given after the delay set in the <a href="specs/kernel/../registry.html">registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms)</li>
+<li><code>0x30</code>: Answer was given after the delay set in the <a href="specs/kernel/../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
 </ul>
 <h3 id="0x30-mem_alloc"><a class="header" href="#0x30-mem_alloc"><code>0x30</code> MEM_ALLOC</a></h3>
 <p>Allocate a linear block of memory.</p>
@@ -4612,7 +4621,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Process identifier (8 bytes)</li>
-<li>Timeout in milliseconds (2 bytes) - if <code>0</code>, will use the system's global default value (<a href="specs/kernel/../registry.html">registry's</a> <code>system.signals.terminate_delay</code>)</li>
+<li>Timeout in milliseconds (2 bytes) - if <code>0</code>, will use the system's global default value (<a href="specs/kernel/../registry.html">registry's</a> <code>system.processes.terminate_delay</code>)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>

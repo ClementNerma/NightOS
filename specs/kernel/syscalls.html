@@ -584,7 +584,7 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 <ul>
 <li><code>0x10</code>: This request ID does not exist</li>
 <li><code>0x20</code>: The process which requested the connection already terminated</li>
-<li><code>0x30</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms)</li>
+<li><code>0x30</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
 </ul>
 <h3 id="0x2d-reject_service_conn"><a class="header" href="#0x2d-reject_service_conn"><code>0x2D</code> REJECT_SERVICE_CONN</a></h3>
 <p>Reject a connection request to the current service.</p>
@@ -598,7 +598,7 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 <ul>
 <li><code>0x10</code>: This request ID does not exist</li>
 <li><code>0x20</code>: The process which requested the connection already terminated</li>
-<li><code>0x30</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms)</li>
+<li><code>0x30</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
 </ul>
 <h3 id="0x30-mem_alloc"><a class="header" href="#0x30-mem_alloc"><code>0x30</code> MEM_ALLOC</a></h3>
 <p>Allocate a linear block of memory.</p>
@@ -844,7 +844,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Process identifier (8 bytes)</li>
-<li>Timeout in milliseconds (2 bytes) - if <code>0</code>, will use the system's global default value (<a href="../registry.html">registry's</a> <code>system.signals.terminate_delay</code>)</li>
+<li>Timeout in milliseconds (2 bytes) - if <code>0</code>, will use the system's global default value (<a href="../registry.html">registry's</a> <code>system.processes.terminate_delay</code>)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>

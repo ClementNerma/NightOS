@@ -312,7 +312,7 @@ To read the message, the process must use the <a href="syscalls.html#0x28-read_s
 <li>Callee process' ID (8 bytes)</li>
 <li>Connection's unique request ID (8 bytes)</li>
 <li>Command code (2 bytes)</li>
-<li><a href="../registry.html">Registry</a>'s <code>system.signals.service_answer_delay</code> key (default: 1000ms) (2 bytes)</li>
+<li><a href="../registry.html">Registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms) (2 bytes)</li>
 </ul>
 <h3 id="0x2b-service_client_closed"><a class="header" href="#0x2b-service_client_closed"><code>0x2B</code> SERVICE_CLIENT_CLOSED</a></h3>
 <p>Sent to a <a href="../services.html#thread-types">client thread</a> to indicate its client closed before the connection was properly terminated.
@@ -395,7 +395,7 @@ The associated RC and SC are immediatly closed.</p>
 <p>Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
-<li><a href="../registry.html">Registry</a>'s <code>system.signals.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
+<li><a href="../registry.html">Registry</a>'s <code>system.processes.suspend_delay</code> key (default: 500ms) (2 bytes)</li>
 </ul>
 <h3 id="0x4e-terminate"><a class="header" href="#0x4e-terminate"><code>0x4E</code> TERMINATE</a></h3>
 <p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="syscalls.html#0x4f-exit"><code>EXIT</code></a> syscall).</p>
@@ -404,7 +404,7 @@ The associated RC and SC are immediatly closed.</p>
 <p>If no handler is registered for this signal, it will kill the process when received.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
-<li><a href="../registry.html">Registry</a>'s <code>system.signals.terminate_delay</code> key (default: 2s) (2 bytes)</li>
+<li><a href="../registry.html">Registry</a>'s <code>system.processes.terminate_delay</code> key (default: 2s) (2 bytes)</li>
 </ul>
 
                     </main>

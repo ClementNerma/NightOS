@@ -189,7 +189,7 @@
 <p>A <em>connection</em> essentially consists of a <a href="kernel/ipc.html#service-sockets">service socket</a> between a service and another process called its <em>client</em>.</p>
 <p>When a process wants to connect to a service, it uses the <a href="kernel/syscalls.html#0x2a-connect_service"><code>CONNECT_SERVICE</code></a> to send a <em>connection request</em> to this service.</p>
 <p>The service process then receives the request through the <a href="kernel/signals.html#0x2a-service_conn_request"><code>SERVICE_CONN_REQUEST</code></a>.</p>
-<p>It is expected to answer under a short delay specified in the <a href="registry.html">registry</a>'s <code>system.signals.service_answer_delay</code> key (1000 ms by default).</p>
+<p>It is expected to answer under a short delay specified in the <a href="registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (2000 ms by default).</p>
 <p>If the service refuses the connection, it provides its answer through the <a href="kernel/syscalls.html#0x2d-reject_service_conn"><code>REJECT_SERVICE_CONN</code></a> syscall, and the procedure stops here.</p>
 <p>Else, it accepts it through the <a href="kernel/syscalls.html#0x2c-accept_service_conn"><code>ACCEPT_SERVICE_CONN</code></a> syscall. A new thread is then created in the service's process, and the signal returns with a code indicating if the current thread is the one that was just created.</p>
 <h3 id="communication"><a class="header" href="#communication">Communication</a></h3>

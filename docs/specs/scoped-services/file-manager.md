@@ -14,7 +14,7 @@
 
 A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose a scoped service named `SYS_FMAN` with standardized methods.
 
-Applications can indicate themselves as file manager by specifying an `SYS_FMAN` service in their [manifest](applications/manifest.md).
+Applications can indicate themselves as file manager by specifying an `SYS_FMAN` service in their [manifest](../applications/manifest.md).
 
 The end user chooses a single file manager (called the _default_ file manager) between all available ones, whose service will be used by other applications.
 
@@ -23,7 +23,7 @@ The end user chooses a single file manager (called the _default_ file manager) b
 Paths destinated to file managers are called _file manager paths_ (FMP) and can be encoded with either:
 
 - A `0x00` status code (1 byte)
-- [FEID](filesystem.md#element-unique-identifier) (8 bytes)
+- [FEID](../filesystem.md#element-unique-identifier) (8 bytes)
 
 Or:
 
@@ -75,7 +75,7 @@ Check if a filesystem item could be opened without user interaction.
 
 Get the thumbnail for a specific item.
 
-The thumbnail should be generated using the [`sys::fs`](system-services/fs.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
+The thumbnail should be generated using the [`sys::fs`](../system-services/fs.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
 
 **Arguments:**
 
@@ -84,7 +84,7 @@ The thumbnail should be generated using the [`sys::fs`](system-services/fs.md) s
 
 **Answer:**
 
-- [Temporary FEID](filesystem.md#temporary-feid) to the thumbnail
+- [Temporary FEID](../filesystem.md#temporary-feid) to the thumbnail
 
 **Errors:**
 
@@ -103,7 +103,7 @@ Generate a context menu for a specific filesystem item. Used by the DEA.
 
 **Answer:**
 
-- [Interface window](../ux/desktop-environment.md#interface-windows) identifier (8 bytes)
+- [Interface window](../../ux/desktop-environment.md#interface-windows) identifier (8 bytes)
 
 **Errors:**
 
@@ -118,7 +118,7 @@ Generate a context menu for a specific filesystem item. Used by the DEA.
 
 A filesystem opener is an application which can associate open specific items. It exposes a `SYS_FSOP` service with the following architecture.
 
-The list of openers can be viewed and modified through the [`sys::fs`](system-services/fs.md).
+The list of openers can be viewed and modified through the [`sys::fs`](../system-services/fs.md).
 
 ### Methods
 
@@ -147,7 +147,7 @@ _None_
 
 Generate a thumbnail for a given filesystem item.
 
-The thumbnail should be generated using the [`sys::fs`](system-services/fs.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
+The thumbnail should be generated using the [`sys::fs`](../system-services/fs.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
 
 **Arguments:**
 
@@ -155,7 +155,7 @@ The thumbnail should be generated using the [`sys::fs`](system-services/fs.md) s
 
 **Answer:**
 
-- [Temporary FEID](filesystem.md#temporary-feid)
+- [Temporary FEID](../filesystem.md#temporary-feid)
 
 **Errors:**
 

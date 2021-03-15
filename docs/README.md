@@ -56,7 +56,6 @@ The list of default applications and their description can be found [here](appli
 - [Application context](specs/applications/context.md) - launch an application to directly perform a specific task
 - [Applications package](specs/applications/package.md) - files representing a whole application
 - [Applications manifest](specs/applications/manifest.md) - how applications describe themselves in their package
-- [File managers](specs/file-manager.md) - how file managers are integrated in the system
 - [Filesystem](specs/filesystem.md) - how the filesystem works
 - [Libraries](specs/libraries.md) - what are libraries
 - [The registry](specs/registry.md) - exhaustive specification of the registry's content

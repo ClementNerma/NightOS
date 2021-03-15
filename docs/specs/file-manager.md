@@ -5,6 +5,7 @@
   - [`0x10` OPEN_ITEM](#0x10-open_item)
   - [`0x11` IS_ITEM_OPENABLE](#0x11-is_item_openable)
   - [`0x20` GET_THUMBNAIL](#0x20-get_thumbnail)
+  - [`0xA0` CONTEXT_MENU](#0xa0-context_menu)
 - [Filesystem openers](#filesystem-openers)
   - [Methods](#methods-1)
     - [`0x10` OPEN_ITEM](#0x10-open_item-1)
@@ -90,6 +91,27 @@ The thumbnail should be generated using the [`sys::fs`](services/fs.md) system s
 - `0x10`: Invalid FMP
 - `0x11`: Could not find the provided item
 - `0x30`: The thumbnail generator failed
+- `0xF0`: Unspecified error
+
+### `0xA0` CONTEXT_MENU
+
+Generate a context menu for a specific filesystem item. Used by the DEA.
+
+**Arguments:**
+
+- [FMP](#file-manager-paths)
+
+**Answer:**
+
+- [Interface window](../ux/desktop-environment.md#interface-windows) identifier (8 bytes)
+
+**Errors:**
+
+- `0x10`: Invalid FMP
+- `0x11`: Could not find the provided item
+- `0x30`: User cancelled the opening
+- `0x31`: Could not find an application to open the provided item
+- `0x32`: Failed to open the provided item due to an I/O error
 - `0xF0`: Unspecified error
 
 ## Filesystem openers

@@ -81,3 +81,11 @@ Desktop environment are traditionally made of several elements:
 - The *titlebar* is an element put on each window to see its title, icon and control [its state](#window-states)
 
 These elements are common but are **_NOT_** required to be present in a desktop environment.
+
+## Interface windows
+
+_Interface windows_ are windows that are created by another application to be used in a specific part of the desktop environment. It results in the integration of an application with the current DEA.
+
+Interface windows are created the same way as usual windows, but do not usually have a titlebar and can often not be moved. They are mostly used to create widgets and display context menus on items.
+
+Typically, an interface windows created by an application is hidden by default, and the DEA shows it only after getting its identifier returned by the service it is communicating with.

@@ -36,6 +36,10 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x38` MAP_AMS](#0x38-map_ams)
   - [`0x39` UNMAP_AMS](#0x39-unmap_ams)
   - [`0x3A` SET_DMA_MEM_ACCESS](#0x3a-set_dma_mem_access)
+  - [`0x40` CREATE_PROCESS](#0x40-create_process)
+  - [`0x41` WAIT_PROCESS](#0x41-wait_process)
+  - [`0x42` KILL_PROCESS](#0x42-kill_process)
+  - [`0x4F` EXIT_PROCESS](#0x4f-exit_process)
   - [`0x90` RAND_INT](#0x90-rand_int)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` PROCESS_ATTRIBUTES](#0xd0-process_attributes)
@@ -77,6 +81,7 @@ System calls' code are categorized as follows:
 - `0x20` to `0x29`: pipes
 - `0x2A` to `0x2F`: services communication
 - `0x30` to `0x3F`: memory management
+- `0x40` to `0x4F`: processes management
 - `0xA0` to `0xAF`: applications-related syscalls
 - `0xD0` to `0xDF`: reserved to system services
 
@@ -780,6 +785,72 @@ _None_
 - `0x20`: The provided device SDI was not found
 - `0x21`: The provided device is not compatible with DMA
 - `0x22`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+
+### `0x40` CREATE_PROCESS
+
+Create a child process from the current one. The new process gets a separate memory space.
+
+Communication can be done through [standard IPC](ipc.md).
+
+The initialization data is joined as part of the [application's context](../applications/context.md).
+
+**Arguments:**
+
+- Initialization data (8 bytes)
+
+**Return value:**
+
+- Process identifier (PID) (8 bytes)
+
+**Errors:**
+
+- `0x30`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
+
+### `0x41` WAIT_PROCESS
+
+Wait for a child process to terminate.
+
+**Arguments:**
+
+- Process identifier (8 bytes)
+- Timeout in milliseconds (2 bytes)
+
+**Return value:**
+
+_Empty_
+
+**Errors:**
+
+- `0x20`: The provided PID does not exist or does not belong to the current application
+
+### `0x42` KILL_PROCESS
+
+Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md#0x13-will_terminate) signal.
+
+**Arguments:**
+
+- Process identifier (8 bytes)
+- Timeout in milliseconds (2 bytes) - if `0`, will use the system's global default value ([registry's](../registry.md) `system.signals.terminate_delay`)
+
+**Return value:**
+
+- Process' return value (provided through [`EXIT_PROCESS`](#0x4f-exit_process), `0` otherwise)
+
+**Errors:**
+
+- `0x30`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
+
+### `0x4F` EXIT_PROCESS
+
+Terminate the current process.
+
+**Arguments:**
+
+- Return value (8 bytes)
+
+**Return value:**
+
+_Never_
 
 ### `0x90` RAND_INT
 

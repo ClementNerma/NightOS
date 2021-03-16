@@ -24,6 +24,12 @@ The graphical interface is split into _layers_, which represent the display prio
 
 Layers are indexed, starting from `0` with the lowest priority.
 
+## Windows
+
+Windows are the base display element for applications. They can take any form depending on the DE's display method, but are usually made of the application's drawing zone and a titlebar.
+
+Some desktop environments may not accept windows (for instance, [BareEnv](../applications/BareEnv.md) which is a text-only desktop environment). In such case, most applications will fail to run as they won't be able to build windows, but this is still allowed.
+
 ## Security and operation
 
 Unlike other operating systems, [DEA](#desktop-environment-applications) can only access their own data and cannot manipulate the data inside other applications, even graphically.

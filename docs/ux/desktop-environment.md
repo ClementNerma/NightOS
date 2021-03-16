@@ -60,6 +60,7 @@ A window's state is made of its characteristics:
 - Coordinates (X and Y)
 - [Active attribute](#activeinactive-windows)
 - [Interactive attribute](#interactive-windows)
+- [Fixed-size attribute](#fixed-size-windows)
 - [Display layer](#display-layers)
 - [Display state](#window-display-state)
 - Custom state attributes
@@ -82,6 +83,10 @@ All windows are considered _inactive_ unless they are _focused_, which on most d
 ## Interactive windows
 
 By default, windows are _interactive_, meaning user inputs can be sent to them. They may be set _non-interactive_ to stop receiving such events and preventing users from interacting with them.
+
+## Fixed-size windows
+
+Fixed-size windows are windows whose size is fixed and cannot be resized by the end user.
 
 ## Common elements
 

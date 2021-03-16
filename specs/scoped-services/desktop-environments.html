@@ -1,0 +1,922 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Desktop environments - NightOS documentation</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Design and specification documents for NightOS">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../FOREWORD.html"><strong aria-hidden="true">1.</strong> Foreword</a></li><li class="chapter-item expanded "><a href="../../FAQ.html"><strong aria-hidden="true">2.</strong> Frequently-asked questions</a></li><li class="chapter-item expanded "><a href="../../project/index.html"><strong aria-hidden="true">3.</strong> Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../project/roadmap.html"><strong aria-hidden="true">3.1.</strong> Roadmap</a></li><li class="chapter-item expanded "><a href="../../project/development.html"><strong aria-hidden="true">3.2.</strong> Development</a></li><li class="chapter-item expanded "><a href="../../project/hw-requirements.html"><strong aria-hidden="true">3.3.</strong> Hardware requirements</a></li></ol></li><li class="chapter-item expanded "><a href="../../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/applications.html"><strong aria-hidden="true">4.1.</strong> What are applications?</a></li><li class="chapter-item expanded "><a href="../../concepts/libraries.html"><strong aria-hidden="true">4.2.</strong> What are libraries?</a></li><li class="chapter-item expanded "><a href="../../concepts/users.html"><strong aria-hidden="true">4.3.</strong> What are users?</a></li></ol></li><li class="chapter-item expanded "><a href="../../features/index.html"><strong aria-hidden="true">5.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../features/balancer.html"><strong aria-hidden="true">5.1.</strong> The balancer</a></li><li class="chapter-item expanded "><a href="../../features/crash-saves.html"><strong aria-hidden="true">5.2.</strong> Crash saves</a></li><li class="chapter-item expanded "><a href="../../features/domains.html"><strong aria-hidden="true">5.3.</strong> Domains</a></li><li class="chapter-item expanded "><a href="../../features/encryption.html"><strong aria-hidden="true">5.4.</strong> Encryption</a></li><li class="chapter-item expanded "><a href="../../features/freeze-prevention.html"><strong aria-hidden="true">5.5.</strong> Freeze-prevention system</a></li><li class="chapter-item expanded "><a href="../../features/parental-control.html"><strong aria-hidden="true">5.6.</strong> Parental control</a></li><li class="chapter-item expanded "><a href="../../features/sandboxes.html"><strong aria-hidden="true">5.7.</strong> Sandboxes</a></li><li class="chapter-item expanded "><a href="../../features/synchronization.html"><strong aria-hidden="true">5.8.</strong> Synchronization</a></li></ol></li><li class="chapter-item expanded "><a href="../../technical/index.html"><strong aria-hidden="true">6.</strong> Technical</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../technical/controller.html"><strong aria-hidden="true">6.1.</strong> The controller</a></li><li class="chapter-item expanded "><a href="../../technical/dev-mode.html"><strong aria-hidden="true">6.2.</strong> Developer mode</a></li><li class="chapter-item expanded "><a href="../../technical/devices.html"><strong aria-hidden="true">6.3.</strong> Devices</a></li><li class="chapter-item expanded "><a href="../../technical/file-formats.html"><strong aria-hidden="true">6.4.</strong> File formats</a></li><li class="chapter-item expanded "><a href="../../technical/integrity-checker.html"><strong aria-hidden="true">6.5.</strong> Integrity checker</a></li><li class="chapter-item expanded "><a href="../../technical/io-manager.html"><strong aria-hidden="true">6.6.</strong> I/O manager</a></li><li class="chapter-item expanded "><a href="../../technical/multi-platform.html"><strong aria-hidden="true">6.7.</strong> Multi-platform management</a></li><li class="chapter-item expanded "><a href="../../technical/performances.html"><strong aria-hidden="true">6.8.</strong> Performances</a></li><li class="chapter-item expanded "><a href="../../technical/pre-compiling.html"><strong aria-hidden="true">6.9.</strong> Pre-compiling applications</a></li><li class="chapter-item expanded "><a href="../../technical/processes.html"><strong aria-hidden="true">6.10.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../../technical/registry.html"><strong aria-hidden="true">6.11.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../../technical/services.html"><strong aria-hidden="true">6.12.</strong> Services</a></li><li class="chapter-item expanded "><a href="../../technical/shell.html"><strong aria-hidden="true">6.13.</strong> The shell</a></li></ol></li><li class="chapter-item expanded "><a href="../../ux/index.html"><strong aria-hidden="true">7.</strong> User Experience</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../ux/desktop-environment.html"><strong aria-hidden="true">7.1.</strong> Desktop environments</a></li><li class="chapter-item expanded "><a href="../../ux/notifications.html"><strong aria-hidden="true">7.2.</strong> Notifications</a></li><li class="chapter-item expanded "><a href="../../ux/sound.html"><strong aria-hidden="true">7.3.</strong> Sound</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/index.html"><strong aria-hidden="true">8.</strong> Specifications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/applications/context.html"><strong aria-hidden="true">8.1.</strong> Application context</a></li><li class="chapter-item expanded "><a href="../../specs/applications/package.html"><strong aria-hidden="true">8.2.</strong> Applications package</a></li><li class="chapter-item expanded "><a href="../../specs/applications/manifest.html"><strong aria-hidden="true">8.3.</strong> Applications manifest</a></li><li class="chapter-item expanded "><a href="../../specs/filesystem.html"><strong aria-hidden="true">8.4.</strong> Filesystem</a></li><li class="chapter-item expanded "><a href="../../specs/libraries.html"><strong aria-hidden="true">8.5.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../../specs/registry.html"><strong aria-hidden="true">8.6.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../../specs/vocabulary.html"><strong aria-hidden="true">8.7.</strong> Vocabulary</a></li><li class="chapter-item expanded "><a href="../../specs/shell.html"><strong aria-hidden="true">8.8.</strong> The shell</a></li><li class="chapter-item expanded "><a href="../../specs/shell-scripting.html"><strong aria-hidden="true">8.9.</strong> Shell scripting</a></li><li class="chapter-item expanded "><a href="../../specs/services.html"><strong aria-hidden="true">8.10.</strong> Services</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/index.html"><strong aria-hidden="true">8.11.</strong> Kernel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/kernel/hardware.html"><strong aria-hidden="true">8.11.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/memory.html"><strong aria-hidden="true">8.11.2.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/processes.html"><strong aria-hidden="true">8.11.3.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/data-structures.html"><strong aria-hidden="true">8.11.4.</strong> Data structures</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/kpc.html"><strong aria-hidden="true">8.11.5.</strong> Kernel-process communication</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/ipc.html"><strong aria-hidden="true">8.11.6.</strong> Inter-process communication</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/signals.html"><strong aria-hidden="true">8.11.7.</strong> Signals</a></li><li class="chapter-item expanded "><a href="../../specs/kernel/syscalls.html"><strong aria-hidden="true">8.11.8.</strong> System calls</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/scoped-services/index.html"><strong aria-hidden="true">8.12.</strong> Scoped services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/scoped-services/desktop-environments.html" class="active"><strong aria-hidden="true">8.12.1.</strong> Desktop environments</a></li><li class="chapter-item expanded "><a href="../../specs/scoped-services/file-managers.html"><strong aria-hidden="true">8.12.2.</strong> File managers</a></li><li class="chapter-item expanded "><a href="../../specs/scoped-services/filesystem-openers.html"><strong aria-hidden="true">8.12.3.</strong> Filesystem openers</a></li></ol></li><li class="chapter-item expanded "><a href="../../specs/system-services/index.html"><strong aria-hidden="true">8.13.</strong> System services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../specs/system-services/fs.html"><strong aria-hidden="true">8.13.1.</strong> sys::fs</a></li><li class="chapter-item expanded "><a href="../../specs/system-services/hw.html"><strong aria-hidden="true">8.13.2.</strong> sys::hw</a></li><li class="chapter-item expanded "><a href="../../specs/system-services/perm.html"><strong aria-hidden="true">8.13.3.</strong> sys::perm</a></li><li class="chapter-item expanded "><a href="../../specs/system-services/net.html"><strong aria-hidden="true">8.13.4.</strong> sys::net</a></li><li class="chapter-item expanded "><a href="../../specs/system-services/crypto.html"><strong aria-hidden="true">8.13.5.</strong> sys::crypto</a></li><li class="chapter-item expanded "><a href="../../specs/system-services/crashsave.html"><strong aria-hidden="true">8.13.6.</strong> sys::crashsave</a></li><li class="chapter-item expanded "><a href="../../specs/system-services/flow.html"><strong aria-hidden="true">8.13.7.</strong> sys::flow</a></li><li class="chapter-item expanded "><a href="../../specs/system-services/hydre.html"><strong aria-hidden="true">8.13.8.</strong> sys::hydre</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../applications/index.html"><strong aria-hidden="true">9.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../applications/Astral.html"><strong aria-hidden="true">9.1.</strong> Astral</a></li><li class="chapter-item expanded "><a href="../../applications/BareEnv.html"><strong aria-hidden="true">9.2.</strong> BareEnv</a></li><li class="chapter-item expanded "><a href="../../applications/Blackhole.html"><strong aria-hidden="true">9.3.</strong> Blackhole</a></li><li class="chapter-item expanded "><a href="../../applications/Central.html"><strong aria-hidden="true">9.4.</strong> Central</a></li><li class="chapter-item expanded "><a href="../../applications/Cloudy.html"><strong aria-hidden="true">9.5.</strong> Cloudy</a></li><li class="chapter-item expanded "><a href="../../applications/Comet.html"><strong aria-hidden="true">9.6.</strong> Comet</a></li><li class="chapter-item expanded "><a href="../../applications/Gravity.html"><strong aria-hidden="true">9.7.</strong> Gravity</a></li><li class="chapter-item expanded "><a href="../../applications/Locky.html"><strong aria-hidden="true">9.8.</strong> Locky</a></li><li class="chapter-item expanded "><a href="../../applications/Milkshake.html"><strong aria-hidden="true">9.9.</strong> Milkshake</a></li><li class="chapter-item expanded "><a href="../../applications/Monitor.html"><strong aria-hidden="true">9.10.</strong> Monitor</a></li><li class="chapter-item expanded "><a href="../../applications/Nova.html"><strong aria-hidden="true">9.11.</strong> Nova</a></li><li class="chapter-item expanded "><a href="../../applications/Particle.html"><strong aria-hidden="true">9.12.</strong> Particle</a></li><li class="chapter-item expanded "><a href="../../applications/Pluton.html"><strong aria-hidden="true">9.13.</strong> Pluton</a></li><li class="chapter-item expanded "><a href="../../applications/Postal.html"><strong aria-hidden="true">9.14.</strong> Postal</a></li><li class="chapter-item expanded "><a href="../../applications/Reader.html"><strong aria-hidden="true">9.15.</strong> Reader</a></li><li class="chapter-item expanded "><a href="../../applications/Registry.html"><strong aria-hidden="true">9.16.</strong> Registry</a></li><li class="chapter-item expanded "><a href="../../applications/Rocket.html"><strong aria-hidden="true">9.17.</strong> Rocket</a></li><li class="chapter-item expanded "><a href="../../applications/ShootingStar.html"><strong aria-hidden="true">9.18.</strong> ShootingStar</a></li><li class="chapter-item expanded "><a href="../../applications/Skyer.html"><strong aria-hidden="true">9.19.</strong> Skyer</a></li><li class="chapter-item expanded "><a href="../../applications/Sonata.html"><strong aria-hidden="true">9.20.</strong> Sonata</a></li><li class="chapter-item expanded "><a href="../../applications/Stellar.html"><strong aria-hidden="true">9.21.</strong> Stellar</a></li><li class="chapter-item expanded "><a href="../../applications/Thinker.html"><strong aria-hidden="true">9.22.</strong> Thinker</a></li><li class="chapter-item expanded "><a href="../../applications/TimeTravel.html"><strong aria-hidden="true">9.23.</strong> TimeTravel</a></li><li class="chapter-item expanded "><a href="../../applications/Vortex.html"><strong aria-hidden="true">9.24.</strong> Vortex</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NightOS documentation</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="desktop-environments"><a class="header" href="#desktop-environments">Desktop Environments</a></h1>
+<ul>
+<li><a href="#user-interface-concepts">User interface concepts</a></li>
+<li><a href="#windows-state">Window's state</a>
+<ul>
+<li><a href="#header-and-content">Header and content</a>
+<ul>
+<li><a href="#delimited-title-strings">Delimited title strings</a></li>
+<li><a href="#icons">Icons</a></li>
+<li><a href="#buttons">Buttons</a></li>
+<li><a href="#display-state">Display state</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#methods">Methods</a>
+<ul>
+<li><a href="#0x01-subscribe_capabilities"><code>0x01</code> SUBSCRIBE_CAPABILITIES</a></li>
+<li><a href="#0x02-capabilities"><code>0x02</code> CAPABILITIES</a></li>
+</ul>
+</li>
+<li><a href="#0x10-create_window"><code>0x10</code> CREATE_WINDOW</a>
+<ul>
+<li><a href="#0x11-update_window"><code>0x11</code> UPDATE_WINDOW</a></li>
+<li><a href="#0x12-get_window_state"><code>0x12</code> GET_WINDOW_STATE</a></li>
+<li><a href="#0x1f-destroy_window"><code>0x1F</code> DESTROY_WINDOW</a></li>
+<li><a href="#0x20-create_popup"><code>0x20</code> CREATE_POPUP</a></li>
+<li><a href="#0x2f-destroy_popup"><code>0x2F</code> DESTROY_POPUP</a></li>
+<li><a href="#0x30-send_basic_notification"><code>0x30</code> SEND_BASIC_NOTIFICATION</a></li>
+<li><a href="#0x31-send_music_player_notification"><code>0x31</code> SEND_MUSIC_PLAYER_NOTIFICATION</a></li>
+<li><a href="#0x32-send_video_player_notification"><code>0x32</code> SEND_VIDEO_PLAYER_NOTIFICATION</a></li>
+</ul>
+</li>
+<li><a href="#notifications">Notifications</a>
+<ul>
+<li><a href="#0x02-capabilities_changed"><code>0x02</code> CAPABILITIES_CHANGED</a></li>
+<li><a href="#0x10-window_changed"><code>0x10</code> WINDOW_CHANGED</a></li>
+<li><a href="#0x11-window_interaction"><code>0x11</code> WINDOW_INTERACTION</a></li>
+<li><a href="#0x1f-window_closed"><code>0x1F</code> WINDOW_CLOSED</a></li>
+<li><a href="#0x20-popup_interaction"><code>0x20</code> POPUP_INTERACTION</a></li>
+<li><a href="#0x2f-popup_closed"><code>0x2F</code> POPUP_CLOSED</a></li>
+<li><a href="#0x30-basic_notification_interaction"><code>0x30</code> BASIC_NOTIFICATION_INTERACTION</a></li>
+<li><a href="#0x31-audio_player_notification_interaction"><code>0x31</code> AUDIO_PLAYER_NOTIFICATION_INTERACTION</a></li>
+<li><a href="#0x31-video_player_notification_interaction"><code>0x31</code> VIDEO_PLAYER_NOTIFICATION_INTERACTION</a></li>
+<li><a href="#0x3f-notification_closed"><code>0x3F</code> NOTIFICATION_CLOSED</a></li>
+</ul>
+</li>
+</ul>
+<p>The <em>Desktop Environment</em> (DE) is an application that acts as the main graphical interface of NightOS.</p>
+<p>It is launched with the system, does never stop until the system itself stops, and handles most of the user interface.</p>
+<p>The exposed service for desktop environments is <code>SYS_DENV</code>.</p>
+<h2 id="user-interface-concepts"><a class="header" href="#user-interface-concepts">User interface concepts</a></h2>
+<p>User interface is technically free of any rule ; but it should usually follow the conventions described in the <a href="../../ux/desktop-environment.html">user experience document</a>.</p>
+<h2 id="windows-state"><a class="header" href="#windows-state">Window's state</a></h2>
+<p>In this document, a <em>window's state</em> is a data structure describing a window.</p>
+<p>It is used both when getting informations about the window, or when changing them.</p>
+<p>Custom elements are non-conventional elements handled by this specific desktop environment.</p>
+<p>Note that each window has an identifier, used to access it or identify from notifications. These identifiers must either be different or scoped for each client process, as different clients should not be able to access one another's windows.</p>
+<h3 id="header-and-content"><a class="header" href="#header-and-content">Header and content</a></h3>
+<p>The window's state is made of a <em>header</em>, containing 1 bit for each conventional element to get/update (listed below). Each bit must be set if the element is provided, unset otherwise.</p>
+<p>It is followed by the number of custom elements to get/update (2 bytes), and the list of custom elements' identifiers (4 bytes per identifier).</p>
+<p>The header is followed by the value of each element to update, <em>only</em> if the element must be updated.</p>
+<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / Size in bytes</th><th>Content</th></tr></thead><tbody>
+<tr><td>0</td><td>Title</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>1</td><td>Buttons</td><td><a href="#buttons">Buttons</a></td><td></td></tr>
+<tr><td>2</td><td>Icon</td><td><a href="#icons">Icon</a></td><td></td></tr>
+<tr><td>3</td><td>Width</td><td>2 bytes</td><td>In pixels</td></tr>
+<tr><td>4</td><td>Height</td><td>2 bytes</td><td>In pixels</td></tr>
+<tr><td>5</td><td>X coordinate</td><td>2 bytes</td><td>In pixels</td></tr>
+<tr><td>6</td><td>Y coordinate</td><td>2 bytes</td><td>In pixels</td></tr>
+<tr><td>7</td><td><a href="../../ux/desktop-environment.html#activeinactive-windows">Active attribute</a></td><td>1 byte</td><td><code>0x01</code> to set the attribute</td></tr>
+<tr><td>8</td><td><a href="../../ux/desktop-environment.html#interactive-windows">Interactive attribute</a></td><td>1 byte</td><td><code>0x01</code> to set the attribute</td></tr>
+<tr><td>9</td><td><a href="../../ux/desktop-environment.html#fixed-size-windows">Fixed-size attribute</a></td><td>1 byte</td><td><code>0x01</code> to set the attribute</td></tr>
+<tr><td>10</td><td><a href="../../ux/desktop-environment.html#display-layers">Display layer</a></td><td>1 byte</td><td>Layer number</td></tr>
+<tr><td>11</td><td><a href="../../ux/desktop-environment.html#window-display-state">Display state</a></td><td><a href="#display-state">Display state</a></td><td></td></tr>
+<tr><td>12-31</td><td><em>Future-proof</em></td><td></td><td></td></tr>
+</tbody></table>
+<h4 id="delimited-title-strings"><a class="header" href="#delimited-title-strings">Delimited title strings</a></h4>
+<p>Delimited title strings are encoded as:</p>
+<ul>
+<li>Title's length, in bytes (2 bytes)</li>
+<li>Title (UTF-8 encoded)</li>
+</ul>
+<h4 id="icons"><a class="header" href="#icons">Icons</a></h4>
+<p>Icons are encoded as:</p>
+<ul>
+<li>Icon's buffer's length (4 bytes)</li>
+<li>Icon's buffer (bitmap only)</li>
+</ul>
+<h4 id="buttons"><a class="header" href="#buttons">Buttons</a></h4>
+<ul>
+<li>Buttons count (1 byte)</li>
+</ul>
+<p>Then, for each button:</p>
+<ul>
+<li>Label's <a href="#delimited-title-strings">delimited title string</a></li>
+<li>Label's icon (1 byte):
+<ul>
+<li>Bit 0: does the button have an icon?</li>
+<li>Bit 1: is the button placed on the left? (else will be placed on the right)</li>
+<li>Bit 2: should the icon be displayed in monochrome?</li>
+</ul>
+</li>
+<li>Label's <a href="#icons">icon</a></li>
+<li>State (1 byte):
+<ul>
+<li>Bit 0: Is disabled?</li>
+<li>Bit 1: Does it use a custom color?</li>
+</ul>
+</li>
+<li>Color (4 bytes for RGB and transparency) - filled with zeroes if custom color not set in state</li>
+<li>Callback code (1 byte) - for internal use in the client</li>
+</ul>
+<h4 id="display-state"><a class="header" href="#display-state">Display state</a></h4>
+<p>The display state is one value among:</p>
+<ul>
+<li><code>0x00</code>: Restored (default)</li>
+<li><code>0x01</code>: Maximized</li>
+<li><code>0x02</code>: Minimized</li>
+<li><code>0x03</code>: Fullscreenized</li>
+<li><code>0x04</code>: Kiosk mode</li>
+</ul>
+<h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
+<h3 id="0x01-subscribe_capabilities"><a class="header" href="#0x01-subscribe_capabilities"><code>0x01</code> SUBSCRIBE_CAPABILITIES</a></h3>
+<p>Subscribe to change of capabilities listed by the <a href="#0x02-capabilities"><code>CAPABILITIES</code></a> method.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Answer:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x02-capabilities"><a class="header" href="#0x02-capabilities"><code>0x02</code> CAPABILITIES</a></h3>
+<p>List elements which can be handled by the desktop environment.</p>
+<p>For more informations about such elements, see the <a href="../../ux/desktop-environment.html">user experience document</a></p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Answer:</strong></p>
+<p>Bits set to <code>1</code> if the element is handled (supported) by the DE, <code>0</code> else. In each byte below, bits are listed from the strongest to the weakest.</p>
+<p>Note that the bit should only be set if the desktop environment is <em>currently</em> able to handle the said element, which means that its display settings change, this answer's content will most probably change.</p>
+<ul>
+<li>
+<p>Global mechanisms (4 bytes)</p>
+<ul>
+<li>Bit  0: Windows</li>
+<li>Bit  1: Moving windows</li>
+<li>Bit  2: Display layers</li>
+<li>Bit  3: Pointing devices</li>
+<li>Bit  4: Notifications</li>
+<li>Bit  5: Notification center</li>
+<li>Bit  6: Quick settings</li>
+<li>Bit  7: Lockscreen</li>
+<li>Bit  8: Taskbar</li>
+<li>Bit  9: Dock</li>
+<li>Bit 10: Desktop icons</li>
+<li>Bit 11: Wallpaper</li>
+<li>Bit 12: Customizable wallpaper</li>
+<li>Bit 13: Popups</li>
+<li>Bit 14: Is the interface customizable?</li>
+<li>Remaining bits: <em>Future-proof</em></li>
+</ul>
+</li>
+<li>
+<p>Windows' outer interface (4 bytes)</p>
+<ul>
+<li>Bit 0: Titlebar for windows</li>
+<li>Bit 1: Custom title in titlebars</li>
+<li>Bit 2: Custom icon in titlebars</li>
+<li>Bit 3: Close button in titlebars</li>
+<li>Bit 4: Customizable buttons in titlebars</li>
+<li>Bit 5: Disabled buttons in titlebars</li>
+<li>Bit 6: Custom colors for buttons in titlebars</li>
+<li>Bit 7: Can windows be made non-interactive</li>
+<li>Bit 8: Can windows be made fixed-size</li>
+<li>Remaining bits: <em>Future-proof</em></li>
+</ul>
+</li>
+<li>
+<p>Windows' dynamic changes (4 bytes)</p>
+<ul>
+<li>Bit 0: Windows' focus</li>
+<li>Bit 1: Ability to move windows</li>
+<li>Bit 2: Ability to resize windows</li>
+<li>Bit 3: Ability to reorder windows in layers (superposition)</li>
+<li>Bit 4: Ability to hide or minimize windows</li>
+<li>Bit 5: Ability to restore and maximize windows</li>
+<li>Bit 6: Ability to set the window to fullscreen</li>
+<li>Bit 7: Ability to set the window to kiosk mode</li>
+<li>Remaining bits: <em>Future-proof</em></li>
+</ul>
+</li>
+<li>
+<p>Windows' dynamic changes by the user (4 bytes)</p>
+<ul>
+<li>Same as <em>Windows' dynamic changes</em>, but set only if the user can achieve the specified operation themselves</li>
+</ul>
+</li>
+<li>
+<p>Popups' dynamic changes (4 bytes)</p>
+<ul>
+<li>Bit 0: Popups' focus</li>
+<li>Bit 1: Ability to move popups</li>
+<li>Bit 2: Ability to resize popups</li>
+<li>Bit 3: Ability to reorder popups in layers (superposition)</li>
+<li>Bit 4: Ability to hide or minimize popups</li>
+<li>Bit 5: Ability to restore and maximize popups</li>
+<li>Bit 6: Ability to set the window to fullscreen</li>
+<li>Bit 7: Ability to set the window to kiosk mode</li>
+<li>Remaining bits: <em>Future-proof</em></li>
+</ul>
+</li>
+<li>
+<p>Popups' dynamic changes by the user (4 bytes)</p>
+<ul>
+<li>Same as <em>Popups' dynamic changes</em>, but set only if the user can achieve the specified operation themselves</li>
+</ul>
+</li>
+<li>
+<p>Notifications (4 bytes) - filled with zeroes if notifications are not supported</p>
+<ul>
+<li>Basic notifications (4 bytes):
+<ul>
+<li>Bit 0: Support for custom icons</li>
+<li>Remaining bits: <em>Future-proof</em></li>
+</ul>
+</li>
+<li>Music player notifications (4 bytes):
+<ul>
+<li>Bit  0: Support for music player notifications</li>
+<li>Bit  1: Support for track's title</li>
+<li>Bit  2: Support for album's title</li>
+<li>Bit  3: Support for artist's name</li>
+<li>Bit  4: Support for album art</li>
+<li>Bit  5: Support for artist art</li>
+<li>Bit  6: Support for track's year</li>
+<li>Bit  7: Support for track's day/month/year</li>
+<li>Bit  8: Support for track's genre</li>
+<li>Bit  9: Support for playlist's name</li>
+<li>Bit 10: Support for progress bar</li>
+<li>Bit 11: Support for codec</li>
+<li>Bit 12: Support for frequency</li>
+<li>Bit 13: Support for resolution</li>
+<li>Bit 14: Support for bitrate</li>
+<li>Bit 15: Support for visualizer</li>
+<li>Bit 16: Support for displaying next title in queue</li>
+<li>Bit 17: Support for <code>current track/queue size</code> display</li>
+<li>Bit 18: Support for pause/resume button</li>
+<li>Bit 19: Support for stop button</li>
+<li>Bit 20: Support for rewind/fast-forward button</li>
+<li>Bit 21: Support for previous/next buttons</li>
+<li>Bit 22: Support for like/dislike button</li>
+<li>Bit 23: Support for shuffle button</li>
+<li>Remaining bits: <em>Future-proof</em></li>
+</ul>
+</li>
+<li>Video player notifications (4 bytes):
+<ul>
+<li>Bit  0: Support for video player notifications</li>
+<li>Bit  1: Support for video's title</li>
+<li>Bit  2: Support for video's author</li>
+<li>Bit  3: Support for video's source</li>
+<li>Bit  4: Support for episode's number</li>
+<li>Bit  5: Support for episode's serie name</li>
+<li>Bit  6: Support for codec</li>
+<li>Bit  7: Support for bitrate</li>
+<li>Bit  8: Support for video's <code>current track/queue size</code> display</li>
+<li>Bit  9: Support for pause/resume button</li>
+<li>Bit 10: Support for stop button</li>
+<li>Bit 11: Support for rewind/fast-forward button</li>
+<li>Bit 12: Support for previous/next buttons</li>
+<li>Bit 13: Support for like/dislike button</li>
+<li>Bit 14: Support for shuffle button</li>
+<li>Remaining bits: <em>Future-proof</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Integrations (4 bytes)</p>
+<ul>
+<li>Bit 0: Integration with the <a href="file-managers.html">default file manager</a></li>
+<li>Bit 1: Thumbnails generation through the <a href="file-managers.html">default file manager</a></li>
+<li>Remaining bits: <em>Future-proof</em></li>
+</ul>
+</li>
+</ul>
+<h2 id="0x10-create_window"><a class="header" href="#0x10-create_window"><code>0x10</code> CREATE_WINDOW</a></h2>
+<p>Create a new window.</p>
+<p>Unset elements in the provided <a href="#windows-state">window's state</a> will be replaced by default values or behaviours.</p>
+<p>Desktop environment-dependant errors can only be used if the error does not fit any other error code.</p>
+<p>If the window is successfully create, the client is automatically subscribed to <a href="#0x10-window_changed"><code>WINDOW_CHANGED</code></a> notifications for this specific window.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="#windows-state">Window's state</a></li>
+</ul>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>Window identifier (8 bytes)</li>
+<li><a href="#windows-state">Window's state</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid list of elements to create/update provided</li>
+<li><code>0x30</code>: Client is not allowed to create/update a window</li>
+<li><code>0x31</code>: Failed to create/update the window</li>
+<li><code>0x40</code>: Title must be provided</li>
+<li><code>0x42</code>: Title cannot be empty</li>
+<li><code>0x43</code>: Title is not a valid UTF-8 string</li>
+<li><code>0x44</code>: Unspecified error with the title</li>
+<li><code>0x50</code>: Custom buttons provided but it is not customizable</li>
+<li><code>0x51</code>: Too many custom buttons were provided</li>
+<li><code>0x52</code>: A custom button's label is not a valid UTF-8 string</li>
+<li><code>0x53</code>: A custom button's label cannot be empty</li>
+<li><code>0x54</code>: Custom button's icon provided but it is not customizable</li>
+<li><code>0x55</code>: Invalid custom button's icon buffer</li>
+<li><code>0x56</code>: A custom button's icon is too small</li>
+<li><code>0x57</code>: A custom button's icon is too large</li>
+<li><code>0x58</code>: Unspecified error with a custom button's icon</li>
+<li><code>0x59</code>: Unspecified error with a custom button's label</li>
+<li><code>0x5A</code>: Custom button's color provided but it is not customizable</li>
+<li><code>0x5B</code>: Custom button's color uses transparency but it is not customizable</li>
+<li><code>0x5C</code>: Duplicate custom button's callback code</li>
+<li><code>0x60</code>: Custom icon provided but it is not customizable</li>
+<li><code>0x61</code>: Invalid custom icon buffer</li>
+<li><code>0x62</code>: Custom icon is too small</li>
+<li><code>0x63</code>: Custom icon is too large</li>
+<li><code>0x64</code>: Unspecified error with the provided custom icon</li>
+<li><code>0x70</code>: Window's width provided but it is not customizable</li>
+<li><code>0x71</code>: Window's width is too small</li>
+<li><code>0x72</code>: Window's width is too large</li>
+<li><code>0x73</code>: Window's height provided but it is not customizable</li>
+<li><code>0x74</code>: Window's height is too small</li>
+<li><code>0x75</code>: Window's height is too large</li>
+<li><code>0x76</code>: Window's X coordinate provided but it is not customizable</li>
+<li><code>0x77</code>: Window's X coordinate is too small</li>
+<li><code>0x78</code>: Window's X coordinate is too large</li>
+<li><code>0x79</code>: Forbidden window's X coordinate</li>
+<li><code>0x7A</code>: Window's Y coordinate provided but it is not customizable</li>
+<li><code>0x7B</code>: Window's Y coordinate is too small</li>
+<li><code>0x7C</code>: Window's Y coordinate is too large</li>
+<li><code>0x7D</code>: Forbidden window's Y coordinate</li>
+<li><code>0x7E</code>: Invalid window's width/height ratio</li>
+<li><code>0x7F</code>: Invalid window's X/Y coordinates couple</li>
+<li><code>0x80</code>: Active attribute provided but it is not customizable</li>
+<li><code>0x81</code>: Invalid active attribute provided</li>
+<li><code>0x82</code>: Cannot apply the custom active attribute for unspecified reasons</li>
+<li><code>0x83</code>: Interactive attribute provided but it is not customizable</li>
+<li><code>0x84</code>: Invalid interactive attribute provided</li>
+<li><code>0x85</code>: Cannot apply the custom interactive attribute for unspecified reasons</li>
+<li><code>0x86</code>: Display layer provided but it is not customizable</li>
+<li><code>0x87</code>: Display layer is too low</li>
+<li><code>0x88</code>: Display layer is too high</li>
+<li><code>0x89</code>: Forbidden display layer</li>
+<li><code>0x8A</code>: Display state provided but it is not customizable</li>
+<li><code>0x8B</code>: Invalid display state provided</li>
+<li><code>0x8C</code>: Cannot set this specific display state</li>
+<li><code>0x90</code>: Provided custom elements but this DE does not have any custom one</li>
+<li><code>0xA0</code> to <code>0xBF</code>: Errors for custom elements</li>
+<li><code>0xD0</code> to <code>0xEF</code>: Desktop environment-dependant errors</li>
+</ul>
+<h3 id="0x11-update_window"><a class="header" href="#0x11-update_window"><code>0x11</code> UPDATE_WINDOW</a></h3>
+<p>Update an existing window.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Window identifier (8 bytes)</li>
+<li><a href="#windows-state">Window's state</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<p>Same errors as the <a href="#0x10-create_window"><code>CREATE_WINDOW</code></a> method, plus <code>0x3F</code> for unknown window identifier.</p>
+<h3 id="0x12-get_window_state"><a class="header" href="#0x12-get_window_state"><code>0x12</code> GET_WINDOW_STATE</a></h3>
+<p>Get informations about an existing window.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Window identifier (8 bytes)</li>
+<li><a href="#header-and-content">Window's state header</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="#header-and-content">Window's state get content</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid list of elements to create/update provided</li>
+<li><code>0x30</code>: Unknown window identifier</li>
+</ul>
+<h3 id="0x1f-destroy_window"><a class="header" href="#0x1f-destroy_window"><code>0x1F</code> DESTROY_WINDOW</a></h3>
+<p>Destroy an existing window.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Window identifier (8 bytes)</li>
+<li>Skip the <a href="#0x1f-window_closed"><code>WINDOW_CLOSED</code></a> (1 byte): <code>0x01</code> to skip the notification, <code>0x00</code> else</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid skip mode provided</li>
+<li><code>0x20</code>: Unknown window identifier</li>
+<li><code>0x21</code>: Failed to destroy the window</li>
+<li><code>0xD0</code> to <code>0xEF</code>: Desktop environment-dependant errors</li>
+</ul>
+<h3 id="0x20-create_popup"><a class="header" href="#0x20-create_popup"><code>0x20</code> CREATE_POPUP</a></h3>
+<p>Create a popup.</p>
+<p><strong>Arguments:</strong></p>
+<p>Same structure than for a <a href="#windows-state">window's state</a>, but with the following common elements:</p>
+<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th></tr></thead><tbody>
+<tr><td>0</td><td>Title</td><td><a href="#delimited-title-strings">String</a></td></tr>
+<tr><td>1</td><td>Icon</td><td><a href="#icons">Icon</a></td></tr>
+<tr><td>2</td><td>Buttons</td><td><a href="#buttons">Buttons</a></td></tr>
+</tbody></table>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Popup identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid list of elements provided</li>
+<li><code>0x30</code>: Client is not allowed to create a popup</li>
+<li><code>0x31</code>: Failed to create/update the popup</li>
+<li><code>0x40</code>: Title must be provided</li>
+<li><code>0x42</code>: Title cannot be empty</li>
+<li><code>0x43</code>: Title is not a valid UTF-8 string</li>
+<li><code>0x44</code>: Unspecified error with the title</li>
+<li><code>0x50</code>: Custom buttons provided but it is not customizable</li>
+<li><code>0x51</code>: Too many custom buttons were provided</li>
+<li><code>0x52</code>: A custom button's label is not a valid UTF-8 string</li>
+<li><code>0x53</code>: A custom button's label cannot be empty</li>
+<li><code>0x54</code>: Custom button's icon provided but it is not customizable</li>
+<li><code>0x55</code>: Invalid custom button's icon buffer</li>
+<li><code>0x56</code>: A custom button's icon is too small</li>
+<li><code>0x57</code>: A custom button's icon is too large</li>
+<li><code>0x58</code>: Unspecified error with a custom button's icon</li>
+<li><code>0x59</code>: Unspecified error with a custom button's label</li>
+<li><code>0x5A</code>: Custom button's color provided but it is not customizable</li>
+<li><code>0x5B</code>: Custom button's color uses transparency but it is not customizable</li>
+<li><code>0x5C</code>: Duplicate custom button's callback code</li>
+<li><code>0x60</code>: Custom icon provided but it is not customizable</li>
+<li><code>0x61</code>: Invalid custom icon buffer</li>
+<li><code>0x62</code>: Custom icon is too small</li>
+<li><code>0x63</code>: Custom icon is too large</li>
+<li><code>0x64</code>: Unspecified error with the provided custom icon</li>
+</ul>
+<h3 id="0x2f-destroy_popup"><a class="header" href="#0x2f-destroy_popup"><code>0x2F</code> DESTROY_POPUP</a></h3>
+<p>Destroy an existing popup.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Popup identifier (8 bytes)</li>
+<li>Skip the <a href="#0x2f-popup_closed"><code>POPUP_CLOSED</code></a> (1 byte): <code>0x01</code> to skip the notification, <code>0x00</code> else</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid skip mode provided</li>
+<li><code>0x20</code>: Unknown popup identifier</li>
+<li><code>0x21</code>: Failed to destroy the popup</li>
+<li><code>0xA0</code> to <code>0xBF</code>: Errors for custom elements</li>
+<li><code>0xD0</code> to <code>0xEF</code>: Desktop environment-dependant errors</li>
+</ul>
+<h3 id="0x30-send_basic_notification"><a class="header" href="#0x30-send_basic_notification"><code>0x30</code> SEND_BASIC_NOTIFICATION</a></h3>
+<p>Send a basic notification, &quot;basic&quot; meaning a non-special notification.</p>
+<p><strong>Arguments:</strong></p>
+<p>Subset of a <a href="#windows-state">window's state</a>: title, icon, buttons.</p>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Notification identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p>Relevant subset of the <a href="#0x10-create_window"><code>CREATE_WINDOW</code></a> method's errors.</p>
+<h3 id="0x31-send_music_player_notification"><a class="header" href="#0x31-send_music_player_notification"><code>0x31</code> SEND_MUSIC_PLAYER_NOTIFICATION</a></h3>
+<p>Send a music player notificaiton.</p>
+<p><strong>Arguments:</strong></p>
+<p>Same structure than for a <a href="#windows-state">window's state</a>, but with the following common elements:</p>
+<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
+<tr><td>0</td><td>Track's title</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>1</td><td>Album's title</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>2</td><td>Artist's name</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>3</td><td>Album art</td><td><a href="#icons">Icon</a></td><td></td></tr>
+<tr><td>4</td><td>Artist art</td><td><a href="#icons">Icon</a></td><td></td></tr>
+<tr><td>3</td><td>Track's year</td><td>2 bytes</td><td></td></tr>
+<tr><td>4</td><td>Track's date</td><td>4 bytes</td><td>Day (1 byte) ; Month (1 byte); Year (2 bytes)</td></tr>
+<tr><td>5</td><td>Track's genre</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>6</td><td>Playlist's name</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>7</td><td>Progress time</td><td>8 bytes</td><td>Elapsed time in seconds (4 bytes) ; Total time in seconds (4 bytes)</td></tr>
+<tr><td>8</td><td>Pause state</td><td>1 byte</td><td><code>0x01</code> for active playback, <code>0x02</code> for paused, <code>0x03</code> for stopped</td></tr>
+<tr><td>9</td><td>Like state</td><td>1 byte</td><td><code>0x01</code> if liked, <code>0x02</code> if disliked, <code>0x00</code> if not liked nor disliked</td></tr>
+<tr><td>10</td><td>Codec</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>11</td><td>Frequency</td><td>4 bytes</td><td>Value in hertz (Hz)</td></tr>
+<tr><td>12</td><td>Resolution</td><td>2 bytes</td><td>Value in bits</td></tr>
+<tr><td>13</td><td>Bitrate</td><td>4 bytes</td><td>Value in bits/second</td></tr>
+<tr><td>14</td><td>Visualizer informations</td><td>24 bytes</td><td>One byte per frequency range (see below)</td></tr>
+<tr><td>18</td><td>Next track's name</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>19</td><td>Track position</td><td>8 bytes</td><td>Track index (4 bytes) ; Tracks in the queue (4 bytes)</td></tr>
+<tr><td>20</td><td>Buttons availibility</td><td>1 byte</td><td>Pause/resume ; Rewind/Fast-forward ; Previous track ; Next track ; Shuffle</td></tr>
+</tbody></table>
+<p>The visualizer shows a value from 0 to 255 to indicate the bar eight. Each bar value corresponds to a specific frequency range. The lower frequency bound of each bar can be found with: <code>exponential(i / 1.88) - 1</code>, where <code>i</code> is the bar number, from 0 to 23.</p>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Notification identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Audio player notifications are not supported</li>
+<li><code>0x21</code>: Invalid list of elements to create/update provided</li>
+<li><code>0x30</code>: Client is not allowed to create/update an audio player notification</li>
+<li><code>0x31</code>: Failed to create/update the notification</li>
+<li><code>0x40</code>: Track's title is not a valid UTF-8 string</li>
+<li><code>0x41</code>: Album's title is not a valid UTF-8 string</li>
+<li><code>0x42</code>: Artist's name is not a valid UTF-8 string</li>
+<li><code>0x70</code>: Invalid pause state</li>
+<li><code>0x71</code>: Invalid like state</li>
+<li><code>0x82</code>: Next track's title cannot be empty</li>
+<li><code>0x83</code>: Next track's title is not a valid UTF-8 string</li>
+<li><code>0x8F</code>: Button avaibility bit provided for unknown button</li>
+<li><code>0xA0</code> to <code>0xBF</code>: Errors for custom elements</li>
+<li><code>0xD0</code> to <code>0xEF</code>: Desktop environment-dependant errors</li>
+</ul>
+<h3 id="0x32-send_video_player_notification"><a class="header" href="#0x32-send_video_player_notification"><code>0x32</code> SEND_VIDEO_PLAYER_NOTIFICATION</a></h3>
+<p>Send a video player notificaiton.</p>
+<p><strong>Arguments:</strong></p>
+<p>Same structure than for a <a href="#windows-state">window's state</a>, but with the following common elements:</p>
+<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
+<tr><td>0</td><td>Video's title</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>1</td><td>Video's author</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>2</td><td>Video's source</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>3</td><td>Episode's number</td><td>4 bytes</td><td>Current episode (2 bytes) ; Total episodes in the season (2 bytes)</td></tr>
+<tr><td>4</td><td>Episode's serie name</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>5</td><td>Codec</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
+<tr><td>6</td><td>Bitrate</td><td>4 bytes</td><td>Value in bits/second</td></tr>
+<tr><td>7</td><td>Video position</td><td>8 bytes</td><td>Video index (4 bytes) ; Videos in the queue (4 bytes)</td></tr>
+<tr><td>8</td><td>Buttons availibility</td><td>1 byte</td><td>Pause/resume ; Rewind/Fast-forward ; Previous track ; Next track ; Shuffle</td></tr>
+</tbody></table>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Notification identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Audio player notifications are not supported</li>
+<li><code>0x21</code>: Invalid list of elements to create/update provided</li>
+<li><code>0x30</code>: Client is not allowed to create/update an audio player notification</li>
+<li><code>0x31</code>: Failed to create/update the notification</li>
+<li><code>0x40</code>: Video's title is not a valid UTF-8 string</li>
+<li><code>0x41</code>: Video's author is not a valid UTF-8 string</li>
+<li><code>0x42</code>: Video's source is not a valid UTF-8 string</li>
+<li><code>0x43</code>: Codec is not a valid UTF-8 string</li>
+<li><code>0xA0</code> to <code>0xBF</code>: Errors for custom elements</li>
+<li><code>0xD0</code> to <code>0xEF</code>: Desktop environment-dependant errors</li>
+</ul>
+<h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
+<h3 id="0x02-capabilities_changed"><a class="header" href="#0x02-capabilities_changed"><code>0x02</code> CAPABILITIES_CHANGED</a></h3>
+<p>Sent to clients that subscribed through the <a href="#0x01-subscribe_capabilities"><code>SUBSCRIBE_CAPABILITIES</code></a> method when the elements the desktop environment can handle changed (for instance when the taskbar is hidden, when the windows' layers become fixed, ...).</p>
+<p><strong>Datafield:</strong></p>
+<p>Equivalent content to the <a href="#0x02-capabilities"><code>CAPABILITIES</code></a>' answer.</p>
+<h3 id="0x10-window_changed"><a class="header" href="#0x10-window_changed"><code>0x10</code> WINDOW_CHANGED</a></h3>
+<p>Notification sent when a window's state changed.</p>
+<p>Only the elements that changed since the last notification will be set in the sent window's state.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Window identifier (8 bytes)</li>
+<li><a href="#windows-state">Window's state</a></li>
+</ul>
+<h3 id="0x11-window_interaction"><a class="header" href="#0x11-window_interaction"><code>0x11</code> WINDOW_INTERACTION</a></h3>
+<p>Sent when the user interacts with a window. These events should not occur if the window is not <a href="../../ux/desktop-environment.html#activeinactive-windows">active</a></p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Window identifier (8 bytes)</li>
+</ul>
+<p>This is followed by the interaction type on 1 byte, then by the interaction's data, which can be either:</p>
+<ul>
+<li>
+<p><code>0x00</code>: Pointing device event</p>
+<ul>
+<li>Type (1 byte):
+<ul>
+<li><code>0x00</code>: Pointer moved</li>
+<li><code>0x01</code>: Left click pressed</li>
+<li><code>0x02</code>: Left click released</li>
+<li><code>0x03</code>: Middle click pressed</li>
+<li><code>0x04</code>: Middle click released</li>
+<li><code>0x05</code>: Right click pressed</li>
+<li><code>0x06</code>: Right click released</li>
+</ul>
+</li>
+<li>X coordinate in pixels (2 bytes) (relative to the window's drawing zone left side)</li>
+<li>Y coordinate in pixels (2 bytes) (relative to the window's drawing zone top side)</li>
+</ul>
+</li>
+<li>
+<p><code>0x01</code>: Scrolling</p>
+<ul>
+<li>Direction (1 byte):
+<ul>
+<li><code>0x00</code>: Up</li>
+<li><code>0x01</code>: Down</li>
+<li><code>0x02</code>: Left</li>
+<li><code>0x03</code>: Right</li>
+<li><code>0x04</code>: Shake</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>0x02</code>: Keyboard event</p>
+<ul>
+<li>Hold type (1 byte):
+<ul>
+<li><code>0x00</code>: Key was pressed</li>
+<li><code>0x11</code>: Key was released</li>
+</ul>
+</li>
+<li>Key code (1 byte), normalized by the <a href="../system-services/hw.html"><code>sys::hw</code></a> service</li>
+</ul>
+</li>
+</ul>
+<h3 id="0x1f-window_closed"><a class="header" href="#0x1f-window_closed"><code>0x1F</code> WINDOW_CLOSED</a></h3>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Window identifier (8 bytes)</li>
+</ul>
+<h3 id="0x20-popup_interaction"><a class="header" href="#0x20-popup_interaction"><code>0x20</code> POPUP_INTERACTION</a></h3>
+<p>Sent when the user selects a button in the list provided by the popup.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Popup identifier (8 bytes)</li>
+<li>Callback code (1 byte)</li>
+</ul>
+<h3 id="0x2f-popup_closed"><a class="header" href="#0x2f-popup_closed"><code>0x2F</code> POPUP_CLOSED</a></h3>
+<p>Sent when a popup was closed by the end user.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Popup identifier (8 bytes)</li>
+</ul>
+<h3 id="0x30-basic_notification_interaction"><a class="header" href="#0x30-basic_notification_interaction"><code>0x30</code> BASIC_NOTIFICATION_INTERACTION</a></h3>
+<p>Sent when the user interacts with a basic notification.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Callback code (1 byte)</li>
+</ul>
+<h3 id="0x31-audio_player_notification_interaction"><a class="header" href="#0x31-audio_player_notification_interaction"><code>0x31</code> AUDIO_PLAYER_NOTIFICATION_INTERACTION</a></h3>
+<p>Sent when the user interacts with an audio player notification.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Button code (1 byte):
+<ul>
+<li><code>0x00</code>: Pause/Resume</li>
+<li><code>0x01</code>: Stop</li>
+<li><code>0x02</code>: Rewind</li>
+<li><code>0x03</code>: Fast-forward</li>
+<li><code>0x04</code>: Previous</li>
+<li><code>0x05</code>: Next</li>
+<li><code>0x06</code>: Like</li>
+<li><code>0x07</code>: Dislike</li>
+<li><code>0x08</code>: Like/dislike toggle</li>
+<li><code>0x09</code>: Shuffle</li>
+</ul>
+</li>
+</ul>
+<h3 id="0x31-video_player_notification_interaction"><a class="header" href="#0x31-video_player_notification_interaction"><code>0x31</code> VIDEO_PLAYER_NOTIFICATION_INTERACTION</a></h3>
+<p>Sent when the user interacts with a video player notification.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Button code (1 byte):
+<ul>
+<li><code>0x00</code>: Pause/Resume</li>
+<li><code>0x01</code>: Stop</li>
+<li><code>0x02</code>: Rewind</li>
+<li><code>0x03</code>: Fast-forward</li>
+<li><code>0x04</code>: Previous</li>
+<li><code>0x05</code>: Next</li>
+<li><code>0x06</code>: Like</li>
+<li><code>0x07</code>: Dislike</li>
+<li><code>0x08</code>: Like/dislike toggle</li>
+<li><code>0x09</code>: Shuffle</li>
+</ul>
+</li>
+</ul>
+<h3 id="0x3f-notification_closed"><a class="header" href="#0x3f-notification_closed"><code>0x3F</code> NOTIFICATION_CLOSED</a></h3>
+<p>Sent a notification is closed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Notification identifier (8 bytes)</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../specs/scoped-services/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../specs/scoped-services/file-managers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../specs/scoped-services/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../specs/scoped-services/file-managers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

@@ -10,5 +10,6 @@ These services are not available directly to the end applications ; they can onl
 
 ## List of system-related scoped services
 
+* [Desktop environment](desktop-environments.md)
 * [File managers](file-managers.md)
 * [Filesystem openers](filesystem-openers.md)

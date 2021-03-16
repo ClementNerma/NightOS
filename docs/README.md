@@ -77,6 +77,7 @@ The list of default applications and their description can be found [here](appli
 
 ### [Scoped services](specs/scoped-services/)
 
+- [Desktop environments](specs/scoped-services/desktop-environments.md) - how the user interface is handled by applications
 - [File managers](specs/scoped-services/file-managers.md) - how file managers are integrated into the system
 - [Filesystem openers](specs/scoped-services/filesystem-openers.md) - how files are associated to applications
 

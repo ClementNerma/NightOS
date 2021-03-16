@@ -7,6 +7,8 @@ NightOS is an **highly experimental** general-purpose operating system aiming to
 * Provide maximum security to the average user
 * Be easily extensible and customizable by the average user
 * Be easy and intuitive to use
+* Minimize data loss in case of problem (power loss, hardware failure)
+* Be powerful enough for more advanced users
 
 ## Documentation
 

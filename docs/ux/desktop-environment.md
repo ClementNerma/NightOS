@@ -105,3 +105,7 @@ _Interface windows_ are windows that are created by another application to be us
 Interface windows are created the same way as usual windows, but do not usually have a titlebar and can often not be moved. They are mostly used to create widgets and display context menus on items.
 
 Typically, an interface windows created by an application is hidden by default, and the DEA shows it only after getting its identifier returned by the service it is communicating with.
+
+## Popups
+
+Popups are special windows which are not drawable directly by the application. They usually contain a single icon, as well as a message and at least one clickable button. They are used to transmit informations to the end user, such as an error or a warning message.

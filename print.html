@@ -5008,10 +5008,7 @@ Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device de
 <ul>
 <li><a href="specs/scoped-services/desktop-environments.html#0x01-subscribe_capabilities"><code>0x01</code> SUBSCRIBE_CAPABILITIES</a></li>
 <li><a href="specs/scoped-services/desktop-environments.html#0x02-capabilities"><code>0x02</code> CAPABILITIES</a></li>
-</ul>
-</li>
-<li><a href="specs/scoped-services/desktop-environments.html#0x10-create_window"><code>0x10</code> CREATE_WINDOW</a>
-<ul>
+<li><a href="specs/scoped-services/desktop-environments.html#0x10-create_window"><code>0x10</code> CREATE_WINDOW</a></li>
 <li><a href="specs/scoped-services/desktop-environments.html#0x11-update_window"><code>0x11</code> UPDATE_WINDOW</a></li>
 <li><a href="specs/scoped-services/desktop-environments.html#0x12-get_window_state"><code>0x12</code> GET_WINDOW_STATE</a></li>
 <li><a href="specs/scoped-services/desktop-environments.html#0x1f-destroy_window"><code>0x1F</code> DESTROY_WINDOW</a></li>
@@ -5274,7 +5271,7 @@ Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device de
 </ul>
 </li>
 </ul>
-<h2 id="0x10-create_window"><a class="header" href="#0x10-create_window"><code>0x10</code> CREATE_WINDOW</a></h2>
+<h3 id="0x10-create_window"><a class="header" href="#0x10-create_window"><code>0x10</code> CREATE_WINDOW</a></h3>
 <p>Create a new window.</p>
 <p>Unset elements in the provided <a href="specs/scoped-services/desktop-environments.html#windows-state">window's state</a> will be replaced by default values or behaviours.</p>
 <p>Desktop environment-dependant errors can only be used if the error does not fit any other error code.</p>

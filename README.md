@@ -2,13 +2,22 @@
 
 ![NightOS Logo](logo.png)
 
-NightOS is an **highly experimental** general-purpose operating system aiming to :
+NightOS is an experimental general-purpose operating system aiming to provide the highest security and safety to the average user, while remaining powerful enough to be fast, efficient and highly customizable for more advanced users.
 
-* Provide maximum security to the average user
-* Be easily extensible and customizable by the average user
-* Be easy and intuitive to use
-* Minimize data loss in case of problem (power loss, hardware failure)
-* Be powerful enough for more advanced users
+It is currently [being fully designed](docs/).
+
+## Features
+
+* Extreme customization, up to the kernel itself
+* Data loss prevention with [crash saves](docs/features/crash-saves.md)
+* Secured with the [permissions system](docs/specs/permissions.md) and [sandboxes](docs/features/sandboxes.md)
+* Secured to external attacks with [by-default encryption](docs/features/encryption.md)
+* Resilient to freezes with the [freeze prevention system](docs/features/freeze-prevention.md)
+* Customize the environment and use it anywhere thanks to [synchronization](docs/features/synchronization.md)
+* Remote computers management using [domains](docs/features/domains.md)
+* Built-in [parental control](docs/features/parental-control.md)
+* Native applications for [common tasks](docs/applications/)
+* ...and [many others](docs/)
 
 ## Documentation
 

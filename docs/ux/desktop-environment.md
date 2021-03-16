@@ -59,6 +59,7 @@ A window's state is made of its characteristics:
 - Dimensions (width / height)
 - Coordinates (X and Y)
 - [Active attribute](#activeinactive-windows)
+- [Interactive attribute](#interactive-windows)
 - [Display layer](#display-layers)
 - [Display state](#window-display-state)
 - Custom state attributes
@@ -77,6 +78,10 @@ Windows have a _display state_ which indicate how they are displayed on the scre
 ## Active/inactive windows
 
 All windows are considered _inactive_ unless they are _focused_, which on most desktop environments put them on the top layer. There are no specific difference between active and inactive windows, but this attribute is indicated to the owner application as this may impact the desired behaviour of the application.
+
+## Interactive windows
+
+By default, windows are _interactive_, meaning user inputs can be sent to them. They may be set _non-interactive_ to stop receiving such events and preventing users from interacting with them.
 
 ## Common elements
 

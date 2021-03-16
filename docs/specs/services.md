@@ -19,6 +19,8 @@ A scope's name is made of up to 8 extended ASCII characters.
 
 Scope whose conventions are established by the system are prefixed by `SYS_`. Each application exposing such a service will be get special recognition for the tasks associated to this scope service. Also, this prefix is reserved for such scopes and cannot be used for custom ones.
 
+These services are not available directly to the end applications ; they can only be used through [system services](system-services/README.md).
+
 ## Architecture of a service
 
 Applications have exactly one running service per scope, and each service has exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.

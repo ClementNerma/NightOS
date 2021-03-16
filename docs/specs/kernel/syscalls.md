@@ -421,9 +421,6 @@ If the current process already has an active connection (a connection that hasn'
 - Scope type (1 byte):
   - `0x00` for the default service
   - `0x01` for a scoped service
-  - `0xA0` for the desktop environment service
-  - `0xA1` for the filesystem manager service
-  - `0xA2` for the filesystem items opener service
 - [Scope name](../services.md#scoped-services) if asking to connect to a custom scoped (8 bytes)
 - Command code (2 bytes)
 
@@ -439,6 +436,7 @@ If the current process already has an active connection (a connection that hasn'
 - `0x20`: The provided ANID does not exist
 - `0x21`: Target application does not [expose the provided service](../../concepts/applications.md#services)
 - `0x22`: Current process already has an active connection to the target service and flexible mode is not set
+- `0x23`: Cannot access a system-related scoped service without being a system process itself
 - `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 - `0x31`: Service rejected the connection request
 

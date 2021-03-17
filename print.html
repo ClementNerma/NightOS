@@ -3743,6 +3743,19 @@ The second entry is the last one and so simply contains the number of initialize
 <h2 id="timestamps"><a class="header" href="#timestamps">Timestamps</a></h2>
 <p>Timestamps are stored as milliseconds, starting from January 1st, 1970. This is to guarantee interopability with existing algorithms using Unix's EPOCH constant.</p>
 <p>They are represented as an 8-byte unsigned integer number.</p>
+<h2 id="simple-list"><a class="header" href="#simple-list">Simple list</a></h2>
+<p>Simple lists are made of:</p>
+<ul>
+<li>Their length in bytes (8 bytes)</li>
+<li>Their content</li>
+</ul>
+<p>Each element must be delimited.</p>
+<h2 id="delimited-strings"><a class="header" href="#delimited-strings">Delimited strings</a></h2>
+<p>Delimited strings are made of:</p>
+<ul>
+<li>Their length in bytes (8 bytes)</li>
+<li>Their content (UTF-8 encoded)</li>
+</ul>
 <h2 id="bitmap-images"><a class="header" href="#bitmap-images">Bitmap images</a></h2>
 <p>Bitmap images are represented as a <em>header</em> and a <em>pixel list</em>.</p>
 <p>The header is composed as a suite of 8 bytes:</p>
@@ -5222,11 +5235,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <tr><td>12-31</td><td><em>Future-proof</em></td><td></td><td></td></tr>
 </tbody></table>
 <h4 id="delimited-title-strings"><a class="header" href="#delimited-title-strings">Delimited title strings</a></h4>
-<p>Delimited title strings are encoded as:</p>
-<ul>
-<li>Title's length, in bytes (2 bytes)</li>
-<li>Title (UTF-8 encoded)</li>
-</ul>
+<p>Delimited title strings are encoded as <a href="specs/integration-services/../kernel/data-structures.html#delimited-strings">delimited strings</a>.</p>
 <h4 id="icons"><a class="header" href="#icons">Icons</a></h4>
 <p>Icons are encoded as <a href="specs/integration-services/../kernel/data-structures.html#bitmap-images">bitmap images</a>.</p>
 <h4 id="buttons-1"><a class="header" href="#buttons-1">Buttons</a></h4>
@@ -5848,7 +5857,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <p>Or:</p>
 <ul>
 <li>A <code>0x01</code> status code (1 byte)</li>
-<li>A <code>NULL</code>-terminated UTF-8 path string (up to 65535 bytes)</li>
+<li>A <a href="specs/integration-services/../kernel/data-structures.html#delimited-strings">delimited string</a></li>
 </ul>
 <h2 id="methods-2"><a class="header" href="#methods-2">Methods</a></h2>
 <h3 id="0x10-open_item"><a class="header" href="#0x10-open_item"><code>0x10</code> OPEN_ITEM</a></h3>

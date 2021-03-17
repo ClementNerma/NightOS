@@ -3676,7 +3676,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 </ol>
 <p>These steps are known as a <em>cycle</em>.</p>
 <h3 id="automatic-priority-attribution"><a class="header" href="#automatic-priority-attribution">Automatic priority attribution</a></h3>
-<p>Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the <a href="specs/kernel/syscalls.html#0xd3-sys_set_priority"><code>SYS_SET_PRIORITY</code></a> syscall.</p>
+<p>Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the <a href="specs/kernel/syscalls.html#0xd2-sys_process_attributes"><code>SYS_PROCESS_ATTRIBUTES</code></a> syscall.</p>
 <p>The priority is determined based on multiple factors:</p>
 <ul>
 <li>Does the process have a fullscreen window?</li>
@@ -4146,7 +4146,6 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0xd0-sys_create_process"><code>0xD0</code> SYS_CREATE_PROCESS</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd1-sys_manage_process"><code>0xD1</code> SYS_MANAGE_PROCESS</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd2-sys_process_attributes"><code>0xD2</code> SYS_PROCESS_ATTRIBUTES</a></li>
-<li><a href="specs/kernel/syscalls.html#0xd3-sys_set_priority"><code>0xD3</code> SYS_SET_PRIORITY</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd4-sys_enum_devices"><code>0xD4</code> SYS_ENUM_DEVICES</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd5-sys_device_infos"><code>0xD5</code> SYS_DEVICE_INFOS</a></li>
 </ul>
@@ -5072,24 +5071,6 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service</li>
 <li><code>0x21</code>: This system service is not allowed to access or edit this attribute</li>
 <li><code>0x22</code>: Provided index is out-of-bounds</li>
-</ul>
-<h3 id="0xd3-sys_set_priority"><a class="header" href="#0xd3-sys_set_priority"><code>0xD3</code> SYS_SET_PRIORITY</a></h3>
-<p>Syscall resserved to the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service.</p>
-<p>Set the priority of a process.<br />
-If the set priority is different than <code>0</code>, the kernel won't adjust the priority automatically anymore.<br />
-Setting it to <code>0</code> will reset it to the kernel's choice.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li>Process PID (8 bytes)</li>
-<li>Priority to set (1 byte) with <code>0</code> to let the kernel set it automatically</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<p><em>None</em></p>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x10</code>: Provided priority is higher than <code>20</code></li>
-<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service</li>
-<li><code>0x21</code>: Provided PID was not found</li>
 </ul>
 <h3 id="0xd4-sys_enum_devices"><a class="header" href="#0xd4-sys_enum_devices"><code>0xD4</code> SYS_ENUM_DEVICES</a></h3>
 <p>Syscall resserved to the <a href="specs/kernel/../system-services/hw.html"><code>sys::hw</code></a> service.</p>

@@ -2,6 +2,61 @@
 
 ## Methods
 
+### `0x01` REGISTER_OPENER
+
+Register an application as an opener for a list of file types.
+
+**Arguments:**
+
+- File extensions to handle as a [simple list](../kernel/data-structures.md#simple-lists) of [delimited strings](../kernel/data-structures.md#delimited-strings)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x20`: Client does not expose a [file opening service](../integration-services/file-openers.md)
+- `0x30`: One of the provided extensions is empty
+- `0x31`: At least one of the provided extensions is reserved to the system
+- `0x32`: Client already handles at least one of the provided extensions
+
+### `0x02` UNREGISTER_OPENER
+
+Unregister an application as an opener for a list of file types.
+
+**Argument:**
+
+- File extensions to unhandle as a [simple list](../kernel/data-structures.md#simple-lists) of [delimited strings](../kernel/data-structures.md#delimited-strings)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x20`: Client does not expose a [file opening service](../integration-services/file-openers.md)
+- `0x30`: One of the provided extensions is empty
+- `0x31`: Client does not currently handle at least one of the provided extensions
+
+### `0x03` LIST_OPENERS
+
+List the [file openers](../integration-services/file-openers.md) associated to a specific type of items.
+
+The list is not ordered, it's up to the [file manager](../integration-services/file-managers.md) to determine the display order if multiple openers are found.
+
+**Arguments:**
+
+- Filesystem item's extension as a [delimited string](../kernel/data-structures.md#delimited-strings)
+
+**Return value:**
+
+- [Simple list](../kernel/data-structures.md#simple-lists) of [ANID](../applications-libraries.md#application-identifier) (8 bytes each)
+
+**Errors:**
+
+- `0x20`: Client does not expose a [file opening service](../integration-services/file-openers.md)
+
 ### `0x10` CHECK_ITEM_THUMBNAIL_CACHE
 
 Check if a cached thumbnail exists for a given filesystem item to determine if another should be generated or not.

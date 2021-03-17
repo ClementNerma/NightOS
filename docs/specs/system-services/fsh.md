@@ -24,7 +24,7 @@ If a thumbnail is present, this is followed by:
 
 **Errors:**
 
-- `0x20`: Caller process is not a [file manager service](../integration-services/file-managers.md)
+- `0x20`: Client is not a [file manager service](../integration-services/file-managers.md)
 - `0x30`: Unknown FSID
 - `0x31`: Unknown FEID
 
@@ -49,6 +49,6 @@ The cache policy is determined using internal criterias.
 **Errors:**
 
 - `0x10`: Invalid bitmap data
-- `0x20`: Caller process is not a [file manager service](../integration-services/file-managers.md)
+- `0x20`: Client is not a [file manager service](../integration-services/file-managers.md)
 - `0x30`: Unknown FSID
 - `0x31`: Unknown FEID

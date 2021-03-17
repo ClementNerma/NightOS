@@ -88,7 +88,7 @@ Timestamps are stored as milliseconds, starting from January 1st, 1970. This is 
 
 They are represented as an 8-byte unsigned integer number.
 
-## Simple list
+## Simple lists
 
 Simple lists are made of:
 

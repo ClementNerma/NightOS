@@ -7,7 +7,7 @@
   - [`0x20` GET_THUMBNAIL](#0x20-get_thumbnail)
   - [`0xA0` CONTEXT_MENU](#0xa0-context_menu)
 
-A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose a scoped service named `SYS_FMAN` with standardized methods.
+A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose an integration service with the standardized methods and notifications described in this document.
 
 Applications can indicate themselves as file manager by specifying an `SYS_FMAN` service in their [manifest](../applications/manifest.md). They rely on [filesystem openers](filesystem-openers.md) to open files.
 

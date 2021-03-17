@@ -78,11 +78,11 @@ The list of default applications and their description can be found [here](appli
 - [Signals](specs/kernel/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
 - [System calls](specs/kernel/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
 
-### [Scoped services](specs/scoped-services/)
+### [Integration services](specs/integration-services/)
 
-- [Desktop environments](specs/scoped-services/desktop-environments.md) - how the user interface is handled by applications
-- [File managers](specs/scoped-services/file-managers.md) - how file managers are integrated into the system
-- [Filesystem openers](specs/scoped-services/filesystem-openers.md) - how files are associated to applications
+- [Desktop environments](specs/integration-services/desktop-environments.md) - how the user interface is handled by applications
+- [File managers](specs/integration-services/file-managers.md) - how file managers are integrated into the system
+- [Filesystem openers](specs/integration-services/filesystem-openers.md) - how files are associated to applications
 
 ### [System services](specs/system-services/)
 

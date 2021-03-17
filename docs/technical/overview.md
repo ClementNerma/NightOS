@@ -68,7 +68,7 @@ Data loss prevention works essentially through [crash saves](../features/crash-s
 
 ## User interface
 
-The user interface is entirely managed by the [desktop environment](../ux/desktop-environment.md), which can be any [application](../concepts/applications.md) exposing the [relevant service (specs)](../specs/scoped-services/desktop-environments.md).
+The user interface is entirely managed by the [desktop environment](../ux/desktop-environment.md), which can be any [application](../concepts/applications.md) exposing the [relevant service (specs)](../specs/integration-services/desktop-environments.md).
 
 ## Users management
 

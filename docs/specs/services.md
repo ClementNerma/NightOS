@@ -2,7 +2,7 @@
 
 This document describes the architecture of [services](../technical/services.md), as well as the list of all system services and their main features.
 
-- [Scoped services](#scoped-services)
+- [Types of services](#types-of-services)
 - [Architecture of a service](#architecture-of-a-service)
   - [Connections](#connections)
   - [Communication](#communication)
@@ -11,19 +11,21 @@ This document describes the architecture of [services](../technical/services.md)
 - [System services](#system-services)
 - [Third-party communication](#third-party-communication)
 
-## Scoped services
+## Types of services
 
-An application can expose a _main service_, which is used as the default one, as well as _scoped services_, which are used either by the system or between applications as a convention for exposing specific methods and notifications.
+An application can expose three types of service:
+
+- A _main service_, which is used as the default one
+- _Scoped services_, which are used as interfaces for conventional tasks between applications which are not specific to the current one
+- _Integration services_, which are used to interact with the system in specific ways (see [the complete list](integration-services/))
 
 A scope's name is made of up to 8 extended ASCII characters.
 
-Scope whose conventions are established by the system are prefixed by `SYS_`. Each application exposing such a service will be get special recognition for the tasks associated to this scope service. Also, this prefix is reserved for such scopes and cannot be used for custom ones.
-
-These services are not available directly to the end applications ; they can only be used through [system services](system-services/README.md).
+Applications exposing integration services get special recognition for the tasks associated to these services. These services are not available directly to the end applications ; they can only be used through [system services](system-services/README.md).
 
 ## Architecture of a service
 
-Applications have exactly one running service per scope, and each service has exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.
+Applications have exactly one running process per service, and each service has exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.
 
 An application process can tell if it was started as a service or not by looking at its [execution context](applications/context.md#execution-context).
 

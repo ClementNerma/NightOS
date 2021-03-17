@@ -23,6 +23,14 @@ services:
   main: false
   # [REQ] List of scoped services
   scoped: []
+  # [REQ] List of integration services
+  integration:
+    # [OPT] Desktop environment service
+    desktop_env: false
+    # [OPT] File manager service
+    file_manager: false
+    # [OPT] Filesystem opener service
+    filesystem_opener: false
 
 # [OPT] Additional informations
 additional:

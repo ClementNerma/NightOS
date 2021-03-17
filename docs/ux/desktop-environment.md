@@ -16,7 +16,7 @@ An application can register itself as a DEA by exposing a `SYS_DENV` service in 
 
 ## Permissions
 
-A [DEA](#desktop-environment-applications) does not require specific permissions in order to work ; it only requires to expose a [specific scoped service](../specs/scoped-services/desktop-environments.md) in its [manifest](../specs/applications/manifest.md).
+A [DEA](#desktop-environment-applications) does not require specific permissions in order to work ; it only requires to expose a [specific integration service](../specs/integration-services/desktop-environments.md) in its [manifest](../specs/applications/manifest.md).
 
 ## Display layers
 

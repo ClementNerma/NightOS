@@ -16,5 +16,5 @@ For more informations about low-level concepts these documents refer to, you can
 - [Shell scripting](shell-scripting.md) - [Hydre](../technical/shell.md)'s scripting language
 - [Kernel](kernel/) - complete specifications of the kernel
 - [Services](services.md) - specifications about services work and behave
-- [Scoped services](scoped-services/) - complete list of system-related scoped services
+- [Integration services](integration-services/) - complete list of [integration services](services.md#types-of-services)
 - [System services](system-services/) - complete list of system services

@@ -58,10 +58,10 @@
     - [Inter-process communication](specs/kernel/ipc.md) - communication between processes
     - [Signals](specs/kernel/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
     - [System calls](specs/kernel/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
-  - [Scoped services](specs/scoped-services/README.md)
-    - [Desktop environments](specs/scoped-services/desktop-environments.md) - scoped service of desktop environments
-    - [File managers](specs/scoped-services/file-managers.md) - scoped service of file managers
-    - [Filesystem openers](specs/scoped-services/filesystem-openers.md) - scoped service of filesystem openers
+  - [Integration services](specs/integration-services/README.md)
+    - [Desktop environments](specs/integration-services/desktop-environments.md) - integration service for desktop environments
+    - [File managers](specs/integration-services/file-managers.md) - integration service for file managers
+    - [Filesystem openers](specs/integration-services/filesystem-openers.md) - integration service for filesystem openers
   - [System services](specs/system-services/README.md)
     - [`sys::fs`](specs/system-services/fs.md)
     - [`sys::fsh`](specs/system-services/fsh.md)

@@ -102,4 +102,4 @@ These applications can be updated independently of the system itself, thus their
 Application can provide [services](../technical/services.md) by specifying them in their [manifest](../specs/applications/manifest.md).
 The services will be run at startup with the usual application's permissions.
 
-There is exactly one process for the main service and one for each [scope](../specs/services.md#scoped-services) service per active user.
+There is exactly one process for each service per active user.

@@ -873,7 +873,7 @@ Will trigger the [`UNSUSPENDED`](signals.md#0x46-unsuspended) signal on the chil
 
 ### `0x46` HAND_OVER
 
-End this process' [cycle](processes.md#switching-and-cycles).
+End this process' [cycle](scheduling.md#cycles-and-context-switching).
 
 Used to indicate to the kernel the current process has no additional work to do for now (e.g. waiting for asynchronous I/O data).
 

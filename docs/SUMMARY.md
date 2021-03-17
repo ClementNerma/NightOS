@@ -53,6 +53,7 @@
     - [Hardware](specs/kernel/hardware.md) - how the kernel interacts with hardware
     - [Memory](specs/kernel/memory.md) - memory organization and management
     - [Processes](specs/kernel/processes.md) - processes concept and management
+    - [Scheduling](specs/kernel/scheduling.md) - tasks scheduling
     - [Data structures](specs/kernel/data-structures.md) - data structures used by the kernel to represent things in memory
     - [Kernel-process communication](specs/kernel/kpc.md) - how the kernel communicate with processes and vice-versa
     - [Inter-process communication](specs/kernel/ipc.md) - communication between processes

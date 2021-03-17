@@ -35,7 +35,7 @@ These steps are known as a _cycle_.
 
 ### Automatic priority attribution
 
-Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the [`SYS_SET_PRIORITY`](syscalls.md#0xd3-sys_set_priority) syscall.
+Processes' priority is automatically adjusted by the kernel, unless it is manually assigned through the [`SYS_PROCESS_ATTRIBUTES`](syscalls.md#0xd2-sys_process_attributes) syscall.
 
 The priority is determined based on multiple factors:
 

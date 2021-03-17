@@ -52,7 +52,6 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0xD0` SYS_CREATE_PROCESS](#0xd0-sys_create_process)
   - [`0xD1` SYS_MANAGE_PROCESS](#0xd1-sys_manage_process)
   - [`0xD2` SYS_PROCESS_ATTRIBUTES](#0xd2-sys_process_attributes)
-  - [`0xD3` SYS_SET_PRIORITY](#0xd3-sys_set_priority)
   - [`0xD4` SYS_ENUM_DEVICES](#0xd4-sys_enum_devices)
   - [`0xD5` SYS_DEVICE_INFOS](#0xd5-sys_device_infos)
 
@@ -1135,29 +1134,6 @@ _For list-based attributes:_
 - `0x20`: Caller process is not the [`sys::process`](../system-services/process.md) service
 - `0x21`: This system service is not allowed to access or edit this attribute
 - `0x22`: Provided index is out-of-bounds
-
-### `0xD3` SYS_SET_PRIORITY
-
-Syscall resserved to the [`sys::process`](../system-services/process.md) service.
-
-Set the priority of a process.  
-If the set priority is different than `0`, the kernel won't adjust the priority automatically anymore.  
-Setting it to `0` will reset it to the kernel's choice.
-
-**Arguments:**
-
-- Process PID (8 bytes)
-- Priority to set (1 byte) with `0` to let the kernel set it automatically
-
-**Return value:**
-
-_None_
-
-**Errors:**
-
-- `0x10`: Provided priority is higher than `20`
-- `0x20`: Caller process is not the [`sys::process`](../system-services/process.md) service
-- `0x21`: Provided PID was not found
 
 ### `0xD4` SYS_ENUM_DEVICES
 

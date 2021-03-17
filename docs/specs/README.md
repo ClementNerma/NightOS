@@ -17,17 +17,17 @@ For more informations about low-level concepts these documents refer to, you can
 - [Kernel](kernel/README.md) - complete specifications of the kernel
 - [Services](services.md) - specifications about services work and behave
 
-## Integration services
+## [Integration services](services/integration/README.md)
 
 * [Desktop environment](services/integration/desktop-environments.md)
 * [File managers](services/integration/file-managers.md)
 * [File openers](services/integration/file-openers.md)
 
-## Driver services
+## [Driver services](services/drivers/README.md)
 
 * [Filesystem driver service](services/drivers/filesystem.md)
 
-## System services
+## [System services](services/system/README.md)
 
 * [`sys::fs`](services/system/fs.md): filesystem management
 * [`sys::fsh`](services/system/fsh.md): high-level filesystem management

@@ -2,17 +2,17 @@
 
 This directory contains documentation for the different types of services.
 
-## Integration services
+## [Integration services](integration/README.md)
 
 * [Desktop environment](integration/desktop-environments.md)
 * [File managers](integration/file-managers.md)
 * [File openers](integration/file-openers.md)
 
-## Driver services
+## [Driver services](drivers/README.md)
 
 * [Filesystem driver service](drivers/filesystem.md)
 
-## System services
+## [System services](system/README.md)
 
 * [`sys::fs`](system/fs.md): filesystem management
 * [`sys::fsh`](system/fsh.md): high-level filesystem management

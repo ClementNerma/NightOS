@@ -81,3 +81,9 @@ But also:
 
 - Increase the memory cost of the last entry when it isn't full
 - Slow down insert times when the last entry is full (needs to allocate)
+
+## Timestamps
+
+Timestamps are stored as milliseconds, starting from January 1st, 1970. This is to guarantee interopability with existing algorithms using Unix's EPOCH constant.
+
+They are represented as an 8-byte unsigned integer number.

@@ -87,3 +87,31 @@ But also:
 Timestamps are stored as milliseconds, starting from January 1st, 1970. This is to guarantee interopability with existing algorithms using Unix's EPOCH constant.
 
 They are represented as an 8-byte unsigned integer number.
+
+## Bitmap images
+
+Bitmap images are represented as a _header_ and a _pixel list_.
+
+The header is composed as a suite of 8 bytes:
+
+- Image width (IW), in pixels (2 bytes)
+- Image height (IH), in pixels (2 bytes)
+- Number of colors (power of 256) for the red channel (NR), `0` if unused (1 byte)
+- Number of colors (power of 256) for the green channel (NG), `0` if unused (1 byte)
+- Number of colors (power of 256) for the blue channel (NB), `0` if unused (1 byte)
+- Number of colors (power of 256) for the alpha channel (NA), `0` if unused (1 byte)
+
+The pixel list is made of the data for each pixel, contiguously.
+
+Each pixel is encoded as follows:
+
+- Value for the red channel (NR bytes)
+- Value for the green channel (NG bytes)
+- Value for the blue channel (NB bytes)
+- Value for the alpha channel (NA bytes)
+
+As shown above, if the number of colors is set to `0` for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for `256 power <number in the header>` different colors.
+
+Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.
+
+The size of pixel list can be calculated as `IW * IH * (NR + NG + NB + NA)` bytes. Add another 8 bytes for the header.

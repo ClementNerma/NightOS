@@ -14,6 +14,7 @@ ShootingStar exposes the `sys::shootingstar` library to manipulate, perform basi
 - Graphics Interchange Format (`.gif`)
 - Graphics Interchange Format Video (`.gifv`)
 - Windows Bitmap (`.bmp`)
+- NightOS Bitmap (`.nbm`)
 - Portable Networks Graphics (`.png`)
 - Portable Pixmap Format (`.ppm`)
 - Portable Graymap Format (`.pgm`)

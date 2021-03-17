@@ -84,10 +84,7 @@ Delimited title strings are encoded as:
 
 #### Icons
 
-Icons are encoded as:
-
-- Icon's buffer's length (4 bytes)
-- Icon's buffer (bitmap only)
+Icons are encoded as [bitmap images](../kernel/data-structures.md#bitmap-images).
 
 #### Buttons
 

@@ -77,10 +77,7 @@ The header is followed by the value of each element to update, _only_ if the ele
 
 #### Delimited title strings
 
-Delimited title strings are encoded as:
-
-- Title's length, in bytes (2 bytes)
-- Title (UTF-8 encoded)
+Delimited title strings are encoded as [delimited strings](../kernel/data-structures.md#delimited-strings).
 
 #### Icons
 

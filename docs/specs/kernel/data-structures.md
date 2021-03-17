@@ -97,6 +97,13 @@ Simple lists are made of:
 
 Each element must be delimited.
 
+## Delimited strings
+
+Delimited strings are made of:
+
+- Their length in bytes (8 bytes)
+- Their content (UTF-8 encoded)
+
 ## Bitmap images
 
 Bitmap images are represented as a _header_ and a _pixel list_.

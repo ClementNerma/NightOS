@@ -23,7 +23,7 @@ Paths destinated to file managers are called _file manager paths_ (FMP) and can 
 Or:
 
 - A `0x01` status code (1 byte)
-- A `NULL`-terminated UTF-8 path string (up to 65535 bytes)
+- A [delimited string](../kernel/data-structures.md#delimited-strings)
 
 ## Methods
 

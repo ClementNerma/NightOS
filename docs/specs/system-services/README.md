@@ -39,3 +39,4 @@ All methods return an answer, though it may be empty (indicated by a _None_). Sy
 - PID 17: [`sys::flow`](flow.md): [flows](../../specs/filesystem.md#flows) management
 - PID 18: [`sys::hydre`](hydre.md): [Hydre](../shell.md) shell service
 - PID 19: [`sys::ui`](ui.md): user interface service
+- PID 20: [`sys::app`](app.md): applications management service

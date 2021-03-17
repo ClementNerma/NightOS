@@ -92,6 +92,7 @@ The list of default applications and their description can be found [here](appli
 - [`sys::crashsave`](specs/system-services/crashsave.md) - the [crash saves](features/crash-saves.md) service
 - [`sys::flow`](specs/system-services/flow.md) - the [flows](specs/filesystem.md#flows) service
 - [`sys::hydre`](specs/system-services/hydre.md) - the [shell (Hydre)](specs/shell.md) service
+- [`sys::app`](specs/system-services/app.md) - the [applications](concepts/applications.md) management service
 
 ## User Experience
 

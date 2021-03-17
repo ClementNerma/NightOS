@@ -83,7 +83,7 @@ The list of default applications and their description can be found [here](appli
 
 - [Desktop environments](specs/integration-services/desktop-environments.md) - how the user interface is handled by applications
 - [File managers](specs/integration-services/file-managers.md) - how file managers are integrated into the system
-- [Filesystem openers](specs/integration-services/filesystem-openers.md) - how files are associated to applications
+- [File openers](specs/integration-services/file-openers.md) - how files are associated to applications
 
 ### [System services](specs/system-services/README.md)
 

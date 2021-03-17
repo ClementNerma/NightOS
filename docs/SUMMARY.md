@@ -62,7 +62,7 @@
   - [Integration services](specs/integration-services/README.md)
     - [Desktop environments](specs/integration-services/desktop-environments.md) - integration service for desktop environments
     - [File managers](specs/integration-services/file-managers.md) - integration service for file managers
-    - [Filesystem openers](specs/integration-services/filesystem-openers.md) - integration service for filesystem openers
+    - [File openers](specs/integration-services/file-openers.md) - integration service for file openers
   - [System services](specs/system-services/README.md)
     - [`sys::fs`](specs/system-services/fs.md)
     - [`sys::fsh`](specs/system-services/fsh.md)

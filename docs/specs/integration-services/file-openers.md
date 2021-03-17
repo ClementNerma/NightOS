@@ -1,10 +1,10 @@
-## Filesystem openers
+## File openers
 
-A filesystem opener is an application which can associate open specific items. It exposes a `SYS_FSOP` service with the following architecture.
+A file opener is an application which can associate open specific items. It exposes an integration service with the standardized methods and notifications described in this document.
 
 The list of openers can be viewed and modified through the [`sys::fsh`](../system-services/fsh.md).
 
-They are mostly used by the [default file manager](file-managers.md).
+They are essentially used by the [default file manager](file-managers.md).
 
 ## Methods
 

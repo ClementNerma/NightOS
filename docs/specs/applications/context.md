@@ -49,7 +49,7 @@ The context header is stored as a single block of data, consisting of:
   - `0x02`: this process is run as an application's scoped service
   - `0x10`: this process is run as the application's [desktop environment service](../integration-services/desktop-environments.md)
   - `0x11`: this process is run as the application's [file manager service](../integration-services/file-managers.md)
-  - `0x12`: this process is run as the application's [filesystem opener service](../integration-services/filesystem-openers.md)
+  - `0x12`: this process is run as the application's [file opener service](../integration-services/file-openers.md)
 - Scoped service's name (8 bytes) - filled with zeroes if the process is not run as a scoped service
 - The application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
 

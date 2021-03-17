@@ -9,7 +9,7 @@
 
 A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose an integration service with the standardized methods and notifications described in this document.
 
-Applications can indicate themselves as file manager by specifying an `SYS_FMAN` service in their [manifest](../applications/manifest.md). They rely on [filesystem openers](filesystem-openers.md) to open files.
+Applications can indicate themselves as file manager by specifying an `SYS_FMAN` service in their [manifest](../applications/manifest.md). They rely on [file openers](file-openers.md) to open files.
 
 The end user chooses a single file manager (called the _default_ file manager) between all available ones, whose service will be used by other applications.
 

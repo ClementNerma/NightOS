@@ -394,8 +394,7 @@ If the pipe was closed while the buffer was not empty, this syscall will still b
 <ul>
 <li><a href="ipc.html#pipes">Pipe</a> RC identifier (8 byte)</li>
 <li>Mode (1 byte): <code>0x00</code> = block until there are enough data to read, <code>0x01</code> = fail if there is not enough data to read or if the pipe is locked, <code>0x02</code> = read as much as possible</li>
-<li>Number of bytes to read (4 bytes): <code>0</code> = read as much data as possible</li>
-<li>Pointer to a writable buffer (8 bytes)</li>
+<li><a href="data-structures.html#buffer-pointers">Readable buffer pointer</a> (16 bytes) (specify <code>0</code> bytes length to read as much data as possible)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <p>Encoded on 4 bytes:</p>
@@ -474,8 +473,7 @@ This syscall can also be used to create a new exchange.</p>
 <li>Exchange identifier (8 bytes) - <code>0</code> creates a new exchange</li>
 <li>Method or notification code (1 byte) - non-zero value if not creating an exchange to close it with a non-error message</li>
 <li>Error code (2 bytes)</li>
-<li>Number of bytes to write (4 bytes)</li>
-<li>Pointer to the message's content (8 bytes)</li>
+<li><a href="data-structures.html#buffer-pointers">Buffer pointer</a> to the message's content (16 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -747,8 +745,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li>Sharer process' PID (8 bytes)</li>
 <li>Receiver process' PID (8 bytes)</li>
 <li>Sharing mode (1 byte): <code>0x00</code> for mutual mode, <code>0x01</code> for exclusive mode</li>
-<li>Shared buffer's start address (8 bytes)</li>
-<li>Sharer buffer's length (8 bytes)</li>
+<li><a href="data-structures.html#buffer-pointers">Pointer</a> to the shared buffer (16 bytes)</li>
 <li>Command code (2 bytes)</li>
 <li>Access permissions (1 byte): for mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, <code>0x00</code></li>
 </ul>
@@ -777,9 +774,8 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>AMS ID (8 bytes)</li>
-<li>Start mapping address in the AMS (8 bytes)</li>
-<li>Address to map the AMS (8 bytes)</li>
-<li>Number of bytes to map (8 bytes)</li>
+<li>Address to map the AMS from (8 bytes)</li>
+<li>Mapped <a href="data-structures.html#buffer-pointers">buffer pointer</a> (16 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <p><em>None</em></p>
@@ -965,8 +961,7 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>TLS slot identifier (8 bytes)</li>
-<li>Writable buffer (8 bytes)</li>
-<li>Number of bytes to read (8 bytes) - <code>0</code> to read everything</li>
+<li><a href="data-structures.html#buffer-pointers">Writable buffer</a> (16 bytes) (specify <code>0</code> bytes length to read the entire data at once)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -981,8 +976,7 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>TLS slot identifier (8 bytes)</li>
-<li>Readable buffer (8 bytes)</li>
-<li>Number of bytes to write (8 bytes)</li>
+<li><a href="data-structures.html#buffer-pointers">Readable buffer</a> (16 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <p><em>None</em></p>
@@ -1103,8 +1097,8 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <li>
 <p>Action code:</p>
 <ul>
-<li><code>0x00</code>: Read the information (followed by a writable address on 8 bytes)</li>
-<li><code>0x01</code>: Write the information (followed by the value to write)</li>
+<li><code>0x00</code>: Read the information (followed by a <a href="data-structures.html#buffer-pointers">writable buffer</a> on 16 bytes)</li>
+<li><code>0x01</code>: Write the information (followed by a <a href="data-structures.html#buffer-pointers">readable buffer</a> on 16 bytes)</li>
 </ul>
 </li>
 </ul>
@@ -1131,13 +1125,11 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <li><code>0x10</code>: Check if the list contains a given item =&gt; value to look for (? bytes)</li>
 </ul>
 </li>
-<li>
-<p>Address to a writable buffer (8 bytes)</p>
-</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
 <li>Number of written bytes (if applies) (8 bytes)</li>
+<li><code>0x00</code> is all data was written, <code>0x01</code> otherwise (1 byte)</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
@@ -1155,11 +1147,12 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <ul>
 <li><a href="hardware.html#connection-interface-identifier">CII</a> of the devices to list (4 bytes)
 <code>0</code> will list all devices</li>
-<li>Address of a writable buffer (8 bytes)</li>
+<li><a href="data-structures.html#buffer-pointers">Writable buffer</a> (16 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
 <li>Number of devices found with the provided criterias (4 bytes)</li>
+<li><code>0x00</code> is all devices were written, <code>0x01</code> otherwise (1 byte)</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
@@ -1172,7 +1165,7 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><strong>Arguments:</strong></p>
 <ul>
 <li><a href="hardware.html#session-device-identifier">SDI</a> of the device to get informations from (4 bytes)</li>
-<li>Address of a writable buffer (8 bytes)</li>
+<li>Address to a writable buffer (8 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>

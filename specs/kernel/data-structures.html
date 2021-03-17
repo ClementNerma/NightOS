@@ -222,8 +222,8 @@ The second entry is the last one and so simply contains the number of initialize
 <h2 id="timestamps"><a class="header" href="#timestamps">Timestamps</a></h2>
 <p>Timestamps are stored as milliseconds, starting from January 1st, 1970. This is to guarantee interopability with existing algorithms using Unix's EPOCH constant.</p>
 <p>They are represented as an 8-byte unsigned integer number.</p>
-<h2 id="simple-lists"><a class="header" href="#simple-lists">Simple lists</a></h2>
-<p>Simple lists are made of:</p>
+<h2 id="delimited-lists"><a class="header" href="#delimited-lists">Delimited lists</a></h2>
+<p>Delimited lists are made of:</p>
 <ul>
 <li>Their length in bytes (8 bytes)</li>
 <li>Their content</li>
@@ -234,6 +234,13 @@ The second entry is the last one and so simply contains the number of initialize
 <ul>
 <li>Their length in bytes (8 bytes)</li>
 <li>Their content (UTF-8 encoded)</li>
+</ul>
+<h2 id="buffer-pointers"><a class="header" href="#buffer-pointers">Buffer pointers</a></h2>
+<p>A buffer pointer refers to a buffer that is either <em>readable</em>, meaning its creator process has read permission on its entire memory location, and/or <em>writable</em>, meaning its creator process has write permission on its entire memory location.</p>
+<p>It is made as follows:</p>
+<ul>
+<li>The memory address of the buffer (8 bytes)</li>
+<li>The buffer's length (8 bytes)</li>
 </ul>
 <h2 id="bitmap-images"><a class="header" href="#bitmap-images">Bitmap images</a></h2>
 <p>Bitmap images are represented as a <em>header</em> and a <em>pixel list</em>.</p>
@@ -257,6 +264,9 @@ The second entry is the last one and so simply contains the number of initialize
 <p>As shown above, if the number of colors is set to <code>0</code> for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for <code>256 power &lt;number in the header&gt;</code> different colors.</p>
 <p>Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.</p>
 <p>The size of pixel list can be calculated as <code>IW * IH * (NR + NG + NB + NA)</code> bytes. Add another 8 bytes for the header.</p>
+<h2 id="option"><a class="header" href="#option">Option</a></h2>
+<p>An <em>option</em> is a data structure that may contain a specific data type or nothing.</p>
+<p>It is made of a variance byte, set to <code>0x01</code> followed by the data if any, or a single <code>0x00</code> byte to indicate no data is present.</p>
 
                     </main>
 

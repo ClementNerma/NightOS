@@ -2,6 +2,8 @@
 
 The `sys::hw` service is in charge of hardware devices. It coordinates and manages communications with the hardware.
 
+It is known as the [I/O manager](../../technical/io-manager.md), or Ion.
+
 - [Hardware detection](#hardware-detection)
 - [Device formats](#device-formats)
   - [Device type descriptor](#device-type-descriptor)

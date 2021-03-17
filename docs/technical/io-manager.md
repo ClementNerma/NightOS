@@ -2,9 +2,9 @@
 
 The _Input/Output Nano-manager_, formerly known as _Ion_, is a part of the system which treats input/output requests from processes.
 
+It is concretely represented by the [`sys::hw`](../specs/system-services/hw.md) service.
+
 - [Hardware access](#hardware-access)
-- [Requests](#requests)
-- [Permissions](#permissions)
 - [Requests priority](#requests-priority)
 
 ## Hardware access
@@ -13,13 +13,11 @@ When a process tries to access the hardware, it must go through Ion, which will 
 
 [System services](services.md) such as [`sys::fs`](../specs/system-services/fs.md) or [`sys::net`](../specs/system-services/net.md) use Ion to deal with the related hardware components.
 
-## Requests
+# Agnosticity
 
-When a process tries to access, for instance, the filesystem, it sends an I/O request to the manager which is pushed in an internal queue. The manager sorts incoming requests and treat them depending on their arrival.
+Ion only permits agnostic access to hardware, meaning it does not have knowledge of the performed action (filesystem access, sensor reading, ...). It can only be accessed by [drivers](../specs/system-services/hw.md#drivers).
 
-## Permissions
-
-To ensure a process has the required permissions to make a specific I/O request, the manager asks the [controller](controller.md) to verify its permissions. The controller's response makes the manager accept or reject the request.
+Non-agnostic access can be performed through various services, such as [`sys::fs`](../specs/system-services/fs.md).
 
 ## Requests priority
 

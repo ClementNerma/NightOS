@@ -72,6 +72,7 @@
     - [`sys::flow`](specs/system-services/flow.md)
     - [`sys::hydre`](specs/system-services/hydre.md)
     - [`sys::app`](specs/system-services/app.md)
+    - [`sys::process`](specs/system-services/process.md)
 - [Applications](applications/README.md)
     - [Astral](applications/Astral.md) : The complete toolchain allowing to build applications
     - [BareEnv](applications/BareEnv.md) : Text-based desktop environment

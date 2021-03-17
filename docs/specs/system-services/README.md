@@ -40,3 +40,4 @@ All methods return an answer, though it may be empty (indicated by a _None_). Sy
 - PID 18: [`sys::hydre`](hydre.md): [Hydre](../shell.md) shell service
 - PID 19: [`sys::ui`](ui.md): user interface service
 - PID 20: [`sys::app`](app.md): applications management service
+- PID 21: [`sys::process`](process.md): processes management service

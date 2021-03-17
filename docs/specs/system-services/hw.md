@@ -26,10 +26,10 @@ It is known as the [I/O manager](../../technical/io-manager.md), or Ion.
   - [`0x20` NOTIFY_PROCESS](#0x20-notify_process)
   - [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
 - [Notifications](#notifications)
-  - [`DEVICE_EVENT`](#device_event)
-  - [`DEVICE_INTERRUPT`](#device_interrupt)
-  - [`DRIVER_METHOD_REQUEST`](#driver_method_request)
-  - [`DEVICE_NORM_NOTIF`](#device_norm_notif)
+  - [0x02 `DEVICE_EVENT`](#0x02-device_event)
+  - [0x10 `DEVICE_INTERRUPT`](#0x10-device_interrupt)
+  - [0xA0 `DRIVER_METHOD_REQUEST`](#0xa0-driver_method_request)
+  - [0xA1 `DEVICE_NORM_NOTIF`](#0xa1-device_norm_notif)
 
 ## Hardware detection
 
@@ -98,7 +98,7 @@ The following list contains all methods and related notifications for all DDTs, 
 
 ### Normalized interrupts
 
-Some devices use interrupts to notify the system of a particular event. In such case, the interrupt is normalized to a format called the _normalized interrupt format_, which is then sent to the driver process using the [`DEVICE_EVENT`](#device_event) notification.
+Some devices use interrupts to notify the system of a particular event. In such case, the interrupt is normalized to a format called the _normalized interrupt format_, which is then sent to the driver process using the [`DEVICE_EVENT`](#0x02-device_event) notification.
 
 The normalized interrupt format depends on the [device's type (DDT)](#driven-device-type).
 
@@ -143,13 +143,13 @@ For instance, providing the DTD `0x0100B2` with the DTD pattern indicator set to
 
 From a higher level point of view, drivers are [services](../services.md) that declare themselves as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
 
-When a device is connected, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#device_event) notification.
+When a device is connected, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#0x02-device_event) notification.
 
 From this point, the driver can create an [AMS](../kernel/memory.md#abstract-memory-segments) from the device's memory using the [`DEVICE_AMS`](../kernel/syscalls.md#0x34-device_ams) syscall.
 
-It can also get informed of interrupts the device raises through the [`DEVICE_INTERRUPT`](#device_interrupt) notification.
+It can also get informed of interrupts the device raises through the [`DEVICE_INTERRUPT`](#0x10-device_interrupt) notification.
 
-Other processes can then ask the driver to perform specific actions depending on the type of device, using [normalized methods](#normalized-methods) which can be sent to the driver using the [`ASK_DRIVER`](#0xa0-ask_driver) method. The driver receives these informations through the [`DRIVER_METHOD_REQUEST`](#driver_method_request) notification.
+Other processes can then ask the driver to perform specific actions depending on the type of device, using [normalized methods](#normalized-methods) which can be sent to the driver using the [`ASK_DRIVER`](#0xa0-ask_driver) method. The driver receives these informations through the [`DRIVER_METHOD_REQUEST`](#0xa0-driver_method_request) notification.
 
 The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to [normalized notifications](#normalized-notifications) which can then be sent to processes that subscribed to them using the related [normalized methods](#normalized-methods).
 
@@ -206,7 +206,7 @@ It's also possible to only count the number of devices matching the provided cri
 ### `0x02` SUBSCRIBE_DEVICES
 
 Subscribe to events related to devices matching a patterns.  
-All current and future devices matching this pattern will cause a [`DEVICE_EVENT`](#device_event) notification.
+All current and future devices matching this pattern will cause a [`DEVICE_EVENT`](#0x02-device_event) notification.
 
 **Required permission:** `devices.subscribe`
 
@@ -228,7 +228,7 @@ _None_
 Set up a service as a driver for all devices matching a pattern.  
 If multiple drivers have colliding patterns, the final user will be prompted to choose a driver.  
 
-The driver process will receive [`DEVICE_EVENT`](#device_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
+The driver process will receive [`DEVICE_EVENT`](#0x02-device_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
 Notifications are also retroactive, which means they will be sent for already-connected devices.
 
 The driver will also have the device registered in its [drivable devices attribute](../kernel/processes.md#drivable-devices), allowing it to use the [`DEVICE_AMS`](../kernel/syscalls.md#0x34-device_ams) syscall to map the device's memory in its own.
@@ -305,7 +305,7 @@ _Expected answer format for this method_
 
 ## Notifications
 
-### `DEVICE_EVENT`
+### 0x02 `DEVICE_EVENT`
 
 Sent for a specific device to processes that either:
 
@@ -330,7 +330,7 @@ Sent for a specific device to processes that either:
   - Bit 1: set if this device was disconnected brutally (not by the system itself)
   - Bit 2: set if this device is connected for the first time on this specific port
 
-### `DEVICE_INTERRUPT`
+### 0x10 `DEVICE_INTERRUPT`
 
 Sent to a [driver](#drivers) after a device it's currently driving raised an interrupt.
 
@@ -339,7 +339,7 @@ Sent to a [driver](#drivers) after a device it's currently driving raised an int
 - Device's SDI (4 bytes)
 - [Normalized interrupt](#normalized-interrupts)
 
-### `DRIVER_METHOD_REQUEST`
+### 0xA0 `DRIVER_METHOD_REQUEST`
 
 Sent to a [driver](#drivers) after receiving a valid [normalized method request](#0xa0-ask_driver).
 
@@ -358,7 +358,7 @@ The _notification ID_ is generated by this service to allow the driver to [send 
 
 _Expected answer format for this method if any_
 
-### `DEVICE_NORM_NOTIF`
+### 0xA1 `DEVICE_NORM_NOTIF`
 
 Sent to a process that subscribed to [normalized notifications](#normalized-methods) of a device.  
 This notification is transferred by the `sys::hw` service after the driver sent it its content through the [`NOTIFY_PROCESS`](#0x20-notify_process) method.

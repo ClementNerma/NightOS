@@ -1019,6 +1019,54 @@ Get informations from the application's [execution context](../applications/cont
 - `0x10`: invalid information number provided
 - `0x20`: caller process is a system service
 
+### `0xD0` SYS_CREATE_PROCESS
+
+System service-only syscall.
+
+Create a [userland process](processes.md#types-of-processes).
+
+**Arguments:**
+
+- Code location token from the [`sys::fs`](../system-services/fs.md) service
+- [Application context](../applications/context.md)
+
+**Return value:**
+
+- [PID](processes.md#process-identifier) (8 bytes)
+
+**Errors:**
+
+- `0x20`: Caller process is not the [`sys::proc`](../system-services/app.md) service
+- `0x30`: Code location token was not accepted by the [`sys::fs`](../system-services/fs.md)
+- `0x31`: Application context is not valid
+
+### `0xD1` SYS_MANAGE_PROCESS
+
+System service-only syscall.
+
+Manage a [userland process](processes.md#types-of-processes).
+
+**Arguments:**
+
+- [PID](processes.md#process-identifier) (8 bytes)
+- Action (1 byte):
+  - `0x01`: [Ask for suspension](signals.md#0x44-suspend)
+  - `0x02`: [Force suspension](signals.md#0x45-will_suspend)
+  - `0x03`: [Unsuspend](signals.md#0x46-unsuspended)
+  - `0x04`: [Ask for termination](signals.md#0x4e-terminate)
+  - `0x05`: [Force termination](signals.md#0x4f-will_terminate)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x10`: Invalid action code provided
+- `0x20`: Caller process is not the [`sys::proc`](../system-services/app.md) service
+- `0x21`: Unknown PID
+- `0x22`: Process is already in the requested state
+
 ### `0xD2` SYS_PROCESS_ATTRIBUTES
 
 System service-only syscall.  

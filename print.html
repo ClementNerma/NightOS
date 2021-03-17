@@ -4979,7 +4979,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/app.html"><code>sys::proc</code></a> service</li>
+<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service</li>
 <li><code>0x30</code>: Code location token was not accepted by the <a href="specs/kernel/../system-services/fs.html"><code>sys::fs</code></a></li>
 <li><code>0x31</code>: Application context is not valid</li>
 </ul>
@@ -5004,7 +5004,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid action code provided</li>
-<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/app.html"><code>sys::proc</code></a> service</li>
+<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service</li>
 <li><code>0x21</code>: Unknown PID</li>
 <li><code>0x22</code>: Process is already in the requested state</li>
 </ul>
@@ -5069,7 +5069,7 @@ Get a process' <a href="specs/kernel/processes.html#process-attributes">attribut
 <ul>
 <li><code>0x10</code>: Invalid action code provided</li>
 <li><code>0x11</code>: Invalid attribute number provided</li>
-<li><code>0x20</code>: Caller process is not a system service</li>
+<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service</li>
 <li><code>0x21</code>: This system service is not allowed to access or edit this attribute</li>
 <li><code>0x22</code>: Provided index is out-of-bounds</li>
 </ul>
@@ -5088,7 +5088,7 @@ Setting it to <code>0</code> will reset it to the kernel's choice.</p>
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Provided priority is higher than <code>20</code></li>
-<li><code>0x20</code>: Caller process is not a system service</li>
+<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service</li>
 <li><code>0x21</code>: Provided PID was not found</li>
 </ul>
 <h3 id="0xd4-sys_enum_devices"><a class="header" href="#0xd4-sys_enum_devices"><code>0xD4</code> SYS_ENUM_DEVICES</a></h3>
@@ -5108,7 +5108,7 @@ List devices matching a provided CII.</p>
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid connection type in CII</li>
-<li><code>0x20</code>: Caller process is not a system service</li>
+<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/hw.html"><code>sys::hw</code></a> service</li>
 </ul>
 <h3 id="0xd5-sys_device_infos"><a class="header" href="#0xd5-sys_device_infos"><code>0xD5</code> SYS_DEVICE_INFOS</a></h3>
 <p>System service-only syscall.<br />
@@ -5124,7 +5124,7 @@ Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device de
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Caller process is not a system service</li>
+<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/hw.html"><code>sys::hw</code></a> service</li>
 <li><code>0x21</code>: No device was found with this SDI</li>
 </ul>
 <h1 id="integration-services"><a class="header" href="#integration-services">Integration services</a></h1>

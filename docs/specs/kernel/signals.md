@@ -236,7 +236,7 @@ Sent to a process when an [abstract memory segment (AMS)](memory.md#abstract-mem
 
 ### `0x37` UNSHARED_AMS
 
-Sent to a process when an[abstract memory segment (AMS)](memory.md#abstract-memory-segments) is unshared by the sharer process.
+Sent to a process when an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) is unshared by the sharer process.
 
 **Datafield:**
 

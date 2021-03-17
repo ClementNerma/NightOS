@@ -4966,7 +4966,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><code>0x20</code>: caller process is a system service</li>
 </ul>
 <h3 id="0xd0-sys_create_process"><a class="header" href="#0xd0-sys_create_process"><code>0xD0</code> SYS_CREATE_PROCESS</a></h3>
-<p>System service-only syscall.</p>
+<p>Syscall resserved to the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service.</p>
 <p>Create a <a href="specs/kernel/processes.html#types-of-processes">userland process</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -4984,7 +4984,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><code>0x31</code>: Application context is not valid</li>
 </ul>
 <h3 id="0xd1-sys_manage_process"><a class="header" href="#0xd1-sys_manage_process"><code>0xD1</code> SYS_MANAGE_PROCESS</a></h3>
-<p>System service-only syscall.</p>
+<p>Syscall resserved to the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service.</p>
 <p>Manage a <a href="specs/kernel/processes.html#types-of-processes">userland process</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -5009,8 +5009,8 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><code>0x22</code>: Process is already in the requested state</li>
 </ul>
 <h3 id="0xd2-sys_process_attributes"><a class="header" href="#0xd2-sys_process_attributes"><code>0xD2</code> SYS_PROCESS_ATTRIBUTES</a></h3>
-<p>System service-only syscall.<br />
-Get a process' <a href="specs/kernel/processes.html#process-attributes">attributes</a>.</p>
+<p>Syscall resserved to the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service.</p>
+<p>Manage a process' <a href="specs/kernel/processes.html#process-attributes">attributes</a>.</p>
 <p><strong>Arguments:</strong></p>
 <p><em>For value-based attributes:</em></p>
 <ul>
@@ -5074,8 +5074,8 @@ Get a process' <a href="specs/kernel/processes.html#process-attributes">attribut
 <li><code>0x22</code>: Provided index is out-of-bounds</li>
 </ul>
 <h3 id="0xd3-sys_set_priority"><a class="header" href="#0xd3-sys_set_priority"><code>0xD3</code> SYS_SET_PRIORITY</a></h3>
-<p>System service-only syscall.<br />
-Set the priority of a process.<br />
+<p>Syscall resserved to the <a href="specs/kernel/../system-services/process.html"><code>sys::process</code></a> service.</p>
+<p>Set the priority of a process.<br />
 If the set priority is different than <code>0</code>, the kernel won't adjust the priority automatically anymore.<br />
 Setting it to <code>0</code> will reset it to the kernel's choice.</p>
 <p><strong>Arguments:</strong></p>
@@ -5092,8 +5092,8 @@ Setting it to <code>0</code> will reset it to the kernel's choice.</p>
 <li><code>0x21</code>: Provided PID was not found</li>
 </ul>
 <h3 id="0xd4-sys_enum_devices"><a class="header" href="#0xd4-sys_enum_devices"><code>0xD4</code> SYS_ENUM_DEVICES</a></h3>
-<p>System service-only syscall.<br />
-List devices matching a provided CII.</p>
+<p>Syscall resserved to the <a href="specs/kernel/../system-services/hw.html"><code>sys::hw</code></a> service.</p>
+<p>List devices matching a provided CII.</p>
 <p>For each device, its SDI (4 bytes) is written to the provided address.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -5111,8 +5111,8 @@ List devices matching a provided CII.</p>
 <li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../system-services/hw.html"><code>sys::hw</code></a> service</li>
 </ul>
 <h3 id="0xd5-sys_device_infos"><a class="header" href="#0xd5-sys_device_infos"><code>0xD5</code> SYS_DEVICE_INFOS</a></h3>
-<p>System service-only syscall.<br />
-Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device descriptor</a> of a single device.</p>
+<p>Syscall resserved to the <a href="specs/kernel/../system-services/hw.html"><code>sys::hw</code></a> service.</p>
+<p>Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device descriptor</a> of a single device.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li><a href="specs/kernel/hardware.html#session-device-identifier">SDI</a> of the device to get informations from (4 bytes)</li>

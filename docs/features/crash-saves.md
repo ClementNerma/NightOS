@@ -46,7 +46,7 @@ _NOTE:_ Because a crash save could have been collected for several instances of 
 
 ## Restoration process
 
-When a crash save is attempted to be restored, the [`sys::crashsave`](../specs/system-services/crashsave.md) service. When the application is ready, a `SYS_CRASHSAVE_RESTORE` confirmable signal is sent, with the application's crash save.
+When a crash save is attempted to be restored, the [`sys::crashsave`](../specs/services/system/crashsave.md) service. When the application is ready, a `SYS_CRASHSAVE_RESTORE` confirmable signal is sent, with the application's crash save.
 The application is expected to confirm the signal when it has finished restoring its state using the crash save.
 The crash save is not deleted directly, though. It is renamed using the new instance's PID and kept until the next collect process receives a new crash save for this instance.
 

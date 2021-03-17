@@ -79,25 +79,25 @@ The list of default applications and their description can be found [here](appli
 - [Signals](specs/kernel/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
 - [System calls](specs/kernel/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
 
-### [Integration services](specs/integration-services/README.md)
+### [Integration services](specs/services/integration/README.md)
 
-- [Desktop environments](specs/integration-services/desktop-environments.md) - how the user interface is handled by applications
-- [File managers](specs/integration-services/file-managers.md) - how file managers are integrated into the system
-- [File openers](specs/integration-services/file-openers.md) - how files are associated to applications
+- [Desktop environments](specs/services/integration/desktop-environments.md) - how the user interface is handled by applications
+- [File managers](specs/services/integration/file-managers.md) - how file managers are integrated into the system
+- [File openers](specs/services/integration/file-openers.md) - how files are associated to applications
 
-### [System services](specs/system-services/README.md)
+### [System services](specs/services/system/README.md)
 
-- [`sys::fs`](specs/system-services/fs.md) - the filesystem service
-- [`sys::fsh`](specs/system-services/fsh.md) - the high-level filesystem service
-- [`sys::hw`](specs/system-services/hw.md) - the hardware service
-- [`sys::perm`](specs/system-services/perm.md) - the permissions service
-- [`sys::net`](specs/system-services/net.md) - the network service
-- [`sys::crypto`](specs/system-services/crypto.md) - the cryptography service
-- [`sys::crashsave`](specs/system-services/crashsave.md) - the [crash saves](features/crash-saves.md) service
-- [`sys::flow`](specs/system-services/flow.md) - the [flows](specs/filesystem.md#flows) service
-- [`sys::hydre`](specs/system-services/hydre.md) - the [shell (Hydre)](specs/shell.md) service
-- [`sys::app`](specs/system-services/app.md) - the [applications](concepts/applications.md) management service
-- [`sys::process`](specs/system-services/process.md) - the [processes](technical/processes.md) management service
+- [`sys::fs`](specs/services/system/fs.md) - the filesystem service
+- [`sys::fsh`](specs/services/system/fsh.md) - the high-level filesystem service
+- [`sys::hw`](specs/services/system/hw.md) - the hardware service
+- [`sys::perm`](specs/services/system/perm.md) - the permissions service
+- [`sys::net`](specs/services/system/net.md) - the network service
+- [`sys::crypto`](specs/services/system/crypto.md) - the cryptography service
+- [`sys::crashsave`](specs/services/system/crashsave.md) - the [crash saves](features/crash-saves.md) service
+- [`sys::flow`](specs/services/system/flow.md) - the [flows](specs/filesystem.md#flows) service
+- [`sys::hydre`](specs/services/system/hydre.md) - the [shell (Hydre)](specs/shell.md) service
+- [`sys::app`](specs/services/system/app.md) - the [applications](concepts/applications.md) management service
+- [`sys::process`](specs/services/system/process.md) - the [processes](technical/processes.md) management service
 
 ## User Experience
 

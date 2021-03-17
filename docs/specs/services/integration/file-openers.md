@@ -2,7 +2,7 @@
 
 A file opener is an application which can associate open specific items. It exposes an integration service with the standardized methods and notifications described in this document.
 
-The list of openers can be viewed and modified through the [`sys::fsh`](../system-services/fsh.md).
+The list of openers can be viewed and modified through the [`sys::fsh`](../../services/system/fsh.md).
 
 They are essentially used by the [default file manager](file-managers.md).
 
@@ -33,7 +33,7 @@ _None_
 
 Generate a thumbnail for a given filesystem item.
 
-The thumbnail should be generated using the [`sys::fsh`](../system-services/fsh.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
+The thumbnail should be generated using the [`sys::fsh`](../../services/system/fsh.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
 
 **Arguments:**
 
@@ -41,7 +41,7 @@ The thumbnail should be generated using the [`sys::fsh`](../system-services/fsh.
 
 **Answer:**
 
-- [Temporary FEID](../filesystem.md#temporary-feid)
+- [Temporary FEID](../../filesystem.md#temporary-feid)
 
 **Errors:**
 

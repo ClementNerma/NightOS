@@ -17,7 +17,7 @@ Register an application as an opener for a list of file types.
 
 **Arguments:**
 
-- File extensions to handle as a [delimited list](../kernel/data-structures.md#delimited-lists) of [delimited strings](../kernel/data-structures.md#delimited-strings)
+- File extensions to handle as a [delimited list](../../kernel/data-structures.md#delimited-lists) of [delimited strings](../../kernel/data-structures.md#delimited-strings)
 
 **Return value:**
 
@@ -25,7 +25,7 @@ _None_
 
 **Errors:**
 
-- `0x20`: Client does not expose a [file opening service](../integration-services/file-openers.md)
+- `0x20`: Client does not expose a [file opening service](../../services/integration/file-openers.md)
 - `0x30`: One of the provided extensions is empty
 - `0x31`: At least one of the provided extensions is reserved to the system
 - `0x32`: Client already handles at least one of the provided extensions
@@ -36,7 +36,7 @@ Unregister an application as an opener for a list of file types.
 
 **Argument:**
 
-- File extensions to unhandle as a [delimited list](../kernel/data-structures.md#delimited-lists) of [delimited strings](../kernel/data-structures.md#delimited-strings)
+- File extensions to unhandle as a [delimited list](../../kernel/data-structures.md#delimited-lists) of [delimited strings](../../kernel/data-structures.md#delimited-strings)
 
 **Return value:**
 
@@ -44,27 +44,27 @@ _None_
 
 **Errors:**
 
-- `0x20`: Client does not expose a [file opening service](../integration-services/file-openers.md)
+- `0x20`: Client does not expose a [file opening service](../../services/integration/file-openers.md)
 - `0x30`: One of the provided extensions is empty
 - `0x31`: Client does not currently handle at least one of the provided extensions
 
 ### `0x03` LIST_OPENERS
 
-List the [file openers](../integration-services/file-openers.md) associated to a specific type of items.
+List the [file openers](../../services/integration/file-openers.md) associated to a specific type of items.
 
-The list is not ordered, it's up to the [file manager](../integration-services/file-managers.md) to determine the display order if multiple openers are found.
+The list is not ordered, it's up to the [file manager](../../services/integration/file-managers.md) to determine the display order if multiple openers are found.
 
 **Arguments:**
 
-- Filesystem item's extension as a [delimited string](../kernel/data-structures.md#delimited-strings)
+- Filesystem item's extension as a [delimited string](../../kernel/data-structures.md#delimited-strings)
 
 **Return value:**
 
-- [Delimited list](../kernel/data-structures.md#delimited-lists) of [ANID](../applications-libraries.md#application-identifier) (8 bytes each)
+- [Delimited list](../../kernel/data-structures.md#delimited-lists) of [ANID](../../applications-libraries.md#application-identifier) (8 bytes each)
 
 **Errors:**
 
-- `0x20`: Client does not expose a [file opening service](../integration-services/file-openers.md)
+- `0x20`: Client does not expose a [file opening service](../../services/integration/file-openers.md)
 
 ### `0x10` CHECK_ITEM_THUMBNAIL_CACHE
 
@@ -74,8 +74,8 @@ The cache policy is determined using internal criterias.
 
 **Arguments:**
 
-- [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
-- [FEID](../filesystem.md#element-unique-identifier) (8 bytes)
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
 
 **Return value:**
 
@@ -83,12 +83,12 @@ The cache policy is determined using internal criterias.
 
 If a thumbnail is present, this is followed by:
 
-- Thumbnail caching [timestamp](../kernel/data-structures.md#timestamps) (8 bytes)
-- Thumbnail [TFEID](../filesystem.md#temporary-feid) (8 bytes)
+- Thumbnail caching [timestamp](../../kernel/data-structures.md#timestamps) (8 bytes)
+- Thumbnail [TFEID](../../filesystem.md#temporary-feid) (8 bytes)
 
 **Errors:**
 
-- `0x20`: Client is not a [file manager service](../integration-services/file-managers.md)
+- `0x20`: Client is not a [file manager service](../../services/integration/file-managers.md)
 - `0x30`: Unknown FSID
 - `0x31`: Unknown FEID
 
@@ -102,17 +102,17 @@ The cache policy is determined using internal criterias.
 
 **Arguments:**
 
-- [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
-- [FEID](../filesystem.md#element-unique-identifier) (8 bytes)
-- Thumbnail as a [bitmap image](../kernel/data-structures.md#bitmap-images)
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
+- Thumbnail as a [bitmap image](../../kernel/data-structures.md#bitmap-images)
 
 **Return value:**
 
-- Thumbnail [TFEID](../filesystem.md#temporary-feid) (8 bytes)
+- Thumbnail [TFEID](../../filesystem.md#temporary-feid) (8 bytes)
 
 **Errors:**
 
 - `0x10`: Invalid bitmap data
-- `0x20`: Client is not a [file manager service](../integration-services/file-managers.md)
+- `0x20`: Client is not a [file manager service](../../services/integration/file-managers.md)
 - `0x30`: Unknown FSID
 - `0x31`: Unknown FEID

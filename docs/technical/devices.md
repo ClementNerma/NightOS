@@ -17,7 +17,7 @@ For instance, if a hard drive is connected to the computer, the DHF may be somet
 
 ## Interacting with a device
 
-Device handler files are not simple files ; they can only be used through the [`sys::hw`](../specs/system-services/hw.md) service.
+Device handler files are not simple files ; they can only be used through the [`sys::hw`](../specs/services/system/hw.md) service.
 
 Different actions may happen depending on the device's type:
 
@@ -28,13 +28,13 @@ Different actions may happen depending on the device's type:
 - Other supported wireless devices: depends on the type (Bluetooth adapter, ...)
 - Basic/persistent storage devices: when possible, the device will be automatically mounted in `/mnt` and visible in the files explorer
 
-There are many different types of devices, all can be found in the specifications of the [`sys::hw`](../specs/system-services/hw.md) service under the ["Driven device type" (DDT) section](../specs/system-services/hw.md#driven-device-type).
+There are many different types of devices, all can be found in the specifications of the [`sys::hw`](../specs/services/system/hw.md) service under the ["Driven device type" (DDT) section](../specs/services/system/hw.md#driven-device-type).
 
 For uncategorized devices (in `/dev/etc`), a popup is shown to the user, to indicate the connected device is not recognized. Some applications may still be able to interact with it (for instance, a storage device using an unsupported protocol).
 
 ## Device handler files persistence
 
-When a device is connected, its DHF is not removed. Instead, if a process tries to interact with the DHF, the [`sys::hw`](../specs/system-services/hw.md) service will indicate the device is currently not connected.
+When a device is connected, its DHF is not removed. Instead, if a process tries to interact with the DHF, the [`sys::hw`](../specs/services/system/hw.md) service will indicate the device is currently not connected.
 
 When the device is connected again, it is associated to the same DHF again. This allows applications to persist the device's location and use it later on.
 

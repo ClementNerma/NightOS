@@ -1029,13 +1029,13 @@ Get informations from the application's [execution context](../applications/cont
 
 ### `0xD0` SYS_CREATE_PROCESS
 
-Syscall resserved to the [`sys::process`](../system-services/process.md) service.
+Syscall resserved to the [`sys::process`](../services/system/process.md) service.
 
 Create a [userland process](processes.md#types-of-processes).
 
 **Arguments:**
 
-- Code location token from the [`sys::fs`](../system-services/fs.md) service
+- Code location token from the [`sys::fs`](../services/system/fs.md) service
 - [Application context](../applications/context.md)
 
 **Return value:**
@@ -1044,13 +1044,13 @@ Create a [userland process](processes.md#types-of-processes).
 
 **Errors:**
 
-- `0x20`: Caller process is not the [`sys::process`](../system-services/process.md) service
-- `0x30`: Code location token was not accepted by the [`sys::fs`](../system-services/fs.md)
+- `0x20`: Caller process is not the [`sys::process`](../services/system/process.md) service
+- `0x30`: Code location token was not accepted by the [`sys::fs`](../services/system/fs.md)
 - `0x31`: Application context is not valid
 
 ### `0xD1` SYS_MANAGE_PROCESS
 
-Syscall resserved to the [`sys::process`](../system-services/process.md) service.
+Syscall resserved to the [`sys::process`](../services/system/process.md) service.
 
 Manage a [userland process](processes.md#types-of-processes).
 
@@ -1071,13 +1071,13 @@ _None_
 **Errors:**
 
 - `0x10`: Invalid action code provided
-- `0x20`: Caller process is not the [`sys::process`](../system-services/process.md) service
+- `0x20`: Caller process is not the [`sys::process`](../services/system/process.md) service
 - `0x21`: Unknown PID
 - `0x22`: Process is already in the requested state
 
 ### `0xD2` SYS_PROCESS_ATTRIBUTES
 
-Syscall resserved to the [`sys::process`](../system-services/process.md) service.
+Syscall resserved to the [`sys::process`](../services/system/process.md) service.
 
 Manage a process' [attributes](processes.md#process-attributes).
 
@@ -1124,13 +1124,13 @@ _For list-based attributes:_
 
 - `0x10`: Invalid action code provided
 - `0x11`: Invalid attribute number provided
-- `0x20`: Caller process is not the [`sys::process`](../system-services/process.md) service
+- `0x20`: Caller process is not the [`sys::process`](../services/system/process.md) service
 - `0x21`: This system service is not allowed to access or edit this attribute
 - `0x22`: Provided index is out-of-bounds
 
 ### `0xD4` SYS_ENUM_DEVICES
 
-Syscall resserved to the [`sys::hw`](../system-services/hw.md) service.
+Syscall resserved to the [`sys::hw`](../services/system/hw.md) service.
 
 List devices matching a provided CII.
 
@@ -1150,11 +1150,11 @@ For each device, its SDI (4 bytes) is written to the provided address.
 **Errors:**
 
 - `0x10`: Invalid connection type in CII
-- `0x20`: Caller process is not the [`sys::hw`](../system-services/hw.md) service
+- `0x20`: Caller process is not the [`sys::hw`](../services/system/hw.md) service
 
 ### `0xD5` SYS_DEVICE_INFOS
 
-Syscall resserved to the [`sys::hw`](../system-services/hw.md) service.
+Syscall resserved to the [`sys::hw`](../services/system/hw.md) service.
 
 Get the [raw device descriptor](hardware.md#raw-device-descriptor) of a single device.
 
@@ -1169,5 +1169,5 @@ Get the [raw device descriptor](hardware.md#raw-device-descriptor) of a single d
 
 **Errors:**
 
-- `0x20`: Caller process is not the [`sys::hw`](../system-services/hw.md) service
+- `0x20`: Caller process is not the [`sys::hw`](../services/system/hw.md) service
 - `0x21`: No device was found with this SDI

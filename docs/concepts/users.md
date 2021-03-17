@@ -45,7 +45,7 @@ This is why it's extremely discouraged to have two administrator users on the sa
 
 ## User Privileges Elevation (UPE)
 
-Users can ask to perform a task with the privileges of another user, such as running a program as administrator. This uses the _User Privileges Elevation_ (UPE) system, builtin the [`sys::perm`](../specs/system-services/perm.md) service.
+Users can ask to perform a task with the privileges of another user, such as running a program as administrator. This uses the _User Privileges Elevation_ (UPE) system, builtin the [`sys::perm`](../specs/services/system/perm.md) service.
 
 In such case, the program is still run as the current user, but with the privileges of both the running user and the user specified to the UPE.
 
@@ -85,4 +85,4 @@ When a user is in a group, the group's privileges cannot be revoked for this use
 
 ## User privileges
 
-User privileges indicate the list of actions a user can perform or not. You can find more in the specifications of the [`sys::perm`](../specs/system-services/perm.md) system service.
+User privileges indicate the list of actions a user can perform or not. You can find more in the specifications of the [`sys::perm`](../specs/services/system/perm.md) system service.

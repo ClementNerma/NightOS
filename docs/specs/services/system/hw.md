@@ -2,7 +2,7 @@
 
 The `sys::hw` service is in charge of hardware devices. It coordinates and manages communications with the hardware.
 
-It is known as the [I/O manager](../../technical/io-manager.md), or Ion.
+It is known as the [I/O manager](../../../technical/io-manager.md), or Ion.
 
 - [Hardware detection](#hardware-detection)
 - [Device formats](#device-formats)
@@ -33,7 +33,7 @@ It is known as the [I/O manager](../../technical/io-manager.md), or Ion.
 
 ## Hardware detection
 
-Hardware detection is handled by [the kernel itself](../kernel/hardware.md#hardware-detection), which then exposes a [_raw device descriptor_ (RDD)](../kernel/hardware.md#raw-device-descriptor) as well as a [_connection interface identifier_ (CII)](../kernel/hardware.md#connection-interface-identifier) and a [_session device identifier_ (SDI)](../kernel/hardware.md#session-device-identifier).
+Hardware detection is handled by [the kernel itself](../../kernel/hardware.md#hardware-detection), which then exposes a [_raw device descriptor_ (RDD)](../../kernel/hardware.md#raw-device-descriptor) as well as a [_connection interface identifier_ (CII)](../../kernel/hardware.md#connection-interface-identifier) and a [_session device identifier_ (SDI)](../../kernel/hardware.md#session-device-identifier).
 
 ## Device formats
 
@@ -41,7 +41,7 @@ This section describes the multiple formats used by this service to deal with de
 
 ### Device type descriptor
 
-From the [RDD](../kernel/hardware.md#raw-device-descriptor) is derived the _device type descriptor_ (DTD), which describes the device's type. Its composition and size depends on the connection type, but it varies from empty (0 byte) if the connection type guarantees no information, up to 256 bytes.
+From the [RDD](../../kernel/hardware.md#raw-device-descriptor) is derived the _device type descriptor_ (DTD), which describes the device's type. Its composition and size depends on the connection type, but it varies from empty (0 byte) if the connection type guarantees no information, up to 256 bytes.
 
 ***The format remains to be determined but should be along the lines of a number-based equivalent of ModAlias, like :***
 
@@ -57,8 +57,8 @@ From the [RDD](../kernel/hardware.md#raw-device-descriptor) is derived the _devi
 
 It also derives a _unique device identifier_ (UDI) encoded on 265 bytes, which is made of:
 
-- [SDI](../kernel/hardware.md#session-device-identifier) (4 bytes)
-- [CII](../kernel/hardware.md#connection-interface-identifier) (4 bytes)
+- [SDI](../../kernel/hardware.md#session-device-identifier) (4 bytes)
+- [CII](../../kernel/hardware.md#connection-interface-identifier) (4 bytes)
 - Size of the [DTD](#device-type-descriptor) (1 byte)
 - [DTD](#device-type-descriptor) (256 bytes, weakest bits filled with zeros)
 
@@ -141,13 +141,13 @@ For instance, providing the DTD `0x0100B2` with the DTD pattern indicator set to
 
 ## Drivers
 
-From a higher level point of view, drivers are [services](../services.md) that declare their parent applications as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
+From a higher level point of view, drivers are [services](../../services.md) that declare their parent applications as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
 
-Registering as a driver for a pattern requires the application to expose the [integration service(s)](../services.md#types-of-services) relevant to this pattern.
+Registering as a driver for a pattern requires the application to expose the [integration service(s)](../../services.md#types-of-services) relevant to this pattern.
 
 When a device is connected, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#0x02-device_event) notification.
 
-From this point, the driver can create an [AMS](../kernel/memory.md#abstract-memory-segments) from the device's memory using the [`DEVICE_AMS`](../kernel/syscalls.md#0x34-device_ams) syscall.
+From this point, the driver can create an [AMS](../../kernel/memory.md#abstract-memory-segments) from the device's memory using the [`DEVICE_AMS`](../../kernel/syscalls.md#0x34-device_ams) syscall.
 
 It can also get informed of interrupts the device raises through the [`DEVICE_INTERRUPT`](#0x10-device_interrupt) notification.
 
@@ -168,7 +168,7 @@ If no criteria is matched, the driver isn't selected to drive the given hardware
 
 ### A note on performances
 
-Although hardware devices' interrupts are notified to the driver through [service socket notifications](../kernel/ipc.md#methods-and-notifications), the latency is still minimal as soon as the driver listens to the [`RECV_SOCK_MSG`](../kernel/signals.md#0x27-recv_sock_msg) signal, which like all signals uses interrupts and so guarantees a very low latency.
+Although hardware devices' interrupts are notified to the driver through [service socket notifications](../../kernel/ipc.md#methods-and-notifications), the latency is still minimal as soon as the driver listens to the [`RECV_SOCK_MSG`](../../kernel/signals.md#0x27-recv_sock_msg) signal, which like all signals uses interrupts and so guarantees a very low latency.
 
 ## Methods
 
@@ -233,7 +233,7 @@ If multiple drivers have colliding patterns, the final user will be prompted to 
 The driver process will receive [`DEVICE_EVENT`](#0x02-device_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
 Notifications are also retroactive, which means they will be sent for already-connected devices.
 
-The driver will also have the device registered in its [drivable devices attribute](../kernel/processes.md#drivable-devices), allowing it to use the [`DEVICE_AMS`](../kernel/syscalls.md#0x34-device_ams) syscall to map the device's memory in its own.
+The driver will also have the device registered in its [drivable devices attribute](../../kernel/processes.md#drivable-devices), allowing it to use the [`DEVICE_AMS`](../../kernel/syscalls.md#0x34-device_ams) syscall to map the device's memory in its own.
 
 **Required permission:** `devices.register_driver`
 
@@ -248,7 +248,7 @@ _None_
 **Errors:**
 
 - `0x20`: Current process is not a service
-- `0x30`: Process' parent application does not expose the relevant [integration services](../services.md#types-of-services)
+- `0x30`: Process' parent application does not expose the relevant [integration services](../../services.md#types-of-services)
 - `0x31`: Current process is already registered as a driver for this pattern
 
 ### `0x11` UNREGISTER_DRIVER

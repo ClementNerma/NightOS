@@ -4,7 +4,7 @@ This document describes how audio is implemented in NightOS.
 
 ## Audio inputs
 
-Devices recognized as [audio inputs](../specs/system-services/hw.md#driven-device-type) can act as global audio input devices. Multiple devices can be used at the same time, but only one default input can be selected.
+Devices recognized as [audio inputs](../specs/services/system/hw.md#driven-device-type) can act as global audio input devices. Multiple devices can be used at the same time, but only one default input can be selected.
 
 By default, each time a new audio input device is connected, it is selected as the new default device. When disconnected, the previous default device is selected again.
 
@@ -12,7 +12,7 @@ It is also possible to set a device as always being the default one, even if oth
 
 ## Playback devices
 
-Devices recognized as [audio outputs](../specs/system-services/hw.md#driven-device-type) can act as global audio output devices. Multiple devices can be used at the same time, but only one default output can be selected.
+Devices recognized as [audio outputs](../specs/services/system/hw.md#driven-device-type) can act as global audio output devices. Multiple devices can be used at the same time, but only one default output can be selected.
 
 By default, each time a new audio input device is connected, it is selected as the new default device. When disconnected, the previous default device is selected again.
 

@@ -1,6 +1,6 @@
 # `sys::fs` service
 
-The `sys::fs` service is in charge of operations related to the [filesystems](../filesystem.md).
+The `sys::fs` service is in charge of operations related to the [filesystems](../../filesystem.md).
 
 ## Methods
 
@@ -12,7 +12,7 @@ Check if a given filesystem is mounted.
 
 **Arguments:**
 
-- [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 
 **Return value:**
 
@@ -30,17 +30,17 @@ Get informations on a filesystem.
 
 **Arguments:**
 
-- [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 
 **Return value:**
 
-- [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
-- Mount [timestamp](../kernel/data-structures.md#timestamps) (8 bytes)
-- Mount path [FEID](../filesystem.md#element-unique-identifier) (8 bytes)
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- Mount [timestamp](../../kernel/data-structures.md#timestamps) (8 bytes)
+- Mount path [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
 - Volume size in bytes (8 bytes)
-- [Option](../kernel/data-structures.md#option) of the volume's free size in bytes (8 bytes)
-- [Option](../kernel/data-structures.md#option) of the mounted volume file's [FEID](../filesystem.md#element-unique-identifier) (1 + 8 bytes)
-- Volume name as a [delimited string](../kernel/data-structures.md#delimited-strings)
+- [Option](../../kernel/data-structures.md#option) of the volume's free size in bytes (8 bytes)
+- [Option](../../kernel/data-structures.md#option) of the mounted volume file's [FEID](../../filesystem.md#element-unique-identifier) (1 + 8 bytes)
+- Volume name as a [delimited string](../../kernel/data-structures.md#delimited-strings)
 
 **Errors:**
 
@@ -58,7 +58,7 @@ _None_
 
 **Return value:**
 
-- [Delimited list](../kernel/data-structures.md#delimited-lists) of [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [Delimited list](../../kernel/data-structures.md#delimited-lists) of [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 
 **Errors:**
 
@@ -72,11 +72,11 @@ Mount a filesystem. If no mount path is provided, the filesystem will be mounted
 
 **Arguments:**
 
-- [Option](../kernel/data-structures.md#option) of the mount path as a [delimited string](../kernel/data-structures.md#delimited-strings)
+- [Option](../../kernel/data-structures.md#option) of the mount path as a [delimited string](../../kernel/data-structures.md#delimited-strings)
 
 **Return value:**
 
-- [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 
 **Errors:**
 
@@ -91,8 +91,8 @@ Mount an existing filesystem. If no mount path is provided, the filesystem will 
 
 **Arguments:**
 
-- [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
-- [Option](../kernel/data-structures.md#option) of the mount path as a [delimited string](../kernel/data-structures.md#delimited-strings)
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [Option](../../kernel/data-structures.md#option) of the mount path as a [delimited string](../../kernel/data-structures.md#delimited-strings)
 
 **Return value:**
 
@@ -100,7 +100,7 @@ _None_
 
 **Errors:**
 
-- `0x30`: Unknown [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- `0x30`: Unknown [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 - `0x31`: This filesystem is already mounted
 
 ### `0x06` FS_UNMOUNT
@@ -111,7 +111,7 @@ Unmount a mounted filesystem.
 
 **Arguments:**
 
-- [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 
 **Return value:**
 
@@ -119,7 +119,7 @@ _None_
 
 **Errors:**
 
-- `0x30`: Unknown [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- `0x30`: Unknown [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 - `0x31`: This filesystem is current not mounted
 
 ### `0x07` FS_WATCH
@@ -167,4 +167,4 @@ Sent to a client which subscribed through [`FS_WATCH`](#0x07-fs_watch) each time
 **Datafield:**
 
 - Mount status (1 byte): `0x01` if the filesystem was mounted, `0x02` if it was unmounted
-- [FSID](../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)

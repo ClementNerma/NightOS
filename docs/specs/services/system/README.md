@@ -1,8 +1,8 @@
 # System services
 
-As NightOS' [kernel](../kernel/README.md) is not monolithic but a microkernel, it only handles the most fundamental tasks of the system, like memory and processes management, as well as direct hardware communication.
+As NightOS' [kernel](../../kernel/README.md) is not monolithic but a microkernel, it only handles the most fundamental tasks of the system, like memory and processes management, as well as direct hardware communication.
 
-The vast majority of its features can be found in system [services](../services.md), run by the system itself under the `sys` [DID](../applications-libraries.md#application-identifier).
+The vast majority of its features can be found in system [services](../../services.md), run by the system itself under the `sys` [DID](../../applications-libraries.md#application-identifier).
 
 This splitting implies that most low-level features of the system are documented in the individual services' specifications documents, which you will find here.
 
@@ -10,7 +10,7 @@ This splitting implies that most low-level features of the system are documented
 
 System services are referred to as the `sys::` services.
 
-All [methods and notifications](../kernel/ipc.md#methods-and-notifications) describe the required permissions to use them, their arguments.
+All [methods and notifications](../../kernel/ipc.md#methods-and-notifications) describe the required permissions to use them, their arguments.
 
 They also use common error codes:
 
@@ -26,7 +26,7 @@ They also use common error codes:
 - `0x30` to `0x3F`: resource errors (e.g. file not found)
 - `0x40` to `0xFF`: other types of errors
 
-All methods return an answer, though it may be empty (indicated by a _None_). System services' answers always [conclude the exchange](../kernel/ipc.md#concluding-exchanges).
+All methods return an answer, though it may be empty (indicated by a _None_). System services' answers always [conclude the exchange](../../kernel/ipc.md#concluding-exchanges).
 
 ## List of system services
 
@@ -36,9 +36,9 @@ All methods return an answer, though it may be empty (indicated by a _None_). Sy
 - PID 13: [`sys::perm`](perm.md): permissions management
 - PID 14: [`sys::net`](net.md): network communications
 - PID 15: [`sys::crypto`](crypto.md): cryptography utilities
-- PID 16: [`sys::crashsave`](crashsave.md): [crash saves](../../features/crash-saves.md) management
-- PID 17: [`sys::flow`](flow.md): [flows](../../specs/filesystem.md#flows) management
-- PID 18: [`sys::hydre`](hydre.md): [Hydre](../shell.md) shell service
+- PID 16: [`sys::crashsave`](crashsave.md): [crash saves](../../../features/crash-saves.md) management
+- PID 17: [`sys::flow`](flow.md): [flows](../../../specs/filesystem.md#flows) management
+- PID 18: [`sys::hydre`](hydre.md): [Hydre](../../shell.md) shell service
 - PID 19: [`sys::ui`](ui.md): user interface service
 - PID 20: [`sys::app`](app.md): applications management service
 - PID 21: [`sys::process`](process.md): processes management service

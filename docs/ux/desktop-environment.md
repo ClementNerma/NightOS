@@ -16,7 +16,7 @@ An application can register itself as a DEA by exposing a `SYS_DENV` service in 
 
 ## Permissions
 
-A [DEA](#desktop-environment-applications) does not require specific permissions in order to work ; it only requires to expose a [specific integration service](../specs/integration-services/desktop-environments.md) in its [manifest](../specs/applications/manifest.md).
+A [DEA](#desktop-environment-applications) does not require specific permissions in order to work ; it only requires to expose a [specific integration service](../specs/services/integration/desktop-environments.md) in its [manifest](../specs/applications/manifest.md).
 
 ## Display layers
 
@@ -34,7 +34,7 @@ Some desktop environments may not accept windows (for instance, [BareEnv](../app
 
 Unlike other operating systems, [DEA](#desktop-environment-applications) can only access their own data and cannot manipulate the data inside other applications, even graphically.
 
-Desktop environments rely on the [`sys::ui`](../specs/system-services/ui.md) system service to control the data they display.
+Desktop environments rely on the [`sys::ui`](../specs/services/system/ui.md) system service to control the data they display.
 
 This service provides them several [methods and events](../specs/services.md#communication), mainly to:
 

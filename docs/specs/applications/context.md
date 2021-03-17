@@ -24,7 +24,7 @@ It is one-byte long, and is made of the following bits (starting from the strong
   - `0x7`: the application was started by another application
   - `0x8`: the application was started using one its exposed [shell commands](../../concepts/applications.md#commands)
   - `0x9`: the application was started as a [desktop environment](../../ux/desktop-environment.md)
-- Bit 4: set if the application was started automatically after a crash/improver shutdown and should to the [`sys::crashsave`](../system-services/crashsave.md) service to get a crashsave
+- Bit 4: set if the application was started automatically after a crash/improver shutdown and should to the [`sys::crashsave`](../services/system/crashsave.md) service to get a crashsave
 - Bit 5: set if the application's raw output (CMDRAW) will be read (e.g. through the use of a [shell operator](../shell-scripting.md#reading-a-commands-output))
 
 The startup reason is especially important as it determines what the application should do (e.g. uninstall itself, run as a command...) but also if it should output data through its CMDRAW in case it was called by a command.
@@ -47,9 +47,9 @@ The context header is stored as a single block of data, consisting of:
   - `0x00`: this process is not run as a service
   - `0x01`: this process is run as the application's main service
   - `0x02`: this process is run as an application's scoped service
-  - `0x10`: this process is run as the application's [desktop environment service](../integration-services/desktop-environments.md)
-  - `0x11`: this process is run as the application's [file manager service](../integration-services/file-managers.md)
-  - `0x12`: this process is run as the application's [file opener service](../integration-services/file-openers.md)
+  - `0x10`: this process is run as the application's [desktop environment service](../services/integration/desktop-environments.md)
+  - `0x11`: this process is run as the application's [file manager service](../services/integration/file-managers.md)
+  - `0x12`: this process is run as the application's [file opener service](../services/integration/file-openers.md)
 - Scoped service's name (8 bytes) - filled with zeroes if the process is not run as a scoped service
 - The application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
 

@@ -16,5 +16,24 @@ For more informations about low-level concepts these documents refer to, you can
 - [Shell scripting](shell-scripting.md) - [Hydre](../technical/shell.md)'s scripting language
 - [Kernel](kernel/README.md) - complete specifications of the kernel
 - [Services](services.md) - specifications about services work and behave
-- [Integration services](integration-services/README.md) - complete list of [integration services](services.md#types-of-services)
-- [System services](system-services/README.md) - complete list of system services
+
+## Integration services
+
+* [Desktop environment](services/integration/desktop-environments.md)
+* [File managers](services/integration/file-managers.md)
+* [File openers](services/integration/file-openers.md)
+
+## System services
+
+* [`sys::fs`](services/system/fs.md): filesystem management
+* [`sys::fsh`](services/system/fsh.md): high-level filesystem management
+* [`sys::hw`](services/system/hw.md): hardware communication
+* [`sys::perm`](services/system/perm.md): permissions management
+* [`sys::net`](services/system/net.md): network communications
+* [`sys::crypto`](services/system/crypto.md): cryptography utilities
+* [`sys::crashsave`](services/system/crashsave.md): [crash saves](../features/crash-saves.md) management
+* [`sys::flow`](services/system/flow.md): [flows](filesystem.md#flows) management
+* [`sys::hydre`](services/system/hydre.md): [Hydre](shell.md) shell service
+* [`sys::ui`](services/system/ui.md): user interface service
+* [`sys::app`](services/system/app.md): applications management service
+* [`sys::process`](services/system/process.md): processes management service

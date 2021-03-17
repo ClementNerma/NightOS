@@ -59,22 +59,22 @@
     - [Inter-process communication](specs/kernel/ipc.md) - communication between processes
     - [Signals](specs/kernel/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
     - [System calls](specs/kernel/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
-  - [Integration services](specs/integration-services/README.md)
-    - [Desktop environments](specs/integration-services/desktop-environments.md) - integration service for desktop environments
-    - [File managers](specs/integration-services/file-managers.md) - integration service for file managers
-    - [File openers](specs/integration-services/file-openers.md) - integration service for file openers
-  - [System services](specs/system-services/README.md)
-    - [`sys::fs`](specs/system-services/fs.md)
-    - [`sys::fsh`](specs/system-services/fsh.md)
-    - [`sys::hw`](specs/system-services/hw.md)
-    - [`sys::perm`](specs/system-services/perm.md)
-    - [`sys::net`](specs/system-services/net.md)
-    - [`sys::crypto`](specs/system-services/crypto.md)
-    - [`sys::crashsave`](specs/system-services/crashsave.md)
-    - [`sys::flow`](specs/system-services/flow.md)
-    - [`sys::hydre`](specs/system-services/hydre.md)
-    - [`sys::app`](specs/system-services/app.md)
-    - [`sys::process`](specs/system-services/process.md)
+  - [Integration services](specs/services/integration/README.md)
+    - [Desktop environments](specs/services/integration/desktop-environments.md) - integration service for desktop environments
+    - [File managers](specs/services/integration/file-managers.md) - integration service for file managers
+    - [File openers](specs/services/integration/file-openers.md) - integration service for file openers
+  - [System services](specs/services/system/README.md)
+    - [`sys::fs`](specs/services/system/fs.md)
+    - [`sys::fsh`](specs/services/system/fsh.md)
+    - [`sys::hw`](specs/services/system/hw.md)
+    - [`sys::perm`](specs/services/system/perm.md)
+    - [`sys::net`](specs/services/system/net.md)
+    - [`sys::crypto`](specs/services/system/crypto.md)
+    - [`sys::crashsave`](specs/services/system/crashsave.md)
+    - [`sys::flow`](specs/services/system/flow.md)
+    - [`sys::hydre`](specs/services/system/hydre.md)
+    - [`sys::app`](specs/services/system/app.md)
+    - [`sys::process`](specs/services/system/process.md)
 - [Applications](applications/README.md)
     - [Astral](applications/Astral.md) : The complete toolchain allowing to build applications
     - [BareEnv](applications/BareEnv.md) : Text-based desktop environment

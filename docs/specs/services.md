@@ -17,11 +17,11 @@ An application can expose three types of service:
 
 - A _main service_, which is used as the default one
 - _Scoped services_, which are used as interfaces for conventional tasks between applications which are not specific to the current one
-- _Integration services_, which are used to interact with the system in specific ways (see [the complete list](integration-services/README.md))
+- _Integration services_, which are used to interact with the system in specific ways (see [the complete list](services/integration/README.md))
 
 A scope's name is made of up to 8 extended ASCII characters.
 
-Applications exposing integration services get special recognition for the tasks associated to these services. These services are not available directly to the end applications ; they can only be used through [system services](system-services/README.md).
+Applications exposing integration services get special recognition for the tasks associated to these services. These services are not available directly to the end applications ; they can only be used through [system services](services/system/README.md).
 
 ## Architecture of a service
 
@@ -74,7 +74,7 @@ System services are run by the system and get access to special [system calls](k
 
 They also have a specific process identifier (PID) to identify them easily.
 
-You can find the list of all system services in the [related directory](system-services/README.md).
+You can find the list of all system services in the [related directory](services/system/README.md).
 
 ## Third-party communication
 

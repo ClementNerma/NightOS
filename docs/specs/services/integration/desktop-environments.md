@@ -39,7 +39,7 @@ The exposed service for desktop environments is `SYS_DENV`.
 
 ## User interface concepts
 
-User interface is technically free of any rule ; but it should usually follow the conventions described in the [user experience document](../../ux/desktop-environment.md).
+User interface is technically free of any rule ; but it should usually follow the conventions described in the [user experience document](../../../ux/desktop-environment.md).
 
 ## Window's state
 
@@ -59,29 +59,29 @@ It is followed by the number of custom elements to get/update (2 bytes), and the
 
 The header is followed by the value of each element to update, _only_ if the element must be updated.
 
-| Header bit | Description                                                                  | Type / Size in bytes               | Content                     |
-| ---------- | ---------------------------------------------------------------------------- | ---------------------------------- | --------------------------- |
-| 0          | Title                                                                        | [String](#delimited-title-strings) |                             |
-| 1          | Buttons                                                                      | [Buttons](#buttons)                |                             |
-| 2          | Icon                                                                         | [Icon](#icons)                     |                             |
-| 3          | Width                                                                        | 2 bytes                            | In pixels                   |
-| 4          | Height                                                                       | 2 bytes                            | In pixels                   |
-| 5          | X coordinate                                                                 | 2 bytes                            | In pixels                   |
-| 6          | Y coordinate                                                                 | 2 bytes                            | In pixels                   |
-| 7          | [Active attribute](../../ux/desktop-environment.md#activeinactive-windows)   | 1 byte                             | `0x01` to set the attribute |
-| 8          | [Interactive attribute](../../ux/desktop-environment.md#interactive-windows) | 1 byte                             | `0x01` to set the attribute |
-| 9          | [Fixed-size attribute](../../ux/desktop-environment.md#fixed-size-windows)   | 1 byte                             | `0x01` to set the attribute |
-| 10         | [Display layer](../../ux/desktop-environment.md#display-layers)              | 1 byte                             | Layer number                |
-| 11         | [Display state](../../ux/desktop-environment.md#window-display-state)        | [Display state](#display-state)    |                             |
-| 12-31      | _Future-proof_                                                               |                                    |                             |
+| Header bit | Description                                                                     | Type / Size in bytes               | Content                     |
+| ---------- | ------------------------------------------------------------------------------- | ---------------------------------- | --------------------------- |
+| 0          | Title                                                                           | [String](#delimited-title-strings) |                             |
+| 1          | Buttons                                                                         | [Buttons](#buttons)                |                             |
+| 2          | Icon                                                                            | [Icon](#icons)                     |                             |
+| 3          | Width                                                                           | 2 bytes                            | In pixels                   |
+| 4          | Height                                                                          | 2 bytes                            | In pixels                   |
+| 5          | X coordinate                                                                    | 2 bytes                            | In pixels                   |
+| 6          | Y coordinate                                                                    | 2 bytes                            | In pixels                   |
+| 7          | [Active attribute](../../../ux/desktop-environment.md#activeinactive-windows)   | 1 byte                             | `0x01` to set the attribute |
+| 8          | [Interactive attribute](../../../ux/desktop-environment.md#interactive-windows) | 1 byte                             | `0x01` to set the attribute |
+| 9          | [Fixed-size attribute](../../../ux/desktop-environment.md#fixed-size-windows)   | 1 byte                             | `0x01` to set the attribute |
+| 10         | [Display layer](../../../ux/desktop-environment.md#display-layers)              | 1 byte                             | Layer number                |
+| 11         | [Display state](../../../ux/desktop-environment.md#window-display-state)        | [Display state](#display-state)    |                             |
+| 12-31      | _Future-proof_                                                                  |                                    |                             |
 
 #### Delimited title strings
 
-Delimited title strings are encoded as [delimited strings](../kernel/data-structures.md#delimited-strings).
+Delimited title strings are encoded as [delimited strings](../../kernel/data-structures.md#delimited-strings).
 
 #### Icons
 
-Icons are encoded as [bitmap images](../kernel/data-structures.md#bitmap-images).
+Icons are encoded as [bitmap images](../../kernel/data-structures.md#bitmap-images).
 
 #### Buttons
 
@@ -133,7 +133,7 @@ _None_
 
 List elements which can be handled by the desktop environment.
 
-For more informations about such elements, see the [user experience document](../../ux/desktop-environment.md)
+For more informations about such elements, see the [user experience document](../../../ux/desktop-environment.md)
 
 **Arguments:**
 
@@ -587,7 +587,7 @@ Only the elements that changed since the last notification will be set in the se
 
 ### `0x11` WINDOW_INTERACTION
 
-Sent when the user interacts with a window. These events should not occur if the window is not [active](../../ux/desktop-environment.md#activeinactive-windows)
+Sent when the user interacts with a window. These events should not occur if the window is not [active](../../../ux/desktop-environment.md#activeinactive-windows)
 
 **Datafield:**
 
@@ -619,7 +619,7 @@ This is followed by the interaction type on 1 byte, then by the interaction's da
   - Hold type (1 byte):
     - `0x00`: Key was pressed
     - `0x11`: Key was released
-  - Key code (1 byte), normalized by the [`sys::hw`](../system-services/hw.md) service
+  - Key code (1 byte), normalized by the [`sys::hw`](../../services/system/hw.md) service
 
 ### `0x1F` WINDOW_CLOSED
 

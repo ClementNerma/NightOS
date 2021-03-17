@@ -22,7 +22,7 @@ Note that this is only an overview, and as such many topics will not be covered 
 
 NightOS doesn't allow to run standalone binaries. Every running code is either:
 
-* Part of the system, as the [kernel (specs)](../specs/kernel/README.md) itself or as a [system service](services.md#system-services) ([specs](../specs/system-services/README.md)).
+* Part of the system, as the [kernel (specs)](../specs/kernel/README.md) itself or as a [system service](services.md#system-services) ([specs](../specs/services/system/README.md)).
 * Part of an [application](../concepts/applications.md) ([specs](../specs/applications-libraries.md))
 
 System services are immutable and run for the entire system's lifespan, while applications can be opened and closed at anytime, and can also run as multiple instances in parallel.
@@ -38,15 +38,15 @@ Capabitilies can be granted through [permissions](../features/permissions.md) ([
 Hardware access is performed through two layers:
 
 * First, the kernel [detects and enumerate (specs)](../specs/kernel/hardware.md) hardware components
-* Then, hardware is accessed through the [hardware service (specs)](../specs/system-services/hw.md)
+* Then, hardware is accessed through the [hardware service (specs)](../specs/services/system/hw.md)
 
 ## Hardware drivers
 
 Unlike most operating systems, hardware drivers are simple applications with no specific integration in the kernel.
 
-Any application can register itself as [a driver (specs)](../specs/system-services/hw.md#drivers) using the [hardware service (specs)](../specs/system-services/hw.md).
+Any application can register itself as [a driver (specs)](../specs/services/system/hw.md#drivers) using the [hardware service (specs)](../specs/services/system/hw.md).
 
-The relevant driver for each hardware component is selected using [various criterias (specs)](../specs/system-services/hw.md#driver-selection).
+The relevant driver for each hardware component is selected using [various criterias (specs)](../specs/services/system/hw.md#driver-selection).
 
 ## Hardware access performances
 
@@ -55,8 +55,8 @@ Hardware access is performed through [syscalls (specs)](../specs/kernel/syscalls
 The access process is often:
 
 * A userland process notifies a [system service](services.md#system-services)
-* The system services contacts the [hardware service (specs)](../specs/system-services/hw.md)
-* The hardware service contacts the [relevant (specs)](../specs/system-services/hw.md#driver-selection) [driver (specs)](../specs/system-services/hw.md#drivers)
+* The system services contacts the [hardware service (specs)](../specs/services/system/hw.md)
+* The hardware service contacts the [relevant (specs)](../specs/services/system/hw.md#driver-selection) [driver (specs)](../specs/services/system/hw.md#drivers)
 * The driver performs the requested task by communicating with the hardware through the hardware service
 * The action's result is then transmitted to the hardware service, which then transmits it to the system service, which in turns transmits it to the userland process
 
@@ -68,7 +68,7 @@ Data loss prevention works essentially through [crash saves](../features/crash-s
 
 ## User interface
 
-The user interface is entirely managed by the [desktop environment](../ux/desktop-environment.md), which can be any [application](../concepts/applications.md) exposing the [relevant service (specs)](../specs/integration-services/desktop-environments.md).
+The user interface is entirely managed by the [desktop environment](../ux/desktop-environment.md), which can be any [application](../concepts/applications.md) exposing the [relevant service (specs)](../specs/services/integration/desktop-environments.md).
 
 ## Users management
 

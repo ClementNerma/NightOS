@@ -9,7 +9,7 @@
 
 A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose an integration service with the standardized methods and notifications described in this document.
 
-Applications can indicate themselves as file manager by specifying an `SYS_FMAN` service in their [manifest](../applications/manifest.md). They rely on [file openers](file-openers.md) to open files.
+Applications can indicate themselves as file manager by specifying an `SYS_FMAN` service in their [manifest](../../applications/manifest.md). They rely on [file openers](file-openers.md) to open files.
 
 The end user chooses a single file manager (called the _default_ file manager) between all available ones, whose service will be used by other applications.
 
@@ -18,12 +18,12 @@ The end user chooses a single file manager (called the _default_ file manager) b
 Paths destinated to file managers are called _file manager paths_ (FMP) and can be encoded with either:
 
 - A `0x00` status code (1 byte)
-- [FEID](../filesystem.md#element-unique-identifier) (8 bytes)
+- [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
 
 Or:
 
 - A `0x01` status code (1 byte)
-- A [delimited string](../kernel/data-structures.md#delimited-strings)
+- A [delimited string](../../kernel/data-structures.md#delimited-strings)
 
 ## Methods
 
@@ -70,7 +70,7 @@ Check if a filesystem item could be opened without user interaction.
 
 Get the thumbnail for a specific item.
 
-The thumbnail should be generated using the [`sys::fsh`](../system-services/fsh.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
+The thumbnail should be generated using the [`sys::fsh`](../../services/system/fsh.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
 
 **Arguments:**
 
@@ -79,7 +79,7 @@ The thumbnail should be generated using the [`sys::fsh`](../system-services/fsh.
 
 **Answer:**
 
-- [Temporary FEID](../filesystem.md#temporary-feid) to the thumbnail
+- [Temporary FEID](../../filesystem.md#temporary-feid) to the thumbnail
 
 **Errors:**
 
@@ -98,7 +98,7 @@ Generate a context menu for a specific filesystem item. Used by the DEA.
 
 **Answer:**
 
-- [Interface window](../../ux/desktop-environment.md#interface-windows) identifier (8 bytes)
+- [Interface window](../../../ux/desktop-environment.md#interface-windows) identifier (8 bytes)
 
 **Errors:**
 

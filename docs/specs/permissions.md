@@ -1,6 +1,6 @@
 # Permissions
 
-Permissions are used to [control what applications can do or not](../features/permissions.md). They have no effect by themselves, but allow different [system services](system-services/README.md) to ensure an application has enough permissions to perform a specific action.
+Permissions are used to [control what applications can do or not](../features/permissions.md). They have no effect by themselves, but allow different [system services](services/system/README.md) to ensure an application has enough permissions to perform a specific action.
 
 **WARNING:** This document is **far from being complete**, and as such may be edited in any way at any moment.
 
@@ -43,12 +43,12 @@ Note that many permissions have a _scope_, indicating what they can or cannot do
 
 ### Devices
 
-**Scope:** list of [device patterns](system-services/hw.md#patterns) the permission applies on
+**Scope:** list of [device patterns](services/system/hw.md#patterns) the permission applies on
 
 - (P) `devices.enum`: enumerate devices
 - (P) `devices.subscribe`: subscribe to devices
 - (P) `devices.register_driver`: register a device driver
-- (P) `devices.ask_driver`: ask a device's driver to perform a [normalized method](system-services/hw.md#normalized-methods)
+- (P) `devices.ask_driver`: ask a device's driver to perform a [normalized method](services/system/hw.md#normalized-methods)
 
 For praticity purpose, the list of device patterns is converted to a human-readable format, with more or less informations depending on the [user's complexity level](../concepts/users.md#complexity-level).
 

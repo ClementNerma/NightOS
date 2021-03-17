@@ -20,6 +20,7 @@ They also use common error codes:
 - `0x03`: unmapped memory pointer (e.g. provided a pointer to a memory location that is not mapped yet)
 - `0x04`: memory permission error (e.g. provided a writable buffer to an allocated but non-writable memory address)
 - `0x05`: insufficient permissions
+- `0x06`: driver error
 - `0x10` to `0x1F`: invalid arguments provided (e.g. value is too high)
 - `0x20` to `0x2F`: arguments are not valid in the current context (e.g. provided ID does not exist)
 - `0x30` to `0x3F`: resource errors (e.g. file not found)

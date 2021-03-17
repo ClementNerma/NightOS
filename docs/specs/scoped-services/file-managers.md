@@ -70,7 +70,7 @@ Check if a filesystem item could be opened without user interaction.
 
 Get the thumbnail for a specific item.
 
-The thumbnail should be generated using the [`sys::fs`](../system-services/fs.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
+The thumbnail should be generated using the [`sys::fsh`](../system-services/fsh.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
 
 **Arguments:**
 

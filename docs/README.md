@@ -84,6 +84,7 @@ The list of default applications and their description can be found [here](appli
 ### [System services](specs/system-services/)
 
 - [`sys::fs`](specs/system-services/fs.md) - the filesystem service
+- [`sys::fsh`](specs/system-services/fsh.md) - the high-level filesystem service
 - [`sys::hw`](specs/system-services/hw.md) - the hardware service
 - [`sys::perm`](specs/system-services/perm.md) - the permissions service
 - [`sys::net`](specs/system-services/net.md) - the network service

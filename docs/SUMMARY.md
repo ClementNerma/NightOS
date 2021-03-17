@@ -63,6 +63,7 @@
     - [Filesystem openers](specs/scoped-services/filesystem-openers.md) - scoped service of filesystem openers
   - [System services](specs/system-services/README.md)
     - [`sys::fs`](specs/system-services/fs.md)
+    - [`sys::fsh`](specs/system-services/fsh.md)
     - [`sys::hw`](specs/system-services/hw.md)
     - [`sys::perm`](specs/system-services/perm.md)
     - [`sys::net`](specs/system-services/net.md)

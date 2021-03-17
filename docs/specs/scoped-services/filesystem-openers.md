@@ -2,7 +2,7 @@
 
 A filesystem opener is an application which can associate open specific items. It exposes a `SYS_FSOP` service with the following architecture.
 
-The list of openers can be viewed and modified through the [`sys::fs`](../system-services/fs.md).
+The list of openers can be viewed and modified through the [`sys::fsh`](../system-services/fsh.md).
 
 They are mostly used by the [default file manager](file-managers.md).
 
@@ -33,7 +33,7 @@ _None_
 
 Generate a thumbnail for a given filesystem item.
 
-The thumbnail should be generated using the [`sys::fs`](../system-services/fs.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
+The thumbnail should be generated using the [`sys::fsh`](../system-services/fsh.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
 
 **Arguments:**
 

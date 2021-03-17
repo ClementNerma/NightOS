@@ -16,6 +16,7 @@ It is known as the [I/O manager](../../technical/io-manager.md), or Ion.
   - [Normalized notifications](#normalized-notifications)
   - [Patterns](#patterns)
 - [Drivers](#drivers)
+  - [Driver selection](#driver-selection)
   - [A note on performances](#a-note-on-performances)
 - [Methods](#methods)
   - [`0x01` ENUM_DEVICES](#0x01-enum_devices)
@@ -142,7 +143,7 @@ For instance, providing the DTD `0x0100B2` with the DTD pattern indicator set to
 
 From a higher level point of view, drivers are [services](../services.md) that declare themselves as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
 
-When a device is connected, using multiple criterias **which are yet to be determined**, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#device_event) notification.
+When a device is connected, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#device_event) notification.
 
 From this point, the driver can create an [AMS](../kernel/memory.md#abstract-memory-segments) from the device's memory using the [`DEVICE_AMS`](../kernel/syscalls.md#0x34-device_ams) syscall.
 
@@ -151,6 +152,17 @@ It can also get informed of interrupts the device raises through the [`DEVICE_IN
 Other processes can then ask the driver to perform specific actions depending on the type of device, using [normalized methods](#normalized-methods) which can be sent to the driver using the [`ASK_DRIVER`](#0xa0-ask_driver) method. The driver receives these informations through the [`DRIVER_METHOD_REQUEST`](#driver_method_request) notification.
 
 The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to [normalized notifications](#normalized-notifications) which can then be sent to processes that subscribed to them using the related [normalized methods](#normalized-methods).
+
+### Driver selection
+
+A driver is selected for a specific hardware component if it matches any of the following criterias, in decreasing importance order:
+
+* The user selected this driver for this specific hardware component ;
+* The user selected this driver for this specific type of hardware components ([pattern](#patterns)) ;
+* This driver is the one with the most specific [pattern](#patterns) covering this hardware component ;
+* This driver is the only one able to drive this specific hardware component ([DTD](#device-type-descriptor))
+
+If no criteria is matched, the driver isn't selected to drive the given hardware component.
 
 ### A note on performances
 

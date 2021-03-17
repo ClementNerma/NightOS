@@ -141,7 +141,9 @@ For instance, providing the DTD `0x0100B2` with the DTD pattern indicator set to
 
 ## Drivers
 
-From a higher level point of view, drivers are [services](../services.md) that declare themselves as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
+From a higher level point of view, drivers are [services](../services.md) that declare their parent applications as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
+
+Registering as a driver for a pattern requires the application to expose the [integration service(s)](../services.md#types-of-services) relevant to this pattern.
 
 When a device is connected, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#0x02-device_event) notification.
 
@@ -246,7 +248,8 @@ _None_
 **Errors:**
 
 - `0x20`: Current process is not a service
-- `0x30`: Current process is already registered as a driver for this pattern
+- `0x30`: Process' parent application does not expose the relevant [integration services](../services.md#types-of-services)
+- `0x31`: Current process is already registered as a driver for this pattern
 
 ### `0x11` UNREGISTER_DRIVER
 

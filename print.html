@@ -6032,6 +6032,18 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <h2 id="notifications-2"><a class="header" href="#notifications-2">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="sysfsh-service"><a class="header" href="#sysfsh-service"><code>sys::fsh</code> service</a></h1>
+<p>The <code>sys::fsh</code> service is in charge of handling high-level filesystem operations, such as file associations and thumbnails generation.</p>
+<ul>
+<li><a href="specs/system-services/fsh.html#methods">Methods</a>
+<ul>
+<li><a href="specs/system-services/fsh.html#0x01-register_opener"><code>0x01</code> REGISTER_OPENER</a></li>
+<li><a href="specs/system-services/fsh.html#0x02-unregister_opener"><code>0x02</code> UNREGISTER_OPENER</a></li>
+<li><a href="specs/system-services/fsh.html#0x03-list_openers"><code>0x03</code> LIST_OPENERS</a></li>
+<li><a href="specs/system-services/fsh.html#0x10-check_item_thumbnail_cache"><code>0x10</code> CHECK_ITEM_THUMBNAIL_CACHE</a></li>
+<li><a href="specs/system-services/fsh.html#0x11-cache_item_thumbnail"><code>0x11</code> CACHE_ITEM_THUMBNAIL</a></li>
+</ul>
+</li>
+</ul>
 <h2 id="methods-5"><a class="header" href="#methods-5">Methods</a></h2>
 <h3 id="0x01-register_opener"><a class="header" href="#0x01-register_opener"><code>0x01</code> REGISTER_OPENER</a></h3>
 <p>Register an application as an opener for a list of file types.</p>

@@ -2,7 +2,7 @@
 
 As NightOS' [kernel](../kernel/README.md) is not monolithic but a microkernel, it only handles the most fundamental tasks of the system, like memory and processes management, as well as direct hardware communication.
 
-The vast majority of its features can be found in the [system service](../services.md), which special services run by the system itself under the `sys` [DID](../applications-libraries.md#application-identifier).
+The vast majority of its features can be found in system [services](../services.md), run by the system itself under the `sys` [DID](../applications-libraries.md#application-identifier).
 
 This splitting implies that most low-level features of the system are documented in the individual services' specifications documents, which you will find here.
 

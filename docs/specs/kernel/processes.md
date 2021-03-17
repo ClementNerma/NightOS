@@ -3,6 +3,7 @@
 Apart from the kernel itself, all programs run in _processes_.
 
 - [Why processes](#why-processes)
+- [Types of processes](#types-of-processes)
 - [Switching and cycles](#switching-and-cycles)
 - [Process identifier](#process-identifier)
 - [Process attributes](#process-attributes)
@@ -18,6 +19,15 @@ Separating programs in threads presents several advantages:
 1. This allows to take advantage of multi-core architectures by running multiple programs in parallel
 2. Each program has its own data space and does not share its data with other programs
 3. Each process has its own permissions and thus cannot bypass what the user chosen
+
+## Types of processes
+
+There are two types of processes:
+
+* [System services](../services.md#system-services), which are handled by the system and have a fixed [PID](#process-identifier)
+* Userland processes, which are [application](../../concepts/applications.md) processes
+
+This implies it is not possible to run an executable as standalone in its own process.
 
 ## Switching and cycles
 

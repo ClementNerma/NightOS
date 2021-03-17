@@ -49,6 +49,8 @@ These steps are known as a _cycle_.
 
 Each process is identified by a 64-bit number, which is guaranteed to be unique until the system restarts. When a process terminates, the PID is not freed. The PID is not randomly generated, but retrieved from a system-wide counter incremented when a new process starts. PID cannot be equal to 0.
 
+System services can be identified by a PID strictly smaller than 100, while userland processes have a PID greater or equal to 100.
+
 ## Process attributes
 
 Each process has a set of _attributes_ which contains critical informations on it (lists are usually [PLL](data-structures.md#packed-linked-lists)):

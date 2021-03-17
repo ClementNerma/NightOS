@@ -131,3 +131,9 @@ As shown above, if the number of colors is set to `0` for a specific channel in 
 Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.
 
 The size of pixel list can be calculated as `IW * IH * (NR + NG + NB + NA)` bytes. Add another 8 bytes for the header.
+
+## Option
+
+An _option_ is a data structure that may contain a specific data type or nothing.
+
+It is made of a variance byte, set to `0x01` followed by the data if any, or a single `0x00` byte to indicate no data is present.

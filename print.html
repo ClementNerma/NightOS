@@ -4136,6 +4136,7 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0x43-get_pid"><code>0x43</code> GET_PID</a></li>
 <li><a href="specs/kernel/syscalls.html#0x44-suspend"><code>0x44</code> SUSPEND</a></li>
 <li><a href="specs/kernel/syscalls.html#0x45-unsuspend"><code>0x45</code> UNSUSPEND</a></li>
+<li><a href="specs/kernel/syscalls.html#0x46-hand_over"><code>0x46</code> HAND_OVER</a></li>
 <li><a href="specs/kernel/syscalls.html#0x4f-exit"><code>0x4F</code> EXIT</a></li>
 <li><a href="specs/kernel/syscalls.html#0x50-create_thread"><code>0x50</code> CREATE_THREAD</a></li>
 <li><a href="specs/kernel/syscalls.html#0x51-create_tls_slot"><code>0x51</code> CREATE_TLS_SLOT</a></li>
@@ -4840,6 +4841,15 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x20</code>: the current process is not an application process</li>
 <li><code>0x21</code>: the current PID was not found or is not a child of the current process</li>
 </ul>
+<h3 id="0x46-hand_over"><a class="header" href="#0x46-hand_over"><code>0x46</code> HAND_OVER</a></h3>
+<p>End this process' <a href="specs/kernel/processes.html#switching-and-cycles">cycle</a>.</p>
+<p>Used to indicate to the kernel the current process has no additional work to do for now (e.g. waiting for asynchronous I/O data).</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
 <h3 id="0x4f-exit"><a class="header" href="#0x4f-exit"><code>0x4F</code> EXIT</a></h3>
 <p>Kill the current process.</p>
 <p>A <a href="specs/kernel/signals.html#0x2b-service_client_closed"><code>SERVICE_CLIENT_CLOSED</code></a> signal is sent to all services connection the process has.<br />

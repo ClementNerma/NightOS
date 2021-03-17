@@ -2,6 +2,8 @@
 
 This folder contains technical documents which essential describe low-level parts of NightOS.
 
+A global overview of the system can be found in the [overview document](overview.md).
+
 - [The controller](controller.md) - permissions management system
 - [Developer mode](dev-mode.md) - enable powerful development options
 - [File formats](file-formats.md) - description of all native file formats

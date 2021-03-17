@@ -4,6 +4,8 @@ Welcome to the documentation of NightOS. This directory contains all design and 
 
 The rendered documentation can be found on [`https://clementnerma.github.io/NightOS`](https://clementnerma.github.io/NightOS).
 
+A global, technical overview of the system's architecture can be found [here](docs/technical/../../technical/overview.md).
+
 ## [Foreword](FOREWORD.md)
 
 ## [Project](project/)
@@ -36,6 +38,7 @@ The list of default applications and their description can be found [here](appli
 
 ## [Technical](technical/)
 
+- [Overview](technical/overview.md) - a global overview of the system
 - [The controller](technical/controller.md) - permissions management system
 - [Developer mode](technical/dev-mode.md) - enable powerful development options
 - [Devices](technical/devices.md) - manage hardware devices

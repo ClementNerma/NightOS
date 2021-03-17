@@ -20,6 +20,7 @@
   - [Sandboxes](features/sandboxes.md) - isolate applications to prevent them from harming important data
   - [Synchronization](features/synchronization.md) - synchronize settings between multiple computers
 - [Technical](technical/README.md)
+  - [Overview](technical/overview.md) - a global overview of the system
   - [The controller](technical/controller.md) - permissions management system
   - [Developer mode](technical/dev-mode.md) - enable powerful development options
   - [Devices](technical/devices.md) - manage hardware devices

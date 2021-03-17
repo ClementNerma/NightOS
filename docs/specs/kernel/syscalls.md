@@ -1084,8 +1084,9 @@ _None_
 
 ### `0xD2` SYS_PROCESS_ATTRIBUTES
 
-System service-only syscall.  
-Get a process' [attributes](processes.md#process-attributes).
+System service-only syscall.
+
+Manage a process' [attributes](processes.md#process-attributes).
 
 **Arguments:**
 

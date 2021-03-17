@@ -1131,7 +1131,7 @@ _For list-based attributes:_
 
 - `0x10`: Invalid action code provided
 - `0x11`: Invalid attribute number provided
-- `0x20`: Caller process is not a system service
+- `0x20`: Caller process is not the [`sys::process`](../system-services/process.md) service
 - `0x21`: This system service is not allowed to access or edit this attribute
 - `0x22`: Provided index is out-of-bounds
 
@@ -1154,7 +1154,7 @@ _None_
 **Errors:**
 
 - `0x10`: Provided priority is higher than `20`
-- `0x20`: Caller process is not a system service
+- `0x20`: Caller process is not the [`sys::process`](../system-services/process.md) service
 - `0x21`: Provided PID was not found
 
 ### `0xD4` SYS_ENUM_DEVICES

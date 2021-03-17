@@ -40,6 +40,7 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x43` GET_PID](#0x43-get_pid)
   - [`0x44` SUSPEND](#0x44-suspend)
   - [`0x45` UNSUSPEND](#0x45-unsuspend)
+  - [`0x46` HAND_OVER](#0x46-hand_over)
   - [`0x4F` EXIT](#0x4f-exit)
   - [`0x50` CREATE_THREAD](#0x50-create_thread)
   - [`0x51` CREATE_TLS_SLOT](#0x51-create_tls_slot)
@@ -869,6 +870,24 @@ Will trigger the [`UNSUSPENDED`](signals.md#0x46-unsuspended) signal on the chil
 
 - `0x20`: the current process is not an application process
 - `0x21`: the current PID was not found or is not a child of the current process
+
+### `0x46` HAND_OVER
+
+End this process' [cycle](processes.md#switching-and-cycles).
+
+Used to indicate to the kernel the current process has no additional work to do for now (e.g. waiting for asynchronous I/O data).
+
+**Arguments:**
+
+_None_
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+_None_
 
 ### `0x4F` EXIT
 

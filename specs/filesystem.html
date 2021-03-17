@@ -172,6 +172,7 @@
 <ul>
 <li><a href="#presentation">Presentation</a></li>
 <li><a href="#naming">Naming</a></li>
+<li><a href="#filesystem-unique-identifier">Filesystem unique identifier</a></li>
 <li><a href="#element-unique-identifier">Element unique identifier</a>
 <ul>
 <li><a href="#temporary-feid">Temporary FEID</a></li>
@@ -207,6 +208,9 @@
 </ul>
 <h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
 <p>Filenames can use absolutely any Unicode character, <em>except</em> slahes and the <code>NULL</code> character (<code>U+0000</code>).</p>
+<h2 id="filesystem-unique-identifier"><a class="header" href="#filesystem-unique-identifier">Filesystem unique identifier</a></h2>
+<p>Each existing filesystem gets a unique identifier called the <em><strong>F</strong>ile<strong>s</strong>ystem <strong>Id</strong>dentifier</em> (FSID).</p>
+<p>It is unique across all filesystems, and consistent across reboots.</p>
 <h2 id="element-unique-identifier"><a class="header" href="#element-unique-identifier">Element unique identifier</a></h2>
 <p>Each filesystem item has an 8-byte identifier, called the <em><strong>F</strong>ilesystem <strong>E</strong>lement <strong>Id</strong>entifier</em> (FEID).</p>
 <p>It is only unique in the filesystem the item is stored in.</p>

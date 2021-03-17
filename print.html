@@ -1343,6 +1343,7 @@ additional:
 <ul>
 <li><a href="specs/filesystem.html#presentation">Presentation</a></li>
 <li><a href="specs/filesystem.html#naming">Naming</a></li>
+<li><a href="specs/filesystem.html#filesystem-unique-identifier">Filesystem unique identifier</a></li>
 <li><a href="specs/filesystem.html#element-unique-identifier">Element unique identifier</a>
 <ul>
 <li><a href="specs/filesystem.html#temporary-feid">Temporary FEID</a></li>
@@ -1378,6 +1379,9 @@ additional:
 </ul>
 <h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
 <p>Filenames can use absolutely any Unicode character, <em>except</em> slahes and the <code>NULL</code> character (<code>U+0000</code>).</p>
+<h2 id="filesystem-unique-identifier"><a class="header" href="#filesystem-unique-identifier">Filesystem unique identifier</a></h2>
+<p>Each existing filesystem gets a unique identifier called the <em><strong>F</strong>ile<strong>s</strong>ystem <strong>Id</strong>dentifier</em> (FSID).</p>
+<p>It is unique across all filesystems, and consistent across reboots.</p>
 <h2 id="element-unique-identifier"><a class="header" href="#element-unique-identifier">Element unique identifier</a></h2>
 <p>Each filesystem item has an 8-byte identifier, called the <em><strong>F</strong>ilesystem <strong>E</strong>lement <strong>Id</strong>entifier</em> (FEID).</p>
 <p>It is only unique in the filesystem the item is stored in.</p>
@@ -3736,6 +3740,31 @@ The second entry is the last one and so simply contains the number of initialize
 <li>Increase the memory cost of the last entry when it isn't full</li>
 <li>Slow down insert times when the last entry is full (needs to allocate)</li>
 </ul>
+<h2 id="timestamps"><a class="header" href="#timestamps">Timestamps</a></h2>
+<p>Timestamps are stored as milliseconds, starting from January 1st, 1970. This is to guarantee interopability with existing algorithms using Unix's EPOCH constant.</p>
+<p>They are represented as an 8-byte unsigned integer number.</p>
+<h2 id="bitmap-images"><a class="header" href="#bitmap-images">Bitmap images</a></h2>
+<p>Bitmap images are represented as a <em>header</em> and a <em>pixel list</em>.</p>
+<p>The header is composed as a suite of 8 bytes:</p>
+<ul>
+<li>Image width (IW), in pixels (2 bytes)</li>
+<li>Image height (IH), in pixels (2 bytes)</li>
+<li>Number of colors (power of 256) for the red channel (NR), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the green channel (NG), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the blue channel (NB), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the alpha channel (NA), <code>0</code> if unused (1 byte)</li>
+</ul>
+<p>The pixel list is made of the data for each pixel, contiguously.</p>
+<p>Each pixel is encoded as follows:</p>
+<ul>
+<li>Value for the red channel (NR bytes)</li>
+<li>Value for the green channel (NG bytes)</li>
+<li>Value for the blue channel (NB bytes)</li>
+<li>Value for the alpha channel (NA bytes)</li>
+</ul>
+<p>As shown above, if the number of colors is set to <code>0</code> for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for <code>256 power &lt;number in the header&gt;</code> different colors.</p>
+<p>Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.</p>
+<p>The size of pixel list can be calculated as <code>IW * IH * (NR + NG + NB + NA)</code> bytes. Add another 8 bytes for the header.</p>
 <h1 id="kernel-process-communication"><a class="header" href="#kernel-process-communication">Kernel-Process Communication</a></h1>
 <p>The <em>Kernel-Process Communication</em> (KPC) describes how a process can interact with the kernel, and vice-versa.</p>
 <p>There are two types of KPC:</p>
@@ -5199,11 +5228,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li>Title (UTF-8 encoded)</li>
 </ul>
 <h4 id="icons"><a class="header" href="#icons">Icons</a></h4>
-<p>Icons are encoded as:</p>
-<ul>
-<li>Icon's buffer's length (4 bytes)</li>
-<li>Icon's buffer (bitmap only)</li>
-</ul>
+<p>Icons are encoded as <a href="specs/integration-services/../kernel/data-structures.html#bitmap-images">bitmap images</a>.</p>
 <h4 id="buttons-1"><a class="header" href="#buttons-1">Buttons</a></h4>
 <ul>
 <li>Buttons count (1 byte)</li>
@@ -6757,6 +6782,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Graphics Interchange Format (<code>.gif</code>)</li>
 <li>Graphics Interchange Format Video (<code>.gifv</code>)</li>
 <li>Windows Bitmap (<code>.bmp</code>)</li>
+<li>NightOS Bitmap (<code>.nbm</code>)</li>
 <li>Portable Networks Graphics (<code>.png</code>)</li>
 <li>Portable Pixmap Format (<code>.ppm</code>)</li>
 <li>Portable Graymap Format (<code>.pgm</code>)</li>

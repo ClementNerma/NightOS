@@ -1036,7 +1036,7 @@ Get informations from the application's [execution context](../applications/cont
 
 ### `0xD0` SYS_CREATE_PROCESS
 
-System service-only syscall.
+Syscall resserved to the [`sys::process`](../system-services/process.md) service.
 
 Create a [userland process](processes.md#types-of-processes).
 
@@ -1057,7 +1057,7 @@ Create a [userland process](processes.md#types-of-processes).
 
 ### `0xD1` SYS_MANAGE_PROCESS
 
-System service-only syscall.
+Syscall resserved to the [`sys::process`](../system-services/process.md) service.
 
 Manage a [userland process](processes.md#types-of-processes).
 
@@ -1084,7 +1084,7 @@ _None_
 
 ### `0xD2` SYS_PROCESS_ATTRIBUTES
 
-System service-only syscall.
+Syscall resserved to the [`sys::process`](../system-services/process.md) service.
 
 Manage a process' [attributes](processes.md#process-attributes).
 
@@ -1138,7 +1138,8 @@ _For list-based attributes:_
 
 ### `0xD3` SYS_SET_PRIORITY
 
-System service-only syscall.  
+Syscall resserved to the [`sys::process`](../system-services/process.md) service.
+
 Set the priority of a process.  
 If the set priority is different than `0`, the kernel won't adjust the priority automatically anymore.  
 Setting it to `0` will reset it to the kernel's choice.
@@ -1160,7 +1161,8 @@ _None_
 
 ### `0xD4` SYS_ENUM_DEVICES
 
-System service-only syscall.  
+Syscall resserved to the [`sys::hw`](../system-services/hw.md) service.
+
 List devices matching a provided CII.
 
 For each device, its SDI (4 bytes) is written to the provided address.
@@ -1182,7 +1184,8 @@ For each device, its SDI (4 bytes) is written to the provided address.
 
 ### `0xD5` SYS_DEVICE_INFOS
 
-System service-only syscall.  
+Syscall resserved to the [`sys::hw`](../system-services/hw.md) service.
+
 Get the [raw device descriptor](hardware.md#raw-device-descriptor) of a single device.
 
 **Arguments:**

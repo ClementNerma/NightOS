@@ -176,9 +176,7 @@ Enumerate connected devices.
 
 It's also possible to only count the number of devices matching the provided criterias by providing a start index and end index of `0`.
 
-**Required permissions:**
-
-- `devices.enum`
+**Required permission:** `devices.enum`
 
 **Arguments:**
 
@@ -210,9 +208,7 @@ It's also possible to only count the number of devices matching the provided cri
 Subscribe to events related to devices matching a patterns.  
 All current and future devices matching this pattern will cause a [`DEVICE_EVENT`](#device_event) notification.
 
-**Required permissions:**
-
-- `devices.subscribe`
+**Required permission:** `devices.subscribe`
 
 **Arguments:**
 
@@ -237,9 +233,7 @@ Notifications are also retroactive, which means they will be sent for already-co
 
 The driver will also have the device registered in its [drivable devices attribute](../kernel/processes.md#drivable-devices), allowing it to use the [`DEVICE_AMS`](../kernel/syscalls.md#0x34-device_ams) syscall to map the device's memory in its own.
 
-**Required permissions:**
-
-- `devices.register_driver`
+**Required permission:** `devices.register_driver`
 
 **Arguments:**
 
@@ -258,9 +252,7 @@ _None_
 
 Unregister a service [previously registered as a driver](#0x10-register_driver).
 
-**Required permissions:**
-
-_None_
+**Required permission:** _None_
 
 **Arguments:**
 
@@ -274,9 +266,7 @@ _None_
 
 Send a notification to a process that registered itself for [normalized methods](#normalized-methods) through a [normalized method](#normalized-methods).
 
-**Required permissions:**
-
-_None_
+**Required permission:** _None_
 
 **Arguments:**
 
@@ -295,9 +285,7 @@ _Expected answer by the notified process for this method if any_
 
 Ask a [driver](#drivers) to use a [normalized method](#normalized-methods) on a device it drives.
 
-**Required permissions:**
-
-- `devices.ask_driver`
+**Required permission:** `devices.ask_driver`
 
 **Arguments:**
 

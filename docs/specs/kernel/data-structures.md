@@ -74,10 +74,10 @@ The length-first variant should only be used when accessing the length instantly
 Increasing the NIE will:
 
 - Reduce the needs of allocating
-- Fasten iteration times
-- Fasten insertion times (when the last entry isn't full)
+- Speed up iteration times
+- Speed up insertion times when the last entry isn't full
 
 But also:
 
-- Increase the memory cost (of the last entry)
-- Worsen allocation performances (as the entries are larger)
+- Increase the memory cost of the last entry when it isn't full
+- Slow down insert times when the last entry is full (needs to allocate)

@@ -6,6 +6,8 @@ This document presents how tasks are scheduled internally.
 
 Each process has a _priority_ number, between 1 and 20, which indicates how much its performances must be prioritized compare to other processes.
 
+Scheduling is achieved in a preemptive way, to prevent processes from taking too much CPU time.
+
 The basics can be found [here](../../features/balancer.md).
 
 More specifically, the higher the priority of a process is, the faster it will run. Here are the priority-dependant aspects of a process:

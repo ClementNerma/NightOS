@@ -1,5 +1,14 @@
 # `sys::fsh` service
 
+The `sys::fsh` service is in charge of handling high-level filesystem operations, such as file associations and thumbnails generation.
+
+- [Methods](#methods)
+  - [`0x01` REGISTER_OPENER](#0x01-register_opener)
+  - [`0x02` UNREGISTER_OPENER](#0x02-unregister_opener)
+  - [`0x03` LIST_OPENERS](#0x03-list_openers)
+  - [`0x10` CHECK_ITEM_THUMBNAIL_CACHE](#0x10-check_item_thumbnail_cache)
+  - [`0x11` CACHE_ITEM_THUMBNAIL](#0x11-cache_item_thumbnail)
+
 ## Methods
 
 ### `0x01` REGISTER_OPENER

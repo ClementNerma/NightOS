@@ -261,8 +261,7 @@ If the pipe was closed while the buffer was not empty, this syscall will still b
 
 - [Pipe](ipc.md#pipes) RC identifier (8 byte)
 - Mode (1 byte): `0x00` = block until there are enough data to read, `0x01` = fail if there is not enough data to read or if the pipe is locked, `0x02` = read as much as possible
-- Number of bytes to read (4 bytes): `0` = read as much data as possible
-- Pointer to a writable buffer (8 bytes)
+- [Readable buffer pointer](data-structures.md#buffer-pointers) (16 bytes) (specify `0` bytes length to read as much data as possible)
 
 **Return value:**
 
@@ -351,8 +350,7 @@ This syscall can also be used to create a new exchange.
 - Exchange identifier (8 bytes) - `0` creates a new exchange
 - Method or notification code (1 byte) - non-zero value if not creating an exchange to close it with a non-error message
 - Error code (2 bytes)
-- Number of bytes to write (4 bytes)
-- Pointer to the message's content (8 bytes)
+- [Buffer pointer](data-structures.md#buffer-pointers) to the message's content (16 bytes)
 
 **Return value:**
 
@@ -665,8 +663,7 @@ Get informations about a [shared](#0x35-share_ams) [abstract memory segment (AMS
 - Sharer process' PID (8 bytes)
 - Receiver process' PID (8 bytes)
 - Sharing mode (1 byte): `0x00` for mutual mode, `0x01` for exclusive mode
-- Shared buffer's start address (8 bytes)
-- Sharer buffer's length (8 bytes)
+- [Pointer](data-structures.md#buffer-pointers) to the shared buffer (16 bytes)
 - Command code (2 bytes)
 - Access permissions (1 byte): for mutual sharings, strongest bit for read, next for write, next for exec ; for exclusive sharings, `0x00`
 
@@ -702,9 +699,8 @@ Map an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) in th
 **Arguments:**
 
 - AMS ID (8 bytes)
-- Start mapping address in the AMS (8 bytes)
-- Address to map the AMS (8 bytes)
-- Number of bytes to map (8 bytes)
+- Address to map the AMS from (8 bytes)
+- Mapped [buffer pointer](data-structures.md#buffer-pointers) (16 bytes)
 
 **Return value:**
 
@@ -948,8 +944,7 @@ Read from a [TLS slot](../../technical/processes.md#thread-local-storage).
 **Arguments:**
 
 - TLS slot identifier (8 bytes)
-- Writable buffer (8 bytes)
-- Number of bytes to read (8 bytes) - `0` to read everything
+- [Writable buffer](data-structures.md#buffer-pointers) (16 bytes) (specify `0` bytes length to read the entire data at once)
 
 **Return value:**
 
@@ -966,8 +961,7 @@ Write to a [TLS slot](../../technical/processes.md#thread-local-storage).
 **Arguments:**
 
 - TLS slot identifier (8 bytes)
-- Readable buffer (8 bytes)
-- Number of bytes to write (8 bytes)
+- [Readable buffer](data-structures.md#buffer-pointers) (16 bytes)
 
 **Return value:**
 
@@ -1101,8 +1095,8 @@ _For value-based attributes:_
   - `0x06`: Execution context (arguments)
 
 - Action code:
-  - `0x00`: Read the information (followed by a writable address on 8 bytes)
-  - `0x01`: Write the information (followed by the value to write)
+  - `0x00`: Read the information (followed by a [writable buffer](data-structures.md#buffer-pointers) on 16 bytes)
+  - `0x01`: Write the information (followed by a [readable buffer](data-structures.md#buffer-pointers) on 16 bytes)
 
 _For list-based attributes:_
 
@@ -1121,11 +1115,10 @@ _For list-based attributes:_
   - `0x06`: Remove the last value from the list
   - `0x10`: Check if the list contains a given item => value to look for (? bytes)
 
-- Address to a writable buffer (8 bytes)
-
 **Return value:**
 
 - Number of written bytes (if applies) (8 bytes)
+- `0x00` is all data was written, `0x01` otherwise (1 byte)
 
 **Errors:**
 
@@ -1147,11 +1140,12 @@ For each device, its SDI (4 bytes) is written to the provided address.
 
 - [CII](hardware.md#connection-interface-identifier) of the devices to list (4 bytes)
   `0` will list all devices
-- Address of a writable buffer (8 bytes)
+- [Writable buffer](data-structures.md#buffer-pointers) (16 bytes)
 
 **Return value:**
 
 - Number of devices found with the provided criterias (4 bytes)
+- `0x00` is all devices were written, `0x01` otherwise (1 byte)
 
 **Errors:**
 
@@ -1167,7 +1161,7 @@ Get the [raw device descriptor](hardware.md#raw-device-descriptor) of a single d
 **Arguments:**
 
 - [SDI](hardware.md#session-device-identifier) of the device to get informations from (4 bytes)
-- Address of a writable buffer (8 bytes)
+- Address to a writable buffer (8 bytes)
 
 **Return value:**
 

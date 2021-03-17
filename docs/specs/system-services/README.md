@@ -29,12 +29,12 @@ All methods return an answer, though it may be empty (indicated by a _None_). Sy
 
 ## List of system services
 
-- [`sys::fs`](fs.md): filesystem management
-- [`sys::hw`](hw.md): hardware communication
-- [`sys::perm`](perm.md): permissions management
-- [`sys::net`](net.md): network communications
-- [`sys::crypto`](crypto.md): cryptography utilities
-- [`sys::crashsave`](crashsave.md): [crash saves](../../features/crash-saves.md) management
-- [`sys::flow`](flow.md): [flows](../../specs/filesystem.md#flows) management
-- [`sys::hydre`](hydre.md): [Hydre](../shell.md) shell service
-- [`sys::ui`](ui.md): user interface service
+- PID 10: [`sys::fs`](fs.md): filesystem management
+- PID 11: [`sys::hw`](hw.md): hardware communication
+- PID 12: [`sys::perm`](perm.md): permissions management
+- PID 13: [`sys::net`](net.md): network communications
+- PID 14: [`sys::crypto`](crypto.md): cryptography utilities
+- PID 15: [`sys::crashsave`](crashsave.md): [crash saves](../../features/crash-saves.md) management
+- PID 16: [`sys::flow`](flow.md): [flows](../../specs/filesystem.md#flows) management
+- PID 17: [`sys::hydre`](hydre.md): [Hydre](../shell.md) shell service
+- PID 18: [`sys::ui`](ui.md): user interface service

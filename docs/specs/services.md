@@ -68,6 +68,10 @@ When a client thread receives on these two signals, it is expected to end as soo
 
 ## System services
 
+System services are run by the system and get access to special [system calls](kernel/syscalls.md) and [signals](kernel/signals.md) that aren't available otherwise.
+
+They also have a specific process identifier (PID) to identify them easily.
+
 You can find the list of all system services in the [related directory](system-services/README.md).
 
 ## Third-party communication

@@ -1198,17 +1198,17 @@ For more informations about low-level concepts these documents refer to, you can
 <li><a href="specs/kernel/README.html">Kernel</a> - complete specifications of the kernel</li>
 <li><a href="specs/services.html">Services</a> - specifications about services work and behave</li>
 </ul>
-<h2 id="integration-services"><a class="header" href="#integration-services">Integration services</a></h2>
+<h2 id="a-hrefspecsservicesintegrationreadmehtmlintegration-servicesa"><a class="header" href="#a-hrefspecsservicesintegrationreadmehtmlintegration-servicesa"><a href="specs/services/integration/README.html">Integration services</a></a></h2>
 <ul>
 <li><a href="specs/services/integration/desktop-environments.html">Desktop environment</a></li>
 <li><a href="specs/services/integration/file-managers.html">File managers</a></li>
 <li><a href="specs/services/integration/file-openers.html">File openers</a></li>
 </ul>
-<h2 id="driver-services"><a class="header" href="#driver-services">Driver services</a></h2>
+<h2 id="a-hrefspecsservicesdriversreadmehtmldriver-servicesa"><a class="header" href="#a-hrefspecsservicesdriversreadmehtmldriver-servicesa"><a href="specs/services/drivers/README.html">Driver services</a></a></h2>
 <ul>
 <li><a href="specs/services/drivers/filesystem.html">Filesystem driver service</a></li>
 </ul>
-<h2 id="system-services-1"><a class="header" href="#system-services-1">System services</a></h2>
+<h2 id="a-hrefspecsservicessystemreadmehtmlsystem-servicesa"><a class="header" href="#a-hrefspecsservicessystemreadmehtmlsystem-servicesa"><a href="specs/services/system/README.html">System services</a></a></h2>
 <ul>
 <li><a href="specs/services/system/fs.html"><code>sys::fs</code></a>: filesystem management</li>
 <li><a href="specs/services/system/fsh.html"><code>sys::fsh</code></a>: high-level filesystem management</li>
@@ -3538,7 +3538,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <p>The service then receives the <a href="specs/kernel/signals.html#0x2c-service_client_quitted"><code>SERVICE_CLIENT_QUITTED</code></a> signal.</p>
 <p>If the client terminates brutally (before the connection was properly ended), the client thread receives the <a href="specs/kernel/signals.html#0x2b-service_client_closed"><code>SERVICE_CLIENT_CLOSED</code></a> signal.</p>
 <p>When a client thread receives on these two signals, it is expected to end as soon as possible (though there is no time limit).</p>
-<h2 id="system-services-2"><a class="header" href="#system-services-2">System services</a></h2>
+<h2 id="system-services-1"><a class="header" href="#system-services-1">System services</a></h2>
 <p>System services are run by the system and get access to special <a href="specs/kernel/syscalls.html">system calls</a> and <a href="specs/kernel/signals.html">signals</a> that aren't available otherwise.</p>
 <p>They also have a specific process identifier (PID) to identify them easily.</p>
 <p>You can find the list of all system services in the <a href="specs/services/system/README.html">related directory</a>.</p>
@@ -5177,7 +5177,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service</li>
 <li><code>0x21</code>: No device was found with this SDI</li>
 </ul>
-<h1 id="integration-services-1"><a class="header" href="#integration-services-1">Integration services</a></h1>
+<h1 id="integration-services"><a class="header" href="#integration-services">Integration services</a></h1>
 <p>This document lists all <a href="specs/services/integration/../../services.html#types-of-services">integration services</a>, which are services whose methods and notifications follow a convention established by the system itself to permit an integration at different levels.</p>
 <p>An application exposing such a service in its <a href="specs/services/integration/../../applications/manifest.html">manifest</a> will automatically be assignable to specific tasks, such as being set as the default desktop environment or file manager.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="specs/services/integration/../../services/system/README.html">system services</a>.</p>
@@ -6017,7 +6017,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <li><code>0x30</code>: Thumbnail could not be generated from the item as its content is invalid</li>
 <li><code>0xF0</code>: Unspecified error</li>
 </ul>
-<h1 id="driver-services-1"><a class="header" href="#driver-services-1">Driver services</a></h1>
+<h1 id="driver-services"><a class="header" href="#driver-services">Driver services</a></h1>
 <p>This document lists all <a href="specs/services/drivers/../../services.html#types-of-services">driver services</a>, which are services whose methods and notifications follow a convention established by the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service to permit interaction with hardware components.</p>
 <p>An application exposing such a service in its <a href="specs/services/drivers/../../applications/manifest.html">manifest</a> will gain the permission to <a href="specs/services/drivers/../system/hw.html#0x10-register_driver">register itself as a driver</a> through the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="specs/services/drivers/../system/README.html">system services</a>.</p>
@@ -6027,7 +6027,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 </ul>
 <h1 id="filesystem-driver-service"><a class="header" href="#filesystem-driver-service">Filesystem driver service</a></h1>
 <p><strong>TODO</strong></p>
-<h1 id="system-services-3"><a class="header" href="#system-services-3">System services</a></h1>
+<h1 id="system-services-2"><a class="header" href="#system-services-2">System services</a></h1>
 <p>As NightOS' <a href="specs/services/system/../../kernel/README.html">kernel</a> is not monolithic but a microkernel, it only handles the most fundamental tasks of the system, like memory and processes management, as well as direct hardware communication.</p>
 <p>The vast majority of its features can be found in system <a href="specs/services/system/../../services.html">services</a>, run by the system itself under the <code>sys</code> <a href="specs/services/system/../../applications-libraries.html#application-identifier">DID</a>.</p>
 <p>This splitting implies that most low-level features of the system are documented in the individual services' specifications documents, which you will find here.</p>
@@ -6697,7 +6697,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li><a href="applications/Vortex.html"><em>Vortex</em></a> : Firewall</li>
 <li><a href="applications/Locky.html"><em>Locky</em></a> : System's encryption tool, with the ability to manage encrypted archives and volumes</li>
 </ul>
-<h2 id="system-services-4"><a class="header" href="#system-services-4">System services</a></h2>
+<h2 id="system-services-3"><a class="header" href="#system-services-3">System services</a></h2>
 <p>System services are listed in their own <a href="applications/../specs/services/system/README.html">specifications directory</a>.</p>
 <h1 id="astral"><a class="header" href="#astral">Astral</a></h1>
 <p>Astral is the toolchain required to build NightOS applications. It's a command-line only application.</p>

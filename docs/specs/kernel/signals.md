@@ -21,6 +21,7 @@ _Signals_ are a type of [KPC](kpc.md). They are used by the kernel to send infor
   - [`0x37` UNSHARED_AMS](#0x37-unshared_ams)
   - [`0x44` SUSPEND](#0x44-suspend)
   - [`0x45` WILL_SUSPEND](#0x45-will_suspend)
+  - [`0x46` UNSUSPENDED](#0x46-unsuspended)
   - [`0x4E` TERMINATE](#0x4e-terminate)
   - [`0x4F` WILL_TERMINATE](#0x4f-will_terminate)
 
@@ -254,6 +255,14 @@ Sent when the process is asked to suspend. If it is not suspended after the prov
 **Datafield:**
 
 - [Registry](../registry.md)'s `system.processes.suspend_delay` key (default: 500ms) (2 bytes)
+
+### `0x46` UNSUSPENDED
+
+Sent when the process was just unsuspended.
+
+**Datafield:**
+
+- Suspension duration, in microseconds (8 bytes)
 
 ### `0x4E` TERMINATE
 

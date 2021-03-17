@@ -48,6 +48,8 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x54` DELETE_TLS_SLOT](#0x54-delete_tls_slot)
   - [`0x5F` EXIT_THREAD](#0x5f-exit_thread)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
+  - [`0xD0` SYS_CREATE_PROCESS](#0xd0-sys_create_process)
+  - [`0xD1` SYS_MANAGE_PROCESS](#0xd1-sys_manage_process)
   - [`0xD2` SYS_PROCESS_ATTRIBUTES](#0xd2-sys_process_attributes)
   - [`0xD3` SYS_SET_PRIORITY](#0xd3-sys_set_priority)
   - [`0xD4` SYS_ENUM_DEVICES](#0xd4-sys_enum_devices)
@@ -856,6 +858,8 @@ _None_
 ### `0x45` UNSUSPEND
 
 [Unsuspend](../../features/balancer.md#application-processes-suspension) a child process.
+
+Will trigger the [`UNSUSPENDED`](signals.md#0x46-unsuspended) signal on the child process' side.
 
 **Arguments:**
 

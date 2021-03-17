@@ -1051,7 +1051,7 @@ Create a [userland process](processes.md#types-of-processes).
 
 **Errors:**
 
-- `0x20`: Caller process is not the [`sys::proc`](../system-services/app.md) service
+- `0x20`: Caller process is not the [`sys::process`](../system-services/process.md) service
 - `0x30`: Code location token was not accepted by the [`sys::fs`](../system-services/fs.md)
 - `0x31`: Application context is not valid
 
@@ -1078,7 +1078,7 @@ _None_
 **Errors:**
 
 - `0x10`: Invalid action code provided
-- `0x20`: Caller process is not the [`sys::proc`](../system-services/app.md) service
+- `0x20`: Caller process is not the [`sys::process`](../system-services/process.md) service
 - `0x21`: Unknown PID
 - `0x22`: Process is already in the requested state
 

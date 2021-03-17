@@ -1177,7 +1177,7 @@ For each device, its SDI (4 bytes) is written to the provided address.
 **Errors:**
 
 - `0x10`: Invalid connection type in CII
-- `0x20`: Caller process is not a system service
+- `0x20`: Caller process is not the [`sys::hw`](../system-services/hw.md) service
 
 ### `0xD5` SYS_DEVICE_INFOS
 
@@ -1195,5 +1195,5 @@ Get the [raw device descriptor](hardware.md#raw-device-descriptor) of a single d
 
 **Errors:**
 
-- `0x20`: Caller process is not a system service
+- `0x20`: Caller process is not the [`sys::hw`](../system-services/hw.md) service
 - `0x21`: No device was found with this SDI

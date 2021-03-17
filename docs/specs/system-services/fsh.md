@@ -17,7 +17,7 @@ Register an application as an opener for a list of file types.
 
 **Arguments:**
 
-- File extensions to handle as a [simple list](../kernel/data-structures.md#simple-lists) of [delimited strings](../kernel/data-structures.md#delimited-strings)
+- File extensions to handle as a [delimited list](../kernel/data-structures.md#delimited-lists) of [delimited strings](../kernel/data-structures.md#delimited-strings)
 
 **Return value:**
 
@@ -36,7 +36,7 @@ Unregister an application as an opener for a list of file types.
 
 **Argument:**
 
-- File extensions to unhandle as a [simple list](../kernel/data-structures.md#simple-lists) of [delimited strings](../kernel/data-structures.md#delimited-strings)
+- File extensions to unhandle as a [delimited list](../kernel/data-structures.md#delimited-lists) of [delimited strings](../kernel/data-structures.md#delimited-strings)
 
 **Return value:**
 
@@ -60,7 +60,7 @@ The list is not ordered, it's up to the [file manager](../integration-services/f
 
 **Return value:**
 
-- [Simple list](../kernel/data-structures.md#simple-lists) of [ANID](../applications-libraries.md#application-identifier) (8 bytes each)
+- [Delimited list](../kernel/data-structures.md#delimited-lists) of [ANID](../applications-libraries.md#application-identifier) (8 bytes each)
 
 **Errors:**
 

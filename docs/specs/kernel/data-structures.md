@@ -104,6 +104,15 @@ Delimited strings are made of:
 - Their length in bytes (8 bytes)
 - Their content (UTF-8 encoded)
 
+## Buffer pointers
+
+A buffer pointer refers to a buffer that is either _readable_, meaning its creator process has read permission on its entire memory location, and/or _writable_, meaning its creator process has write permission on its entire memory location.
+
+It is made as follows:
+
+- The memory address of the buffer (8 bytes)
+- The buffer's length (8 bytes)
+
 ## Bitmap images
 
 Bitmap images are represented as a _header_ and a _pixel list_.

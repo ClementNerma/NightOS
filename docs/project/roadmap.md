@@ -51,7 +51,7 @@ The system development will consist in building the following pieces successivel
 
 ### Phase 3: Applications & System optimization
 
-The third phase consists in developing the [native applications](../applications/), which are meant to be used by the end user, as well as optimizing the system in parallel and improving its stability.
+The third phase consists in developing the [native applications](../applications/README.md), which are meant to be used by the end user, as well as optimizing the system in parallel and improving its stability.
 
 Starting from this point, all conception documents are definitively validated, which means they cannot receive breaking changes anymore, only new points/features.
 

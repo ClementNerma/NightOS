@@ -17,7 +17,7 @@ An application can expose three types of service:
 
 - A _main service_, which is used as the default one
 - _Scoped services_, which are used as interfaces for conventional tasks between applications which are not specific to the current one
-- _Integration services_, which are used to interact with the system in specific ways (see [the complete list](integration-services/))
+- _Integration services_, which are used to interact with the system in specific ways (see [the complete list](integration-services/README.md))
 
 A scope's name is made of up to 8 extended ASCII characters.
 

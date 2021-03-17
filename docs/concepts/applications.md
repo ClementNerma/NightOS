@@ -86,7 +86,7 @@ Commands work by launching the application with a specific [context](../specs/ap
 
 ## System applications
 
-Some [native applications](../applications/) are part of the system itself and are called _system applications_ as such. They get a few specific features:
+Some [native applications](../applications/README.md) are part of the system itself and are called _system applications_ as such. They get a few specific features:
 
 - Access to system-reserved features
 - Ability to create [system services](#services)

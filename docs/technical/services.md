@@ -14,7 +14,7 @@ Each system service is a system application, exposing a service. Most also expos
 
 You can get more details about how services work in the [specifications document](../specs/services.md).
 
-You can find the list of system services in their [specifications directory](../specs/system-services/).
+You can find the list of system services in their [specifications directory](../specs/system-services/README.md).
 
 ## Application services
 

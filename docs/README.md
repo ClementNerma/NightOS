@@ -8,19 +8,19 @@ A global, technical overview of the system's architecture can be found [here](do
 
 ## [Foreword](FOREWORD.md)
 
-## [Project](project/)
+## [Project](project/README.md)
 
 - [Roadmap](project/roadmap.md) - the project's roadmap
 - [Development](project/development.md) - how the project will be developped
 - [Hardware requirements](project/hw-requirements.md) - hardware required in order to install and run NightOS
 
-## [Concepts](concepts/)
+## [Concepts](concepts/README.md)
 
 - [What are applications?](concepts/applications.md) - the way to run software on NightOS
 - [What are libraries?](concepts/libraries.md) - sharing identical behaviours between multiple applications
 - [What are users?](concepts/users.md) - sharing a computer between multiple persons
 
-## [Features](features/)
+## [Features](features/README.md)
 
 - [The balancer](features/balancer.md) - improve performances by balancing processes' priority
 - [Crash saves](features/crash-saves.md) - prevent data loss at maximum with crash-proof data saving
@@ -32,11 +32,11 @@ A global, technical overview of the system's architecture can be found [here](do
 - [Sandboxes](features/sandboxes.md) - isolate applications to prevent them from harming important data
 - [Synchronization](features/synchronization.md) - synchronize settings between multiple computers
 
-## [Applications](applications/)
+## [Applications](applications/README.md)
 
 The list of default applications and their description can be found [here](applications/README.md).
 
-## [Technical](technical/)
+## [Technical](technical/README.md)
 
 - [Overview](technical/overview.md) - a global overview of the system
 - [The controller](technical/controller.md) - permissions management system
@@ -53,7 +53,7 @@ The list of default applications and their description can be found [here](appli
 - [Services](technical/services.md) - special processes that run in the background and allow other applications to perform specific tasks
 - [The shell](technical/shell.md) - the de-facto way to run complex and/or automatized tasks on NightOS
 
-## [Specifications](specs/)
+## [Specifications](specs/README.md)
 
 - [Applications and libraries](specs/applications-libraries.md) - document describing common things between applications and libraries
 - [Application context](specs/applications/context.md) - launch an application to directly perform a specific task
@@ -67,7 +67,7 @@ The list of default applications and their description can be found [here](appli
 - [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
 - [Services](specs/services.md) - specifications about services work and behave
 
-### [Kernel](specs/kernel/)
+### [Kernel](specs/kernel/README.md)
 
 - [Hardware](specs/kernel/hardware.md) - how the kernel interacts with hardware
 - [Memory](specs/kernel/memory.md) - memory organization and management
@@ -78,13 +78,13 @@ The list of default applications and their description can be found [here](appli
 - [Signals](specs/kernel/signals.md) - complete specification of [signals](specs/kernel/kpc.md)
 - [System calls](specs/kernel/syscalls.md) - complete specification of [system calls](specs/kernel/kpc.md)
 
-### [Integration services](specs/integration-services/)
+### [Integration services](specs/integration-services/README.md)
 
 - [Desktop environments](specs/integration-services/desktop-environments.md) - how the user interface is handled by applications
 - [File managers](specs/integration-services/file-managers.md) - how file managers are integrated into the system
 - [Filesystem openers](specs/integration-services/filesystem-openers.md) - how files are associated to applications
 
-### [System services](specs/system-services/)
+### [System services](specs/system-services/README.md)
 
 - [`sys::fs`](specs/system-services/fs.md) - the filesystem service
 - [`sys::fsh`](specs/system-services/fsh.md) - the high-level filesystem service

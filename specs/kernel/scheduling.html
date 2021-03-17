@@ -171,6 +171,7 @@
 <p>This document presents how tasks are scheduled internally.</p>
 <h2 id="performance-balancing"><a class="header" href="#performance-balancing">Performance balancing</a></h2>
 <p>Each process has a <em>priority</em> number, between 1 and 20, which indicates how much its performances must be prioritized compare to other processes.</p>
+<p>Scheduling is achieved in a preemptive way, to prevent processes from taking too much CPU time.</p>
 <p>The basics can be found <a href="../../features/balancer.html">here</a>.</p>
 <p>More specifically, the higher the priority of a process is, the faster it will run. Here are the priority-dependant aspects of a process:</p>
 <ul>

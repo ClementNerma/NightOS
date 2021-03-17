@@ -168,10 +168,124 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="sysfs-service"><a class="header" href="#sysfs-service"><code>sys::fs</code> service</a></h1>
+<p>The <code>sys::fs</code> service is in charge of operations related to the <a href="../filesystem.html">filesystems</a>.</p>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x01-is_fs_mounted"><a class="header" href="#0x01-is_fs_mounted"><code>0x01</code> IS_FS_MOUNTED</a></h3>
+<p>Check if a given filesystem is mounted.</p>
+<p><strong>Required permission:</strong> <code>fs.filesystems.mounted</code></p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><code>0x01</code> if the filesystem is currently mounted, <code>0x00</code> else</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x02-fs_metadata"><a class="header" href="#0x02-fs_metadata"><code>0x02</code> FS_METADATA</a></h3>
+<p>Get informations on a filesystem.</p>
+<p><strong>Required permission:</strong> <code>fs.filesystems.metadata</code></p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li>Mount <a href="../kernel/data-structures.html#timestamps">timestamp</a> (8 bytes)</li>
+<li>Mount path <a href="../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+<li>Volume size in bytes (8 bytes)</li>
+<li><a href="../kernel/data-structures.html#option">Option</a> of the volume's free size in bytes (8 bytes)</li>
+<li><a href="../kernel/data-structures.html#option">Option</a> of the mounted volume file's <a href="../filesystem.html#element-unique-identifier">FEID</a> (1 + 8 bytes)</li>
+<li>Volume name as a <a href="../kernel/data-structures.html#delimited-strings">delimited string</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: The requested filesystem is currently not mounted</li>
+</ul>
+<h3 id="0x03-fs_list"><a class="header" href="#0x03-fs_list"><code>0x03</code> FS_LIST</a></h3>
+<p>Enumerate mounted filesystems.</p>
+<p><strong>Required permission:</strong> <code>fs.filesystems.list</code></p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../kernel/data-structures.html#delimited-lists">Delimited list</a> of <a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x04-fs_mount"><a class="header" href="#0x04-fs_mount"><code>0x04</code> FS_MOUNT</a></h3>
+<p>Mount a filesystem. If no mount path is provided, the filesystem will be mounted under the <code>/mnt</code> directory.</p>
+<p><strong>Required permission:</strong> <code>fs.filesystems.mount</code></p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../kernel/data-structures.html#option">Option</a> of the mount path as a <a href="../kernel/data-structures.html#delimited-strings">delimited string</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Client does not expose a <a href="hw.html#drivers">filesystem driver service</a></li>
+<li><code>0x31</code>: This filesystem is already mounted</li>
+</ul>
+<h3 id="0x05-fs_mount_existing"><a class="header" href="#0x05-fs_mount_existing"><code>0x05</code> FS_MOUNT_EXISTING</a></h3>
+<p>Mount an existing filesystem. If no mount path is provided, the filesystem will be mounted under the <code>/mnt</code> directory.</p>
+<p><strong>Required permission:</strong> <code>fs.filesystems.mount.existing</code></p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="../kernel/data-structures.html#option">Option</a> of the mount path as a <a href="../kernel/data-structures.html#delimited-strings">delimited string</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Unknown <a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><code>0x31</code>: This filesystem is already mounted</li>
+</ul>
+<h3 id="0x06-fs_unmount"><a class="header" href="#0x06-fs_unmount"><code>0x06</code> FS_UNMOUNT</a></h3>
+<p>Unmount a mounted filesystem.</p>
+<p><strong>Required permission</strong> <code>fs.filesystems.unmount</code></p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Unknown <a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><code>0x31</code>: This filesystem is current not mounted</li>
+</ul>
+<h3 id="0x07-fs_watch"><a class="header" href="#0x07-fs_watch"><code>0x07</code> FS_WATCH</a></h3>
+<p>Subscribe to <a href="#0x07-fs_changed"><code>FS_CHANGED</code></a> notifications when a filesystem is mounted or unmounted.</p>
+<p><strong>Required permission:</strong> <code>fs.filesystems.watch</code></p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x08-fs_unwatch"><a class="header" href="#0x08-fs_unwatch"><code>0x08</code> FS_UNWATCH</a></h3>
+<p>Unsubscribe from <a href="#0x07-fs_watch"><code>FS_WATCH</code></a>.</p>
+<p><strong>Required permission:</strong> <em>None</em></p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
 <h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x07-fs_changed"><a class="header" href="#0x07-fs_changed"><code>0x07</code> FS_CHANGED</a></h3>
+<p>Sent to a client which subscribed through <a href="#0x07-fs_watch"><code>FS_WATCH</code></a> each time a filesystem is mounted or unmounted.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Mount status (1 byte): <code>0x01</code> if the filesystem was mounted, <code>0x02</code> if it was unmounted</li>
+<li><a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+</ul>
 
                     </main>
 

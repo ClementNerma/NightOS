@@ -299,7 +299,8 @@
 <p>It's also possible to list only devices that match a specific DTD pattern. For that, the bit corresponding to the byte number in the DTD pattern indicator must be set.</p>
 <p>For instance, providing the DTD <code>0x0100B2</code> with the DTD pattern indicator set to <code>0b01000000</code>, the second byte will match all devices.</p>
 <h2 id="drivers"><a class="header" href="#drivers">Drivers</a></h2>
-<p>From a higher level point of view, drivers are <a href="../services.html">services</a> that declare themselves as being able to handle certain type of devices through the <a href="#0x10-register_driver"><code>REGISTER_DRIVER</code></a> method, using <a href="#patterns">patterns</a>.</p>
+<p>From a higher level point of view, drivers are <a href="../services.html">services</a> that declare their parent applications as being able to handle certain type of devices through the <a href="#0x10-register_driver"><code>REGISTER_DRIVER</code></a> method, using <a href="#patterns">patterns</a>.</p>
+<p>Registering as a driver for a pattern requires the application to expose the <a href="../services.html#types-of-services">integration service(s)</a> relevant to this pattern.</p>
 <p>When a device is connected, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the <a href="#0x02-device_event"><code>DEVICE_EVENT</code></a> notification.</p>
 <p>From this point, the driver can create an <a href="../kernel/memory.html#abstract-memory-segments">AMS</a> from the device's memory using the <a href="../kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall.</p>
 <p>It can also get informed of interrupts the device raises through the <a href="#0x10-device_interrupt"><code>DEVICE_INTERRUPT</code></a> notification.</p>
@@ -377,7 +378,8 @@ Notifications are also retroactive, which means they will be sent for already-co
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x20</code>: Current process is not a service</li>
-<li><code>0x30</code>: Current process is already registered as a driver for this pattern</li>
+<li><code>0x30</code>: Process' parent application does not expose the relevant <a href="../services.html#types-of-services">integration services</a></li>
+<li><code>0x31</code>: Current process is already registered as a driver for this pattern</li>
 </ul>
 <h3 id="0x11-unregister_driver"><a class="header" href="#0x11-unregister_driver"><code>0x11</code> UNREGISTER_DRIVER</a></h3>
 <p>Unregister a service <a href="#0x10-register_driver">previously registered as a driver</a>.</p>

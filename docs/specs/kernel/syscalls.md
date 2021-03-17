@@ -48,10 +48,10 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x54` DELETE_TLS_SLOT](#0x54-delete_tls_slot)
   - [`0x5F` EXIT_THREAD](#0x5f-exit_thread)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
-  - [`0xD0` SYS_PROCESS_ATTRIBUTES](#0xd0-sys_process_attributes)
-  - [`0xD1` SYS_SET_PRIORITY](#0xd1-sys_set_priority)
-  - [`0xD2` SYS_ENUM_DEVICES](#0xd2-sys_enum_devices)
-  - [`0xD3` SYS_DEVICE_INFOS](#0xd3-sys_device_infos)
+  - [`0xD2` SYS_PROCESS_ATTRIBUTES](#0xd2-sys_process_attributes)
+  - [`0xD3` SYS_SET_PRIORITY](#0xd3-sys_set_priority)
+  - [`0xD4` SYS_ENUM_DEVICES](#0xd4-sys_enum_devices)
+  - [`0xD5` SYS_DEVICE_INFOS](#0xd5-sys_device_infos)
 
 ## Technical overview
 
@@ -1015,7 +1015,7 @@ Get informations from the application's [execution context](../applications/cont
 - `0x10`: invalid information number provided
 - `0x20`: caller process is a system service
 
-### `0xD0` SYS_PROCESS_ATTRIBUTES
+### `0xD2` SYS_PROCESS_ATTRIBUTES
 
 System service-only syscall.  
 Get a process' [attributes](processes.md#process-attributes).
@@ -1068,7 +1068,7 @@ _For list-based attributes:_
 - `0x21`: This system service is not allowed to access or edit this attribute
 - `0x22`: Provided index is out-of-bounds
 
-### `0xD1` SYS_SET_PRIORITY
+### `0xD3` SYS_SET_PRIORITY
 
 System service-only syscall.  
 Set the priority of a process.  
@@ -1090,7 +1090,7 @@ _None_
 - `0x20`: Caller process is not a system service
 - `0x21`: Provided PID was not found
 
-### `0xD2` SYS_ENUM_DEVICES
+### `0xD4` SYS_ENUM_DEVICES
 
 System service-only syscall.  
 List devices matching a provided CII.
@@ -1112,7 +1112,7 @@ For each device, its SDI (4 bytes) is written to the provided address.
 - `0x10`: Invalid connection type in CII
 - `0x20`: Caller process is not a system service
 
-### `0xD3` SYS_DEVICE_INFOS
+### `0xD5` SYS_DEVICE_INFOS
 
 System service-only syscall.  
 Get the [raw device descriptor](hardware.md#raw-device-descriptor) of a single device.

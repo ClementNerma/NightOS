@@ -1,6 +1,8 @@
 # Controller
 
-The _controller_ is a system library that manages permissions of processes. The [_I/O manager_](io-manager.md) relies on it to accept or reject requests.
+The _controller_ is a system library that manages permissions of processes.
+
+It is concretely represented by the [`sys::perm`](../specs/permissions.md) service.
 
 - [Notion of scope](#notion-of-scope)
 - [The `perm` system library](#the-perm-system-library)

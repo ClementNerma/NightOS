@@ -143,7 +143,7 @@ For instance, providing the DTD `0x0100B2` with the DTD pattern indicator set to
 
 From a higher level point of view, drivers are [services](../../services.md) that declare their parent applications as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
 
-Registering as a driver for a pattern requires the application to expose the [integration service(s)](../../services.md#types-of-services) relevant to this pattern.
+Registering as a driver for a pattern requires the application to expose the [driver service(s)](../../services.md#types-of-services) relevant to this pattern.
 
 When a device is connected, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the [`DEVICE_EVENT`](#0x02-device_event) notification.
 

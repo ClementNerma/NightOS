@@ -8,6 +8,10 @@ This directory contains documentation for the different types of services.
 * [File managers](integration/file-managers.md)
 * [File openers](integration/file-openers.md)
 
+## Driver services
+
+* [Filesystem driver service](drivers/filesystem.md)
+
 ## System services
 
 * [`sys::fs`](system/fs.md): filesystem management

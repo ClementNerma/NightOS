@@ -80,7 +80,7 @@ Mount a filesystem. If no mount path is provided, the filesystem will be mounted
 
 **Errors:**
 
-- `0x30`: Client does not expose a [filesystem driver service](hw.md#drivers)
+- `0x30`: Client does not expose a [filesystem driver service](../drivers/filesystem.md) as [required](hw.md#drivers)
 - `0x31`: This filesystem is already mounted
 
 ### `0x05` FS_MOUNT_EXISTING

@@ -23,6 +23,10 @@ For more informations about low-level concepts these documents refer to, you can
 * [File managers](services/integration/file-managers.md)
 * [File openers](services/integration/file-openers.md)
 
+## Driver services
+
+* [Filesystem driver service](services/drivers/filesystem.md)
+
 ## System services
 
 * [`sys::fs`](services/system/fs.md): filesystem management

@@ -85,6 +85,10 @@ The list of default applications and their description can be found [here](appli
 - [File managers](specs/services/integration/file-managers.md) - how file managers are integrated into the system
 - [File openers](specs/services/integration/file-openers.md) - how files are associated to applications
 
+### [Driver services](specs/services/drivers/README.md)
+
+- [Filesystem driver service](specs/services/drivers/filesystem.md)
+
 ### [System services](specs/services/system/README.md)
 
 - [`sys::fs`](specs/services/system/fs.md) - the filesystem service

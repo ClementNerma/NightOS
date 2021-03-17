@@ -6024,9 +6024,50 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p><strong>TODO</strong></p>
 <h1 id="sysfsh-service"><a class="header" href="#sysfsh-service"><code>sys::fsh</code> service</a></h1>
 <h2 id="methods-5"><a class="header" href="#methods-5">Methods</a></h2>
-<p><strong>TODO</strong></p>
-<h2 id="notifications-3"><a class="header" href="#notifications-3">Notifications</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x10-check_item_thumbnail_cache"><a class="header" href="#0x10-check_item_thumbnail_cache"><code>0x10</code> CHECK_ITEM_THUMBNAIL_CACHE</a></h3>
+<p>Check if a cached thumbnail exists for a given filesystem item to determine if another should be generated or not.</p>
+<p>The cache policy is determined using internal criterias.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/system-services/../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="specs/system-services/../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Presence (1 byte): <code>0x01</code> if a thumbnail is present, <code>0x00</code> else</li>
+</ul>
+<p>If a thumbnail is present, this is followed by:</p>
+<ul>
+<li>Thumbnail caching <a href="specs/system-services/../kernel/data-structures.html#timestamps">timestamp</a> (8 bytes)</li>
+<li>Thumbnail <a href="specs/system-services/../filesystem.html#temporary-feid">TFEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Caller process is not a <a href="specs/system-services/../integration-services/file-managers.html">file manager service</a></li>
+<li><code>0x30</code>: Unknown FSID</li>
+<li><code>0x31</code>: Unknown FEID</li>
+</ul>
+<h3 id="0x11-cache_item_thumbnail"><a class="header" href="#0x11-cache_item_thumbnail"><code>0x11</code> CACHE_ITEM_THUMBNAIL</a></h3>
+<p>Write a filesystem item's thumbnail in the cache.</p>
+<p>If a thumbnail already exists in cache, it will be replaced by the new one.</p>
+<p>The cache policy is determined using internal criterias.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/system-services/../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="specs/system-services/../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+<li>Thumbnail as a <a href="specs/system-services/../kernel/data-structures.html#bitmap-images">bitmap image</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Thumbnail <a href="specs/system-services/../filesystem.html#temporary-feid">TFEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid bitmap data</li>
+<li><code>0x20</code>: Caller process is not a <a href="specs/system-services/../integration-services/file-managers.html">file manager service</a></li>
+<li><code>0x30</code>: Unknown FSID</li>
+<li><code>0x31</code>: Unknown FEID</li>
+</ul>
 <h1 id="syshw-service"><a class="header" href="#syshw-service"><code>sys::hw</code> service</a></h1>
 <p>The <code>sys::hw</code> service is in charge of hardware devices. It coordinates and manages communications with the hardware.</p>
 <p>It is known as the <a href="specs/system-services/../../technical/io-manager.html">I/O manager</a>, or Ion.</p>
@@ -6295,7 +6336,7 @@ Notifications are also retroactive, which means they will be sent for already-co
 <li><code>0x21</code>: Provided method code is invalid for this device</li>
 <li><code>0x22</code>: Invalid arguments provided for this method</li>
 </ul>
-<h2 id="notifications-4"><a class="header" href="#notifications-4">Notifications</a></h2>
+<h2 id="notifications-3"><a class="header" href="#notifications-3">Notifications</a></h2>
 <h3 id="device_event"><a class="header" href="#device_event"><code>DEVICE_EVENT</code></a></h3>
 <p>Sent for a specific device to processes that either:</p>
 <ul>
@@ -6370,42 +6411,42 @@ System services communicate directly with the kernel and are trusted processes s
 <p>The list of permissions can be found in the <a href="specs/system-services/../permissions.html">dedicated specifications document</a>.</p>
 <h2 id="methods-7"><a class="header" href="#methods-7">Methods</a></h2>
 <p><strong>TODO</strong></p>
-<h2 id="notifications-5"><a class="header" href="#notifications-5">Notifications</a></h2>
+<h2 id="notifications-4"><a class="header" href="#notifications-4">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="sysnet-service"><a class="header" href="#sysnet-service"><code>sys::net</code> service</a></h1>
 <h2 id="methods-8"><a class="header" href="#methods-8">Methods</a></h2>
 <p><strong>TODO</strong></p>
-<h2 id="notifications-6"><a class="header" href="#notifications-6">Notifications</a></h2>
+<h2 id="notifications-5"><a class="header" href="#notifications-5">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="syscrypto-service"><a class="header" href="#syscrypto-service"><code>sys::crypto</code> service</a></h1>
 <h2 id="methods-9"><a class="header" href="#methods-9">Methods</a></h2>
 <p><strong>TODO</strong></p>
-<h2 id="notifications-7"><a class="header" href="#notifications-7">Notifications</a></h2>
+<h2 id="notifications-6"><a class="header" href="#notifications-6">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="syscrashsave-service"><a class="header" href="#syscrashsave-service"><code>sys::crashsave</code> service</a></h1>
 <h2 id="methods-10"><a class="header" href="#methods-10">Methods</a></h2>
 <p><strong>TODO</strong></p>
-<h2 id="notifications-8"><a class="header" href="#notifications-8">Notifications</a></h2>
+<h2 id="notifications-7"><a class="header" href="#notifications-7">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="sysflow-service"><a class="header" href="#sysflow-service"><code>sys::flow</code> service</a></h1>
 <h2 id="methods-11"><a class="header" href="#methods-11">Methods</a></h2>
 <p><strong>TODO</strong></p>
-<h2 id="notifications-9"><a class="header" href="#notifications-9">Notifications</a></h2>
+<h2 id="notifications-8"><a class="header" href="#notifications-8">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="syshydre-service"><a class="header" href="#syshydre-service"><code>sys::hydre</code> service</a></h1>
 <h2 id="methods-12"><a class="header" href="#methods-12">Methods</a></h2>
 <p><strong>TODO</strong></p>
-<h2 id="notifications-10"><a class="header" href="#notifications-10">Notifications</a></h2>
+<h2 id="notifications-9"><a class="header" href="#notifications-9">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="sysapp-service"><a class="header" href="#sysapp-service"><code>sys::app</code> service</a></h1>
 <h2 id="methods-13"><a class="header" href="#methods-13">Methods</a></h2>
 <p><strong>TODO</strong></p>
-<h2 id="notifications-11"><a class="header" href="#notifications-11">Notifications</a></h2>
+<h2 id="notifications-10"><a class="header" href="#notifications-10">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="sysprocess-service"><a class="header" href="#sysprocess-service"><code>sys::process</code> service</a></h1>
 <h2 id="methods-14"><a class="header" href="#methods-14">Methods</a></h2>
 <p><strong>TODO</strong></p>
-<h2 id="notifications-12"><a class="header" href="#notifications-12">Notifications</a></h2>
+<h2 id="notifications-11"><a class="header" href="#notifications-11">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="native-applications"><a class="header" href="#native-applications">Native applications</a></h1>
 <p>This folder contains documentation for each native application.</p>

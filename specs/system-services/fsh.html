@@ -169,9 +169,50 @@
                     <main>
                         <h1 id="sysfsh-service"><a class="header" href="#sysfsh-service"><code>sys::fsh</code> service</a></h1>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
-<p><strong>TODO</strong></p>
-<h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x10-check_item_thumbnail_cache"><a class="header" href="#0x10-check_item_thumbnail_cache"><code>0x10</code> CHECK_ITEM_THUMBNAIL_CACHE</a></h3>
+<p>Check if a cached thumbnail exists for a given filesystem item to determine if another should be generated or not.</p>
+<p>The cache policy is determined using internal criterias.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Presence (1 byte): <code>0x01</code> if a thumbnail is present, <code>0x00</code> else</li>
+</ul>
+<p>If a thumbnail is present, this is followed by:</p>
+<ul>
+<li>Thumbnail caching <a href="../kernel/data-structures.html#timestamps">timestamp</a> (8 bytes)</li>
+<li>Thumbnail <a href="../filesystem.html#temporary-feid">TFEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Caller process is not a <a href="../integration-services/file-managers.html">file manager service</a></li>
+<li><code>0x30</code>: Unknown FSID</li>
+<li><code>0x31</code>: Unknown FEID</li>
+</ul>
+<h3 id="0x11-cache_item_thumbnail"><a class="header" href="#0x11-cache_item_thumbnail"><code>0x11</code> CACHE_ITEM_THUMBNAIL</a></h3>
+<p>Write a filesystem item's thumbnail in the cache.</p>
+<p>If a thumbnail already exists in cache, it will be replaced by the new one.</p>
+<p>The cache policy is determined using internal criterias.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+<li>Thumbnail as a <a href="../kernel/data-structures.html#bitmap-images">bitmap image</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Thumbnail <a href="../filesystem.html#temporary-feid">TFEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid bitmap data</li>
+<li><code>0x20</code>: Caller process is not a <a href="../integration-services/file-managers.html">file manager service</a></li>
+<li><code>0x30</code>: Unknown FSID</li>
+<li><code>0x31</code>: Unknown FEID</li>
+</ul>
 
                     </main>
 

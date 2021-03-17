@@ -88,6 +88,15 @@ Timestamps are stored as milliseconds, starting from January 1st, 1970. This is 
 
 They are represented as an 8-byte unsigned integer number.
 
+## Simple list
+
+Simple lists are made of:
+
+- Their length in bytes (8 bytes)
+- Their content
+
+Each element must be delimited.
+
 ## Bitmap images
 
 Bitmap images are represented as a _header_ and a _pixel list_.

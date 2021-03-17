@@ -56,31 +56,52 @@ For praticity purpose, the list of device patterns is converted to a human-reada
 
 **Scope**: paths the permission applies on
 
-- (S) `fs.create.dir`: create directories
-- (S) `fs.create.file`: create files
-- (S) `fs.create.symlink`: create symlinks
-- (S) `fs.create.symlink.scoped`: create symlinks whose target is in the application's available paths
-- (S) `fs.create.flow`: create flows
-- (S) `fs.remove.file_dir`: remove files and directories
-- (S) `fs.remove.symlink`: remove symlinks
-- (S) `fs.remove.flow`: remove flows
-- (S) `fs.remove.self`: remove items created by the application itself
-- (S) `fs.read.dir`: list all items inside directories
-- (S) `fs.read.dir.hidden`: list hidden items in directories
-- (S) `fs.read.symlink`: read from symlinks (= knowing the symlink's target)
-- (S) `fs.read.symlink.scoped`: read from symlinks whose target is in the application's available paths (= knowing the symlink's target)
-- (S) `fs.read.flow`: read from flows
-- (S) `fs.write.file`: change files' content
-- (S) `fs.write.symlink`: write to symlinks (= updating the symlink's target)
-- (S) `fs.write.flow`: write to flows
-- (S) `fs.meta.dir`: get metadata on directories
-- (S) `fs.meta.file`: get metadata on files
-- (S) `fs.meta.symlink`: get metadata on symlinks
-- (S) `fs.meta.symlink.scoped`: get metadata on symlinks whose target is in the application's available paths
-- (S) `fs.meta.flow`: get metadata on flows
-- (S) `fs.watch.dir`: be notified of any change to a directory's content (including its items)
-- (S) `fs.watch.dir.recursive`: be notified of any change to a directory's content (including its items, recursively)
-- (S) `fs.watch.file`: be notified of any change to a file's content
+These permissions are automatically granted if their scope is one of the application's own data directories.
+
+- (S) `fs.filesystems.mounted`: check if a given filesystem is mounted (all other `fs.filesystems.*` permissions imply this one)
+- (S) `fs.filesystems.metadata`: get metadata on a given filesystem
+- (S) `fs.filesystems.list`: enumerate mounted filesystems
+- (S) `fs.filesystems.mount`: mount a filesystem
+- (S) `fs.filesystems.mount_existing`: mount an existing filesystem
+- (S) `fs.filesystems.unmount`: unmount filesystems mounted by other applications
+- (S) `fs.filesystems.watch`: be notified when a filesystem is mounted / unmounted
+
+- (S) `fs.path.exists`: check if an item exists at a given path
+- (S) `fs.path.stringify`: get the path from a [FEID](filesystem.md#element-unique-identifier) as a string
+- (S) `fs.feid.exists`: check if a given [FEID](filesystem.md#element-unique-identifier) exists in a filesystem
+
+- (S) `fs.dir.exists`: check if a directory exist at a given path
+- (S) `fs.dir.metadata`: get metadata on directories
+- (S) `fs.dir.create`: create directories
+- (S) `fs.dir.read`: list all items inside directories
+- (S) `fs.dir.read.hidden`: list hidden items in directories
+- (S) `fs.dir.remove.trash`: send directories (only empty ones if no permission to remove files) to the user's trash
+- (S) `fs.dir.remove.permanently`: remove directories (only empty ones if no permission to remove files)
+- (S) `fs.dir.watch`: be notified of any change to a directory's metadata and items
+- (S) `fs.dir.watch.recursive`: be notified of any change to a directory's metadata and items, recursively
+
+- (S) `fs.file.exists`: check if a file exists at a given path
+- (S) `fs.file.metadata`: get metadata on files
+- (S) `fs.file.create`: create files
+- (S) `fs.file.remove.trash`: send files to the user's trash
+- (S) `fs.file.remove.permanently`: remove files
+- (S) `fs.file.write`: change files' content
+- (S) `fs.file.watch`: be notified of any change to a file's metadata and content
+
+- (S) `fs.symlink.exists`: check if a symlink exists at a given path
+- (S) `fs.symlink.metadata`: get metadata on symlinks
+- (S) `fs.symlink.create`: create symlinks
+- (S) `fs.symlink.read`: read from symlinks (= knowing the symlink's target)
+- (S) `fs.symlink.remove`: remove symlinks
+- (S) `fs.symlink.update`: update symlinks' target
+
+#### Flows
+
+- (S) `flow.list`: list flows opened by all applications
+- (S) `flow.metadata`: get metadata on flows
+- (B) `flow.create`: create flows
+- (S) `flow.read`: read from flows
+- (S) `flow.write`: write to flows
 
 ### Network
 

@@ -205,6 +205,8 @@
 <li><a href="#0x11-unregister_driver"><code>0x11</code> UNREGISTER_DRIVER</a></li>
 <li><a href="#0x20-notify_process"><code>0x20</code> NOTIFY_PROCESS</a></li>
 <li><a href="#0xa0-ask_driver"><code>0xA0</code> ASK_DRIVER</a></li>
+<li><a href="#0xd0-authorize_fs_interface"><code>0xD0</code> AUTHORIZE_FS_INTERFACE</a></li>
+<li><a href="#0xd1-unauthorize_fs_interface"><code>0xD1</code> UNAUTHORIZE_FS_INTERFACE</a></li>
 </ul>
 </li>
 <li><a href="#notifications">Notifications</a>
@@ -426,6 +428,38 @@ Notifications are also retroactive, which means they will be sent for already-co
 <li><code>0x21</code>: Unknown device UDI provided</li>
 <li><code>0x22</code>: Provided method code is invalid for this device</li>
 <li><code>0x23</code>: Invalid arguments provided for this method</li>
+</ul>
+<h3 id="0xd0-authorize_fs_interface"><a class="header" href="#0xd0-authorize_fs_interface"><code>0xD0</code> AUTHORIZE_FS_INTERFACE</a></h3>
+<p>Authorize a <a href="../integration/filesystem-interfaces.html">filesystem interface</a> to access a specific part of a storage device.</p>
+<p>The interface service will be allowed to perform requests on the provided storage device, only on the provided data segment.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Device's <a href="#unique-device-identifier">UDI</a> (8 bytes)</li>
+<li>Start byte (8 bytes)</li>
+<li>End byte (8 bytes)</li>
+</ul>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>Authorization token (8 bytes) to use with <a href="#0xd1-unauthorize_fs_interface"><code>UNAUTHORIZE_FS_INTERFACE</code></a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Client is not the <a href="fs.html"><code>sys::fs</code></a> service</li>
+<li><code>0x21</code>: Unknown device UDI provided</li>
+<li><code>0x22</code>: Start byte is not aligned on the device's sectors</li>
+<li><code>0x23</code>: End byte is not aligned on the device's sectors</li>
+<li><code>0x24</code>: End byte is greater than or equal to the start byte</li>
+</ul>
+<h3 id="0xd1-unauthorize_fs_interface"><a class="header" href="#0xd1-unauthorize_fs_interface"><code>0xD1</code> UNAUTHORIZE_FS_INTERFACE</a></h3>
+<p>Unauthorize a <a href="../integration/filesystem-interfaces.html">filesystem interface</a> authorization created using the <a href="#0xd0-authorize_fs_interface"><code>AUTHORIZE_FS_INTERFACE</code></a> method.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Authorization token (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Client is not the <a href="fs.html"><code>sys::fs</code></a> service</li>
+<li><code>0x21</code>: Unknown authorization token provided</li>
 </ul>
 <h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
 <h3 id="0x02-identify_device"><a class="header" href="#0x02-identify_device">0x02 <code>IDENTIFY_DEVICE</code></a></h3>

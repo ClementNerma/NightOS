@@ -228,8 +228,9 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
+<li><code>0x20</code>: Cannot mount a filesystem inside another filesystem that the main one</li>
+<li><code>0x21</code>: This filesystem is already mounted</li>
 <li><code>0x30</code>: Client does not expose a <a href="../drivers/filesystem.html">filesystem driver service</a> as <a href="hw.html#drivers">required</a></li>
-<li><code>0x31</code>: This filesystem is already mounted</li>
 </ul>
 <h3 id="0x05-fs_mount_existing"><a class="header" href="#0x05-fs_mount_existing"><code>0x05</code> FS_MOUNT_EXISTING</a></h3>
 <p>Mount an existing filesystem. If no mount path is provided, the filesystem will be mounted under the <code>/mnt</code> directory.</p>

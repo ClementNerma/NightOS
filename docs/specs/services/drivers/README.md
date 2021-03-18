@@ -6,6 +6,17 @@ An application exposing such a service in its [manifest](../../applications/mani
 
 These services are not available directly to the end applications ; they can only be used through [system services](../system/README.md).
 
+## Error codes
+
+Error codes follow a specific convention, but all may not be returned by the services in case of errors.
+
+Some error codes are only reserved to services supporting the additional check tied to the said error code.
+
+Also, all drivers can use:
+
+* The `0x30` error code to indicate the provided [UDI](../system/hw.md#unique-device-identifier) is invalid or not driven by the current driver service
+* The `0x5F` error code to indicate an unspecified hardware error occurred.
+
 ## List of driver services
 
 The list below indicates the service as well as the [DDT](../system/hw.md#driven-device-type) it is tied to.

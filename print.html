@@ -6388,7 +6388,49 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x38</code>: Unspecified filesystem error</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x31-write_file_sync"><a class="header" href="#0x31-write_file_sync"><code>0x31</code> WRITE_FILE_SYNC</a></h3>
+<h3 id="0x31-read_file_sync"><a class="header" href="#0x31-read_file_sync"><code>0x31</code> READ_FILE_SYNC</a></h3>
+<p>Read a file synchronously.</p>
+<p>If no read length is provided, the whole file must be read.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/services/integration/filesystem-interfaces.html#storage-operating-range">SOR</a> (40 bytes)</li>
+<li>File's <a href="specs/services/integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
+<li>Start offset address (8 bytes)</li>
+<li><a href="specs/services/integration/../../kernel/data-structures.html#options">Optional</a> length to read (1 + 8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of read bytes (8 bytes)</li>
+<li>File's content</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x31</code>: Start offset is out-of-range</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x32-read_file_async"><a class="header" href="#0x32-read_file_async"><code>0x32</code> READ_FILE_ASYNC</a></h3>
+<p>Read a file synchronously to a writable <a href="specs/services/integration/../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
+<p>THe number of bytes to read is always provided to ensure it does not accidentally exceed the AMS's size.</p>
+<p>When the read is complete, a <a href="specs/services/integration/filesystem-interfaces.html#0x32-file_read"><code>FILE_READ</code></a> notification must be sent to the client.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/services/integration/filesystem-interfaces.html#storage-operating-range">SOR</a> (40 bytes)</li>
+<li>File's <a href="specs/services/integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
+<li>Start offset address (8 bytes)</li>
+<li>Number of bytes to read (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x31</code>: Invalid AMS ID provided</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x33-write_file_sync"><a class="header" href="#0x33-write_file_sync"><code>0x33</code> WRITE_FILE_SYNC</a></h3>
 <p>Synchronously write a buffer to a file.</p>
 <p>If no offset address is provided, the file's content must be completely overriden with the provided buffer.</p>
 <p><strong>Arguments:</strong></p>
@@ -6410,10 +6452,10 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x34</code>: Filesystem's free space exceeded</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x32-write_file_async"><a class="header" href="#0x32-write_file_async"><code>0x32</code> WRITE_FILE_ASYNC</a></h3>
+<h3 id="0x34-write_file_async"><a class="header" href="#0x34-write_file_async"><code>0x34</code> WRITE_FILE_ASYNC</a></h3>
 <p>Asynchronously write a readable <a href="specs/services/integration/../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> to a file.</p>
 <p>If no offset address is provided, the file's content must be completely overriden with the provided buffer.</p>
-<p>When the writing is complete, a <a href="specs/services/integration/filesystem-interfaces.html#0x31-file_written"><code>FILE_WRITTEN</code></a> notification must be sent to the client. The notification <strong>must not</strong> be sent before the current method returned successfully.</p>
+<p>When the writing is complete, a <a href="specs/services/integration/filesystem-interfaces.html#0x34-file_written"><code>FILE_WRITTEN</code></a> notification must be sent to the client. The notification <strong>must not</strong> be sent before the current method returned successfully.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li><a href="specs/services/integration/filesystem-interfaces.html#storage-operating-range">SOR</a> (40 bytes)</li>
@@ -6421,48 +6463,6 @@ If the number of items to get is larger than the number of entries in the direct
 <li><a href="specs/services/integration/../../kernel/data-structures.html#options">Optional</a> write offset address (1 + 8 bytes)</li>
 <li>Number of bytes to write (8 bytes)</li>
 <li>AMS identifier (8 bytes)</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<ul>
-<li>Generated task identifier (8 bytes)</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Invalid AMS ID provided</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
-</ul>
-<h3 id="0x33-read_file_sync"><a class="header" href="#0x33-read_file_sync"><code>0x33</code> READ_FILE_SYNC</a></h3>
-<p>Read a file synchronously.</p>
-<p>If no read length is provided, the whole file must be read.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li><a href="specs/services/integration/filesystem-interfaces.html#storage-operating-range">SOR</a> (40 bytes)</li>
-<li>File's <a href="specs/services/integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
-<li>Start offset address (8 bytes)</li>
-<li><a href="specs/services/integration/../../kernel/data-structures.html#options">Optional</a> length to read (1 + 8 bytes)</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<ul>
-<li>Number of read bytes (8 bytes)</li>
-<li>File's content</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Start offset is out-of-range</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
-</ul>
-<h3 id="0x34-read_file_async"><a class="header" href="#0x34-read_file_async"><code>0x34</code> READ_FILE_ASYNC</a></h3>
-<p>Read a file synchronously to a writable <a href="specs/services/integration/../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
-<p>THe number of bytes to read is always provided to ensure it does not accidentally exceed the AMS's size.</p>
-<p>When the read is complete, a <a href="specs/services/integration/filesystem-interfaces.html#0x34-file_read"><code>FILE_READ</code></a> notification must be sent to the client.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li><a href="specs/services/integration/filesystem-interfaces.html#storage-operating-range">SOR</a> (40 bytes)</li>
-<li>File's <a href="specs/services/integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
-<li>Start offset address (8 bytes)</li>
-<li>Number of bytes to read (8 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -6535,8 +6535,25 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x32</code>: Symbolic link is cyclic</li>
 </ul>
 <h2 id="notifications-2"><a class="header" href="#notifications-2">Notifications</a></h2>
-<h3 id="0x31-file_written"><a class="header" href="#0x31-file_written"><code>0x31</code> FILE_WRITTEN</a></h3>
-<p>Sent to a client that asked to perform an asynchronous file writing using the <a href="specs/services/integration/filesystem-interfaces.html#0x32-write_file_async"><code>WRITE_FILE_ASYNC</code></a> method.</p>
+<h3 id="0x32-file_read"><a class="header" href="#0x32-file_read"><code>0x32</code> FILE_READ</a></h3>
+<p>Sent to a client that asked to perform an asynchronous file reading using the <a href="specs/services/integration/filesystem-interfaces.html#0x32-read_file_async"><code>READ_FILE_ASYNC</code></a> method.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="specs/services/integration/../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: number of bytes read (8 bytes)</li>
+<li>Error code (1 byte)
+<ul>
+<li><code>0x30</code>: Start offset is out-of-range</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="0x34-file_written"><a class="header" href="#0x34-file_written"><code>0x34</code> FILE_WRITTEN</a></h3>
+<p>Sent to a client that asked to perform an asynchronous file writing using the <a href="specs/services/integration/filesystem-interfaces.html#0x34-write_file_async"><code>WRITE_FILE_ASYNC</code></a> method.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Task identifier (8 bytes)</li>
@@ -6548,23 +6565,6 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x30</code>: Start offset is out-of-range</li>
 <li><code>0x31</code>: Maximum individual file size exceeded</li>
 <li><code>0x32</code>: Filesystem's free space exceeded</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="0x34-file_read"><a class="header" href="#0x34-file_read"><code>0x34</code> FILE_READ</a></h3>
-<p>Sent to a client that asked to perform an asynchronous file reading using the <a href="specs/services/integration/filesystem-interfaces.html#0x34-read_file_async"><code>READ_FILE_ASYNC</code></a> method.</p>
-<p><strong>Datafield:</strong></p>
-<ul>
-<li>Task identifier (8 bytes)</li>
-<li><a href="specs/services/integration/../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
-<ul>
-<li>Success data: number of bytes read (8 bytes)</li>
-<li>Error code (1 byte)
-<ul>
-<li><code>0x30</code>: Start offset is out-of-range</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
 </li>

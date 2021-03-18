@@ -3,11 +3,12 @@
 This document presents how files are stored in NightOS.
 
 - [Presentation](#presentation)
-- [Naming](#naming)
-- [Filesystem unique identifier](#filesystem-unique-identifier)
-- [Element unique identifier](#element-unique-identifier)
+- [Identifiers and limitations](#identifiers-and-limitations)
+  - [Filesystem unique identifier](#filesystem-unique-identifier)
+  - [Element unique identifier](#element-unique-identifier)
   - [Temporary FEID](#temporary-feid)
-- [Paths' size limit](#paths-size-limit)
+  - [Paths' size limit](#paths-size-limit)
+- [Items naming](#items-naming)
 - [Symbolic links](#symbolic-links)
   - [Concept](#concept)
   - [Cyclic symlinks](#cyclic-symlinks)
@@ -28,17 +29,15 @@ Three partitions are used to store the data:
 * One **FAT32** partition for the system (`/sys` and `/etc/sys`) ;
 * One **Btrfs** partition for users' data (`/etc` except `/etc/sys`, `/apps` and `/home`)
 
-## Naming
+## Identifiers and limitations
 
-Filenames can use absolutely any Unicode character, _except_ slahes and the `NULL` character (`U+0000`).
-
-## Filesystem unique identifier
+### Filesystem unique identifier
 
 Each existing filesystem gets a unique identifier called the _**F**ile**s**ystem **Id**dentifier_ (FSID).
 
 It is unique across all filesystems, and consistent across reboots.
 
-## Element unique identifier
+### Element unique identifier
 
 Each filesystem item has an 8-byte identifier, called the _**F**ilesystem **E**lement **Id**entifier_ (FEID).
 
@@ -50,11 +49,15 @@ Note that some filesystem do not support this identifier.
 
 A temporary FEID can be created to grant access to a resource to an application without giving actual access to the original item itself. A temporary FEID only lives in memory, and refers an existing filesystem item. If the original item is deleted, the temporary FEID is deleted too.
 
-## Paths' size limit
+### Paths' size limit
 
 Paths' length is encoded on 2 bytes, allowing up to 65 534 characters plus the `NULL` character.
 
 This limit exists to avoid too costly string copies on path manipulation, while being long enough for the very large majority of use cases.
+
+## Items naming
+
+Filenames can use absolutely any Unicode character, _except_ slahes and the `NULL` character (`U+0000`).
 
 ## Symbolic links
 

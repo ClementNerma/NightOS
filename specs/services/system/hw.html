@@ -306,6 +306,7 @@
 <p>It can also get informed of interrupts the device raises through the <a href="#0x10-device_interrupt"><code>DEVICE_INTERRUPT</code></a> notification.</p>
 <p>Other processes can then ask the driver to perform specific actions depending on the type of device, using <a href="#normalized-methods">normalized methods</a> which can be sent to the driver using the <a href="#0xa0-ask_driver"><code>ASK_DRIVER</code></a> method. The driver receives these informations through the <a href="#0xa0-driver_method_request"><code>DRIVER_METHOD_REQUEST</code></a> notification.</p>
 <p>The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to <a href="#normalized-notifications">normalized notifications</a> which can then be sent to processes that subscribed to them using the related <a href="#normalized-methods">normalized methods</a>.</p>
+<p>You can see the complete list of methods and notifications for each type of driver services in the <a href="../drivers/README.html">related section of the documentation</a>.</p>
 <h3 id="driver-selection"><a class="header" href="#driver-selection">Driver selection</a></h3>
 <p>A driver is selected for a specific hardware component if it matches any of the following criterias, in decreasing importance order:</p>
 <ul>

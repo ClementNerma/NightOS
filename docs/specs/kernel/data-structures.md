@@ -2,6 +2,22 @@
 
 This documents describes the structures used by the kernel to represent the data it uses in memory.
 
+- [Packed linked lists](#packed-linked-lists)
+  - [Caracteristics](#caracteristics)
+  - [Structure in memory](#structure-in-memory)
+  - [Checking an entry's type](#checking-an-entrys-type)
+  - [The ratio](#the-ratio)
+  - [Performances bottlenecks](#performances-bottlenecks)
+  - [Performance advantages](#performance-advantages)
+  - [Length-first variant](#length-first-variant)
+  - [Tricking the `NIE`](#tricking-the-nie)
+- [Timestamps](#timestamps)
+- [Delimited lists](#delimited-lists)
+- [Delimited strings](#delimited-strings)
+- [Buffer pointers](#buffer-pointers)
+- [Bitmap images](#bitmap-images)
+- [Options](#options)
+
 ## Packed linked lists
 
 _Packed linked lists_ (PLL) are linked lists used for items whose size is both small (usually <= 32 bytes) and fixed for all items.

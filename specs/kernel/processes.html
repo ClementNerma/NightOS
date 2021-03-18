@@ -208,9 +208,9 @@
 <li><code>PLL(e=32)</code> for <a href="#drivable-devices">drivable devices</a></li>
 </ul>
 <h2 id="drivable-devices"><a class="header" href="#drivable-devices">Drivable devices</a></h2>
-<p>The drivable devices attribute contains the list of all devices' <a href="hardware.html#session-device-identifier">SDI</a> the current process can drive.</p>
+<p>The drivable devices attribute contains the list of all devices' <a href="hardware.html#kernel-device-identifier">KDI</a> the current process can drive.</p>
 <p>The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an <a href="memory.html#abstract-memory-segments">AMS</a> from it using the <a href="syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall, as well as using DMA-related instructions in the CPU.</p>
-<p>This attribute is managed by the <a href="../services/system/hw.html"><code>sys::hw</code></a> service and can only be updated by this service.</p>
+<p>This attribute is managed by the <a href="../services/system/hw.html"><code>sys::hw</code></a> service and can only be updated by it.</p>
 <h2 id="raw-permissions"><a class="header" href="#raw-permissions">Raw permissions</a></h2>
 <p><em>Raw permissions</em> are used by system services to determine the permissions of a process without <a href="ipc.html#exchanges-and-messages">sending a message</a> to the <a href="../services/system/perm.html"><code>sys::perm</code></a> service and waiting for its answer, which would be costly in terms of performance.</p>
 <p>These permissions use a specific structure, specified in the <a href="../services/system/perm.html#list-of-permissions">related service's specifications document</a>.</p>

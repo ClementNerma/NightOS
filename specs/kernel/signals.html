@@ -193,6 +193,8 @@
 <li><a href="#0x46-unsuspended"><code>0x46</code> UNSUSPENDED</a></li>
 <li><a href="#0x4e-terminate"><code>0x4E</code> TERMINATE</a></li>
 <li><a href="#0x4f-will_terminate"><code>0x4F</code> WILL_TERMINATE</a></li>
+<li><a href="#0xd4-device_changed"><code>0xD4</code> DEVICE_CHANGED</a></li>
+<li><a href="#0xd4-device_interrupt"><code>0xD4</code> DEVICE_INTERRUPT</a></li>
 </ul>
 </li>
 </ul>
@@ -412,6 +414,27 @@ The associated RC and SC are immediatly closed.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li><a href="../registry.html">Registry</a>'s <code>system.processes.terminate_delay</code> key (default: 2s) (2 bytes)</li>
+</ul>
+<h3 id="0xd4-device_changed"><a class="header" href="#0xd4-device_changed"><code>0xD4</code> DEVICE_CHANGED</a></h3>
+<p>Sent to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service only, when a hardware component is plugged, unplugged, or when its <a href="hardware.html#raw-device-descriptor">raw device descriptor (RDD)</a> changes.</p>
+<p>The <a href="hardware.html#kernel-device-identifier">KDI</a> is guaranteed to remain the same for each individual devices.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Event code (1 byte):
+<ul>
+<li><code>0x01</code>: a component was connected on this port</li>
+<li><code>0x02</code>: the connected component was disconnected from this port</li>
+<li><code>0x03</code>: the component connected to this port changed its <a href="hardware.html#raw-device-descriptor">RDD</a></li>
+</ul>
+</li>
+<li><a href="hardware.html#raw-device-descriptor">RDD</a></li>
+</ul>
+<h3 id="0xd4-device_interrupt"><a class="header" href="#0xd4-device_interrupt"><code>0xD4</code> DEVICE_INTERRUPT</a></h3>
+<p>Sent to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service only, when a hardware component raises a CPU interruption.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="hardware.html#kernel-device-identifier">KDI</a> (8 bytes)</li>
+<li>Interruption code (1 byte)</li>
 </ul>
 
                     </main>

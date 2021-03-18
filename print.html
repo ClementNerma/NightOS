@@ -3568,11 +3568,12 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <p>This document describes how the kernel interacts with hardware.</p>
 <ul>
 <li><a href="specs/kernel/hardware.html#hardware-detection">Hardware detection</a></li>
-<li><a href="specs/kernel/hardware.html#connection-specific-device-descriptor">Connection-specific device descriptor</a></li>
 <li><a href="specs/kernel/hardware.html#connection-interface-identifier">Connection interface identifier</a></li>
-<li><a href="specs/kernel/hardware.html#session-device-identifier">Session device identifier</a></li>
+<li><a href="specs/kernel/hardware.html#connection-specific-device-descriptor">Connection-specific device descriptor</a></li>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">Kernel device identifier</a></li>
 <li><a href="specs/kernel/hardware.html#raw-device-descriptor">Raw device descriptor</a></li>
 <li><a href="specs/kernel/hardware.html#drivers">Drivers</a></li>
+<li><a href="specs/kernel/hardware.html#kernel-communication">Kernel communication</a></li>
 </ul>
 <h2 id="hardware-detection"><a class="header" href="#hardware-detection">Hardware detection</a></h2>
 <p>Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional components afterwards.</p>
@@ -3583,9 +3584,6 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <li>USB components are enumerated through the USB protocol stack</li>
 </ul>
 <p>Some components may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.</p>
-<h2 id="connection-specific-device-descriptor"><a class="header" href="#connection-specific-device-descriptor">Connection-specific device descriptor</a></h2>
-<p>All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the <em>connection-specific device descriptor</em> (CSDD).</p>
-<p>Its size can vary up to 256 bytes.</p>
 <h2 id="connection-interface-identifier"><a class="header" href="#connection-interface-identifier">Connection interface identifier</a></h2>
 <p>The <em>connection interface identifier</em> (CII) is a 4-byte number describing what a component is connected to:</p>
 <ul>
@@ -3603,19 +3601,25 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <li>Port number (2 bytes)</li>
 </ul>
 <p>For instance, the seventh USB port on the second bus will have the <code>0x05010006</code> CII.</p>
-<h2 id="session-device-identifier"><a class="header" href="#session-device-identifier">Session device identifier</a></h2>
-<p>The kernel generates for each device a <em>session device identifier</em> (SDI), which is a random 4-byte number specific to the current session, allowing to plug up to 4 billion devices in a single session.</p>
+<h2 id="connection-specific-device-descriptor"><a class="header" href="#connection-specific-device-descriptor">Connection-specific device descriptor</a></h2>
+<p>All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the <em>connection-specific device descriptor</em> (CSDD).</p>
+<p>Its size can vary up to 256 bytes.</p>
+<h2 id="kernel-device-identifier"><a class="header" href="#kernel-device-identifier">Kernel device identifier</a></h2>
+<p>The <em>kernel device identifier</em> is an 8-byte identifier computed from the <a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> and the <a href="specs/kernel/hardware.html#connection-specific-device-descriptor">CSDD</a>. It is unique across all components, consistent across reboots, and identical from one computer to another for the same device. It is only meant for internal use by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service, which generates an <a href="specs/kernel/../services/system/hw.html#unique-device-identifier">UDI</a> for external use.</p>
 <h2 id="raw-device-descriptor"><a class="header" href="#raw-device-descriptor">Raw device descriptor</a></h2>
-<p>The <em>raw device descriptor</em> (RDD) is a data structure (up to 264 bytes) made of the followings:</p>
+<p>The <em>raw device descriptor</em> (RDD) is a data structure (up to 260 bytes) made of the followings:</p>
 <ul>
-<li><a href="specs/kernel/hardware.html#session-device-identifier">SDI</a> (4 bytes)</li>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> (8 bytes)</li>
 <li><a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> (4 bytes)</li>
+<li>Size of the <a href="specs/kernel/hardware.html#connection-specific-device-descriptor">CSDD</a>, in bytes (1 byte)</li>
 <li><a href="specs/kernel/hardware.html#connection-specific-device-descriptor">CSDD</a> (up to 256 bytes)</li>
 </ul>
 <p>This descriptor is then used by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service to expose the device to the rest of the operating system.</p>
 <h2 id="drivers"><a class="header" href="#drivers">Drivers</a></h2>
 <p>Drivers and software &lt;-&gt; hardware devices communications are handled by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> system service.</p>
 <p>You can find more about how drivers work in <a href="specs/kernel/../services/system/hw.html#drivers">this section</a>.</p>
+<h2 id="kernel-communication"><a class="header" href="#kernel-communication">Kernel communication</a></h2>
+<p>The kernel does not identify components, as this task is relegated to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service. In order to communicate with hardware components, only the <a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> is provided.</p>
 <h1 id="memory"><a class="header" href="#memory">Memory</a></h1>
 <p>This document describes how the kernel organizes and manages the memory.</p>
 <h2 id="pages"><a class="header" href="#pages">Pages</a></h2>
@@ -3671,9 +3675,9 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <li><code>PLL(e=32)</code> for <a href="specs/kernel/processes.html#drivable-devices">drivable devices</a></li>
 </ul>
 <h2 id="drivable-devices"><a class="header" href="#drivable-devices">Drivable devices</a></h2>
-<p>The drivable devices attribute contains the list of all devices' <a href="specs/kernel/hardware.html#session-device-identifier">SDI</a> the current process can drive.</p>
+<p>The drivable devices attribute contains the list of all devices' <a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> the current process can drive.</p>
 <p>The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an <a href="specs/kernel/memory.html#abstract-memory-segments">AMS</a> from it using the <a href="specs/kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall, as well as using DMA-related instructions in the CPU.</p>
-<p>This attribute is managed by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service and can only be updated by this service.</p>
+<p>This attribute is managed by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service and can only be updated by it.</p>
 <h2 id="raw-permissions"><a class="header" href="#raw-permissions">Raw permissions</a></h2>
 <p><em>Raw permissions</em> are used by system services to determine the permissions of a process without <a href="specs/kernel/ipc.html#exchanges-and-messages">sending a message</a> to the <a href="specs/kernel/../services/system/perm.html"><code>sys::perm</code></a> service and waiting for its answer, which would be costly in terms of performance.</p>
 <p>These permissions use a specific structure, specified in the <a href="specs/kernel/../services/system/perm.html#list-of-permissions">related service's specifications document</a>.</p>
@@ -3969,6 +3973,8 @@ Their length is determined when the message is sent which, coupled to <a href="s
 <li><a href="specs/kernel/signals.html#0x46-unsuspended"><code>0x46</code> UNSUSPENDED</a></li>
 <li><a href="specs/kernel/signals.html#0x4e-terminate"><code>0x4E</code> TERMINATE</a></li>
 <li><a href="specs/kernel/signals.html#0x4f-will_terminate"><code>0x4F</code> WILL_TERMINATE</a></li>
+<li><a href="specs/kernel/signals.html#0xd4-device_changed"><code>0xD4</code> DEVICE_CHANGED</a></li>
+<li><a href="specs/kernel/signals.html#0xd4-device_interrupt"><code>0xD4</code> DEVICE_INTERRUPT</a></li>
 </ul>
 </li>
 </ul>
@@ -4189,6 +4195,27 @@ The associated RC and SC are immediatly closed.</p>
 <ul>
 <li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.processes.terminate_delay</code> key (default: 2s) (2 bytes)</li>
 </ul>
+<h3 id="0xd4-device_changed"><a class="header" href="#0xd4-device_changed"><code>0xD4</code> DEVICE_CHANGED</a></h3>
+<p>Sent to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service only, when a hardware component is plugged, unplugged, or when its <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device descriptor (RDD)</a> changes.</p>
+<p>The <a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> is guaranteed to remain the same for each individual devices.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Event code (1 byte):
+<ul>
+<li><code>0x01</code>: a component was connected on this port</li>
+<li><code>0x02</code>: the connected component was disconnected from this port</li>
+<li><code>0x03</code>: the component connected to this port changed its <a href="specs/kernel/hardware.html#raw-device-descriptor">RDD</a></li>
+</ul>
+</li>
+<li><a href="specs/kernel/hardware.html#raw-device-descriptor">RDD</a></li>
+</ul>
+<h3 id="0xd4-device_interrupt"><a class="header" href="#0xd4-device_interrupt"><code>0xD4</code> DEVICE_INTERRUPT</a></h3>
+<p>Sent to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service only, when a hardware component raises a CPU interruption.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> (8 bytes)</li>
+<li>Interruption code (1 byte)</li>
+</ul>
 <h1 id="system-calls"><a class="header" href="#system-calls">System calls</a></h1>
 <p><em>System calls</em>, abbreviated <em>syscalls</em>, are a type of <a href="specs/kernel/kpc.html">KPC</a>. They allow a process to ask the kernel to perform an action.</p>
 <ul>
@@ -4244,7 +4271,6 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0xd1-sys_manage_process"><code>0xD1</code> SYS_MANAGE_PROCESS</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd2-sys_process_attributes"><code>0xD2</code> SYS_PROCESS_ATTRIBUTES</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd4-sys_enum_devices"><code>0xD4</code> SYS_ENUM_DEVICES</a></li>
-<li><a href="specs/kernel/syscalls.html#0xd5-sys_device_infos"><code>0xD5</code> SYS_DEVICE_INFOS</a></li>
 </ul>
 </li>
 </ul>
@@ -4708,7 +4734,7 @@ Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.
 <p>Requires the current process to have the device in its <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><a href="specs/kernel/hardware.html#session-device-identifier">SDI</a> of the device to map in memory (4 bytes)</li>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (4 bytes)</li>
 <li>Start address in the device's memory (8 bytes)</li>
 <li>Number of bytes to map (8 bytes)</li>
 <li>Start address to map in this process' memory (8 bytes)</li>
@@ -4722,7 +4748,7 @@ Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.
 <li><code>0x10</code>: The mapping's start address is not aligned with a page</li>
 <li><code>0x11</code>: The mapping's length is not a multiple of a page's size</li>
 <li><code>0x12</code>: The mapping's size is null (0 bytes)</li>
-<li><code>0x20</code>: The provided device SDI was not found</li>
+<li><code>0x20</code>: The provided device KDI was not found</li>
 <li><code>0x21</code>: The provided device is not compatible with MMIO</li>
 <li><code>0x22</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
 </ul>
@@ -4827,7 +4853,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <p>Requires the current process to have the device in its <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><a href="specs/kernel/hardware.html#session-device-identifier">SDI</a> of the device to map in memory (4 bytes)</li>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (4 bytes)</li>
 <li>Start address in the current process' address space (8 bytes)</li>
 <li>Length (8 bytes)</li>
 <li>Authorization (1 byte): <code>0x00</code> to allow the device to use this range, <code>0x01</code> to cancel an authorization</li>
@@ -4839,7 +4865,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x10</code>: The range's start address is not aligned with a page</li>
 <li><code>0x11</code>: The range's length is not a multiple of a page's size</li>
 <li><code>0x12</code>: The range's size is null (0 bytes)</li>
-<li><code>0x20</code>: The provided device SDI was not found</li>
+<li><code>0x20</code>: The provided device KDI was not found</li>
 <li><code>0x21</code>: The provided device is not compatible with DMA</li>
 <li><code>0x22</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
 </ul>
@@ -5163,12 +5189,19 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 </ul>
 <h3 id="0xd4-sys_enum_devices"><a class="header" href="#0xd4-sys_enum_devices"><code>0xD4</code> SYS_ENUM_DEVICES</a></h3>
 <p>Syscall resserved to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service.</p>
-<p>List devices matching a provided CII.</p>
-<p>For each device, its SDI (4 bytes) is written to the provided address.</p>
+<p>List devices with a provided <a href="specs/kernel/hardware.html#connection-interface-identifier">connection interface identifier (CII)</a>.</p>
+<p>For each device, its <a href="specs/kernel/hardware.html#connection-interface-identifier">raw device descriptor (RDD)</a> (up to 260 bytes) is written to the provided address.</p>
+<p>By prodiving a pattern with all bits set and a full CII, it is possible to retrieve informations from a single connection port.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> of the devices to list (4 bytes)
-<code>0</code> will list all devices</li>
+<li>Pattern type (1 byte):
+<ul>
+<li>Bit 0: match all connection types</li>
+<li>Bit 1: match all buses</li>
+<li>Bit 2: match all port numbers</li>
+</ul>
+</li>
+<li><a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> pattern of the devices to list (4 bytes)</li>
 <li><a href="specs/kernel/data-structures.html#buffer-pointers">Writable buffer</a> (16 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -5180,23 +5213,6 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <ul>
 <li><code>0x10</code>: Invalid connection type in CII</li>
 <li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service</li>
-</ul>
-<h3 id="0xd5-sys_device_infos"><a class="header" href="#0xd5-sys_device_infos"><code>0xD5</code> SYS_DEVICE_INFOS</a></h3>
-<p>Syscall resserved to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service.</p>
-<p>Get the <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device descriptor</a> of a single device.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li><a href="specs/kernel/hardware.html#session-device-identifier">SDI</a> of the device to get informations from (4 bytes)</li>
-<li>Address to a writable buffer (8 bytes)</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<ul>
-<li>Number of written bytes (1 byte)</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x20</code>: Caller process is not the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service</li>
-<li><code>0x21</code>: No device was found with this SDI</li>
 </ul>
 <h1 id="integration-services"><a class="header" href="#integration-services">Integration services</a></h1>
 <p>This document lists all <a href="specs/services/integration/../../services.html#types-of-services">integration services</a>, which are services whose methods and notifications follow a convention established by the system itself to permit an integration at different levels.</p>
@@ -6043,8 +6059,10 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p>An application exposing such a service in its <a href="specs/services/drivers/../../applications/manifest.html">manifest</a> will gain the permission to <a href="specs/services/drivers/../system/hw.html#0x10-register_driver">register itself as a driver</a> through the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="specs/services/drivers/../system/README.html">system services</a>.</p>
 <h2 id="list-of-driver-services"><a class="header" href="#list-of-driver-services">List of driver services</a></h2>
+<p>The list below indicates the service as well as the <a href="specs/services/drivers/../system/hw.html#driven-device-type">DDT</a> it is tied to.</p>
+<h3 id="storage-drivers"><a class="header" href="#storage-drivers">Storage drivers</a></h3>
 <ul>
-<li><a href="specs/services/drivers/filesystem.html">Filesystem driver service</a></li>
+<li><code>0x0001</code> <a href="specs/services/drivers/filesystem.html">Filesystem driver service</a></li>
 </ul>
 <h1 id="filesystem-driver-service"><a class="header" href="#filesystem-driver-service">Filesystem driver service</a></h1>
 <p><strong>TODO</strong></p>
@@ -6311,19 +6329,16 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p>It is known as the <a href="specs/services/system/../../../technical/io-manager.html">I/O manager</a>, or Ion.</p>
 <ul>
 <li><a href="specs/services/system/hw.html#hardware-detection">Hardware detection</a></li>
+<li><a href="specs/services/system/hw.html#unique-device-identifier">Unique device identifier</a></li>
 <li><a href="specs/services/system/hw.html#device-formats">Device formats</a>
 <ul>
 <li><a href="specs/services/system/hw.html#device-type-descriptor">Device type descriptor</a></li>
-<li><a href="specs/services/system/hw.html#unique-device-identifier">Unique device identifier</a></li>
-<li><a href="specs/services/system/hw.html#driver-device-descriptor">Driver device descriptor</a></li>
+<li><a href="specs/services/system/hw.html#drivable-device-raw-descriptor">Drivable device raw descriptor</a></li>
 <li><a href="specs/services/system/hw.html#driven-device-type">Driven device type</a></li>
 </ul>
 </li>
 <li><a href="specs/services/system/hw.html#normalization">Normalization</a>
 <ul>
-<li><a href="specs/services/system/hw.html#normalized-methods">Normalized methods</a></li>
-<li><a href="specs/services/system/hw.html#normalized-interrupts">Normalized interrupts</a></li>
-<li><a href="specs/services/system/hw.html#normalized-notifications">Normalized notifications</a></li>
 <li><a href="specs/services/system/hw.html#patterns">Patterns</a></li>
 </ul>
 </li>
@@ -6345,7 +6360,8 @@ If it cannot, the default file manager will be in charge of providing a placehol
 </li>
 <li><a href="specs/services/system/hw.html#notifications">Notifications</a>
 <ul>
-<li><a href="specs/services/system/hw.html#0x02-device_event">0x02 <code>DEVICE_EVENT</code></a></li>
+<li><a href="specs/services/system/hw.html#0x02-identify_device">0x02 <code>IDENTIFY_DEVICE</code></a></li>
+<li><a href="specs/services/system/hw.html#0x03-device_event">0x03 <code>DEVICE_EVENT</code></a></li>
 <li><a href="specs/services/system/hw.html#0x10-device_interrupt">0x10 <code>DEVICE_INTERRUPT</code></a></li>
 <li><a href="specs/services/system/hw.html#0xa0-driver_method_request">0xA0 <code>DRIVER_METHOD_REQUEST</code></a></li>
 <li><a href="specs/services/system/hw.html#0xa1-device_norm_notif">0xA1 <code>DEVICE_NORM_NOTIF</code></a></li>
@@ -6353,7 +6369,10 @@ If it cannot, the default file manager will be in charge of providing a placehol
 </li>
 </ul>
 <h2 id="hardware-detection-1"><a class="header" href="#hardware-detection-1">Hardware detection</a></h2>
-<p>Hardware detection is handled by <a href="specs/services/system/../../kernel/hardware.html#hardware-detection">the kernel itself</a>, which then exposes a <a href="specs/services/system/../../kernel/hardware.html#raw-device-descriptor"><em>raw device descriptor</em> (RDD)</a> as well as a <a href="specs/services/system/../../kernel/hardware.html#connection-interface-identifier"><em>connection interface identifier</em> (CII)</a> and a <a href="specs/services/system/../../kernel/hardware.html#session-device-identifier"><em>session device identifier</em> (SDI)</a>.</p>
+<p>Hardware detection is handled by <a href="specs/services/system/../../kernel/hardware.html#hardware-detection">the kernel itself</a>, which exposes a <a href="specs/services/system/../../kernel/hardware.html#raw-device-descriptor"><em>raw device descriptor</em> (RDD)</a>.</p>
+<h2 id="unique-device-identifier"><a class="header" href="#unique-device-identifier">Unique device identifier</a></h2>
+<p>Each device gets a <em>unique device identifier</em> (UDI) encoded on 8 bytes, which identifies a unique hardware component. It is unique across components and consistent across reboots. Unlike the <a href="specs/services/system/../../kernel/hardware.html#kernel-device-identifier">KDI</a>, the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.</p>
+<p>The identification mechanism depends on the connection type and is yet to be specified.</p>
 <h2 id="device-formats"><a class="header" href="#device-formats">Device formats</a></h2>
 <p>This section describes the multiple formats used by this service to deal with devices.</p>
 <h3 id="device-type-descriptor"><a class="header" href="#device-type-descriptor">Device type descriptor</a></h3>
@@ -6371,22 +6390,17 @@ If it cannot, the default file manager will be in charge of providing a placehol
 </li>
 <li>...</li>
 </ul>
-<h3 id="unique-device-identifier"><a class="header" href="#unique-device-identifier">Unique device identifier</a></h3>
-<p>It also derives a <em>unique device identifier</em> (UDI) encoded on 265 bytes, which is made of:</p>
+<h3 id="drivable-device-raw-descriptor"><a class="header" href="#drivable-device-raw-descriptor">Drivable device raw descriptor</a></h3>
+<p>A <em>drivable device raw descriptor</em> (DDRD) is a 512-byte long data structure meant to be used by <a href="specs/services/system/hw.html#drivers">drivers</a>. It uses the following format:</p>
 <ul>
-<li><a href="specs/services/system/../../kernel/hardware.html#session-device-identifier">SDI</a> (4 bytes)</li>
+<li><a href="specs/services/system/hw.html#unique-device-identifier">UDI</a> (8 bytes)</li>
 <li><a href="specs/services/system/../../kernel/hardware.html#connection-interface-identifier">CII</a> (4 bytes)</li>
 <li>Size of the <a href="specs/services/system/hw.html#device-type-descriptor">DTD</a> (1 byte)</li>
-<li><a href="specs/services/system/hw.html#device-type-descriptor">DTD</a> (256 bytes, weakest bits filled with zeros)</li>
-</ul>
-<h3 id="driver-device-descriptor"><a class="header" href="#driver-device-descriptor">Driver device descriptor</a></h3>
-<p>A <em>driver device descriptor</em> (DDD) is a data structure meant to be used by <a href="specs/services/system/hw.html#drivers">drivers</a>. It uses the following format:</p>
-<ul>
-<li>Bytes 000-264: Device's <a href="specs/services/system/hw.html#unique-device-identifier">UDI</a></li>
-<li>Bytes 265-512: <em>Future-proof</em></li>
+<li><a href="specs/services/system/hw.html#device-type-descriptor">DTD</a> (256 bytes, unused weakest bytes filled with zeros)</li>
+<li><em>Future-proof</em></li>
 </ul>
 <h3 id="driven-device-type"><a class="header" href="#driven-device-type">Driven device type</a></h3>
-<p>A <em>driven device type</em> (DDT), usually referred to as the <em>device type</em>, is generated by the <a href="specs/services/system/hw.html#drivers">driver</a> for each device is drives. This is a normalized value, used by the system to determine which actions can be performed through this device.</p>
+<p>A <em>driven device type</em> (DDT), usually referred to as the <em>device type</em>, is generated by the <a href="specs/services/system/hw.html#drivers">driver</a> for each device it drives from the <a href="specs/services/system/hw.html#drivable-device-raw-descriptor">DDRD</a>. This is a normalized value, used by the system to determine which actions can be performed through this device.</p>
 <p>It's a 4-byte value, the strongest two bytes describing the <em>category</em> and the weakest two the <em>sub-category</em>.</p>
 <p>The following list contains all possible values for DDTs, but is <strong>far from being complete yet</strong>. It will also grow over time as new device types appear on the market.</p>
 <ul>
@@ -6401,21 +6415,11 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <li>...</li>
 </ul>
 <h2 id="normalization"><a class="header" href="#normalization">Normalization</a></h2>
-<h3 id="normalized-methods"><a class="header" href="#normalized-methods">Normalized methods</a></h3>
-<p>When a device is driven, other processes can ask this service to use <em>normalized methods</em>. These are methods that allow to perform a specific action or to receive <a href="specs/services/system/hw.html#normalized-notifications"><em>normalized notifications</em></a> about specific events of a specific device.</p>
+<p>When a device is driven, other processes can ask this service to use <em>normalized methods</em>. These are methods that allow to perform a specific action or to receive <a href="specs/services/system/hw.html#normalization"><em>normalized notifications</em></a> about specific events of a specific device.</p>
+<p>Also, interrupts are normalized to ensure constancy across devices of the same type. They are sent to the driver processes using the <a href="specs/services/system/hw.html#0x10-device_interrupt"><code>DEVICE_EVENT</code></a> notification.</p>
+<p>The normalization of methods, notifications and interrupts is performed by the <a href="specs/services/system/hw.html#drivers">driver</a> in charge of the device.</p>
 <p>There are several methods, depending on the <a href="specs/services/system/hw.html#driven-device-type">device's type (DDT)</a>. Notifications differ as well.</p>
-<p>The following list contains all methods and related notifications for all DDTs, but is <strong>far from being complete yet</strong>. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.</p>
-<p><strong>TODO</strong></p>
-<h3 id="normalized-interrupts"><a class="header" href="#normalized-interrupts">Normalized interrupts</a></h3>
-<p>Some devices use interrupts to notify the system of a particular event. In such case, the interrupt is normalized to a format called the <em>normalized interrupt format</em>, which is then sent to the driver process using the <a href="specs/services/system/hw.html#0x02-device_event"><code>DEVICE_EVENT</code></a> notification.</p>
-<p>The normalized interrupt format depends on the <a href="specs/services/system/hw.html#driven-device-type">device's type (DDT)</a>.</p>
-<p>The following list contains all normalized interrupts for all DDTs, but is <strong>far from being complete yet</strong>. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.</p>
-<p><strong>TODO</strong></p>
-<h3 id="normalized-notifications"><a class="header" href="#normalized-notifications">Normalized notifications</a></h3>
-<p>The <em>normalized notifications</em> are a type of notifications sent by a <a href="specs/services/system/hw.html#drivers">driver</a> to processes that subscribed to them using <a href="specs/services/system/hw.html#normalized-methods">normalized methods</a>. They are derived from the device's interrupts and events pulled from its memory, after a translation by the driver itself.</p>
-<p>The normalized notification format depends on the <a href="specs/services/system/hw.html#driven-device-type">device's type (DDT)</a>.</p>
-<p>The following list contains all normalized notifications for all DDTs, but is <strong>far from being complete yet</strong>. It will also grow over time as new device types appear on the market and as existing devices evolve to provide new features.</p>
-<p><strong>TODO</strong></p>
+<p>You can find the <strong>far from being complete</strong> list in the relevant <a href="specs/services/system/../drivers/README.html">specifications directory</a>. It will grow over time as new device types appear on the market and as existing devices evolve to provide new features.</p>
 <h3 id="patterns"><a class="header" href="#patterns">Patterns</a></h3>
 <p>Several methods of this service use <em>patterns</em>, which allow to match devices depending on several criterias.</p>
 <p>A pattern is a data structure whose size varies from 5 to 277 bytes made of the following:</p>
@@ -6431,7 +6435,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <li>Bus number (1 byte)</li>
 <li>Port number (1 byte)</li>
 <li>DTD length (1 byte) - <code>0</code> to omit DTD</li>
-<li>DTD pattern indicator (16 bytes, only if DTD) - indicates which bytes of the DTD must be used as patterns</li>
+<li>DTD pattern indicator (32 bytes, only if DTD) - indicates which bytes of the DTD must be used as patterns</li>
 <li>DTD (up to 256 bytes)</li>
 </ul>
 <p>It's possible to match only devices that use a given connection type, and more specifically on a given bus and/or port.</p>
@@ -6439,12 +6443,13 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p>For instance, providing the DTD <code>0x0100B2</code> with the DTD pattern indicator set to <code>0b01000000</code>, the second byte will match all devices.</p>
 <h2 id="drivers-1"><a class="header" href="#drivers-1">Drivers</a></h2>
 <p>From a higher level point of view, drivers are <a href="specs/services/system/../../services.html">services</a> that declare their parent applications as being able to handle certain type of devices through the <a href="specs/services/system/hw.html#0x10-register_driver"><code>REGISTER_DRIVER</code></a> method, using <a href="specs/services/system/hw.html#patterns">patterns</a>.</p>
-<p>Registering as a driver for a pattern requires the application to expose the <a href="specs/services/system/../../services.html#types-of-services">driver service(s)</a> relevant to this pattern.</p>
-<p>When a device is connected, a driver is selected from the list of drivers able to handle this specific device. This driver process then receives the <a href="specs/services/system/hw.html#0x02-device_event"><code>DEVICE_EVENT</code></a> notification.</p>
+<p>Registering as a driver for a pattern requires the application to expose the <a href="specs/services/system/../../services.html#types-of-services">driver service(s)</a> relevant to the <a href="specs/services/system/hw.html#driven-device-type">DDT</a> provided in the pattern.</p>
+<p>When a device is connected, a driver is selected from the list of drivers able to handle this specific device. If the device is connected for the very first time, the selected driver process first receives an <a href="specs/services/system/hw.html#0x02-identify_device"><code>IDENTIFY_DEVICE</code></a> notification to translate the <a href="specs/services/system/hw.html#drivable-device-raw-descriptor">DDRD</a> into a <a href="specs/services/system/hw.html#driven-device-type">DDT</a>.</p>
+<p>Then, the driver process receives a <a href="specs/services/system/hw.html#0x03-device_event"><code>DEVICE_EVENT</code></a> notification, which will also be sent if the status of the device changes.</p>
 <p>From this point, the driver can create an <a href="specs/services/system/../../kernel/memory.html#abstract-memory-segments">AMS</a> from the device's memory using the <a href="specs/services/system/../../kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall.</p>
 <p>It can also get informed of interrupts the device raises through the <a href="specs/services/system/hw.html#0x10-device_interrupt"><code>DEVICE_INTERRUPT</code></a> notification.</p>
-<p>Other processes can then ask the driver to perform specific actions depending on the type of device, using <a href="specs/services/system/hw.html#normalized-methods">normalized methods</a> which can be sent to the driver using the <a href="specs/services/system/hw.html#0xa0-ask_driver"><code>ASK_DRIVER</code></a> method. The driver receives these informations through the <a href="specs/services/system/hw.html#0xa0-driver_method_request"><code>DRIVER_METHOD_REQUEST</code></a> notification.</p>
-<p>The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to <a href="specs/services/system/hw.html#normalized-notifications">normalized notifications</a> which can then be sent to processes that subscribed to them using the related <a href="specs/services/system/hw.html#normalized-methods">normalized methods</a>.</p>
+<p>Other processes can then ask the driver to perform specific actions depending on the type of device, using <a href="specs/services/system/hw.html#normalization">normalized methods</a> which can be sent to the driver using the <a href="specs/services/system/hw.html#0xa0-ask_driver"><code>ASK_DRIVER</code></a> method. The driver receives these informations through the <a href="specs/services/system/hw.html#0xa0-driver_method_request"><code>DRIVER_METHOD_REQUEST</code></a> notification.</p>
+<p>The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to <a href="specs/services/system/hw.html#normalization">normalized notifications</a> which can then be sent to processes that subscribed to them using the related <a href="specs/services/system/hw.html#normalization">normalized methods</a>.</p>
 <p>You can see the complete list of methods and notifications for each type of driver services in the <a href="specs/services/system/../drivers/README.html">related section of the documentation</a>.</p>
 <h3 id="driver-selection"><a class="header" href="#driver-selection">Driver selection</a></h3>
 <p>A driver is selected for a specific hardware component if it matches any of the following criterias, in decreasing importance order:</p>
@@ -6459,7 +6464,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p>Although hardware devices' interrupts are notified to the driver through <a href="specs/services/system/../../kernel/ipc.html#methods-and-notifications">service socket notifications</a>, the latency is still minimal as soon as the driver listens to the <a href="specs/services/system/../../kernel/signals.html#0x27-recv_sock_msg"><code>RECV_SOCK_MSG</code></a> signal, which like all signals uses interrupts and so guarantees a very low latency.</p>
 <h2 id="methods-6"><a class="header" href="#methods-6">Methods</a></h2>
 <h3 id="0x01-enum_devices"><a class="header" href="#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></h3>
-<p>Enumerate connected devices.</p>
+<p>Enumerate connected devices, reserved to <a href="specs/services/system/../../services.html">system services</a>.</p>
 <p>It's also possible to only count the number of devices matching the provided criterias by providing a start index and end index of <code>0</code>.</p>
 <p><strong>Required permission:</strong> <code>devices.enum</code></p>
 <p><strong>Arguments:</strong></p>
@@ -6472,7 +6477,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <ul>
 <li>Number of found devices globally (4 bytes)</li>
 <li>Number of devices listed in this answer (4 bytes)</li>
-<li><a href="specs/services/system/hw.html#driver-device-descriptor">DDD</a> of each device (512 bytes * number of devices)</li>
+<li><a href="specs/services/system/hw.html#drivable-device-raw-descriptor">DDRD</a> of each device (512 bytes * number of devices)</li>
 <li><code>0x01</code> if some devices were masked due to insufficient permissions, <code>0x00</code> else (1 byte)</li>
 </ul>
 <p><strong>Errors:</strong></p>
@@ -6483,13 +6488,14 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <li><code>0x13</code>: Port number was provided without a connection type</li>
 <li><code>0x14</code>: Both bus number and port number were provided</li>
 <li><code>0x15</code>: Invalid DTD</li>
-<li><code>0x20</code>: Range is greater than the available answer size</li>
-<li><code>0x21</code>: Provided bus was not found</li>
-<li><code>0x22</code>: Provided port was not found</li>
+<li><code>0x20</code>: Client is not a <a href="specs/services/system/README.html">system service</a></li>
+<li><code>0x21</code>: Range is greater than the available answer size</li>
+<li><code>0x22</code>: Provided bus was not found</li>
+<li><code>0x23</code>: Provided port was not found</li>
 </ul>
 <h3 id="0x02-subscribe_devices"><a class="header" href="#0x02-subscribe_devices"><code>0x02</code> SUBSCRIBE_DEVICES</a></h3>
-<p>Subscribe to events related to devices matching a patterns.<br />
-All current and future devices matching this pattern will cause a <a href="specs/services/system/hw.html#0x02-device_event"><code>DEVICE_EVENT</code></a> notification.</p>
+<p>Subscribe to events related to devices matching a patterns, reserved to <a href="specs/services/system/README.html">system services</a>.</p>
+<p>All current and future devices matching this pattern will cause a <a href="specs/services/system/hw.html#0x03-device_event"><code>DEVICE_EVENT</code></a> notification.</p>
 <p><strong>Required permission:</strong> <code>devices.subscribe</code></p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -6500,18 +6506,20 @@ All current and future devices matching this pattern will cause a <a href="specs
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Asked to unsubscribe but no subscription is active for this pattern</li>
+<li><code>0x20</code>: Client is not a <a href="specs/services/system/README.html">system service</a></li>
+<li><code>0x21</code>: Asked to unsubscribe but no subscription is active for this pattern</li>
 </ul>
 <h3 id="0x10-register_driver"><a class="header" href="#0x10-register_driver"><code>0x10</code> REGISTER_DRIVER</a></h3>
 <p>Set up a service as a driver for all devices matching a pattern.<br />
 If multiple drivers have colliding patterns, the final user will be prompted to choose a driver.</p>
-<p>The driver process will receive <a href="specs/services/system/hw.html#0x02-device_event"><code>DEVICE_EVENT</code></a> notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.<br />
+<p>When a new device is connected, the driver process will receive an <a href="specs/services/system/hw.html#0x02-identify_device"><code>IDENTIFY_DEVICE</code></a> notification to translate the <a href="specs/services/system/hw.html#drivable-device-raw-descriptor">DDRD</a> into a <a href="specs/services/system/hw.html#driven-device-type">DDT</a>.</p>
+<p>The driver process will receive <a href="specs/services/system/hw.html#0x03-device_event"><code>DEVICE_EVENT</code></a> notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.<br />
 Notifications are also retroactive, which means they will be sent for already-connected devices.</p>
 <p>The driver will also have the device registered in its <a href="specs/services/system/../../kernel/processes.html#drivable-devices">drivable devices attribute</a>, allowing it to use the <a href="specs/services/system/../../kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall to map the device's memory in its own.</p>
 <p><strong>Required permission:</strong> <code>devices.register_driver</code></p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><a href="specs/services/system/hw.html#patterns">Pattern</a> of the devices to drive (277 bytes)</li>
+<li><a href="specs/services/system/hw.html#patterns">Pattern</a> of the devices to drive (up to 277 bytes)</li>
 </ul>
 <p><strong>Answer:</strong></p>
 <p><em>None</em></p>
@@ -6526,19 +6534,19 @@ Notifications are also retroactive, which means they will be sent for already-co
 <p><strong>Required permission:</strong> <em>None</em></p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><a href="specs/services/system/hw.html#patterns">Pattern</a> to unsubscribe from (277 bytes)</li>
+<li><a href="specs/services/system/hw.html#patterns">Pattern</a> to unsubscribe from (up to 277 bytes)</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x30</code>: Current process is not registered as a driver for this pattern</li>
 </ul>
 <h3 id="0x20-notify_process"><a class="header" href="#0x20-notify_process"><code>0x20</code> NOTIFY_PROCESS</a></h3>
-<p>Send a notification to a process that registered itself for <a href="specs/services/system/hw.html#normalized-methods">normalized methods</a> through a <a href="specs/services/system/hw.html#normalized-methods">normalized method</a>.</p>
+<p>Send a notification to a process that registered itself for <a href="specs/services/system/hw.html#normalization">normalized methods</a> through a <a href="specs/services/system/hw.html#normalization">normalized method</a>.</p>
 <p><strong>Required permission:</strong> <em>None</em></p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Notification ID (8 bytes)</li>
-<li><a href="specs/services/system/hw.html#normalized-notifications"><em>Normalized notification's content</em></a></li>
+<li><a href="specs/services/system/hw.html#normalization"><em>Normalized notification's content</em></a></li>
 </ul>
 <p><strong>Answer:</strong></p>
 <p><em>Expected answer by the notified process for this method if any</em></p>
@@ -6547,11 +6555,12 @@ Notifications are also retroactive, which means they will be sent for already-co
 <li><code>0x20</code>: Unknown notification ID</li>
 </ul>
 <h3 id="0xa0-ask_driver"><a class="header" href="#0xa0-ask_driver"><code>0xA0</code> ASK_DRIVER</a></h3>
-<p>Ask a <a href="specs/services/system/hw.html#drivers">driver</a> to use a <a href="specs/services/system/hw.html#normalized-methods">normalized method</a> on a device it drives.</p>
+<p>Ask a <a href="specs/services/system/hw.html#drivers">driver</a> to use a <a href="specs/services/system/hw.html#normalization">normalized method</a> on a device it drives.</p>
+<p>Reserved to <a href="specs/services/system/README.html">system services</a>.</p>
 <p><strong>Required permission:</strong> <code>devices.ask_driver</code></p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li>Device's SDI (4 bytes)</li>
+<li>Device's <a href="specs/services/system/hw.html#unique-device-identifier">UDI</a> (8 bytes)</li>
 <li>Method's code (4 bytes)</li>
 <li>Method's arguments (size depends on the method)</li>
 </ul>
@@ -6559,20 +6568,36 @@ Notifications are also retroactive, which means they will be sent for already-co
 <p><em>Expected answer format for this method</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Unknown device SDI provided</li>
-<li><code>0x21</code>: Provided method code is invalid for this device</li>
-<li><code>0x22</code>: Invalid arguments provided for this method</li>
+<li><code>0x20</code>: Client is not a <a href="specs/services/system/README.html">system service</a></li>
+<li><code>0x21</code>: Unknown device UDI provided</li>
+<li><code>0x22</code>: Provided method code is invalid for this device</li>
+<li><code>0x23</code>: Invalid arguments provided for this method</li>
 </ul>
 <h2 id="notifications-3"><a class="header" href="#notifications-3">Notifications</a></h2>
-<h3 id="0x02-device_event"><a class="header" href="#0x02-device_event">0x02 <code>DEVICE_EVENT</code></a></h3>
-<p>Sent for a specific device to processes that either:</p>
+<h3 id="0x02-identify_device"><a class="header" href="#0x02-identify_device">0x02 <code>IDENTIFY_DEVICE</code></a></h3>
+<p>Sent for a specific device the client that was <a href="specs/services/system/hw.html#driver-selection">selected as its driver</a>.</p>
+<p><strong>Datafield:</strong></p>
 <ul>
-<li><a href="specs/services/system/hw.html#drivers">Drive</a> this specific device</li>
+<li><a href="specs/services/system/hw.html#drivable-device-raw-descriptor">DDRD</a> (512 bytes)</li>
+</ul>
+<p><strong>Expected answer:</strong></p>
+<ul>
+<li><a href="specs/services/system/hw.html#drivable-device-raw-descriptor">DTD</a> (512 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: The provided DTD is invalid</li>
+<li><code>0x21</code>: The client does not expose the <a href="specs/services/system/../drivers/README.html">driver service</a> relevant to this type of device</li>
+</ul>
+<h3 id="0x03-device_event"><a class="header" href="#0x03-device_event">0x03 <code>DEVICE_EVENT</code></a></h3>
+<p>Sent for a specific device to clients that either:</p>
+<ul>
+<li><a href="specs/services/system/hw.html#driver-selection">Drives</a> this specific device</li>
 <li>Subscribed to it using the <a href="specs/services/system/hw.html#0x02-subscribe_devices"><code>SUBSCRIBE_DEVICES</code></a> method</li>
 </ul>
 <p><strong>Datafield:</strong></p>
 <ul>
-<li><a href="specs/services/system/hw.html#driver-device-descriptor">DDD</a> (512 bytes)</li>
+<li><a href="specs/services/system/hw.html#driven-device-type">DDT</a> (512 bytes)</li>
 <li>Event code (1 byte):
 <ul>
 <li><code>0x10</code>: device was just connected</li>
@@ -6598,12 +6623,12 @@ Notifications are also retroactive, which means they will be sent for already-co
 <p>Sent to a <a href="specs/services/system/hw.html#drivers">driver</a> after a device it's currently driving raised an interrupt.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
-<li>Device's SDI (4 bytes)</li>
-<li><a href="specs/services/system/hw.html#normalized-interrupts">Normalized interrupt</a></li>
+<li>Device's <a href="specs/services/system/hw.html#unique-device-identifier">UDI</a> (8 bytes)</li>
+<li><a href="specs/services/system/hw.html#normalization">Normalized interrupt</a></li>
 </ul>
 <h3 id="0xa0-driver_method_request"><a class="header" href="#0xa0-driver_method_request">0xA0 <code>DRIVER_METHOD_REQUEST</code></a></h3>
 <p>Sent to a <a href="specs/services/system/hw.html#drivers">driver</a> after receiving a valid <a href="specs/services/system/hw.html#0xa0-ask_driver">normalized method request</a>.</p>
-<p>The driver is expected to answer using the relevant answer format for the provided <a href="specs/services/system/hw.html#normalized-methods">normalized method and arguments</a>.</p>
+<p>The driver is expected to answer using the relevant answer format for the provided <a href="specs/services/system/hw.html#normalization">normalized method and arguments</a>.</p>
 <p>The <em>notification ID</em> is generated by this service to allow the driver to <a href="specs/services/system/hw.html#0x20-notify_process">send normalized notifications</a> to a process that registers for it through this method without showing the caller process' PID to the driver process.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
@@ -6615,12 +6640,12 @@ Notifications are also retroactive, which means they will be sent for already-co
 <p><strong>Expected answer:</strong></p>
 <p><em>Expected answer format for this method if any</em></p>
 <h3 id="0xa1-device_norm_notif"><a class="header" href="#0xa1-device_norm_notif">0xA1 <code>DEVICE_NORM_NOTIF</code></a></h3>
-<p>Sent to a process that subscribed to <a href="specs/services/system/hw.html#normalized-methods">normalized notifications</a> of a device.<br />
+<p>Sent to a process that subscribed to <a href="specs/services/system/hw.html#normalization">normalized notifications</a> of a device.<br />
 This notification is transferred by the <code>sys::hw</code> service after the driver sent it its content through the <a href="specs/services/system/hw.html#0x20-notify_process"><code>NOTIFY_PROCESS</code></a> method.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
-<li>Device's SDI (4 bytes)</li>
-<li><a href="specs/services/system/hw.html#normalized-notifications"><em>Normalized notification's content</em></a></li>
+<li>Device's <a href="specs/services/system/hw.html#unique-device-identifier">UDI</a> (4 bytes)</li>
+<li><a href="specs/services/system/hw.html#normalization"><em>Normalized notification's content</em></a></li>
 </ul>
 <h1 id="sysperm-service"><a class="header" href="#sysperm-service"><code>sys::perm</code> service</a></h1>
 <p>The <code>sys::perm</code> service is used to manage the <a href="specs/services/system/../../../concepts/users.html#user-privileges">privileges</a> of <a href="specs/services/system/../../../concepts/users.html">users</a> and the <a href="specs/services/system/../../../features/permissions.html">permissions</a> of <a href="specs/services/system/../../kernel/processes.html">processes</a>.</p>

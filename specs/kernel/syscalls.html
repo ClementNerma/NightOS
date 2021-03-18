@@ -222,7 +222,6 @@
 <li><a href="#0xd1-sys_manage_process"><code>0xD1</code> SYS_MANAGE_PROCESS</a></li>
 <li><a href="#0xd2-sys_process_attributes"><code>0xD2</code> SYS_PROCESS_ATTRIBUTES</a></li>
 <li><a href="#0xd4-sys_enum_devices"><code>0xD4</code> SYS_ENUM_DEVICES</a></li>
-<li><a href="#0xd5-sys_device_infos"><code>0xD5</code> SYS_DEVICE_INFOS</a></li>
 </ul>
 </li>
 </ul>
@@ -686,7 +685,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <p>Requires the current process to have the device in its <a href="processes.html#drivable-devices">drivable devices attribute</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><a href="hardware.html#session-device-identifier">SDI</a> of the device to map in memory (4 bytes)</li>
+<li><a href="hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (4 bytes)</li>
 <li>Start address in the device's memory (8 bytes)</li>
 <li>Number of bytes to map (8 bytes)</li>
 <li>Start address to map in this process' memory (8 bytes)</li>
@@ -700,7 +699,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x10</code>: The mapping's start address is not aligned with a page</li>
 <li><code>0x11</code>: The mapping's length is not a multiple of a page's size</li>
 <li><code>0x12</code>: The mapping's size is null (0 bytes)</li>
-<li><code>0x20</code>: The provided device SDI was not found</li>
+<li><code>0x20</code>: The provided device KDI was not found</li>
 <li><code>0x21</code>: The provided device is not compatible with MMIO</li>
 <li><code>0x22</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
 </ul>
@@ -805,7 +804,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <p>Requires the current process to have the device in its <a href="processes.html#drivable-devices">drivable devices attribute</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><a href="hardware.html#session-device-identifier">SDI</a> of the device to map in memory (4 bytes)</li>
+<li><a href="hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (4 bytes)</li>
 <li>Start address in the current process' address space (8 bytes)</li>
 <li>Length (8 bytes)</li>
 <li>Authorization (1 byte): <code>0x00</code> to allow the device to use this range, <code>0x01</code> to cancel an authorization</li>
@@ -817,7 +816,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <li><code>0x10</code>: The range's start address is not aligned with a page</li>
 <li><code>0x11</code>: The range's length is not a multiple of a page's size</li>
 <li><code>0x12</code>: The range's size is null (0 bytes)</li>
-<li><code>0x20</code>: The provided device SDI was not found</li>
+<li><code>0x20</code>: The provided device KDI was not found</li>
 <li><code>0x21</code>: The provided device is not compatible with DMA</li>
 <li><code>0x22</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
 </ul>
@@ -1141,12 +1140,19 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 </ul>
 <h3 id="0xd4-sys_enum_devices"><a class="header" href="#0xd4-sys_enum_devices"><code>0xD4</code> SYS_ENUM_DEVICES</a></h3>
 <p>Syscall resserved to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service.</p>
-<p>List devices matching a provided CII.</p>
-<p>For each device, its SDI (4 bytes) is written to the provided address.</p>
+<p>List devices with a provided <a href="hardware.html#connection-interface-identifier">connection interface identifier (CII)</a>.</p>
+<p>For each device, its <a href="hardware.html#connection-interface-identifier">raw device descriptor (RDD)</a> (up to 260 bytes) is written to the provided address.</p>
+<p>By prodiving a pattern with all bits set and a full CII, it is possible to retrieve informations from a single connection port.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><a href="hardware.html#connection-interface-identifier">CII</a> of the devices to list (4 bytes)
-<code>0</code> will list all devices</li>
+<li>Pattern type (1 byte):
+<ul>
+<li>Bit 0: match all connection types</li>
+<li>Bit 1: match all buses</li>
+<li>Bit 2: match all port numbers</li>
+</ul>
+</li>
+<li><a href="hardware.html#connection-interface-identifier">CII</a> pattern of the devices to list (4 bytes)</li>
 <li><a href="data-structures.html#buffer-pointers">Writable buffer</a> (16 bytes)</li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -1158,23 +1164,6 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <ul>
 <li><code>0x10</code>: Invalid connection type in CII</li>
 <li><code>0x20</code>: Caller process is not the <a href="../services/system/hw.html"><code>sys::hw</code></a> service</li>
-</ul>
-<h3 id="0xd5-sys_device_infos"><a class="header" href="#0xd5-sys_device_infos"><code>0xD5</code> SYS_DEVICE_INFOS</a></h3>
-<p>Syscall resserved to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service.</p>
-<p>Get the <a href="hardware.html#raw-device-descriptor">raw device descriptor</a> of a single device.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li><a href="hardware.html#session-device-identifier">SDI</a> of the device to get informations from (4 bytes)</li>
-<li>Address to a writable buffer (8 bytes)</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<ul>
-<li>Number of written bytes (1 byte)</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x20</code>: Caller process is not the <a href="../services/system/hw.html"><code>sys::hw</code></a> service</li>
-<li><code>0x21</code>: No device was found with this SDI</li>
 </ul>
 
                     </main>

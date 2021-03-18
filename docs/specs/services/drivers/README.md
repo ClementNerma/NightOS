@@ -8,4 +8,8 @@ These services are not available directly to the end applications ; they can onl
 
 ## List of driver services
 
-* [Filesystem driver service](filesystem.md)
+The list below indicates the service as well as the [DDT](../system/hw.md#driven-device-type) it is tied to.
+
+### Storage drivers
+
+* `0x0001` [Filesystem driver service](filesystem.md)

@@ -53,7 +53,6 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0xD1` SYS_MANAGE_PROCESS](#0xd1-sys_manage_process)
   - [`0xD2` SYS_PROCESS_ATTRIBUTES](#0xd2-sys_process_attributes)
   - [`0xD4` SYS_ENUM_DEVICES](#0xd4-sys_enum_devices)
-  - [`0xD5` SYS_DEVICE_INFOS](#0xd5-sys_device_infos)
 
 ## Technical overview
 
@@ -600,7 +599,7 @@ Requires the current process to have the device in its [drivable devices attribu
 
 **Arguments:**
 
-- [SDI](hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
+- [KDI](hardware.md#kernel-device-identifier) of the device to map in memory (4 bytes)
 - Start address in the device's memory (8 bytes)
 - Number of bytes to map (8 bytes)
 - Start address to map in this process' memory (8 bytes)
@@ -614,7 +613,7 @@ Requires the current process to have the device in its [drivable devices attribu
 - `0x10`: The mapping's start address is not aligned with a page
 - `0x11`: The mapping's length is not a multiple of a page's size
 - `0x12`: The mapping's size is null (0 bytes)
-- `0x20`: The provided device SDI was not found
+- `0x20`: The provided device KDI was not found
 - `0x21`: The provided device is not compatible with MMIO
 - `0x22`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
 
@@ -739,7 +738,7 @@ Requires the current process to have the device in its [drivable devices attribu
 
 **Arguments:**
 
-- [SDI](hardware.md#session-device-identifier) of the device to map in memory (4 bytes)
+- [KDI](hardware.md#kernel-device-identifier) of the device to map in memory (4 bytes)
 - Start address in the current process' address space (8 bytes)
 - Length (8 bytes)
 - Authorization (1 byte): `0x00` to allow the device to use this range, `0x01` to cancel an authorization
@@ -753,7 +752,7 @@ _None_
 - `0x10`: The range's start address is not aligned with a page
 - `0x11`: The range's length is not a multiple of a page's size
 - `0x12`: The range's size is null (0 bytes)
-- `0x20`: The provided device SDI was not found
+- `0x20`: The provided device KDI was not found
 - `0x21`: The provided device is not compatible with DMA
 - `0x22`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
 
@@ -1132,14 +1131,19 @@ _For list-based attributes:_
 
 Syscall resserved to the [`sys::hw`](../services/system/hw.md) service.
 
-List devices matching a provided CII.
+List devices with a provided [connection interface identifier (CII)](hardware.md#connection-interface-identifier).
 
-For each device, its SDI (4 bytes) is written to the provided address.
+For each device, its [raw device descriptor (RDD)](hardware.md#connection-interface-identifier) (up to 260 bytes) is written to the provided address.
+
+By prodiving a pattern with all bits set and a full CII, it is possible to retrieve informations from a single connection port.
 
 **Arguments:**
 
-- [CII](hardware.md#connection-interface-identifier) of the devices to list (4 bytes)
-  `0` will list all devices
+- Pattern type (1 byte):
+  - Bit 0: match all connection types
+  - Bit 1: match all buses
+  - Bit 2: match all port numbers
+- [CII](hardware.md#connection-interface-identifier) pattern of the devices to list (4 bytes)
 - [Writable buffer](data-structures.md#buffer-pointers) (16 bytes)
 
 **Return value:**
@@ -1151,23 +1155,3 @@ For each device, its SDI (4 bytes) is written to the provided address.
 
 - `0x10`: Invalid connection type in CII
 - `0x20`: Caller process is not the [`sys::hw`](../services/system/hw.md) service
-
-### `0xD5` SYS_DEVICE_INFOS
-
-Syscall resserved to the [`sys::hw`](../services/system/hw.md) service.
-
-Get the [raw device descriptor](hardware.md#raw-device-descriptor) of a single device.
-
-**Arguments:**
-
-- [SDI](hardware.md#session-device-identifier) of the device to get informations from (4 bytes)
-- Address to a writable buffer (8 bytes)
-
-**Return value:**
-
-- Number of written bytes (1 byte)
-
-**Errors:**
-
-- `0x20`: Caller process is not the [`sys::hw`](../services/system/hw.md) service
-- `0x21`: No device was found with this SDI

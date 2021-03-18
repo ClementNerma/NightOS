@@ -24,6 +24,8 @@ _Signals_ are a type of [KPC](kpc.md). They are used by the kernel to send infor
   - [`0x46` UNSUSPENDED](#0x46-unsuspended)
   - [`0x4E` TERMINATE](#0x4e-terminate)
   - [`0x4F` WILL_TERMINATE](#0x4f-will_terminate)
+  - [`0xD4` DEVICE_CHANGED](#0xd4-device_changed)
+  - [`0xD4` DEVICE_INTERRUPT](#0xd4-device_interrupt)
 
 ## Technical overview
 
@@ -277,3 +279,27 @@ If no handler is registered for this signal, it will kill the process when recei
 **Datafield:**
 
 - [Registry](../registry.md)'s `system.processes.terminate_delay` key (default: 2s) (2 bytes)
+
+### `0xD4` DEVICE_CHANGED
+
+Sent to the [`sys::hw`](../services/system/hw.md) service only, when a hardware component is plugged, unplugged, or when its [raw device descriptor (RDD)](hardware.md#raw-device-descriptor) changes.
+
+The [KDI](hardware.md#kernel-device-identifier) is guaranteed to remain the same for each individual devices.
+
+**Datafield:**
+
+- Event code (1 byte):
+  - `0x01`: a component was connected on this port
+  - `0x02`: the connected component was disconnected from this port
+  - `0x03`: the component connected to this port changed its [RDD](hardware.md#raw-device-descriptor)
+- [RDD](hardware.md#raw-device-descriptor)
+
+
+### `0xD4` DEVICE_INTERRUPT
+
+Sent to the [`sys::hw`](../services/system/hw.md) service only, when a hardware component raises a CPU interruption.
+
+**Datafield:**
+
+- [KDI](hardware.md#kernel-device-identifier) (8 bytes)
+- Interruption code (1 byte)

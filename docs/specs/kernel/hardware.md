@@ -3,11 +3,12 @@
 This document describes how the kernel interacts with hardware.
 
 - [Hardware detection](#hardware-detection)
-- [Connection-specific device descriptor](#connection-specific-device-descriptor)
 - [Connection interface identifier](#connection-interface-identifier)
-- [Session device identifier](#session-device-identifier)
+- [Connection-specific device descriptor](#connection-specific-device-descriptor)
+- [Kernel device identifier](#kernel-device-identifier)
 - [Raw device descriptor](#raw-device-descriptor)
 - [Drivers](#drivers)
+- [Kernel communication](#kernel-communication)
 
 ## Hardware detection
 
@@ -20,12 +21,6 @@ As all components do not use the same connection protocols, the detection proces
 * USB components are enumerated through the USB protocol stack
 
 Some components may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.
-
-## Connection-specific device descriptor
-
-All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the _connection-specific device descriptor_ (CSDD).
-
-Its size can vary up to 256 bytes.
 
 ## Connection interface identifier
 
@@ -43,16 +38,23 @@ The *connection interface identifier* (CII) is a 4-byte number describing what a
 
 For instance, the seventh USB port on the second bus will have the `0x05010006` CII.
 
-## Session device identifier
+## Connection-specific device descriptor
 
-The kernel generates for each device a _session device identifier_ (SDI), which is a random 4-byte number specific to the current session, allowing to plug up to 4 billion devices in a single session.
+All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the _connection-specific device descriptor_ (CSDD).
+
+Its size can vary up to 256 bytes.
+
+## Kernel device identifier
+
+The _kernel device identifier_ is an 8-byte identifier computed from the [CII](#connection-interface-identifier) and the [CSDD](#connection-specific-device-descriptor). It is unique across all components, consistent across reboots, and identical from one computer to another for the same device. It is only meant for internal use by the [`sys::hw`](../services/system/hw.md) service, which generates an [UDI](../services/system/hw.md#unique-device-identifier) for external use.
 
 ## Raw device descriptor
 
-The _raw device descriptor_ (RDD) is a data structure (up to 264 bytes) made of the followings:
+The _raw device descriptor_ (RDD) is a data structure (up to 260 bytes) made of the followings:
 
-- [SDI](#session-device-identifier) (4 bytes)
+- [KDI](#kernel-device-identifier) (8 bytes)
 - [CII](#connection-interface-identifier) (4 bytes)
+- Size of the [CSDD](#connection-specific-device-descriptor), in bytes (1 byte)
 - [CSDD](#connection-specific-device-descriptor) (up to 256 bytes)
 
 This descriptor is then used by the [`sys::hw`](../services/system/hw.md) service to expose the device to the rest of the operating system.
@@ -62,3 +64,7 @@ This descriptor is then used by the [`sys::hw`](../services/system/hw.md) servic
 Drivers and software <-> hardware devices communications are handled by the [`sys::hw`](../services/system/hw.md) system service.
 
 You can find more about how drivers work in [this section](../services/system/hw.md#drivers).
+
+## Kernel communication
+
+The kernel does not identify components, as this task is relegated to the [`sys::hw`](../services/system/hw.md) service. In order to communicate with hardware components, only the [CII](#connection-interface-identifier) is provided.

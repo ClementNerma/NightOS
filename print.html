@@ -6045,7 +6045,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <li><code>0xF0</code>: Unspecified error</li>
 </ul>
 <h1 id="filesystem-interfaces"><a class="header" href="#filesystem-interfaces">Filesystem interfaces</a></h1>
-<p>Filesystem interfaces are services that act as a layer of indirection between a storage <a href="specs/services/integration/../system/hw.html#drivers">driver</a> and the <a href="specs/services/integration/../system/fs.html"><code>sys::fs</code></a> service. Their role is to translate all common filesystem operations, such as items management and modification.</p>
+<p>Filesystem interfaces are services that act as a layer of indirection between a storage <a href="specs/services/integration/../system/hw.html#drivers">driver</a> and the <a href="specs/services/integration/../system/fs.html"><code>sys::fs</code></a> service. Their role is to translate all common filesystem operations, such as items management and modification, for filesystems that aren't <a href="specs/services/integration/../system/fs.html#natively-handled-filesystems">natively handled</a>. They heavily communicate with the <a href="specs/services/integration/../system/hw.html"><code>sys::hw</code></a> service to communicate with the underlying storage device.</p>
 <p>Most methods and notifications of filesystems interfaces are also available in the <a href="specs/services/integration/../system/fs.html"><code>sys::fs</code></a> service, with first perform permissions checking and determines the device and location to perform the operation on.</p>
 <p>As an application can only expose one single filesystem interface service, the said service will handle all of the hardware components driven by the said process. This is why the the <a href="specs/services/integration/../../filesystem.html#filesystem-unique-identifier">FSID</a> of the target filesystem is provided for each request.</p>
 <h2 id="filesystem-paths"><a class="header" href="#filesystem-paths">Filesystem paths</a></h2>
@@ -6056,7 +6056,46 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p>Empty and <code>.</code> components are ignored, while components equal to <code>..</code> will make this component ignored and remove the previous component in the list.</p>
 <p>The slash (<code>/</code>) character is forbidden in components.</p>
 <h2 id="methods-4"><a class="header" href="#methods-4">Methods</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x01-handled_fs_list"><a class="header" href="#0x01-handled_fs_list"><code>0x01</code> HANDLED_FS_LIST</a></h3>
+<p>Get informations about each filesystem handled by the current interface.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Answer:</strong></p>
+<ul>
+<li><a href="specs/services/integration/../../kernel/data-structures.html#delimited-lists">Delimited list</a> of filesystem informations:
+<ul>
+<li>Identifier used for internal use in the interface (1 byte)</li>
+<li>Name of the filesystem as a <a href="specs/services/integration/../../kernel/data-structures.html#delimited-strings">delimited string</a></li>
+<li><a href="specs/services/integration/../../kernel/data-structures.html#options">Optional</a> filesystem <a href="specs/services/integration/../../kernel/data-structures.html#bitmap-images">icon</a></li>
+<li>Capabilities byte (1 byte):
+<ul>
+<li>Bit 0: set if the filesystem is writable</li>
+<li>Bit 1: set if the filesystem handles <a href="specs/services/integration/../../filesystem.html#filesystem-unique-identifier">FSID</a></li>
+<li>Bit 2: set if the filesystem handles <a href="specs/services/integration/../../filesystem.html#symbolic-links">symbolic links</a></li>
+<li>Bit 3: set if the filesystem stores modification dates</li>
+<li>Bit 4: set if the filesystem stores last access dates</li>
+<li>Bit 5: set if the filesystem can store an owner UID on 8 bytes</li>
+<li>Bit 6: set if the filesystem can store access control lists</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>none</em></p>
+<h3 id="0x02-is_valid_partition"><a class="header" href="#0x02-is_valid_partition"><code>0x02</code> IS_VALID_PARTITION</a></h3>
+<p>Check if a given partition is of the type of filesystem handled by the current interface.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>First bytes of the partition (512 bytes)</li>
+<li>Last bytes of the partition (512 bytes)</li>
+</ul>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>Identifier of the filesystem if it can be handled by the current interface, <code>0</code> otherwise (1 byte)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
 <h1 id="driver-services"><a class="header" href="#driver-services">Driver services</a></h1>
 <p>This document lists all <a href="specs/services/drivers/../../services.html#types-of-services">driver services</a>, which are services whose methods and notifications follow a convention established by the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service to permit interaction with hardware components.</p>
 <p>An application exposing such a service in its <a href="specs/services/drivers/../../applications/manifest.html">manifest</a> will gain the permission to <a href="specs/services/drivers/../system/hw.html#0x10-register_driver">register itself as a driver</a> through the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service.</p>
@@ -6109,7 +6148,24 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <h1 id="sysfs-service"><a class="header" href="#sysfs-service"><code>sys::fs</code> service</a></h1>
 <p>The <code>sys::fs</code> service is in charge of operations related to the <a href="specs/services/system/../../filesystem.html">filesystems</a>.</p>
 <h2 id="behaviour"><a class="header" href="#behaviour">Behaviour</a></h2>
-<p>The typical sequence of filesystem operations is:</p>
+<h3 id="natively-handled-filesystems"><a class="header" href="#natively-handled-filesystems">Natively handled filesystems</a></h3>
+<p>The <code>sys::fs</code> service natively handles the following filesystem types:</p>
+<ul>
+<li>Btrfs</li>
+<li>Ext2 / Ext3 / Ext4</li>
+<li>NTFS</li>
+<li>FAT12 / FAT16 / FAT32</li>
+<li>exFAT</li>
+</ul>
+<p>For these, the typical sequence of filesystem operations is:</p>
+<ul>
+<li>The client calls the <code>sys::fs</code> service to perform a given operation</li>
+<li>The operation is directly performed by the service on the storage device thanks to <a href="specs/services/system/hw.html#direct-access-for-sysfs">direct access</a> and <a href="specs/services/system/hw.html#direct-operations">direct operations</a>.</li>
+</ul>
+<p>This is unless the storage device requires a <a href="specs/services/system/../drivers/storage.html">specific driver</a> which prevent from performing <a href="specs/services/system/hw.html#direct-operations">direct operations</a>.</p>
+<h3 id="extending-handled-filesystems"><a class="header" href="#extending-handled-filesystems">Extending handled filesystems</a></h3>
+<p>It is possible to use other filesystems that the natively handled ones, using <a href="specs/services/system/../integration/filesystem-interfaces.html">filesystem interfaces</a>.</p>
+<p>This, however, creates a higher latency as direct access and operations are not permitted anymore. The typical sequence of operations becomes:</p>
 <ul>
 <li>The client calls the <code>sys::fs</code> service to perform a given operation</li>
 <li>The operation is transmitted to the related <a href="specs/services/system/../integration/filesystem-interfaces.html">filesystem interface</a>...</li>
@@ -6123,6 +6179,9 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <li>Then back to the <code>sys::fs</code> service</li>
 <li>And finally to the client</li>
 </ul>
+<h3 id="filesystems-detection"><a class="header" href="#filesystems-detection">Filesystems detection</a></h3>
+<p>The <code>sys::fs</code> serviec is responsible for detecting filesystems. It performs this by contacting the <a href="specs/services/system/hw.html"><code>sys::hw</code></a> service to enumerate and access the different storage devices, as well as being notified when a storage device is connected, disconnected or changes.</p>
+<p>Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is <a href="specs/services/system/fs.html#natively-handled-filesystems">natively handled</a>), <a href="specs/services/system/../integration/filesystem-interfaces.html">filesystem interfaces</a> are used one by one to find one that can handle the said filesystem, using their <a href="specs/services/system/../integration/filesystem-interfaces.html#0x02-is_valid_partition"><code>IS_VALID_PARTITION</code></a> method.</p>
 <h2 id="methods-5"><a class="header" href="#methods-5">Methods</a></h2>
 <h3 id="0x01-is_fs_mounted"><a class="header" href="#0x01-is_fs_mounted"><code>0x01</code> IS_FS_MOUNTED</a></h3>
 <p>Check if a given filesystem is mounted.</p>
@@ -6367,6 +6426,13 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <li><a href="specs/services/system/hw.html#a-note-on-performances">A note on performances</a></li>
 </ul>
 </li>
+<li><a href="specs/services/system/hw.html#latency-reduction-for-storage-devices">Latency reduction for storage devices</a>
+<ul>
+<li><a href="specs/services/system/hw.html#direct-operations">Direct operations</a></li>
+<li><a href="specs/services/system/hw.html#direct-access-for-sysfs">Direct access for <code>sys::fs</code></a></li>
+<li><a href="specs/services/system/hw.html#best-and-worst-scenario">Best and worst scenario</a></li>
+</ul>
+</li>
 <li><a href="specs/services/system/hw.html#methods">Methods</a>
 <ul>
 <li><a href="specs/services/system/hw.html#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></li>
@@ -6481,6 +6547,28 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p>If no criteria is matched, the driver isn't selected to drive the given hardware component.</p>
 <h3 id="a-note-on-performances"><a class="header" href="#a-note-on-performances">A note on performances</a></h3>
 <p>Although hardware devices' interrupts are notified to the driver through <a href="specs/services/system/../../kernel/ipc.html#methods-and-notifications">service socket notifications</a>, the latency is still minimal as soon as the driver listens to the <a href="specs/services/system/../../kernel/signals.html#0x27-recv_sock_msg"><code>RECV_SOCK_MSG</code></a> signal, which like all signals uses interrupts and so guarantees a very low latency.</p>
+<h2 id="latency-reduction-for-storage-devices"><a class="header" href="#latency-reduction-for-storage-devices">Latency reduction for storage devices</a></h2>
+<h3 id="direct-operations"><a class="header" href="#direct-operations">Direct operations</a></h3>
+<p>All operations on storage devices - except on exotic storage devices requiring <a href="specs/services/system/../drivers/storage.html">dedicated driver</a> - all operations are performed directly by the <code>sys::hw</code> service, without the need for a driver.</p>
+<h3 id="direct-access-for-a-hrefspecsservicessystemfshtmlsysfsa"><a class="header" href="#direct-access-for-a-hrefspecsservicessystemfshtmlsysfsa">Direct access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
+<p>All operations related to storage devices are handled by the <a href="specs/services/system/fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all hardware components identified as storage devices, or their driver service in case it isn't handled natively.</p>
+<p>This optimization is not performed in the case the <code>sys::fs</code> service uses a <a href="specs/services/system/../integration/filesystem-interfaces.html">filesystem interfaces</a> to handle a non-common filesystem type, as the interface must only be able to use a specific portion of the storage device, and not is entirety.</p>
+<h3 id="best-and-worst-scenario"><a class="header" href="#best-and-worst-scenario">Best and worst scenario</a></h3>
+<p>Worst scenario is in the case of a filesystem making use a <a href="specs/services/system/../integration/filesystem-interfaces.html">filesystem interface</a>. Data traverses the following processes:</p>
+<ul>
+<li>Client</li>
+<li><code>sys::fs</code></li>
+<li>Filesystem interface</li>
+<li><code>sys::hw</code></li>
+<li>Underlying storage driver</li>
+<li>Hardware storage device</li>
+</ul>
+<p>Best scenario is for common filesystems:</p>
+<ul>
+<li>Client</li>
+<li><code>sys::fs</code></li>
+<li>Hardware storage device</li>
+</ul>
 <h2 id="methods-7"><a class="header" href="#methods-7">Methods</a></h2>
 <h3 id="0x01-enum_devices"><a class="header" href="#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></h3>
 <p>Enumerate connected devices, reserved to <a href="specs/services/system/../../services.html">system services</a>.</p>

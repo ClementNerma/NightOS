@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="filesystem-interfaces"><a class="header" href="#filesystem-interfaces">Filesystem interfaces</a></h1>
-<p>Filesystem interfaces are services that act as a layer of indirection between a storage <a href="../system/hw.html#drivers">driver</a> and the <a href="../system/fs.html"><code>sys::fs</code></a> service. Their role is to translate all common filesystem operations, such as items management and modification.</p>
+<p>Filesystem interfaces are services that act as a layer of indirection between a storage <a href="../system/hw.html#drivers">driver</a> and the <a href="../system/fs.html"><code>sys::fs</code></a> service. Their role is to translate all common filesystem operations, such as items management and modification, for filesystems that aren't <a href="../system/fs.html#natively-handled-filesystems">natively handled</a>. They heavily communicate with the <a href="../system/hw.html"><code>sys::hw</code></a> service to communicate with the underlying storage device.</p>
 <p>Most methods and notifications of filesystems interfaces are also available in the <a href="../system/fs.html"><code>sys::fs</code></a> service, with first perform permissions checking and determines the device and location to perform the operation on.</p>
 <p>As an application can only expose one single filesystem interface service, the said service will handle all of the hardware components driven by the said process. This is why the the <a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> of the target filesystem is provided for each request.</p>
 <h2 id="filesystem-paths"><a class="header" href="#filesystem-paths">Filesystem paths</a></h2>
@@ -179,7 +179,46 @@
 <p>Empty and <code>.</code> components are ignored, while components equal to <code>..</code> will make this component ignored and remove the previous component in the list.</p>
 <p>The slash (<code>/</code>) character is forbidden in components.</p>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x01-handled_fs_list"><a class="header" href="#0x01-handled_fs_list"><code>0x01</code> HANDLED_FS_LIST</a></h3>
+<p>Get informations about each filesystem handled by the current interface.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Answer:</strong></p>
+<ul>
+<li><a href="../../kernel/data-structures.html#delimited-lists">Delimited list</a> of filesystem informations:
+<ul>
+<li>Identifier used for internal use in the interface (1 byte)</li>
+<li>Name of the filesystem as a <a href="../../kernel/data-structures.html#delimited-strings">delimited string</a></li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> filesystem <a href="../../kernel/data-structures.html#bitmap-images">icon</a></li>
+<li>Capabilities byte (1 byte):
+<ul>
+<li>Bit 0: set if the filesystem is writable</li>
+<li>Bit 1: set if the filesystem handles <a href="../../filesystem.html#filesystem-unique-identifier">FSID</a></li>
+<li>Bit 2: set if the filesystem handles <a href="../../filesystem.html#symbolic-links">symbolic links</a></li>
+<li>Bit 3: set if the filesystem stores modification dates</li>
+<li>Bit 4: set if the filesystem stores last access dates</li>
+<li>Bit 5: set if the filesystem can store an owner UID on 8 bytes</li>
+<li>Bit 6: set if the filesystem can store access control lists</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>none</em></p>
+<h3 id="0x02-is_valid_partition"><a class="header" href="#0x02-is_valid_partition"><code>0x02</code> IS_VALID_PARTITION</a></h3>
+<p>Check if a given partition is of the type of filesystem handled by the current interface.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>First bytes of the partition (512 bytes)</li>
+<li>Last bytes of the partition (512 bytes)</li>
+</ul>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>Identifier of the filesystem if it can be handled by the current interface, <code>0</code> otherwise (1 byte)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
 
                     </main>
 

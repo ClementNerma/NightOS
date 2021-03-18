@@ -6410,7 +6410,7 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
 <h3 id="0x32-read_file_async"><a class="header" href="#0x32-read_file_async"><code>0x32</code> READ_FILE_ASYNC</a></h3>
-<p>Read a file synchronously to a writable <a href="specs/services/integration/../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
+<p>Asynchronously read a file to a writable <a href="specs/services/integration/../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
 <p>THe number of bytes to read is always provided to ensure it does not accidentally exceed the AMS's size.</p>
 <p>When the read is complete, a <a href="specs/services/integration/filesystem-interfaces.html#0x32-file_read"><code>FILE_READ</code></a> notification must be sent to the client.</p>
 <p><strong>Arguments:</strong></p>

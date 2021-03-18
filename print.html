@@ -3809,7 +3809,7 @@ The second entry is the last one and so simply contains the number of initialize
 <p>As shown above, if the number of colors is set to <code>0</code> for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for <code>256 power &lt;number in the header&gt;</code> different colors.</p>
 <p>Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.</p>
 <p>The size of pixel list can be calculated as <code>IW * IH * (NR + NG + NB + NA)</code> bytes. Add another 8 bytes for the header.</p>
-<h2 id="option"><a class="header" href="#option">Option</a></h2>
+<h2 id="options"><a class="header" href="#options">Options</a></h2>
 <p>An <em>option</em> is a data structure that may contain a specific data type or nothing.</p>
 <p>It is made of a variance byte, set to <code>0x01</code> followed by the data if any, or a single <code>0x00</code> byte to indicate no data is present.</p>
 <h1 id="kernel-process-communication"><a class="header" href="#kernel-process-communication">Kernel-Process Communication</a></h1>
@@ -6093,8 +6093,8 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <li>Mount <a href="specs/services/system/../../kernel/data-structures.html#timestamps">timestamp</a> (8 bytes)</li>
 <li>Mount path <a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
 <li>Volume size in bytes (8 bytes)</li>
-<li><a href="specs/services/system/../../kernel/data-structures.html#option">Option</a> of the volume's free size in bytes (8 bytes)</li>
-<li><a href="specs/services/system/../../kernel/data-structures.html#option">Option</a> of the mounted volume file's <a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (1 + 8 bytes)</li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#options">Option</a> of the volume's free size in bytes (8 bytes)</li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#options">Option</a> of the mounted volume file's <a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (1 + 8 bytes)</li>
 <li>Volume name as a <a href="specs/services/system/../../kernel/data-structures.html#delimited-strings">delimited string</a></li>
 </ul>
 <p><strong>Errors:</strong></p>
@@ -6117,7 +6117,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p><strong>Required permission:</strong> <code>fs.filesystems.mount</code></p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><a href="specs/services/system/../../kernel/data-structures.html#option">Option</a> of the mount path as a <a href="specs/services/system/../../kernel/data-structures.html#delimited-strings">delimited string</a></li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#options">Option</a> of the mount path as a <a href="specs/services/system/../../kernel/data-structures.html#delimited-strings">delimited string</a></li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -6134,7 +6134,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p><strong>Arguments:</strong></p>
 <ul>
 <li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
-<li><a href="specs/services/system/../../kernel/data-structures.html#option">Option</a> of the mount path as a <a href="specs/services/system/../../kernel/data-structures.html#delimited-strings">delimited string</a></li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#options">Option</a> of the mount path as a <a href="specs/services/system/../../kernel/data-structures.html#delimited-strings">delimited string</a></li>
 </ul>
 <p><strong>Return value:</strong></p>
 <p><em>None</em></p>

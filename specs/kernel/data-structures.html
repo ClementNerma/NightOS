@@ -264,7 +264,7 @@ The second entry is the last one and so simply contains the number of initialize
 <p>As shown above, if the number of colors is set to <code>0</code> for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for <code>256 power &lt;number in the header&gt;</code> different colors.</p>
 <p>Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.</p>
 <p>The size of pixel list can be calculated as <code>IW * IH * (NR + NG + NB + NA)</code> bytes. Add another 8 bytes for the header.</p>
-<h2 id="option"><a class="header" href="#option">Option</a></h2>
+<h2 id="options"><a class="header" href="#options">Options</a></h2>
 <p>An <em>option</em> is a data structure that may contain a specific data type or nothing.</p>
 <p>It is made of a variance byte, set to <code>0x01</code> followed by the data if any, or a single <code>0x00</code> byte to indicate no data is present.</p>
 

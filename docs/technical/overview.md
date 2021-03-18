@@ -11,6 +11,7 @@ Note that this is only an overview, and as such many topics will not be covered 
 - [Hardware access](#hardware-access)
 - [Hardware drivers](#hardware-drivers)
 - [Hardware access performances](#hardware-access-performances)
+- [Filesystem access](#filesystem-access)
 - [Data loss prevention](#data-loss-prevention)
 - [User interface](#user-interface)
 - [Users management](#users-management)
@@ -61,6 +62,14 @@ The access process is often:
 * The action's result is then transmitted to the hardware service, which then transmits it to the system service, which in turns transmits it to the userland process
 
 Although this process can seem a bit long, CPU interruptions and [forced threading (specs)](../specs/services.md#connections) makes the theoric latency low enough for intensive use.
+
+## Filesystem access
+
+Accessing and managing filesystems and their content is faster than common hardware operations thanks to [direct hardware access](../specs/services/system/hw.md#direct-hardware-access-for-sysfs) (and [direct driver access](../specs/services/system/hw.md#direct-driver-access-for-sysfs) for worst-case scenarios).
+
+The typical process involves communication with the [filesystem service](../specs/services/system/fs.md) which [communicates directly](../specs/services/system/hw.md#direct-hardware-access-for-sysfs) with storage devices.
+
+For filesystems that [aren't natively supported](../specs/services/system/fs.md#list-of-natively-supported-filesystems), a [filesystem interface](../specs/services/integration/filesystem-interfaces.md) is involved to communicate with the [storage driver service](../specs/services/drivers/storage.md), which then communicates with the [hardware service](../specs/services/system/hw.md). This involves a higher latency, but is only limited to edge cases and remains in an acceptable range of performances.
 
 ## Data loss prevention
 

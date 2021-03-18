@@ -622,6 +622,22 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x31</code>: Provided path was not found</li>
 <li><code>0x32</code>: Symbolic link is cyclic</li>
 </ul>
+<h3 id="0xf0-format_async"><a class="header" href="#0xf0-format_async"><code>0xF0</code> FORMAT_ASYNC</a></h3>
+<p>Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, </p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="#storage-operating-range">SOR</a> (40 bytes)</li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> new partition's sector size, in bytes (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Error codes:</strong></p>
+<ul>
+<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x31</code>: Invalid sector size provided</li>
+</ul>
 <h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
 <h3 id="0x32-file_read"><a class="header" href="#0x32-file_read"><code>0x32</code> FILE_READ</a></h3>
 <p>Sent to a client after an asynchronous file reading requested using the <a href="#0x32-read_file_async"><code>READ_FILE_ASYNC</code></a> method completed.</p>
@@ -653,6 +669,22 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x30</code>: Start offset is out-of-range</li>
 <li><code>0x31</code>: Maximum individual file size exceeded</li>
 <li><code>0x32</code>: Filesystem's free space exceeded</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="0xf0-formatted"><a class="header" href="#0xf0-formatted"><code>0xF0</code> FORMATTED</a></h3>
+<p>Sent to a client after an formatting requested using the <a href="#0xf0-format_async"><code>FORMAT_ASYC</code></a> method completed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: <em>None</em></li>
+<li>Error code (1 byte):
+<ul>
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
 </li>

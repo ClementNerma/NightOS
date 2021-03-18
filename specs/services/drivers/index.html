@@ -171,6 +171,14 @@
 <p>This document lists all <a href="../../services.html#types-of-services">driver services</a>, which are services whose methods and notifications follow a convention established by the <a href="../system/hw.html"><code>sys::hw</code></a> service to permit interaction with hardware components.</p>
 <p>An application exposing such a service in its <a href="../../applications/manifest.html">manifest</a> will gain the permission to <a href="../system/hw.html#0x10-register_driver">register itself as a driver</a> through the <a href="../system/hw.html"><code>sys::hw</code></a> service.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="../system/README.html">system services</a>.</p>
+<h2 id="error-codes"><a class="header" href="#error-codes">Error codes</a></h2>
+<p>Error codes follow a specific convention, but all may not be returned by the services in case of errors.</p>
+<p>Some error codes are only reserved to services supporting the additional check tied to the said error code.</p>
+<p>Also, all drivers can use:</p>
+<ul>
+<li>The <code>0x30</code> error code to indicate the provided <a href="../system/hw.html#unique-device-identifier">UDI</a> is invalid or not driven by the current driver service</li>
+<li>The <code>0x5F</code> error code to indicate an unspecified hardware error occurred.</li>
+</ul>
 <h2 id="list-of-driver-services"><a class="header" href="#list-of-driver-services">List of driver services</a></h2>
 <p>The list below indicates the service as well as the <a href="../system/hw.html#driven-device-type">DDT</a> it is tied to.</p>
 <h3 id="storage-drivers"><a class="header" href="#storage-drivers">Storage drivers</a></h3>

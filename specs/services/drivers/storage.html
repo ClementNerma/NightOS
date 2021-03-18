@@ -168,7 +168,118 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="storage-driver-services"><a class="header" href="#storage-driver-services">Storage driver services</a></h1>
-<p><strong>TODO</strong></p>
+<p>Storage driver services handle storage devices. They are used to perform basic I/O operations.</p>
+<p>As an application can only expose one single storage driver service, the said service will handle all of the hardware components driven by the said process. This is why the the <a href="../system/hw.html#unique-device-identifier">UDI</a> of the target device is provided for each request.</p>
+<h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
+<h3 id="0x01-storage_infos"><a class="header" href="#0x01-storage_infos"><code>0x01</code> STORAGE_INFOS</a></h3>
+<p>Get the storage's informations.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Device's <a href="../system/hw.html#unique-device-identifier">UDI</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Storage's size in bytes (8 bytes)</li>
+<li>Sector's size in bytes (8 bytes)</li>
+<li>Writability (1 byte): <code>0x00</code> if the storage is writable, <code>0x01</code> else</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x10-read_sync"><a class="header" href="#0x10-read_sync"><code>0x10</code> READ_SYNC</a></h3>
+<p>Synchronously read a suite of sectors.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Start sector number (8 bytes)</li>
+<li>Number of sectors to read (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of bytes read (8 bytes)</li>
+<li>Content of the read sectors</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x31</code>: Start sector is out-of-bounds</li>
+<li><code>0x32</code>: End sector is out-of-bounds</li>
+</ul>
+<h3 id="0x11-read_async"><a class="header" href="#0x11-read_async"><code>0x11</code> READ_ASYNC</a></h3>
+<p>Asynchronously read a suite of sectors to a writable <a href="../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
+<p>When the task completes, the <a href="#0x11-sectors_read"><code>SECTORS_READ</code></a> notification must be sent to the client.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Start sector number (8 bytes)</li>
+<li>Number of sectors to read (8 bytes)</li>
+<li>AMS identifier (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x31</code>: Start sector is out-of-bounds</li>
+<li><code>0x32</code>: End sector is out-of-bounds</li>
+</ul>
+<h3 id="0x20-write_sync"><a class="header" href="#0x20-write_sync"><code>0x20</code> WRITE_SYNC</a></h3>
+<p>Synchronously write a suite of sectors.</p>
+<p>The content to write is guaranteed to be aligned with the sectors' size.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Start sector number (8 bytes)</li>
+<li>Number of bytes to write (8 bytes)</li>
+<li>Content to write</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x31</code>: Start sector is out-of-bounds</li>
+<li><code>0x32</code>: End sector is out-of-bounds</li>
+</ul>
+<h3 id="0x21-write_async"><a class="header" href="#0x21-write_async"><code>0x21</code> WRITE_ASYNC</a></h3>
+<p>Asynchronously write a suite of sectors from an <a href="../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
+<p>When the task completes, the <a href="#0x21-sectors_written"><code>SECTORS_WRITTEN</code></a> notification must be sent to the client.</p>
+<p>The content to write is guaranteed to be aligned with the sectors' size.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Start sector number (8 bytes)</li>
+<li>Number of bytes to write (8 bytes)</li>
+<li>AMS identifier (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x31</code>: Start sector is out-of-bounds</li>
+<li><code>0x32</code>: End sector is out-of-bounds</li>
+</ul>
+<h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
+<h3 id="0x11-sectors_read"><a class="header" href="#0x11-sectors_read"><code>0x11</code> SECTORS_READ</a></h3>
+<p>Sent to a client after an asynchronous sectors reading requested using the <a href="#0x11-read_async"><code>READ_ASYNC</code></a> method completed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: number of bytes read (8 bytes)</li>
+<li>Error code (1 byte): <em>None</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="0x21-sectors_written"><a class="header" href="#0x21-sectors_written"><code>0x21</code> SECTORS_WRITTEN</a></h3>
+<p>Sent to a client after an asynchronous sectors writing requested using the <a href="#0x21-write_async"><code>WRITE_ASYNC</code></a> method completed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: <em>None</em></li>
+<li>Error code (1 byte): <em>None</em></li>
+</ul>
+</li>
+</ul>
 
                     </main>
 

@@ -6535,6 +6535,22 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x31</code>: Provided path was not found</li>
 <li><code>0x32</code>: Symbolic link is cyclic</li>
 </ul>
+<h3 id="0xf0-format_async"><a class="header" href="#0xf0-format_async"><code>0xF0</code> FORMAT_ASYNC</a></h3>
+<p>Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, </p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/services/integration/filesystem-interfaces.html#storage-operating-range">SOR</a> (40 bytes)</li>
+<li><a href="specs/services/integration/../../kernel/data-structures.html#options">Optional</a> new partition's sector size, in bytes (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Error codes:</strong></p>
+<ul>
+<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x31</code>: Invalid sector size provided</li>
+</ul>
 <h2 id="notifications-2"><a class="header" href="#notifications-2">Notifications</a></h2>
 <h3 id="0x32-file_read"><a class="header" href="#0x32-file_read"><code>0x32</code> FILE_READ</a></h3>
 <p>Sent to a client after an asynchronous file reading requested using the <a href="specs/services/integration/filesystem-interfaces.html#0x32-read_file_async"><code>READ_FILE_ASYNC</code></a> method completed.</p>
@@ -6572,10 +6588,34 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
+<h3 id="0xf0-formatted"><a class="header" href="#0xf0-formatted"><code>0xF0</code> FORMATTED</a></h3>
+<p>Sent to a client after an formatting requested using the <a href="specs/services/integration/filesystem-interfaces.html#0xf0-format_async"><code>FORMAT_ASYC</code></a> method completed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="specs/services/integration/../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: <em>None</em></li>
+<li>Error code (1 byte):
+<ul>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h1 id="driver-services"><a class="header" href="#driver-services">Driver services</a></h1>
 <p>This document lists all <a href="specs/services/drivers/../../services.html#types-of-services">driver services</a>, which are services whose methods and notifications follow a convention established by the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service to permit interaction with hardware components.</p>
 <p>An application exposing such a service in its <a href="specs/services/drivers/../../applications/manifest.html">manifest</a> will gain the permission to <a href="specs/services/drivers/../system/hw.html#0x10-register_driver">register itself as a driver</a> through the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="specs/services/drivers/../system/README.html">system services</a>.</p>
+<h2 id="error-codes-1"><a class="header" href="#error-codes-1">Error codes</a></h2>
+<p>Error codes follow a specific convention, but all may not be returned by the services in case of errors.</p>
+<p>Some error codes are only reserved to services supporting the additional check tied to the said error code.</p>
+<p>Also, all drivers can use:</p>
+<ul>
+<li>The <code>0x30</code> error code to indicate the provided <a href="specs/services/drivers/../system/hw.html#unique-device-identifier">UDI</a> is invalid or not driven by the current driver service</li>
+<li>The <code>0x5F</code> error code to indicate an unspecified hardware error occurred.</li>
+</ul>
 <h2 id="list-of-driver-services"><a class="header" href="#list-of-driver-services">List of driver services</a></h2>
 <p>The list below indicates the service as well as the <a href="specs/services/drivers/../system/hw.html#driven-device-type">DDT</a> it is tied to.</p>
 <h3 id="storage-drivers"><a class="header" href="#storage-drivers">Storage drivers</a></h3>
@@ -6583,7 +6623,118 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x0001</code> <a href="specs/services/drivers/storage.html">Storage driver service</a></li>
 </ul>
 <h1 id="storage-driver-services"><a class="header" href="#storage-driver-services">Storage driver services</a></h1>
-<p><strong>TODO</strong></p>
+<p>Storage driver services handle storage devices. They are used to perform basic I/O operations.</p>
+<p>As an application can only expose one single storage driver service, the said service will handle all of the hardware components driven by the said process. This is why the the <a href="specs/services/drivers/../system/hw.html#unique-device-identifier">UDI</a> of the target device is provided for each request.</p>
+<h2 id="methods-5"><a class="header" href="#methods-5">Methods</a></h2>
+<h3 id="0x01-storage_infos"><a class="header" href="#0x01-storage_infos"><code>0x01</code> STORAGE_INFOS</a></h3>
+<p>Get the storage's informations.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Device's <a href="specs/services/drivers/../system/hw.html#unique-device-identifier">UDI</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Storage's size in bytes (8 bytes)</li>
+<li>Sector's size in bytes (8 bytes)</li>
+<li>Writability (1 byte): <code>0x00</code> if the storage is writable, <code>0x01</code> else</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h3 id="0x10-read_sync"><a class="header" href="#0x10-read_sync"><code>0x10</code> READ_SYNC</a></h3>
+<p>Synchronously read a suite of sectors.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Start sector number (8 bytes)</li>
+<li>Number of sectors to read (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of bytes read (8 bytes)</li>
+<li>Content of the read sectors</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x31</code>: Start sector is out-of-bounds</li>
+<li><code>0x32</code>: End sector is out-of-bounds</li>
+</ul>
+<h3 id="0x11-read_async"><a class="header" href="#0x11-read_async"><code>0x11</code> READ_ASYNC</a></h3>
+<p>Asynchronously read a suite of sectors to a writable <a href="specs/services/drivers/../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
+<p>When the task completes, the <a href="specs/services/drivers/storage.html#0x11-sectors_read"><code>SECTORS_READ</code></a> notification must be sent to the client.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Start sector number (8 bytes)</li>
+<li>Number of sectors to read (8 bytes)</li>
+<li>AMS identifier (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x31</code>: Start sector is out-of-bounds</li>
+<li><code>0x32</code>: End sector is out-of-bounds</li>
+</ul>
+<h3 id="0x20-write_sync"><a class="header" href="#0x20-write_sync"><code>0x20</code> WRITE_SYNC</a></h3>
+<p>Synchronously write a suite of sectors.</p>
+<p>The content to write is guaranteed to be aligned with the sectors' size.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Start sector number (8 bytes)</li>
+<li>Number of bytes to write (8 bytes)</li>
+<li>Content to write</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x31</code>: Start sector is out-of-bounds</li>
+<li><code>0x32</code>: End sector is out-of-bounds</li>
+</ul>
+<h3 id="0x21-write_async"><a class="header" href="#0x21-write_async"><code>0x21</code> WRITE_ASYNC</a></h3>
+<p>Asynchronously write a suite of sectors from an <a href="specs/services/drivers/../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
+<p>When the task completes, the <a href="specs/services/drivers/storage.html#0x21-sectors_written"><code>SECTORS_WRITTEN</code></a> notification must be sent to the client.</p>
+<p>The content to write is guaranteed to be aligned with the sectors' size.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Start sector number (8 bytes)</li>
+<li>Number of bytes to write (8 bytes)</li>
+<li>AMS identifier (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x31</code>: Start sector is out-of-bounds</li>
+<li><code>0x32</code>: End sector is out-of-bounds</li>
+</ul>
+<h2 id="notifications-3"><a class="header" href="#notifications-3">Notifications</a></h2>
+<h3 id="0x11-sectors_read"><a class="header" href="#0x11-sectors_read"><code>0x11</code> SECTORS_READ</a></h3>
+<p>Sent to a client after an asynchronous sectors reading requested using the <a href="specs/services/drivers/storage.html#0x11-read_async"><code>READ_ASYNC</code></a> method completed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="specs/services/drivers/../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: number of bytes read (8 bytes)</li>
+<li>Error code (1 byte): <em>None</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="0x21-sectors_written"><a class="header" href="#0x21-sectors_written"><code>0x21</code> SECTORS_WRITTEN</a></h3>
+<p>Sent to a client after an asynchronous sectors writing requested using the <a href="specs/services/drivers/storage.html#0x21-write_async"><code>WRITE_ASYNC</code></a> method completed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="specs/services/drivers/../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: <em>None</em></li>
+<li>Error code (1 byte): <em>None</em></li>
+</ul>
+</li>
+</ul>
 <h1 id="system-services-2"><a class="header" href="#system-services-2">System services</a></h1>
 <p>As NightOS' <a href="specs/services/system/../../kernel/README.html">kernel</a> is not monolithic but a microkernel, it only handles the most fundamental tasks of the system, like memory and processes management, as well as direct hardware communication.</p>
 <p>The vast majority of its features can be found in system <a href="specs/services/system/../../services.html">services</a>, run by the system itself under the <code>sys</code> <a href="specs/services/system/../../applications-libraries.html#application-identifier">DID</a>.</p>
@@ -6671,7 +6822,7 @@ If the number of items to get is larger than the number of entries in the direct
 <p>The <code>sys::fs</code> serviec is responsible for detecting filesystems. It performs this by contacting the <a href="specs/services/system/hw.html"><code>sys::hw</code></a> service to enumerate and access the different storage devices, as well as being notified when a storage device is connected, disconnected or changes.</p>
 <p>Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is <a href="specs/services/system/fs.html#list-of-natively-supported-filesystems">natively supported</a>), <a href="specs/services/system/../integration/filesystem-interfaces.html">filesystem interfaces</a> are used one by one to find one that can handle the said filesystem, using their <a href="specs/services/system/../integration/filesystem-interfaces.html#0x02-is_valid_partition"><code>IS_VALID_PARTITION</code></a> method.</p>
 <p>Each partition then gets an identifier, the <a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">filesystem unique identifier (FSID)</a>, which is consistent across reboots but different between computers to avoid collection of informations from the FSID alone.</p>
-<h2 id="methods-5"><a class="header" href="#methods-5">Methods</a></h2>
+<h2 id="methods-6"><a class="header" href="#methods-6">Methods</a></h2>
 <h3 id="0x01-is_fs_mounted"><a class="header" href="#0x01-is_fs_mounted"><code>0x01</code> IS_FS_MOUNTED</a></h3>
 <p>Check if a given filesystem is mounted.</p>
 <p><strong>Required permission:</strong> <code>fs.filesystems.mounted</code></p>
@@ -6762,7 +6913,7 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h2 id="notifications-3"><a class="header" href="#notifications-3">Notifications</a></h2>
+<h2 id="notifications-4"><a class="header" href="#notifications-4">Notifications</a></h2>
 <h3 id="0x07-fs_changed"><a class="header" href="#0x07-fs_changed"><code>0x07</code> FS_CHANGED</a></h3>
 <p>Sent to a client which subscribed through <a href="specs/services/system/fs.html#0x07-fs_watch"><code>FS_WATCH</code></a> each time a filesystem is mounted or unmounted.</p>
 <p><strong>Datafield:</strong></p>
@@ -6783,7 +6934,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<h2 id="methods-6"><a class="header" href="#methods-6">Methods</a></h2>
+<h2 id="methods-7"><a class="header" href="#methods-7">Methods</a></h2>
 <h3 id="0x01-register_opener"><a class="header" href="#0x01-register_opener"><code>0x01</code> REGISTER_OPENER</a></h3>
 <p>Register an application as an opener for a list of file types.</p>
 <p><strong>Arguments:</strong></p>
@@ -7024,7 +7175,7 @@ If the number of items to get is larger than the number of entries in the direct
 <p>All operations related to storage devices are handled by the <a href="specs/services/system/fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all <a href="specs/services/system/../drivers/storage.html">storage driver services</a>.</p>
 <h3 id="direct-hardware-access-for-a-hrefspecsservicessystemfshtmlsysfsa"><a class="header" href="#direct-hardware-access-for-a-hrefspecsservicessystemfshtmlsysfsa">Direct hardware access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
 <p>In case a specific storage device doesn't require a <a href="specs/services/system/../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware component.</p>
-<h2 id="methods-7"><a class="header" href="#methods-7">Methods</a></h2>
+<h2 id="methods-8"><a class="header" href="#methods-8">Methods</a></h2>
 <h3 id="0x01-enum_devices"><a class="header" href="#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></h3>
 <p>Enumerate connected devices, reserved to <a href="specs/services/system/../../services.html">system services</a>.</p>
 <p>It's also possible to only count the number of devices matching the provided criterias by providing a start index and end index of <code>0</code>.</p>
@@ -7182,7 +7333,7 @@ Notifications are also retroactive, which means they will be sent for already-co
 <ul>
 <li><code>0x20</code>: The provided authorization token is unknown or not tied to this client</li>
 </ul>
-<h2 id="notifications-4"><a class="header" href="#notifications-4">Notifications</a></h2>
+<h2 id="notifications-5"><a class="header" href="#notifications-5">Notifications</a></h2>
 <h3 id="0x02-identify_device"><a class="header" href="#0x02-identify_device">0x02 <code>IDENTIFY_DEVICE</code></a></h3>
 <p>Sent for a specific device the client that was <a href="specs/services/system/hw.html#driver-selection">selected as its driver</a>.</p>
 <p><strong>Datafield:</strong></p>
@@ -7270,44 +7421,44 @@ System services communicate directly with the kernel and are trusted processes s
 <p>But applications, who run <a href="specs/services/system/../../kernel/processes.html"><em>userland processes</em></a> <strong>TODO</strong></p>
 <h2 id="list-of-permissions"><a class="header" href="#list-of-permissions">List of permissions</a></h2>
 <p>The list of permissions can be found in the <a href="specs/services/system/../../permissions.html">dedicated specifications document</a>.</p>
-<h2 id="methods-8"><a class="header" href="#methods-8">Methods</a></h2>
-<p><strong>TODO</strong></p>
-<h2 id="notifications-5"><a class="header" href="#notifications-5">Notifications</a></h2>
-<p><strong>TODO</strong></p>
-<h1 id="sysnet-service"><a class="header" href="#sysnet-service"><code>sys::net</code> service</a></h1>
 <h2 id="methods-9"><a class="header" href="#methods-9">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-6"><a class="header" href="#notifications-6">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="syscrypto-service"><a class="header" href="#syscrypto-service"><code>sys::crypto</code> service</a></h1>
+<h1 id="sysnet-service"><a class="header" href="#sysnet-service"><code>sys::net</code> service</a></h1>
 <h2 id="methods-10"><a class="header" href="#methods-10">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-7"><a class="header" href="#notifications-7">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="syscrashsave-service"><a class="header" href="#syscrashsave-service"><code>sys::crashsave</code> service</a></h1>
+<h1 id="syscrypto-service"><a class="header" href="#syscrypto-service"><code>sys::crypto</code> service</a></h1>
 <h2 id="methods-11"><a class="header" href="#methods-11">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-8"><a class="header" href="#notifications-8">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="sysflow-service"><a class="header" href="#sysflow-service"><code>sys::flow</code> service</a></h1>
+<h1 id="syscrashsave-service"><a class="header" href="#syscrashsave-service"><code>sys::crashsave</code> service</a></h1>
 <h2 id="methods-12"><a class="header" href="#methods-12">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-9"><a class="header" href="#notifications-9">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="syshydre-service"><a class="header" href="#syshydre-service"><code>sys::hydre</code> service</a></h1>
+<h1 id="sysflow-service"><a class="header" href="#sysflow-service"><code>sys::flow</code> service</a></h1>
 <h2 id="methods-13"><a class="header" href="#methods-13">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-10"><a class="header" href="#notifications-10">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="sysapp-service"><a class="header" href="#sysapp-service"><code>sys::app</code> service</a></h1>
+<h1 id="syshydre-service"><a class="header" href="#syshydre-service"><code>sys::hydre</code> service</a></h1>
 <h2 id="methods-14"><a class="header" href="#methods-14">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-11"><a class="header" href="#notifications-11">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="sysprocess-service"><a class="header" href="#sysprocess-service"><code>sys::process</code> service</a></h1>
+<h1 id="sysapp-service"><a class="header" href="#sysapp-service"><code>sys::app</code> service</a></h1>
 <h2 id="methods-15"><a class="header" href="#methods-15">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-12"><a class="header" href="#notifications-12">Notifications</a></h2>
+<p><strong>TODO</strong></p>
+<h1 id="sysprocess-service"><a class="header" href="#sysprocess-service"><code>sys::process</code> service</a></h1>
+<h2 id="methods-16"><a class="header" href="#methods-16">Methods</a></h2>
+<p><strong>TODO</strong></p>
+<h2 id="notifications-13"><a class="header" href="#notifications-13">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <h1 id="native-applications"><a class="header" href="#native-applications">Native applications</a></h1>
 <p>This folder contains documentation for each native application.</p>

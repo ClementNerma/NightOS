@@ -635,6 +635,8 @@ The _mutual mode_ allows both processes to access the memory, with the sharer se
 
 The _exclusive mode_ allows, only when sharing AMS [made from existing memory pages](#0x32-virt_mem_ams) from its original process, to unmap the original pages from the said process to let the exclusive access to the target process. This is useful when transferring temporarily large chunks of data to another process. Also, access permissions are ignored when using exclusive mode.
 
+The returned AMS ID is common for both the sender and the receiver, allowing to use it in exchanges.
+
 **Arguments:**
 
 - Target process' PID (8 bytes)

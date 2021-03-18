@@ -3714,6 +3714,75 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 </ul>
 <h1 id="data-structures"><a class="header" href="#data-structures">Data structures</a></h1>
 <p>This documents describes the structures used by the kernel to represent the data it uses in memory.</p>
+<p>All contiguous data structures are made such as it is easy to delimit them by computing their size in the memory.</p>
+<ul>
+<li><a href="specs/kernel/data-structures.html#timestamps">Timestamps</a></li>
+<li><a href="specs/kernel/data-structures.html#delimited-lists">Delimited lists</a></li>
+<li><a href="specs/kernel/data-structures.html#delimited-strings">Delimited strings</a></li>
+<li><a href="specs/kernel/data-structures.html#buffer-pointers">Buffer pointers</a></li>
+<li><a href="specs/kernel/data-structures.html#options">Options</a></li>
+<li><a href="specs/kernel/data-structures.html#bitmap-images">Bitmap images</a></li>
+<li><a href="specs/kernel/data-structures.html#packed-linked-lists">Packed linked lists</a>
+<ul>
+<li><a href="specs/kernel/data-structures.html#caracteristics">Caracteristics</a></li>
+<li><a href="specs/kernel/data-structures.html#structure-in-memory">Structure in memory</a></li>
+<li><a href="specs/kernel/data-structures.html#checking-an-entrys-type">Checking an entry's type</a></li>
+<li><a href="specs/kernel/data-structures.html#the-ratio">The ratio</a></li>
+<li><a href="specs/kernel/data-structures.html#performances-bottlenecks">Performances bottlenecks</a></li>
+<li><a href="specs/kernel/data-structures.html#performance-advantages">Performance advantages</a></li>
+<li><a href="specs/kernel/data-structures.html#length-first-variant">Length-first variant</a></li>
+<li><a href="specs/kernel/data-structures.html#tricking-the-nie">Tricking the <code>NIE</code></a></li>
+</ul>
+</li>
+</ul>
+<h2 id="timestamps"><a class="header" href="#timestamps">Timestamps</a></h2>
+<p>Timestamps are stored as milliseconds, starting from January 1st, 1970. This is to guarantee interopability with existing algorithms using Unix's EPOCH constant.</p>
+<p>They are represented as an 8-byte unsigned integer number.</p>
+<h2 id="delimited-lists"><a class="header" href="#delimited-lists">Delimited lists</a></h2>
+<p>Delimited lists are made of:</p>
+<ul>
+<li>Their length in bytes (8 bytes)</li>
+<li>Their content</li>
+</ul>
+<p>Each element must be delimited.</p>
+<h2 id="delimited-strings"><a class="header" href="#delimited-strings">Delimited strings</a></h2>
+<p>Delimited strings are made of:</p>
+<ul>
+<li>Their length in bytes (8 bytes)</li>
+<li>Their content (UTF-8 encoded)</li>
+</ul>
+<h2 id="buffer-pointers"><a class="header" href="#buffer-pointers">Buffer pointers</a></h2>
+<p>A buffer pointer refers to a buffer that is either <em>readable</em>, meaning its creator process has read permission on its entire memory location, and/or <em>writable</em>, meaning its creator process has write permission on its entire memory location.</p>
+<p>It is made as follows:</p>
+<ul>
+<li>The memory address of the buffer (8 bytes)</li>
+<li>The buffer's length (8 bytes)</li>
+</ul>
+<h2 id="options"><a class="header" href="#options">Options</a></h2>
+<p>An <em>option</em> is a data structure that may contain a specific data type or nothing.</p>
+<p>It is made of a variance byte, set to <code>0x01</code> followed by the data if any, or a single <code>0x00</code> byte to indicate no data is present.</p>
+<h2 id="bitmap-images"><a class="header" href="#bitmap-images">Bitmap images</a></h2>
+<p>Bitmap images are represented as a <em>header</em> and a <em>pixel list</em>.</p>
+<p>The header is composed as a suite of 8 bytes:</p>
+<ul>
+<li>Image width (IW), in pixels (2 bytes)</li>
+<li>Image height (IH), in pixels (2 bytes)</li>
+<li>Number of colors (power of 256) for the red channel (NR), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the green channel (NG), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the blue channel (NB), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the alpha channel (NA), <code>0</code> if unused (1 byte)</li>
+</ul>
+<p>The pixel list is made of the data for each pixel, contiguously.</p>
+<p>Each pixel is encoded as follows:</p>
+<ul>
+<li>Value for the red channel (NR bytes)</li>
+<li>Value for the green channel (NG bytes)</li>
+<li>Value for the blue channel (NB bytes)</li>
+<li>Value for the alpha channel (NA bytes)</li>
+</ul>
+<p>As shown above, if the number of colors is set to <code>0</code> for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for <code>256 power &lt;number in the header&gt;</code> different colors.</p>
+<p>Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.</p>
+<p>The size of pixel list can be calculated as <code>IW * IH * (NR + NG + NB + NA)</code> bytes. Add another 8 bytes for the header.</p>
 <h2 id="packed-linked-lists"><a class="header" href="#packed-linked-lists">Packed linked lists</a></h2>
 <p><em>Packed linked lists</em> (PLL) are linked lists used for items whose size is both small (usually &lt;= 32 bytes) and fixed for all items.</p>
 <p>It uses a system of same-size entries, each containing a micro bump allocator.</p>
@@ -3764,54 +3833,6 @@ The second entry is the last one and so simply contains the number of initialize
 <li>Increase the memory cost of the last entry when it isn't full</li>
 <li>Slow down insert times when the last entry is full (needs to allocate)</li>
 </ul>
-<h2 id="timestamps"><a class="header" href="#timestamps">Timestamps</a></h2>
-<p>Timestamps are stored as milliseconds, starting from January 1st, 1970. This is to guarantee interopability with existing algorithms using Unix's EPOCH constant.</p>
-<p>They are represented as an 8-byte unsigned integer number.</p>
-<h2 id="delimited-lists"><a class="header" href="#delimited-lists">Delimited lists</a></h2>
-<p>Delimited lists are made of:</p>
-<ul>
-<li>Their length in bytes (8 bytes)</li>
-<li>Their content</li>
-</ul>
-<p>Each element must be delimited.</p>
-<h2 id="delimited-strings"><a class="header" href="#delimited-strings">Delimited strings</a></h2>
-<p>Delimited strings are made of:</p>
-<ul>
-<li>Their length in bytes (8 bytes)</li>
-<li>Their content (UTF-8 encoded)</li>
-</ul>
-<h2 id="buffer-pointers"><a class="header" href="#buffer-pointers">Buffer pointers</a></h2>
-<p>A buffer pointer refers to a buffer that is either <em>readable</em>, meaning its creator process has read permission on its entire memory location, and/or <em>writable</em>, meaning its creator process has write permission on its entire memory location.</p>
-<p>It is made as follows:</p>
-<ul>
-<li>The memory address of the buffer (8 bytes)</li>
-<li>The buffer's length (8 bytes)</li>
-</ul>
-<h2 id="bitmap-images"><a class="header" href="#bitmap-images">Bitmap images</a></h2>
-<p>Bitmap images are represented as a <em>header</em> and a <em>pixel list</em>.</p>
-<p>The header is composed as a suite of 8 bytes:</p>
-<ul>
-<li>Image width (IW), in pixels (2 bytes)</li>
-<li>Image height (IH), in pixels (2 bytes)</li>
-<li>Number of colors (power of 256) for the red channel (NR), <code>0</code> if unused (1 byte)</li>
-<li>Number of colors (power of 256) for the green channel (NG), <code>0</code> if unused (1 byte)</li>
-<li>Number of colors (power of 256) for the blue channel (NB), <code>0</code> if unused (1 byte)</li>
-<li>Number of colors (power of 256) for the alpha channel (NA), <code>0</code> if unused (1 byte)</li>
-</ul>
-<p>The pixel list is made of the data for each pixel, contiguously.</p>
-<p>Each pixel is encoded as follows:</p>
-<ul>
-<li>Value for the red channel (NR bytes)</li>
-<li>Value for the green channel (NG bytes)</li>
-<li>Value for the blue channel (NB bytes)</li>
-<li>Value for the alpha channel (NA bytes)</li>
-</ul>
-<p>As shown above, if the number of colors is set to <code>0</code> for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for <code>256 power &lt;number in the header&gt;</code> different colors.</p>
-<p>Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.</p>
-<p>The size of pixel list can be calculated as <code>IW * IH * (NR + NG + NB + NA)</code> bytes. Add another 8 bytes for the header.</p>
-<h2 id="options"><a class="header" href="#options">Options</a></h2>
-<p>An <em>option</em> is a data structure that may contain a specific data type or nothing.</p>
-<p>It is made of a variance byte, set to <code>0x01</code> followed by the data if any, or a single <code>0x00</code> byte to indicate no data is present.</p>
 <h1 id="kernel-process-communication"><a class="header" href="#kernel-process-communication">Kernel-Process Communication</a></h1>
 <p>The <em>Kernel-Process Communication</em> (KPC) describes how a process can interact with the kernel, and vice-versa.</p>
 <p>There are two types of KPC:</p>

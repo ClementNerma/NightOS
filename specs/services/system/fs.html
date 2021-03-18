@@ -170,21 +170,32 @@
                         <h1 id="sysfs-service"><a class="header" href="#sysfs-service"><code>sys::fs</code> service</a></h1>
 <p>The <code>sys::fs</code> service is in charge of operations related to the <a href="../../filesystem.html">filesystems</a>.</p>
 <h2 id="behaviour"><a class="header" href="#behaviour">Behaviour</a></h2>
-<h3 id="natively-handled-filesystems"><a class="header" href="#natively-handled-filesystems">Natively handled filesystems</a></h3>
-<p>The <code>sys::fs</code> service natively handles the following filesystem types:</p>
+<h3 id="operations-and-latency"><a class="header" href="#operations-and-latency">Operations and latency</a></h3>
+<p>A single filesystem operation request from a client process up to the hardware component traverses:</p>
+<ul>
+<li>Client</li>
+<li><code>sys::fs</code> service</li>
+<li><a href="../integration/filesystem-interfaces.html">filesystem interface</a> (only if the filesystem is not <a href="#list-of-natively-handled-filesystems">handled natively</a>)</li>
+<li><a href="../drivers/storage.html">storage driver service</a> (only if a filesystem interface is used, or if the storage device requires a <a href="../drivers/storage.html">specific driver</a>)</li>
+<li>Hardware storage device</li>
+</ul>
+<p>The response then goes up through all layers. Note that in all cases, the <a href="hw.html"><code>sys::hw</code></a> don't need to be contacted, thanks to <a href="hw.html#direct-driver-access-for-sysfs">direct driver access</a>.</p>
+<p>In the best scenario, which is for <a href="#list-of-natively-handled-filesystems">natively handled filesystems</a> on storage devices that don't require a <a href="../drivers/storage.html">dedicated driver</a>, <a href="hw.html#direct-hardware-access-for-sysfs">direct hardware access</a> is possible, reducing the traversal to:</p>
+<ul>
+<li>Client</li>
+<li><code>sys::fs</code> service</li>
+<li>Hardware storage device</li>
+</ul>
+<h3 id="list-of-natively-handled-filesystems"><a class="header" href="#list-of-natively-handled-filesystems">List of natively handled filesystems</a></h3>
+<p>The following filesystems are natively handled, meaning they don't require a <a href="../integration/filesystem-interfaces.html">filesystem interface</a> to work properly:</p>
 <ul>
 <li>Btrfs</li>
 <li>Ext2 / Ext3 / Ext4</li>
 <li>NTFS</li>
 <li>FAT12 / FAT16 / FAT32</li>
 <li>exFAT</li>
+<li></li>
 </ul>
-<p>For these, the typical sequence of filesystem operations is:</p>
-<ul>
-<li>The client calls the <code>sys::fs</code> service to perform a given operation</li>
-<li>The operation is directly performed by the service on the storage device thanks to <a href="hw.html#direct-access-for-sysfs">direct access</a> and <a href="hw.html#direct-operations">direct operations</a>.</li>
-</ul>
-<p>This is unless the storage device requires a <a href="../drivers/storage.html">specific driver</a> which prevent from performing <a href="hw.html#direct-operations">direct operations</a>. In such case, the service can still contact the driver directly, bypassing the <code>sys::hw</code> service.</p>
 <h3 id="extending-handled-filesystems"><a class="header" href="#extending-handled-filesystems">Extending handled filesystems</a></h3>
 <p>It is possible to use other filesystems that the natively handled ones, using <a href="../integration/filesystem-interfaces.html">filesystem interfaces</a>.</p>
 <p>This, however, creates a higher latency as direct access and operations are not permitted anymore. The typical sequence of operations becomes:</p>
@@ -203,7 +214,7 @@
 </ul>
 <h3 id="filesystems-detection"><a class="header" href="#filesystems-detection">Filesystems detection</a></h3>
 <p>The <code>sys::fs</code> serviec is responsible for detecting filesystems. It performs this by contacting the <a href="hw.html"><code>sys::hw</code></a> service to enumerate and access the different storage devices, as well as being notified when a storage device is connected, disconnected or changes.</p>
-<p>Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is <a href="#natively-handled-filesystems">natively handled</a>), <a href="../integration/filesystem-interfaces.html">filesystem interfaces</a> are used one by one to find one that can handle the said filesystem, using their <a href="../integration/filesystem-interfaces.html#0x02-is_valid_partition"><code>IS_VALID_PARTITION</code></a> method.</p>
+<p>Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is <a href="#list-of-natively-handled-filesystems">natively handled</a>), <a href="../integration/filesystem-interfaces.html">filesystem interfaces</a> are used one by one to find one that can handle the said filesystem, using their <a href="../integration/filesystem-interfaces.html#0x02-is_valid_partition"><code>IS_VALID_PARTITION</code></a> method.</p>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
 <h3 id="0x01-is_fs_mounted"><a class="header" href="#0x01-is_fs_mounted"><code>0x01</code> IS_FS_MOUNTED</a></h3>
 <p>Check if a given filesystem is mounted.</p>

@@ -193,9 +193,8 @@
 </li>
 <li><a href="#latency-reduction-for-storage-devices">Latency reduction for storage devices</a>
 <ul>
-<li><a href="#direct-operations">Direct operations</a></li>
-<li><a href="#direct-access-for-sysfs">Direct access for <code>sys::fs</code></a></li>
-<li><a href="#best-and-worst-scenario">Best and worst scenario</a></li>
+<li><a href="#direct-driver-access-for-sysfs">Direct driver access for <code>sys::fs</code></a></li>
+<li><a href="#direct-hardware-access-for-sysfs">Direct hardware access for <code>sys::fs</code></a></li>
 </ul>
 </li>
 <li><a href="#methods">Methods</a>
@@ -313,27 +312,10 @@
 <h3 id="a-note-on-performances"><a class="header" href="#a-note-on-performances">A note on performances</a></h3>
 <p>Although hardware devices' interrupts are notified to the driver through <a href="../../kernel/ipc.html#methods-and-notifications">service socket notifications</a>, the latency is still minimal as soon as the driver listens to the <a href="../../kernel/signals.html#0x27-recv_sock_msg"><code>RECV_SOCK_MSG</code></a> signal, which like all signals uses interrupts and so guarantees a very low latency.</p>
 <h2 id="latency-reduction-for-storage-devices"><a class="header" href="#latency-reduction-for-storage-devices">Latency reduction for storage devices</a></h2>
-<h3 id="direct-operations"><a class="header" href="#direct-operations">Direct operations</a></h3>
-<p>All operations on storage devices - except on exotic storage devices requiring <a href="../drivers/storage.html">dedicated driver</a> - all operations are performed directly by the <code>sys::hw</code> service, without the need for a driver.</p>
-<h3 id="direct-access-for-a-hreffshtmlsysfsa"><a class="header" href="#direct-access-for-a-hreffshtmlsysfsa">Direct access for <a href="fs.html"><code>sys::fs</code></a></a></h3>
-<p>All operations related to storage devices are handled by the <a href="fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all hardware components identified as storage devices, or their driver service in case it isn't handled natively.</p>
-<p>This optimization is not performed in the case the <code>sys::fs</code> service uses a <a href="../integration/filesystem-interfaces.html">filesystem interfaces</a> to handle a non-common filesystem type, as the interface must only be able to use a specific portion of the storage device, and not is entirety.</p>
-<h3 id="best-and-worst-scenario"><a class="header" href="#best-and-worst-scenario">Best and worst scenario</a></h3>
-<p>Worst scenario is in the case of a filesystem making use a <a href="../integration/filesystem-interfaces.html">filesystem interface</a>. Data traverses the following processes:</p>
-<ul>
-<li>Client</li>
-<li><code>sys::fs</code></li>
-<li>Filesystem interface</li>
-<li><code>sys::hw</code></li>
-<li>Underlying storage driver</li>
-<li>Hardware storage device</li>
-</ul>
-<p>Best scenario is for common filesystems:</p>
-<ul>
-<li>Client</li>
-<li><code>sys::fs</code></li>
-<li>Hardware storage device</li>
-</ul>
+<h3 id="direct-driver-access-for-a-hreffshtmlsysfsa"><a class="header" href="#direct-driver-access-for-a-hreffshtmlsysfsa">Direct driver access for <a href="fs.html"><code>sys::fs</code></a></a></h3>
+<p>All operations related to storage devices are handled by the <a href="fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all <a href="../drivers/storage.html">storage driver services</a>.</p>
+<h3 id="direct-hardware-access-for-a-hreffshtmlsysfsa"><a class="header" href="#direct-hardware-access-for-a-hreffshtmlsysfsa">Direct hardware access for <a href="fs.html"><code>sys::fs</code></a></a></h3>
+<p>In case a specific storage device doesn't require a <a href="../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware component.</p>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
 <h3 id="0x01-enum_devices"><a class="header" href="#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></h3>
 <p>Enumerate connected devices, reserved to <a href="../../services.html">system services</a>.</p>

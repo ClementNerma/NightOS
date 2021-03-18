@@ -547,6 +547,24 @@ Read a [symbolic link](../../filesystem.md#symbolic-links)'s target.
 - `0x31`: Provided path was not found
 - `0x32`: Symbolic link is cyclic
 
+### `0xF0` FORMAT_ASYNC
+
+Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, 
+
+**Arguments:**
+
+- [SOR](#storage-operating-range) (40 bytes)
+- [Optional](../../kernel/data-structures.md#options) new partition's sector size, in bytes (8 bytes)
+
+**Return value:**
+
+- Generated task identifier (8 bytes)
+
+**Error codes:**
+
+- `0x30`: Invalid SOR provided
+- `0x31`: Invalid sector size provided
+
 ## Notifications
 
 ### `0x32` FILE_READ
@@ -575,4 +593,16 @@ Sent to a client after an asynchronous file writing requested using the [`WRITE_
     - `0x30`: Start offset is out-of-range
     - `0x31`: Maximum individual file size exceeded
     - `0x32`: Filesystem's free space exceeded
+    - `0x40`: Unspecified filesystem error
+
+### `0xF0` FORMATTED
+
+Sent to a client after an formatting requested using the [`FORMAT_ASYC`](#0xf0-format_async) method completed.
+
+**Datafield:**
+
+- Task identifier (8 bytes)
+- [Fallible result](../../kernel/data-structures.md#fallible-results) with:
+  - Success data: _None_
+  - Error code (1 byte):
     - `0x40`: Unspecified filesystem error

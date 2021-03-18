@@ -27,6 +27,7 @@ It is known as the [I/O manager](../../../technical/io-manager.md), or Ion.
   - [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
   - [`0xD0` AUTHORIZE_FS_INTERFACE](#0xd0-authorize_fs_interface)
   - [`0xD1` UNAUTHORIZE_FS_INTERFACE](#0xd1-unauthorize_fs_interface)
+  - [`0xD2` AUTH_PERFORM_STORAGE](#0xd2-auth_perform_storage)
 - [Notifications](#notifications)
   - [0x02 `IDENTIFY_DEVICE`](#0x02-identify_device)
   - [0x03 `DEVICE_EVENT`](#0x03-device_event)
@@ -347,6 +348,26 @@ Unauthorize a [filesystem interface](../integration/filesystem-interfaces.md) au
 
 - `0x20`: Client is not the [`sys::fs`](fs.md) service
 - `0x21`: Unknown authorization token provided
+
+### `0xD2` AUTH_PERFORM_STORAGE
+
+Used by [filesystem interfaces](../integration/filesystem-interfaces.md) which received an [authorization](#0xd0-authorize_fs_interface) beforehand.
+
+Perform an action just like with the [`ASK_DRIVER`](#0xa0-ask_driver) method, but restricted to the authorization's scope.
+
+**Arguments:**
+
+- Authorization token (8 bytes)
+- Method's code (4 bytes)
+- Method's arguments (size depends on the method)
+
+**Answer:**
+
+_Expected answer format for this method_
+
+**Errors:**
+
+- `0x20`: The provided authorization token is unknown or not tied to this client
 
 ## Notifications
 

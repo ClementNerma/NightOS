@@ -10,21 +10,21 @@ A single filesystem operation request from a client process up to the hardware c
 
 * Client
 * `sys::fs` service
-* [filesystem interface](../integration/filesystem-interfaces.md) (only if the filesystem is not [handled natively](#list-of-natively-handled-filesystems))
+* [filesystem interface](../integration/filesystem-interfaces.md) (only if the filesystem is not [supported natively](#list-of-natively-supported-filesystems))
 * [storage driver service](../drivers/storage.md) (only if a filesystem interface is used, or if the storage device requires a [specific driver](../drivers/storage.md))
 * Hardware storage device
 
 The response then goes up through all layers. Note that in all cases, the [`sys::hw`](hw.md) don't need to be contacted, thanks to [direct driver access](hw.md#direct-driver-access-for-sysfs).
 
-In the best scenario, which is for [natively handled filesystems](#list-of-natively-handled-filesystems) on storage devices that don't require a [dedicated driver](../drivers/storage.md), [direct hardware access](hw.md#direct-hardware-access-for-sysfs) is possible, reducing the traversal to:
+In the best scenario, which is for [natively supported filesystems](#list-of-natively-supported-filesystems) on storage devices that don't require a [dedicated driver](../drivers/storage.md), [direct hardware access](hw.md#direct-hardware-access-for-sysfs) is possible, reducing the traversal to:
 
 * Client
 * `sys::fs` service
 * Hardware storage device
 
-### List of natively handled filesystems
+### List of natively supported filesystems
 
-The following filesystems are natively handled, meaning they don't require a [filesystem interface](../integration/filesystem-interfaces.md) to work properly:
+The following filesystems are natively supported, meaning they don't require a [filesystem interface](../integration/filesystem-interfaces.md) to work properly:
 
 * Btrfs
 * Ext2 / Ext3 / Ext4
@@ -32,9 +32,9 @@ The following filesystems are natively handled, meaning they don't require a [fi
 * FAT12 / FAT16 / FAT32
 * exFAT
 
-### Extending handled filesystems
+### Extending supported filesystems
 
-It is possible to use other filesystems that the natively handled ones, using [filesystem interfaces](../integration/filesystem-interfaces.md).
+It is possible to use other filesystems that the natively supported ones, using [filesystem interfaces](../integration/filesystem-interfaces.md).
 
 This, however, creates a higher latency as direct access and operations are not permitted anymore. The typical sequence of operations becomes:
 
@@ -54,7 +54,7 @@ The information then goes up:
 
 The `sys::fs` serviec is responsible for detecting filesystems. It performs this by contacting the [`sys::hw`](hw.md) service to enumerate and access the different storage devices, as well as being notified when a storage device is connected, disconnected or changes.
 
-Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is [natively handled](#list-of-natively-handled-filesystems)), [filesystem interfaces](../integration/filesystem-interfaces.md) are used one by one to find one that can handle the said filesystem, using their [`IS_VALID_PARTITION`](../integration/filesystem-interfaces.md#0x02-is_valid_partition) method.
+Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is [natively supported](#list-of-natively-supported-filesystems)), [filesystem interfaces](../integration/filesystem-interfaces.md) are used one by one to find one that can handle the said filesystem, using their [`IS_VALID_PARTITION`](../integration/filesystem-interfaces.md#0x02-is_valid_partition) method.
 
 Each partition then gets an identifier, the [filesystem unique identifier (FSID)](../../filesystem.md#filesystem-unique-identifier), which is consistent across reboots but different between computers to avoid collection of informations from the FSID alone.
 
@@ -119,27 +119,9 @@ Get informations on a filesystem.
 
 ### `0x04` FS_MOUNT
 
-Mount a filesystem. If no mount path is provided, the filesystem will be mounted under the `/mnt` directory.
-
-**Required permission:** `fs.filesystems.mount`
-
-**Arguments:**
-
-- [Option](../../kernel/data-structures.md#options) of the mount path as a [delimited string](../../kernel/data-structures.md#delimited-strings)
-
-**Return value:**
-
-- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
-
-**Errors:**
-
-- `0x20`: Cannot mount a filesystem inside another filesystem that the main one
-- `0x21`: This filesystem is already mounted
-- `0x30`: Client does not expose a [storage driver service](../drivers/storage.md) as [required](hw.md#drivers)
-
-### `0x05` FS_MOUNT_EXISTING
-
 Mount an existing filesystem. If no mount path is provided, the filesystem will be mounted under the `/mnt` directory.
+
+New filesystems are [automatically detected](#filesystems-detection) when storage devices are connected.
 
 **Required permission:** `fs.filesystems.mount.existing`
 
@@ -157,7 +139,7 @@ _None_
 - `0x30`: Unknown [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 - `0x31`: This filesystem is already mounted
 
-### `0x06` FS_UNMOUNT
+### `0x05` FS_UNMOUNT
 
 Unmount a mounted filesystem.
 

@@ -155,6 +155,8 @@ Other processes can then ask the driver to perform specific actions depending on
 
 The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to [normalized notifications](#normalized-notifications) which can then be sent to processes that subscribed to them using the related [normalized methods](#normalized-methods).
 
+You can see the complete list of methods and notifications for each type of driver services in the [related section of the documentation](../drivers/README.md).
+
 ### Driver selection
 
 A driver is selected for a specific hardware component if it matches any of the following criterias, in decreasing importance order:

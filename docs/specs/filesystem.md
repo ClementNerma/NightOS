@@ -25,8 +25,8 @@ NightOS uses the **Btrfs** filesystem for the main storage due to its robustness
 Three partitions are used to store the data:
 
 * One **FAT32** partition for the bootloader ;
-* One **Btrfs** partition for the system (`/sys` and `/etc`) ;
-* One **Btrfs** partition for users' data (`/apps` and `/home`)
+* One **FAT32** partition for the system (`/sys` and `/etc/sys`) ;
+* One **Btrfs** partition for users' data (`/etc` except `/etc/sys`, `/apps` and `/home`)
 
 ## Naming
 

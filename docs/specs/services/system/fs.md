@@ -56,6 +56,8 @@ The `sys::fs` serviec is responsible for detecting filesystems. It performs this
 
 Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is [natively handled](#list-of-natively-handled-filesystems)), [filesystem interfaces](../integration/filesystem-interfaces.md) are used one by one to find one that can handle the said filesystem, using their [`IS_VALID_PARTITION`](../integration/filesystem-interfaces.md#0x02-is_valid_partition) method.
 
+Each partition then gets an identifier, the [filesystem unique identifier (FSID)](../../filesystem.md#filesystem-unique-identifier), which is consistent across reboots but different between computers to avoid collection of informations from the FSID alone.
+
 ## Methods
 
 ### `0x01` IS_FS_MOUNTED

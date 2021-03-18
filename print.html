@@ -6119,28 +6119,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 </ul>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3 id="0x02-fs_metadata"><a class="header" href="#0x02-fs_metadata"><code>0x02</code> FS_METADATA</a></h3>
-<p>Get informations on a filesystem.</p>
-<p><strong>Required permission:</strong> <code>fs.filesystems.metadata</code></p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<ul>
-<li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
-<li>Mount <a href="specs/services/system/../../kernel/data-structures.html#timestamps">timestamp</a> (8 bytes)</li>
-<li>Mount path <a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
-<li>Volume size in bytes (8 bytes)</li>
-<li><a href="specs/services/system/../../kernel/data-structures.html#options">Option</a> of the volume's free size in bytes (8 bytes)</li>
-<li><a href="specs/services/system/../../kernel/data-structures.html#options">Option</a> of the mounted volume file's <a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (1 + 8 bytes)</li>
-<li>Volume name as a <a href="specs/services/system/../../kernel/data-structures.html#delimited-strings">delimited string</a></li>
-</ul>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x30</code>: The requested filesystem is currently not mounted</li>
-</ul>
-<h3 id="0x03-fs_list"><a class="header" href="#0x03-fs_list"><code>0x03</code> FS_LIST</a></h3>
+<h3 id="0x02-enum_fs"><a class="header" href="#0x02-enum_fs"><code>0x02</code> ENUM_FS</a></h3>
 <p>Enumerate mounted filesystems.</p>
 <p><strong>Required permission:</strong> <code>fs.filesystems.list</code></p>
 <p><strong>Arguments:</strong></p>
@@ -6151,6 +6130,27 @@ If it cannot, the default file manager will be in charge of providing a placehol
 </ul>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
+<h3 id="0x03-fs_metadata"><a class="header" href="#0x03-fs_metadata"><code>0x03</code> FS_METADATA</a></h3>
+<p>Get informations on a filesystem.</p>
+<p><strong>Required permission:</strong> <code>fs.filesystems.metadata</code></p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Volume size in bytes (8 bytes)</li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#options">Option</a> of the volume's free size in bytes (8 bytes)</li>
+<li>Volume name as a <a href="specs/services/system/../../kernel/data-structures.html#delimited-strings">delimited string</a></li>
+<li>Writable mode (1 byte): <code>0x01</code> if the volume is writable, <code>0x00</code> if it is read-only</li>
+<li>Mount <a href="specs/services/system/../../kernel/data-structures.html#timestamps">timestamp</a> (8 bytes)</li>
+<li>Mount path <a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#options">Option</a> of the mounted volume file's <a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (1 + 8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: The requested filesystem is currently not mounted</li>
+</ul>
 <h3 id="0x04-fs_mount"><a class="header" href="#0x04-fs_mount"><code>0x04</code> FS_MOUNT</a></h3>
 <p>Mount a filesystem. If no mount path is provided, the filesystem will be mounted under the <code>/mnt</code> directory.</p>
 <p><strong>Required permission:</strong> <code>fs.filesystems.mount</code></p>

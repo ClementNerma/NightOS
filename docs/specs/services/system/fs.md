@@ -38,8 +38,8 @@ Get informations on a filesystem.
 - Mount [timestamp](../../kernel/data-structures.md#timestamps) (8 bytes)
 - Mount path [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
 - Volume size in bytes (8 bytes)
-- [Option](../../kernel/data-structures.md#option) of the volume's free size in bytes (8 bytes)
-- [Option](../../kernel/data-structures.md#option) of the mounted volume file's [FEID](../../filesystem.md#element-unique-identifier) (1 + 8 bytes)
+- [Option](../../kernel/data-structures.md#options) of the volume's free size in bytes (8 bytes)
+- [Option](../../kernel/data-structures.md#options) of the mounted volume file's [FEID](../../filesystem.md#element-unique-identifier) (1 + 8 bytes)
 - Volume name as a [delimited string](../../kernel/data-structures.md#delimited-strings)
 
 **Errors:**
@@ -72,7 +72,7 @@ Mount a filesystem. If no mount path is provided, the filesystem will be mounted
 
 **Arguments:**
 
-- [Option](../../kernel/data-structures.md#option) of the mount path as a [delimited string](../../kernel/data-structures.md#delimited-strings)
+- [Option](../../kernel/data-structures.md#options) of the mount path as a [delimited string](../../kernel/data-structures.md#delimited-strings)
 
 **Return value:**
 
@@ -92,7 +92,7 @@ Mount an existing filesystem. If no mount path is provided, the filesystem will 
 **Arguments:**
 
 - [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
-- [Option](../../kernel/data-structures.md#option) of the mount path as a [delimited string](../../kernel/data-structures.md#delimited-strings)
+- [Option](../../kernel/data-structures.md#options) of the mount path as a [delimited string](../../kernel/data-structures.md#delimited-strings)
 
 **Return value:**
 

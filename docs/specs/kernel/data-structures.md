@@ -141,7 +141,7 @@ Pixels are listed from the top left corner of the image to the bottom right corn
 
 The size of pixel list can be calculated as `IW * IH * (NR + NG + NB + NA)` bytes. Add another 8 bytes for the header.
 
-## Option
+## Options
 
 An _option_ is a data structure that may contain a specific data type or nothing.
 

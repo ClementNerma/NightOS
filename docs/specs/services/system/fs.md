@@ -80,7 +80,7 @@ _None_
 
 ### `0x02` ENUM_FS
 
-Enumerate mounted filesystems.
+Enumerate all available filesystems.
 
 **Required permission:** `fs.filesystems.list`
 

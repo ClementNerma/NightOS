@@ -184,7 +184,7 @@
 <li>The client calls the <code>sys::fs</code> service to perform a given operation</li>
 <li>The operation is directly performed by the service on the storage device thanks to <a href="hw.html#direct-access-for-sysfs">direct access</a> and <a href="hw.html#direct-operations">direct operations</a>.</li>
 </ul>
-<p>This is unless the storage device requires a <a href="../drivers/storage.html">specific driver</a> which prevent from performing <a href="hw.html#direct-operations">direct operations</a>.</p>
+<p>This is unless the storage device requires a <a href="../drivers/storage.html">specific driver</a> which prevent from performing <a href="hw.html#direct-operations">direct operations</a>. In such case, the service can still contact the driver directly, bypassing the <code>sys::hw</code> service.</p>
 <h3 id="extending-handled-filesystems"><a class="header" href="#extending-handled-filesystems">Extending handled filesystems</a></h3>
 <p>It is possible to use other filesystems that the natively handled ones, using <a href="../integration/filesystem-interfaces.html">filesystem interfaces</a>.</p>
 <p>This, however, creates a higher latency as direct access and operations are not permitted anymore. The typical sequence of operations becomes:</p>

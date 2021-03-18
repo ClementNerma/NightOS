@@ -1,6 +1,6 @@
 # Filesystem interfaces
 
-Filesystem interfaces are services that act as a layer of indirection between a storage [driver](../system/hw.md#drivers) and the [`sys::fs`](../system/fs.md) service. Their role is to translate all common filesystem operations, such as items management and modification, for filesystems that aren't [natively handled](../system/fs.md#natively-handled-filesystems). They heavily communicate with the [`sys::hw`](../system/hw.md) service to communicate with the underlying storage device.
+Filesystem interfaces are services that act as a layer of indirection between a storage [driver](../system/hw.md#drivers) and the [`sys::fs`](../system/fs.md) service. Their role is to translate all common filesystem operations, such as items management and modification, for filesystems that aren't [natively handled](../system/fs.md#list-of-natively-handled-filesystems). They heavily communicate with the [`sys::hw`](../system/hw.md) service to communicate with the underlying storage device.
 
 Most methods and notifications of filesystems interfaces are also available in the [`sys::fs`](../system/fs.md) service, with first perform permissions checking and determines the device and location to perform the operation on.
 

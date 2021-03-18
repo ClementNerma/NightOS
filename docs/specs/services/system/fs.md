@@ -4,22 +4,33 @@ The `sys::fs` service is in charge of operations related to the [filesystems](..
 
 ## Behaviour
 
-### Natively handled filesystems
+### Operations and latency
 
-The `sys::fs` service natively handles the following filesystem types:
+A single filesystem operation request from a client process up to the hardware component traverses:
+
+* Client
+* `sys::fs` service
+* [filesystem interface](../integration/filesystem-interfaces.md) (only if the filesystem is not [handled natively](#list-of-natively-handled-filesystems))
+* [storage driver service](../drivers/storage.md) (only if a filesystem interface is used, or if the storage device requires a [specific driver](../drivers/storage.md))
+* Hardware storage device
+
+The response then goes up through all layers. Note that in all cases, the [`sys::hw`](hw.md) don't need to be contacted, thanks to [direct driver access](hw.md#direct-driver-access-for-sysfs).
+
+In the best scenario, which is for [natively handled filesystems](#list-of-natively-handled-filesystems) on storage devices that don't require a [dedicated driver](../drivers/storage.md), [direct hardware access](hw.md#direct-hardware-access-for-sysfs) is possible, reducing the traversal to:
+
+* Client
+* `sys::fs` service
+* Hardware storage device
+
+### List of natively handled filesystems
+
+The following filesystems are natively handled, meaning they don't require a [filesystem interface](../integration/filesystem-interfaces.md) to work properly:
 
 * Btrfs
 * Ext2 / Ext3 / Ext4
 * NTFS
 * FAT12 / FAT16 / FAT32
 * exFAT
-
-For these, the typical sequence of filesystem operations is:
-
-* The client calls the `sys::fs` service to perform a given operation
-* The operation is directly performed by the service on the storage device thanks to [direct access](hw.md#direct-access-for-sysfs) and [direct operations](hw.md#direct-operations).
-
-This is unless the storage device requires a [specific driver](../drivers/storage.md) which prevent from performing [direct operations](hw.md#direct-operations). In such case, the service can still contact the driver directly, bypassing the `sys::hw` service.
 
 ### Extending handled filesystems
 
@@ -43,7 +54,7 @@ The information then goes up:
 
 The `sys::fs` serviec is responsible for detecting filesystems. It performs this by contacting the [`sys::hw`](hw.md) service to enumerate and access the different storage devices, as well as being notified when a storage device is connected, disconnected or changes.
 
-Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is [natively handled](#natively-handled-filesystems)), [filesystem interfaces](../integration/filesystem-interfaces.md) are used one by one to find one that can handle the said filesystem, using their [`IS_VALID_PARTITION`](../integration/filesystem-interfaces.md#0x02-is_valid_partition) method.
+Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is [natively handled](#list-of-natively-handled-filesystems)), [filesystem interfaces](../integration/filesystem-interfaces.md) are used one by one to find one that can handle the said filesystem, using their [`IS_VALID_PARTITION`](../integration/filesystem-interfaces.md#0x02-is_valid_partition) method.
 
 ## Methods
 

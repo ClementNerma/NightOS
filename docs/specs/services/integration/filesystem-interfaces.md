@@ -176,7 +176,7 @@ Get metadata on a given filesystem.
 
 **Error codes:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 
 ### `0x10` ITEM_EXISTS
 
@@ -194,7 +194,7 @@ Check if a given item exists.
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 
 ### `0x11` FEID_TO_SPLIT
 
@@ -211,7 +211,7 @@ Convert a [FEID](../../filesystem.md#element-unique-identifier) to the correspon
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: The provided FEID was not found in the filesystem
 
 ### `0x12` ITEM_METADATA
@@ -229,7 +229,7 @@ Get the metadata of a given item.
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: The provided path was not found
 
 ### `0x13` RENAME_ITEM
@@ -245,7 +245,7 @@ Rename an existing item.
 **Errors:**
 
 - `0x10`: Invalid filename provided
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: The provided path was not foud
 
 ### `0x14` MOVE_ITEM
@@ -262,7 +262,7 @@ Move an existing item.
 **Errors:**
 
 - `0x10`: Invalid filename provided
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: The provided path was not found
 - `0x32`: Target directory was not found
 - `0x33`: Target directory's maximum capacity has been reached
@@ -286,7 +286,7 @@ _None_
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Item was not found
 - `0x32`: Cannot remove a non-empty directory
 - `0x40`: Unspecified filesystem error
@@ -308,7 +308,7 @@ _None_
 **Errors:**
 
 - `0x10`: Invalid filename provided
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Parent directory was not found
 - `0x32`: Directory's maximum capacity has been reached
 - `0x33`: Maximum nested items number has been reached
@@ -337,7 +337,7 @@ If the number of items to get is larger than the number of entries in the direct
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Directory was not found
 - `0x40`: Unspecified filesystem error
 
@@ -363,7 +363,7 @@ _None_
 **Errors:**
 
 - `0x10`: Invalid filename provided
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Parent directory was not found
 - `0x32`: Directory's maximum capacity has been reached
 - `0x33`: Maximum nested items number has been reached
@@ -394,7 +394,7 @@ If no read length is provided, the whole file must be read.
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Start offset is out-of-range
 - `0x40`: Unspecified filesystem error
 
@@ -420,7 +420,7 @@ When the read is complete, a [`FILE_READ`](#0x32-file_read) notification must be
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Invalid AMS ID provided
 - `0x40`: Unspecified filesystem error
 
@@ -444,7 +444,7 @@ _None_
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Offset is out-of-range
 - `0x32`: Storage's capacity exceeded
 - `0x33`: Maximum individual file size exceeded
@@ -473,7 +473,7 @@ When the writing is complete, a [`FILE_WRITTEN`](#0x34-file_written) notificatio
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Invalid AMS ID provided
 - `0x40`: Unspecified filesystem error
 
@@ -496,7 +496,7 @@ _None_
 **Errors:**
 
 - `0x10`: Invalid filename provided
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Parent directory was not found
 - `0x32`: Directory's maximum capacity has been reached
 - `0x33`: Maximum nested items number has been reached
@@ -522,7 +522,7 @@ _None_
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Provided path was not found
 - `0x32`: Cannot crate symbolic links to cross-filesystem items
 - `0x33`: Cannot crate symbolic links to non-existing items
@@ -543,7 +543,7 @@ Read a [symbolic link](../../filesystem.md#symbolic-links)'s target.
 
 **Errors:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Provided path was not found
 - `0x32`: Symbolic link is cyclic
 
@@ -562,7 +562,7 @@ Asynchronously format the partition to get an empty filesystem. Once the formatt
 
 **Error codes:**
 
-- `0x30`: Invalid SOR provided
+- `0x20`: Invalid SOR provided
 - `0x31`: Invalid sector size provided
 
 ## Notifications
@@ -577,7 +577,7 @@ Sent to a client after an asynchronous file reading requested using the [`READ_F
 - [Fallible result](../../kernel/data-structures.md#fallible-results) with:
   - Success data: number of bytes read (8 bytes)
   - Error code (1 byte)
-    - `0x30`: Start offset is out-of-range
+    - `0x20`: Start offset is out-of-range
     - `0x40`: Unspecified filesystem error
 
 ### `0x34` FILE_WRITTEN
@@ -590,7 +590,7 @@ Sent to a client after an asynchronous file writing requested using the [`WRITE_
 - [Fallible result](../../kernel/data-structures.md#fallible-results) with:
   - Success data: _None_
   - Error code (1 byte):
-    - `0x30`: Start offset is out-of-range
+    - `0x20`: Start offset is out-of-range
     - `0x31`: Maximum individual file size exceeded
     - `0x32`: Filesystem's free space exceeded
     - `0x40`: Unspecified filesystem error

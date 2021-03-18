@@ -2,6 +2,12 @@
 
 This documents describes the structures used by the kernel to represent the data it uses in memory.
 
+- [Timestamps](#timestamps)
+- [Delimited lists](#delimited-lists)
+- [Delimited strings](#delimited-strings)
+- [Buffer pointers](#buffer-pointers)
+- [Options](#options)
+- [Bitmap images](#bitmap-images)
 - [Packed linked lists](#packed-linked-lists)
   - [Caracteristics](#caracteristics)
   - [Structure in memory](#structure-in-memory)
@@ -11,12 +17,71 @@ This documents describes the structures used by the kernel to represent the data
   - [Performance advantages](#performance-advantages)
   - [Length-first variant](#length-first-variant)
   - [Tricking the `NIE`](#tricking-the-nie)
-- [Timestamps](#timestamps)
-- [Delimited lists](#delimited-lists)
-- [Delimited strings](#delimited-strings)
-- [Buffer pointers](#buffer-pointers)
-- [Bitmap images](#bitmap-images)
-- [Options](#options)
+
+## Timestamps
+
+Timestamps are stored as milliseconds, starting from January 1st, 1970. This is to guarantee interopability with existing algorithms using Unix's EPOCH constant.
+
+They are represented as an 8-byte unsigned integer number.
+
+## Delimited lists
+
+Delimited lists are made of:
+
+- Their length in bytes (8 bytes)
+- Their content
+
+Each element must be delimited.
+
+## Delimited strings
+
+Delimited strings are made of:
+
+- Their length in bytes (8 bytes)
+- Their content (UTF-8 encoded)
+
+## Buffer pointers
+
+A buffer pointer refers to a buffer that is either _readable_, meaning its creator process has read permission on its entire memory location, and/or _writable_, meaning its creator process has write permission on its entire memory location.
+
+It is made as follows:
+
+- The memory address of the buffer (8 bytes)
+- The buffer's length (8 bytes)
+
+## Options
+
+An _option_ is a data structure that may contain a specific data type or nothing.
+
+It is made of a variance byte, set to `0x01` followed by the data if any, or a single `0x00` byte to indicate no data is present.
+
+## Bitmap images
+
+Bitmap images are represented as a _header_ and a _pixel list_.
+
+The header is composed as a suite of 8 bytes:
+
+- Image width (IW), in pixels (2 bytes)
+- Image height (IH), in pixels (2 bytes)
+- Number of colors (power of 256) for the red channel (NR), `0` if unused (1 byte)
+- Number of colors (power of 256) for the green channel (NG), `0` if unused (1 byte)
+- Number of colors (power of 256) for the blue channel (NB), `0` if unused (1 byte)
+- Number of colors (power of 256) for the alpha channel (NA), `0` if unused (1 byte)
+
+The pixel list is made of the data for each pixel, contiguously.
+
+Each pixel is encoded as follows:
+
+- Value for the red channel (NR bytes)
+- Value for the green channel (NG bytes)
+- Value for the blue channel (NB bytes)
+- Value for the alpha channel (NA bytes)
+
+As shown above, if the number of colors is set to `0` for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for `256 power <number in the header>` different colors.
+
+Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.
+
+The size of pixel list can be calculated as `IW * IH * (NR + NG + NB + NA)` bytes. Add another 8 bytes for the header.
 
 ## Packed linked lists
 
@@ -97,68 +162,3 @@ But also:
 
 - Increase the memory cost of the last entry when it isn't full
 - Slow down insert times when the last entry is full (needs to allocate)
-
-## Timestamps
-
-Timestamps are stored as milliseconds, starting from January 1st, 1970. This is to guarantee interopability with existing algorithms using Unix's EPOCH constant.
-
-They are represented as an 8-byte unsigned integer number.
-
-## Delimited lists
-
-Delimited lists are made of:
-
-- Their length in bytes (8 bytes)
-- Their content
-
-Each element must be delimited.
-
-## Delimited strings
-
-Delimited strings are made of:
-
-- Their length in bytes (8 bytes)
-- Their content (UTF-8 encoded)
-
-## Buffer pointers
-
-A buffer pointer refers to a buffer that is either _readable_, meaning its creator process has read permission on its entire memory location, and/or _writable_, meaning its creator process has write permission on its entire memory location.
-
-It is made as follows:
-
-- The memory address of the buffer (8 bytes)
-- The buffer's length (8 bytes)
-
-## Bitmap images
-
-Bitmap images are represented as a _header_ and a _pixel list_.
-
-The header is composed as a suite of 8 bytes:
-
-- Image width (IW), in pixels (2 bytes)
-- Image height (IH), in pixels (2 bytes)
-- Number of colors (power of 256) for the red channel (NR), `0` if unused (1 byte)
-- Number of colors (power of 256) for the green channel (NG), `0` if unused (1 byte)
-- Number of colors (power of 256) for the blue channel (NB), `0` if unused (1 byte)
-- Number of colors (power of 256) for the alpha channel (NA), `0` if unused (1 byte)
-
-The pixel list is made of the data for each pixel, contiguously.
-
-Each pixel is encoded as follows:
-
-- Value for the red channel (NR bytes)
-- Value for the green channel (NG bytes)
-- Value for the blue channel (NB bytes)
-- Value for the alpha channel (NA bytes)
-
-As shown above, if the number of colors is set to `0` for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for `256 power <number in the header>` different colors.
-
-Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.
-
-The size of pixel list can be calculated as `IW * IH * (NR + NG + NB + NA)` bytes. Add another 8 bytes for the header.
-
-## Options
-
-An _option_ is a data structure that may contain a specific data type or nothing.
-
-It is made of a variance byte, set to `0x01` followed by the data if any, or a single `0x00` byte to indicate no data is present.

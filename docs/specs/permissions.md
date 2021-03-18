@@ -52,48 +52,44 @@ Note that many permissions have a _scope_, indicating what they can or cannot do
 
 For praticity purpose, the list of device patterns is converted to a human-readable format, with more or less informations depending on the [user's complexity level](../concepts/users.md#complexity-level).
 
-### Filesystem
+### Filesystems
 
-**Scope**: paths the permission applies on
-
-These permissions are automatically granted if their scope is one of the application's own data directories.
+**Scope**: filesystems the permission applies on
 
 - (S) `fs.filesystems.mounted`: check if a given filesystem is mounted (all other `fs.filesystems.*` permissions imply this one)
 - (S) `fs.filesystems.metadata`: get metadata on a given filesystem
 - (S) `fs.filesystems.list`: enumerate mounted filesystems
-- (S) `fs.filesystems.mount`: mount a filesystem
-- (S) `fs.filesystems.mount_existing`: mount an existing filesystem
+- (S) `fs.filesystems.mount`: mount an existing filesystem
 - (S) `fs.filesystems.unmount`: unmount filesystems mounted by other applications
 - (S) `fs.filesystems.watch`: be notified when a filesystem is mounted / unmounted
+- (S) `fs.filesystems.format`: format an existing filesystem
 
-- (S) `fs.path.exists`: check if an item exists at a given path
-- (S) `fs.path.stringify`: get the path from a [FEID](filesystem.md#element-unique-identifier) as a string
+### Filesystem elements
+
+**Scope**: [paths](services/integration/filesystem-interfaces.md#split-paths) the permission applies on
+
+These permissions are automatically granted if their scope is one of the application's own data directories.
+
+- (S) `fs.feid.path`: convert a given [FEID](filesystem.md#element-unique-identifier) to a [split path](services/integration/filesystem-interfaces.md#split-paths)
 - (S) `fs.feid.exists`: check if a given [FEID](filesystem.md#element-unique-identifier) exists in a filesystem
 
-- (S) `fs.dir.exists`: check if a directory exist at a given path
-- (S) `fs.dir.metadata`: get metadata on directories
-- (S) `fs.dir.create`: create directories
-- (S) `fs.dir.read`: list all items inside directories
-- (S) `fs.dir.read.hidden`: list hidden items in directories
-- (S) `fs.dir.remove.trash`: send directories (only empty ones if no permission to remove files) to the user's trash
-- (S) `fs.dir.remove.permanently`: remove directories (only empty ones if no permission to remove files)
-- (S) `fs.dir.watch`: be notified of any change to a directory's metadata and items
-- (S) `fs.dir.watch.recursive`: be notified of any change to a directory's metadata and items, recursively
+- (S) `fs.path.canonicalize`: canonicalize a [split path](services/integration/filesystem-interfaces.md#split-paths)
 
-- (S) `fs.file.exists`: check if a file exists at a given path
-- (S) `fs.file.metadata`: get metadata on files
-- (S) `fs.file.create`: create files
-- (S) `fs.file.remove.trash`: send files to the user's trash
-- (S) `fs.file.remove.permanently`: remove files
-- (S) `fs.file.write`: change files' content
-- (S) `fs.file.watch`: be notified of any change to a file's metadata and content
+- (S) `fs.items.exists`: check if an item exists at a given path
+- (S) `fs.items.metadata`: get metadata on a given item
+- (S) `fs.items.create`: create new filesystem elements
+- (S) `fs.items.move`: rename and move existing filesystem elements
+- (S) `fs.items.readdir`: list items contained inside given directories
+- (S) `fs.items.readdir.hidden`: list hidden items in directories
+- (S) `fs.items.remove.trash`: send items to the current user's trash
+- (S) `fs.items.remove`: delete items permanently
+- (S) `fs.items.watch`: be notified of any change to a an item's metadata and items
+- (S) `fs.items.watch.recursive`: be notified of any change to a directory's metadata and items, recursively
+- (S) `fs.items.write`: update an existing filesystem element's content
 
-- (S) `fs.symlink.exists`: check if a symlink exists at a given path
-- (S) `fs.symlink.metadata`: get metadata on symlinks
-- (S) `fs.symlink.create`: create symlinks
-- (S) `fs.symlink.read`: read from symlinks (= knowing the symlink's target)
-- (S) `fs.symlink.remove`: remove symlinks
-- (S) `fs.symlink.update`: update symlinks' target
+- (S) `fs.symlinks.create`: create symbolic links
+- (S) `fs.symlinks.update`: update existing symbolic links
+- (S) `fs.symlinks.read`: read the target of a symbolic link
 
 #### Flows
 

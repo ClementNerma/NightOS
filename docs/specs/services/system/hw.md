@@ -25,6 +25,8 @@ It is known as the [I/O manager](../../../technical/io-manager.md), or Ion.
   - [`0x11` UNREGISTER_DRIVER](#0x11-unregister_driver)
   - [`0x20` NOTIFY_PROCESS](#0x20-notify_process)
   - [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
+  - [`0xD0` AUTHORIZE_FS_INTERFACE](#0xd0-authorize_fs_interface)
+  - [`0xD1` UNAUTHORIZE_FS_INTERFACE](#0xd1-unauthorize_fs_interface)
 - [Notifications](#notifications)
   - [0x02 `IDENTIFY_DEVICE`](#0x02-identify_device)
   - [0x03 `DEVICE_EVENT`](#0x03-device_event)
@@ -308,6 +310,43 @@ _Expected answer format for this method_
 - `0x21`: Unknown device UDI provided
 - `0x22`: Provided method code is invalid for this device
 - `0x23`: Invalid arguments provided for this method
+
+### `0xD0` AUTHORIZE_FS_INTERFACE
+
+Authorize a [filesystem interface](../integration/filesystem-interfaces.md) to access a specific part of a storage device.
+
+The interface service will be allowed to perform requests on the provided storage device, only on the provided data segment.
+
+**Arguments:**
+
+- Device's [UDI](#unique-device-identifier) (8 bytes)
+- Start byte (8 bytes)
+- End byte (8 bytes)
+
+**Answer:**
+
+- Authorization token (8 bytes) to use with [`UNAUTHORIZE_FS_INTERFACE`](#0xd1-unauthorize_fs_interface)
+
+**Errors:**
+
+- `0x20`: Client is not the [`sys::fs`](fs.md) service
+- `0x21`: Unknown device UDI provided
+- `0x22`: Start byte is not aligned on the device's sectors
+- `0x23`: End byte is not aligned on the device's sectors
+- `0x24`: End byte is greater than or equal to the start byte
+
+### `0xD1` UNAUTHORIZE_FS_INTERFACE
+
+Unauthorize a [filesystem interface](../integration/filesystem-interfaces.md) authorization created using the [`AUTHORIZE_FS_INTERFACE`](#0xd0-authorize_fs_interface) method.
+
+**Arguments:**
+
+- Authorization token (8 bytes)
+
+**Errors:**
+
+- `0x20`: Client is not the [`sys::fs`](fs.md) service
+- `0x21`: Unknown authorization token provided
 
 ## Notifications
 

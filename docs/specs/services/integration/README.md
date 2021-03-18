@@ -6,6 +6,12 @@ An application exposing such a service in its [manifest](../../applications/mani
 
 These services are not available directly to the end applications ; they can only be used through [system services](../../services/system/README.md).
 
+## Error codes
+
+Error codes follow a specific convention, but all may not be returned by the services in case of errors.
+
+Some error codes are only reserved to services supporting the additional check tied to the said error code.
+
 ## List of integration services
 
 * [Desktop environment](desktop-environments.md)

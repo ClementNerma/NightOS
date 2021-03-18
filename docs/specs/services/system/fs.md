@@ -22,31 +22,7 @@ Check if a given filesystem is mounted.
 
 _None_
 
-### `0x02` FS_METADATA
-
-Get informations on a filesystem.
-
-**Required permission:** `fs.filesystems.metadata`
-
-**Arguments:**
-
-- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
-
-**Return value:**
-
-- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
-- Mount [timestamp](../../kernel/data-structures.md#timestamps) (8 bytes)
-- Mount path [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
-- Volume size in bytes (8 bytes)
-- [Option](../../kernel/data-structures.md#options) of the volume's free size in bytes (8 bytes)
-- [Option](../../kernel/data-structures.md#options) of the mounted volume file's [FEID](../../filesystem.md#element-unique-identifier) (1 + 8 bytes)
-- Volume name as a [delimited string](../../kernel/data-structures.md#delimited-strings)
-
-**Errors:**
-
-- `0x30`: The requested filesystem is currently not mounted
-
-### `0x03` FS_LIST
+### `0x02` ENUM_FS
 
 Enumerate mounted filesystems.
 
@@ -63,6 +39,30 @@ _None_
 **Errors:**
 
 _None_
+
+### `0x03` FS_METADATA
+
+Get informations on a filesystem.
+
+**Required permission:** `fs.filesystems.metadata`
+
+**Arguments:**
+
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+
+**Return value:**
+
+- Volume size in bytes (8 bytes)
+- [Option](../../kernel/data-structures.md#options) of the volume's free size in bytes (8 bytes)
+- Volume name as a [delimited string](../../kernel/data-structures.md#delimited-strings)
+- Writable mode (1 byte): `0x01` if the volume is writable, `0x00` if it is read-only
+- Mount [timestamp](../../kernel/data-structures.md#timestamps) (8 bytes)
+- Mount path [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
+- [Option](../../kernel/data-structures.md#options) of the mounted volume file's [FEID](../../filesystem.md#element-unique-identifier) (1 + 8 bytes)
+
+**Errors:**
+
+- `0x30`: The requested filesystem is currently not mounted
 
 ### `0x04` FS_MOUNT
 

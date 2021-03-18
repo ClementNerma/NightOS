@@ -24,7 +24,9 @@ They also use common error codes:
 - `0x10` to `0x1F`: invalid arguments provided (e.g. value is too high)
 - `0x20` to `0x2F`: arguments are not valid in the current context (e.g. provided ID does not exist)
 - `0x30` to `0x3F`: resource errors (e.g. file not found)
-- `0x40` to `0xFF`: other types of errors
+- `0x40` to `0x4F`: driver errors
+- `0x50` to `0x5F`: hardware errors
+- `0x60` to `0xFF`: other types of errors
 
 All methods return an answer, though it may be empty (indicated by a _None_). System services' answers always [conclude the exchange](../../kernel/ipc.md#concluding-exchanges).
 

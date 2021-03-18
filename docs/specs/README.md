@@ -22,10 +22,11 @@ For more informations about low-level concepts these documents refer to, you can
 * [Desktop environment](services/integration/desktop-environments.md)
 * [File managers](services/integration/file-managers.md)
 * [File openers](services/integration/file-openers.md)
+* [Filesystem interfaces](services/integration/filesystem-interfaces.md)
 
 ## [Driver services](services/drivers/README.md)
 
-* [Filesystem driver service](services/drivers/filesystem.md)
+* [Storage driver service](services/drivers/storage.md)
 
 ## [System services](services/system/README.md)
 

@@ -84,10 +84,11 @@ The list of default applications and their description can be found [here](appli
 - [Desktop environments](specs/services/integration/desktop-environments.md) - how the user interface is handled by applications
 - [File managers](specs/services/integration/file-managers.md) - how file managers are integrated into the system
 - [File openers](specs/services/integration/file-openers.md) - how files are associated to applications
+- [Filesystem interfaces](specs/services/integration/filesystem-interfaces.md) - how filesystems are handled by third-party services
 
 ### [Driver services](specs/services/drivers/README.md)
 
-- [Filesystem driver service](specs/services/drivers/filesystem.md)
+- [Storage driver service](specs/services/drivers/storage.md)
 
 ### [System services](specs/services/system/README.md)
 

@@ -1,6 +1,5 @@
 # File Manager
 
-- [File manager paths](#file-manager-paths)
 - [Methods](#methods)
   - [`0x10` OPEN_ITEM](#0x10-open_item)
   - [`0x11` IS_ITEM_OPENABLE](#0x11-is_item_openable)
@@ -13,18 +12,6 @@ Applications can indicate themselves as file manager by specifying an `SYS_FMAN`
 
 The end user chooses a single file manager (called the _default_ file manager) between all available ones, whose service will be used by other applications.
 
-## File manager paths
-
-Paths destinated to file managers are called _file manager paths_ (FMP) and can be encoded with either:
-
-- A `0x00` status code (1 byte)
-- [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
-
-Or:
-
-- A `0x01` status code (1 byte)
-- A [delimited string](../../kernel/data-structures.md#delimited-strings)
-
 ## Methods
 
 ### `0x10` OPEN_ITEM
@@ -33,7 +20,7 @@ Open a filesystem item.
 
 **Arguments:**
 
-- [FMP](#file-manager-paths)
+- [Filesystem path](filesystem-interfaces.md#filesystem-paths)
 
 **Answer:**
 
@@ -54,7 +41,7 @@ Check if a filesystem item could be opened without user interaction.
 
 **Arguments:**
 
-- [FMP](#file-manager-paths)
+- [Filesystem path](filesystem-interfaces.md#filesystem-paths)
 
 **Answer:**
 
@@ -75,7 +62,7 @@ The thumbnail should be generated using the [`sys::fsh`](../../services/system/f
 **Arguments:**
 
 - Refresh mode (1 byte): `0x00` to get the current thumbnail or a cached one, `0x01` to force generating a new thumbnail for the item
-- [FMP](#file-manager-paths)
+- [Filesystem path](filesystem-interfaces.md#filesystem-paths)
 
 **Answer:**
 
@@ -94,7 +81,7 @@ Generate a context menu for a specific filesystem item. Used by the DEA.
 
 **Arguments:**
 
-- [FMP](#file-manager-paths)
+- [Filesystem path](filesystem-interfaces.md#filesystem-paths)
 
 **Answer:**
 

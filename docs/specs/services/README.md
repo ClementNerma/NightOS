@@ -10,7 +10,7 @@ This directory contains documentation for the different types of services.
 
 ## [Driver services](drivers/README.md)
 
-* [Filesystem driver service](drivers/filesystem.md)
+* [Storage driver service](drivers/storage.md)
 
 ## [System services](system/README.md)
 

@@ -14,7 +14,7 @@ Open a filesystem item.
 
 **Arguments:**
 
-- [FMP](file-managers.md#file-manager-paths)
+- [Filesystem path](filesystem-interfaces.md#filesystem-paths)
 
 **Answer:**
 
@@ -37,7 +37,7 @@ The thumbnail should be generated using the [`sys::fsh`](../../services/system/f
 
 **Arguments:**
 
-- [FMP](file-managers.md#file-manager-paths)
+- [Filesystem path](filesystem-interfaces.md#filesystem-paths)
 
 **Answer:**
 
@@ -58,7 +58,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 
 **Arguments:**
 
-- [FMP](file-managers.md#file-manager-paths)
+- [Filesystem path](filesystem-interfaces.md#filesystem-paths)
 
 **Answer:**
 

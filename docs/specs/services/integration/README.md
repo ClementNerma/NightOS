@@ -11,3 +11,4 @@ These services are not available directly to the end applications ; they can onl
 * [Desktop environment](desktop-environments.md)
 * [File managers](file-managers.md)
 * [File openers](file-openers.md)
+* [Filesystem interfaces](filesystem-interfaces.md)

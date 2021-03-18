@@ -12,4 +12,4 @@ The list below indicates the service as well as the [DDT](../system/hw.md#driven
 
 ### Storage drivers
 
-* `0x0001` [Filesystem driver service](filesystem.md)
+* `0x0001` [Storage driver service](storage.md)

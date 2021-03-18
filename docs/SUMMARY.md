@@ -63,8 +63,9 @@
     - [Desktop environments](specs/services/integration/desktop-environments.md) - integration service for desktop environments
     - [File managers](specs/services/integration/file-managers.md) - integration service for file managers
     - [File openers](specs/services/integration/file-openers.md) - integration service for file openers
+    - [Filesystem interfaces](specs/services/integration/filesystem-interfaces.md) - integration service for filesystem interfaces
   - [Driver services](specs/services/drivers/README.md)
-    - [Filesystem driver service](specs/services/drivers/filesystem.md)
+    - [Storage driver service](specs/services/drivers/storage.md)
   - [System services](specs/services/system/README.md)
     - [`sys::fs`](specs/services/system/fs.md)
     - [`sys::fsh`](specs/services/system/fsh.md)

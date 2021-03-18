@@ -60,6 +60,7 @@ The list of default applications and their description can be found [here](appli
 - [Applications package](specs/applications/package.md) - files representing a whole application
 - [Applications manifest](specs/applications/manifest.md) - how applications describe themselves in their package
 - [Filesystem](specs/filesystem.md) - how the filesystem works
+- [Storage permissions map](specs/storage-permissions-map.md) - how permissions are managed on filesystem elements
 - [Libraries](specs/libraries.md) - what are libraries
 - [The registry](specs/registry.md) - exhaustive specification of the registry's content
 - [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms

@@ -9,6 +9,7 @@ This document presents how files are stored in NightOS.
   - [Temporary FEID](#temporary-feid)
   - [Paths' size limit](#paths-size-limit)
 - [Items naming](#items-naming)
+- [Storage permissions map](#storage-permissions-map)
 - [Symbolic links](#symbolic-links)
   - [Concept](#concept)
   - [Cyclic symlinks](#cyclic-symlinks)
@@ -56,8 +57,9 @@ Paths' length is encoded on 2 bytes, allowing up to 65 534 characters plus the `
 This limit exists to avoid too costly string copies on path manipulation, while being long enough for the very large majority of use cases.
 
 ## Items naming
+## Storage permissions map
 
-Filenames can use absolutely any Unicode character, _except_ slahes and the `NULL` character (`U+0000`).
+Permissions on individual items is achieved through [storage permissions maps](storage-permissions-map.md).
 
 ## Symbolic links
 

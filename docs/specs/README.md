@@ -9,6 +9,7 @@ For more informations about low-level concepts these documents refer to, you can
 - [Applications package](applications/package.md) - files representing a whole application
 - [Applications manifest](applications/manifest.md) - how applications describe themselves in their package
 - [Filesystem](filesystem.md) - how the filesystem works
+- [Storage permissions map](storage-permissions-map.md) - how permissions are managed on filesystem elements
 - [Libraries](libraries.md) - what are libraries
 - [The registry](registry.md) - exhaustive specification of the registry's content
 - [Vocabulary](vocabulary.md) - the list of NightOS-related terms

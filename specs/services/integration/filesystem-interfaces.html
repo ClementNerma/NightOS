@@ -303,7 +303,7 @@
 </ul>
 <p><strong>Error codes:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 </ul>
 <h3 id="0x10-item_exists"><a class="header" href="#0x10-item_exists"><code>0x10</code> ITEM_EXISTS</a></h3>
 <p>Check if a given item exists.</p>
@@ -319,7 +319,7 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 </ul>
 <h3 id="0x11-feid_to_split"><a class="header" href="#0x11-feid_to_split"><code>0x11</code> FEID_TO_SPLIT</a></h3>
 <p>Convert a <a href="../../filesystem.html#element-unique-identifier">FEID</a> to the corresponding <a href="#split-paths">split path</a>.</p>
@@ -334,7 +334,7 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: The provided FEID was not found in the filesystem</li>
 </ul>
 <h3 id="0x12-item_metadata"><a class="header" href="#0x12-item_metadata"><code>0x12</code> ITEM_METADATA</a></h3>
@@ -350,7 +350,7 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: The provided path was not found</li>
 </ul>
 <h3 id="0x13-rename_item"><a class="header" href="#0x13-rename_item"><code>0x13</code> RENAME_ITEM</a></h3>
@@ -364,7 +364,7 @@
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: The provided path was not foud</li>
 </ul>
 <h3 id="0x14-move_item"><a class="header" href="#0x14-move_item"><code>0x14</code> MOVE_ITEM</a></h3>
@@ -379,7 +379,7 @@
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: The provided path was not found</li>
 <li><code>0x32</code>: Target directory was not found</li>
 <li><code>0x33</code>: Target directory's maximum capacity has been reached</li>
@@ -399,7 +399,7 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Item was not found</li>
 <li><code>0x32</code>: Cannot remove a non-empty directory</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>
@@ -417,7 +417,7 @@
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Parent directory was not found</li>
 <li><code>0x32</code>: Directory's maximum capacity has been reached</li>
 <li><code>0x33</code>: Maximum nested items number has been reached</li>
@@ -443,7 +443,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Directory was not found</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
@@ -464,7 +464,7 @@ If the number of items to get is larger than the number of entries in the direct
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Parent directory was not found</li>
 <li><code>0x32</code>: Directory's maximum capacity has been reached</li>
 <li><code>0x33</code>: Maximum nested items number has been reached</li>
@@ -492,7 +492,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Start offset is out-of-range</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
@@ -514,7 +514,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Invalid AMS ID provided</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
@@ -533,7 +533,7 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Offset is out-of-range</li>
 <li><code>0x32</code>: Storage's capacity exceeded</li>
 <li><code>0x33</code>: Maximum individual file size exceeded</li>
@@ -558,7 +558,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Invalid AMS ID provided</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
@@ -577,7 +577,7 @@ If the number of items to get is larger than the number of entries in the direct
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Parent directory was not found</li>
 <li><code>0x32</code>: Directory's maximum capacity has been reached</li>
 <li><code>0x33</code>: Maximum nested items number has been reached</li>
@@ -599,7 +599,7 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Provided path was not found</li>
 <li><code>0x32</code>: Cannot crate symbolic links to cross-filesystem items</li>
 <li><code>0x33</code>: Cannot crate symbolic links to non-existing items</li>
@@ -618,7 +618,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Provided path was not found</li>
 <li><code>0x32</code>: Symbolic link is cyclic</li>
 </ul>
@@ -635,7 +635,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Error codes:</strong></p>
 <ul>
-<li><code>0x30</code>: Invalid SOR provided</li>
+<li><code>0x20</code>: Invalid SOR provided</li>
 <li><code>0x31</code>: Invalid sector size provided</li>
 </ul>
 <h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
@@ -649,7 +649,7 @@ If the number of items to get is larger than the number of entries in the direct
 <li>Success data: number of bytes read (8 bytes)</li>
 <li>Error code (1 byte)
 <ul>
-<li><code>0x30</code>: Start offset is out-of-range</li>
+<li><code>0x20</code>: Start offset is out-of-range</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
 </li>
@@ -666,7 +666,7 @@ If the number of items to get is larger than the number of entries in the direct
 <li>Success data: <em>None</em></li>
 <li>Error code (1 byte):
 <ul>
-<li><code>0x30</code>: Start offset is out-of-range</li>
+<li><code>0x20</code>: Start offset is out-of-range</li>
 <li><code>0x31</code>: Maximum individual file size exceeded</li>
 <li><code>0x32</code>: Filesystem's free space exceeded</li>
 <li><code>0x40</code>: Unspecified filesystem error</li>

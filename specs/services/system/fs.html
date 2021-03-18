@@ -261,7 +261,7 @@
 <h3 id="0x04-fs_mount"><a class="header" href="#0x04-fs_mount"><code>0x04</code> FS_MOUNT</a></h3>
 <p>Mount an existing filesystem. If no mount path is provided, the filesystem will be mounted under the <code>/mnt</code> directory.</p>
 <p>New filesystems are <a href="#filesystems-detection">automatically detected</a> when storage devices are connected.</p>
-<p><strong>Required permission:</strong> <code>fs.filesystems.mount.existing</code></p>
+<p><strong>Required permission:</strong> <code>fs.filesystems.mount</code></p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
@@ -306,6 +306,427 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
+<h3 id="0x10-item_exists"><a class="header" href="#0x10-item_exists"><code>0x10</code> ITEM_EXISTS</a></h3>
+<p>Check if a given item exists.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.path.exists</code> to check any item type</li>
+<li><code>fs.feid.exists</code> to check only <a href="../../filesystem.html#element-unique-identifier">FEID</a></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a></li>
+<li><a href="../integration/filesystem-interfaces.html#item-type-byte">Item type byte</a> (1 byte) to check if the item exists <strong>and</strong> is of a specific type - <code>0</code> to accept all types</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../integration/filesystem-interfaces.html#item-type-byte">Item type byte</a> (1 byte)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+</ul>
+<h3 id="0x11-feid_to_split"><a class="header" href="#0x11-feid_to_split"><code>0x11</code> FEID_TO_SPLIT</a></h3>
+<p>Convert a <a href="../../filesystem.html#element-unique-identifier">FEID</a> to the corresponding <a href="../integration/filesystem-interfaces.html#split-paths">split path</a>.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.path.exists</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../integration/filesystem-interfaces.html#split-paths">Split path</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: The provided FEID was not found in the filesystem</li>
+</ul>
+<h3 id="0x12-item_metadata"><a class="header" href="#0x12-item_metadata"><code>0x12</code> ITEM_METADATA</a></h3>
+<p>Get the metadata of a given item.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.metadata</code> to get symbolic links' metadata</li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../integration/filesystem-interfaces.html#item-metadata">Item metadata</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: The provided path was not found</li>
+</ul>
+<h3 id="0x13-rename_item"><a class="header" href="#0x13-rename_item"><code>0x13</code> RENAME_ITEM</a></h3>
+<p>Rename an existing item.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.move</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a></li>
+<li>New <a href="../integration/filesystem-interfaces.html#filenames">filename</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid filename provided</li>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: The provided path was not foud</li>
+</ul>
+<h3 id="0x14-move_item"><a class="header" href="#0x14-move_item"><code>0x14</code> MOVE_ITEM</a></h3>
+<p>Move an existing item.</p>
+<ul>
+<li><code>fs.items.move</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a></li>
+<li>New <a href="../integration/filesystem-interfaces.html#filesystem-paths">parent directory</a></li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> new <a href="../integration/filesystem-interfaces.html#filenames">filename</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid filename provided</li>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: The provided path was not found</li>
+<li><code>0x32</code>: Target directory was not found</li>
+<li><code>0x33</code>: Target directory's maximum capacity has been reached</li>
+<li><code>0x34</code>: Maximum nested items number has been reached</li>
+<li><code>0x35</code>: Maximum path length has been reached</li>
+<li><code>0x36</code>: Item cannot be moved for unspecified reasons</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x15-delete_item"><a class="header" href="#0x15-delete_item"><code>0x15</code> DELETE_ITEM</a></h3>
+<p>Delete an item.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.remove.trash</code> to send items to the trash</li>
+<li><code>fs.items.remove</code> to delete items permanently</li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a></li>
+<li>Deletion mode (1 byte): <code>0x01</code> to send the item to the user's trash, <code>0x02</code> to delete it permanently</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Item was not found</li>
+<li><code>0x32</code>: Cannot remove a non-empty directory</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x20-create_directory"><a class="header" href="#0x20-create_directory"><code>0x20</code> CREATE_DIRECTORY</a></h3>
+<p>Create a directory.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.create</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a> of the parent directory</li>
+<li>New item's <a href="../integration/filesystem-interfaces.html#filenames">filename</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid filename provided</li>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Parent directory was not found</li>
+<li><code>0x32</code>: Directory's maximum capacity has been reached</li>
+<li><code>0x33</code>: Maximum nested items number has been reached</li>
+<li><code>0x34</code>: Maximum path length has been reached</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x21-read_directory"><a class="header" href="#0x21-read_directory"><code>0x21</code> READ_DIRECTORY</a></h3>
+<p>List all entries in a directory.</p>
+<p>If the provided offset is larger than the number of entries in the directory, all remaining items must be returned.<br />
+If the number of items to get is larger than the number of entries in the directory less the start offset, all remaining items must be returned.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.readdir</code></li>
+<li><code>fs.items.readdir.hidden</code> to also list hidden items</li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a></li>
+<li>Start offset (8 bytes)</li>
+<li>Number of items to get (8 bytes) - <code>0</code> to list all items at once</li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> total number of entries, if available (1 + 8 bytes)</li>
+<li>Hidden flag match (1 byte): set to <code>0x00</code> to match only non-hidden items, <code>0x01</code> to match all items</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../../kernel/data-structures.html#delimited-lists">Delimited list</a> of <a href="../integration/filesystem-interfaces.html#item-metadata">item metadata</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Directory was not found</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x30-create_file"><a class="header" href="#0x30-create_file"><code>0x30</code> CREATE_FILE</a></h3>
+<p>Create a file.</p>
+<p>The reserved size is only provided if the filesystem <a href="../integration/filesystem-interfaces.html#capabilities-list">supports it</a>.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.create</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a> of the parent directory</li>
+<li>New item's <a href="../integration/filesystem-interfaces.html#filenames">filename</a></li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> reserved size (1 + 8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> length of the buffer to write (1 + 8 bytes)</li>
+<li>Buffer to write</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid filename provided</li>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Parent directory was not found</li>
+<li><code>0x32</code>: Directory's maximum capacity has been reached</li>
+<li><code>0x33</code>: Maximum nested items number has been reached</li>
+<li><code>0x34</code>: Maximum path length has been reached</li>
+<li><code>0x35</code>: Storage's capacity exceeded</li>
+<li><code>0x36</code>: Maximum individual file size exceeded</li>
+<li><code>0x37</code>: Filesystem's free space exceeded</li>
+<li><code>0x38</code>: Unspecified filesystem error</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x31-read_file_sync"><a class="header" href="#0x31-read_file_sync"><code>0x31</code> READ_FILE_SYNC</a></h3>
+<p>Read a file synchronously.</p>
+<p>If no read length is provided, the whole file must be read.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.read</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li>File's <a href="../integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
+<li>Start offset address (8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> length to read (1 + 8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of read bytes (8 bytes)</li>
+<li>File's content</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Start offset is out-of-range</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x32-read_file_async"><a class="header" href="#0x32-read_file_async"><code>0x32</code> READ_FILE_ASYNC</a></h3>
+<p>Asynchronously read a file to a writable <a href="../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
+<p>THe number of bytes to read is always provided to ensure it does not accidentally exceed the AMS's size.</p>
+<p>When the read is complete, a <a href="#0x32-file_read"><code>FILE_READ</code></a> notification must be sent to the client.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.read</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li>File's <a href="../integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
+<li>Start offset address (8 bytes)</li>
+<li>Number of bytes to read (8 bytes)</li>
+<li>AMS identifier (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Invalid AMS ID provided</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x33-write_file_sync"><a class="header" href="#0x33-write_file_sync"><code>0x33</code> WRITE_FILE_SYNC</a></h3>
+<p>Synchronously write a buffer to a file.</p>
+<p>If no offset address is provided, the file's content must be completely overriden with the provided buffer.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.write</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li>File's <a href="../integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> write offset address (1 + 8 bytes)</li>
+<li>Number of bytes to write (8 bytes)</li>
+<li>Buffer to write (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Offset is out-of-range</li>
+<li><code>0x32</code>: Storage's capacity exceeded</li>
+<li><code>0x33</code>: Maximum individual file size exceeded</li>
+<li><code>0x34</code>: Filesystem's free space exceeded</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x34-write_file_async"><a class="header" href="#0x34-write_file_async"><code>0x34</code> WRITE_FILE_ASYNC</a></h3>
+<p>Asynchronously write a readable <a href="../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> to a file.</p>
+<p>If no offset address is provided, the file's content must be completely overriden with the provided buffer.</p>
+<p>When the writing is complete, a <a href="#0x34-file_written"><code>FILE_WRITTEN</code></a> notification must be sent to the client. The notification <strong>must not</strong> be sent before the current method returned successfully.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.write</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li>File's <a href="../integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> write offset address (1 + 8 bytes)</li>
+<li>Number of bytes to write (8 bytes)</li>
+<li>AMS identifier (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Invalid AMS ID provided</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+<h3 id="0x40-create_symlink"><a class="header" href="#0x40-create_symlink"><code>0x40</code> CREATE_SYMLINK</a></h3>
+<p>Create a <a href="../../filesystem.html#symbolic-links">symbolic link</a>.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.symlinks.create</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a> of the parent directory</li>
+<li>New item's <a href="../integration/filesystem-interfaces.html#filenames">filename</a></li>
+<li>Symlink's <a href="../../filesystem.html#filesystem-unique-identifier">target FSID</a> (8 bytes)</li>
+<li>Symlink's <a href="../integration/filesystem-interfaces.html#filesystem-paths">target path</a> (always a <a href="../integration/filesystem-interfaces.html#split-paths">split path</a> for other filesystems)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: Invalid filename provided</li>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Parent directory was not found</li>
+<li><code>0x32</code>: Directory's maximum capacity has been reached</li>
+<li><code>0x33</code>: Maximum nested items number has been reached</li>
+<li><code>0x34</code>: Maximum path length has been reached</li>
+<li><code>0x35</code>: Storage's capacity exceeded</li>
+<li><code>0x36</code>: Cannot create symbolic links to cross-filesystem items</li>
+<li><code>0x37</code>: Cannot create symbolic links to non-existing items</li>
+</ul>
+<h3 id="0x41-update_symlink"><a class="header" href="#0x41-update_symlink"><code>0x41</code> UPDATE_SYMLINK</a></h3>
+<p>Create a <a href="../../filesystem.html#symbolic-links">symbolic link</a>.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.symlinks.update</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li>Symlink's <a href="../integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
+<li>Symlink's <a href="../../filesystem.html#filesystem-unique-identifier">target FSID</a> (8 bytes)</li>
+<li>Symlink's <a href="../integration/filesystem-interfaces.html#filesystem-paths">target path</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Provided path was not found</li>
+<li><code>0x32</code>: Cannot crate symbolic links to cross-filesystem items</li>
+<li><code>0x33</code>: Cannot crate symbolic links to non-existing items</li>
+</ul>
+<h3 id="0x42-read_symlink"><a class="header" href="#0x42-read_symlink"><code>0x42</code> READ_SYMLINK</a></h3>
+<p>Read a <a href="../../filesystem.html#symbolic-links">symbolic link</a>'s target.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.symlinks.read</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li>Symlink's <a href="../integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Symlink's <a href="../../filesystem.html#filesystem-unique-identifier">target FSID</a> (8 bytes)</li>
+<li>Symlink's <a href="../integration/filesystem-interfaces.html#filesystem-paths">target path</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Provided path was not found</li>
+<li><code>0x32</code>: Symbolic link is cyclic</li>
+</ul>
+<h3 id="0xf0-format_async"><a class="header" href="#0xf0-format_async"><code>0xF0</code> FORMAT_ASYNC</a></h3>
+<p>Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, </p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.filesystems.format</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> new partition's sector size, in bytes (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated task identifier (8 bytes)</li>
+</ul>
+<p><strong>Error codes:</strong></p>
+<ul>
+<li><code>0x20</code>: Invalid FSID provided</li>
+<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x31</code>: Invalid sector size provided</li>
+</ul>
 <h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
 <h3 id="0x07-fs_changed"><a class="header" href="#0x07-fs_changed"><code>0x07</code> FS_CHANGED</a></h3>
 <p>Sent to a client which subscribed through <a href="#0x07-fs_watch"><code>FS_WATCH</code></a> each time a filesystem is mounted or unmounted.</p>
@@ -313,6 +734,58 @@
 <ul>
 <li>Mount status (1 byte): <code>0x01</code> if the filesystem was mounted, <code>0x02</code> if it was unmounted</li>
 <li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+</ul>
+<h3 id="0x32-file_read"><a class="header" href="#0x32-file_read"><code>0x32</code> FILE_READ</a></h3>
+<p>Sent to a client after an asynchronous file reading requested using the <a href="#0x32-read_file_async"><code>READ_FILE_ASYNC</code></a> method completed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: number of bytes read (8 bytes)</li>
+<li>Error code (1 byte)
+<ul>
+<li><code>0x20</code>: Start offset is out-of-range</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="0x34-file_written"><a class="header" href="#0x34-file_written"><code>0x34</code> FILE_WRITTEN</a></h3>
+<p>Sent to a client after an asynchronous file writing requested using the <a href="#0x34-write_file_async"><code>WRITE_FILE_ASYNC</code></a> method completed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: <em>None</em></li>
+<li>Error code (1 byte):
+<ul>
+<li><code>0x20</code>: Start offset is out-of-range</li>
+<li><code>0x31</code>: Maximum individual file size exceeded</li>
+<li><code>0x32</code>: Filesystem's free space exceeded</li>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="0xf0-formatted"><a class="header" href="#0xf0-formatted"><code>0xF0</code> FORMATTED</a></h3>
+<p>Sent to a client after an formatting requested using the <a href="#0xf0-format_async"><code>FORMAT_ASYC</code></a> method completed.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Task identifier (8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#fallible-results">Fallible result</a> with:
+<ul>
+<li>Success data: <em>None</em></li>
+<li>Error code (1 byte):
+<ul>
+<li><code>0x40</code>: Unspecified filesystem error</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
                     </main>

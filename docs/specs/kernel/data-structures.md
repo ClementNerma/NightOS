@@ -9,6 +9,7 @@ All contiguous data structures are made such as it is easy to delimit them by co
 - [Delimited strings](#delimited-strings)
 - [Buffer pointers](#buffer-pointers)
 - [Options](#options)
+- [Fallible results](#fallible-results)
 - [Bitmap images](#bitmap-images)
 - [Packed linked lists](#packed-linked-lists)
   - [Caracteristics](#caracteristics)
@@ -56,6 +57,13 @@ It is made as follows:
 An _option_ is a data structure that may contain a specific data type or nothing.
 
 It is made of a variance byte, set to `0x01` followed by the data if any, or a single `0x00` byte to indicate no data is present.
+
+## Fallible results
+
+A _fallible result_ is a data structure describing a fallible operation's result. It starts by a variance byte to indicate its result type:
+
+- Either `0x00` to indicate the operation was successfully, followed by the success data
+- Or `0x01` to indicate something went wrong, followed by the error data
 
 ## Bitmap images
 

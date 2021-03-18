@@ -203,8 +203,8 @@
 <p>Three partitions are used to store the data:</p>
 <ul>
 <li>One <strong>FAT32</strong> partition for the bootloader ;</li>
-<li>One <strong>Btrfs</strong> partition for the system (<code>/sys</code> and <code>/etc</code>) ;</li>
-<li>One <strong>Btrfs</strong> partition for users' data (<code>/apps</code> and <code>/home</code>)</li>
+<li>One <strong>FAT32</strong> partition for the system (<code>/sys</code> and <code>/etc/sys</code>) ;</li>
+<li>One <strong>Btrfs</strong> partition for users' data (<code>/etc</code> except <code>/etc/sys</code>, <code>/apps</code> and <code>/home</code>)</li>
 </ul>
 <h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
 <p>Filenames can use absolutely any Unicode character, <em>except</em> slahes and the <code>NULL</code> character (<code>U+0000</code>).</p>

@@ -15,6 +15,10 @@ It is known as the [I/O manager](../../../technical/io-manager.md), or Ion.
 - [Drivers](#drivers)
   - [Driver selection](#driver-selection)
   - [A note on performances](#a-note-on-performances)
+- [Latency reduction for storage devices](#latency-reduction-for-storage-devices)
+  - [Direct operations](#direct-operations)
+  - [Direct access for `sys::fs`](#direct-access-for-sysfs)
+  - [Best and worst scenario](#best-and-worst-scenario)
 - [Methods](#methods)
   - [`0x01` ENUM_DEVICES](#0x01-enum_devices)
   - [`0x02` SUBSCRIBE_DEVICES](#0x02-subscribe_devices)
@@ -151,6 +155,35 @@ If no criteria is matched, the driver isn't selected to drive the given hardware
 ### A note on performances
 
 Although hardware devices' interrupts are notified to the driver through [service socket notifications](../../kernel/ipc.md#methods-and-notifications), the latency is still minimal as soon as the driver listens to the [`RECV_SOCK_MSG`](../../kernel/signals.md#0x27-recv_sock_msg) signal, which like all signals uses interrupts and so guarantees a very low latency.
+
+## Latency reduction for storage devices
+
+### Direct operations
+
+All operations on storage devices - except on exotic storage devices requiring [dedicated driver](../drivers/storage.md) - all operations are performed directly by the `sys::hw` service, without the need for a driver.
+
+### Direct access for [`sys::fs`](fs.md)
+
+All operations related to storage devices are handled by the [`sys::fs`](fs.md) service. To avoid the cost of using `sys::hw` as a relay for hardware operations, the `sys::fs` service is allowed to directly communicate with all hardware components identified as storage devices, or their driver service in case it isn't handled natively.
+
+This optimization is not performed in the case the `sys::fs` service uses a [filesystem interfaces](../integration/filesystem-interfaces.md) to handle a non-common filesystem type, as the interface must only be able to use a specific portion of the storage device, and not is entirety.
+
+### Best and worst scenario
+
+Worst scenario is in the case of a filesystem making use a [filesystem interface](../integration/filesystem-interfaces.md). Data traverses the following processes:
+
+* Client
+* `sys::fs`
+* Filesystem interface
+* `sys::hw`
+* Underlying storage driver
+* Hardware storage device
+
+Best scenario is for common filesystems:
+
+* Client
+* `sys::fs`
+* Hardware storage device
 
 ## Methods
 

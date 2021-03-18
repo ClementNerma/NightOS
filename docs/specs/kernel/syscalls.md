@@ -417,6 +417,11 @@ If the current process already has an active connection (a connection that hasn'
 **Arguments:**
 
 - Target application's [ANID](../applications-libraries.md#application-identifier) (4 bytes)
+- Target type (1 byte):
+  - `0x00` for the main service
+  - `0x01` for a scoped service
+  - `0x02` for an [integration service](../services/integration/README.md)
+  - `0x03` for a [driver service](../services/drivers/README.md)
 - [Scope name](../services.md#types-of-services) - filled with zeroes to access the default service (8 bytes)
 - Command code (2 bytes)
 
@@ -429,9 +434,12 @@ If the current process already has an active connection (a connection that hasn'
 **Errors:**
 
 - `0x10`: Invalid flexible mode provided
-- `0x20`: The provided ANID does not exist
-- `0x21`: Target application does not [expose the provided service](../../concepts/applications.md#services)
+- `0x11`: Invalid target ytpe provided
+- `0x20`: Requested an integration or driver service but client is not a [system services](../services/system/README.md)
+- `0x21`: The provided ANID does not exist
+- `0x22`: Target application does not [expose the requested service](../../concepts/applications.md#services)
 - `0x22`: Current process already has an active connection to the target service and flexible mode is not set
+- `0x2F`: Client is the [`sys::fs`](../services/system/fs.md) service but a service other than a [storage driver service](../services/drivers/storage.md) or a [filesystem interface service](../services/integration/filesystem-interfaces.md) was requested
 - `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
 - `0x31`: Service rejected the connection request
 

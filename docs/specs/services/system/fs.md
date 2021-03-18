@@ -4,7 +4,28 @@ The `sys::fs` service is in charge of operations related to the [filesystems](..
 
 ## Behaviour
 
-The typical sequence of filesystem operations is:
+### Natively handled filesystems
+
+The `sys::fs` service natively handles the following filesystem types:
+
+* Btrfs
+* Ext2 / Ext3 / Ext4
+* NTFS
+* FAT12 / FAT16 / FAT32
+* exFAT
+
+For these, the typical sequence of filesystem operations is:
+
+* The client calls the `sys::fs` service to perform a given operation
+* The operation is directly performed by the service on the storage device thanks to [direct access](hw.md#direct-access-for-sysfs) and [direct operations](hw.md#direct-operations).
+
+This is unless the storage device requires a [specific driver](../drivers/storage.md) which prevent from performing [direct operations](hw.md#direct-operations). In such case, the service can still contact the driver directly, bypassing the `sys::hw` service.
+
+### Extending handled filesystems
+
+It is possible to use other filesystems that the natively handled ones, using [filesystem interfaces](../integration/filesystem-interfaces.md).
+
+This, however, creates a higher latency as direct access and operations are not permitted anymore. The typical sequence of operations becomes:
 
 * The client calls the `sys::fs` service to perform a given operation
 * The operation is transmitted to the related [filesystem interface](../integration/filesystem-interfaces.md)...
@@ -17,6 +38,12 @@ The information then goes up:
 * Then to the filesystem interface which translates it
 * Then back to the `sys::fs` service
 * And finally to the client
+
+### Filesystems detection
+
+The `sys::fs` serviec is responsible for detecting filesystems. It performs this by contacting the [`sys::hw`](hw.md) service to enumerate and access the different storage devices, as well as being notified when a storage device is connected, disconnected or changes.
+
+Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is [natively handled](#natively-handled-filesystems)), [filesystem interfaces](../integration/filesystem-interfaces.md) are used one by one to find one that can handle the said filesystem, using their [`IS_VALID_PARTITION`](../integration/filesystem-interfaces.md#0x02-is_valid_partition) method.
 
 ## Methods
 

@@ -2,6 +2,8 @@
 
 This documents describes the structures used by the kernel to represent the data it uses in memory.
 
+All contiguous data structures are made such as it is easy to delimit them by computing their size in the memory.
+
 - [Timestamps](#timestamps)
 - [Delimited lists](#delimited-lists)
 - [Delimited strings](#delimited-strings)

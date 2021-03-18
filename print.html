@@ -4583,6 +4583,14 @@ Triggers the <a href="specs/kernel/signals.html#0x29-serv_sock_closed"><code>SER
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Target application's <a href="specs/kernel/../applications-libraries.html#application-identifier">ANID</a> (4 bytes)</li>
+<li>Target type (1 byte):
+<ul>
+<li><code>0x00</code> for the main service</li>
+<li><code>0x01</code> for a scoped service</li>
+<li><code>0x02</code> for an <a href="specs/kernel/../services/integration/README.html">integration service</a></li>
+<li><code>0x03</code> for a <a href="specs/kernel/../services/drivers/README.html">driver service</a></li>
+</ul>
+</li>
 <li><a href="specs/kernel/../services.html#types-of-services">Scope name</a> - filled with zeroes to access the default service (8 bytes)</li>
 <li>Command code (2 bytes)</li>
 </ul>
@@ -4595,8 +4603,10 @@ Triggers the <a href="specs/kernel/signals.html#0x29-serv_sock_closed"><code>SER
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid flexible mode provided</li>
-<li><code>0x20</code>: The provided ANID does not exist</li>
-<li><code>0x21</code>: Target application does not <a href="specs/kernel/../../concepts/applications.html#services">expose the provided service</a></li>
+<li><code>0x11</code>: Invalid target ytpe provided</li>
+<li><code>0x20</code>: Requested an integration or driver service but client is not a <a href="specs/kernel/../services/system/README.html">system services</a></li>
+<li><code>0x21</code>: The provided ANID does not exist</li>
+<li><code>0x22</code>: Target application does not <a href="specs/kernel/../../concepts/applications.html#services">expose the requested service</a></li>
 <li><code>0x22</code>: Current process already has an active connection to the target service and flexible mode is not set</li>
 <li><code>0x30</code>: Failed to send the <a href="specs/kernel/signals.html#0x2a-service_conn_request"><code>SERVICE_CONN_REQUEST</code></a> due to a <a href="specs/kernel/signals.html#0x01-handler_fault">double handler fault</a></li>
 <li><code>0x31</code>: Service rejected the connection request</li>

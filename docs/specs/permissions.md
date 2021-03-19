@@ -79,13 +79,12 @@ These permissions are automatically granted if their scope is one of the applica
 - (S) `fs.items.metadata`: get metadata on a given item
 - (S) `fs.items.create`: create new filesystem elements
 - (S) `fs.items.move`: rename and move existing filesystem elements
-- (S) `fs.items.readdir`: list items contained inside given directories
-- (S) `fs.items.readdir.hidden`: list hidden items in directories
 - (S) `fs.items.remove.trash`: send items to the current user's trash
 - (S) `fs.items.remove`: delete items permanently
-- (S) `fs.items.watch`: be notified of any change to a an item's metadata and items
-- (S) `fs.items.watch.recursive`: be notified of any change to a directory's metadata and items, recursively
 - (S) `fs.items.write`: update an existing filesystem element's content
+
+- (S) `fs.dir.read`: list items contained inside given directories
+- (S) `fs.dir.read.hidden`: list hidden items in directories
 
 - (S) `fs.symlinks.create`: create symbolic links
 - (S) `fs.symlinks.update`: update existing symbolic links

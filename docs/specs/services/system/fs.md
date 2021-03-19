@@ -376,8 +376,8 @@ If the number of items to get is larger than the number of entries in the direct
 
 **Required permissions:**
 
-- `fs.items.readdir`
-- `fs.items.readdir.hidden` to also list hidden items
+- `fs.dir.read`
+- `fs.dir.read.hidden` to also list hidden items
 
 **Arguments:**
 
@@ -669,7 +669,7 @@ Watch a directory's content for changes on its metadata or content. Any change w
 
 **Required permission:**
 
-- `fs.items.readdir`
+- `fs.dir.read`
 
 **Arguments:**
 

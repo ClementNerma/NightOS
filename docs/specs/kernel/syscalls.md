@@ -343,6 +343,8 @@ Triggers the [`RECV_SERV_SOCK`](signals.md#0x26-recv_serv_sock) signal on the re
 Send a message through a [service socket exchange](ipc.md#exchanges-and-messages).  
 This syscall can also be used to create a new exchange.
 
+Sending a non-zero error code will close the exchange.
+
 **Arguments:**
 
 - Socket identifier (8 bytes)

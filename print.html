@@ -4543,6 +4543,7 @@ Triggers the <a href="specs/kernel/signals.html#0x26-recv_serv_sock"><code>RECV_
 <h3 id="0x27-send_sock_msg"><a class="header" href="#0x27-send_sock_msg"><code>0x27</code> SEND_SOCK_MSG</a></h3>
 <p>Send a message through a <a href="specs/kernel/ipc.html#exchanges-and-messages">service socket exchange</a>.<br />
 This syscall can also be used to create a new exchange.</p>
+<p>Sending a non-zero error code will close the exchange.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Socket identifier (8 bytes)</li>

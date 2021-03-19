@@ -223,7 +223,7 @@
 <h2 id="hardware-detection"><a class="header" href="#hardware-detection">Hardware detection</a></h2>
 <p>Hardware detection is handled by <a href="../../kernel/hardware.html#hardware-detection">the kernel itself</a>, which exposes a <a href="../../kernel/hardware.html#raw-device-descriptor"><em>raw device descriptor</em> (RDD)</a>.</p>
 <h2 id="unique-device-identifier"><a class="header" href="#unique-device-identifier">Unique device identifier</a></h2>
-<p>Each device gets a <em>unique device identifier</em> (UDI) encoded on 8 bytes, which identifies a unique hardware component. It is unique across components and consistent across reboots. Unlike the <a href="../../kernel/hardware.html#kernel-device-identifier">KDI</a>, the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.</p>
+<p>Each device gets a <em>unique device identifier</em> (UDI) encoded on 8 bytes, which identifies a unique hardware device. It is unique across devices and consistent across reboots. Unlike the <a href="../../kernel/hardware.html#kernel-device-identifier">KDI</a>, the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.</p>
 <p>The identification mechanism depends on the connection type and is yet to be specified.</p>
 <h2 id="device-formats"><a class="header" href="#device-formats">Device formats</a></h2>
 <p>This section describes the multiple formats used by this service to deal with devices.</p>
@@ -298,27 +298,27 @@
 <p>Registering as a driver for a pattern requires the application to expose the <a href="../../services.html#types-of-services">driver service(s)</a> relevant to the <a href="#driven-device-type">DDT</a> provided in the pattern.</p>
 <p>When a device is connected, a driver is selected from the list of drivers able to handle this specific device. If the device is connected for the very first time, the selected driver process first receives an <a href="#0x02-identify_device"><code>IDENTIFY_DEVICE</code></a> notification to translate the <a href="#drivable-device-raw-descriptor">DDRD</a> into a <a href="#driven-device-type">DDT</a>.</p>
 <p>Then, the driver process receives a <a href="#0x03-device_event"><code>DEVICE_EVENT</code></a> notification, which will also be sent if the status of the device changes.</p>
-<p>From this point, the driver can create an <a href="../../kernel/memory.html#abstract-memory-segments">AMS</a> from the device's memory using the <a href="../../kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall.</p>
-<p>It can also get informed of interrupts the device raises through the <a href="#0x10-device_interrupt"><code>DEVICE_INTERRUPT</code></a> notification.</p>
+<p>From this point, the driver process can communicate with the device using its <a href="../../kernel/hardware.html#inputoutput-ports">I/O ports</a> with the <a href="../../kernel/syscalls.html#0x60-read_io_port"><code>READ_IO_PORT</code></a> and <a href="../../kernel/syscalls.html#0x61-write_io_port"><code>WRITE_IO_PORT</code></a> syscalls.</p>
+<p>It can also map the device's memory into its own address space using an <a href="../../kernel/memory.html#abstract-memory-segments">AMS</a> with the <a href="../../kernel/syscalls.html#0x63-device_ams"><code>DEVICE_AMS</code></a> syscall.</p>
 <p>Other processes can then ask the driver to perform specific actions depending on the type of device, using <a href="#normalization">normalized methods</a> which can be sent to the driver using the <a href="#0xa0-ask_driver"><code>ASK_DRIVER</code></a> method. The driver receives these informations through the <a href="#0xa0-driver_method_request"><code>DRIVER_METHOD_REQUEST</code></a> notification.</p>
 <p>The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to <a href="#normalization">normalized notifications</a> which can then be sent to processes that subscribed to them using the related <a href="#normalization">normalized methods</a>.</p>
 <p>You can see the complete list of methods and notifications for each type of driver services in the <a href="../drivers/README.html">related section of the documentation</a>.</p>
 <h3 id="driver-selection"><a class="header" href="#driver-selection">Driver selection</a></h3>
-<p>A driver is selected for a specific hardware component if it matches any of the following criterias, in decreasing importance order:</p>
+<p>A driver is selected for a specific hardware device if it matches any of the following criterias, in decreasing importance order:</p>
 <ul>
-<li>The user selected this driver for this specific hardware component ;</li>
-<li>The user selected this driver for this specific type of hardware components (<a href="#patterns">pattern</a>) ;</li>
-<li>This driver is the one with the most specific <a href="#patterns">pattern</a> covering this hardware component ;</li>
-<li>This driver is the only one able to drive this specific hardware component (<a href="#device-type-descriptor">DTD</a>)</li>
+<li>The user selected this driver for this specific hardware device ;</li>
+<li>The user selected this driver for this specific type of hardware devices (<a href="#patterns">pattern</a>) ;</li>
+<li>This driver is the one with the most specific <a href="#patterns">pattern</a> covering this hardware device ;</li>
+<li>This driver is the only one able to drive this specific hardware device (<a href="#device-type-descriptor">DTD</a>)</li>
 </ul>
-<p>If no criteria is matched, the driver isn't selected to drive the given hardware component.</p>
+<p>If no criteria is matched, the driver isn't selected to drive the given hardware device.</p>
 <h3 id="a-note-on-performances"><a class="header" href="#a-note-on-performances">A note on performances</a></h3>
 <p>Although hardware devices' interrupts are notified to the driver through <a href="../../kernel/ipc.html#methods-and-notifications">service socket notifications</a>, the latency is still minimal as soon as the driver listens to the <a href="../../kernel/signals.html#0x27-recv_sock_msg"><code>RECV_SOCK_MSG</code></a> signal, which like all signals uses interrupts and so guarantees a very low latency.</p>
 <h2 id="latency-reduction-for-storage-devices"><a class="header" href="#latency-reduction-for-storage-devices">Latency reduction for storage devices</a></h2>
 <h3 id="direct-driver-access-for-a-hreffshtmlsysfsa"><a class="header" href="#direct-driver-access-for-a-hreffshtmlsysfsa">Direct driver access for <a href="fs.html"><code>sys::fs</code></a></a></h3>
 <p>All operations related to storage devices are handled by the <a href="fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all <a href="../drivers/storage.html">storage driver services</a>.</p>
 <h3 id="direct-hardware-access-for-a-hreffshtmlsysfsa"><a class="header" href="#direct-hardware-access-for-a-hreffshtmlsysfsa">Direct hardware access for <a href="fs.html"><code>sys::fs</code></a></a></h3>
-<p>In case a specific storage device doesn't require a <a href="../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware component.</p>
+<p>In case a specific storage device doesn't require a <a href="../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware device.</p>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
 <h3 id="0x01-enum_devices"><a class="header" href="#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></h3>
 <p>Enumerate connected devices, reserved to <a href="../../services.html">system services</a>.</p>
@@ -372,7 +372,7 @@ If multiple drivers have colliding patterns, the final user will be prompted to 
 <p>When a new device is connected, the driver process will receive an <a href="#0x02-identify_device"><code>IDENTIFY_DEVICE</code></a> notification to translate the <a href="#drivable-device-raw-descriptor">DDRD</a> into a <a href="#driven-device-type">DDT</a>.</p>
 <p>The driver process will receive <a href="#0x03-device_event"><code>DEVICE_EVENT</code></a> notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.<br />
 Notifications are also retroactive, which means they will be sent for already-connected devices.</p>
-<p>The driver will also have the device registered in its <a href="../../kernel/processes.html#drivable-devices">drivable devices attribute</a>, allowing it to use the <a href="../../kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall to map the device's memory in its own.</p>
+<p>The driver will also have the device registered in its <a href="../../kernel/processes.html#drivable-devices">drivable devices attribute</a>, allowing it to use the <a href="../../kernel/syscalls.html#0x63-device_ams"><code>DEVICE_AMS</code></a> syscall to map the device's memory in its own.</p>
 <p><strong>Required permission:</strong> <code>devices.register_driver</code></p>
 <p><strong>Arguments:</strong></p>
 <ul>

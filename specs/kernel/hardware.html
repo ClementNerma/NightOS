@@ -175,20 +175,26 @@
 <li><a href="#connection-specific-device-descriptor">Connection-specific device descriptor</a></li>
 <li><a href="#kernel-device-identifier">Kernel device identifier</a></li>
 <li><a href="#raw-device-descriptor">Raw device descriptor</a></li>
+<li><a href="#inputoutput-ports">Input/output ports</a>
+<ul>
+<li><a href="#io-ports-identifiers">I/O ports identifiers</a></li>
+</ul>
+</li>
 <li><a href="#drivers">Drivers</a></li>
 <li><a href="#kernel-communication">Kernel communication</a></li>
 </ul>
 <h2 id="hardware-detection"><a class="header" href="#hardware-detection">Hardware detection</a></h2>
-<p>Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional components afterwards.</p>
-<p>As all components do not use the same connection protocols, the detection process depends on the connection:</p>
+<p>Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional devices afterwards.</p>
+<p>As all devices do not use the same connection protocols, the detection process depends on the connection:</p>
 <ul>
-<li>PCI-Express components are detected through their Configuration Space</li>
-<li>IDE/SATA components are detected through the IDE/SATA controller</li>
-<li>USB components are enumerated through the USB protocol stack</li>
+<li>PCI-Express devices are detected through their Configuration Space</li>
+<li>IDE/SATA devices are detected through the IDE/SATA controller</li>
+<li>USB devices are enumerated through the USB protocol stack</li>
 </ul>
-<p>Some components may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.</p>
+<p>Some devices may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.</p>
 <h2 id="connection-interface-identifier"><a class="header" href="#connection-interface-identifier">Connection interface identifier</a></h2>
-<p>The <em>connection interface identifier</em> (CII) is a 4-byte number describing what a component is connected to:</p>
+<p>The <em>connection interface identifier</em> (CII) is a 4-byte number describing what a device is connected to:
+hardw</p>
 <ul>
 <li>Connection type (1 byte):
 <ul>
@@ -205,10 +211,10 @@
 </ul>
 <p>For instance, the seventh USB port on the second bus will have the <code>0x05010006</code> CII.</p>
 <h2 id="connection-specific-device-descriptor"><a class="header" href="#connection-specific-device-descriptor">Connection-specific device descriptor</a></h2>
-<p>All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the <em>connection-specific device descriptor</em> (CSDD).</p>
+<p>All hardware devices expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the <em>connection-specific device descriptor</em> (CSDD).</p>
 <p>Its size can vary up to 256 bytes.</p>
 <h2 id="kernel-device-identifier"><a class="header" href="#kernel-device-identifier">Kernel device identifier</a></h2>
-<p>The <em>kernel device identifier</em> is an 8-byte identifier computed from the <a href="#connection-interface-identifier">CII</a> and the <a href="#connection-specific-device-descriptor">CSDD</a>. It is unique across all components, consistent across reboots, and identical from one computer to another for the same device. It is only meant for internal use by the <a href="../services/system/hw.html"><code>sys::hw</code></a> service, which generates an <a href="../services/system/hw.html#unique-device-identifier">UDI</a> for external use.</p>
+<p>The <em>kernel device identifier</em> is an 8-byte identifier computed from the <a href="#connection-interface-identifier">CII</a> and the <a href="#connection-specific-device-descriptor">CSDD</a>. It is unique across all devices, consistent across reboots, and identical from one computer to another for the same device. It is only meant for internal use by the <a href="../services/system/hw.html"><code>sys::hw</code></a> service, which generates an <a href="../services/system/hw.html#unique-device-identifier">UDI</a> for external use.</p>
 <h2 id="raw-device-descriptor"><a class="header" href="#raw-device-descriptor">Raw device descriptor</a></h2>
 <p>The <em>raw device descriptor</em> (RDD) is a data structure (up to 260 bytes) made of the followings:</p>
 <ul>
@@ -218,11 +224,22 @@
 <li><a href="#connection-specific-device-descriptor">CSDD</a> (up to 256 bytes)</li>
 </ul>
 <p>This descriptor is then used by the <a href="../services/system/hw.html"><code>sys::hw</code></a> service to expose the device to the rest of the operating system.</p>
+<h2 id="inputoutput-ports"><a class="header" href="#inputoutput-ports">Input/output ports</a></h2>
+<p>The kernel first detects the I/O ports used by each device, and maps it to the device's <a href="#kernel-device-identifier">KDI</a>.</p>
+<p>They are uni-directionals and as such are split in two categories: <em>input</em> ports and <em>output</em> ports.</p>
+<p>Input ports are used by devices to transmit informations to the kernel. When this happens, the data is put on a stack, and <a href="#drivers">drivers</a> can then retrieve it using the <a href="syscalls.html#0x60-read_io_port"><code>READ_IO_PORT</code></a> system call.</p>
+<p>Output ports are used by <a href="#drivers">drivers</a> to transmit informations to devices, using the <a href="syscalls.html#0x61-write_io_port"><code>WRITE_IO_PORT</code></a> system call.</p>
+<h3 id="io-ports-identifiers"><a class="header" href="#io-ports-identifiers">I/O ports identifiers</a></h3>
+<p>I/O ports are accessed using <em>relative identifiers</em>, which corresponds to the <em>nth</em> port of the physical device, meaning it starts to <code>0</code> and ends to <code>&lt;number of ports in the device&gt; - 1</code>. The kernel transparently translates the relative identifier to the real port number.</p>
+<p>The association with the real port number is transparently performed by the kernel.</p>
 <h2 id="drivers"><a class="header" href="#drivers">Drivers</a></h2>
-<p>Drivers and software &lt;-&gt; hardware devices communications are handled by the <a href="../services/system/hw.html"><code>sys::hw</code></a> system service.</p>
+<p>A <em>driver</em> is a process which can directly communicate with hardware devices using <a href="syscalls.html#0x62-device_interrupt">the dedicated system calls</a>.</p>
+<p>They communicate with external processes through the <a href="../services/system/hw.html"><code>sys::hw</code></a> system service, or <a href="../services/system/fs.html"><code>sys::fs</code></a> when <a href="../services/system/hw.html#direct-driver-access-for-sysfs">direct driver access</a> is possible.</p>
 <p>You can find more about how drivers work in <a href="../services/system/hw.html#drivers">this section</a>.</p>
+<p>Direct communication with device hardwares is made through <a href="syscalls.html#0x62-device_interrupt">system calls</a>.</p>
+<p>The <a href="../services/system/hw.html"><code>sys::hw</code></a> service is considered as a driver for all devices.</p>
 <h2 id="kernel-communication"><a class="header" href="#kernel-communication">Kernel communication</a></h2>
-<p>The kernel does not identify components, as this task is relegated to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service. In order to communicate with hardware components, only the <a href="#connection-interface-identifier">CII</a> is provided.</p>
+<p>The kernel does not identify devices, as this task is relegated to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service. In order to communicate with hardware devices, only the <a href="#connection-interface-identifier">CII</a> is provided.</p>
 
                     </main>
 

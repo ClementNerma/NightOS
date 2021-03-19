@@ -177,7 +177,7 @@
 <p>An <em>abstract memory segment</em> (AMS) is an identifier which refers to a segment of memory which doesn't actually exist. To be used, they must be <em>mapped</em> in a process' memory to be accessed like regular memory. The kernel then intercepts all memory accesses to these mappings and handle them, depending on their nature which cover three cases:</p>
 <ul>
 <li><a href="syscalls.html#0x32-virt_mem_ams">Mapping existing memory pages to others, or sharing them with other processes</a> ;</li>
-<li><a href="syscalls.html#0x34-device_ams">Mapping a device's memory into the process' own memory space</a> ;</li>
+<li><a href="syscalls.html#0x63-device_ams">Mapping a device's memory into the process' own memory space</a> ;</li>
 <li><a href="syscalls.html#0x33-backed_ams">Making a virtual memory space handled by signals</a></li>
 </ul>
 <p>An AMS can then be mapped at multiple places in a process' memory, or shared with other processes. The kernel handles mappings to get optimal performances and reduce the number of memory accesses as much as possible.</p>

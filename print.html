@@ -737,13 +737,13 @@ By default, installation is allowed but sends a notification to the parent user 
 <h2 id="hardware-access"><a class="header" href="#hardware-access">Hardware access</a></h2>
 <p>Hardware access is performed through two layers:</p>
 <ul>
-<li>First, the kernel <a href="technical/../specs/kernel/hardware.html">detects and enumerate (specs)</a> hardware components</li>
+<li>First, the kernel <a href="technical/../specs/kernel/hardware.html">detects and enumerate (specs)</a> hardware devices</li>
 <li>Then, hardware is accessed through the <a href="technical/../specs/services/system/hw.html">hardware service (specs)</a></li>
 </ul>
 <h2 id="hardware-drivers"><a class="header" href="#hardware-drivers">Hardware drivers</a></h2>
 <p>Unlike most operating systems, hardware drivers are simple applications with no specific integration in the kernel.</p>
 <p>Any application can register itself as <a href="technical/../specs/services/system/hw.html#drivers">a driver (specs)</a> using the <a href="technical/../specs/services/system/hw.html">hardware service (specs)</a>.</p>
-<p>The relevant driver for each hardware component is selected using <a href="technical/../specs/services/system/hw.html#driver-selection">various criterias (specs)</a>.</p>
+<p>The relevant driver for each hardware device is selected using <a href="technical/../specs/services/system/hw.html#driver-selection">various criterias (specs)</a>.</p>
 <h2 id="hardware-access-performances"><a class="header" href="#hardware-access-performances">Hardware access performances</a></h2>
 <p>Hardware access is performed through <a href="technical/../specs/kernel/syscalls.html">syscalls (specs)</a> and <a href="technical/../specs/kernel/signals.html">signals (specs)</a>, which use CPU interruptions. </p>
 <p>The access process is often:</p>
@@ -913,8 +913,8 @@ It's possible to force the boot process, but a large warning will indicate it ma
 <li><a href="technical/io-manager.html#requests-priority">Requests priority</a></li>
 </ul>
 <h2 id="hardware-access-1"><a class="header" href="#hardware-access-1">Hardware access</a></h2>
-<p>When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired component.</p>
-<p><a href="technical/services.html">System services</a> such as <a href="technical/../specs/services/system/fs.html"><code>sys::fs</code></a> or <a href="technical/../specs/services/system/net.html"><code>sys::net</code></a> use Ion to deal with the related hardware components.</p>
+<p>When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired device.</p>
+<p><a href="technical/services.html">System services</a> such as <a href="technical/../specs/services/system/fs.html"><code>sys::fs</code></a> or <a href="technical/../specs/services/system/net.html"><code>sys::net</code></a> use Ion to deal with the related hardware devices.</p>
 <h1 id="agnosticity"><a class="header" href="#agnosticity">Agnosticity</a></h1>
 <p>Ion only permits agnostic access to hardware, meaning it does not have knowledge of the performed action (filesystem access, sensor reading, ...). It can only be accessed by <a href="technical/../specs/services/system/hw.html#drivers">drivers</a>.</p>
 <p>Non-agnostic access can be performed through various services, such as <a href="technical/../specs/services/system/fs.html"><code>sys::fs</code></a>.</p>
@@ -3532,7 +3532,7 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 <li>A <em>main service</em>, which is used as the default one</li>
 <li><em>Scoped services</em>, which are used as interfaces for conventional tasks between applications which are not specific to the current one</li>
 <li><em>Integration services</em>, which are used to interact with the system in specific ways (see <a href="specs/services/integration/README.html">the complete list</a>)</li>
-<li><em>Driver services</em>, which are used to interact with hardware components through the <a href="specs/services/system/hw.html"><code>sys::hw</code></a> service.</li>
+<li><em>Driver services</em>, which are used to interact with hardware devices through the <a href="specs/services/system/hw.html"><code>sys::hw</code></a> service.</li>
 </ul>
 <p>A scope's name is made of up to 8 extended ASCII characters.</p>
 <p>Applications exposing integration services get special recognition for the tasks associated to these services. These services are not available directly to the end applications ; they can only be used through <a href="specs/services/system/README.html">system services</a>.</p>
@@ -3593,20 +3593,26 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <li><a href="specs/kernel/hardware.html#connection-specific-device-descriptor">Connection-specific device descriptor</a></li>
 <li><a href="specs/kernel/hardware.html#kernel-device-identifier">Kernel device identifier</a></li>
 <li><a href="specs/kernel/hardware.html#raw-device-descriptor">Raw device descriptor</a></li>
+<li><a href="specs/kernel/hardware.html#inputoutput-ports">Input/output ports</a>
+<ul>
+<li><a href="specs/kernel/hardware.html#io-ports-identifiers">I/O ports identifiers</a></li>
+</ul>
+</li>
 <li><a href="specs/kernel/hardware.html#drivers">Drivers</a></li>
 <li><a href="specs/kernel/hardware.html#kernel-communication">Kernel communication</a></li>
 </ul>
 <h2 id="hardware-detection"><a class="header" href="#hardware-detection">Hardware detection</a></h2>
-<p>Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional components afterwards.</p>
-<p>As all components do not use the same connection protocols, the detection process depends on the connection:</p>
+<p>Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional devices afterwards.</p>
+<p>As all devices do not use the same connection protocols, the detection process depends on the connection:</p>
 <ul>
-<li>PCI-Express components are detected through their Configuration Space</li>
-<li>IDE/SATA components are detected through the IDE/SATA controller</li>
-<li>USB components are enumerated through the USB protocol stack</li>
+<li>PCI-Express devices are detected through their Configuration Space</li>
+<li>IDE/SATA devices are detected through the IDE/SATA controller</li>
+<li>USB devices are enumerated through the USB protocol stack</li>
 </ul>
-<p>Some components may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.</p>
+<p>Some devices may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.</p>
 <h2 id="connection-interface-identifier"><a class="header" href="#connection-interface-identifier">Connection interface identifier</a></h2>
-<p>The <em>connection interface identifier</em> (CII) is a 4-byte number describing what a component is connected to:</p>
+<p>The <em>connection interface identifier</em> (CII) is a 4-byte number describing what a device is connected to:
+hardw</p>
 <ul>
 <li>Connection type (1 byte):
 <ul>
@@ -3623,10 +3629,10 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 </ul>
 <p>For instance, the seventh USB port on the second bus will have the <code>0x05010006</code> CII.</p>
 <h2 id="connection-specific-device-descriptor"><a class="header" href="#connection-specific-device-descriptor">Connection-specific device descriptor</a></h2>
-<p>All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the <em>connection-specific device descriptor</em> (CSDD).</p>
+<p>All hardware devices expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the <em>connection-specific device descriptor</em> (CSDD).</p>
 <p>Its size can vary up to 256 bytes.</p>
 <h2 id="kernel-device-identifier"><a class="header" href="#kernel-device-identifier">Kernel device identifier</a></h2>
-<p>The <em>kernel device identifier</em> is an 8-byte identifier computed from the <a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> and the <a href="specs/kernel/hardware.html#connection-specific-device-descriptor">CSDD</a>. It is unique across all components, consistent across reboots, and identical from one computer to another for the same device. It is only meant for internal use by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service, which generates an <a href="specs/kernel/../services/system/hw.html#unique-device-identifier">UDI</a> for external use.</p>
+<p>The <em>kernel device identifier</em> is an 8-byte identifier computed from the <a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> and the <a href="specs/kernel/hardware.html#connection-specific-device-descriptor">CSDD</a>. It is unique across all devices, consistent across reboots, and identical from one computer to another for the same device. It is only meant for internal use by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service, which generates an <a href="specs/kernel/../services/system/hw.html#unique-device-identifier">UDI</a> for external use.</p>
 <h2 id="raw-device-descriptor"><a class="header" href="#raw-device-descriptor">Raw device descriptor</a></h2>
 <p>The <em>raw device descriptor</em> (RDD) is a data structure (up to 260 bytes) made of the followings:</p>
 <ul>
@@ -3636,11 +3642,22 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <li><a href="specs/kernel/hardware.html#connection-specific-device-descriptor">CSDD</a> (up to 256 bytes)</li>
 </ul>
 <p>This descriptor is then used by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service to expose the device to the rest of the operating system.</p>
+<h2 id="inputoutput-ports"><a class="header" href="#inputoutput-ports">Input/output ports</a></h2>
+<p>The kernel first detects the I/O ports used by each device, and maps it to the device's <a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a>.</p>
+<p>They are uni-directionals and as such are split in two categories: <em>input</em> ports and <em>output</em> ports.</p>
+<p>Input ports are used by devices to transmit informations to the kernel. When this happens, the data is put on a stack, and <a href="specs/kernel/hardware.html#drivers">drivers</a> can then retrieve it using the <a href="specs/kernel/syscalls.html#0x60-read_io_port"><code>READ_IO_PORT</code></a> system call.</p>
+<p>Output ports are used by <a href="specs/kernel/hardware.html#drivers">drivers</a> to transmit informations to devices, using the <a href="specs/kernel/syscalls.html#0x61-write_io_port"><code>WRITE_IO_PORT</code></a> system call.</p>
+<h3 id="io-ports-identifiers"><a class="header" href="#io-ports-identifiers">I/O ports identifiers</a></h3>
+<p>I/O ports are accessed using <em>relative identifiers</em>, which corresponds to the <em>nth</em> port of the physical device, meaning it starts to <code>0</code> and ends to <code>&lt;number of ports in the device&gt; - 1</code>. The kernel transparently translates the relative identifier to the real port number.</p>
+<p>The association with the real port number is transparently performed by the kernel.</p>
 <h2 id="drivers"><a class="header" href="#drivers">Drivers</a></h2>
-<p>Drivers and software &lt;-&gt; hardware devices communications are handled by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> system service.</p>
+<p>A <em>driver</em> is a process which can directly communicate with hardware devices using <a href="specs/kernel/syscalls.html#0x62-device_interrupt">the dedicated system calls</a>.</p>
+<p>They communicate with external processes through the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> system service, or <a href="specs/kernel/../services/system/fs.html"><code>sys::fs</code></a> when <a href="specs/kernel/../services/system/hw.html#direct-driver-access-for-sysfs">direct driver access</a> is possible.</p>
 <p>You can find more about how drivers work in <a href="specs/kernel/../services/system/hw.html#drivers">this section</a>.</p>
+<p>Direct communication with device hardwares is made through <a href="specs/kernel/syscalls.html#0x62-device_interrupt">system calls</a>.</p>
+<p>The <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service is considered as a driver for all devices.</p>
 <h2 id="kernel-communication"><a class="header" href="#kernel-communication">Kernel communication</a></h2>
-<p>The kernel does not identify components, as this task is relegated to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service. In order to communicate with hardware components, only the <a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> is provided.</p>
+<p>The kernel does not identify devices, as this task is relegated to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service. In order to communicate with hardware devices, only the <a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> is provided.</p>
 <h1 id="memory"><a class="header" href="#memory">Memory</a></h1>
 <p>This document describes how the kernel organizes and manages the memory.</p>
 <h2 id="pages"><a class="header" href="#pages">Pages</a></h2>
@@ -3651,7 +3668,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <p>An <em>abstract memory segment</em> (AMS) is an identifier which refers to a segment of memory which doesn't actually exist. To be used, they must be <em>mapped</em> in a process' memory to be accessed like regular memory. The kernel then intercepts all memory accesses to these mappings and handle them, depending on their nature which cover three cases:</p>
 <ul>
 <li><a href="specs/kernel/syscalls.html#0x32-virt_mem_ams">Mapping existing memory pages to others, or sharing them with other processes</a> ;</li>
-<li><a href="specs/kernel/syscalls.html#0x34-device_ams">Mapping a device's memory into the process' own memory space</a> ;</li>
+<li><a href="specs/kernel/syscalls.html#0x63-device_ams">Mapping a device's memory into the process' own memory space</a> ;</li>
 <li><a href="specs/kernel/syscalls.html#0x33-backed_ams">Making a virtual memory space handled by signals</a></li>
 </ul>
 <p>An AMS can then be mapped at multiple places in a process' memory, or shared with other processes. The kernel handles mappings to get optimal performances and reduce the number of memory accesses as much as possible.</p>
@@ -3697,7 +3714,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 </ul>
 <h2 id="drivable-devices"><a class="header" href="#drivable-devices">Drivable devices</a></h2>
 <p>The drivable devices attribute contains the list of all devices' <a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> the current process can drive.</p>
-<p>The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an <a href="specs/kernel/memory.html#abstract-memory-segments">AMS</a> from it using the <a href="specs/kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall, as well as using DMA-related instructions in the CPU.</p>
+<p>The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an <a href="specs/kernel/memory.html#abstract-memory-segments">AMS</a> from it using the <a href="specs/kernel/syscalls.html#0x63-device_ams"><code>DEVICE_AMS</code></a> syscall, as well as using DMA-related instructions in the CPU.</p>
 <p>This attribute is managed by the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service and can only be updated by it.</p>
 <h2 id="raw-permissions"><a class="header" href="#raw-permissions">Raw permissions</a></h2>
 <p><em>Raw permissions</em> are used by system services to determine the permissions of a process without <a href="specs/kernel/ipc.html#exchanges-and-messages">sending a message</a> to the <a href="specs/kernel/../services/system/perm.html"><code>sys::perm</code></a> service and waiting for its answer, which would be costly in terms of performance.</p>
@@ -3967,14 +3984,14 @@ Their length is determined when the message is sent which, coupled to <a href="s
 <li>There is no pipe buffer to manage which means all the data can be sent at once</li>
 </ul>
 <p>Its main disadvantage being that all data is shared at once, so there is no synchronization or &quot;asynchronous sending&quot; mechanism, which is the purpose of pipes.</p>
-<p>It works by asking the kernel to share the memory through the <a href="specs/kernel/syscalls.html#0x35-share_ams"><code>SHARE_AMS</code></a> syscall, the target process receiving the <a href="specs/kernel/signals.html#0x35-recv_shared_ams"><code>RECV_SHARED_AMS</code></a> signal.</p>
+<p>It works by asking the kernel to share the memory through the <a href="specs/kernel/syscalls.html#0x34-share_ams"><code>SHARE_AMS</code></a> syscall, the target process receiving the <a href="specs/kernel/signals.html#0x35-recv_shared_ams"><code>RECV_SHARED_AMS</code></a> signal.</p>
 <p>There are two types of sharing:</p>
 <ul>
 <li><em>Mutual</em> sharing allows both the sharer and the receiver processes to access the shared memory ;</li>
 <li><em>Exclusive</em> sharing unmaps the shared memory from the sharer and only allows the receiver process to access it</li>
 </ul>
 <p>Exclusive mode has several advantages: the sender process to not have to care about managing this memory and avoid overwriting it by accident, but it also ensures the receiving process that the sender will not perform malicious modifications on the shared buffer while the data is processed on its side.</p>
-<p>Mutual memory sharing can be stopped using the <a href="specs/kernel/syscalls.html#0x37-unshare_ams"><code>UNSHARE_AMS</code></a> syscall, while exclusive sharing are left to the receiver process.</p>
+<p>Mutual memory sharing can be stopped using the <a href="specs/kernel/syscalls.html#0x36-unshare_ams"><code>UNSHARE_AMS</code></a> syscall, while exclusive sharing are left to the receiver process.</p>
 <h1 id="signals"><a class="header" href="#signals">Signals</a></h1>
 <p><em>Signals</em> are a type of <a href="specs/kernel/kpc.html">KPC</a>. They are used by the kernel to send informations to processes about a specific event.</p>
 <ul>
@@ -4195,7 +4212,7 @@ The associated RC and SC are immediatly closed.</p>
 <ul>
 <li>Unsharing type (1 byte):
 <ul>
-<li><code>0x00</code> if the shared memory was unshared properly using the <a href="specs/kernel/syscalls.html#0x37-unshare_ams">UNSHARE_AMS</a> syscall</li>
+<li><code>0x00</code> if the shared memory was unshared properly using the <a href="specs/kernel/syscalls.html#0x36-unshare_ams">UNSHARE_AMS</a> syscall</li>
 <li><code>0x01</code> if the other process brutally terminated</li>
 </ul>
 </li>
@@ -4224,21 +4241,21 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/../registry.html">Registry</a>'s <code>system.processes.terminate_delay</code> key (default: 2s) (2 bytes)</li>
 </ul>
 <h3 id="0xd4-device_changed"><a class="header" href="#0xd4-device_changed"><code>0xD4</code> DEVICE_CHANGED</a></h3>
-<p>Sent to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service only, when a hardware component is plugged, unplugged, or when its <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device descriptor (RDD)</a> changes.</p>
+<p>Sent to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service only, when a hardware device is plugged, unplugged, or when its <a href="specs/kernel/hardware.html#raw-device-descriptor">raw device descriptor (RDD)</a> changes.</p>
 <p>The <a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> is guaranteed to remain the same for each individual devices.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Event code (1 byte):
 <ul>
-<li><code>0x01</code>: a component was connected on this port</li>
-<li><code>0x02</code>: the connected component was disconnected from this port</li>
-<li><code>0x03</code>: the component connected to this port changed its <a href="specs/kernel/hardware.html#raw-device-descriptor">RDD</a></li>
+<li><code>0x01</code>: a device was connected on this port</li>
+<li><code>0x02</code>: the connected device was disconnected from this port</li>
+<li><code>0x03</code>: the device connected to this port changed its <a href="specs/kernel/hardware.html#raw-device-descriptor">RDD</a></li>
 </ul>
 </li>
 <li><a href="specs/kernel/hardware.html#raw-device-descriptor">RDD</a></li>
 </ul>
 <h3 id="0xd4-device_interrupt"><a class="header" href="#0xd4-device_interrupt"><code>0xD4</code> DEVICE_INTERRUPT</a></h3>
-<p>Sent to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service only, when a hardware component raises a CPU interruption.</p>
+<p>Sent to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service only, when a hardware device raises a CPU interruption.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> (8 bytes)</li>
@@ -4273,13 +4290,11 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0x31-mem_free"><code>0x31</code> MEM_FREE</a></li>
 <li><a href="specs/kernel/syscalls.html#0x32-virt_mem_ams"><code>0x32</code> VIRT_MEM_AMS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x33-backed_ams"><code>0x33</code> BACKED_AMS</a></li>
-<li><a href="specs/kernel/syscalls.html#0x34-device_ams"><code>0x34</code> DEVICE_AMS</a></li>
-<li><a href="specs/kernel/syscalls.html#0x35-share_ams"><code>0x35</code> SHARE_AMS</a></li>
-<li><a href="specs/kernel/syscalls.html#0x36-ams_sharing_info"><code>0x36</code> AMS_SHARING_INFO</a></li>
-<li><a href="specs/kernel/syscalls.html#0x37-unshare_ams"><code>0x37</code> UNSHARE_AMS</a></li>
-<li><a href="specs/kernel/syscalls.html#0x38-map_ams"><code>0x38</code> MAP_AMS</a></li>
-<li><a href="specs/kernel/syscalls.html#0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></li>
-<li><a href="specs/kernel/syscalls.html#0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x34-share_ams"><code>0x34</code> SHARE_AMS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x35-ams_sharing_info"><code>0x35</code> AMS_SHARING_INFO</a></li>
+<li><a href="specs/kernel/syscalls.html#0x36-unshare_ams"><code>0x36</code> UNSHARE_AMS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x37-map_ams"><code>0x37</code> MAP_AMS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x38-unmap_ams"><code>0x38</code> UNMAP_AMS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x40-create_process"><code>0x40</code> CREATE_PROCESS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x41-wait_child_process"><code>0x41</code> WAIT_CHILD_PROCESS</a></li>
 <li><a href="specs/kernel/syscalls.html#0x42-kill_child_process"><code>0x42</code> KILL_CHILD_PROCESS</a></li>
@@ -4294,6 +4309,11 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/syscalls.html#0x53-write_tls_slot"><code>0x53</code> WRITE_TLS_SLOT</a></li>
 <li><a href="specs/kernel/syscalls.html#0x54-delete_tls_slot"><code>0x54</code> DELETE_TLS_SLOT</a></li>
 <li><a href="specs/kernel/syscalls.html#0x5f-exit_thread"><code>0x5F</code> EXIT_THREAD</a></li>
+<li><a href="specs/kernel/syscalls.html#0x60-read_io_port"><code>0x60</code> READ_IO_PORT</a></li>
+<li><a href="specs/kernel/syscalls.html#0x61-write_io_port"><code>0x61</code> WRITE_IO_PORT</a></li>
+<li><a href="specs/kernel/syscalls.html#0x62-device_interrupt"><code>0x62</code> DEVICE_INTERRUPT</a></li>
+<li><a href="specs/kernel/syscalls.html#0x63-device_ams"><code>0x63</code> DEVICE_AMS</a></li>
+<li><a href="specs/kernel/syscalls.html#0x64-set_dma_mem_access"><code>0x64</code> SET_DMA_MEM_ACCESS</a></li>
 <li><a href="specs/kernel/syscalls.html#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd0-sys_create_process"><code>0xD0</code> SYS_CREATE_PROCESS</a></li>
 <li><a href="specs/kernel/syscalls.html#0xd1-sys_manage_process"><code>0xD1</code> SYS_MANAGE_PROCESS</a></li>
@@ -4721,8 +4741,8 @@ The client thread will not receive any <a href="specs/kernel/signals.html#0x2a-s
 </ul>
 <h3 id="0x31-mem_free"><a class="header" href="#0x31-mem_free"><code>0x31</code> MEM_FREE</a></h3>
 <p>Unallocate a linear block of memory.</p>
-<p>Shared memory pages must first be unshared through the <a href="specs/kernel/syscalls.html#0x37-unshare_ams"><code>UNSHARE_AMS</code></a> syscall.<br />
-Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.html#0x39-unmap_ams"><code>UNMAP_AMS</code></a> syscall.</p>
+<p>Shared memory pages must first be unshared through the <a href="specs/kernel/syscalls.html#0x36-unshare_ams"><code>UNSHARE_AMS</code></a> syscall.<br />
+Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.html#0x38-unmap_ams"><code>UNMAP_AMS</code></a> syscall.</p>
 <p><strong>WARNING:</strong> Memory will not be zeroed, therefore the caller process shall ensure critical informations are zeroed or randomized before freeing the memory.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -4769,30 +4789,7 @@ Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.
 <li><code>0x10</code>: Invalid COW mode provided</li>
 <li><code>0x11</code>: Provided length is unaligned</li>
 </ul>
-<h3 id="0x34-device_ams"><a class="header" href="#0x34-device_ams"><code>0x34</code> DEVICE_AMS</a></h3>
-<p>Create an <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from a device's memory through <em>Mapped Memory Input/Output</em> (MMIO).</p>
-<p>Requires the current process to have the device in its <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a>.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (4 bytes)</li>
-<li>Start address in the device's memory (8 bytes)</li>
-<li>Number of bytes to map (8 bytes)</li>
-<li>Start address to map in this process' memory (8 bytes)</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<ul>
-<li>AMS ID (8 bytes)</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x10</code>: The mapping's start address is not aligned with a page</li>
-<li><code>0x11</code>: The mapping's length is not a multiple of a page's size</li>
-<li><code>0x12</code>: The mapping's size is null (0 bytes)</li>
-<li><code>0x20</code>: The provided device KDI was not found</li>
-<li><code>0x21</code>: The provided device is not compatible with MMIO</li>
-<li><code>0x22</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
-</ul>
-<h3 id="0x35-share_ams"><a class="header" href="#0x35-share_ams"><code>0x35</code> SHARE_AMS</a></h3>
+<h3 id="0x34-share_ams"><a class="header" href="#0x34-share_ams"><code>0x34</code> SHARE_AMS</a></h3>
 <p>Share an <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> with another process.</p>
 <p>This will trigger in the target process the <a href="specs/kernel/signals.html#0x35-recv_shared_ams"><code>RECV_SHARED_MEM</code></a> with the provided command code, unless the notification mode states otherwise.</p>
 <p>The <em>mutual mode</em> allows both processes to access the memory, with the sharer setting the permissions for the receiver to limit its access. Copy-on-write can also be enabled to allow the receiver process to write data without affecting the sharer process' memory.</p>
@@ -4823,8 +4820,8 @@ Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.
 <li><code>0x14</code>: Invalid exclusive mode provided</li>
 <li><code>0x30</code>: There is not enough contiguous space in the receiver process' memory space to map the shared memory</li>
 </ul>
-<h3 id="0x36-ams_sharing_info"><a class="header" href="#0x36-ams_sharing_info"><code>0x36</code> AMS_SHARING_INFO</a></h3>
-<p>Get informations about a <a href="specs/kernel/syscalls.html#0x35-share_ams">shared</a> <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
+<h3 id="0x35-ams_sharing_info"><a class="header" href="#0x35-ams_sharing_info"><code>0x35</code> AMS_SHARING_INFO</a></h3>
+<p>Get informations about a <a href="specs/kernel/syscalls.html#0x34-share_ams">shared</a> <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>AMS ID (8 bytes)</li>
@@ -4842,8 +4839,8 @@ Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.
 <ul>
 <li><code>0x10</code>: Unknwon AMS ID provided</li>
 </ul>
-<h3 id="0x37-unshare_ams"><a class="header" href="#0x37-unshare_ams"><code>0x37</code> UNSHARE_AMS</a></h3>
-<p>Stop sharing an <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> started by <a href="specs/kernel/syscalls.html#0x35-share_ams"><code>SHARE_AMS</code></a>. Note that exlusive sharings cannot be unmapped.</p>
+<h3 id="0x36-unshare_ams"><a class="header" href="#0x36-unshare_ams"><code>0x36</code> UNSHARE_AMS</a></h3>
+<p>Stop sharing an <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> started by <a href="specs/kernel/syscalls.html#0x34-share_ams"><code>SHARE_AMS</code></a>. Note that exlusive sharings cannot be unmapped.</p>
 <p>This will trigger in the target process the <a href="specs/kernel/signals.html#0x37-unshared_ams"><code>UNSHARED_AMS</code></a> signal.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -4858,7 +4855,7 @@ Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.
 <li><code>0x20</code>: Provided AMS ID is exclusive</li>
 <li><code>0x21</code>: Provided AMS was not shared with the provided process</li>
 </ul>
-<h3 id="0x38-map_ams"><a class="header" href="#0x38-map_ams"><code>0x38</code> MAP_AMS</a></h3>
+<h3 id="0x37-map_ams"><a class="header" href="#0x37-map_ams"><code>0x37</code> MAP_AMS</a></h3>
 <p>Map an <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> in the current process' address space.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -4874,7 +4871,7 @@ Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.
 <li><code>0x20</code>: Provided mapping address or address+length is out-of-range in the AMS</li>
 <li><code>0x21</code>: Provided address to map or address+length is out-of-orange in this process' address space</li>
 </ul>
-<h3 id="0x39-unmap_ams"><a class="header" href="#0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></h3>
+<h3 id="0x38-unmap_ams"><a class="header" href="#0x38-unmap_ams"><code>0x38</code> UNMAP_AMS</a></h3>
 <p>Unmap an <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from the current process' address space.<br />
 If the AMS is mapped at multiple addresses of this process, only one of the mappings will be unmapped by default.</p>
 <p><strong>Arguments:</strong></p>
@@ -4888,27 +4885,6 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <ul>
 <li><code>0x10</code>: Unknown AMS ID provided</li>
 <li><code>0x20</code>: Provided AMS it not mapped at this address</li>
-</ul>
-<h3 id="0x3a-set_dma_mem_access"><a class="header" href="#0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></h3>
-<p>Allow or disallow a device to access a range of addresses through <em>Direct Memory Access</em> (DMA) in the current process' address space.</p>
-<p>Requires the current process to have the device in its <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a>.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (4 bytes)</li>
-<li>Start address in the current process' address space (8 bytes)</li>
-<li>Length (8 bytes)</li>
-<li>Authorization (1 byte): <code>0x00</code> to allow the device to use this range, <code>0x01</code> to cancel an authorization</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<p><em>None</em></p>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x10</code>: The range's start address is not aligned with a page</li>
-<li><code>0x11</code>: The range's length is not a multiple of a page's size</li>
-<li><code>0x12</code>: The range's size is null (0 bytes)</li>
-<li><code>0x20</code>: The provided device KDI was not found</li>
-<li><code>0x21</code>: The provided device is not compatible with DMA</li>
-<li><code>0x22</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
 </ul>
 <h3 id="0x40-create_process"><a class="header" href="#0x40-create_process"><code>0x40</code> CREATE_PROCESS</a></h3>
 <p>Create a child process from the current one. The new process gets a separate memory space.</p>
@@ -5096,6 +5072,110 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <p><em>None</em> (never returns)</p>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
+<h3 id="0x60-read_io_port"><a class="header" href="#0x60-read_io_port"><code>0x60</code> READ_IO_PORT</a></h3>
+<p>Read data from the physical <a href="specs/kernel/hardware.html#inputoutput-ports">I/O port</a> a device, if <a href="specs/kernel/processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> of the device to read data from (8 bytes)</li>
+<li>Relative I/O port number (2 bytes)</li>
+<li>Writable <a href="specs/kernel/data-structures.html#buffer-pointers">buffer pointer</a> (16 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of bytes read from the I/O port (8 bytes)</li>
+</ul>
+<p><strong>Error codes:</strong></p>
+<ul>
+<li><code>0x20</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided I/O port does not exist for the provided device</li>
+<li><code>0x23</code>: The provided I/O port is an output port</li>
+</ul>
+<h3 id="0x61-write_io_port"><a class="header" href="#0x61-write_io_port"><code>0x61</code> WRITE_IO_PORT</a></h3>
+<p>Write data to the physical <a href="specs/kernel/hardware.html#inputoutput-ports">I/O port</a> a device, if <a href="specs/kernel/processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> of the device to read data from (8 bytes)</li>
+<li>Relative I/O port number (2 bytes)</li>
+<li>Readable <a href="specs/kernel/data-structures.html#buffer-pointers">buffer pointer</a> (16 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of bytes written (8 bytes)</li>
+</ul>
+<p><strong>Error codes:</strong></p>
+<ul>
+<li><code>0x20</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided I/O port does not exist for the provided device</li>
+<li><code>0x23</code>: The provided I/O port is an input port</li>
+</ul>
+<h3 id="0x62-device_interrupt"><a class="header" href="#0x62-device_interrupt"><code>0x62</code> DEVICE_INTERRUPT</a></h3>
+<p>Trigger a hardware interruption on a device, if <a href="specs/kernel/processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> of the device to trigger an interrupt on (8 bytes)</li>
+<li>Relative I/O port identifier (2 bytes)</li>
+<li>Interrupt code (1 byte)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Error codes:</strong></p>
+<ul>
+<li><code>0x20</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided I/O port does not exist for the provided device</li>
+<li><code>0x23</code>: The provided I/O port is an input port</li>
+</ul>
+<h3 id="0x63-device_ams"><a class="header" href="#0x63-device_ams"><code>0x63</code> DEVICE_AMS</a></h3>
+<p>Create an <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from a device's memory through <em>Mapped Memory Input/Output</em> (MMIO).</p>
+<p>Read data from the physical input/output port a device, if <a href="specs/kernel/processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (8 bytes)</li>
+<li>Start address in the device's memory (8 bytes)</li>
+<li>Number of bytes to map (8 bytes)</li>
+<li>Start address to map in this process' memory (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>AMS ID (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: The mapping's start address is not aligned with a page</li>
+<li><code>0x11</code>: The mapping's length is not a multiple of a page's size</li>
+<li><code>0x12</code>: The mapping's size is null (0 bytes)</li>
+<li><code>0x20</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided device is not compatible with MMIO</li>
+</ul>
+<h3 id="0x64-set_dma_mem_access"><a class="header" href="#0x64-set_dma_mem_access"><code>0x64</code> SET_DMA_MEM_ACCESS</a></h3>
+<p>Allow or disallow a device to access a range of addresses through <em>Direct Memory Access</em> (DMA) in the current process' address space.</p>
+<p>Read data from the physical input/output port a device, if <a href="specs/kernel/processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (8 bytes)</li>
+<li>Start address in the current process' address space (8 bytes)</li>
+<li>Length (8 bytes)</li>
+<li>Authorization (1 byte): <code>0x00</code> to allow the device to use this range, <code>0x01</code> to cancel an authorization</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: The range's start address is not aligned with a page</li>
+<li><code>0x11</code>: The range's length is not a multiple of a page's size</li>
+<li><code>0x12</code>: The range's size is null (0 bytes)</li>
+<li><code>0x20</code>: This device is not registered in this process' <a href="specs/kernel/processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided device is not compatible with DMA</li>
+</ul>
 <h3 id="0xa0-execution_context"><a class="header" href="#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></h3>
 <p>Get informations from the application's <a href="specs/kernel/../applications/context.html">execution context</a>.</p>
 <p><strong>Arguments:</strong></p>
@@ -6091,7 +6171,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <p>Filesystem interfaces are services that act as a layer of indirection between a storage <a href="specs/services/integration/../system/hw.html#drivers">driver</a> and the <a href="specs/services/integration/../system/fs.html"><code>sys::fs</code></a> service. Their role is to translate all common filesystem operations, such as items management and modification, for filesystems that aren't <a href="specs/services/integration/../system/fs.html#list-of-natively-supported-filesystems">natively supported</a>. They heavily communicate with the <a href="specs/services/integration/../system/hw.html"><code>sys::hw</code></a> service to communicate with the underlying storage device.</p>
 <p>A filesystem is tied to only one partition, and each partition has a filesystem. A storage space is made, unless empty, of a partitions table which lists all the available partitions.</p>
 <p>Most <a href="specs/services/integration/filesystem-interfaces.html#methods">methods</a> and <a href="specs/services/integration/filesystem-interfaces.html#notifications">notifications</a> of filesystems interfaces are also available in the <a href="specs/services/integration/../system/fs.html"><code>sys::fs</code></a> service, with first perform permissions checking and determines the device and location to perform the operation on. It also leverages many more powerful features such as items watching, and features that are our of the scope of a filesystem interface such as partitions management.</p>
-<p>As an application can only expose one single filesystem interface service, the said service will handle all of the hardware components driven by the said process. This is why the the <a href="specs/services/integration/filesystem-interfaces.html#storage-operating-range">SOR</a> of the target partition and filesystem is provided for each request.</p>
+<p>As an application can only expose one single filesystem interface service, the said service will handle all of the hardware devices driven by the said process. This is why the the <a href="specs/services/integration/filesystem-interfaces.html#storage-operating-range">SOR</a> of the target partition and filesystem is provided for each request.</p>
 <h2 id="nomenclature"><a class="header" href="#nomenclature">Nomenclature</a></h2>
 <h3 id="storage-operating-range"><a class="header" href="#storage-operating-range">Storage operating range</a></h3>
 <p>The <em>storage operating range</em> (SOR) is a 40-byte information transmitted to all operation methods of the filesystem interface to indicate where the requested operation should be performed and on which devices.</p>
@@ -6612,7 +6692,7 @@ If the number of items to get is larger than the number of entries in the direct
 </li>
 </ul>
 <h1 id="driver-services"><a class="header" href="#driver-services">Driver services</a></h1>
-<p>This document lists all <a href="specs/services/drivers/../../services.html#types-of-services">driver services</a>, which are services whose methods and notifications follow a convention established by the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service to permit interaction with hardware components.</p>
+<p>This document lists all <a href="specs/services/drivers/../../services.html#types-of-services">driver services</a>, which are services whose methods and notifications follow a convention established by the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service to permit interaction with hardware devices.</p>
 <p>An application exposing such a service in its <a href="specs/services/drivers/../../applications/manifest.html">manifest</a> will gain the permission to <a href="specs/services/drivers/../system/hw.html#0x10-register_driver">register itself as a driver</a> through the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="specs/services/drivers/../system/README.html">system services</a>.</p>
 <h2 id="error-codes-1"><a class="header" href="#error-codes-1">Error codes</a></h2>
@@ -6631,7 +6711,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <h1 id="storage-driver-services"><a class="header" href="#storage-driver-services">Storage driver services</a></h1>
 <p>Storage driver services handle storage devices. They are used to perform basic I/O operations.</p>
-<p>As an application can only expose one single storage driver service, the said service will handle all of the hardware components driven by the said process. This is why the the <a href="specs/services/drivers/../system/hw.html#unique-device-identifier">UDI</a> of the target device is provided for each request.</p>
+<p>As an application can only expose one single storage driver service, the said service will handle all of the hardware devices it drives. This is why the the <a href="specs/services/drivers/../system/hw.html#unique-device-identifier">UDI</a> of the target device is provided for each request.</p>
 <h2 id="methods-5"><a class="header" href="#methods-5">Methods</a></h2>
 <h3 id="0x01-storage_infos"><a class="header" href="#0x01-storage_infos"><code>0x01</code> STORAGE_INFOS</a></h3>
 <p>Get the storage's informations.</p>
@@ -6785,7 +6865,7 @@ If the number of items to get is larger than the number of entries in the direct
 <p>The <code>sys::fs</code> service is in charge of operations related to the <a href="specs/services/system/../../filesystem.html">filesystems</a>.</p>
 <h2 id="behaviour"><a class="header" href="#behaviour">Behaviour</a></h2>
 <h3 id="operations-and-latency"><a class="header" href="#operations-and-latency">Operations and latency</a></h3>
-<p>A single filesystem operation request from a client process up to the hardware component traverses:</p>
+<p>A single filesystem operation request from a client process up to the hardware device traverses:</p>
 <ul>
 <li>Client</li>
 <li><code>sys::fs</code> service</li>
@@ -7670,7 +7750,7 @@ If the number of items to get is larger than the number of entries in the direct
 <h2 id="hardware-detection-1"><a class="header" href="#hardware-detection-1">Hardware detection</a></h2>
 <p>Hardware detection is handled by <a href="specs/services/system/../../kernel/hardware.html#hardware-detection">the kernel itself</a>, which exposes a <a href="specs/services/system/../../kernel/hardware.html#raw-device-descriptor"><em>raw device descriptor</em> (RDD)</a>.</p>
 <h2 id="unique-device-identifier"><a class="header" href="#unique-device-identifier">Unique device identifier</a></h2>
-<p>Each device gets a <em>unique device identifier</em> (UDI) encoded on 8 bytes, which identifies a unique hardware component. It is unique across components and consistent across reboots. Unlike the <a href="specs/services/system/../../kernel/hardware.html#kernel-device-identifier">KDI</a>, the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.</p>
+<p>Each device gets a <em>unique device identifier</em> (UDI) encoded on 8 bytes, which identifies a unique hardware device. It is unique across devices and consistent across reboots. Unlike the <a href="specs/services/system/../../kernel/hardware.html#kernel-device-identifier">KDI</a>, the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.</p>
 <p>The identification mechanism depends on the connection type and is yet to be specified.</p>
 <h2 id="device-formats"><a class="header" href="#device-formats">Device formats</a></h2>
 <p>This section describes the multiple formats used by this service to deal with devices.</p>
@@ -7745,27 +7825,27 @@ If the number of items to get is larger than the number of entries in the direct
 <p>Registering as a driver for a pattern requires the application to expose the <a href="specs/services/system/../../services.html#types-of-services">driver service(s)</a> relevant to the <a href="specs/services/system/hw.html#driven-device-type">DDT</a> provided in the pattern.</p>
 <p>When a device is connected, a driver is selected from the list of drivers able to handle this specific device. If the device is connected for the very first time, the selected driver process first receives an <a href="specs/services/system/hw.html#0x02-identify_device"><code>IDENTIFY_DEVICE</code></a> notification to translate the <a href="specs/services/system/hw.html#drivable-device-raw-descriptor">DDRD</a> into a <a href="specs/services/system/hw.html#driven-device-type">DDT</a>.</p>
 <p>Then, the driver process receives a <a href="specs/services/system/hw.html#0x03-device_event"><code>DEVICE_EVENT</code></a> notification, which will also be sent if the status of the device changes.</p>
-<p>From this point, the driver can create an <a href="specs/services/system/../../kernel/memory.html#abstract-memory-segments">AMS</a> from the device's memory using the <a href="specs/services/system/../../kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall.</p>
-<p>It can also get informed of interrupts the device raises through the <a href="specs/services/system/hw.html#0x10-device_interrupt"><code>DEVICE_INTERRUPT</code></a> notification.</p>
+<p>From this point, the driver process can communicate with the device using its <a href="specs/services/system/../../kernel/hardware.html#inputoutput-ports">I/O ports</a> with the <a href="specs/services/system/../../kernel/syscalls.html#0x60-read_io_port"><code>READ_IO_PORT</code></a> and <a href="specs/services/system/../../kernel/syscalls.html#0x61-write_io_port"><code>WRITE_IO_PORT</code></a> syscalls.</p>
+<p>It can also map the device's memory into its own address space using an <a href="specs/services/system/../../kernel/memory.html#abstract-memory-segments">AMS</a> with the <a href="specs/services/system/../../kernel/syscalls.html#0x63-device_ams"><code>DEVICE_AMS</code></a> syscall.</p>
 <p>Other processes can then ask the driver to perform specific actions depending on the type of device, using <a href="specs/services/system/hw.html#normalization">normalized methods</a> which can be sent to the driver using the <a href="specs/services/system/hw.html#0xa0-ask_driver"><code>ASK_DRIVER</code></a> method. The driver receives these informations through the <a href="specs/services/system/hw.html#0xa0-driver_method_request"><code>DRIVER_METHOD_REQUEST</code></a> notification.</p>
 <p>The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to <a href="specs/services/system/hw.html#normalization">normalized notifications</a> which can then be sent to processes that subscribed to them using the related <a href="specs/services/system/hw.html#normalization">normalized methods</a>.</p>
 <p>You can see the complete list of methods and notifications for each type of driver services in the <a href="specs/services/system/../drivers/README.html">related section of the documentation</a>.</p>
 <h3 id="driver-selection"><a class="header" href="#driver-selection">Driver selection</a></h3>
-<p>A driver is selected for a specific hardware component if it matches any of the following criterias, in decreasing importance order:</p>
+<p>A driver is selected for a specific hardware device if it matches any of the following criterias, in decreasing importance order:</p>
 <ul>
-<li>The user selected this driver for this specific hardware component ;</li>
-<li>The user selected this driver for this specific type of hardware components (<a href="specs/services/system/hw.html#patterns">pattern</a>) ;</li>
-<li>This driver is the one with the most specific <a href="specs/services/system/hw.html#patterns">pattern</a> covering this hardware component ;</li>
-<li>This driver is the only one able to drive this specific hardware component (<a href="specs/services/system/hw.html#device-type-descriptor">DTD</a>)</li>
+<li>The user selected this driver for this specific hardware device ;</li>
+<li>The user selected this driver for this specific type of hardware devices (<a href="specs/services/system/hw.html#patterns">pattern</a>) ;</li>
+<li>This driver is the one with the most specific <a href="specs/services/system/hw.html#patterns">pattern</a> covering this hardware device ;</li>
+<li>This driver is the only one able to drive this specific hardware device (<a href="specs/services/system/hw.html#device-type-descriptor">DTD</a>)</li>
 </ul>
-<p>If no criteria is matched, the driver isn't selected to drive the given hardware component.</p>
+<p>If no criteria is matched, the driver isn't selected to drive the given hardware device.</p>
 <h3 id="a-note-on-performances"><a class="header" href="#a-note-on-performances">A note on performances</a></h3>
 <p>Although hardware devices' interrupts are notified to the driver through <a href="specs/services/system/../../kernel/ipc.html#methods-and-notifications">service socket notifications</a>, the latency is still minimal as soon as the driver listens to the <a href="specs/services/system/../../kernel/signals.html#0x27-recv_sock_msg"><code>RECV_SOCK_MSG</code></a> signal, which like all signals uses interrupts and so guarantees a very low latency.</p>
 <h2 id="latency-reduction-for-storage-devices"><a class="header" href="#latency-reduction-for-storage-devices">Latency reduction for storage devices</a></h2>
 <h3 id="direct-driver-access-for-a-hrefspecsservicessystemfshtmlsysfsa"><a class="header" href="#direct-driver-access-for-a-hrefspecsservicessystemfshtmlsysfsa">Direct driver access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
 <p>All operations related to storage devices are handled by the <a href="specs/services/system/fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all <a href="specs/services/system/../drivers/storage.html">storage driver services</a>.</p>
 <h3 id="direct-hardware-access-for-a-hrefspecsservicessystemfshtmlsysfsa"><a class="header" href="#direct-hardware-access-for-a-hrefspecsservicessystemfshtmlsysfsa">Direct hardware access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
-<p>In case a specific storage device doesn't require a <a href="specs/services/system/../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware component.</p>
+<p>In case a specific storage device doesn't require a <a href="specs/services/system/../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware device.</p>
 <h2 id="methods-8"><a class="header" href="#methods-8">Methods</a></h2>
 <h3 id="0x01-enum_devices"><a class="header" href="#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></h3>
 <p>Enumerate connected devices, reserved to <a href="specs/services/system/../../services.html">system services</a>.</p>
@@ -7819,7 +7899,7 @@ If multiple drivers have colliding patterns, the final user will be prompted to 
 <p>When a new device is connected, the driver process will receive an <a href="specs/services/system/hw.html#0x02-identify_device"><code>IDENTIFY_DEVICE</code></a> notification to translate the <a href="specs/services/system/hw.html#drivable-device-raw-descriptor">DDRD</a> into a <a href="specs/services/system/hw.html#driven-device-type">DDT</a>.</p>
 <p>The driver process will receive <a href="specs/services/system/hw.html#0x03-device_event"><code>DEVICE_EVENT</code></a> notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.<br />
 Notifications are also retroactive, which means they will be sent for already-connected devices.</p>
-<p>The driver will also have the device registered in its <a href="specs/services/system/../../kernel/processes.html#drivable-devices">drivable devices attribute</a>, allowing it to use the <a href="specs/services/system/../../kernel/syscalls.html#0x34-device_ams"><code>DEVICE_AMS</code></a> syscall to map the device's memory in its own.</p>
+<p>The driver will also have the device registered in its <a href="specs/services/system/../../kernel/processes.html#drivable-devices">drivable devices attribute</a>, allowing it to use the <a href="specs/services/system/../../kernel/syscalls.html#0x63-device_ams"><code>DEVICE_AMS</code></a> syscall to map the device's memory in its own.</p>
 <p><strong>Required permission:</strong> <code>devices.register_driver</code></p>
 <p><strong>Arguments:</strong></p>
 <ul>

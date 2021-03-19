@@ -196,13 +196,11 @@
 <li><a href="#0x31-mem_free"><code>0x31</code> MEM_FREE</a></li>
 <li><a href="#0x32-virt_mem_ams"><code>0x32</code> VIRT_MEM_AMS</a></li>
 <li><a href="#0x33-backed_ams"><code>0x33</code> BACKED_AMS</a></li>
-<li><a href="#0x34-device_ams"><code>0x34</code> DEVICE_AMS</a></li>
-<li><a href="#0x35-share_ams"><code>0x35</code> SHARE_AMS</a></li>
-<li><a href="#0x36-ams_sharing_info"><code>0x36</code> AMS_SHARING_INFO</a></li>
-<li><a href="#0x37-unshare_ams"><code>0x37</code> UNSHARE_AMS</a></li>
-<li><a href="#0x38-map_ams"><code>0x38</code> MAP_AMS</a></li>
-<li><a href="#0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></li>
-<li><a href="#0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></li>
+<li><a href="#0x34-share_ams"><code>0x34</code> SHARE_AMS</a></li>
+<li><a href="#0x35-ams_sharing_info"><code>0x35</code> AMS_SHARING_INFO</a></li>
+<li><a href="#0x36-unshare_ams"><code>0x36</code> UNSHARE_AMS</a></li>
+<li><a href="#0x37-map_ams"><code>0x37</code> MAP_AMS</a></li>
+<li><a href="#0x38-unmap_ams"><code>0x38</code> UNMAP_AMS</a></li>
 <li><a href="#0x40-create_process"><code>0x40</code> CREATE_PROCESS</a></li>
 <li><a href="#0x41-wait_child_process"><code>0x41</code> WAIT_CHILD_PROCESS</a></li>
 <li><a href="#0x42-kill_child_process"><code>0x42</code> KILL_CHILD_PROCESS</a></li>
@@ -217,6 +215,11 @@
 <li><a href="#0x53-write_tls_slot"><code>0x53</code> WRITE_TLS_SLOT</a></li>
 <li><a href="#0x54-delete_tls_slot"><code>0x54</code> DELETE_TLS_SLOT</a></li>
 <li><a href="#0x5f-exit_thread"><code>0x5F</code> EXIT_THREAD</a></li>
+<li><a href="#0x60-read_io_port"><code>0x60</code> READ_IO_PORT</a></li>
+<li><a href="#0x61-write_io_port"><code>0x61</code> WRITE_IO_PORT</a></li>
+<li><a href="#0x62-device_interrupt"><code>0x62</code> DEVICE_INTERRUPT</a></li>
+<li><a href="#0x63-device_ams"><code>0x63</code> DEVICE_AMS</a></li>
+<li><a href="#0x64-set_dma_mem_access"><code>0x64</code> SET_DMA_MEM_ACCESS</a></li>
 <li><a href="#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></li>
 <li><a href="#0xd0-sys_create_process"><code>0xD0</code> SYS_CREATE_PROCESS</a></li>
 <li><a href="#0xd1-sys_manage_process"><code>0xD1</code> SYS_MANAGE_PROCESS</a></li>
@@ -644,8 +647,8 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 </ul>
 <h3 id="0x31-mem_free"><a class="header" href="#0x31-mem_free"><code>0x31</code> MEM_FREE</a></h3>
 <p>Unallocate a linear block of memory.</p>
-<p>Shared memory pages must first be unshared through the <a href="#0x37-unshare_ams"><code>UNSHARE_AMS</code></a> syscall.<br />
-Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code>UNMAP_AMS</code></a> syscall.</p>
+<p>Shared memory pages must first be unshared through the <a href="#0x36-unshare_ams"><code>UNSHARE_AMS</code></a> syscall.<br />
+Mapped memory pages must be unmapped through the <a href="#0x38-unmap_ams"><code>UNMAP_AMS</code></a> syscall.</p>
 <p><strong>WARNING:</strong> Memory will not be zeroed, therefore the caller process shall ensure critical informations are zeroed or randomized before freeing the memory.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -692,30 +695,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x10</code>: Invalid COW mode provided</li>
 <li><code>0x11</code>: Provided length is unaligned</li>
 </ul>
-<h3 id="0x34-device_ams"><a class="header" href="#0x34-device_ams"><code>0x34</code> DEVICE_AMS</a></h3>
-<p>Create an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from a device's memory through <em>Mapped Memory Input/Output</em> (MMIO).</p>
-<p>Requires the current process to have the device in its <a href="processes.html#drivable-devices">drivable devices attribute</a>.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li><a href="hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (4 bytes)</li>
-<li>Start address in the device's memory (8 bytes)</li>
-<li>Number of bytes to map (8 bytes)</li>
-<li>Start address to map in this process' memory (8 bytes)</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<ul>
-<li>AMS ID (8 bytes)</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x10</code>: The mapping's start address is not aligned with a page</li>
-<li><code>0x11</code>: The mapping's length is not a multiple of a page's size</li>
-<li><code>0x12</code>: The mapping's size is null (0 bytes)</li>
-<li><code>0x20</code>: The provided device KDI was not found</li>
-<li><code>0x21</code>: The provided device is not compatible with MMIO</li>
-<li><code>0x22</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
-</ul>
-<h3 id="0x35-share_ams"><a class="header" href="#0x35-share_ams"><code>0x35</code> SHARE_AMS</a></h3>
+<h3 id="0x34-share_ams"><a class="header" href="#0x34-share_ams"><code>0x34</code> SHARE_AMS</a></h3>
 <p>Share an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> with another process.</p>
 <p>This will trigger in the target process the <a href="signals.html#0x35-recv_shared_ams"><code>RECV_SHARED_MEM</code></a> with the provided command code, unless the notification mode states otherwise.</p>
 <p>The <em>mutual mode</em> allows both processes to access the memory, with the sharer setting the permissions for the receiver to limit its access. Copy-on-write can also be enabled to allow the receiver process to write data without affecting the sharer process' memory.</p>
@@ -746,8 +726,8 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x14</code>: Invalid exclusive mode provided</li>
 <li><code>0x30</code>: There is not enough contiguous space in the receiver process' memory space to map the shared memory</li>
 </ul>
-<h3 id="0x36-ams_sharing_info"><a class="header" href="#0x36-ams_sharing_info"><code>0x36</code> AMS_SHARING_INFO</a></h3>
-<p>Get informations about a <a href="#0x35-share_ams">shared</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
+<h3 id="0x35-ams_sharing_info"><a class="header" href="#0x35-ams_sharing_info"><code>0x35</code> AMS_SHARING_INFO</a></h3>
+<p>Get informations about a <a href="#0x34-share_ams">shared</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>AMS ID (8 bytes)</li>
@@ -765,8 +745,8 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <ul>
 <li><code>0x10</code>: Unknwon AMS ID provided</li>
 </ul>
-<h3 id="0x37-unshare_ams"><a class="header" href="#0x37-unshare_ams"><code>0x37</code> UNSHARE_AMS</a></h3>
-<p>Stop sharing an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> started by <a href="#0x35-share_ams"><code>SHARE_AMS</code></a>. Note that exlusive sharings cannot be unmapped.</p>
+<h3 id="0x36-unshare_ams"><a class="header" href="#0x36-unshare_ams"><code>0x36</code> UNSHARE_AMS</a></h3>
+<p>Stop sharing an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> started by <a href="#0x34-share_ams"><code>SHARE_AMS</code></a>. Note that exlusive sharings cannot be unmapped.</p>
 <p>This will trigger in the target process the <a href="signals.html#0x37-unshared_ams"><code>UNSHARED_AMS</code></a> signal.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -781,7 +761,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x20</code>: Provided AMS ID is exclusive</li>
 <li><code>0x21</code>: Provided AMS was not shared with the provided process</li>
 </ul>
-<h3 id="0x38-map_ams"><a class="header" href="#0x38-map_ams"><code>0x38</code> MAP_AMS</a></h3>
+<h3 id="0x37-map_ams"><a class="header" href="#0x37-map_ams"><code>0x37</code> MAP_AMS</a></h3>
 <p>Map an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> in the current process' address space.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -797,7 +777,7 @@ Mapped memory pages must be unmapped through the <a href="#0x39-unmap_ams"><code
 <li><code>0x20</code>: Provided mapping address or address+length is out-of-range in the AMS</li>
 <li><code>0x21</code>: Provided address to map or address+length is out-of-orange in this process' address space</li>
 </ul>
-<h3 id="0x39-unmap_ams"><a class="header" href="#0x39-unmap_ams"><code>0x39</code> UNMAP_AMS</a></h3>
+<h3 id="0x38-unmap_ams"><a class="header" href="#0x38-unmap_ams"><code>0x38</code> UNMAP_AMS</a></h3>
 <p>Unmap an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from the current process' address space.<br />
 If the AMS is mapped at multiple addresses of this process, only one of the mappings will be unmapped by default.</p>
 <p><strong>Arguments:</strong></p>
@@ -811,27 +791,6 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <ul>
 <li><code>0x10</code>: Unknown AMS ID provided</li>
 <li><code>0x20</code>: Provided AMS it not mapped at this address</li>
-</ul>
-<h3 id="0x3a-set_dma_mem_access"><a class="header" href="#0x3a-set_dma_mem_access"><code>0x3A</code> SET_DMA_MEM_ACCESS</a></h3>
-<p>Allow or disallow a device to access a range of addresses through <em>Direct Memory Access</em> (DMA) in the current process' address space.</p>
-<p>Requires the current process to have the device in its <a href="processes.html#drivable-devices">drivable devices attribute</a>.</p>
-<p><strong>Arguments:</strong></p>
-<ul>
-<li><a href="hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (4 bytes)</li>
-<li>Start address in the current process' address space (8 bytes)</li>
-<li>Length (8 bytes)</li>
-<li>Authorization (1 byte): <code>0x00</code> to allow the device to use this range, <code>0x01</code> to cancel an authorization</li>
-</ul>
-<p><strong>Return value:</strong></p>
-<p><em>None</em></p>
-<p><strong>Errors:</strong></p>
-<ul>
-<li><code>0x10</code>: The range's start address is not aligned with a page</li>
-<li><code>0x11</code>: The range's length is not a multiple of a page's size</li>
-<li><code>0x12</code>: The range's size is null (0 bytes)</li>
-<li><code>0x20</code>: The provided device KDI was not found</li>
-<li><code>0x21</code>: The provided device is not compatible with DMA</li>
-<li><code>0x22</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
 </ul>
 <h3 id="0x40-create_process"><a class="header" href="#0x40-create_process"><code>0x40</code> CREATE_PROCESS</a></h3>
 <p>Create a child process from the current one. The new process gets a separate memory space.</p>
@@ -1019,6 +978,110 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><em>None</em> (never returns)</p>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
+<h3 id="0x60-read_io_port"><a class="header" href="#0x60-read_io_port"><code>0x60</code> READ_IO_PORT</a></h3>
+<p>Read data from the physical <a href="hardware.html#inputoutput-ports">I/O port</a> a device, if <a href="processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="hardware.html#kernel-device-identifier">KDI</a> of the device to read data from (8 bytes)</li>
+<li>Relative I/O port number (2 bytes)</li>
+<li>Writable <a href="data-structures.html#buffer-pointers">buffer pointer</a> (16 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of bytes read from the I/O port (8 bytes)</li>
+</ul>
+<p><strong>Error codes:</strong></p>
+<ul>
+<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided I/O port does not exist for the provided device</li>
+<li><code>0x23</code>: The provided I/O port is an output port</li>
+</ul>
+<h3 id="0x61-write_io_port"><a class="header" href="#0x61-write_io_port"><code>0x61</code> WRITE_IO_PORT</a></h3>
+<p>Write data to the physical <a href="hardware.html#inputoutput-ports">I/O port</a> a device, if <a href="processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="hardware.html#kernel-device-identifier">KDI</a> of the device to read data from (8 bytes)</li>
+<li>Relative I/O port number (2 bytes)</li>
+<li>Readable <a href="data-structures.html#buffer-pointers">buffer pointer</a> (16 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Number of bytes written (8 bytes)</li>
+</ul>
+<p><strong>Error codes:</strong></p>
+<ul>
+<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided I/O port does not exist for the provided device</li>
+<li><code>0x23</code>: The provided I/O port is an input port</li>
+</ul>
+<h3 id="0x62-device_interrupt"><a class="header" href="#0x62-device_interrupt"><code>0x62</code> DEVICE_INTERRUPT</a></h3>
+<p>Trigger a hardware interruption on a device, if <a href="processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="hardware.html#kernel-device-identifier">KDI</a> of the device to trigger an interrupt on (8 bytes)</li>
+<li>Relative I/O port identifier (2 bytes)</li>
+<li>Interrupt code (1 byte)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Error codes:</strong></p>
+<ul>
+<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided I/O port does not exist for the provided device</li>
+<li><code>0x23</code>: The provided I/O port is an input port</li>
+</ul>
+<h3 id="0x63-device_ams"><a class="header" href="#0x63-device_ams"><code>0x63</code> DEVICE_AMS</a></h3>
+<p>Create an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from a device's memory through <em>Mapped Memory Input/Output</em> (MMIO).</p>
+<p>Read data from the physical input/output port a device, if <a href="processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (8 bytes)</li>
+<li>Start address in the device's memory (8 bytes)</li>
+<li>Number of bytes to map (8 bytes)</li>
+<li>Start address to map in this process' memory (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>AMS ID (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: The mapping's start address is not aligned with a page</li>
+<li><code>0x11</code>: The mapping's length is not a multiple of a page's size</li>
+<li><code>0x12</code>: The mapping's size is null (0 bytes)</li>
+<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided device is not compatible with MMIO</li>
+</ul>
+<h3 id="0x64-set_dma_mem_access"><a class="header" href="#0x64-set_dma_mem_access"><code>0x64</code> SET_DMA_MEM_ACCESS</a></h3>
+<p>Allow or disallow a device to access a range of addresses through <em>Direct Memory Access</em> (DMA) in the current process' address space.</p>
+<p>Read data from the physical input/output port a device, if <a href="processes.html#drivable-devices">authorized as a driver</a>.</p>
+<p>Complete access is granted to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="hardware.html#kernel-device-identifier">KDI</a> of the device to map in memory (8 bytes)</li>
+<li>Start address in the current process' address space (8 bytes)</li>
+<li>Length (8 bytes)</li>
+<li>Authorization (1 byte): <code>0x00</code> to allow the device to use this range, <code>0x01</code> to cancel an authorization</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x10</code>: The range's start address is not aligned with a page</li>
+<li><code>0x11</code>: The range's length is not a multiple of a page's size</li>
+<li><code>0x12</code>: The range's size is null (0 bytes)</li>
+<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x21</code>: The provided device KDI was not found</li>
+<li><code>0x22</code>: The provided device is not compatible with DMA</li>
+</ul>
 <h3 id="0xa0-execution_context"><a class="header" href="#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></h3>
 <p>Get informations from the application's <a href="../applications/context.html">execution context</a>.</p>
 <p><strong>Arguments:</strong></p>

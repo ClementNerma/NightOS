@@ -175,8 +175,8 @@
 <li><a href="#requests-priority">Requests priority</a></li>
 </ul>
 <h2 id="hardware-access"><a class="header" href="#hardware-access">Hardware access</a></h2>
-<p>When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired component.</p>
-<p><a href="services.html">System services</a> such as <a href="../specs/services/system/fs.html"><code>sys::fs</code></a> or <a href="../specs/services/system/net.html"><code>sys::net</code></a> use Ion to deal with the related hardware components.</p>
+<p>When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired device.</p>
+<p><a href="services.html">System services</a> such as <a href="../specs/services/system/fs.html"><code>sys::fs</code></a> or <a href="../specs/services/system/net.html"><code>sys::net</code></a> use Ion to deal with the related hardware devices.</p>
 <h1 id="agnosticity"><a class="header" href="#agnosticity">Agnosticity</a></h1>
 <p>Ion only permits agnostic access to hardware, meaning it does not have knowledge of the performed action (filesystem access, sensor reading, ...). It can only be accessed by <a href="../specs/services/system/hw.html#drivers">drivers</a>.</p>
 <p>Non-agnostic access can be performed through various services, such as <a href="../specs/services/system/fs.html"><code>sys::fs</code></a>.</p>

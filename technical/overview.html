@@ -198,13 +198,13 @@
 <h2 id="hardware-access"><a class="header" href="#hardware-access">Hardware access</a></h2>
 <p>Hardware access is performed through two layers:</p>
 <ul>
-<li>First, the kernel <a href="../specs/kernel/hardware.html">detects and enumerate (specs)</a> hardware components</li>
+<li>First, the kernel <a href="../specs/kernel/hardware.html">detects and enumerate (specs)</a> hardware devices</li>
 <li>Then, hardware is accessed through the <a href="../specs/services/system/hw.html">hardware service (specs)</a></li>
 </ul>
 <h2 id="hardware-drivers"><a class="header" href="#hardware-drivers">Hardware drivers</a></h2>
 <p>Unlike most operating systems, hardware drivers are simple applications with no specific integration in the kernel.</p>
 <p>Any application can register itself as <a href="../specs/services/system/hw.html#drivers">a driver (specs)</a> using the <a href="../specs/services/system/hw.html">hardware service (specs)</a>.</p>
-<p>The relevant driver for each hardware component is selected using <a href="../specs/services/system/hw.html#driver-selection">various criterias (specs)</a>.</p>
+<p>The relevant driver for each hardware device is selected using <a href="../specs/services/system/hw.html#driver-selection">various criterias (specs)</a>.</p>
 <h2 id="hardware-access-performances"><a class="header" href="#hardware-access-performances">Hardware access performances</a></h2>
 <p>Hardware access is performed through <a href="../specs/kernel/syscalls.html">syscalls (specs)</a> and <a href="../specs/kernel/signals.html">signals (specs)</a>, which use CPU interruptions. </p>
 <p>The access process is often:</p>

@@ -7081,8 +7081,8 @@ If the number of items to get is larger than the number of entries in the direct
 If the number of items to get is larger than the number of entries in the directory less the start offset, all remaining items must be returned.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
-<li><code>fs.items.readdir</code></li>
-<li><code>fs.items.readdir.hidden</code> to also list hidden items</li>
+<li><code>fs.dir.read</code></li>
+<li><code>fs.dir.read.hidden</code> to also list hidden items</li>
 </ul>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -7319,6 +7319,48 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x31</code>: Provided path was not found</li>
 <li><code>0x32</code>: Symbolic link is cyclic</li>
 </ul>
+<h3 id="0xa0-watch_item"><a class="header" href="#0xa0-watch_item"><code>0xA0</code> WATCH_ITEM</a></h3>
+<p>Watch an item for changes on its metadata or content. Any change will trigger a <a href="specs/services/system/fs.html#0xa0-item_changed"><code>ITEM_CHANGED</code></a> notification.</p>
+<p><strong>Required permission:</strong></p>
+<ul>
+<li><code>fs.items.metadata</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="specs/services/system/../integration/filesystem-interfaces.html#filesystem-paths">Path</a> to watch</li>
+<li>Generated watch identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Provided path was not found</li>
+</ul>
+<h3 id="0xa1-watch_dir_content"><a class="header" href="#0xa1-watch_dir_content"><code>0xA1</code> WATCH_DIR_CONTENT</a></h3>
+<p>Watch a directory's content for changes on its metadata or content. Any change will trigger a <a href="specs/services/system/fs.html#0xa1-dir_content_changed"><code>DIR_CONTENT_CHANGED</code></a> notification.</p>
+<p><strong>Required permission:</strong></p>
+<ul>
+<li><code>fs.dir.read</code></li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="specs/services/system/../integration/filesystem-interfaces.html#filesystem-paths">Path</a> to watch</li>
+<li>Generated watch identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Provided path was not found</li>
+</ul>
+<h3 id="0xa2-unwatch"><a class="header" href="#0xa2-unwatch"><code>0xA2</code> UNWATCH</a></h3>
+<p>Stop watching a content watched with <a href="specs/services/system/fs.html#0xa0-watch_item"><code>WATCH_ITEM</code></a> or <a href="specs/services/system/fs.html#0xa1-watch_dir_content"><code>WATCH_DIR_CONTENT</code></a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Generated watch identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Provided watch identifier was not found</li>
+</ul>
 <h3 id="0xf0-format_async-1"><a class="header" href="#0xf0-format_async-1"><code>0xF0</code> FORMAT_ASYNC</a></h3>
 <p>Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, </p>
 <p><strong>Required permissions:</strong></p>
@@ -7381,6 +7423,30 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x40</code>: Unspecified filesystem error</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<h3 id="0xa0-item_changed"><a class="header" href="#0xa0-item_changed"><code>0xA0</code> ITEM_CHANGED</a></h3>
+<p>Notification sent to clients watching an item through the <a href="specs/services/system/fs.html#0xa0-watch_item"><code>WATCH_ITEM</code></a> method.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+<li>Event code (1 byte):
+<ul>
+<li><code>0x01</code>: item's metadata changed</li>
+<li><code>0x02</code>: item was moved</li>
+<li><code>0x03</code>: item was deleted</li>
+</ul>
+</li>
+</ul>
+<h3 id="0xa1-dir_content_changed"><a class="header" href="#0xa1-dir_content_changed"><code>0xA1</code> DIR_CONTENT_CHANGED</a></h3>
+<ul>
+<li><code>0x10</code>: the watched directory's content changed, followed by:
+<ul>
+<li>Affected element's <a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li>Affected element's <a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+<li>Affected element's event code (1 byte) - same as the parent code, plus <code>0x20</code> if the element was created</li>
 </ul>
 </li>
 </ul>

@@ -7361,6 +7361,49 @@ If the number of items to get is larger than the number of entries in the direct
 <ul>
 <li><code>0x30</code>: Provided watch identifier was not found</li>
 </ul>
+<h3 id="0xaa-lock_item"><a class="header" href="#0xaa-lock_item"><code>0xAA</code> LOCK_ITEM</a></h3>
+<p>Lock an item to prevent modifications and/or complete access from other processes.</p>
+<p>No-modification mode will prevent changing the item's data and metadata (except timestamps).</p>
+<p><a href="specs/services/system/fs.html#0xa0-item_changed"><code>ITEM_CHANGED</code></a> and <a href="specs/services/system/fs.html#0xa1-dir_content_changed"><code>DIR_CONTENT_CHANGED</code></a> notifications won't be triggered for the locking process.</p>
+<p><strong>Required permissions:</strong></p>
+<ul>
+<li><code>fs.items.lock</code>: lock a single item</li>
+<li><code>fs.items.lock.full</code>: lock a single item with exclusive mode</li>
+<li><code>fs.dir.lock</code>: lock a full directory's content</li>
+<li><code>fs.dir.lock.full</code>: lock a full directory's content with exclusive mode</li>
+</ul>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li>Item's <a href="specs/services/system/../integration/filesystem-interfaces.html#filesystem-paths">path</a></li>
+<li>Recursive mode (1 byte): <code>0x01</code> if the item is a directory and all its content should be locked, <code>0x00</code> otherwise</li>
+<li>Exclusive move (1 byte): <code>0x01</code> to prevent access from other processes, <code>0x00</code> otherwise</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated lock identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x11</code>: Invalid recursive mode</li>
+<li><code>0x12</code>: Invalid exclude mode</li>
+<li><code>0x30</code>: Provided FSID was not found</li>
+<li><code>0x31</code>: Provided item was not found</li>
+<li><code>0x32</code>: A lock is already in place on this item</li>
+<li><code>0x33</code>: Cannot lock in recursive mode as the item is not a directory</li>
+</ul>
+<h3 id="0xab-unlock_item"><a class="header" href="#0xab-unlock_item"><code>0xAB</code> UNLOCK_ITEM</a></h3>
+<p>Unlock an item locked with <a href="specs/services/system/fs.html#0xaa-lock_item"><code>LOCK_ITEM</code></a>.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Lock identifier (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Unknown lock identifier</li>
+</ul>
 <h3 id="0xf0-format_async-1"><a class="header" href="#0xf0-format_async-1"><code>0xF0</code> FORMAT_ASYNC</a></h3>
 <p>Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, </p>
 <p><strong>Required permissions:</strong></p>
@@ -7437,6 +7480,8 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x01</code>: item's metadata changed</li>
 <li><code>0x02</code>: item was moved</li>
 <li><code>0x03</code>: item was deleted</li>
+<li><code>0x04</code>: item was locked (only for the parent directory if case of a recursive lock)</li>
+<li><code>0x05</code>: item was unlocked (only for the parent directory if case of a recursive lock)</li>
 </ul>
 </li>
 </ul>

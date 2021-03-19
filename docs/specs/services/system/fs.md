@@ -826,7 +826,7 @@ Notification sent to clients watching an item through the [`WATCH_ITEM`](#0xa0-w
 - `0x10`: the watched directory's content changed, followed by:
     - Affected element's [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
     - Affected element's [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
-    - Affected element's event code (1 byte) - same as the parent code, plus `0x20` if the element was created
+    - Affected element's event code (1 byte) - same for [`ITEM_CHANGED`](#0xa0-item_changed), plus `0xA0` if the element was just created
 
 ### `0xF0` FORMATTED
 

@@ -27,13 +27,11 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x31` MEM_FREE](#0x31-mem_free)
   - [`0x32` VIRT_MEM_AMS](#0x32-virt_mem_ams)
   - [`0x33` BACKED_AMS](#0x33-backed_ams)
-  - [`0x34` DEVICE_AMS](#0x34-device_ams)
-  - [`0x35` SHARE_AMS](#0x35-share_ams)
-  - [`0x36` AMS_SHARING_INFO](#0x36-ams_sharing_info)
-  - [`0x37` UNSHARE_AMS](#0x37-unshare_ams)
-  - [`0x38` MAP_AMS](#0x38-map_ams)
-  - [`0x39` UNMAP_AMS](#0x39-unmap_ams)
-  - [`0x3A` SET_DMA_MEM_ACCESS](#0x3a-set_dma_mem_access)
+  - [`0x34` SHARE_AMS](#0x34-share_ams)
+  - [`0x35` AMS_SHARING_INFO](#0x35-ams_sharing_info)
+  - [`0x36` UNSHARE_AMS](#0x36-unshare_ams)
+  - [`0x37` MAP_AMS](#0x37-map_ams)
+  - [`0x38` UNMAP_AMS](#0x38-unmap_ams)
   - [`0x40` CREATE_PROCESS](#0x40-create_process)
   - [`0x41` WAIT_CHILD_PROCESS](#0x41-wait_child_process)
   - [`0x42` KILL_CHILD_PROCESS](#0x42-kill_child_process)
@@ -48,6 +46,11 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x53` WRITE_TLS_SLOT](#0x53-write_tls_slot)
   - [`0x54` DELETE_TLS_SLOT](#0x54-delete_tls_slot)
   - [`0x5F` EXIT_THREAD](#0x5f-exit_thread)
+  - [`0x60` READ_IO_PORT](#0x60-read_io_port)
+  - [`0x61` WRITE_IO_PORT](#0x61-write_io_port)
+  - [`0x62` DEVICE_INTERRUPT](#0x62-device_interrupt)
+  - [`0x63` DEVICE_AMS](#0x63-device_ams)
+  - [`0x64` SET_DMA_MEM_ACCESS](#0x64-set_dma_mem_access)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` SYS_CREATE_PROCESS](#0xd0-sys_create_process)
   - [`0xD1` SYS_MANAGE_PROCESS](#0xd1-sys_manage_process)
@@ -544,8 +547,8 @@ Allocate a linear block of memory.
 
 Unallocate a linear block of memory.
 
-Shared memory pages must first be unshared through the [`UNSHARE_AMS`](#0x37-unshare_ams) syscall.  
-Mapped memory pages must be unmapped through the [`UNMAP_AMS`](#0x39-unmap_ams) syscall.
+Shared memory pages must first be unshared through the [`UNSHARE_AMS`](#0x36-unshare_ams) syscall.  
+Mapped memory pages must be unmapped through the [`UNMAP_AMS`](#0x38-unmap_ams) syscall.
 
 **WARNING:** Memory will not be zeroed, therefore the caller process shall ensure critical informations are zeroed or randomized before freeing the memory.
 
@@ -601,33 +604,7 @@ Copy-on-write support can be enabled to allow the receiver process to write data
 - `0x10`: Invalid COW mode provided
 - `0x11`: Provided length is unaligned
 
-### `0x34` DEVICE_AMS
-
-Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) from a device's memory through _Mapped Memory Input/Output_ (MMIO).
-
-Requires the current process to have the device in its [drivable devices attribute](processes.md#drivable-devices).
-
-**Arguments:**
-
-- [KDI](hardware.md#kernel-device-identifier) of the device to map in memory (4 bytes)
-- Start address in the device's memory (8 bytes)
-- Number of bytes to map (8 bytes)
-- Start address to map in this process' memory (8 bytes)
-
-**Return value:**
-
-- AMS ID (8 bytes)
-
-**Errors:**
-
-- `0x10`: The mapping's start address is not aligned with a page
-- `0x11`: The mapping's length is not a multiple of a page's size
-- `0x12`: The mapping's size is null (0 bytes)
-- `0x20`: The provided device KDI was not found
-- `0x21`: The provided device is not compatible with MMIO
-- `0x22`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
-
-### `0x35` SHARE_AMS
+### `0x34` SHARE_AMS
 
 Share an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) with another process.
 
@@ -661,9 +638,9 @@ The returned AMS ID is common for both the sender and the receiver, allowing to 
 - `0x14`: Invalid exclusive mode provided
 - `0x30`: There is not enough contiguous space in the receiver process' memory space to map the shared memory
 
-### `0x36` AMS_SHARING_INFO
+### `0x35` AMS_SHARING_INFO
 
-Get informations about a [shared](#0x35-share_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments).
+Get informations about a [shared](#0x34-share_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments).
 
 **Arguments:**
 
@@ -682,9 +659,9 @@ Get informations about a [shared](#0x35-share_ams) [abstract memory segment (AMS
 
 - `0x10`: Unknwon AMS ID provided
 
-### `0x37` UNSHARE_AMS
+### `0x36` UNSHARE_AMS
 
-Stop sharing an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) started by [`SHARE_AMS`](#0x35-share_ams). Note that exlusive sharings cannot be unmapped.
+Stop sharing an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) started by [`SHARE_AMS`](#0x34-share_ams). Note that exlusive sharings cannot be unmapped.
 
 This will trigger in the target process the [`UNSHARED_AMS`](signals.md#0x37-unshared_ams) signal.
 
@@ -703,7 +680,7 @@ _None_
 - `0x20`: Provided AMS ID is exclusive
 - `0x21`: Provided AMS was not shared with the provided process
 
-### `0x38` MAP_AMS
+### `0x37` MAP_AMS
 
 Map an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) in the current process' address space.
 
@@ -723,7 +700,7 @@ _None_
 - `0x20`: Provided mapping address or address+length is out-of-range in the AMS
 - `0x21`: Provided address to map or address+length is out-of-orange in this process' address space
 
-### `0x39` UNMAP_AMS
+### `0x38` UNMAP_AMS
 
 Unmap an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) from the current process' address space.  
 If the AMS is mapped at multiple addresses of this process, only one of the mappings will be unmapped by default.
@@ -741,32 +718,6 @@ _Empty_
 
 - `0x10`: Unknown AMS ID provided
 - `0x20`: Provided AMS it not mapped at this address
-
-### `0x3A` SET_DMA_MEM_ACCESS
-
-Allow or disallow a device to access a range of addresses through _Direct Memory Access_ (DMA) in the current process' address space.
-
-Requires the current process to have the device in its [drivable devices attribute](processes.md#drivable-devices).
-
-**Arguments:**
-
-- [KDI](hardware.md#kernel-device-identifier) of the device to map in memory (4 bytes)
-- Start address in the current process' address space (8 bytes)
-- Length (8 bytes)
-- Authorization (1 byte): `0x00` to allow the device to use this range, `0x01` to cancel an authorization
-
-**Return value:**
-
-_None_
-
-**Errors:**
-
-- `0x10`: The range's start address is not aligned with a page
-- `0x11`: The range's length is not a multiple of a page's size
-- `0x12`: The range's size is null (0 bytes)
-- `0x20`: The provided device KDI was not found
-- `0x21`: The provided device is not compatible with DMA
-- `0x22`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
 
 ### `0x40` CREATE_PROCESS
 
@@ -1014,6 +965,131 @@ _None_ (never returns)
 **Errors:**
 
 _None_
+
+### `0x60` READ_IO_PORT
+
+Read data from the physical [I/O port](hardware.md#inputoutput-ports) a device, if [authorized as a driver](processes.md#drivable-devices).
+
+Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
+
+**Arguments:**
+
+- [KDI](hardware.md#kernel-device-identifier) of the device to read data from (8 bytes)
+- Relative I/O port number (2 bytes)
+- Writable [buffer pointer](data-structures.md#buffer-pointers) (16 bytes)
+
+**Return value:**
+
+- Number of bytes read from the I/O port (8 bytes)
+
+**Error codes:**
+
+- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x21`: The provided device KDI was not found
+- `0x22`: The provided I/O port does not exist for the provided device
+- `0x23`: The provided I/O port is an output port
+
+### `0x61` WRITE_IO_PORT
+
+Write data to the physical [I/O port](hardware.md#inputoutput-ports) a device, if [authorized as a driver](processes.md#drivable-devices).
+
+Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
+
+**Arguments:**
+
+- [KDI](hardware.md#kernel-device-identifier) of the device to read data from (8 bytes)
+- Relative I/O port number (2 bytes)
+- Readable [buffer pointer](data-structures.md#buffer-pointers) (16 bytes)
+
+**Return value:**
+
+- Number of bytes written (8 bytes)
+
+**Error codes:**
+
+- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x21`: The provided device KDI was not found
+- `0x22`: The provided I/O port does not exist for the provided device
+- `0x23`: The provided I/O port is an input port
+
+### `0x62` DEVICE_INTERRUPT
+
+Trigger a hardware interruption on a device, if [authorized as a driver](processes.md#drivable-devices).
+
+Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
+
+**Arguments:**
+
+- [KDI](hardware.md#kernel-device-identifier) of the device to trigger an interrupt on (8 bytes)
+- Relative I/O port identifier (2 bytes)
+- Interrupt code (1 byte)
+
+**Return value:**
+
+_None_
+
+**Error codes:**
+
+- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x21`: The provided device KDI was not found
+- `0x22`: The provided I/O port does not exist for the provided device
+- `0x23`: The provided I/O port is an input port
+
+### `0x63` DEVICE_AMS
+
+Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) from a device's memory through _Mapped Memory Input/Output_ (MMIO).
+
+Read data from the physical input/output port a device, if [authorized as a driver](processes.md#drivable-devices).
+
+Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
+
+**Arguments:**
+
+- [KDI](hardware.md#kernel-device-identifier) of the device to map in memory (8 bytes)
+- Start address in the device's memory (8 bytes)
+- Number of bytes to map (8 bytes)
+- Start address to map in this process' memory (8 bytes)
+
+**Return value:**
+
+- AMS ID (8 bytes)
+
+**Errors:**
+
+- `0x10`: The mapping's start address is not aligned with a page
+- `0x11`: The mapping's length is not a multiple of a page's size
+- `0x12`: The mapping's size is null (0 bytes)
+- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x21`: The provided device KDI was not found
+- `0x22`: The provided device is not compatible with MMIO
+
+### `0x64` SET_DMA_MEM_ACCESS
+
+Allow or disallow a device to access a range of addresses through _Direct Memory Access_ (DMA) in the current process' address space.
+
+Read data from the physical input/output port a device, if [authorized as a driver](processes.md#drivable-devices).
+
+Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
+
+**Arguments:**
+
+- [KDI](hardware.md#kernel-device-identifier) of the device to map in memory (8 bytes)
+- Start address in the current process' address space (8 bytes)
+- Length (8 bytes)
+- Authorization (1 byte): `0x00` to allow the device to use this range, `0x01` to cancel an authorization
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x10`: The range's start address is not aligned with a page
+- `0x11`: The range's length is not a multiple of a page's size
+- `0x12`: The range's size is null (0 bytes)
+- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x21`: The provided device KDI was not found
+- `0x22`: The provided device is not compatible with DMA
 
 ### `0xA0` EXECUTION_CONTEXT
 

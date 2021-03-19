@@ -133,9 +133,9 @@ When a device is connected, a driver is selected from the list of drivers able t
 
 Then, the driver process receives a [`DEVICE_EVENT`](#0x03-device_event) notification, which will also be sent if the status of the device changes.
 
-From this point, the driver can create an [AMS](../../kernel/memory.md#abstract-memory-segments) from the device's memory using the [`DEVICE_AMS`](../../kernel/syscalls.md#0x34-device_ams) syscall.
+From this point, the driver process can communicate with the device using its [I/O ports](../../kernel/hardware.md#inputoutput-ports) with the [`READ_IO_PORT`](../../kernel/syscalls.md#0x60-read_io_port) and [`WRITE_IO_PORT`](../../kernel/syscalls.md#0x61-write_io_port) syscalls.
 
-It can also get informed of interrupts the device raises through the [`DEVICE_INTERRUPT`](#0x10-device_interrupt) notification.
+It can also map the device's memory into its own address space using an [AMS](../../kernel/memory.md#abstract-memory-segments) with the [`DEVICE_AMS`](../../kernel/syscalls.md#0x63-device_ams) syscall.
 
 Other processes can then ask the driver to perform specific actions depending on the type of device, using [normalized methods](#normalization) which can be sent to the driver using the [`ASK_DRIVER`](#0xa0-ask_driver) method. The driver receives these informations through the [`DRIVER_METHOD_REQUEST`](#0xa0-driver_method_request) notification.
 
@@ -236,7 +236,7 @@ When a new device is connected, the driver process will receive an [`IDENTIFY_DE
 The driver process will receive [`DEVICE_EVENT`](#0x03-device_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
 Notifications are also retroactive, which means they will be sent for already-connected devices.
 
-The driver will also have the device registered in its [drivable devices attribute](../../kernel/processes.md#drivable-devices), allowing it to use the [`DEVICE_AMS`](../../kernel/syscalls.md#0x34-device_ams) syscall to map the device's memory in its own.
+The driver will also have the device registered in its [drivable devices attribute](../../kernel/processes.md#drivable-devices), allowing it to use the [`DEVICE_AMS`](../../kernel/syscalls.md#0x63-device_ams) syscall to map the device's memory in its own.
 
 **Required permission:** `devices.register_driver`
 

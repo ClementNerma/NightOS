@@ -243,7 +243,7 @@ Sent to a process when an [abstract memory segment (AMS)](memory.md#abstract-mem
 **Datafield:**
 
 - Unsharing type (1 byte):
-  - `0x00` if the shared memory was unshared properly using the [UNSHARE_AMS](syscalls.md#0x37-unshare_ams) syscall
+  - `0x00` if the shared memory was unshared properly using the [UNSHARE_AMS](syscalls.md#0x36-unshare_ams) syscall
   - `0x01` if the other process brutally terminated
 
 ### `0x44` SUSPEND

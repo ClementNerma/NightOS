@@ -7,6 +7,8 @@ This document describes how the kernel interacts with hardware.
 - [Connection-specific device descriptor](#connection-specific-device-descriptor)
 - [Kernel device identifier](#kernel-device-identifier)
 - [Raw device descriptor](#raw-device-descriptor)
+- [Input/output ports](#inputoutput-ports)
+  - [I/O ports identifiers](#io-ports-identifiers)
 - [Drivers](#drivers)
 - [Kernel communication](#kernel-communication)
 
@@ -59,11 +61,33 @@ The _raw device descriptor_ (RDD) is a data structure (up to 260 bytes) made of 
 
 This descriptor is then used by the [`sys::hw`](../services/system/hw.md) service to expose the device to the rest of the operating system.
 
+## Input/output ports
+
+The kernel first detects the I/O ports used by each device, and maps it to the device's [KDI](#kernel-device-identifier).
+
+They are uni-directionals and as such are split in two categories: _input_ ports and _output_ ports.
+
+Input ports are used by devices to transmit informations to the kernel. When this happens, the data is put on a stack, and [drivers](#drivers) can then retrieve it using the [`READ_IO_PORT`](syscalls.md#0x60-read_io_port) system call.
+
+Output ports are used by [drivers](#drivers) to transmit informations to devices, using the [`WRITE_IO_PORT`](syscalls.md#0x61-write_io_port) system call.
+
+### I/O ports identifiers
+
+I/O ports are accessed using _relative identifiers_, which corresponds to the _nth_ port of the physical device, meaning it starts to `0` and ends to `<number of ports in the device> - 1`. The kernel transparently translates the relative identifier to the real port number.
+
+The association with the real port number is transparently performed by the kernel.
+
 ## Drivers
 
-Drivers and software <-> hardware devices communications are handled by the [`sys::hw`](../services/system/hw.md) system service.
+A _driver_ is a process which can directly communicate with hardware devices using [the dedicated system calls](syscalls.md#0x62-device_interrupt).
+
+They communicate with external processes through the [`sys::hw`](../services/system/hw.md) system service, or [`sys::fs`](../services/system/fs.md) when [direct driver access](../services/system/hw.md#direct-driver-access-for-sysfs) is possible.
 
 You can find more about how drivers work in [this section](../services/system/hw.md#drivers).
+
+Direct communication with component hardwares is made through [system calls](syscalls.md#0x62-device_interrupt).
+
+The [`sys::hw`](../services/system/hw.md) service is considered as a driver for all devices.
 
 ## Kernel communication
 

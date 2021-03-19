@@ -50,7 +50,7 @@ Each process has a set of _attributes_ which contains critical informations on i
 
 The drivable devices attribute contains the list of all devices' [KDI](hardware.md#kernel-device-identifier) the current process can drive.
 
-The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an [AMS](memory.md#abstract-memory-segments) from it using the [`DEVICE_AMS`](syscalls.md#0x34-device_ams) syscall, as well as using DMA-related instructions in the CPU.
+The goal of this attribute is to determine if the process is allowed to map a device's memory by creating an [AMS](memory.md#abstract-memory-segments) from it using the [`DEVICE_AMS`](syscalls.md#0x63-device_ams) syscall, as well as using DMA-related instructions in the CPU.
 
 This attribute is managed by the [`sys::hw`](../services/system/hw.md) service and can only be updated by it.
 

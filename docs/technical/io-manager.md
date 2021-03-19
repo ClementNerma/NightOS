@@ -9,9 +9,9 @@ It is concretely represented by the [`sys::hw`](../specs/services/system/hw.md) 
 
 ## Hardware access
 
-When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired component.
+When a process tries to access the hardware, it must go through Ion, which will allow it or not to interact with the desired device.
 
-[System services](services.md) such as [`sys::fs`](../specs/services/system/fs.md) or [`sys::net`](../specs/services/system/net.md) use Ion to deal with the related hardware components.
+[System services](services.md) such as [`sys::fs`](../specs/services/system/fs.md) or [`sys::net`](../specs/services/system/net.md) use Ion to deal with the related hardware devices.
 
 # Agnosticity
 

@@ -14,20 +14,20 @@ This document describes how the kernel interacts with hardware.
 
 ## Hardware detection
 
-Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional components afterwards.
+Devices are detected during the boot process and then periodically after startup. This allows to hotplug some additional devices afterwards.
 
-As all components do not use the same connection protocols, the detection process depends on the connection:
+As all devices do not use the same connection protocols, the detection process depends on the connection:
 
-* PCI-Express components are detected through their Configuration Space
-* IDE/SATA components are detected through the IDE/SATA controller
-* USB components are enumerated through the USB protocol stack
+* PCI-Express devices are detected through their Configuration Space
+* IDE/SATA devices are detected through the IDE/SATA controller
+* USB devices are enumerated through the USB protocol stack
 
-Some components may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.
+Some devices may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.
 
 ## Connection interface identifier
 
-The *connection interface identifier* (CII) is a 4-byte number describing what a component is connected to:
-
+The *connection interface identifier* (CII) is a 4-byte number describing what a device is connected to:
+hardw
 - Connection type (1 byte):
   - `0x01`: PCI-Express
   - `0x02`: IDE
@@ -42,13 +42,13 @@ For instance, the seventh USB port on the second bus will have the `0x05010006` 
 
 ## Connection-specific device descriptor
 
-All hardware components (devices) expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the _connection-specific device descriptor_ (CSDD).
+All hardware devices expose a normalized identifier whose format depends on the connection type (PCI-Express, SATA, ...). This identifier is called the _connection-specific device descriptor_ (CSDD).
 
 Its size can vary up to 256 bytes.
 
 ## Kernel device identifier
 
-The _kernel device identifier_ is an 8-byte identifier computed from the [CII](#connection-interface-identifier) and the [CSDD](#connection-specific-device-descriptor). It is unique across all components, consistent across reboots, and identical from one computer to another for the same device. It is only meant for internal use by the [`sys::hw`](../services/system/hw.md) service, which generates an [UDI](../services/system/hw.md#unique-device-identifier) for external use.
+The _kernel device identifier_ is an 8-byte identifier computed from the [CII](#connection-interface-identifier) and the [CSDD](#connection-specific-device-descriptor). It is unique across all devices, consistent across reboots, and identical from one computer to another for the same device. It is only meant for internal use by the [`sys::hw`](../services/system/hw.md) service, which generates an [UDI](../services/system/hw.md#unique-device-identifier) for external use.
 
 ## Raw device descriptor
 
@@ -85,10 +85,10 @@ They communicate with external processes through the [`sys::hw`](../services/sys
 
 You can find more about how drivers work in [this section](../services/system/hw.md#drivers).
 
-Direct communication with component hardwares is made through [system calls](syscalls.md#0x62-device_interrupt).
+Direct communication with device hardwares is made through [system calls](syscalls.md#0x62-device_interrupt).
 
 The [`sys::hw`](../services/system/hw.md) service is considered as a driver for all devices.
 
 ## Kernel communication
 
-The kernel does not identify components, as this task is relegated to the [`sys::hw`](../services/system/hw.md) service. In order to communicate with hardware components, only the [CII](#connection-interface-identifier) is provided.
+The kernel does not identify devices, as this task is relegated to the [`sys::hw`](../services/system/hw.md) service. In order to communicate with hardware devices, only the [CII](#connection-interface-identifier) is provided.

@@ -6,7 +6,7 @@ The `sys::fs` service is in charge of operations related to the [filesystems](..
 
 ### Operations and latency
 
-A single filesystem operation request from a client process up to the hardware component traverses:
+A single filesystem operation request from a client process up to the hardware device traverses:
 
 * Client
 * `sys::fs` service

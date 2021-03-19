@@ -6,7 +6,7 @@ A filesystem is tied to only one partition, and each partition has a filesystem.
 
 Most [methods](#methods) and [notifications](#notifications) of filesystems interfaces are also available in the [`sys::fs`](../system/fs.md) service, with first perform permissions checking and determines the device and location to perform the operation on. It also leverages many more powerful features such as items watching, and features that are our of the scope of a filesystem interface such as partitions management.
 
-As an application can only expose one single filesystem interface service, the said service will handle all of the hardware components driven by the said process. This is why the the [SOR](#storage-operating-range) of the target partition and filesystem is provided for each request.
+As an application can only expose one single filesystem interface service, the said service will handle all of the hardware devices driven by the said process. This is why the the [SOR](#storage-operating-range) of the target partition and filesystem is provided for each request.
 
 ## Nomenclature
 

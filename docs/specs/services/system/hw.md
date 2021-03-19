@@ -41,7 +41,7 @@ Hardware detection is handled by [the kernel itself](../../kernel/hardware.md#ha
 
 ## Unique device identifier
 
-Each device gets a _unique device identifier_ (UDI) encoded on 8 bytes, which identifies a unique hardware component. It is unique across components and consistent across reboots. Unlike the [KDI](../../kernel/hardware.md#kernel-device-identifier), the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.
+Each device gets a _unique device identifier_ (UDI) encoded on 8 bytes, which identifies a unique hardware device. It is unique across devices and consistent across reboots. Unlike the [KDI](../../kernel/hardware.md#kernel-device-identifier), the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.
 
 The identification mechanism depends on the connection type and is yet to be specified.
 
@@ -145,14 +145,14 @@ You can see the complete list of methods and notifications for each type of driv
 
 ### Driver selection
 
-A driver is selected for a specific hardware component if it matches any of the following criterias, in decreasing importance order:
+A driver is selected for a specific hardware device if it matches any of the following criterias, in decreasing importance order:
 
-* The user selected this driver for this specific hardware component ;
-* The user selected this driver for this specific type of hardware components ([pattern](#patterns)) ;
-* This driver is the one with the most specific [pattern](#patterns) covering this hardware component ;
-* This driver is the only one able to drive this specific hardware component ([DTD](#device-type-descriptor))
+* The user selected this driver for this specific hardware device ;
+* The user selected this driver for this specific type of hardware devices ([pattern](#patterns)) ;
+* This driver is the one with the most specific [pattern](#patterns) covering this hardware device ;
+* This driver is the only one able to drive this specific hardware device ([DTD](#device-type-descriptor))
 
-If no criteria is matched, the driver isn't selected to drive the given hardware component.
+If no criteria is matched, the driver isn't selected to drive the given hardware device.
 
 ### A note on performances
 
@@ -166,7 +166,7 @@ All operations related to storage devices are handled by the [`sys::fs`](fs.md) 
 
 ### Direct hardware access for [`sys::fs`](fs.md)
 
-In case a specific storage device doesn't require a [dedicated driver](../drivers/storage.md), the `sys::fs` service can directly access the said hardware component.
+In case a specific storage device doesn't require a [dedicated driver](../drivers/storage.md), the `sys::fs` service can directly access the said hardware device.
 
 ## Methods
 

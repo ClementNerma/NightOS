@@ -282,22 +282,22 @@ If no handler is registered for this signal, it will kill the process when recei
 
 ### `0xD4` DEVICE_CHANGED
 
-Sent to the [`sys::hw`](../services/system/hw.md) service only, when a hardware component is plugged, unplugged, or when its [raw device descriptor (RDD)](hardware.md#raw-device-descriptor) changes.
+Sent to the [`sys::hw`](../services/system/hw.md) service only, when a hardware device is plugged, unplugged, or when its [raw device descriptor (RDD)](hardware.md#raw-device-descriptor) changes.
 
 The [KDI](hardware.md#kernel-device-identifier) is guaranteed to remain the same for each individual devices.
 
 **Datafield:**
 
 - Event code (1 byte):
-  - `0x01`: a component was connected on this port
-  - `0x02`: the connected component was disconnected from this port
-  - `0x03`: the component connected to this port changed its [RDD](hardware.md#raw-device-descriptor)
+  - `0x01`: a device was connected on this port
+  - `0x02`: the connected device was disconnected from this port
+  - `0x03`: the device connected to this port changed its [RDD](hardware.md#raw-device-descriptor)
 - [RDD](hardware.md#raw-device-descriptor)
 
 
 ### `0xD4` DEVICE_INTERRUPT
 
-Sent to the [`sys::hw`](../services/system/hw.md) service only, when a hardware component raises a CPU interruption.
+Sent to the [`sys::hw`](../services/system/hw.md) service only, when a hardware device raises a CPU interruption.
 
 **Datafield:**
 

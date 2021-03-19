@@ -18,7 +18,7 @@ An application can expose four types of service:
 - A _main service_, which is used as the default one
 - _Scoped services_, which are used as interfaces for conventional tasks between applications which are not specific to the current one
 - _Integration services_, which are used to interact with the system in specific ways (see [the complete list](services/integration/README.md))
-- _Driver services_, which are used to interact with hardware components through the [`sys::hw`](services/system/hw.md) service.
+- _Driver services_, which are used to interact with hardware devices through the [`sys::hw`](services/system/hw.md) service.
 
 A scope's name is made of up to 8 extended ASCII characters.
 

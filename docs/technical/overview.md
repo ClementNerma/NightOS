@@ -38,7 +38,7 @@ Capabitilies can be granted through [permissions](../features/permissions.md) ([
 
 Hardware access is performed through two layers:
 
-* First, the kernel [detects and enumerate (specs)](../specs/kernel/hardware.md) hardware components
+* First, the kernel [detects and enumerate (specs)](../specs/kernel/hardware.md) hardware devices
 * Then, hardware is accessed through the [hardware service (specs)](../specs/services/system/hw.md)
 
 ## Hardware drivers
@@ -47,7 +47,7 @@ Unlike most operating systems, hardware drivers are simple applications with no 
 
 Any application can register itself as [a driver (specs)](../specs/services/system/hw.md#drivers) using the [hardware service (specs)](../specs/services/system/hw.md).
 
-The relevant driver for each hardware component is selected using [various criterias (specs)](../specs/services/system/hw.md#driver-selection).
+The relevant driver for each hardware device is selected using [various criterias (specs)](../specs/services/system/hw.md#driver-selection).
 
 ## Hardware access performances
 

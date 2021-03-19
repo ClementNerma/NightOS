@@ -2,7 +2,7 @@
 
 Storage driver services handle storage devices. They are used to perform basic I/O operations.
 
-As an application can only expose one single storage driver service, the said service will handle all of the hardware components driven by the said process. This is why the the [UDI](../system/hw.md#unique-device-identifier) of the target device is provided for each request.
+As an application can only expose one single storage driver service, the said service will handle all of the hardware devices it drives. This is why the the [UDI](../system/hw.md#unique-device-identifier) of the target device is provided for each request.
 
 ## Methods
 

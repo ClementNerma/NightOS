@@ -180,7 +180,7 @@
 <li>Hardware storage device</li>
 </ul>
 <p>The response then goes up through all layers. Note that in all cases, the <a href="hw.html"><code>sys::hw</code></a> don't need to be contacted, thanks to <a href="hw.html#direct-driver-access-for-sysfs">direct driver access</a>.</p>
-<p>In the best scenario, which is for <a href="#list-of-natively-supported-filesystems">natively supported filesystems</a> on storage devices that don't require a <a href="../drivers/storage.html">dedicated driver</a>, <a href="hw.html#direct-hardware-access-for-sysfs">direct hardware access</a> is possible, reducing the traversal to:</p>
+<p>In the best scenario, which is for <a href="#list-of-natively-supported-filesystems">natively supported filesystems</a> on storage devices that don't require a <a href="../drivers/storage.html">dedicated driver</a>, <a href="hw.html#direct-storage-access-for-sysfs">direct storage access</a> is possible, reducing the traversal to:</p>
 <ul>
 <li>Client</li>
 <li><code>sys::fs</code> service</li>

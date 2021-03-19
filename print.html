@@ -756,8 +756,8 @@ By default, installation is allowed but sends a notification to the parent user 
 </ul>
 <p>Although this process can seem a bit long, CPU interruptions and <a href="technical/../specs/services.html#connections">forced threading (specs)</a> makes the theoric latency low enough for intensive use.</p>
 <h2 id="filesystem-access"><a class="header" href="#filesystem-access">Filesystem access</a></h2>
-<p>Accessing and managing filesystems and their content is faster than common hardware operations thanks to <a href="technical/../specs/services/system/hw.html#direct-hardware-access-for-sysfs">direct hardware access</a> (and <a href="technical/../specs/services/system/hw.html#direct-driver-access-for-sysfs">direct driver access</a> for worst-case scenarios).</p>
-<p>The typical process involves communication with the <a href="technical/../specs/services/system/fs.html">filesystem service</a> which <a href="technical/../specs/services/system/hw.html#direct-hardware-access-for-sysfs">communicates directly</a> with storage devices.</p>
+<p>Accessing and managing filesystems and their content is faster than common hardware operations thanks to <a href="technical/../specs/services/system/hw.html#direct-storage-access-for-sysfs">direct storage access</a> (and <a href="technical/../specs/services/system/hw.html#direct-driver-access-for-sysfs">direct driver access</a> for worst-case scenarios).</p>
+<p>The typical process involves communication with the <a href="technical/../specs/services/system/fs.html">filesystem service</a> which <a href="technical/../specs/services/system/hw.html#direct-storage-access-for-sysfs">communicates directly</a> with storage devices.</p>
 <p>For filesystems that <a href="technical/../specs/services/system/fs.html#list-of-natively-supported-filesystems">aren't natively supported</a>, a <a href="technical/../specs/services/integration/filesystem-interfaces.html">filesystem interface</a> is involved to communicate with the <a href="technical/../specs/services/drivers/storage.html">storage driver service</a>, which then communicates with the <a href="technical/../specs/services/system/hw.html">hardware service</a>. This involves a higher latency, but is only limited to edge cases and remains in an acceptable range of performances.</p>
 <h2 id="data-loss-prevention"><a class="header" href="#data-loss-prevention">Data loss prevention</a></h2>
 <p>Data loss prevention works essentially through <a href="technical/../features/crash-saves.html">crash saves</a>, which ensure applications' state is regularly saved on disk in case something goes wrong.</p>
@@ -6874,7 +6874,7 @@ If the number of items to get is larger than the number of entries in the direct
 <li>Hardware storage device</li>
 </ul>
 <p>The response then goes up through all layers. Note that in all cases, the <a href="specs/services/system/hw.html"><code>sys::hw</code></a> don't need to be contacted, thanks to <a href="specs/services/system/hw.html#direct-driver-access-for-sysfs">direct driver access</a>.</p>
-<p>In the best scenario, which is for <a href="specs/services/system/fs.html#list-of-natively-supported-filesystems">natively supported filesystems</a> on storage devices that don't require a <a href="specs/services/system/../drivers/storage.html">dedicated driver</a>, <a href="specs/services/system/hw.html#direct-hardware-access-for-sysfs">direct hardware access</a> is possible, reducing the traversal to:</p>
+<p>In the best scenario, which is for <a href="specs/services/system/fs.html#list-of-natively-supported-filesystems">natively supported filesystems</a> on storage devices that don't require a <a href="specs/services/system/../drivers/storage.html">dedicated driver</a>, <a href="specs/services/system/hw.html#direct-storage-access-for-sysfs">direct storage access</a> is possible, reducing the traversal to:</p>
 <ul>
 <li>Client</li>
 <li><code>sys::fs</code> service</li>
@@ -7721,7 +7721,7 @@ If the number of items to get is larger than the number of entries in the direct
 <li><a href="specs/services/system/hw.html#latency-reduction-for-storage-devices">Latency reduction for storage devices</a>
 <ul>
 <li><a href="specs/services/system/hw.html#direct-driver-access-for-sysfs">Direct driver access for <code>sys::fs</code></a></li>
-<li><a href="specs/services/system/hw.html#direct-hardware-access-for-sysfs">Direct hardware access for <code>sys::fs</code></a></li>
+<li><a href="specs/services/system/hw.html#direct-storage-access-for-sysfs">Direct storage access for <code>sys::fs</code></a></li>
 </ul>
 </li>
 <li><a href="specs/services/system/hw.html#methods">Methods</a>
@@ -7844,7 +7844,7 @@ If the number of items to get is larger than the number of entries in the direct
 <h2 id="latency-reduction-for-storage-devices"><a class="header" href="#latency-reduction-for-storage-devices">Latency reduction for storage devices</a></h2>
 <h3 id="direct-driver-access-for-a-hrefspecsservicessystemfshtmlsysfsa"><a class="header" href="#direct-driver-access-for-a-hrefspecsservicessystemfshtmlsysfsa">Direct driver access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
 <p>All operations related to storage devices are handled by the <a href="specs/services/system/fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all <a href="specs/services/system/../drivers/storage.html">storage driver services</a>.</p>
-<h3 id="direct-hardware-access-for-a-hrefspecsservicessystemfshtmlsysfsa"><a class="header" href="#direct-hardware-access-for-a-hrefspecsservicessystemfshtmlsysfsa">Direct hardware access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
+<h3 id="direct-storage-access-for-a-hrefspecsservicessystemfshtmlsysfsa"><a class="header" href="#direct-storage-access-for-a-hrefspecsservicessystemfshtmlsysfsa">Direct storage access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
 <p>In case a specific storage device doesn't require a <a href="specs/services/system/../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware device.</p>
 <h2 id="methods-8"><a class="header" href="#methods-8">Methods</a></h2>
 <h3 id="0x01-enum_devices"><a class="header" href="#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></h3>

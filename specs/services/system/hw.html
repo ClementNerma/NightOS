@@ -194,7 +194,7 @@
 <li><a href="#latency-reduction-for-storage-devices">Latency reduction for storage devices</a>
 <ul>
 <li><a href="#direct-driver-access-for-sysfs">Direct driver access for <code>sys::fs</code></a></li>
-<li><a href="#direct-hardware-access-for-sysfs">Direct hardware access for <code>sys::fs</code></a></li>
+<li><a href="#direct-storage-access-for-sysfs">Direct storage access for <code>sys::fs</code></a></li>
 </ul>
 </li>
 <li><a href="#methods">Methods</a>
@@ -317,7 +317,7 @@
 <h2 id="latency-reduction-for-storage-devices"><a class="header" href="#latency-reduction-for-storage-devices">Latency reduction for storage devices</a></h2>
 <h3 id="direct-driver-access-for-a-hreffshtmlsysfsa"><a class="header" href="#direct-driver-access-for-a-hreffshtmlsysfsa">Direct driver access for <a href="fs.html"><code>sys::fs</code></a></a></h3>
 <p>All operations related to storage devices are handled by the <a href="fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all <a href="../drivers/storage.html">storage driver services</a>.</p>
-<h3 id="direct-hardware-access-for-a-hreffshtmlsysfsa"><a class="header" href="#direct-hardware-access-for-a-hreffshtmlsysfsa">Direct hardware access for <a href="fs.html"><code>sys::fs</code></a></a></h3>
+<h3 id="direct-storage-access-for-a-hreffshtmlsysfsa"><a class="header" href="#direct-storage-access-for-a-hreffshtmlsysfsa">Direct storage access for <a href="fs.html"><code>sys::fs</code></a></a></h3>
 <p>In case a specific storage device doesn't require a <a href="../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware device.</p>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
 <h3 id="0x01-enum_devices"><a class="header" href="#0x01-enum_devices"><code>0x01</code> ENUM_DEVICES</a></h3>

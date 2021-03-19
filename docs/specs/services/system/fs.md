@@ -645,6 +645,54 @@ Read a [symbolic link](../../filesystem.md#symbolic-links)'s target.
 - `0x31`: Provided path was not found
 - `0x32`: Symbolic link is cyclic
 
+### `0xA0` WATCH_ITEM
+
+Watch an item for changes on its metadata or content. Any change will trigger a [`ITEM_CHANGED`](#0xa0-item_changed) notification.
+
+**Required permission:**
+
+- `fs.items.metadata`
+
+**Arguments:**
+
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [Path](../integration/filesystem-interfaces.md#filesystem-paths) to watch
+- Generated watch identifier (8 bytes)
+
+**Errors:**
+
+- `0x30`: Provided path was not found
+
+### `0xA1` WATCH_DIR_CONTENT
+
+Watch a directory's content for changes on its metadata or content. Any change will trigger a [`DIR_CONTENT_CHANGED`](#0xa1-dir_content_changed) notification.
+
+**Required permission:**
+
+- `fs.items.readdir`
+
+**Arguments:**
+
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [Path](../integration/filesystem-interfaces.md#filesystem-paths) to watch
+- Generated watch identifier (8 bytes)
+
+**Errors:**
+
+- `0x30`: Provided path was not found
+
+### `0xA2` UNWATCH
+
+Stop watching a content watched with [`WATCH_ITEM`](#0xa0-watch_item) or [`WATCH_DIR_CONTENT`](#0xa1-watch_dir_content).
+
+**Arguments:**
+
+- Generated watch identifier (8 bytes)
+
+**Errors:**
+
+- `0x30`: Provided watch identifier was not found
+
 ### `0xF0` FORMAT_ASYNC
 
 Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, 
@@ -706,6 +754,26 @@ Sent to a client after an asynchronous file writing requested using the [`WRITE_
     - `0x31`: Maximum individual file size exceeded
     - `0x32`: Filesystem's free space exceeded
     - `0x40`: Unspecified filesystem error
+
+### `0xA0` ITEM_CHANGED
+
+Notification sent to clients watching an item through the [`WATCH_ITEM`](#0xa0-watch_item) method.
+
+**Datafield:**
+
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
+- Event code (1 byte):
+  - `0x01`: item's metadata changed
+  - `0x02`: item was moved
+  - `0x03`: item was deleted
+
+### `0xA1` DIR_CONTENT_CHANGED
+
+- `0x10`: the watched directory's content changed, followed by:
+    - Affected element's [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+    - Affected element's [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
+    - Affected element's event code (1 byte) - same as the parent code, plus `0x20` if the element was created
 
 ### `0xF0` FORMATTED
 

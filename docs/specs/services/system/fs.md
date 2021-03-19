@@ -693,6 +693,57 @@ Stop watching a content watched with [`WATCH_ITEM`](#0xa0-watch_item) or [`WATCH
 
 - `0x30`: Provided watch identifier was not found
 
+### `0xAA` LOCK_ITEM
+
+Lock an item to prevent modifications and/or complete access from other processes.
+
+No-modification mode will prevent changing the item's data and metadata (except timestamps).
+
+[`ITEM_CHANGED`](#0xa0-item_changed) and [`DIR_CONTENT_CHANGED`](#0xa1-dir_content_changed) notifications won't be triggered for the locking process.
+
+**Required permissions:**
+
+- `fs.items.lock`: lock a single item
+- `fs.items.lock.full`: lock a single item with exclusive mode
+- `fs.dir.lock`: lock a full directory's content
+- `fs.dir.lock.full`: lock a full directory's content with exclusive mode
+
+**Arguments:**
+
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- Item's [path](../integration/filesystem-interfaces.md#filesystem-paths)
+- Recursive mode (1 byte): `0x01` if the item is a directory and all its content should be locked, `0x00` otherwise
+- Exclusive move (1 byte): `0x01` to prevent access from other processes, `0x00` otherwise
+
+**Return value:**
+
+- Generated lock identifier (8 bytes)
+
+**Errors:**
+
+- `0x11`: Invalid recursive mode
+- `0x12`: Invalid exclude mode
+- `0x30`: Provided FSID was not found
+- `0x31`: Provided item was not found
+- `0x32`: A lock is already in place on this item
+- `0x33`: Cannot lock in recursive mode as the item is not a directory
+
+### `0xAB` UNLOCK_ITEM
+
+Unlock an item locked with [`LOCK_ITEM`](#0xaa-lock_item).
+
+**Arguments:**
+
+- Lock identifier (8 bytes)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x30`: Unknown lock identifier
+
 ### `0xF0` FORMAT_ASYNC
 
 Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, 
@@ -767,6 +818,8 @@ Notification sent to clients watching an item through the [`WATCH_ITEM`](#0xa0-w
   - `0x01`: item's metadata changed
   - `0x02`: item was moved
   - `0x03`: item was deleted
+  - `0x04`: item was locked (only for the parent directory if case of a recursive lock)
+  - `0x05`: item was unlocked (only for the parent directory if case of a recursive lock)
 
 ### `0xA1` DIR_CONTENT_CHANGED
 

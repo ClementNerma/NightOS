@@ -815,7 +815,7 @@ Notification sent to clients watching an item through the [`WATCH_ITEM`](#0xa0-w
 - [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 - [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
 - Event code (1 byte):
-  - `0x01`: item's metadata changed
+  - `0x01`: item's metadata changed (timestamps excluded)
   - `0x02`: item was moved
   - `0x03`: item was deleted
   - `0x04`: item was locked (only for the parent directory if case of a recursive lock)

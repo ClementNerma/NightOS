@@ -16,7 +16,7 @@ A single filesystem operation request from a client process up to the hardware d
 
 The response then goes up through all layers. Note that in all cases, the [`sys::hw`](hw.md) don't need to be contacted, thanks to [direct driver access](hw.md#direct-driver-access-for-sysfs).
 
-In the best scenario, which is for [natively supported filesystems](#list-of-natively-supported-filesystems) on storage devices that don't require a [dedicated driver](../drivers/storage.md), [direct hardware access](hw.md#direct-hardware-access-for-sysfs) is possible, reducing the traversal to:
+In the best scenario, which is for [natively supported filesystems](#list-of-natively-supported-filesystems) on storage devices that don't require a [dedicated driver](../drivers/storage.md), [direct storage access](hw.md#direct-storage-access-for-sysfs) is possible, reducing the traversal to:
 
 * Client
 * `sys::fs` service

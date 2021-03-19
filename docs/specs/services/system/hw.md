@@ -17,7 +17,7 @@ It is known as the [I/O manager](../../../technical/io-manager.md), or Ion.
   - [A note on performances](#a-note-on-performances)
 - [Latency reduction for storage devices](#latency-reduction-for-storage-devices)
   - [Direct driver access for `sys::fs`](#direct-driver-access-for-sysfs)
-  - [Direct hardware access for `sys::fs`](#direct-hardware-access-for-sysfs)
+  - [Direct storage access for `sys::fs`](#direct-storage-access-for-sysfs)
 - [Methods](#methods)
   - [`0x01` ENUM_DEVICES](#0x01-enum_devices)
   - [`0x02` SUBSCRIBE_DEVICES](#0x02-subscribe_devices)
@@ -164,7 +164,7 @@ Although hardware devices' interrupts are notified to the driver through [servic
 
 All operations related to storage devices are handled by the [`sys::fs`](fs.md) service. To avoid the cost of using `sys::hw` as a relay for hardware operations, the `sys::fs` service is allowed to directly communicate with all [storage driver services](../drivers/storage.md).
 
-### Direct hardware access for [`sys::fs`](fs.md)
+### Direct storage access for [`sys::fs`](fs.md)
 
 In case a specific storage device doesn't require a [dedicated driver](../drivers/storage.md), the `sys::fs` service can directly access the said hardware device.
 

@@ -65,9 +65,9 @@ Although this process can seem a bit long, CPU interruptions and [forced threadi
 
 ## Filesystem access
 
-Accessing and managing filesystems and their content is faster than common hardware operations thanks to [direct hardware access](../specs/services/system/hw.md#direct-hardware-access-for-sysfs) (and [direct driver access](../specs/services/system/hw.md#direct-driver-access-for-sysfs) for worst-case scenarios).
+Accessing and managing filesystems and their content is faster than common hardware operations thanks to [direct storage access](../specs/services/system/hw.md#direct-storage-access-for-sysfs) (and [direct driver access](../specs/services/system/hw.md#direct-driver-access-for-sysfs) for worst-case scenarios).
 
-The typical process involves communication with the [filesystem service](../specs/services/system/fs.md) which [communicates directly](../specs/services/system/hw.md#direct-hardware-access-for-sysfs) with storage devices.
+The typical process involves communication with the [filesystem service](../specs/services/system/fs.md) which [communicates directly](../specs/services/system/hw.md#direct-storage-access-for-sysfs) with storage devices.
 
 For filesystems that [aren't natively supported](../specs/services/system/fs.md#list-of-natively-supported-filesystems), a [filesystem interface](../specs/services/integration/filesystem-interfaces.md) is involved to communicate with the [storage driver service](../specs/services/drivers/storage.md), which then communicates with the [hardware service](../specs/services/system/hw.md). This involves a higher latency, but is only limited to edge cases and remains in an acceptable range of performances.
 

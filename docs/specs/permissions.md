@@ -39,7 +39,7 @@ Some permissions require the user to have specific privileges, such as being [ad
 
 Below is the exhaustive list of all available permissions, with their category between parenthesis (e.g. `(P)` for _privacy_, etc.).
 
-Note that many permissions have a _scope_, indicating what they can or cannot do. When an application requests a single permission, it must provide a scope that will eventually be shown to the end user.
+Most permissions require to have an associated _scope_, indicating the resources they can access. Each scope is a path or filesystem with a set of permissions that apply on this specific path/filesystem.
 
 ### Devices
 

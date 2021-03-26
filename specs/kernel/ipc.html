@@ -235,9 +235,11 @@ Their length is determined when the message is sent which, coupled to <a href="#
 <p>Service sockets are based on <em>exchanges</em>, which are sets of messages. An exchange is described by a structure made of the following:</p>
 <ul>
 <li>Identifier (8 bytes)</li>
-<li>Method or notification code (1 byte)</li>
-<li>Status: is the exchange closed, and if so what is the error code (on 2 bytes)</li>
-<li>Message counter for this exchange (4 bytes)</li>
+<li>Method or notification code (2 bytes)</li>
+<li>Status (1 byte): <code>0x01</code> if the exchange must be closed, <code>0x00</code> otherwise</li>
+<li>Error code (on 2 bytes) - only valid if the exchange is closed by this message</li>
+<li>Message counter for this exchange (2 bytes)</li>
+<li>Message's length (2 bytes)</li>
 </ul>
 <p>This structure is handled by the kernel itself and can be managed using a set of system calls and signals.</p>
 <p>Messages can then be sent using the <a href="syscalls.html#0x27-send_sock_msg"><code>SEND_SOCK_MSG</code></a> syscall and received through the <a href="signals.html#0x27-recv_sock_msg"><code>RECV_SOCK_MSG</code></a> signal. To be read, the receiver process must use the <a href="syscalls.html#0x28-read_sock_msg"><code>READ_SOCK_MSG</code></a> syscall.</p>

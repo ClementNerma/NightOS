@@ -169,6 +169,59 @@
                     <main>
                         <h1 id="sysfs-service"><a class="header" href="#sysfs-service"><code>sys::fs</code> service</a></h1>
 <p>The <code>sys::fs</code> service is in charge of operations related to the <a href="../../filesystem.html">filesystems</a>.</p>
+<ul>
+<li><a href="#behaviour">Behaviour</a>
+<ul>
+<li><a href="#operations-and-latency">Operations and latency</a></li>
+<li><a href="#list-of-natively-supported-filesystems">List of natively supported filesystems</a></li>
+<li><a href="#extending-supported-filesystems">Extending supported filesystems</a></li>
+<li><a href="#filesystems-detection">Filesystems detection</a></li>
+</ul>
+</li>
+<li><a href="#methods">Methods</a>
+<ul>
+<li><a href="#0x0001-is_fs_mounted"><code>0x0001</code> IS_FS_MOUNTED</a></li>
+<li><a href="#0x0002-enum_fs"><code>0x0002</code> ENUM_FS</a></li>
+<li><a href="#0x0003-fs_metadata"><code>0x0003</code> FS_METADATA</a></li>
+<li><a href="#0x0004-fs_mount"><code>0x0004</code> FS_MOUNT</a></li>
+<li><a href="#0x0005-fs_unmount"><code>0x0005</code> FS_UNMOUNT</a></li>
+<li><a href="#0x0006-fs_watch"><code>0x0006</code> FS_WATCH</a></li>
+<li><a href="#0x0007-fs_unwatch"><code>0x0007</code> FS_UNWATCH</a></li>
+<li><a href="#0x1000-item_exists"><code>0x1000</code> ITEM_EXISTS</a></li>
+<li><a href="#0x1001-feid_to_split"><code>0x1001</code> FEID_TO_SPLIT</a></li>
+<li><a href="#0x1002-item_metadata"><code>0x1002</code> ITEM_METADATA</a></li>
+<li><a href="#0x1003-rename_item"><code>0x1003</code> RENAME_ITEM</a></li>
+<li><a href="#0x1004-move_item"><code>0x1004</code> MOVE_ITEM</a></li>
+<li><a href="#0x1005-delete_item"><code>0x1005</code> DELETE_ITEM</a></li>
+<li><a href="#0x2000-create_directory"><code>0x2000</code> CREATE_DIRECTORY</a></li>
+<li><a href="#0x2001-read_directory"><code>0x2001</code> READ_DIRECTORY</a></li>
+<li><a href="#0x3000-create_file"><code>0x3000</code> CREATE_FILE</a></li>
+<li><a href="#0x3001-read_file_sync"><code>0x3001</code> READ_FILE_SYNC</a></li>
+<li><a href="#0x3002-read_file_async"><code>0x3002</code> READ_FILE_ASYNC</a></li>
+<li><a href="#0x3003-write_file_sync"><code>0x3003</code> WRITE_FILE_SYNC</a></li>
+<li><a href="#0x3004-write_file_async"><code>0x3004</code> WRITE_FILE_ASYNC</a></li>
+<li><a href="#0x4000-create_symlink"><code>0x4000</code> CREATE_SYMLINK</a></li>
+<li><a href="#0x4001-update_symlink"><code>0x4001</code> UPDATE_SYMLINK</a></li>
+<li><a href="#0x4002-read_symlink"><code>0x4002</code> READ_SYMLINK</a></li>
+<li><a href="#0xa000-watch_item"><code>0xA000</code> WATCH_ITEM</a></li>
+<li><a href="#0xa001-watch_dir_content"><code>0xA001</code> WATCH_DIR_CONTENT</a></li>
+<li><a href="#0xa002-unwatch"><code>0xA002</code> UNWATCH</a></li>
+<li><a href="#0xaa00-lock_item"><code>0xAA00</code> LOCK_ITEM</a></li>
+<li><a href="#0xaa01-unlock_item"><code>0xAA01</code> UNLOCK_ITEM</a></li>
+<li><a href="#0xf000-format_async"><code>0xF000</code> FORMAT_ASYNC</a></li>
+</ul>
+</li>
+<li><a href="#notifications">Notifications</a>
+<ul>
+<li><a href="#0x0006-fs_changed"><code>0x0006</code> FS_CHANGED</a></li>
+<li><a href="#0x3002-file_read"><code>0x3002</code> FILE_READ</a></li>
+<li><a href="#0x3004-file_written"><code>0x3004</code> FILE_WRITTEN</a></li>
+<li><a href="#0xa000-item_changed"><code>0xA000</code> ITEM_CHANGED</a></li>
+<li><a href="#0xa001-dir_content_changed"><code>0xA001</code> DIR_CONTENT_CHANGED</a></li>
+<li><a href="#0xf000-formatted"><code>0xF000</code> FORMATTED</a></li>
+</ul>
+</li>
+</ul>
 <h2 id="behaviour"><a class="header" href="#behaviour">Behaviour</a></h2>
 <h3 id="operations-and-latency"><a class="header" href="#operations-and-latency">Operations and latency</a></h3>
 <p>A single filesystem operation request from a client process up to the hardware device traverses:</p>
@@ -213,10 +266,10 @@
 </ul>
 <h3 id="filesystems-detection"><a class="header" href="#filesystems-detection">Filesystems detection</a></h3>
 <p>The <code>sys::fs</code> serviec is responsible for detecting filesystems. It performs this by contacting the <a href="hw.html"><code>sys::hw</code></a> service to enumerate and access the different storage devices, as well as being notified when a storage device is connected, disconnected or changes.</p>
-<p>Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is <a href="#list-of-natively-supported-filesystems">natively supported</a>), <a href="../integration/filesystem-interfaces.html">filesystem interfaces</a> are used one by one to find one that can handle the said filesystem, using their <a href="../integration/filesystem-interfaces.html#0x02-is_valid_partition"><code>IS_VALID_PARTITION</code></a> method.</p>
+<p>Filesystems are detected using a variety of methods. If all fail (which is, if the filesystem is not one that is <a href="#list-of-natively-supported-filesystems">natively supported</a>), <a href="../integration/filesystem-interfaces.html">filesystem interfaces</a> are used one by one to find one that can handle the said filesystem, using their <a href="../integration/filesystem-interfaces.html#0x0002-is_valid_partition"><code>IS_VALID_PARTITION</code></a> method.</p>
 <p>Each partition then gets an identifier, the <a href="../../filesystem.html#filesystem-unique-identifier">filesystem unique identifier (FSID)</a>, which is consistent across reboots but different between computers to avoid collection of informations from the FSID alone.</p>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
-<h3 id="0x01-is_fs_mounted"><a class="header" href="#0x01-is_fs_mounted"><code>0x01</code> IS_FS_MOUNTED</a></h3>
+<h3 id="0x0001-is_fs_mounted"><a class="header" href="#0x0001-is_fs_mounted"><code>0x0001</code> IS_FS_MOUNTED</a></h3>
 <p>Check if a given filesystem is mounted.</p>
 <p><strong>Required permission:</strong> <code>fs.filesystems.mounted</code></p>
 <p><strong>Arguments:</strong></p>
@@ -229,7 +282,7 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3 id="0x02-enum_fs"><a class="header" href="#0x02-enum_fs"><code>0x02</code> ENUM_FS</a></h3>
+<h3 id="0x0002-enum_fs"><a class="header" href="#0x0002-enum_fs"><code>0x0002</code> ENUM_FS</a></h3>
 <p>Enumerate all available filesystems.</p>
 <p><strong>Required permission:</strong> <code>fs.filesystems.list</code></p>
 <p><strong>Arguments:</strong></p>
@@ -240,7 +293,7 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3 id="0x03-fs_metadata"><a class="header" href="#0x03-fs_metadata"><code>0x03</code> FS_METADATA</a></h3>
+<h3 id="0x0003-fs_metadata"><a class="header" href="#0x0003-fs_metadata"><code>0x0003</code> FS_METADATA</a></h3>
 <p>Get informations on a filesystem.</p>
 <p><strong>Required permission:</strong> <code>fs.filesystems.metadata</code></p>
 <p><strong>Arguments:</strong></p>
@@ -256,9 +309,9 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: The requested filesystem is currently not mounted</li>
+<li><code>0x3000</code>: The requested filesystem is currently not mounted</li>
 </ul>
-<h3 id="0x04-fs_mount"><a class="header" href="#0x04-fs_mount"><code>0x04</code> FS_MOUNT</a></h3>
+<h3 id="0x0004-fs_mount"><a class="header" href="#0x0004-fs_mount"><code>0x0004</code> FS_MOUNT</a></h3>
 <p>Mount an existing filesystem. If no mount path is provided, the filesystem will be mounted under the <code>/mnt</code> directory.</p>
 <p>New filesystems are <a href="#filesystems-detection">automatically detected</a> when storage devices are connected.</p>
 <p><strong>Required permission:</strong> <code>fs.filesystems.mount</code></p>
@@ -271,10 +324,10 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Unknown <a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
-<li><code>0x31</code>: This filesystem is already mounted</li>
+<li><code>0x3000</code>: Unknown <a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><code>0x3001</code>: This filesystem is already mounted</li>
 </ul>
-<h3 id="0x05-fs_unmount"><a class="header" href="#0x05-fs_unmount"><code>0x05</code> FS_UNMOUNT</a></h3>
+<h3 id="0x0005-fs_unmount"><a class="header" href="#0x0005-fs_unmount"><code>0x0005</code> FS_UNMOUNT</a></h3>
 <p>Unmount a mounted filesystem.</p>
 <p><strong>Required permission</strong> <code>fs.filesystems.unmount</code></p>
 <p><strong>Arguments:</strong></p>
@@ -285,11 +338,11 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Unknown <a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
-<li><code>0x31</code>: This filesystem is current not mounted</li>
+<li><code>0x3000</code>: Unknown <a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><code>0x3001</code>: This filesystem is current not mounted</li>
 </ul>
-<h3 id="0x07-fs_watch"><a class="header" href="#0x07-fs_watch"><code>0x07</code> FS_WATCH</a></h3>
-<p>Subscribe to <a href="#0x07-fs_changed"><code>FS_CHANGED</code></a> notifications when a filesystem is mounted or unmounted.</p>
+<h3 id="0x0006-fs_watch"><a class="header" href="#0x0006-fs_watch"><code>0x0006</code> FS_WATCH</a></h3>
+<p>Subscribe to <a href="#0x0006-fs_changed"><code>FS_CHANGED</code></a> notifications when a filesystem is mounted or unmounted.</p>
 <p><strong>Required permission:</strong> <code>fs.filesystems.watch</code></p>
 <p><strong>Arguments:</strong></p>
 <p><em>None</em></p>
@@ -297,8 +350,8 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3 id="0x08-fs_unwatch"><a class="header" href="#0x08-fs_unwatch"><code>0x08</code> FS_UNWATCH</a></h3>
-<p>Unsubscribe from <a href="#0x07-fs_watch"><code>FS_WATCH</code></a>.</p>
+<h3 id="0x0007-fs_unwatch"><a class="header" href="#0x0007-fs_unwatch"><code>0x0007</code> FS_UNWATCH</a></h3>
+<p>Unsubscribe from <a href="#0x0006-fs_watch"><code>FS_WATCH</code></a>.</p>
 <p><strong>Required permission:</strong> <em>None</em></p>
 <p><strong>Arguments:</strong></p>
 <p><em>None</em></p>
@@ -306,7 +359,7 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3 id="0x10-item_exists"><a class="header" href="#0x10-item_exists"><code>0x10</code> ITEM_EXISTS</a></h3>
+<h3 id="0x1000-item_exists"><a class="header" href="#0x1000-item_exists"><code>0x1000</code> ITEM_EXISTS</a></h3>
 <p>Check if a given item exists.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -325,10 +378,10 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
 </ul>
-<h3 id="0x11-feid_to_split"><a class="header" href="#0x11-feid_to_split"><code>0x11</code> FEID_TO_SPLIT</a></h3>
+<h3 id="0x1001-feid_to_split"><a class="header" href="#0x1001-feid_to_split"><code>0x1001</code> FEID_TO_SPLIT</a></h3>
 <p>Convert a <a href="../../filesystem.html#element-unique-identifier">FEID</a> to the corresponding <a href="../integration/filesystem-interfaces.html#split-paths">split path</a>.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -345,11 +398,11 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: The provided FEID was not found in the filesystem</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: The provided FEID was not found in the filesystem</li>
 </ul>
-<h3 id="0x12-item_metadata"><a class="header" href="#0x12-item_metadata"><code>0x12</code> ITEM_METADATA</a></h3>
+<h3 id="0x1002-item_metadata"><a class="header" href="#0x1002-item_metadata"><code>0x1002</code> ITEM_METADATA</a></h3>
 <p>Get the metadata of a given item.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -366,11 +419,11 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: The provided path was not found</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: The provided path was not found</li>
 </ul>
-<h3 id="0x13-rename_item"><a class="header" href="#0x13-rename_item"><code>0x13</code> RENAME_ITEM</a></h3>
+<h3 id="0x1003-rename_item"><a class="header" href="#0x1003-rename_item"><code>0x1003</code> RENAME_ITEM</a></h3>
 <p>Rename an existing item.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -384,12 +437,12 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: The provided path was not foud</li>
+<li><code>0x3000</code>: Invalid filename provided</li>
+<li><code>0x3001</code>: Invalid FSID provided</li>
+<li><code>0x3002</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3003</code>: The provided path was not foud</li>
 </ul>
-<h3 id="0x14-move_item"><a class="header" href="#0x14-move_item"><code>0x14</code> MOVE_ITEM</a></h3>
+<h3 id="0x1004-move_item"><a class="header" href="#0x1004-move_item"><code>0x1004</code> MOVE_ITEM</a></h3>
 <p>Move an existing item.</p>
 <ul>
 <li><code>fs.items.move</code></li>
@@ -403,18 +456,18 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: The provided path was not found</li>
-<li><code>0x32</code>: Target directory was not found</li>
-<li><code>0x33</code>: Target directory's maximum capacity has been reached</li>
-<li><code>0x34</code>: Maximum nested items number has been reached</li>
-<li><code>0x35</code>: Maximum path length has been reached</li>
-<li><code>0x36</code>: Item cannot be moved for unspecified reasons</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x1000</code>: Invalid filename provided</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: The provided path was not found</li>
+<li><code>0x3003</code>: Target directory was not found</li>
+<li><code>0x4000</code>: Target directory's maximum capacity has been reached</li>
+<li><code>0x4001</code>: Maximum nested items number has been reached</li>
+<li><code>0x4002</code>: Maximum path length has been reached</li>
+<li><code>0x4003</code>: Item cannot be moved for unspecified reasons</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x15-delete_item"><a class="header" href="#0x15-delete_item"><code>0x15</code> DELETE_ITEM</a></h3>
+<h3 id="0x1005-delete_item"><a class="header" href="#0x1005-delete_item"><code>0x1005</code> DELETE_ITEM</a></h3>
 <p>Delete an item.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -431,13 +484,13 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Item was not found</li>
-<li><code>0x32</code>: Cannot remove a non-empty directory</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: Item was not found</li>
+<li><code>0x3003</code>: Cannot remove a non-empty directory</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x20-create_directory"><a class="header" href="#0x20-create_directory"><code>0x20</code> CREATE_DIRECTORY</a></h3>
+<h3 id="0x2000-create_directory"><a class="header" href="#0x2000-create_directory"><code>0x2000</code> CREATE_DIRECTORY</a></h3>
 <p>Create a directory.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -453,16 +506,16 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Parent directory was not found</li>
-<li><code>0x32</code>: Directory's maximum capacity has been reached</li>
-<li><code>0x33</code>: Maximum nested items number has been reached</li>
-<li><code>0x34</code>: Maximum path length has been reached</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x1000</code>: Invalid filename provided</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: Parent directory was not found</li>
+<li><code>0x4000</code>: Directory's maximum capacity has been reached</li>
+<li><code>0x4001</code>: Maximum nested items number has been reached</li>
+<li><code>0x4002</code>: Maximum path length has been reached</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x21-read_directory"><a class="header" href="#0x21-read_directory"><code>0x21</code> READ_DIRECTORY</a></h3>
+<h3 id="0x2001-read_directory"><a class="header" href="#0x2001-read_directory"><code>0x2001</code> READ_DIRECTORY</a></h3>
 <p>List all entries in a directory.</p>
 <p>If the provided offset is larger than the number of entries in the directory, all remaining items must be returned.<br />
 If the number of items to get is larger than the number of entries in the directory less the start offset, all remaining items must be returned.</p>
@@ -486,12 +539,12 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Directory was not found</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: Directory was not found</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x30-create_file"><a class="header" href="#0x30-create_file"><code>0x30</code> CREATE_FILE</a></h3>
+<h3 id="0x3000-create_file"><a class="header" href="#0x3000-create_file"><code>0x3000</code> CREATE_FILE</a></h3>
 <p>Create a file.</p>
 <p>The reserved size is only provided if the filesystem <a href="../integration/filesystem-interfaces.html#capabilities-list">supports it</a>.</p>
 <p><strong>Required permissions:</strong></p>
@@ -511,20 +564,19 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Parent directory was not found</li>
-<li><code>0x32</code>: Directory's maximum capacity has been reached</li>
-<li><code>0x33</code>: Maximum nested items number has been reached</li>
-<li><code>0x34</code>: Maximum path length has been reached</li>
-<li><code>0x35</code>: Storage's capacity exceeded</li>
-<li><code>0x36</code>: Maximum individual file size exceeded</li>
-<li><code>0x37</code>: Filesystem's free space exceeded</li>
-<li><code>0x38</code>: Unspecified filesystem error</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid filename provided</li>
+<li><code>0x3001</code>: Invalid FSID provided</li>
+<li><code>0x3002</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3003</code>: Parent directory was not found</li>
+<li><code>0x4000</code>: Directory's maximum capacity has been reached</li>
+<li><code>0x4001</code>: Maximum nested items number has been reached</li>
+<li><code>0x4002</code>: Maximum path length has been reached</li>
+<li><code>0x4003</code>: Storage's capacity exceeded</li>
+<li><code>0x4004</code>: Maximum individual file size exceeded</li>
+<li><code>0x4005</code>: Filesystem's free space exceeded</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x31-read_file_sync"><a class="header" href="#0x31-read_file_sync"><code>0x31</code> READ_FILE_SYNC</a></h3>
+<h3 id="0x3001-read_file_sync"><a class="header" href="#0x3001-read_file_sync"><code>0x3001</code> READ_FILE_SYNC</a></h3>
 <p>Read a file synchronously.</p>
 <p>If no read length is provided, the whole file must be read.</p>
 <p><strong>Required permissions:</strong></p>
@@ -545,15 +597,15 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Start offset is out-of-range</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: Start offset is out-of-range</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x32-read_file_async"><a class="header" href="#0x32-read_file_async"><code>0x32</code> READ_FILE_ASYNC</a></h3>
+<h3 id="0x3002-read_file_async"><a class="header" href="#0x3002-read_file_async"><code>0x3002</code> READ_FILE_ASYNC</a></h3>
 <p>Asynchronously read a file to a writable <a href="../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
 <p>THe number of bytes to read is always provided to ensure it does not accidentally exceed the AMS's size.</p>
-<p>When the read is complete, a <a href="#0x32-file_read"><code>FILE_READ</code></a> notification must be sent to the client.</p>
+<p>When the read is complete, a <a href="#0x3002-file_read"><code>FILE_READ</code></a> notification must be sent to the client.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
 <li><code>fs.items.read</code></li>
@@ -572,12 +624,12 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Invalid AMS ID provided</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: Invalid AMS ID provided</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x33-write_file_sync"><a class="header" href="#0x33-write_file_sync"><code>0x33</code> WRITE_FILE_SYNC</a></h3>
+<h3 id="0x3003-write_file_sync"><a class="header" href="#0x3003-write_file_sync"><code>0x3003</code> WRITE_FILE_SYNC</a></h3>
 <p>Synchronously write a buffer to a file.</p>
 <p>If no offset address is provided, the file's content must be completely overriden with the provided buffer.</p>
 <p><strong>Required permissions:</strong></p>
@@ -596,18 +648,18 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Offset is out-of-range</li>
-<li><code>0x32</code>: Storage's capacity exceeded</li>
-<li><code>0x33</code>: Maximum individual file size exceeded</li>
-<li><code>0x34</code>: Filesystem's free space exceeded</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: Offset is out-of-range</li>
+<li><code>0x4000</code>: Storage's capacity exceeded</li>
+<li><code>0x4001</code>: Maximum individual file size exceeded</li>
+<li><code>0x4002</code>: Filesystem's free space exceeded</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x34-write_file_async"><a class="header" href="#0x34-write_file_async"><code>0x34</code> WRITE_FILE_ASYNC</a></h3>
+<h3 id="0x3004-write_file_async"><a class="header" href="#0x3004-write_file_async"><code>0x3004</code> WRITE_FILE_ASYNC</a></h3>
 <p>Asynchronously write a readable <a href="../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> to a file.</p>
 <p>If no offset address is provided, the file's content must be completely overriden with the provided buffer.</p>
-<p>When the writing is complete, a <a href="#0x34-file_written"><code>FILE_WRITTEN</code></a> notification must be sent to the client. The notification <strong>must not</strong> be sent before the current method returned successfully.</p>
+<p>When the writing is complete, a <a href="#0x3004-file_written"><code>FILE_WRITTEN</code></a> notification must be sent to the client. The notification <strong>must not</strong> be sent before the current method returned successfully.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
 <li><code>fs.items.write</code></li>
@@ -626,12 +678,12 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Invalid AMS ID provided</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: Invalid AMS ID provided</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x40-create_symlink"><a class="header" href="#0x40-create_symlink"><code>0x40</code> CREATE_SYMLINK</a></h3>
+<h3 id="0x4000-create_symlink"><a class="header" href="#0x4000-create_symlink"><code>0x4000</code> CREATE_SYMLINK</a></h3>
 <p>Create a <a href="../../filesystem.html#symbolic-links">symbolic link</a>.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -649,18 +701,19 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Parent directory was not found</li>
-<li><code>0x32</code>: Directory's maximum capacity has been reached</li>
-<li><code>0x33</code>: Maximum nested items number has been reached</li>
-<li><code>0x34</code>: Maximum path length has been reached</li>
-<li><code>0x35</code>: Storage's capacity exceeded</li>
-<li><code>0x36</code>: Cannot create symbolic links to cross-filesystem items</li>
-<li><code>0x37</code>: Cannot create symbolic links to non-existing items</li>
+<li><code>0x3000</code>: Invalid filename provided</li>
+<li><code>0x3001</code>: Invalid FSID provided</li>
+<li><code>0x3002</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3003</code>: Parent directory was not found</li>
+<li><code>0x3004</code>: Cannot create symbolic links to cross-filesystem items</li>
+<li><code>0x3005</code>: Cannot create symbolic links to non-existing items</li>
+<li><code>0x4000</code>: Directory's maximum capacity has been reached</li>
+<li><code>0x4001</code>: Maximum nested items number has been reached</li>
+<li><code>0x4002</code>: Maximum path length has been reached</li>
+<li><code>0x4003</code>: Storage's capacity exceeded</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x41-update_symlink"><a class="header" href="#0x41-update_symlink"><code>0x41</code> UPDATE_SYMLINK</a></h3>
+<h3 id="0x4001-update_symlink"><a class="header" href="#0x4001-update_symlink"><code>0x4001</code> UPDATE_SYMLINK</a></h3>
 <p>Create a <a href="../../filesystem.html#symbolic-links">symbolic link</a>.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -677,13 +730,14 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Provided path was not found</li>
-<li><code>0x32</code>: Cannot crate symbolic links to cross-filesystem items</li>
-<li><code>0x33</code>: Cannot crate symbolic links to non-existing items</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: Provided path was not found</li>
+<li><code>0x3003</code>: Cannot crate symbolic links to cross-filesystem items</li>
+<li><code>0x3004</code>: Cannot crate symbolic links to non-existing items</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x42-read_symlink"><a class="header" href="#0x42-read_symlink"><code>0x42</code> READ_SYMLINK</a></h3>
+<h3 id="0x4002-read_symlink"><a class="header" href="#0x4002-read_symlink"><code>0x4002</code> READ_SYMLINK</a></h3>
 <p>Read a <a href="../../filesystem.html#symbolic-links">symbolic link</a>'s target.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -701,13 +755,13 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Provided path was not found</li>
-<li><code>0x32</code>: Symbolic link is cyclic</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
+<li><code>0x3002</code>: Provided path was not found</li>
+<li><code>0x4000</code>: Symbolic link is cyclic</li>
 </ul>
-<h3 id="0xa0-watch_item"><a class="header" href="#0xa0-watch_item"><code>0xA0</code> WATCH_ITEM</a></h3>
-<p>Watch an item for changes on its metadata or content. Any change will trigger a <a href="#0xa0-item_changed"><code>ITEM_CHANGED</code></a> notification.</p>
+<h3 id="0xa000-watch_item"><a class="header" href="#0xa000-watch_item"><code>0xA000</code> WATCH_ITEM</a></h3>
+<p>Watch an item for changes on its metadata or content. Any change will trigger a <a href="#0xa000-item_changed"><code>ITEM_CHANGED</code></a> notification.</p>
 <p><strong>Required permission:</strong></p>
 <ul>
 <li><code>fs.items.metadata</code></li>
@@ -720,10 +774,11 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Provided path was not found</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Provided path was not found</li>
 </ul>
-<h3 id="0xa1-watch_dir_content"><a class="header" href="#0xa1-watch_dir_content"><code>0xA1</code> WATCH_DIR_CONTENT</a></h3>
-<p>Watch a directory's content for changes on its metadata or content. Any change will trigger a <a href="#0xa1-dir_content_changed"><code>DIR_CONTENT_CHANGED</code></a> notification.</p>
+<h3 id="0xa001-watch_dir_content"><a class="header" href="#0xa001-watch_dir_content"><code>0xA001</code> WATCH_DIR_CONTENT</a></h3>
+<p>Watch a directory's content for changes on its metadata or content. Any change will trigger a <a href="#0xa001-dir_content_changed"><code>DIR_CONTENT_CHANGED</code></a> notification.</p>
 <p><strong>Required permission:</strong></p>
 <ul>
 <li><code>fs.dir.read</code></li>
@@ -736,22 +791,23 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Provided path was not found</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Provided path was not found</li>
 </ul>
-<h3 id="0xa2-unwatch"><a class="header" href="#0xa2-unwatch"><code>0xA2</code> UNWATCH</a></h3>
-<p>Stop watching a content watched with <a href="#0xa0-watch_item"><code>WATCH_ITEM</code></a> or <a href="#0xa1-watch_dir_content"><code>WATCH_DIR_CONTENT</code></a>.</p>
+<h3 id="0xa002-unwatch"><a class="header" href="#0xa002-unwatch"><code>0xA002</code> UNWATCH</a></h3>
+<p>Stop watching a content watched with <a href="#0xa000-watch_item"><code>WATCH_ITEM</code></a> or <a href="#0xa001-watch_dir_content"><code>WATCH_DIR_CONTENT</code></a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Generated watch identifier (8 bytes)</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Provided watch identifier was not found</li>
+<li><code>0x3000</code>: Provided watch identifier was not found</li>
 </ul>
-<h3 id="0xaa-lock_item"><a class="header" href="#0xaa-lock_item"><code>0xAA</code> LOCK_ITEM</a></h3>
+<h3 id="0xaa00-lock_item"><a class="header" href="#0xaa00-lock_item"><code>0xAA00</code> LOCK_ITEM</a></h3>
 <p>Lock an item to prevent modifications and/or complete access from other processes.</p>
 <p>No-modification mode will prevent changing the item's data and metadata (except timestamps).</p>
-<p><a href="#0xa0-item_changed"><code>ITEM_CHANGED</code></a> and <a href="#0xa1-dir_content_changed"><code>DIR_CONTENT_CHANGED</code></a> notifications won't be triggered for the locking process.</p>
+<p><a href="#0xa000-item_changed"><code>ITEM_CHANGED</code></a> and <a href="#0xa001-dir_content_changed"><code>DIR_CONTENT_CHANGED</code></a> notifications won't be triggered for the locking process.</p>
 <p><strong>Required permissions:</strong></p>
 <ul>
 <li><code>fs.items.lock</code>: lock a single item</li>
@@ -772,15 +828,15 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x11</code>: Invalid recursive mode</li>
-<li><code>0x12</code>: Invalid exclude mode</li>
-<li><code>0x30</code>: Provided FSID was not found</li>
-<li><code>0x31</code>: Provided item was not found</li>
-<li><code>0x32</code>: A lock is already in place on this item</li>
-<li><code>0x33</code>: Cannot lock in recursive mode as the item is not a directory</li>
+<li><code>0x1000</code>: Invalid recursive mode</li>
+<li><code>0x1001</code>: Invalid exclude mode</li>
+<li><code>0x3000</code>: Provided FSID was not found</li>
+<li><code>0x3001</code>: Provided item was not found</li>
+<li><code>0x3002</code>: Cannot lock in recursive mode as the item is not a directory</li>
+<li><code>0x4000</code>: A lock is already in place on this item</li>
 </ul>
-<h3 id="0xab-unlock_item"><a class="header" href="#0xab-unlock_item"><code>0xAB</code> UNLOCK_ITEM</a></h3>
-<p>Unlock an item locked with <a href="#0xaa-lock_item"><code>LOCK_ITEM</code></a>.</p>
+<h3 id="0xaa01-unlock_item"><a class="header" href="#0xaa01-unlock_item"><code>0xAA01</code> UNLOCK_ITEM</a></h3>
+<p>Unlock an item locked with <a href="#0xaa00-lock_item"><code>LOCK_ITEM</code></a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Lock identifier (8 bytes)</li>
@@ -789,9 +845,9 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Unknown lock identifier</li>
+<li><code>0x3000</code>: Unknown lock identifier</li>
 </ul>
-<h3 id="0xf0-format_async"><a class="header" href="#0xf0-format_async"><code>0xF0</code> FORMAT_ASYNC</a></h3>
+<h3 id="0xf000-format_async"><a class="header" href="#0xf000-format_async"><code>0xF000</code> FORMAT_ASYNC</a></h3>
 <p>Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, </p>
 <p><strong>Required permissions:</strong></p>
 <ul>
@@ -808,20 +864,20 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Error codes:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid FSID provided</li>
-<li><code>0x21</code>: Requested filesystem is currently not mounted</li>
-<li><code>0x31</code>: Invalid sector size provided</li>
+<li><code>0x1000</code>: Invalid sector size provided</li>
+<li><code>0x3000</code>: Invalid FSID provided</li>
+<li><code>0x3001</code>: Requested filesystem is currently not mounted</li>
 </ul>
 <h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
-<h3 id="0x07-fs_changed"><a class="header" href="#0x07-fs_changed"><code>0x07</code> FS_CHANGED</a></h3>
-<p>Sent to a client which subscribed through <a href="#0x07-fs_watch"><code>FS_WATCH</code></a> each time a filesystem is mounted or unmounted.</p>
+<h3 id="0x0006-fs_changed"><a class="header" href="#0x0006-fs_changed"><code>0x0006</code> FS_CHANGED</a></h3>
+<p>Sent to a client which subscribed through <a href="#0x0006-fs_watch"><code>FS_WATCH</code></a> each time a filesystem is mounted or unmounted.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Mount status (1 byte): <code>0x01</code> if the filesystem was mounted, <code>0x02</code> if it was unmounted</li>
 <li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
 </ul>
-<h3 id="0x32-file_read"><a class="header" href="#0x32-file_read"><code>0x32</code> FILE_READ</a></h3>
-<p>Sent to a client after an asynchronous file reading requested using the <a href="#0x32-read_file_async"><code>READ_FILE_ASYNC</code></a> method completed.</p>
+<h3 id="0x3002-file_read"><a class="header" href="#0x3002-file_read"><code>0x3002</code> FILE_READ</a></h3>
+<p>Sent to a client after an asynchronous file reading requested using the <a href="#0x3002-read_file_async"><code>READ_FILE_ASYNC</code></a> method completed.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Task identifier (8 bytes)</li>
@@ -837,8 +893,8 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<h3 id="0x34-file_written"><a class="header" href="#0x34-file_written"><code>0x34</code> FILE_WRITTEN</a></h3>
-<p>Sent to a client after an asynchronous file writing requested using the <a href="#0x34-write_file_async"><code>WRITE_FILE_ASYNC</code></a> method completed.</p>
+<h3 id="0x3004-file_written"><a class="header" href="#0x3004-file_written"><code>0x3004</code> FILE_WRITTEN</a></h3>
+<p>Sent to a client after an asynchronous file writing requested using the <a href="#0x3004-write_file_async"><code>WRITE_FILE_ASYNC</code></a> method completed.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Task identifier (8 bytes)</li>
@@ -856,8 +912,8 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<h3 id="0xa0-item_changed"><a class="header" href="#0xa0-item_changed"><code>0xA0</code> ITEM_CHANGED</a></h3>
-<p>Notification sent to clients watching an item through the <a href="#0xa0-watch_item"><code>WATCH_ITEM</code></a> method.</p>
+<h3 id="0xa000-item_changed"><a class="header" href="#0xa000-item_changed"><code>0xA000</code> ITEM_CHANGED</a></h3>
+<p>Notification sent to clients watching an item through the <a href="#0xa000-watch_item"><code>WATCH_ITEM</code></a> method.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
@@ -872,18 +928,18 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<h3 id="0xa1-dir_content_changed"><a class="header" href="#0xa1-dir_content_changed"><code>0xA1</code> DIR_CONTENT_CHANGED</a></h3>
+<h3 id="0xa001-dir_content_changed"><a class="header" href="#0xa001-dir_content_changed"><code>0xA001</code> DIR_CONTENT_CHANGED</a></h3>
 <ul>
 <li><code>0x10</code>: the watched directory's content changed, followed by:
 <ul>
 <li>Affected element's <a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
 <li>Affected element's <a href="../../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
-<li>Affected element's event code (1 byte) - same for <a href="#0xa0-item_changed"><code>ITEM_CHANGED</code></a>, plus <code>0xA0</code> if the element was just created</li>
+<li>Affected element's event code (1 byte) - same for <a href="#0xa000-item_changed"><code>ITEM_CHANGED</code></a>, plus <code>0xA0</code> if the element was just created</li>
 </ul>
 </li>
 </ul>
-<h3 id="0xf0-formatted"><a class="header" href="#0xf0-formatted"><code>0xF0</code> FORMATTED</a></h3>
-<p>Sent to a client after an formatting requested using the <a href="#0xf0-format_async"><code>FORMAT_ASYC</code></a> method completed.</p>
+<h3 id="0xf000-formatted"><a class="header" href="#0xf000-formatted"><code>0xF000</code> FORMATTED</a></h3>
+<p>Sent to a client after an formatting requested using the <a href="#0xf000-format_async"><code>FORMAT_ASYC</code></a> method completed.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Task identifier (8 bytes)</li>

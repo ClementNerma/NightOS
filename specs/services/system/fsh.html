@@ -172,16 +172,16 @@
 <ul>
 <li><a href="#methods">Methods</a>
 <ul>
-<li><a href="#0x01-register_opener"><code>0x01</code> REGISTER_OPENER</a></li>
-<li><a href="#0x02-unregister_opener"><code>0x02</code> UNREGISTER_OPENER</a></li>
-<li><a href="#0x03-list_openers"><code>0x03</code> LIST_OPENERS</a></li>
-<li><a href="#0x10-check_item_thumbnail_cache"><code>0x10</code> CHECK_ITEM_THUMBNAIL_CACHE</a></li>
-<li><a href="#0x11-cache_item_thumbnail"><code>0x11</code> CACHE_ITEM_THUMBNAIL</a></li>
+<li><a href="#0x0001-register_opener"><code>0x0001</code> REGISTER_OPENER</a></li>
+<li><a href="#0x0002-unregister_opener"><code>0x0002</code> UNREGISTER_OPENER</a></li>
+<li><a href="#0x0003-list_openers"><code>0x0003</code> LIST_OPENERS</a></li>
+<li><a href="#0x1000-check_item_thumbnail_cache"><code>0x1000</code> CHECK_ITEM_THUMBNAIL_CACHE</a></li>
+<li><a href="#0x1001-cache_item_thumbnail"><code>0x1001</code> CACHE_ITEM_THUMBNAIL</a></li>
 </ul>
 </li>
 </ul>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
-<h3 id="0x01-register_opener"><a class="header" href="#0x01-register_opener"><code>0x01</code> REGISTER_OPENER</a></h3>
+<h3 id="0x0001-register_opener"><a class="header" href="#0x0001-register_opener"><code>0x0001</code> REGISTER_OPENER</a></h3>
 <p>Register an application as an opener for a list of file types.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -191,12 +191,12 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Client does not expose a <a href="../../services/integration/file-openers.html">file opening service</a></li>
-<li><code>0x30</code>: One of the provided extensions is empty</li>
-<li><code>0x31</code>: At least one of the provided extensions is reserved to the system</li>
-<li><code>0x32</code>: Client already handles at least one of the provided extensions</li>
+<li><code>0x1000</code>: One of the provided extensions is empty</li>
+<li><code>0x1001</code>: At least one of the provided extensions is reserved to the system</li>
+<li><code>0x3000</code>: Client does not expose a <a href="../../services/integration/file-openers.html">file opening service</a></li>
+<li><code>0x3001</code>: Client already handles at least one of the provided extensions</li>
 </ul>
-<h3 id="0x02-unregister_opener"><a class="header" href="#0x02-unregister_opener"><code>0x02</code> UNREGISTER_OPENER</a></h3>
+<h3 id="0x0002-unregister_opener"><a class="header" href="#0x0002-unregister_opener"><code>0x0002</code> UNREGISTER_OPENER</a></h3>
 <p>Unregister an application as an opener for a list of file types.</p>
 <p><strong>Argument:</strong></p>
 <ul>
@@ -206,11 +206,11 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Client does not expose a <a href="../../services/integration/file-openers.html">file opening service</a></li>
-<li><code>0x30</code>: One of the provided extensions is empty</li>
-<li><code>0x31</code>: Client does not currently handle at least one of the provided extensions</li>
+<li><code>0x1001</code>: One of the provided extensions is empty</li>
+<li><code>0x3000</code>: Client does not expose a <a href="../../services/integration/file-openers.html">file opening service</a></li>
+<li><code>0x3001</code>: Client does not currently handle at least one of the provided extensions</li>
 </ul>
-<h3 id="0x03-list_openers"><a class="header" href="#0x03-list_openers"><code>0x03</code> LIST_OPENERS</a></h3>
+<h3 id="0x0003-list_openers"><a class="header" href="#0x0003-list_openers"><code>0x0003</code> LIST_OPENERS</a></h3>
 <p>List the <a href="../../services/integration/file-openers.html">file openers</a> associated to a specific type of items.</p>
 <p>The list is not ordered, it's up to the <a href="../../services/integration/file-managers.html">file manager</a> to determine the display order if multiple openers are found.</p>
 <p><strong>Arguments:</strong></p>
@@ -223,9 +223,9 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Client does not expose a <a href="../../services/integration/file-openers.html">file opening service</a></li>
+<li><code>0x3000</code>: Client does not expose a <a href="../../services/integration/file-openers.html">file opening service</a></li>
 </ul>
-<h3 id="0x10-check_item_thumbnail_cache"><a class="header" href="#0x10-check_item_thumbnail_cache"><code>0x10</code> CHECK_ITEM_THUMBNAIL_CACHE</a></h3>
+<h3 id="0x1000-check_item_thumbnail_cache"><a class="header" href="#0x1000-check_item_thumbnail_cache"><code>0x1000</code> CHECK_ITEM_THUMBNAIL_CACHE</a></h3>
 <p>Check if a cached thumbnail exists for a given filesystem item to determine if another should be generated or not.</p>
 <p>The cache policy is determined using internal criterias.</p>
 <p><strong>Arguments:</strong></p>
@@ -244,11 +244,11 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Client is not a <a href="../../services/integration/file-managers.html">file manager service</a></li>
-<li><code>0x30</code>: Unknown FSID</li>
-<li><code>0x31</code>: Unknown FEID</li>
+<li><code>0x3000</code>: Client is not a <a href="../../services/integration/file-managers.html">file manager service</a></li>
+<li><code>0x3001</code>: Unknown FSID</li>
+<li><code>0x3002</code>: Unknown FEID</li>
 </ul>
-<h3 id="0x11-cache_item_thumbnail"><a class="header" href="#0x11-cache_item_thumbnail"><code>0x11</code> CACHE_ITEM_THUMBNAIL</a></h3>
+<h3 id="0x1001-cache_item_thumbnail"><a class="header" href="#0x1001-cache_item_thumbnail"><code>0x1001</code> CACHE_ITEM_THUMBNAIL</a></h3>
 <p>Write a filesystem item's thumbnail in the cache.</p>
 <p>If a thumbnail already exists in cache, it will be replaced by the new one.</p>
 <p>The cache policy is determined using internal criterias.</p>
@@ -264,10 +264,10 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid bitmap data</li>
-<li><code>0x20</code>: Client is not a <a href="../../services/integration/file-managers.html">file manager service</a></li>
-<li><code>0x30</code>: Unknown FSID</li>
-<li><code>0x31</code>: Unknown FEID</li>
+<li><code>0x1000</code>: Invalid bitmap data</li>
+<li><code>0x3000</code>: Client is not a <a href="../../services/integration/file-managers.html">file manager service</a></li>
+<li><code>0x3001</code>: Unknown FSID</li>
+<li><code>0x3002</code>: Unknown FEID</li>
 </ul>
 
                     </main>

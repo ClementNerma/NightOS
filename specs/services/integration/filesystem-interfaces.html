@@ -172,6 +172,52 @@
 <p>A filesystem is tied to only one partition, and each partition has a filesystem. A storage space is made, unless empty, of a partitions table which lists all the available partitions.</p>
 <p>Most <a href="#methods">methods</a> and <a href="#notifications">notifications</a> of filesystems interfaces are also available in the <a href="../system/fs.html"><code>sys::fs</code></a> service, with first perform permissions checking and determines the device and location to perform the operation on. It also leverages many more powerful features such as items watching, and features that are our of the scope of a filesystem interface such as partitions management.</p>
 <p>As an application can only expose one single filesystem interface service, the said service will handle all of the hardware devices driven by the said process. This is why the the <a href="#storage-operating-range">SOR</a> of the target partition and filesystem is provided for each request.</p>
+<ul>
+<li><a href="#nomenclature">Nomenclature</a>
+<ul>
+<li><a href="#storage-operating-range">Storage operating range</a></li>
+<li><a href="#filesystem-paths">Filesystem paths</a></li>
+<li><a href="#split-paths">Split paths</a></li>
+<li><a href="#filenames">Filenames</a></li>
+<li><a href="#capabilities-list">Capabilities list</a></li>
+<li><a href="#filesystem-metadata">Filesystem metadata</a></li>
+<li><a href="#item-type-byte">Item type byte</a></li>
+<li><a href="#item-flags">Item flags</a></li>
+<li><a href="#item-metadata">Item metadata</a></li>
+</ul>
+</li>
+<li><a href="#methods">Methods</a>
+<ul>
+<li><a href="#0x0001-handled_fs_list"><code>0x0001</code> HANDLED_FS_LIST</a></li>
+<li><a href="#0x0002-is_valid_partition"><code>0x0002</code> IS_VALID_PARTITION</a></li>
+<li><a href="#0x0003-fs_metadata"><code>0x0003</code> FS_METADATA</a></li>
+<li><a href="#0x1000-item_exists"><code>0x1000</code> ITEM_EXISTS</a></li>
+<li><a href="#0x1001-feid_to_split"><code>0x1001</code> FEID_TO_SPLIT</a></li>
+<li><a href="#0x1002-item_metadata"><code>0x1002</code> ITEM_METADATA</a></li>
+<li><a href="#0x1003-rename_item"><code>0x1003</code> RENAME_ITEM</a></li>
+<li><a href="#0x1004-move_item"><code>0x1004</code> MOVE_ITEM</a></li>
+<li><a href="#0x1005-delete_item"><code>0x1005</code> DELETE_ITEM</a></li>
+<li><a href="#0x2000-create_directory"><code>0x2000</code> CREATE_DIRECTORY</a></li>
+<li><a href="#0x2001-read_directory"><code>0x2001</code> READ_DIRECTORY</a></li>
+<li><a href="#0x3000-create_file"><code>0x3000</code> CREATE_FILE</a></li>
+<li><a href="#0x3001-read_file_sync"><code>0x3001</code> READ_FILE_SYNC</a></li>
+<li><a href="#0x3002-read_file_async"><code>0x3002</code> READ_FILE_ASYNC</a></li>
+<li><a href="#0x3003-write_file_sync"><code>0x3003</code> WRITE_FILE_SYNC</a></li>
+<li><a href="#0x3004-write_file_async"><code>0x3004</code> WRITE_FILE_ASYNC</a></li>
+<li><a href="#0x4000-create_symlink"><code>0x4000</code> CREATE_SYMLINK</a></li>
+<li><a href="#0x4001-update_symlink"><code>0x4001</code> UPDATE_SYMLINK</a></li>
+<li><a href="#0x4002-read_symlink"><code>0x4002</code> READ_SYMLINK</a></li>
+<li><a href="#0xf000-format_async"><code>0xF000</code> FORMAT_ASYNC</a></li>
+</ul>
+</li>
+<li><a href="#notifications">Notifications</a>
+<ul>
+<li><a href="#0x3002-file_read"><code>0x3002</code> FILE_READ</a></li>
+<li><a href="#0x3004-file_written"><code>0x3004</code> FILE_WRITTEN</a></li>
+<li><a href="#0xf000-formatted"><code>0xF000</code> FORMATTED</a></li>
+</ul>
+</li>
+</ul>
 <h2 id="nomenclature"><a class="header" href="#nomenclature">Nomenclature</a></h2>
 <h3 id="storage-operating-range"><a class="header" href="#storage-operating-range">Storage operating range</a></h3>
 <p>The <em>storage operating range</em> (SOR) is a 40-byte information transmitted to all operation methods of the filesystem interface to indicate where the requested operation should be performed and on which devices.</p>
@@ -180,11 +226,11 @@
 <li>The device's <a href="../system/hw.html#unique-device-identifier">UDI</a> (8 bytes)</li>
 <li>The partition's first byte address on the device (8 bytes)</li>
 <li>The partition's last byte address on the device (8 bytes)</li>
-<li><a href="../system/hw.html#0xd0-authorize_fs_interface">Authorization token</a> (8 bytes)</li>
+<li><a href="../system/hw.html#0xd000-authorize_fs_interface">Authorization token</a> (8 bytes)</li>
 <li>The filesystem's <a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
 </ul>
 <p>The FSID is only useful to identify partitions more easily, and to inform clients in <a href="#notifications">notifications</a>.</p>
-<p>All SOR sent to the interface service are guaranteed to follow this specification, but may be invalid in case of a bad timing (e.g. authorization is <a href="../system/hw.html#0xd1-unauthorize_fs_interface">revoked</a> just before a request is performed).</p>
+<p>All SOR sent to the interface service are guaranteed to follow this specification, but may be invalid in case of a bad timing (e.g. authorization is <a href="../system/hw.html#0xd001-unauthorize_fs_interface">revoked</a> just before a request is performed).</p>
 <h3 id="filesystem-paths"><a class="header" href="#filesystem-paths">Filesystem paths</a></h3>
 <p>Filesystem paths are used to refer to specific filesystem elements and are encoded as either a <code>0x01</code> byte followed by a <a href="../../filesystem.html#element-unique-identifier">FEID</a>, or a <code>0x02</code> byte followed by a <a href="#split-paths">split path</a>.</p>
 <p>All filesystem paths sent to the interface service are guaranteed to follow this specification.</p>
@@ -268,7 +314,7 @@
 <li>Item's <a href="#filenames">filename</a></li>
 </ul>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
-<h3 id="0x01-handled_fs_list"><a class="header" href="#0x01-handled_fs_list"><code>0x01</code> HANDLED_FS_LIST</a></h3>
+<h3 id="0x0001-handled_fs_list"><a class="header" href="#0x0001-handled_fs_list"><code>0x0001</code> HANDLED_FS_LIST</a></h3>
 <p>Get informations about each filesystem handled by the current interface.</p>
 <p><strong>Arguments:</strong></p>
 <p><em>None</em></p>
@@ -278,7 +324,7 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <p><em>none</em></p>
-<h3 id="0x02-is_valid_partition"><a class="header" href="#0x02-is_valid_partition"><code>0x02</code> IS_VALID_PARTITION</a></h3>
+<h3 id="0x0002-is_valid_partition"><a class="header" href="#0x0002-is_valid_partition"><code>0x0002</code> IS_VALID_PARTITION</a></h3>
 <p>Check if a given partition is of the type of filesystem handled by the current interface.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -291,7 +337,7 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <p><em>None</em></p>
-<h3 id="0x03-fs_metadata"><a class="header" href="#0x03-fs_metadata"><code>0x03</code> FS_METADATA</a></h3>
+<h3 id="0x0003-fs_metadata"><a class="header" href="#0x0003-fs_metadata"><code>0x0003</code> FS_METADATA</a></h3>
 <p>Get metadata on a given filesystem.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -303,9 +349,9 @@
 </ul>
 <p><strong>Error codes:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
 </ul>
-<h3 id="0x10-item_exists"><a class="header" href="#0x10-item_exists"><code>0x10</code> ITEM_EXISTS</a></h3>
+<h3 id="0x1000-item_exists"><a class="header" href="#0x1000-item_exists"><code>0x1000</code> ITEM_EXISTS</a></h3>
 <p>Check if a given item exists.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -319,9 +365,9 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
 </ul>
-<h3 id="0x11-feid_to_split"><a class="header" href="#0x11-feid_to_split"><code>0x11</code> FEID_TO_SPLIT</a></h3>
+<h3 id="0x1001-feid_to_split"><a class="header" href="#0x1001-feid_to_split"><code>0x1001</code> FEID_TO_SPLIT</a></h3>
 <p>Convert a <a href="../../filesystem.html#element-unique-identifier">FEID</a> to the corresponding <a href="#split-paths">split path</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -334,10 +380,10 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: The provided FEID was not found in the filesystem</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: The provided FEID was not found in the filesystem</li>
 </ul>
-<h3 id="0x12-item_metadata"><a class="header" href="#0x12-item_metadata"><code>0x12</code> ITEM_METADATA</a></h3>
+<h3 id="0x1002-item_metadata"><a class="header" href="#0x1002-item_metadata"><code>0x1002</code> ITEM_METADATA</a></h3>
 <p>Get the metadata of a given item.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -350,10 +396,10 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: The provided path was not found</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: The provided path was not found</li>
 </ul>
-<h3 id="0x13-rename_item"><a class="header" href="#0x13-rename_item"><code>0x13</code> RENAME_ITEM</a></h3>
+<h3 id="0x1003-rename_item"><a class="header" href="#0x1003-rename_item"><code>0x1003</code> RENAME_ITEM</a></h3>
 <p>Rename an existing item.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -363,11 +409,11 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: The provided path was not foud</li>
+<li><code>0x3000</code>: Invalid filename provided</li>
+<li><code>0x3001</code>: Invalid SOR provided</li>
+<li><code>0x3002</code>: The provided path was not foud</li>
 </ul>
-<h3 id="0x14-move_item"><a class="header" href="#0x14-move_item"><code>0x14</code> MOVE_ITEM</a></h3>
+<h3 id="0x1004-move_item"><a class="header" href="#0x1004-move_item"><code>0x1004</code> MOVE_ITEM</a></h3>
 <p>Move an existing item.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -378,17 +424,17 @@
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: The provided path was not found</li>
-<li><code>0x32</code>: Target directory was not found</li>
-<li><code>0x33</code>: Target directory's maximum capacity has been reached</li>
-<li><code>0x34</code>: Maximum nested items number has been reached</li>
-<li><code>0x35</code>: Maximum path length has been reached</li>
-<li><code>0x36</code>: Item cannot be moved for unspecified reasons</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x1000</code>: Invalid filename provided</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: The provided path was not found</li>
+<li><code>0x3002</code>: Target directory was not found</li>
+<li><code>0x4000</code>: Target directory's maximum capacity has been reached</li>
+<li><code>0x4001</code>: Maximum nested items number has been reached</li>
+<li><code>0x4002</code>: Maximum path length has been reached</li>
+<li><code>0x4003</code>: Item cannot be moved for unspecified reasons</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x15-delete_item"><a class="header" href="#0x15-delete_item"><code>0x15</code> DELETE_ITEM</a></h3>
+<h3 id="0x1005-delete_item"><a class="header" href="#0x1005-delete_item"><code>0x1005</code> DELETE_ITEM</a></h3>
 <p>Delete an item.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -399,12 +445,12 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Item was not found</li>
-<li><code>0x32</code>: Cannot remove a non-empty directory</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Item was not found</li>
+<li><code>0x3002</code>: Cannot remove a non-empty directory</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x20-create_directory"><a class="header" href="#0x20-create_directory"><code>0x20</code> CREATE_DIRECTORY</a></h3>
+<h3 id="0x2000-create_directory"><a class="header" href="#0x2000-create_directory"><code>0x2000</code> CREATE_DIRECTORY</a></h3>
 <p>Create a directory.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -416,15 +462,15 @@
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Parent directory was not found</li>
-<li><code>0x32</code>: Directory's maximum capacity has been reached</li>
-<li><code>0x33</code>: Maximum nested items number has been reached</li>
-<li><code>0x34</code>: Maximum path length has been reached</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x1000</code>: Invalid filename provided</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Parent directory was not found</li>
+<li><code>0x4000</code>: Directory's maximum capacity has been reached</li>
+<li><code>0x4001</code>: Maximum nested items number has been reached</li>
+<li><code>0x4002</code>: Maximum path length has been reached</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x21-read_directory"><a class="header" href="#0x21-read_directory"><code>0x21</code> READ_DIRECTORY</a></h3>
+<h3 id="0x2001-read_directory"><a class="header" href="#0x2001-read_directory"><code>0x2001</code> READ_DIRECTORY</a></h3>
 <p>List all entries in a directory.</p>
 <p>If the provided offset is larger than the number of entries in the directory, all remaining items must be returned.<br />
 If the number of items to get is larger than the number of entries in the directory less the start offset, all remaining items must be returned.</p>
@@ -443,11 +489,11 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Directory was not found</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Directory was not found</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x30-create_file"><a class="header" href="#0x30-create_file"><code>0x30</code> CREATE_FILE</a></h3>
+<h3 id="0x3000-create_file"><a class="header" href="#0x3000-create_file"><code>0x3000</code> CREATE_FILE</a></h3>
 <p>Create a file.</p>
 <p>The reserved size is only provided if the interface reported the filesystem as <a href="#capabilities-list">supporting this feature</a>.</p>
 <p><strong>Arguments:</strong></p>
@@ -463,19 +509,18 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Parent directory was not found</li>
-<li><code>0x32</code>: Directory's maximum capacity has been reached</li>
-<li><code>0x33</code>: Maximum nested items number has been reached</li>
-<li><code>0x34</code>: Maximum path length has been reached</li>
-<li><code>0x35</code>: Storage's capacity exceeded</li>
-<li><code>0x36</code>: Maximum individual file size exceeded</li>
-<li><code>0x37</code>: Filesystem's free space exceeded</li>
-<li><code>0x38</code>: Unspecified filesystem error</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x1000</code>: Invalid filename provided</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Parent directory was not found</li>
+<li><code>0x4000</code>: Directory's maximum capacity has been reached</li>
+<li><code>0x4001</code>: Maximum nested items number has been reached</li>
+<li><code>0x4002</code>: Maximum path length has been reached</li>
+<li><code>0x4003</code>: Storage's capacity exceeded</li>
+<li><code>0x4004</code>: Maximum individual file size exceeded</li>
+<li><code>0x4005</code>: Filesystem's free space exceeded</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x31-read_file_sync"><a class="header" href="#0x31-read_file_sync"><code>0x31</code> READ_FILE_SYNC</a></h3>
+<h3 id="0x3001-read_file_sync"><a class="header" href="#0x3001-read_file_sync"><code>0x3001</code> READ_FILE_SYNC</a></h3>
 <p>Read a file synchronously.</p>
 <p>If no read length is provided, the whole file must be read.</p>
 <p><strong>Arguments:</strong></p>
@@ -492,14 +537,14 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Start offset is out-of-range</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Start offset is out-of-range</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x32-read_file_async"><a class="header" href="#0x32-read_file_async"><code>0x32</code> READ_FILE_ASYNC</a></h3>
+<h3 id="0x3002-read_file_async"><a class="header" href="#0x3002-read_file_async"><code>0x3002</code> READ_FILE_ASYNC</a></h3>
 <p>Asynchronously read a file to a writable <a href="../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
 <p>THe number of bytes to read is always provided to ensure it does not accidentally exceed the AMS's size.</p>
-<p>When the read is complete, a <a href="#0x32-file_read"><code>FILE_READ</code></a> notification must be sent to the client.</p>
+<p>When the read is complete, a <a href="#0x3002-file_read"><code>FILE_READ</code></a> notification must be sent to the client.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li><a href="#storage-operating-range">SOR</a> (40 bytes)</li>
@@ -514,11 +559,11 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Invalid AMS ID provided</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Invalid AMS ID provided</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x33-write_file_sync"><a class="header" href="#0x33-write_file_sync"><code>0x33</code> WRITE_FILE_SYNC</a></h3>
+<h3 id="0x3003-write_file_sync"><a class="header" href="#0x3003-write_file_sync"><code>0x3003</code> WRITE_FILE_SYNC</a></h3>
 <p>Synchronously write a buffer to a file.</p>
 <p>If no offset address is provided, the file's content must be completely overriden with the provided buffer.</p>
 <p><strong>Arguments:</strong></p>
@@ -533,17 +578,17 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Offset is out-of-range</li>
-<li><code>0x32</code>: Storage's capacity exceeded</li>
-<li><code>0x33</code>: Maximum individual file size exceeded</li>
-<li><code>0x34</code>: Filesystem's free space exceeded</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Offset is out-of-range</li>
+<li><code>0x4000</code>: Storage's capacity exceeded</li>
+<li><code>0x4001</code>: Maximum individual file size exceeded</li>
+<li><code>0x4002</code>: Filesystem's free space exceeded</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x34-write_file_async"><a class="header" href="#0x34-write_file_async"><code>0x34</code> WRITE_FILE_ASYNC</a></h3>
+<h3 id="0x3004-write_file_async"><a class="header" href="#0x3004-write_file_async"><code>0x3004</code> WRITE_FILE_ASYNC</a></h3>
 <p>Asynchronously write a readable <a href="../../kernel/memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> to a file.</p>
 <p>If no offset address is provided, the file's content must be completely overriden with the provided buffer.</p>
-<p>When the writing is complete, a <a href="#0x34-file_written"><code>FILE_WRITTEN</code></a> notification must be sent to the client. The notification <strong>must not</strong> be sent before the current method returned successfully.</p>
+<p>When the writing is complete, a <a href="#0x3004-file_written"><code>FILE_WRITTEN</code></a> notification must be sent to the client. The notification <strong>must not</strong> be sent before the current method returned successfully.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li><a href="#storage-operating-range">SOR</a> (40 bytes)</li>
@@ -558,11 +603,11 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Invalid AMS ID provided</li>
-<li><code>0x40</code>: Unspecified filesystem error</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Invalid AMS ID provided</li>
+<li><code>0x4FFF</code>: Unspecified filesystem error</li>
 </ul>
-<h3 id="0x40-create_symlink"><a class="header" href="#0x40-create_symlink"><code>0x40</code> CREATE_SYMLINK</a></h3>
+<h3 id="0x4000-create_symlink"><a class="header" href="#0x4000-create_symlink"><code>0x4000</code> CREATE_SYMLINK</a></h3>
 <p>Create a <a href="../../filesystem.html#symbolic-links">symbolic link</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -576,17 +621,17 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Invalid filename provided</li>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Parent directory was not found</li>
-<li><code>0x32</code>: Directory's maximum capacity has been reached</li>
-<li><code>0x33</code>: Maximum nested items number has been reached</li>
-<li><code>0x34</code>: Maximum path length has been reached</li>
-<li><code>0x35</code>: Storage's capacity exceeded</li>
-<li><code>0x36</code>: Cannot create symbolic links to cross-filesystem items</li>
-<li><code>0x37</code>: Cannot create symbolic links to non-existing items</li>
+<li><code>0x1000</code>: Invalid filename provided</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Parent directory was not found</li>
+<li><code>0x3002</code>: Cannot create symbolic links to cross-filesystem items</li>
+<li><code>0x3003</code>: Cannot create symbolic links to non-existing items</li>
+<li><code>0x4000</code>: Directory's maximum capacity has been reached</li>
+<li><code>0x4001</code>: Maximum nested items number has been reached</li>
+<li><code>0x4002</code>: Maximum path length has been reached</li>
+<li><code>0x4003</code>: Storage's capacity exceeded</li>
 </ul>
-<h3 id="0x41-update_symlink"><a class="header" href="#0x41-update_symlink"><code>0x41</code> UPDATE_SYMLINK</a></h3>
+<h3 id="0x4001-update_symlink"><a class="header" href="#0x4001-update_symlink"><code>0x4001</code> UPDATE_SYMLINK</a></h3>
 <p>Create a <a href="../../filesystem.html#symbolic-links">symbolic link</a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -599,12 +644,12 @@ If the number of items to get is larger than the number of entries in the direct
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Provided path was not found</li>
-<li><code>0x32</code>: Cannot crate symbolic links to cross-filesystem items</li>
-<li><code>0x33</code>: Cannot crate symbolic links to non-existing items</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Provided path was not found</li>
+<li><code>0x3002</code>: Cannot crate symbolic links to cross-filesystem items</li>
+<li><code>0x3003</code>: Cannot crate symbolic links to non-existing items</li>
 </ul>
-<h3 id="0x42-read_symlink"><a class="header" href="#0x42-read_symlink"><code>0x42</code> READ_SYMLINK</a></h3>
+<h3 id="0x4002-read_symlink"><a class="header" href="#0x4002-read_symlink"><code>0x4002</code> READ_SYMLINK</a></h3>
 <p>Read a <a href="../../filesystem.html#symbolic-links">symbolic link</a>'s target.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -618,11 +663,11 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Provided path was not found</li>
-<li><code>0x32</code>: Symbolic link is cyclic</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
+<li><code>0x3001</code>: Provided path was not found</li>
+<li><code>0x4000</code>: Symbolic link is cyclic</li>
 </ul>
-<h3 id="0xf0-format_async"><a class="header" href="#0xf0-format_async"><code>0xF0</code> FORMAT_ASYNC</a></h3>
+<h3 id="0xf000-format_async"><a class="header" href="#0xf000-format_async"><code>0xF000</code> FORMAT_ASYNC</a></h3>
 <p>Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, </p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -635,12 +680,12 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 <p><strong>Error codes:</strong></p>
 <ul>
-<li><code>0x20</code>: Invalid SOR provided</li>
-<li><code>0x31</code>: Invalid sector size provided</li>
+<li><code>0x1000</code>: Invalid sector size provided</li>
+<li><code>0x3000</code>: Invalid SOR provided</li>
 </ul>
 <h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
-<h3 id="0x32-file_read"><a class="header" href="#0x32-file_read"><code>0x32</code> FILE_READ</a></h3>
-<p>Sent to a client after an asynchronous file reading requested using the <a href="#0x32-read_file_async"><code>READ_FILE_ASYNC</code></a> method completed.</p>
+<h3 id="0x3002-file_read"><a class="header" href="#0x3002-file_read"><code>0x3002</code> FILE_READ</a></h3>
+<p>Sent to a client after an asynchronous file reading requested using the <a href="#0x3002-read_file_async"><code>READ_FILE_ASYNC</code></a> method completed.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Task identifier (8 bytes)</li>
@@ -656,8 +701,8 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<h3 id="0x34-file_written"><a class="header" href="#0x34-file_written"><code>0x34</code> FILE_WRITTEN</a></h3>
-<p>Sent to a client after an asynchronous file writing requested using the <a href="#0x34-write_file_async"><code>WRITE_FILE_ASYNC</code></a> method completed.</p>
+<h3 id="0x3004-file_written"><a class="header" href="#0x3004-file_written"><code>0x3004</code> FILE_WRITTEN</a></h3>
+<p>Sent to a client after an asynchronous file writing requested using the <a href="#0x3004-write_file_async"><code>WRITE_FILE_ASYNC</code></a> method completed.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Task identifier (8 bytes)</li>
@@ -675,8 +720,8 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<h3 id="0xf0-formatted"><a class="header" href="#0xf0-formatted"><code>0xF0</code> FORMATTED</a></h3>
-<p>Sent to a client after an formatting requested using the <a href="#0xf0-format_async"><code>FORMAT_ASYC</code></a> method completed.</p>
+<h3 id="0xf000-formatted"><a class="header" href="#0xf000-formatted"><code>0xF000</code> FORMATTED</a></h3>
+<p>Sent to a client after an formatting requested using the <a href="#0xf000-format_async"><code>FORMAT_ASYC</code></a> method completed.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>Task identifier (8 bytes)</li>

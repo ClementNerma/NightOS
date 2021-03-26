@@ -87,9 +87,11 @@ Sockets are opened with the [`OPEN_SERV_SOCK`](syscalls.md#0x26-open_serv_sock) 
 Service sockets are based on _exchanges_, which are sets of messages. An exchange is described by a structure made of the following:
 
 - Identifier (8 bytes)
-- Method or notification code (1 byte)
-- Status: is the exchange closed, and if so what is the error code (on 2 bytes)
-- Message counter for this exchange (4 bytes)
+- Method or notification code (2 bytes)
+- Status (1 byte): `0x01` if the exchange must be closed, `0x00` otherwise
+- Error code (on 2 bytes) - only valid if the exchange is closed by this message
+- Message counter for this exchange (2 bytes)
+- Message's length (2 bytes)
 
 This structure is handled by the kernel itself and can be managed using a set of system calls and signals.
 

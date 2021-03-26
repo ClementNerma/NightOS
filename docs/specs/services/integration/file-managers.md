@@ -1,10 +1,10 @@
 # File Manager
 
 - [Methods](#methods)
-  - [`0x10` OPEN_ITEM](#0x10-open_item)
-  - [`0x11` IS_ITEM_OPENABLE](#0x11-is_item_openable)
-  - [`0x20` GET_THUMBNAIL](#0x20-get_thumbnail)
-  - [`0xA0` CONTEXT_MENU](#0xa0-context_menu)
+  - [`0x1000` OPEN_ITEM](#0x1000-open_item)
+  - [`0x1001` IS_ITEM_OPENABLE](#0x1001-is_item_openable)
+  - [`0x2000` GET_THUMBNAIL](#0x2000-get_thumbnail)
+  - [`0xA000` CONTEXT_MENU](#0xa000-context_menu)
 
 A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose an integration service with the standardized methods and notifications described in this document.
 
@@ -14,7 +14,7 @@ The end user chooses a single file manager (called the _default_ file manager) b
 
 ## Methods
 
-### `0x10` OPEN_ITEM
+### `0x1000` OPEN_ITEM
 
 Open a filesystem item.
 
@@ -28,14 +28,14 @@ _None_
 
 **Errors:**
 
-- `0x10`: Invalid FMP
-- `0x11`: Could not find the provided item
-- `0x30`: User cancelled the opening
-- `0x31`: Could not find an application to open the provided item
-- `0x32`: Failed to open the provided item due to an I/O error
-- `0xF0`: Unspecified error
+- `0x3000`: Invalid FMP
+- `0x3001`: Could not find the provided item
+- `0x4000`: User cancelled the opening
+- `0x4001`: Could not find an application to open the provided item
+- `0x4002`: Failed to open the provided item due to an I/O error
+- `0x4FFF`: Unspecified error
 
-### `0x11` IS_ITEM_OPENABLE
+### `0x1001` IS_ITEM_OPENABLE
 
 Check if a filesystem item could be opened without user interaction.
 
@@ -49,11 +49,11 @@ Check if a filesystem item could be opened without user interaction.
 
 **Errors:**
 
-- `0x10`: Invalid FMP
-- `0x11`: Could not find the provided item
-- `0xF0`: Unspecified error
+- `0x3000`: Invalid FMP
+- `0x3001`: Could not find the provided item
+- `0x4000`: Unspecified error
 
-### `0x20` GET_THUMBNAIL
+### `0x2000` GET_THUMBNAIL
 
 Get the thumbnail for a specific item.
 
@@ -70,12 +70,12 @@ The thumbnail should be generated using the [`sys::fsh`](../../services/system/f
 
 **Errors:**
 
-- `0x10`: Invalid FMP
-- `0x11`: Could not find the provided item
-- `0x30`: The thumbnail generator failed
-- `0xF0`: Unspecified error
+- `0x3000`: Invalid FMP
+- `0x3001`: Could not find the provided item
+- `0x4000`: The thumbnail generator failed
+- `0x4FFF`: Unspecified error
 
-### `0xA0` CONTEXT_MENU
+### `0xA000` CONTEXT_MENU
 
 Generate a context menu for a specific filesystem item. Used by the DEA.
 
@@ -89,9 +89,9 @@ Generate a context menu for a specific filesystem item. Used by the DEA.
 
 **Errors:**
 
-- `0x10`: Invalid FMP
-- `0x11`: Could not find the provided item
-- `0x30`: User cancelled the opening
-- `0x31`: Could not find an application to open the provided item
-- `0x32`: Failed to open the provided item due to an I/O error
-- `0xF0`: Unspecified error
+- `0x3000`: Invalid FMP
+- `0x3001`: Could not find the provided item
+- `0x4000`: User cancelled the opening
+- `0x3001`: Could not find an application to open the provided item
+- `0x4002`: Failed to open the provided item due to an I/O error
+- `0x4FFF`: Unspecified error

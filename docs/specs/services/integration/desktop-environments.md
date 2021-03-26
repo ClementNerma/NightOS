@@ -8,28 +8,28 @@
     - [Buttons](#buttons)
     - [Display state](#display-state)
 - [Methods](#methods)
-  - [`0x01` SUBSCRIBE_CAPABILITIES](#0x01-subscribe_capabilities)
-  - [`0x02` CAPABILITIES](#0x02-capabilities)
-  - [`0x10` CREATE_WINDOW](#0x10-create_window)
-  - [`0x11` UPDATE_WINDOW](#0x11-update_window)
-  - [`0x12` GET_WINDOW_STATE](#0x12-get_window_state)
-  - [`0x1F` DESTROY_WINDOW](#0x1f-destroy_window)
-  - [`0x20` CREATE_POPUP](#0x20-create_popup)
-  - [`0x2F` DESTROY_POPUP](#0x2f-destroy_popup)
-  - [`0x30` SEND_BASIC_NOTIFICATION](#0x30-send_basic_notification)
-  - [`0x31` SEND_MUSIC_PLAYER_NOTIFICATION](#0x31-send_music_player_notification)
-  - [`0x32` SEND_VIDEO_PLAYER_NOTIFICATION](#0x32-send_video_player_notification)
+  - [`0x0001` SUBSCRIBE_CAPABILITIES](#0x0001-subscribe_capabilities)
+  - [`0x0002` CAPABILITIES](#0x0002-capabilities)
+  - [`0x1000` CREATE_WINDOW](#0x1000-create_window)
+  - [`0x1001` UPDATE_WINDOW](#0x1001-update_window)
+  - [`0x1002` GET_WINDOW_STATE](#0x1002-get_window_state)
+  - [`0x10FF` DESTROY_WINDOW](#0x10ff-destroy_window)
+  - [`0x2000` CREATE_POPUP](#0x2000-create_popup)
+  - [`0x20FF` DESTROY_POPUP](#0x20ff-destroy_popup)
+  - [`0x3000` SEND_BASIC_NOTIFICATION](#0x3000-send_basic_notification)
+  - [`0x3001` SEND_MUSIC_PLAYER_NOTIFICATION](#0x3001-send_music_player_notification)
+  - [`0x3002` SEND_VIDEO_PLAYER_NOTIFICATION](#0x3002-send_video_player_notification)
 - [Notifications](#notifications)
-  - [`0x02` CAPABILITIES_CHANGED](#0x02-capabilities_changed)
-  - [`0x10` WINDOW_CHANGED](#0x10-window_changed)
-  - [`0x11` WINDOW_INTERACTION](#0x11-window_interaction)
-  - [`0x1F` WINDOW_CLOSED](#0x1f-window_closed)
-  - [`0x20` POPUP_INTERACTION](#0x20-popup_interaction)
-  - [`0x2F` POPUP_CLOSED](#0x2f-popup_closed)
-  - [`0x30` BASIC_NOTIFICATION_INTERACTION](#0x30-basic_notification_interaction)
-  - [`0x31` AUDIO_PLAYER_NOTIFICATION_INTERACTION](#0x31-audio_player_notification_interaction)
-  - [`0x31` VIDEO_PLAYER_NOTIFICATION_INTERACTION](#0x31-video_player_notification_interaction)
-  - [`0x3F` NOTIFICATION_CLOSED](#0x3f-notification_closed)
+  - [`0x0001` CAPABILITIES_CHANGED](#0x0001-capabilities_changed)
+  - [`0x1000` WINDOW_CHANGED](#0x1000-window_changed)
+  - [`0x1001` WINDOW_INTERACTION](#0x1001-window_interaction)
+  - [`0x10FF` WINDOW_CLOSED](#0x10ff-window_closed)
+  - [`0x2000` POPUP_INTERACTION](#0x2000-popup_interaction)
+  - [`0x20FF` POPUP_CLOSED](#0x20ff-popup_closed)
+  - [`0x3000` BASIC_NOTIFICATION_INTERACTION](#0x3000-basic_notification_interaction)
+  - [`0x3001` AUDIO_PLAYER_NOTIFICATION_INTERACTION](#0x3001-audio_player_notification_interaction)
+  - [`0x3002` VIDEO_PLAYER_NOTIFICATION_INTERACTION](#0x3002-video_player_notification_interaction)
+  - [`0x30FF` NOTIFICATION_CLOSED](#0x30ff-notification_closed)
 
 The _Desktop Environment_ (DE) is an application that acts as the main graphical interface of NightOS.
 
@@ -113,9 +113,9 @@ The display state is one value among:
 
 ## Methods
 
-### `0x01` SUBSCRIBE_CAPABILITIES
+### `0x0001` SUBSCRIBE_CAPABILITIES
 
-Subscribe to change of capabilities listed by the [`CAPABILITIES`](#0x02-capabilities) method.
+Subscribe to change of capabilities listed by the [`CAPABILITIES`](#0x0002-capabilities) method.
 
 **Arguments:**
 
@@ -129,7 +129,7 @@ _None_
 
 _None_
 
-### `0x02` CAPABILITIES
+### `0x0002` CAPABILITIES
 
 List elements which can be handled by the desktop environment.
 
@@ -256,7 +256,7 @@ Note that the bit should only be set if the desktop environment is _currently_ a
   - Bit 1: Thumbnails generation through the [default file manager](file-managers.md)
   - Remaining bits: _Future-proof_
 
-### `0x10` CREATE_WINDOW
+### `0x1000` CREATE_WINDOW
 
 Create a new window.
 
@@ -264,7 +264,7 @@ Unset elements in the provided [window's state](#windows-state) will be replaced
 
 Desktop environment-dependant errors can only be used if the error does not fit any other error code.
 
-If the window is successfully create, the client is automatically subscribed to [`WINDOW_CHANGED`](#0x10-window_changed) notifications for this specific window.
+If the window is successfully create, the client is automatically subscribed to [`WINDOW_CHANGED`](#0x1000-window_changed) notifications for this specific window.
 
 **Arguments:**
 
@@ -277,65 +277,68 @@ If the window is successfully create, the client is automatically subscribed to 
 
 **Errors:**
 
-- `0x20`: Invalid list of elements to create/update provided
-- `0x30`: Client is not allowed to create/update a window
-- `0x31`: Failed to create/update the window
-- `0x40`: Title must be provided
-- `0x42`: Title cannot be empty
-- `0x43`: Title is not a valid UTF-8 string
-- `0x44`: Unspecified error with the title
-- `0x50`: Custom buttons provided but it is not customizable
-- `0x51`: Too many custom buttons were provided
-- `0x52`: A custom button's label is not a valid UTF-8 string
-- `0x53`: A custom button's label cannot be empty
-- `0x54`: Custom button's icon provided but it is not customizable
-- `0x55`: Invalid custom button's icon buffer
-- `0x56`: A custom button's icon is too small
-- `0x57`: A custom button's icon is too large
-- `0x58`: Unspecified error with a custom button's icon
-- `0x59`: Unspecified error with a custom button's label
-- `0x5A`: Custom button's color provided but it is not customizable
-- `0x5B`: Custom button's color uses transparency but it is not customizable
-- `0x5C`: Duplicate custom button's callback code
-- `0x60`: Custom icon provided but it is not customizable
-- `0x61`: Invalid custom icon buffer
-- `0x62`: Custom icon is too small
-- `0x63`: Custom icon is too large
-- `0x64`: Unspecified error with the provided custom icon
-- `0x70`: Window's width provided but it is not customizable
-- `0x71`: Window's width is too small
-- `0x72`: Window's width is too large
-- `0x73`: Window's height provided but it is not customizable
-- `0x74`: Window's height is too small
-- `0x75`: Window's height is too large
-- `0x76`: Window's X coordinate provided but it is not customizable
-- `0x77`: Window's X coordinate is too small
-- `0x78`: Window's X coordinate is too large
-- `0x79`: Forbidden window's X coordinate
-- `0x7A`: Window's Y coordinate provided but it is not customizable
-- `0x7B`: Window's Y coordinate is too small
-- `0x7C`: Window's Y coordinate is too large
-- `0x7D`: Forbidden window's Y coordinate
-- `0x7E`: Invalid window's width/height ratio
-- `0x7F`: Invalid window's X/Y coordinates couple
-- `0x80`: Active attribute provided but it is not customizable
-- `0x81`: Invalid active attribute provided
-- `0x82`: Cannot apply the custom active attribute for unspecified reasons
-- `0x83`: Interactive attribute provided but it is not customizable
-- `0x84`: Invalid interactive attribute provided
-- `0x85`: Cannot apply the custom interactive attribute for unspecified reasons
-- `0x86`: Display layer provided but it is not customizable
-- `0x87`: Display layer is too low
-- `0x88`: Display layer is too high
-- `0x89`: Forbidden display layer
-- `0x8A`: Display state provided but it is not customizable
-- `0x8B`: Invalid display state provided
-- `0x8C`: Cannot set this specific display state
-- `0x90`: Provided custom elements but this DE does not have any custom one
-- `0xA0` to `0xBF`: Errors for custom elements
-- `0xD0` to `0xEF`: Desktop environment-dependant errors
+- `0x1000`: Invalid list of elements to create/update provided
+- `0x1010`: Title must be provided
+- `0x1011`: Title cannot be empty
+- `0x1012`: Title is not a valid UTF-8 string
+- `0x1013`: Unspecified error with the title
+- `0x1020`: Custom buttons provided but it is not customizable
+- `0x1021`: Too many custom buttons were provided
+- `0x1022`: A custom button's label is not a valid UTF-8 string
+- `0x1023`: A custom button's label cannot be empty
+- `0x1024`: Custom button's icon provided but it is not customizable
+- `0x1025`: Invalid custom button's icon buffer
+- `0x1026`: A custom button's icon is too small
+- `0x1027`: A custom button's icon is too large
+- `0x1028`: Unspecified error with a custom button's icon
+- `0x1029`: Unspecified error with a custom button's label
+- `0x102A`: Custom button's color provided but it is not customizable
+- `0x102B`: Custom button's color uses transparency but it is not customizable
+- `0x102C`: Duplicate custom button's callback code
+- `0x1030`: Custom icon provided but it is not customizable
+- `0x1031`: Invalid custom icon buffer
+- `0x1032`: Custom icon is too small
+- `0x1033`: Custom icon is too large
+- `0x1034`: Unspecified error with the provided custom icon
+- `0x1040`: Window's width provided but it is not customizable
+- `0x1041`: Window's width is too small
+- `0x1042`: Window's width is too large
+- `0x1043`: Window's height provided but it is not customizable
+- `0x1044`: Window's height is too small
+- `0x1045`: Window's height is too large
+- `0x1046`: Window's X coordinate provided but it is not customizable
+- `0x1047`: Window's X coordinate is too small
+- `0x1048`: Window's X coordinate is too large
+- `0x1049`: Forbidden window's X coordinate
+- `0x104A`: Window's Y coordinate provided but it is not customizable
+- `0x104B`: Window's Y coordinate is too small
+- `0x104C`: Window's Y coordinate is too large
+- `0x104D`: Forbidden window's Y coordinate
+- `0x104E`: Invalid window's width/height ratio
+- `0x104F`: Invalid window's X/Y coordinates couple
+- `0x1050`: Active attribute provided but it is not customizable
+- `0x1051`: Invalid active attribute provided
+- `0x1052`: Cannot apply the custom active attribute for unspecified reasons
+- `0x1053`: Interactive attribute provided but it is not customizable
+- `0x1054`: Invalid interactive attribute provided
+- `0x1055`: Cannot apply the custom interactive attribute for unspecified reasons
+- `0x1056`: Display layer provided but it is not customizable
+- `0x1057`: Display layer is too low
+- `0x1058`: Display layer is too high
+- `0x1059`: Forbidden display layer
+- `0x105A`: Display state provided but it is not customizable
+- `0x105B`: Invalid display state provided
+- `0x105C`: Cannot set this specific display state
+- `0x1060`: Provided custom elements but this DE does not have any custom one
+- `0x1100` to `0x11FF`: Errors for custom elements
+- `0x3000`: Client is not allowed to create/update a window
+- `0x3100` to `0x31FF`: Errors for custom elements
+- `0x3200` to `0x32FF`: Desktop environment-dependant errors
+- `0x4000`: Failed to create/update the window
+- `0x4100` to `0x41FF`: Errors for custom elements
+- `0x4200` to `0x42FF`: Desktop environment-dependant errors
 
-### `0x11` UPDATE_WINDOW
+### `0x1001` UPDATE_WINDOW
 
 Update an existing window.
 
@@ -350,9 +353,9 @@ _None_
 
 **Errors:**
 
-Same errors as the [`CREATE_WINDOW`](#0x10-create_window) method, plus `0x3F` for unknown window identifier.
+Same errors as the [`CREATE_WINDOW`](#0x1000-create_window) method, plus `0x3FFF` for unknown window identifier.
 
-### `0x12` GET_WINDOW_STATE
+### `0x1002` GET_WINDOW_STATE
 
 Get informations about an existing window.
 
@@ -367,17 +370,17 @@ Get informations about an existing window.
 
 **Errors:**
 
-- `0x20`: Invalid list of elements to create/update provided
-- `0x30`: Unknown window identifier
+- `0x2000`: Invalid list of elements to create/update provided
+- `0x3000`: Unknown window identifier
 
-### `0x1F` DESTROY_WINDOW
+### `0x10FF` DESTROY_WINDOW
 
 Destroy an existing window.
 
 **Arguments:**
 
 - Window identifier (8 bytes)
-- Skip the [`WINDOW_CLOSED`](#0x1f-window_closed) (1 byte): `0x01` to skip the notification, `0x00` else
+- Skip the [`WINDOW_CLOSED`](#0x10ff-window_closed) (1 byte): `0x01` to skip the notification, `0x00` else
 
 **Return value:**
 
@@ -385,12 +388,13 @@ _None_
 
 **Errors:**
 
-- `0x10`: Invalid skip mode provided
-- `0x20`: Unknown window identifier
-- `0x21`: Failed to destroy the window
-- `0xD0` to `0xEF`: Desktop environment-dependant errors
+- `0x1000`: Invalid skip mode provided
+- `0x3000`: Unknown window identifier
+- `0x3001`: Failed to destroy the window
+- `0x3100` to `0x31FF`: Desktop environment-dependant errors
+- `0x4100` to `0x41FF`: Desktop environment-dependant errors
 
-### `0x20` CREATE_POPUP
+### `0x2000` CREATE_POPUP
 
 Create a popup.
 
@@ -410,40 +414,40 @@ Same structure than for a [window's state](#windows-state), but with the followi
 
 **Errors:**
 
-- `0x20`: Invalid list of elements provided
-- `0x30`: Client is not allowed to create a popup
-- `0x31`: Failed to create/update the popup
-- `0x40`: Title must be provided
-- `0x42`: Title cannot be empty
-- `0x43`: Title is not a valid UTF-8 string
-- `0x44`: Unspecified error with the title
-- `0x50`: Custom buttons provided but it is not customizable
-- `0x51`: Too many custom buttons were provided
-- `0x52`: A custom button's label is not a valid UTF-8 string
-- `0x53`: A custom button's label cannot be empty
-- `0x54`: Custom button's icon provided but it is not customizable
-- `0x55`: Invalid custom button's icon buffer
-- `0x56`: A custom button's icon is too small
-- `0x57`: A custom button's icon is too large
-- `0x58`: Unspecified error with a custom button's icon
-- `0x59`: Unspecified error with a custom button's label
-- `0x5A`: Custom button's color provided but it is not customizable
-- `0x5B`: Custom button's color uses transparency but it is not customizable
-- `0x5C`: Duplicate custom button's callback code
-- `0x60`: Custom icon provided but it is not customizable
-- `0x61`: Invalid custom icon buffer
-- `0x62`: Custom icon is too small
-- `0x63`: Custom icon is too large
-- `0x64`: Unspecified error with the provided custom icon
+- `0x1000`: Invalid list of elements provided
+- `0x1010`: Title must be provided
+- `0x1012`: Title cannot be empty
+- `0x1013`: Title is not a valid UTF-8 string
+- `0x1014`: Unspecified error with the title
+- `0x1020`: Custom buttons provided but it is not customizable
+- `0x1021`: Too many custom buttons were provided
+- `0x1022`: A custom button's label is not a valid UTF-8 string
+- `0x1023`: A custom button's label cannot be empty
+- `0x1024`: Custom button's icon provided but it is not customizable
+- `0x1025`: Invalid custom button's icon buffer
+- `0x1026`: A custom button's icon is too small
+- `0x1027`: A custom button's icon is too large
+- `0x1028`: Unspecified error with a custom button's icon
+- `0x1029`: Unspecified error with a custom button's label
+- `0x102A`: Custom button's color provided but it is not customizable
+- `0x102B`: Custom button's color uses transparency but it is not customizable
+- `0x102C`: Duplicate custom button's callback code
+- `0x1030`: Custom icon provided but it is not customizable
+- `0x1031`: Invalid custom icon buffer
+- `0x1032`: Custom icon is too small
+- `0x1033`: Custom icon is too large
+- `0x1034`: Unspecified error with the provided custom icon
+- `0x3000`: Client is not allowed to create a popup
+- `0x4000`: Failed to create/update the popup
 
-### `0x2F` DESTROY_POPUP
+### `0x20FF` DESTROY_POPUP
 
 Destroy an existing popup.
 
 **Arguments:**
 
 - Popup identifier (8 bytes)
-- Skip the [`POPUP_CLOSED`](#0x2f-popup_closed) (1 byte): `0x01` to skip the notification, `0x00` else
+- Skip the [`POPUP_CLOSED`](#0x20ff-popup_closed) (1 byte): `0x01` to skip the notification, `0x00` else
 
 **Return value:**
 
@@ -451,13 +455,11 @@ _None_
 
 **Errors:**
 
-- `0x10`: Invalid skip mode provided
-- `0x20`: Unknown popup identifier
-- `0x21`: Failed to destroy the popup
-- `0xA0` to `0xBF`: Errors for custom elements
-- `0xD0` to `0xEF`: Desktop environment-dependant errors
+- `0x1000`: Invalid skip mode provided
+- `0x3000`: Unknown popup identifier
+- `0x4000`: Failed to destroy the popup
 
-### `0x30` SEND_BASIC_NOTIFICATION
+### `0x3000` SEND_BASIC_NOTIFICATION
 
 Send a basic notification, "basic" meaning a non-special notification.
 
@@ -471,9 +473,9 @@ Subset of a [window's state](#windows-state): title, icon, buttons.
 
 **Errors:**
 
-Relevant subset of the [`CREATE_WINDOW`](#0x10-create_window) method's errors.
+Relevant subset of the [`CREATE_WINDOW`](#0x1000-create_window) method's errors.
 
-### `0x31` SEND_MUSIC_PLAYER_NOTIFICATION
+### `0x3001` SEND_MUSIC_PLAYER_NOTIFICATION
 
 Send a music player notificaiton.
 
@@ -512,22 +514,25 @@ The visualizer shows a value from 0 to 255 to indicate the bar eight. Each bar v
 
 **Errors:**
 
-- `0x20`: Audio player notifications are not supported
-- `0x21`: Invalid list of elements to create/update provided
-- `0x30`: Client is not allowed to create/update an audio player notification
-- `0x31`: Failed to create/update the notification
-- `0x40`: Track's title is not a valid UTF-8 string
-- `0x41`: Album's title is not a valid UTF-8 string
-- `0x42`: Artist's name is not a valid UTF-8 string
-- `0x70`: Invalid pause state
-- `0x71`: Invalid like state
-- `0x82`: Next track's title cannot be empty
-- `0x83`: Next track's title is not a valid UTF-8 string
-- `0x8F`: Button avaibility bit provided for unknown button
-- `0xA0` to `0xBF`: Errors for custom elements
-- `0xD0` to `0xEF`: Desktop environment-dependant errors
+- `0x1000`: Invalid list of elements to create/update provided
+- `0x1001`: Track's title is not a valid UTF-8 string
+- `0x1002`: Album's title is not a valid UTF-8 string
+- `0x1003`: Artist's name is not a valid UTF-8 string
+- `0x1004`: Invalid pause state
+- `0x1005`: Invalid like state
+- `0x1006`: Next track's title cannot be empty
+- `0x1007`: Next track's title is not a valid UTF-8 string
+- `0x1008`: Button avaibility bit provided for unknown button
+- `0x1100` to `0x11FF`: Errors for custom elements
+- `0x3000`: Audio player notifications are not supported
+- `0x3001`: Client is not allowed to create/update an audio player notification
+- `0x3100` to `0x31FF`: Errors for custom elements
+- `0x3200` to `0x32FF`: Desktop environment-dependant errors
+- `0x4000`: Failed to create/update the notification
+- `0x4100` to `0x41FF`: Errors for custom elements
+- `0x4200` to `0x42FF`: Desktop environment-dependant errors
 
-### `0x32` SEND_VIDEO_PLAYER_NOTIFICATION
+### `0x3002` SEND_VIDEO_PLAYER_NOTIFICATION
 
 Send a video player notificaiton.
 
@@ -553,28 +558,31 @@ Same structure than for a [window's state](#windows-state), but with the followi
 
 **Errors:**
 
-- `0x20`: Audio player notifications are not supported
-- `0x21`: Invalid list of elements to create/update provided
-- `0x30`: Client is not allowed to create/update an audio player notification
-- `0x31`: Failed to create/update the notification
-- `0x40`: Video's title is not a valid UTF-8 string
-- `0x41`: Video's author is not a valid UTF-8 string
-- `0x42`: Video's source is not a valid UTF-8 string
-- `0x43`: Codec is not a valid UTF-8 string
-- `0xA0` to `0xBF`: Errors for custom elements
-- `0xD0` to `0xEF`: Desktop environment-dependant errors
+- `0x1000`: Invalid list of elements to create/update provided
+- `0x1001`: Video's title is not a valid UTF-8 string
+- `0x1002`: Video's author is not a valid UTF-8 string
+- `0x1003`: Video's source is not a valid UTF-8 string
+- `0x1004`: Codec is not a valid UTF-8 string
+- `0x1100` to `0x11FF`: Errors for custom elements
+- `0x3000`: Audio player notifications are not supported
+- `0x3001`: Client is not allowed to create/update an audio player notification
+- `0x3100` to `0x31FF`: Errors for custom elements
+- `0x3200` to `0x32FF`: Desktop environment-dependant errors
+- `0x4000`: Failed to create/update the notification
+- `0x4100` to `0x41FF`: Errors for custom elements
+- `0x4200` to `0x42FF`: Desktop environment-dependant errors
 
 ## Notifications
 
-### `0x02` CAPABILITIES_CHANGED
+### `0x0001` CAPABILITIES_CHANGED
 
-Sent to clients that subscribed through the [`SUBSCRIBE_CAPABILITIES`](#0x01-subscribe_capabilities) method when the elements the desktop environment can handle changed (for instance when the taskbar is hidden, when the windows' layers become fixed, ...).
+Sent to clients that subscribed through the [`SUBSCRIBE_CAPABILITIES`](#0x0001-subscribe_capabilities) method when the elements the desktop environment can handle changed (for instance when the taskbar is hidden, when the windows' layers become fixed, ...).
 
 **Datafield:**
 
-Equivalent content to the [`CAPABILITIES`](#0x02-capabilities)' answer.
+Equivalent content to the [`CAPABILITIES`](#0x0002-capabilities)' answer.
 
-### `0x10` WINDOW_CHANGED
+### `0x1000` WINDOW_CHANGED
 
 Notification sent when a window's state changed.
 
@@ -585,7 +593,7 @@ Only the elements that changed since the last notification will be set in the se
 - Window identifier (8 bytes)
 - [Window's state](#windows-state)
 
-### `0x11` WINDOW_INTERACTION
+### `0x1001` WINDOW_INTERACTION
 
 Sent when the user interacts with a window. These events should not occur if the window is not [active](../../../ux/desktop-environment.md#activeinactive-windows)
 
@@ -621,13 +629,13 @@ This is followed by the interaction type on 1 byte, then by the interaction's da
     - `0x11`: Key was released
   - Key code (1 byte), normalized by the [`sys::hw`](../../services/system/hw.md) service
 
-### `0x1F` WINDOW_CLOSED
+### `0x10FF` WINDOW_CLOSED
 
 **Datafield:**
 
 - Window identifier (8 bytes)
 
-### `0x20` POPUP_INTERACTION
+### `0x2000` POPUP_INTERACTION
 
 Sent when the user selects a button in the list provided by the popup.
 
@@ -636,7 +644,7 @@ Sent when the user selects a button in the list provided by the popup.
 - Popup identifier (8 bytes)
 - Callback code (1 byte)
 
-### `0x2F` POPUP_CLOSED
+### `0x20FF` POPUP_CLOSED
 
 Sent when a popup was closed by the end user.
 
@@ -644,7 +652,7 @@ Sent when a popup was closed by the end user.
 
 - Popup identifier (8 bytes)
 
-### `0x30` BASIC_NOTIFICATION_INTERACTION
+### `0x3000` BASIC_NOTIFICATION_INTERACTION
 
 Sent when the user interacts with a basic notification.
 
@@ -652,7 +660,7 @@ Sent when the user interacts with a basic notification.
 
 - Callback code (1 byte)
 
-### `0x31` AUDIO_PLAYER_NOTIFICATION_INTERACTION
+### `0x3001` AUDIO_PLAYER_NOTIFICATION_INTERACTION
 
 Sent when the user interacts with an audio player notification.
 
@@ -670,7 +678,7 @@ Sent when the user interacts with an audio player notification.
   - `0x08`: Like/dislike toggle
   - `0x09`: Shuffle
 
-### `0x31` VIDEO_PLAYER_NOTIFICATION_INTERACTION
+### `0x3002` VIDEO_PLAYER_NOTIFICATION_INTERACTION
 
 Sent when the user interacts with a video player notification.
 
@@ -688,7 +696,7 @@ Sent when the user interacts with a video player notification.
   - `0x08`: Like/dislike toggle
   - `0x09`: Shuffle
 
-### `0x3F` NOTIFICATION_CLOSED
+### `0x30FF` NOTIFICATION_CLOSED
 
 Sent a notification is closed.
 

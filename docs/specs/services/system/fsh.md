@@ -3,15 +3,15 @@
 The `sys::fsh` service is in charge of handling high-level filesystem operations, such as file associations and thumbnails generation.
 
 - [Methods](#methods)
-  - [`0x01` REGISTER_OPENER](#0x01-register_opener)
-  - [`0x02` UNREGISTER_OPENER](#0x02-unregister_opener)
-  - [`0x03` LIST_OPENERS](#0x03-list_openers)
-  - [`0x10` CHECK_ITEM_THUMBNAIL_CACHE](#0x10-check_item_thumbnail_cache)
-  - [`0x11` CACHE_ITEM_THUMBNAIL](#0x11-cache_item_thumbnail)
+  - [`0x0001` REGISTER_OPENER](#0x0001-register_opener)
+  - [`0x0002` UNREGISTER_OPENER](#0x0002-unregister_opener)
+  - [`0x0003` LIST_OPENERS](#0x0003-list_openers)
+  - [`0x1000` CHECK_ITEM_THUMBNAIL_CACHE](#0x1000-check_item_thumbnail_cache)
+  - [`0x1001` CACHE_ITEM_THUMBNAIL](#0x1001-cache_item_thumbnail)
 
 ## Methods
 
-### `0x01` REGISTER_OPENER
+### `0x0001` REGISTER_OPENER
 
 Register an application as an opener for a list of file types.
 
@@ -25,12 +25,12 @@ _None_
 
 **Errors:**
 
-- `0x20`: Client does not expose a [file opening service](../../services/integration/file-openers.md)
-- `0x30`: One of the provided extensions is empty
-- `0x31`: At least one of the provided extensions is reserved to the system
-- `0x32`: Client already handles at least one of the provided extensions
+- `0x1000`: One of the provided extensions is empty
+- `0x1001`: At least one of the provided extensions is reserved to the system
+- `0x3000`: Client does not expose a [file opening service](../../services/integration/file-openers.md)
+- `0x3001`: Client already handles at least one of the provided extensions
 
-### `0x02` UNREGISTER_OPENER
+### `0x0002` UNREGISTER_OPENER
 
 Unregister an application as an opener for a list of file types.
 
@@ -44,11 +44,11 @@ _None_
 
 **Errors:**
 
-- `0x20`: Client does not expose a [file opening service](../../services/integration/file-openers.md)
-- `0x30`: One of the provided extensions is empty
-- `0x31`: Client does not currently handle at least one of the provided extensions
+- `0x1001`: One of the provided extensions is empty
+- `0x3000`: Client does not expose a [file opening service](../../services/integration/file-openers.md)
+- `0x3001`: Client does not currently handle at least one of the provided extensions
 
-### `0x03` LIST_OPENERS
+### `0x0003` LIST_OPENERS
 
 List the [file openers](../../services/integration/file-openers.md) associated to a specific type of items.
 
@@ -64,9 +64,9 @@ The list is not ordered, it's up to the [file manager](../../services/integratio
 
 **Errors:**
 
-- `0x20`: Client does not expose a [file opening service](../../services/integration/file-openers.md)
+- `0x3000`: Client does not expose a [file opening service](../../services/integration/file-openers.md)
 
-### `0x10` CHECK_ITEM_THUMBNAIL_CACHE
+### `0x1000` CHECK_ITEM_THUMBNAIL_CACHE
 
 Check if a cached thumbnail exists for a given filesystem item to determine if another should be generated or not.
 
@@ -88,11 +88,11 @@ If a thumbnail is present, this is followed by:
 
 **Errors:**
 
-- `0x20`: Client is not a [file manager service](../../services/integration/file-managers.md)
-- `0x30`: Unknown FSID
-- `0x31`: Unknown FEID
+- `0x3000`: Client is not a [file manager service](../../services/integration/file-managers.md)
+- `0x3001`: Unknown FSID
+- `0x3002`: Unknown FEID
 
-### `0x11` CACHE_ITEM_THUMBNAIL
+### `0x1001` CACHE_ITEM_THUMBNAIL
 
 Write a filesystem item's thumbnail in the cache.
 
@@ -112,7 +112,7 @@ The cache policy is determined using internal criterias.
 
 **Errors:**
 
-- `0x10`: Invalid bitmap data
-- `0x20`: Client is not a [file manager service](../../services/integration/file-managers.md)
-- `0x30`: Unknown FSID
-- `0x31`: Unknown FEID
+- `0x1000`: Invalid bitmap data
+- `0x3000`: Client is not a [file manager service](../../services/integration/file-managers.md)
+- `0x3001`: Unknown FSID
+- `0x3002`: Unknown FEID

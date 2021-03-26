@@ -8,7 +8,7 @@ They are essentially used by the [default file manager](file-managers.md).
 
 ## Methods
 
-### `0x10` OPEN_ITEM
+### `0x1000` OPEN_ITEM
 
 Open a filesystem item.
 
@@ -22,14 +22,14 @@ _None_
 
 **Errors:**
 
-- `0x10`: Invalid FMP
-- `0x11`: Could not find the provided item
-- `0x30`: User cancelled the opening
-- `0x31`: Could not find an application to open the provided item
-- `0x32`: Failed to open the provided item due to an I/O error
-- `0xF0`: Unspecified error
+- `0x3000`: Invalid FMP
+- `0x3001`: Could not find the provided item
+- `0x3002`: User cancelled the opening
+- `0x3003`: Could not find an application to open the provided item
+- `0x3004`: Failed to open the provided item due to an I/O error
+- `0x3FFF`: Unspecified error
 
-### `0x20` GENERATE_THUMBNAIL
+### `0x2000` GENERATE_THUMBNAIL
 
 Generate a thumbnail for a given filesystem item.
 
@@ -45,13 +45,13 @@ The thumbnail should be generated using the [`sys::fsh`](../../services/system/f
 
 **Errors:**
 
-- `0x10`: Invalid FMP
-- `0x11`: Could not find the provided item
-- `0x20`: This application does not support thumbnail generation for this item type
-- `0x30`: Thumbnail could not be generated from the item as its content is invalid
-- `0xF0`: Unspecified error
+- `0x3000`: Invalid FMP
+- `0x3001`: Could not find the provided item
+- `0x3002`: This application does not support thumbnail generation for this item type
+- `0x3003`: Thumbnail could not be generated from the item as its content is invalid
+- `0x3FFF`: Unspecified error
 
-### `0x21` CAN_GENERATE_THUMBNAIL
+### `0x2001` CAN_GENERATE_THUMBNAIL
 
 Check if the application can generate a thumbnail for a specific filesystem item.  
 If it cannot, the default file manager will be in charge of providing a placeholder _or_ using an alternative thumbnail generator.
@@ -66,7 +66,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 
 **Errors:**
 
-- `0x10`: Invalid FMP
-- `0x11`: Could not find the provided item
-- `0x30`: Thumbnail could not be generated from the item as its content is invalid
-- `0xF0`: Unspecified error
+- `0x3000`: Invalid FMP
+- `0x3001`: Could not find the provided item
+- `0x3002`: Thumbnail could not be generated from the item as its content is invalid
+- `0x3FFF`: Unspecified error

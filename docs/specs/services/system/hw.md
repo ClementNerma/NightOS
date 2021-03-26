@@ -19,21 +19,21 @@ It is known as the [I/O manager](../../../technical/io-manager.md), or Ion.
   - [Direct driver access for `sys::fs`](#direct-driver-access-for-sysfs)
   - [Direct storage access for `sys::fs`](#direct-storage-access-for-sysfs)
 - [Methods](#methods)
-  - [`0x01` ENUM_DEVICES](#0x01-enum_devices)
-  - [`0x02` SUBSCRIBE_DEVICES](#0x02-subscribe_devices)
-  - [`0x10` REGISTER_DRIVER](#0x10-register_driver)
-  - [`0x11` UNREGISTER_DRIVER](#0x11-unregister_driver)
-  - [`0x20` NOTIFY_PROCESS](#0x20-notify_process)
-  - [`0xA0` ASK_DRIVER](#0xa0-ask_driver)
-  - [`0xD0` AUTHORIZE_FS_INTERFACE](#0xd0-authorize_fs_interface)
-  - [`0xD1` UNAUTHORIZE_FS_INTERFACE](#0xd1-unauthorize_fs_interface)
-  - [`0xD2` AUTH_PERFORM_STORAGE](#0xd2-auth_perform_storage)
+  - [`0x0001` ENUM_DEVICES](#0x0001-enum_devices)
+  - [`0x0002` SUBSCRIBE_DEVICES](#0x0002-subscribe_devices)
+  - [`0x1000` REGISTER_DRIVER](#0x1000-register_driver)
+  - [`0x1001` UNREGISTER_DRIVER](#0x1001-unregister_driver)
+  - [`0x2000` NOTIFY_PROCESS](#0x2000-notify_process)
+  - [`0xA000` ASK_DRIVER](#0xa000-ask_driver)
+  - [`0xD000` AUTHORIZE_FS_INTERFACE](#0xd000-authorize_fs_interface)
+  - [`0xD001` UNAUTHORIZE_FS_INTERFACE](#0xd001-unauthorize_fs_interface)
+  - [`0xD002` AUTH_PERFORM_STORAGE](#0xd002-auth_perform_storage)
 - [Notifications](#notifications)
-  - [0x02 `IDENTIFY_DEVICE`](#0x02-identify_device)
-  - [0x03 `DEVICE_EVENT`](#0x03-device_event)
-  - [0x10 `DEVICE_INTERRUPT`](#0x10-device_interrupt)
-  - [0xA0 `DRIVER_METHOD_REQUEST`](#0xa0-driver_method_request)
-  - [0xA1 `DEVICE_NORM_NOTIF`](#0xa1-device_norm_notif)
+  - [0x0002 `IDENTIFY_DEVICE`](#0x0002-identify_device)
+  - [0x0003 `DEVICE_EVENT`](#0x0003-device_event)
+  - [0x1000 `DEVICE_INTERRUPT`](#0x1000-device_interrupt)
+  - [0xA000 `DRIVER_METHOD_REQUEST`](#0xa000-driver_method_request)
+  - [0xA001 `DEVICE_NORM_NOTIF`](#0xa001-device_norm_notif)
 
 ## Hardware detection
 
@@ -92,7 +92,7 @@ The following list contains all possible values for DDTs, but is **far from bein
 
 When a device is driven, other processes can ask this service to use _normalized methods_. These are methods that allow to perform a specific action or to receive [_normalized notifications_](#normalization) about specific events of a specific device.
 
-Also, interrupts are normalized to ensure constancy across devices of the same type. They are sent to the driver processes using the [`DEVICE_EVENT`](#0x10-device_interrupt) notification.
+Also, interrupts are normalized to ensure constancy across devices of the same type. They are sent to the driver processes using the [`DEVICE_EVENT`](#0x1000-device_interrupt) notification.
 
 The normalization of methods, notifications and interrupts is performed by the [driver](#drivers) in charge of the device.
 
@@ -125,19 +125,21 @@ For instance, providing the DTD `0x0100B2` with the DTD pattern indicator set to
 
 ## Drivers
 
-From a higher level point of view, drivers are [services](../../services.md) that declare their parent applications as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x10-register_driver) method, using [patterns](#patterns).
+From a higher level point of view, drivers are [services](../../services.md) that declare their parent applications as being able to handle certain type of devices through the [`REGISTER_DRIVER`](#0x1000-register_driver) method, using [patterns](#patterns).
 
 Registering as a driver for a pattern requires the application to expose the [driver service(s)](../../services.md#types-of-services) relevant to the [DDT](#driven-device-type) provided in the pattern.
 
-When a device is connected, a driver is selected from the list of drivers able to handle this specific device. If the device is connected for the very first time, the selected driver process first receives an [`IDENTIFY_DEVICE`](#0x02-identify_device) notification to translate the [DDRD](#drivable-device-raw-descriptor) into a [DDT](#driven-device-type).
+When a device is connected, a driver is selected from the list of drivers able to handle this specific device. If the device is connected for the very first time, the selected driver process first receives an [`IDENTIFY_DEVICE`](#0x0002-identify_device) notification to translate the [DDRD](#drivable-device-raw-descriptor) into a [DDT](#driven-device-type).
 
-Then, the driver process receives a [`DEVICE_EVENT`](#0x03-device_event) notification, which will also be sent if the status of the device changes.
+Then, the driver process receives a [`DEVICE_EVENT`](#0x0003-device_event) notification, which will also be sent if the status of the device changes.
 
 From this point, the driver process can communicate with the device using its [I/O ports](../../kernel/hardware.md#inputoutput-ports) with the [`READ_IO_PORT`](../../kernel/syscalls.md#0x60-read_io_port) and [`WRITE_IO_PORT`](../../kernel/syscalls.md#0x61-write_io_port) syscalls.
 
 It can also map the device's memory into its own address space using an [AMS](../../kernel/memory.md#abstract-memory-segments) with the [`DEVICE_AMS`](../../kernel/syscalls.md#0x63-device_ams) syscall.
 
-Other processes can then ask the driver to perform specific actions depending on the type of device, using [normalized methods](#normalization) which can be sent to the driver using the [`ASK_DRIVER`](#0xa0-ask_driver) method. The driver receives these informations through the [`DRIVER_METHOD_REQUEST`](#0xa0-driver_method_request) notification.
+Other processes can then ask the driver to perform specific actions depending on the type of device, using [normalized methods](#normalization) which can be sent to the driver using the [`ASK_DRIVER`](#0xa000-ask_driver) method. The driver receives these informations through the [`DRIVER_METHOD_REQUEST`](#0xa000-driver_method_request) notification.
+
+All methods and notifications are transmitted through this service, which performs permission checkings and validates some arguments.
 
 The driver is also in charge of translating the interrupts of a device as well as eventual events polled from its (mapped) memory to [normalized notifications](#normalization) which can then be sent to processes that subscribed to them using the related [normalized methods](#normalization).
 
@@ -170,7 +172,7 @@ In case a specific storage device doesn't require a [dedicated driver](../driver
 
 ## Methods
 
-### `0x01` ENUM_DEVICES
+### `0x0001` ENUM_DEVICES
 
 Enumerate connected devices, reserved to [system services](../../services.md).
 
@@ -193,22 +195,21 @@ It's also possible to only count the number of devices matching the provided cri
 
 **Errors:**
 
-- `0x10`: Start index is lower than the end index
-- `0x11`: Invalid connection type
-- `0x12`: Bus number was provided without a connection type
-- `0x13`: Port number was provided without a connection type
-- `0x14`: Both bus number and port number were provided
-- `0x15`: Invalid DTD
-- `0x20`: Client is not a [system service](README.md)
-- `0x21`: Range is greater than the available answer size
-- `0x22`: Provided bus was not found
-- `0x23`: Provided port was not found
+- `0x1000`: Start index is lower than the end index
+- `0x1001`: Invalid connection type
+- `0x1002`: Bus number was provided without a connection type
+- `0x1003`: Port number was provided without a connection type
+- `0x1004`: Invalid DTD
+- `0x1005`: Range is greater than the available answer size
+- `0x3000`: Client is not a [system service](README.md)
+- `0x3001`: Provided bus was not found
+- `0x3002`: Provided port was not found
 
-### `0x02` SUBSCRIBE_DEVICES
+### `0x0002` SUBSCRIBE_DEVICES
 
 Subscribe to events related to devices matching a patterns, reserved to [system services](README.md).
 
-All current and future devices matching this pattern will cause a [`DEVICE_EVENT`](#0x03-device_event) notification.
+All current and future devices matching this pattern will cause a [`DEVICE_EVENT`](#0x0003-device_event) notification.
 
 **Required permission:** `devices.subscribe`
 
@@ -223,17 +224,17 @@ _None_
 
 **Errors:**
 
-- `0x20`: Client is not a [system service](README.md)
-- `0x21`: Asked to unsubscribe but no subscription is active for this pattern
+- `0x3000`: Client is not a [system service](README.md)
+- `0x3001`: Asked to unsubscribe but no subscription is active for this pattern
 
-### `0x10` REGISTER_DRIVER
+### `0x1000` REGISTER_DRIVER
 
 Set up a service as a driver for all devices matching a pattern.  
 If multiple drivers have colliding patterns, the final user will be prompted to choose a driver.  
 
-When a new device is connected, the driver process will receive an [`IDENTIFY_DEVICE`](#0x02-identify_device) notification to translate the [DDRD](#drivable-device-raw-descriptor) into a [DDT](#driven-device-type).
+When a new device is connected, the driver process will receive an [`IDENTIFY_DEVICE`](#0x0002-identify_device) notification to translate the [DDRD](#drivable-device-raw-descriptor) into a [DDT](#driven-device-type).
 
-The driver process will receive [`DEVICE_EVENT`](#0x03-device_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
+The driver process will receive [`DEVICE_EVENT`](#0x0003-device_event) notifications for drivable devices. This notification will only be sent for devices for which the system chose this driver as the main one.  
 Notifications are also retroactive, which means they will be sent for already-connected devices.
 
 The driver will also have the device registered in its [drivable devices attribute](../../kernel/processes.md#drivable-devices), allowing it to use the [`DEVICE_AMS`](../../kernel/syscalls.md#0x63-device_ams) syscall to map the device's memory in its own.
@@ -250,13 +251,13 @@ _None_
 
 **Errors:**
 
-- `0x20`: Current process is not a service
-- `0x30`: Process' parent application does not expose the relevant [integration services](../../services.md#types-of-services)
-- `0x31`: Current process is already registered as a driver for this pattern
+- `0x3000`: Current process is not a service
+- `0x3001`: Process' parent application does not expose the relevant [integration services](../../services.md#types-of-services)
+- `0x3002`: Current process is already registered as a driver for this pattern
 
-### `0x11` UNREGISTER_DRIVER
+### `0x1001` UNREGISTER_DRIVER
 
-Unregister a service [previously registered as a driver](#0x10-register_driver).
+Unregister a service [previously registered as a driver](#0x1000-register_driver).
 
 **Required permission:** _None_
 
@@ -266,9 +267,9 @@ Unregister a service [previously registered as a driver](#0x10-register_driver).
 
 **Errors:**
 
-- `0x30`: Current process is not registered as a driver for this pattern
+- `0x3000`: Current process is not registered as a driver for this pattern
 
-### `0x20` NOTIFY_PROCESS
+### `0x2000` NOTIFY_PROCESS
 
 Send a notification to a process that registered itself for [normalized methods](#normalization) through a [normalized method](#normalization).
 
@@ -285,9 +286,9 @@ _Expected answer by the notified process for this method if any_
 
 **Errors:**
 
-- `0x20`: Unknown notification ID
+- `0x3000`: Unknown notification ID
 
-### `0xA0` ASK_DRIVER
+### `0xA000` ASK_DRIVER
 
 Ask a [driver](#drivers) to use a [normalized method](#normalization) on a device it drives.
 
@@ -307,12 +308,12 @@ _Expected answer format for this method_
 
 **Errors:**
 
-- `0x20`: Client is not a [system service](README.md)
-- `0x21`: Unknown device UDI provided
-- `0x22`: Provided method code is invalid for this device
-- `0x23`: Invalid arguments provided for this method
+- `0x3000`: Client is not a [system service](README.md)
+- `03x001`: Unknown device UDI provided
+- `0x3002`: Provided method code is invalid for this device
+- `0x3003`: Invalid arguments provided for this method
 
-### `0xD0` AUTHORIZE_FS_INTERFACE
+### `0xD000` AUTHORIZE_FS_INTERFACE
 
 Authorize a [filesystem interface](../integration/filesystem-interfaces.md) to access a specific part of a storage device.
 
@@ -326,19 +327,19 @@ The interface service will be allowed to perform requests on the provided storag
 
 **Answer:**
 
-- Authorization token (8 bytes) to use with [`UNAUTHORIZE_FS_INTERFACE`](#0xd1-unauthorize_fs_interface)
+- Authorization token (8 bytes) to use with [`UNAUTHORIZE_FS_INTERFACE`](#0xd001-unauthorize_fs_interface)
 
 **Errors:**
 
-- `0x20`: Client is not the [`sys::fs`](fs.md) service
-- `0x21`: Unknown device UDI provided
-- `0x22`: Start byte is not aligned on the device's sectors
-- `0x23`: End byte is not aligned on the device's sectors
-- `0x24`: End byte is greater than or equal to the start byte
+- `0x3000`: Client is not the [`sys::fs`](fs.md) service
+- `0x3001`: Unknown device UDI provided
+- `0x3002`: Start byte is not aligned on the device's sectors
+- `0x3003`: End byte is not aligned on the device's sectors
+- `0x3004`: End byte is greater than or equal to the start byte
 
-### `0xD1` UNAUTHORIZE_FS_INTERFACE
+### `0xD001` UNAUTHORIZE_FS_INTERFACE
 
-Unauthorize a [filesystem interface](../integration/filesystem-interfaces.md) authorization created using the [`AUTHORIZE_FS_INTERFACE`](#0xd0-authorize_fs_interface) method.
+Unauthorize a [filesystem interface](../integration/filesystem-interfaces.md) authorization created using the [`AUTHORIZE_FS_INTERFACE`](#0xd000-authorize_fs_interface) method.
 
 **Arguments:**
 
@@ -346,14 +347,14 @@ Unauthorize a [filesystem interface](../integration/filesystem-interfaces.md) au
 
 **Errors:**
 
-- `0x20`: Client is not the [`sys::fs`](fs.md) service
-- `0x21`: Unknown authorization token provided
+- `0x3000`: Client is not the [`sys::fs`](fs.md) service
+- `0x3001`: Unknown authorization token provided
 
-### `0xD2` AUTH_PERFORM_STORAGE
+### `0xD002` AUTH_PERFORM_STORAGE
 
-Used by [filesystem interfaces](../integration/filesystem-interfaces.md) which received an [authorization](#0xd0-authorize_fs_interface) beforehand.
+Used by [filesystem interfaces](../integration/filesystem-interfaces.md) which received an [authorization](#0xd000-authorize_fs_interface) beforehand.
 
-Perform an action just like with the [`ASK_DRIVER`](#0xa0-ask_driver) method, but restricted to the authorization's scope.
+Perform an action just like with the [`ASK_DRIVER`](#0xa000-ask_driver) method, but restricted to the authorization's scope.
 
 **Arguments:**
 
@@ -367,11 +368,11 @@ _Expected answer format for this method_
 
 **Errors:**
 
-- `0x20`: The provided authorization token is unknown or not tied to this client
+- `0x3000`: The provided authorization token is unknown or not tied to this client
 
 ## Notifications
 
-### 0x02 `IDENTIFY_DEVICE`
+### 0x0002 `IDENTIFY_DEVICE`
 
 Sent for a specific device the client that was [selected as its driver](#driver-selection).
 
@@ -385,15 +386,15 @@ Sent for a specific device the client that was [selected as its driver](#driver-
 
 **Errors:**
 
-- `0x20`: The provided DTD is invalid
-- `0x21`: The client does not expose the [driver service](../drivers/README.md) relevant to this type of device
+- `0x3000`: The provided DTD is invalid
+- `0x3001`: The client does not expose the [driver service](../drivers/README.md) relevant to this type of device
 
-### 0x03 `DEVICE_EVENT`
+### 0x0003 `DEVICE_EVENT`
 
 Sent for a specific device to clients that either:
 
 - [Drives](#driver-selection) this specific device
-- Subscribed to it using the [`SUBSCRIBE_DEVICES`](#0x02-subscribe_devices) method
+- Subscribed to it using the [`SUBSCRIBE_DEVICES`](#0x0002-subscribe_devices) method
 
 **Datafield:**
 
@@ -413,7 +414,7 @@ Sent for a specific device to clients that either:
   - Bit 1: set if this device was disconnected brutally (not by the system itself)
   - Bit 2: set if this device is connected for the first time on this specific port
 
-### 0x10 `DEVICE_INTERRUPT`
+### 0x1000 `DEVICE_INTERRUPT`
 
 Sent to a [driver](#drivers) after a device it's currently driving raised an interrupt.
 
@@ -422,13 +423,13 @@ Sent to a [driver](#drivers) after a device it's currently driving raised an int
 - Device's [UDI](#unique-device-identifier) (8 bytes)
 - [Normalized interrupt](#normalization)
 
-### 0xA0 `DRIVER_METHOD_REQUEST`
+### 0xA000 `DRIVER_METHOD_REQUEST`
 
-Sent to a [driver](#drivers) after receiving a valid [normalized method request](#0xa0-ask_driver).
+Sent to a [driver](#drivers) after receiving a valid [normalized method request](#0xa000-ask_driver).
 
 The driver is expected to answer using the relevant answer format for the provided [normalized method and arguments](#normalization).
 
-The _notification ID_ is generated by this service to allow the driver to [send normalized notifications](#0x20-notify_process) to a process that registers for it through this method without showing the caller process' PID to the driver process.
+The _notification ID_ is generated by this service to allow the driver to [send normalized notifications](#0x2000-notify_process) to a process that registers for it through this method without showing the caller process' PID to the driver process.
 
 **Datafield:**
 
@@ -441,10 +442,10 @@ The _notification ID_ is generated by this service to allow the driver to [send 
 
 _Expected answer format for this method if any_
 
-### 0xA1 `DEVICE_NORM_NOTIF`
+### 0xA001 `DEVICE_NORM_NOTIF`
 
 Sent to a process that subscribed to [normalized notifications](#normalization) of a device.  
-This notification is transferred by the `sys::hw` service after the driver sent it its content through the [`NOTIFY_PROCESS`](#0x20-notify_process) method.
+This notification is transferred by the `sys::hw` service after the driver sent it its content through the [`NOTIFY_PROCESS`](#0x2000-notify_process) method.
 
 **Datafield:**
 

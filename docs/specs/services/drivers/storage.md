@@ -6,7 +6,7 @@ As an application can only expose one single storage driver service, the said se
 
 ## Methods
 
-### `0x01` STORAGE_INFOS
+### `0x1001` STORAGE_INFOS
 
 Get the storage's informations.
 
@@ -24,7 +24,7 @@ Get the storage's informations.
 
 _None_
 
-### `0x10` READ_SYNC
+### `0x1100` READ_SYNC
 
 Synchronously read a suite of sectors.
 
@@ -40,14 +40,14 @@ Synchronously read a suite of sectors.
 
 **Errors:**
 
-- `0x31`: Start sector is out-of-bounds
-- `0x32`: End sector is out-of-bounds
+- `0x3000`: Start sector is out-of-bounds
+- `0x3001`: End sector is out-of-bounds
 
-### `0x11` READ_ASYNC
+### `0x1101` READ_ASYNC
 
 Asynchronously read a suite of sectors to a writable [abstract memory segment (AMS)](../../kernel/memory.md#abstract-memory-segments).
 
-When the task completes, the [`SECTORS_READ`](#0x11-sectors_read) notification must be sent to the client.
+When the task completes, the [`SECTORS_READ`](#0x1101-sectors_read) notification must be sent to the client.
 
 **Arguments:**
 
@@ -61,10 +61,10 @@ When the task completes, the [`SECTORS_READ`](#0x11-sectors_read) notification m
 
 **Errors:**
 
-- `0x31`: Start sector is out-of-bounds
-- `0x32`: End sector is out-of-bounds
+- `0x3000`: Start sector is out-of-bounds
+- `0x3001`: End sector is out-of-bounds
 
-### `0x20` WRITE_SYNC
+### `0x1200` WRITE_SYNC
 
 Synchronously write a suite of sectors.
 
@@ -82,14 +82,14 @@ _None_
 
 **Errors:**
 
-- `0x31`: Start sector is out-of-bounds
-- `0x32`: End sector is out-of-bounds
+- `0x3000`: Start sector is out-of-bounds
+- `0x3001`: End sector is out-of-bounds
 
-### `0x21` WRITE_ASYNC
+### `0x1201` WRITE_ASYNC
 
 Asynchronously write a suite of sectors from an [abstract memory segment (AMS)](../../kernel/memory.md#abstract-memory-segments).
 
-When the task completes, the [`SECTORS_WRITTEN`](#0x21-sectors_written) notification must be sent to the client.
+When the task completes, the [`SECTORS_WRITTEN`](#0x1201-sectors_written) notification must be sent to the client.
 
 The content to write is guaranteed to be aligned with the sectors' size.
 
@@ -105,29 +105,29 @@ The content to write is guaranteed to be aligned with the sectors' size.
 
 **Errors:**
 
-- `0x31`: Start sector is out-of-bounds
-- `0x32`: End sector is out-of-bounds
+- `0x3000`: Start sector is out-of-bounds
+- `0x3001`: End sector is out-of-bounds
 
 ## Notifications
 
-### `0x11` SECTORS_READ
+### `0x1101` SECTORS_READ
 
-Sent to a client after an asynchronous sectors reading requested using the [`READ_ASYNC`](#0x11-read_async) method completed.
+Sent to a client after an asynchronous sectors reading requested using the [`READ_ASYNC`](#0x1101-read_async) method completed.
 
 **Datafield:**
 
 - Task identifier (8 bytes)
 - [Fallible result](../../kernel/data-structures.md#fallible-results) with:
   - Success data: number of bytes read (8 bytes)
-  - Error code (1 byte): _None_
+  - Error code (2 bytes): _None_
 
-### `0x21` SECTORS_WRITTEN
+### `0x1201` SECTORS_WRITTEN
 
-Sent to a client after an asynchronous sectors writing requested using the [`WRITE_ASYNC`](#0x21-write_async) method completed.
+Sent to a client after an asynchronous sectors writing requested using the [`WRITE_ASYNC`](#0x1201-write_async) method completed.
 
 **Datafield:**
 
 - Task identifier (8 bytes)
 - [Fallible result](../../kernel/data-structures.md#fallible-results) with:
   - Success data: _None_
-  - Error code (1 byte): _None_
+  - Error code (2 bytes): _None_

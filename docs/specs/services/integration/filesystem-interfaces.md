@@ -8,6 +8,42 @@ Most [methods](#methods) and [notifications](#notifications) of filesystems inte
 
 As an application can only expose one single filesystem interface service, the said service will handle all of the hardware devices driven by the said process. This is why the the [SOR](#storage-operating-range) of the target partition and filesystem is provided for each request.
 
+- [Nomenclature](#nomenclature)
+  - [Storage operating range](#storage-operating-range)
+  - [Filesystem paths](#filesystem-paths)
+  - [Split paths](#split-paths)
+  - [Filenames](#filenames)
+  - [Capabilities list](#capabilities-list)
+  - [Filesystem metadata](#filesystem-metadata)
+  - [Item type byte](#item-type-byte)
+  - [Item flags](#item-flags)
+  - [Item metadata](#item-metadata)
+- [Methods](#methods)
+  - [`0x0001` HANDLED_FS_LIST](#0x0001-handled_fs_list)
+  - [`0x0002` IS_VALID_PARTITION](#0x0002-is_valid_partition)
+  - [`0x0003` FS_METADATA](#0x0003-fs_metadata)
+  - [`0x1000` ITEM_EXISTS](#0x1000-item_exists)
+  - [`0x1001` FEID_TO_SPLIT](#0x1001-feid_to_split)
+  - [`0x1002` ITEM_METADATA](#0x1002-item_metadata)
+  - [`0x1003` RENAME_ITEM](#0x1003-rename_item)
+  - [`0x1004` MOVE_ITEM](#0x1004-move_item)
+  - [`0x1005` DELETE_ITEM](#0x1005-delete_item)
+  - [`0x2000` CREATE_DIRECTORY](#0x2000-create_directory)
+  - [`0x2001` READ_DIRECTORY](#0x2001-read_directory)
+  - [`0x3000` CREATE_FILE](#0x3000-create_file)
+  - [`0x3001` READ_FILE_SYNC](#0x3001-read_file_sync)
+  - [`0x3002` READ_FILE_ASYNC](#0x3002-read_file_async)
+  - [`0x3003` WRITE_FILE_SYNC](#0x3003-write_file_sync)
+  - [`0x3004` WRITE_FILE_ASYNC](#0x3004-write_file_async)
+  - [`0x4000` CREATE_SYMLINK](#0x4000-create_symlink)
+  - [`0x4001` UPDATE_SYMLINK](#0x4001-update_symlink)
+  - [`0x4002` READ_SYMLINK](#0x4002-read_symlink)
+  - [`0xF000` FORMAT_ASYNC](#0xf000-format_async)
+- [Notifications](#notifications)
+  - [`0x3002` FILE_READ](#0x3002-file_read)
+  - [`0x3004` FILE_WRITTEN](#0x3004-file_written)
+  - [`0xF000` FORMATTED](#0xf000-formatted)
+
 ## Nomenclature
 
 ### Storage operating range
@@ -19,12 +55,12 @@ It is composed of:
 - The device's [UDI](../system/hw.md#unique-device-identifier) (8 bytes)
 - The partition's first byte address on the device (8 bytes)
 - The partition's last byte address on the device (8 bytes)
-- [Authorization token](../system/hw.md#0xd0-authorize_fs_interface) (8 bytes)
+- [Authorization token](../system/hw.md#0xd000-authorize_fs_interface) (8 bytes)
 - The filesystem's [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 
 The FSID is only useful to identify partitions more easily, and to inform clients in [notifications](#notifications).
 
-All SOR sent to the interface service are guaranteed to follow this specification, but may be invalid in case of a bad timing (e.g. authorization is [revoked](../system/hw.md#0xd1-unauthorize_fs_interface) just before a request is performed).
+All SOR sent to the interface service are guaranteed to follow this specification, but may be invalid in case of a bad timing (e.g. authorization is [revoked](../system/hw.md#0xd001-unauthorize_fs_interface) just before a request is performed).
 
 ### Filesystem paths
 
@@ -129,7 +165,7 @@ An _item metadata_ is a structure describing the content of a single item in a f
 
 ## Methods
 
-### `0x01` HANDLED_FS_LIST
+### `0x0001` HANDLED_FS_LIST
 
 Get informations about each filesystem handled by the current interface.
 
@@ -145,7 +181,7 @@ _None_
 
 _none_
 
-### `0x02` IS_VALID_PARTITION
+### `0x0002` IS_VALID_PARTITION
 
 Check if a given partition is of the type of filesystem handled by the current interface.
 
@@ -162,7 +198,7 @@ Check if a given partition is of the type of filesystem handled by the current i
 
 _None_
 
-### `0x03` FS_METADATA
+### `0x0003` FS_METADATA
 
 Get metadata on a given filesystem.
 
@@ -176,9 +212,9 @@ Get metadata on a given filesystem.
 
 **Error codes:**
 
-- `0x20`: Invalid SOR provided
+- `0x3000`: Invalid SOR provided
 
-### `0x10` ITEM_EXISTS
+### `0x1000` ITEM_EXISTS
 
 Check if a given item exists.
 
@@ -194,9 +230,9 @@ Check if a given item exists.
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
+- `0x3000`: Invalid SOR provided
 
-### `0x11` FEID_TO_SPLIT
+### `0x1001` FEID_TO_SPLIT
 
 Convert a [FEID](../../filesystem.md#element-unique-identifier) to the corresponding [split path](#split-paths).
 
@@ -211,10 +247,10 @@ Convert a [FEID](../../filesystem.md#element-unique-identifier) to the correspon
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: The provided FEID was not found in the filesystem
+- `0x3000`: Invalid SOR provided
+- `0x3001`: The provided FEID was not found in the filesystem
 
-### `0x12` ITEM_METADATA
+### `0x1002` ITEM_METADATA
 
 Get the metadata of a given item.
 
@@ -229,10 +265,10 @@ Get the metadata of a given item.
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: The provided path was not found
+- `0x3000`: Invalid SOR provided
+- `0x3001`: The provided path was not found
 
-### `0x13` RENAME_ITEM
+### `0x1003` RENAME_ITEM
 
 Rename an existing item.
 
@@ -244,11 +280,11 @@ Rename an existing item.
 
 **Errors:**
 
-- `0x10`: Invalid filename provided
-- `0x20`: Invalid SOR provided
-- `0x31`: The provided path was not foud
+- `0x3000`: Invalid filename provided
+- `0x3001`: Invalid SOR provided
+- `0x3002`: The provided path was not foud
 
-### `0x14` MOVE_ITEM
+### `0x1004` MOVE_ITEM
 
 Move an existing item.
 
@@ -261,17 +297,17 @@ Move an existing item.
 
 **Errors:**
 
-- `0x10`: Invalid filename provided
-- `0x20`: Invalid SOR provided
-- `0x31`: The provided path was not found
-- `0x32`: Target directory was not found
-- `0x33`: Target directory's maximum capacity has been reached
-- `0x34`: Maximum nested items number has been reached
-- `0x35`: Maximum path length has been reached
-- `0x36`: Item cannot be moved for unspecified reasons
-- `0x40`: Unspecified filesystem error
+- `0x1000`: Invalid filename provided
+- `0x3000`: Invalid SOR provided
+- `0x3001`: The provided path was not found
+- `0x3002`: Target directory was not found
+- `0x4000`: Target directory's maximum capacity has been reached
+- `0x4001`: Maximum nested items number has been reached
+- `0x4002`: Maximum path length has been reached
+- `0x4003`: Item cannot be moved for unspecified reasons
+- `0x4FFF`: Unspecified filesystem error
 
-### `0x15` DELETE_ITEM
+### `0x1005` DELETE_ITEM
 
 Delete an item.
 
@@ -286,12 +322,12 @@ _None_
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: Item was not found
-- `0x32`: Cannot remove a non-empty directory
-- `0x40`: Unspecified filesystem error
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Item was not found
+- `0x3002`: Cannot remove a non-empty directory
+- `0x4FFF`: Unspecified filesystem error
 
-### `0x20` CREATE_DIRECTORY
+### `0x2000` CREATE_DIRECTORY
 
 Create a directory.
 
@@ -307,15 +343,15 @@ _None_
 
 **Errors:**
 
-- `0x10`: Invalid filename provided
-- `0x20`: Invalid SOR provided
-- `0x31`: Parent directory was not found
-- `0x32`: Directory's maximum capacity has been reached
-- `0x33`: Maximum nested items number has been reached
-- `0x34`: Maximum path length has been reached
-- `0x40`: Unspecified filesystem error
+- `0x1000`: Invalid filename provided
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Parent directory was not found
+- `0x4000`: Directory's maximum capacity has been reached
+- `0x4001`: Maximum nested items number has been reached
+- `0x4002`: Maximum path length has been reached
+- `0x4FFF`: Unspecified filesystem error
 
-### `0x21` READ_DIRECTORY
+### `0x2001` READ_DIRECTORY
 
 List all entries in a directory.
 
@@ -337,11 +373,11 @@ If the number of items to get is larger than the number of entries in the direct
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: Directory was not found
-- `0x40`: Unspecified filesystem error
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Directory was not found
+- `0x4FFF`: Unspecified filesystem error
 
-### `0x30` CREATE_FILE
+### `0x3000` CREATE_FILE
 
 Create a file.
 
@@ -362,19 +398,18 @@ _None_
 
 **Errors:**
 
-- `0x10`: Invalid filename provided
-- `0x20`: Invalid SOR provided
-- `0x31`: Parent directory was not found
-- `0x32`: Directory's maximum capacity has been reached
-- `0x33`: Maximum nested items number has been reached
-- `0x34`: Maximum path length has been reached
-- `0x35`: Storage's capacity exceeded
-- `0x36`: Maximum individual file size exceeded
-- `0x37`: Filesystem's free space exceeded
-- `0x38`: Unspecified filesystem error
-- `0x40`: Unspecified filesystem error
+- `0x1000`: Invalid filename provided
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Parent directory was not found
+- `0x4000`: Directory's maximum capacity has been reached
+- `0x4001`: Maximum nested items number has been reached
+- `0x4002`: Maximum path length has been reached
+- `0x4003`: Storage's capacity exceeded
+- `0x4004`: Maximum individual file size exceeded
+- `0x4005`: Filesystem's free space exceeded
+- `0x4FFF`: Unspecified filesystem error
 
-### `0x31` READ_FILE_SYNC
+### `0x3001` READ_FILE_SYNC
 
 Read a file synchronously.
 
@@ -394,17 +429,17 @@ If no read length is provided, the whole file must be read.
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: Start offset is out-of-range
-- `0x40`: Unspecified filesystem error
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Start offset is out-of-range
+- `0x4FFF`: Unspecified filesystem error
 
-### `0x32` READ_FILE_ASYNC
+### `0x3002` READ_FILE_ASYNC
 
 Asynchronously read a file to a writable [abstract memory segment (AMS)](../../kernel/memory.md#abstract-memory-segments).
 
 THe number of bytes to read is always provided to ensure it does not accidentally exceed the AMS's size.
 
-When the read is complete, a [`FILE_READ`](#0x32-file_read) notification must be sent to the client.
+When the read is complete, a [`FILE_READ`](#0x3002-file_read) notification must be sent to the client.
 
 **Arguments:**
 
@@ -420,11 +455,11 @@ When the read is complete, a [`FILE_READ`](#0x32-file_read) notification must be
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: Invalid AMS ID provided
-- `0x40`: Unspecified filesystem error
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Invalid AMS ID provided
+- `0x4FFF`: Unspecified filesystem error
 
-### `0x33` WRITE_FILE_SYNC
+### `0x3003` WRITE_FILE_SYNC
 
 Synchronously write a buffer to a file.
 
@@ -444,20 +479,20 @@ _None_
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: Offset is out-of-range
-- `0x32`: Storage's capacity exceeded
-- `0x33`: Maximum individual file size exceeded
-- `0x34`: Filesystem's free space exceeded
-- `0x40`: Unspecified filesystem error
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Offset is out-of-range
+- `0x4000`: Storage's capacity exceeded
+- `0x4001`: Maximum individual file size exceeded
+- `0x4002`: Filesystem's free space exceeded
+- `0x4FFF`: Unspecified filesystem error
 
-### `0x34` WRITE_FILE_ASYNC
+### `0x3004` WRITE_FILE_ASYNC
 
 Asynchronously write a readable [abstract memory segment (AMS)](../../kernel/memory.md#abstract-memory-segments) to a file.
 
 If no offset address is provided, the file's content must be completely overriden with the provided buffer.
 
-When the writing is complete, a [`FILE_WRITTEN`](#0x34-file_written) notification must be sent to the client. The notification **must not** be sent before the current method returned successfully.
+When the writing is complete, a [`FILE_WRITTEN`](#0x3004-file_written) notification must be sent to the client. The notification **must not** be sent before the current method returned successfully.
 
 **Arguments:**
 
@@ -473,11 +508,11 @@ When the writing is complete, a [`FILE_WRITTEN`](#0x34-file_written) notificatio
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: Invalid AMS ID provided
-- `0x40`: Unspecified filesystem error
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Invalid AMS ID provided
+- `0x4FFF`: Unspecified filesystem error
 
-### `0x40` CREATE_SYMLINK
+### `0x4000` CREATE_SYMLINK
 
 Create a [symbolic link](../../filesystem.md#symbolic-links).
 
@@ -495,17 +530,17 @@ _None_
 
 **Errors:**
 
-- `0x10`: Invalid filename provided
-- `0x20`: Invalid SOR provided
-- `0x31`: Parent directory was not found
-- `0x32`: Directory's maximum capacity has been reached
-- `0x33`: Maximum nested items number has been reached
-- `0x34`: Maximum path length has been reached
-- `0x35`: Storage's capacity exceeded
-- `0x36`: Cannot create symbolic links to cross-filesystem items
-- `0x37`: Cannot create symbolic links to non-existing items
+- `0x1000`: Invalid filename provided
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Parent directory was not found
+- `0x3002`: Cannot create symbolic links to cross-filesystem items
+- `0x3003`: Cannot create symbolic links to non-existing items
+- `0x4000`: Directory's maximum capacity has been reached
+- `0x4001`: Maximum nested items number has been reached
+- `0x4002`: Maximum path length has been reached
+- `0x4003`: Storage's capacity exceeded
 
-### `0x41` UPDATE_SYMLINK
+### `0x4001` UPDATE_SYMLINK
 
 Create a [symbolic link](../../filesystem.md#symbolic-links).
 
@@ -522,12 +557,12 @@ _None_
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: Provided path was not found
-- `0x32`: Cannot crate symbolic links to cross-filesystem items
-- `0x33`: Cannot crate symbolic links to non-existing items
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Provided path was not found
+- `0x3002`: Cannot crate symbolic links to cross-filesystem items
+- `0x3003`: Cannot crate symbolic links to non-existing items
 
-### `0x42` READ_SYMLINK
+### `0x4002` READ_SYMLINK
 
 Read a [symbolic link](../../filesystem.md#symbolic-links)'s target.
 
@@ -543,11 +578,11 @@ Read a [symbolic link](../../filesystem.md#symbolic-links)'s target.
 
 **Errors:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: Provided path was not found
-- `0x32`: Symbolic link is cyclic
+- `0x3000`: Invalid SOR provided
+- `0x3001`: Provided path was not found
+- `0x4000`: Symbolic link is cyclic
 
-### `0xF0` FORMAT_ASYNC
+### `0xF000` FORMAT_ASYNC
 
 Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, 
 
@@ -562,14 +597,14 @@ Asynchronously format the partition to get an empty filesystem. Once the formatt
 
 **Error codes:**
 
-- `0x20`: Invalid SOR provided
-- `0x31`: Invalid sector size provided
+- `0x1000`: Invalid sector size provided
+- `0x3000`: Invalid SOR provided
 
 ## Notifications
 
-### `0x32` FILE_READ
+### `0x3002` FILE_READ
 
-Sent to a client after an asynchronous file reading requested using the [`READ_FILE_ASYNC`](#0x32-read_file_async) method completed.
+Sent to a client after an asynchronous file reading requested using the [`READ_FILE_ASYNC`](#0x3002-read_file_async) method completed.
 
 **Datafield:**
 
@@ -580,9 +615,9 @@ Sent to a client after an asynchronous file reading requested using the [`READ_F
     - `0x20`: Start offset is out-of-range
     - `0x40`: Unspecified filesystem error
 
-### `0x34` FILE_WRITTEN
+### `0x3004` FILE_WRITTEN
 
-Sent to a client after an asynchronous file writing requested using the [`WRITE_FILE_ASYNC`](#0x34-write_file_async) method completed.
+Sent to a client after an asynchronous file writing requested using the [`WRITE_FILE_ASYNC`](#0x3004-write_file_async) method completed.
 
 **Datafield:**
 
@@ -595,9 +630,9 @@ Sent to a client after an asynchronous file writing requested using the [`WRITE_
     - `0x32`: Filesystem's free space exceeded
     - `0x40`: Unspecified filesystem error
 
-### `0xF0` FORMATTED
+### `0xF000` FORMATTED
 
-Sent to a client after an formatting requested using the [`FORMAT_ASYC`](#0xf0-format_async) method completed.
+Sent to a client after an formatting requested using the [`FORMAT_ASYC`](#0xf000-format_async) method completed.
 
 **Datafield:**
 

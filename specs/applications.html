@@ -1,0 +1,463 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Applications - NightOS documentation</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Design and specification documents for NightOS">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../FOREWORD.html"><strong aria-hidden="true">1.</strong> Foreword</a></li><li class="chapter-item expanded "><a href="../FAQ.html"><strong aria-hidden="true">2.</strong> Frequently-asked questions</a></li><li class="chapter-item expanded "><a href="../project/index.html"><strong aria-hidden="true">3.</strong> Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../project/roadmap.html"><strong aria-hidden="true">3.1.</strong> Roadmap</a></li><li class="chapter-item expanded "><a href="../project/development.html"><strong aria-hidden="true">3.2.</strong> Development</a></li><li class="chapter-item expanded "><a href="../project/hw-requirements.html"><strong aria-hidden="true">3.3.</strong> Hardware requirements</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/applications.html"><strong aria-hidden="true">4.1.</strong> What are applications?</a></li><li class="chapter-item expanded "><a href="../concepts/libraries.html"><strong aria-hidden="true">4.2.</strong> What are libraries?</a></li><li class="chapter-item expanded "><a href="../concepts/users.html"><strong aria-hidden="true">4.3.</strong> What are users?</a></li></ol></li><li class="chapter-item expanded "><a href="../features/index.html"><strong aria-hidden="true">5.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../features/balancer.html"><strong aria-hidden="true">5.1.</strong> The balancer</a></li><li class="chapter-item expanded "><a href="../features/crash-saves.html"><strong aria-hidden="true">5.2.</strong> Crash saves</a></li><li class="chapter-item expanded "><a href="../features/domains.html"><strong aria-hidden="true">5.3.</strong> Domains</a></li><li class="chapter-item expanded "><a href="../features/encryption.html"><strong aria-hidden="true">5.4.</strong> Encryption</a></li><li class="chapter-item expanded "><a href="../features/freeze-prevention.html"><strong aria-hidden="true">5.5.</strong> Freeze-prevention system</a></li><li class="chapter-item expanded "><a href="../features/parental-control.html"><strong aria-hidden="true">5.6.</strong> Parental control</a></li><li class="chapter-item expanded "><a href="../features/sandboxes.html"><strong aria-hidden="true">5.7.</strong> Sandboxes</a></li><li class="chapter-item expanded "><a href="../features/synchronization.html"><strong aria-hidden="true">5.8.</strong> Synchronization</a></li></ol></li><li class="chapter-item expanded "><a href="../technical/index.html"><strong aria-hidden="true">6.</strong> Technical</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../technical/overview.html"><strong aria-hidden="true">6.1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="../technical/controller.html"><strong aria-hidden="true">6.2.</strong> The controller</a></li><li class="chapter-item expanded "><a href="../technical/dev-mode.html"><strong aria-hidden="true">6.3.</strong> Developer mode</a></li><li class="chapter-item expanded "><a href="../technical/devices.html"><strong aria-hidden="true">6.4.</strong> Devices</a></li><li class="chapter-item expanded "><a href="../technical/file-formats.html"><strong aria-hidden="true">6.5.</strong> File formats</a></li><li class="chapter-item expanded "><a href="../technical/integrity-checker.html"><strong aria-hidden="true">6.6.</strong> Integrity checker</a></li><li class="chapter-item expanded "><a href="../technical/io-manager.html"><strong aria-hidden="true">6.7.</strong> I/O manager</a></li><li class="chapter-item expanded "><a href="../technical/multi-platform.html"><strong aria-hidden="true">6.8.</strong> Multi-platform management</a></li><li class="chapter-item expanded "><a href="../technical/performances.html"><strong aria-hidden="true">6.9.</strong> Performances</a></li><li class="chapter-item expanded "><a href="../technical/pre-compiling.html"><strong aria-hidden="true">6.10.</strong> Pre-compiling applications</a></li><li class="chapter-item expanded "><a href="../technical/processes.html"><strong aria-hidden="true">6.11.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../technical/registry.html"><strong aria-hidden="true">6.12.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../technical/services.html"><strong aria-hidden="true">6.13.</strong> Services</a></li><li class="chapter-item expanded "><a href="../technical/shell.html"><strong aria-hidden="true">6.14.</strong> The shell</a></li></ol></li><li class="chapter-item expanded "><a href="../ux/index.html"><strong aria-hidden="true">7.</strong> User Experience</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ux/desktop-environment.html"><strong aria-hidden="true">7.1.</strong> Desktop environments</a></li><li class="chapter-item expanded "><a href="../ux/notifications.html"><strong aria-hidden="true">7.2.</strong> Notifications</a></li><li class="chapter-item expanded "><a href="../ux/sound.html"><strong aria-hidden="true">7.3.</strong> Sound</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/index.html"><strong aria-hidden="true">8.</strong> Specifications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/applications-libraries.html"><strong aria-hidden="true">8.1.</strong> Applications and libraries</a></li><li class="chapter-item expanded "><a href="../specs/applications.html" class="active"><strong aria-hidden="true">8.2.</strong> Applications</a></li><li class="chapter-item expanded "><a href="../specs/filesystem.html"><strong aria-hidden="true">8.3.</strong> Filesystem</a></li><li class="chapter-item expanded "><a href="../specs/storage-permissions-map.html"><strong aria-hidden="true">8.4.</strong> Storage permissions map</a></li><li class="chapter-item expanded "><a href="../specs/libraries.html"><strong aria-hidden="true">8.5.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../specs/registry.html"><strong aria-hidden="true">8.6.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../specs/vocabulary.html"><strong aria-hidden="true">8.7.</strong> Vocabulary</a></li><li class="chapter-item expanded "><a href="../specs/shell.html"><strong aria-hidden="true">8.8.</strong> The shell</a></li><li class="chapter-item expanded "><a href="../specs/shell-scripting.html"><strong aria-hidden="true">8.9.</strong> Shell scripting</a></li><li class="chapter-item expanded "><a href="../specs/services.html"><strong aria-hidden="true">8.10.</strong> Services</a></li><li class="chapter-item expanded "><a href="../specs/kernel/index.html"><strong aria-hidden="true">8.11.</strong> Kernel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/kernel/hardware.html"><strong aria-hidden="true">8.11.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="../specs/kernel/memory.html"><strong aria-hidden="true">8.11.2.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../specs/kernel/processes.html"><strong aria-hidden="true">8.11.3.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../specs/kernel/scheduling.html"><strong aria-hidden="true">8.11.4.</strong> Scheduling</a></li><li class="chapter-item expanded "><a href="../specs/kernel/data-structures.html"><strong aria-hidden="true">8.11.5.</strong> Data structures</a></li><li class="chapter-item expanded "><a href="../specs/kernel/kpc.html"><strong aria-hidden="true">8.11.6.</strong> Kernel-process communication</a></li><li class="chapter-item expanded "><a href="../specs/kernel/ipc.html"><strong aria-hidden="true">8.11.7.</strong> Inter-process communication</a></li><li class="chapter-item expanded "><a href="../specs/kernel/signals.html"><strong aria-hidden="true">8.11.8.</strong> Signals</a></li><li class="chapter-item expanded "><a href="../specs/kernel/syscalls.html"><strong aria-hidden="true">8.11.9.</strong> System calls</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/integration/index.html"><strong aria-hidden="true">8.12.</strong> Integration services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/integration/desktop-environments.html"><strong aria-hidden="true">8.12.1.</strong> Desktop environments</a></li><li class="chapter-item expanded "><a href="../specs/services/integration/file-managers.html"><strong aria-hidden="true">8.12.2.</strong> File managers</a></li><li class="chapter-item expanded "><a href="../specs/services/integration/file-openers.html"><strong aria-hidden="true">8.12.3.</strong> File openers</a></li><li class="chapter-item expanded "><a href="../specs/services/integration/filesystem-interfaces.html"><strong aria-hidden="true">8.12.4.</strong> Filesystem interfaces</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/drivers/index.html"><strong aria-hidden="true">8.13.</strong> Driver services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/drivers/storage.html"><strong aria-hidden="true">8.13.1.</strong> Storage driver service</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/system/index.html"><strong aria-hidden="true">8.14.</strong> System services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/system/fs.html"><strong aria-hidden="true">8.14.1.</strong> sys::fs</a></li><li class="chapter-item expanded "><a href="../specs/services/system/fsh.html"><strong aria-hidden="true">8.14.2.</strong> sys::fsh</a></li><li class="chapter-item expanded "><a href="../specs/services/system/hw.html"><strong aria-hidden="true">8.14.3.</strong> sys::hw</a></li><li class="chapter-item expanded "><a href="../specs/services/system/perm.html"><strong aria-hidden="true">8.14.4.</strong> sys::perm</a></li><li class="chapter-item expanded "><a href="../specs/services/system/net.html"><strong aria-hidden="true">8.14.5.</strong> sys::net</a></li><li class="chapter-item expanded "><a href="../specs/services/system/crypto.html"><strong aria-hidden="true">8.14.6.</strong> sys::crypto</a></li><li class="chapter-item expanded "><a href="../specs/services/system/crashsave.html"><strong aria-hidden="true">8.14.7.</strong> sys::crashsave</a></li><li class="chapter-item expanded "><a href="../specs/services/system/flow.html"><strong aria-hidden="true">8.14.8.</strong> sys::flow</a></li><li class="chapter-item expanded "><a href="../specs/services/system/hydre.html"><strong aria-hidden="true">8.14.9.</strong> sys::hydre</a></li><li class="chapter-item expanded "><a href="../specs/services/system/app.html"><strong aria-hidden="true">8.14.10.</strong> sys::app</a></li><li class="chapter-item expanded "><a href="../specs/services/system/process.html"><strong aria-hidden="true">8.14.11.</strong> sys::process</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../applications/index.html"><strong aria-hidden="true">9.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../applications/Astral.html"><strong aria-hidden="true">9.1.</strong> Astral</a></li><li class="chapter-item expanded "><a href="../applications/BareEnv.html"><strong aria-hidden="true">9.2.</strong> BareEnv</a></li><li class="chapter-item expanded "><a href="../applications/Blackhole.html"><strong aria-hidden="true">9.3.</strong> Blackhole</a></li><li class="chapter-item expanded "><a href="../applications/Central.html"><strong aria-hidden="true">9.4.</strong> Central</a></li><li class="chapter-item expanded "><a href="../applications/Cloudy.html"><strong aria-hidden="true">9.5.</strong> Cloudy</a></li><li class="chapter-item expanded "><a href="../applications/Comet.html"><strong aria-hidden="true">9.6.</strong> Comet</a></li><li class="chapter-item expanded "><a href="../applications/Gravity.html"><strong aria-hidden="true">9.7.</strong> Gravity</a></li><li class="chapter-item expanded "><a href="../applications/Locky.html"><strong aria-hidden="true">9.8.</strong> Locky</a></li><li class="chapter-item expanded "><a href="../applications/Milkshake.html"><strong aria-hidden="true">9.9.</strong> Milkshake</a></li><li class="chapter-item expanded "><a href="../applications/Monitor.html"><strong aria-hidden="true">9.10.</strong> Monitor</a></li><li class="chapter-item expanded "><a href="../applications/Nova.html"><strong aria-hidden="true">9.11.</strong> Nova</a></li><li class="chapter-item expanded "><a href="../applications/Particle.html"><strong aria-hidden="true">9.12.</strong> Particle</a></li><li class="chapter-item expanded "><a href="../applications/Pluton.html"><strong aria-hidden="true">9.13.</strong> Pluton</a></li><li class="chapter-item expanded "><a href="../applications/Postal.html"><strong aria-hidden="true">9.14.</strong> Postal</a></li><li class="chapter-item expanded "><a href="../applications/Reader.html"><strong aria-hidden="true">9.15.</strong> Reader</a></li><li class="chapter-item expanded "><a href="../applications/Registry.html"><strong aria-hidden="true">9.16.</strong> Registry</a></li><li class="chapter-item expanded "><a href="../applications/Rocket.html"><strong aria-hidden="true">9.17.</strong> Rocket</a></li><li class="chapter-item expanded "><a href="../applications/ShootingStar.html"><strong aria-hidden="true">9.18.</strong> ShootingStar</a></li><li class="chapter-item expanded "><a href="../applications/Skyer.html"><strong aria-hidden="true">9.19.</strong> Skyer</a></li><li class="chapter-item expanded "><a href="../applications/Sonata.html"><strong aria-hidden="true">9.20.</strong> Sonata</a></li><li class="chapter-item expanded "><a href="../applications/Stellar.html"><strong aria-hidden="true">9.21.</strong> Stellar</a></li><li class="chapter-item expanded "><a href="../applications/Thinker.html"><strong aria-hidden="true">9.22.</strong> Thinker</a></li><li class="chapter-item expanded "><a href="../applications/TimeTravel.html"><strong aria-hidden="true">9.23.</strong> TimeTravel</a></li><li class="chapter-item expanded "><a href="../applications/Vortex.html"><strong aria-hidden="true">9.24.</strong> Vortex</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NightOS documentation</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="applications"><a class="header" href="#applications">Applications</a></h1>
+<p>This document describes application-specific structure and behaviour. For common reference, see the <a href="applications-libraries.html">applications and libraries</a> document.</p>
+<ul>
+<li><a href="#application-package">Application package</a>
+<ul>
+<li><a href="#content">Content</a></li>
+<li><a href="#pre-compiled-applications">Pre-compiled applications</a></li>
+<li><a href="#libraries-embedding">Libraries embedding</a></li>
+<li><a href="#values-encoding">Values encoding</a></li>
+<li><a href="#returning-and-failing">Returning and failing</a></li>
+<li><a href="#volatile-applications">Volatile applications</a></li>
+</ul>
+</li>
+<li><a href="#application-manifest">Application manifest</a></li>
+<li><a href="#commands">Commands</a>
+<ul>
+<li><a href="#example">Example</a></li>
+</ul>
+</li>
+<li><a href="#execution-context">Execution Context</a>
+<ul>
+<li><a href="#startup-reason">Startup Reason</a></li>
+<li><a href="#context-header">Context header</a></li>
+<li><a href="#arguments-structure">Arguments structure</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="application-package"><a class="header" href="#application-package">Application package</a></h2>
+<p>Application packages are files that have either the <code>.nap</code> (NightOS Application Package) or <code>.nva</code> (NightOS Volatile Application).</p>
+<h3 id="content"><a class="header" href="#content">Content</a></h3>
+<p>NAP and NVA files are ZStandard archives which only requirement is to contain, at the archive's root, a <code>manifest.toml</code> file describing the archive itself, a <code>hash.md5</code> ensuring the archive has not been corrupted.</p>
+<p>They are built around a <em>manifest</em> which can be found <a href="#application-manifest">below</a>.</p>
+<h3 id="pre-compiled-applications"><a class="header" href="#pre-compiled-applications">Pre-compiled applications</a></h3>
+<p>By default, and if possible, the system will always try to install <a href="../technical/pre-compiling.html">pre-compiled programs</a> from applications' package. If the pre-compiled programs are not available, it will be built from source code - which takes a lot more time.</p>
+<h3 id="libraries-embedding"><a class="header" href="#libraries-embedding">Libraries embedding</a></h3>
+<p>Although it's a better practice to split applications and libraries into different packages, sometimes it's more easy to embed both in the same package, especially in two cases:</p>
+<ul>
+<li>When the application is just a thin layer ahead of the library (e.g. CLI tool)</li>
+<li>When the library's API changes rapidly and the application relies on it</li>
+</ul>
+<p>For such scenarios, it's possible for an application package to embed one or more libraries, and publish them all at once.</p>
+<p>The application's and libraries' version may differ if required.</p>
+<p>If an another application or a library specifies one of the embedded libraries as a dependency, only the said library will be installed, not the application.</p>
+<h3 id="values-encoding"><a class="header" href="#values-encoding">Values encoding</a></h3>
+<p>The application's startup arguments and output value use the following encoding:</p>
+<ul>
+<li>The return value's length (8 bytes) ;</li>
+<li>The value's <a href="shell-scripting.html#value-types">shell type</a> code (see the table below) ;</li>
+<li>The encoded value (see the table below)</li>
+</ul>
+<table><thead><tr><th>Type code</th><th>Type</th><th>Description</th><th>Representation</th></tr></thead><tbody>
+<tr><td><code>0x00</code></td><td><code>void</code></td><td>Void</td><td>nothing</td></tr>
+<tr><td><code>0x01</code></td><td><code>bool</code></td><td>Boolean</td><td>1 byte, <code>0x00</code> = falsy, <code>0x01</code> = truthy</td></tr>
+<tr><td><code>0x02</code></td><td><code>int</code></td><td>64-bit signed integer number</td><td>Two's complement</td></tr>
+<tr><td><code>0x03</code></td><td><code>float</code></td><td>64-bit signed floating-point number</td><td><a href="https://standards.ieee.org/standard/754-2019.html">IEEE 754</a></td></tr>
+<tr><td><code>0x04</code></td><td><code>char</code></td><td>UTF-8 grapheme cluster</td><td>Character's length (8 bytes), followed by the UTF-8 grapheme cluster</td></tr>
+<tr><td><code>0x05</code></td><td><code>string</code></td><td>UTF-8 string</td><td>String's length (8 bytes), followed by the UTF-8 encoded string</td></tr>
+<tr><td><code>0x06</code></td><td><code>list</code></td><td>Typed linear list</td><td>Type code of the list's number of items (1 byte), length in bytes (64 bits), encoded items</td></tr>
+<tr><td><code>0x07</code></td><td><code>path</code></td><td>Filesystem path</td><td>Represented as an UTF-8 string</td></tr>
+<tr><td><code>0x08</code></td><td><code>command</code></td><td>Shell command</td><td>Represented as an UTF-8 string</td></tr>
+<tr><td><code>0x09</code></td><td><code>stream</code></td><td><a href="kernel/ipc.html#pipes">Pipe RC</a></td><td>RC identifier (8 bytes)</td></tr>
+</tbody></table>
+<p>The type code is present to avoid misinterpreting the value in case the command returned a value of the wrong type.</p>
+<h3 id="returning-and-failing"><a class="header" href="#returning-and-failing">Returning and failing</a></h3>
+<p>The value must be returned using the <a href="kernel/ipc.html#interactive-usage">CMDOUT</a> pipe. The data sent through this pipe must follow the above <a href="#values-encoding">encoding</a>.</p>
+<p>A command may also fail. To indicate so, the process must send the <code>0xFF</code> value through the pipe, and the shell will consider the command as failed (but not invalid, so the process won't be abruptly killed).</p>
+<h3 id="volatile-applications"><a class="header" href="#volatile-applications">Volatile applications</a></h3>
+<p><a href="../concepts/applications.html#volatile-applications">Volatile applications</a> cannot expose commands globally as they are technically not installed.<br />
+They can though be used in shell scripts through <a href="shell-scripting.html#volatile-imports">volatile imports</a>.</p>
+<h2 id="application-manifest"><a class="header" href="#application-manifest">Application manifest</a></h2>
+<p>Here is the specifications of the application manifest, in additional to the <a href="applications-libraries.html#the-manifest">common manifest</a>:</p>
+<pre><code class="language-yaml"># [OPT] Event triggers
+events:
+  # [OPT] Should the application start just after being installed?
+  postinstall: false
+  # [OPT] Should the application start just before being uninstalled?
+  preuninstall: false
+  # [OPT] Should the application start just before being updated?
+  preupdate: false
+  # [OPT] Should the application start just after being updated?
+  postupdate: false
+
+# [OPT] Exposed commands (see the related document for additional informations)
+commands: {}
+
+# [OPT] Does the application expose services?
+services:
+  # [REQ] Does the application expose a main service?
+  main: false
+  # [REQ] List of scoped services
+  scoped: []
+  # [REQ] List of integration services
+  integration:
+    # [OPT] Desktop environment service
+    desktop_env: false
+    # [OPT] File manager service
+    file_manager: false
+    # [OPT] Filesystem opener service
+    fs_items_opener: false
+    # [OPT] Filesystem interface
+    fs_interface: false
+  # [REQ] List of driver services
+  driver:
+    # [OPT] Storage driver service
+    storage: false
+
+# [OPT] Additional informations
+additional:
+  # [OPT] Available languages (in a list of existing languages)
+  languages: [&quot;en-US&quot;]
+</code></pre>
+<h2 id="commands"><a class="header" href="#commands">Commands</a></h2>
+<p>Applications can expose commands through their <a href="#application-manifest">manifest</a>.</p>
+<p>The format is the same as the <a href="shell-scripting.html#commands-typing">shell's command typing</a>, although adapted to YAML:</p>
+<ul>
+<li>The <code>pos</code> or <code>dash</code> indicator is turned into a (required) <code>syntax</code> option</li>
+<li>The <code>optional</code> indicator becomes a boolean that must be set to <code>true</code></li>
+<li>The <code>void</code> type is forbidden</li>
+</ul>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<pre><code class="language-yaml"># [...beginning of the manifest...]
+commands:
+  say_hello:
+    help: &quot;A program that repeats the name of a list of person&quot;
+    author: &quot;Me &lt;my@email&gt;&quot; # Optional
+    license: &quot;MIT&quot; # Optional
+    return: void
+    args:
+      # Declare a positional argument named 'names' with a help text
+      names:
+        syntax: pos
+        type: list[string]
+        help: &quot;List of names to display&quot;
+
+      # Declare a dash argument named 'repeat'
+      repeat:
+        syntax: dash
+        type: int
+        short: r
+        long: repeat
+        optional: true
+
+      # Return the time this command took to complete
+      get-duration:
+        syntax: flag
+        short: d
+        long: duration
+        $if:
+          cond: present()
+          return: void
+# [...end of the manifest...]
+</code></pre>
+<h2 id="execution-context"><a class="header" href="#execution-context">Execution Context</a></h2>
+<p>An application's <em>execution context</em> is a piece of data that is provided when the application starts.<br />
+It indicates why the application was started and so what it is supposed to do.</p>
+<h3 id="startup-reason"><a class="header" href="#startup-reason">Startup Reason</a></h3>
+<p>The most important information is the <em>startup reason</em>, which indicates <em>why</em> the application was started.</p>
+<p>It is one-byte long, and is made of the following bits (starting from the strongest):</p>
+<ul>
+<li>Bits 0-3:
+<ul>
+<li><code>0x1</code>: the application was started as part of its post-installation process</li>
+<li><code>0x2</code>: the application was started as part of its pre-update process</li>
+<li><code>0x3</code>: the application was started as part of its post-update process</li>
+<li><code>0x4</code>: the application was started as part of its pre-uninstallation process</li>
+<li><code>0x4</code>: the application was started by the system as an <a href="../concepts/applications.html#services">application service</a></li>
+<li><code>0x5</code>: the application was started by the desktop environment</li>
+<li><code>0x6</code>: the application was started by itself (from another process of the same application)</li>
+<li><code>0x7</code>: the application was started by another application</li>
+<li><code>0x8</code>: the application was started using one its exposed <a href="../concepts/applications.html#commands">shell commands</a></li>
+<li><code>0x9</code>: the application was started as a <a href="../ux/desktop-environment.html">desktop environment</a></li>
+</ul>
+</li>
+<li>Bit 4: set if the application was started automatically after a crash/improver shutdown and should to the <a href="services/system/crashsave.html"><code>sys::crashsave</code></a> service to get a crashsave</li>
+<li>Bit 5: set if the application's raw output (CMDRAW) will be read (e.g. through the use of a <a href="shell-scripting.html#reading-a-commands-output">shell operator</a>)</li>
+</ul>
+<p>The startup reason is especially important as it determines what the application should do (e.g. uninstall itself, run as a command...) but also if it should output data through its CMDRAW in case it was called by a command.</p>
+<h3 id="context-header"><a class="header" href="#context-header">Context header</a></h3>
+<p>The context header is stored as a single block of data, consisting of:</p>
+<ul>
+<li>The startup reason (1 byte)</li>
+<li>Ambiant informations (1 byte)
+<ul>
+<li>Bit 0: set if the application is starting for the very first time since it was installed</li>
+<li>Bit 1: set if the application is starting for the very first time for this specific user</li>
+<li>Bit 2: set if the application is starting for the very first time as this specific service</li>
+<li>Bit 3: set if the application is starting for the first time after an update</li>
+<li>Bit 4: set if other instances of this application are running</li>
+</ul>
+</li>
+<li>Special assignment information (1 byte)
+<ul>
+<li>Bit 0: set if the application is starting for the first time after being assigned as the new desktop environment</li>
+<li>Bit 1: set if the application is starting for the first time after being assigned as the new default file manager</li>
+</ul>
+</li>
+<li>Service type (1 byte):
+<ul>
+<li><code>0x00</code>: this process is not run as a service</li>
+<li><code>0x01</code>: this process is run as the application's main service</li>
+<li><code>0x02</code>: this process is run as an application's scoped service</li>
+<li><code>0x10</code>: this process is run as the application's <a href="services/integration/desktop-environments.html">desktop environment service</a></li>
+<li><code>0x11</code>: this process is run as the application's <a href="services/integration/file-managers.html">file manager service</a></li>
+<li><code>0x12</code>: this process is run as the application's <a href="services/integration/file-openers.html">file opener service</a></li>
+</ul>
+</li>
+<li>Scoped service's name (8 bytes) - filled with zeroes if the process is not run as a scoped service</li>
+<li>The application's <a href="applications-libraries.html#application-identifier">ANID</a> (4 bytes)</li>
+</ul>
+<p>If the command was started as a command, it also contains the following informations:</p>
+<ul>
+<li>The ANID of the caller application (4 bytes)</li>
+<li>The number of arguments the process was started with (1 byte)</li>
+<li>The cumulated size of all arguments, in bytes - up to 63.5 KB (2 bytes)</li>
+<li>RC identifier for the CMDIN pipe (8 bytes)</li>
+<li>RC identifier for the CMDUSR pipe (8 bytes)</li>
+<li>SC identifier for the CMDMSG pipe (8 bytes)</li>
+<li>SC identifier for the CMDERR pipe (8 bytes)</li>
+<li>SC identifier for the CMDRAW pipe (8 bytes)</li>
+<li>SC identifier for the CMDOUT pipe (8 bytes)</li>
+<li><em>Future-proof shift space</em> (196 bytes)</li>
+</ul>
+<h3 id="arguments-structure"><a class="header" href="#arguments-structure">Arguments structure</a></h3>
+<p>The context header is followed by the list of each command-line argument, taking up to 64 KB.</p>
+<p>Arguments are a simple concatenation of <a href="#values-encoding">encoded values</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../specs/applications-libraries.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../specs/filesystem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../specs/applications-libraries.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../specs/filesystem.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

@@ -32,7 +32,7 @@ Virtual storage files have the `.vsf` extension and are opened using [Blackhole]
 
 ## Application packages
 
-Applications can be installed from standalone files called [application packages](../specs/applications/package.md).
+Applications can be installed from standalone files called [application packages](../specs/applications.md#application-package).
 Installable applications have the `.nap` (NightOS Application Package) extension, while volatile applications have the `.nva` (NightOS Volatile Application) one.
 
 They are opened using [Skyer](../applications/Skyer.md).

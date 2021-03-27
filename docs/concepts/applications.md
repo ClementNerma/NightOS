@@ -23,7 +23,7 @@ Administrator users can install global applications, which are available to ever
 
 ## Installation methods
 
-Applications are installed through an [_application package_](../specs/applications/package.md) via [Skyer](../applications/Skyer.md), the applications manager. There are several installation methods:
+Applications are installed through an [_application package_](../specs/applications.md#application-package) via [Skyer](../applications/Skyer.md), the applications manager. There are several installation methods:
 
 - From the store
 - Directly from the application's package ([_sideloading_](#sideloading))
@@ -40,7 +40,7 @@ For the latter, user can choose either to build the program from source, using t
 
 ### Sideloading
 
-Applications sideloading (installing an application directly from its [package](../specs/applications/package.md)) follows strict rules determined by the _sideloading mode_, which is either "disabled", "secure" or "unsecure".
+Applications sideloading (installing an application directly from its [package](../specs/applications.md#application-package)) follows strict rules determined by the _sideloading mode_, which is either "disabled", "secure" or "unsecure".
 
 **Disable mode** prevents all sideloading ; it's not possible to install applications from their package in this mode. [Volatile applications](#volatile-applications) can stil be run, though.
 
@@ -82,7 +82,7 @@ This is quite a long name but allows to prevent any clashing between commands. I
 
 Note that, by default, shell prompts (not scripts) will allow to directly use commands such as `get_time` in the short form if no other application exposes a command with the same name.
 
-Commands work by launching the application with a specific [context](../specs/applications/context.md).
+Commands work by launching the application with a specific [execution context](../specs/applications.md#execution-context).
 
 ## System applications
 
@@ -99,7 +99,7 @@ These applications can be updated independently of the system itself, thus their
 
 ## Services
 
-Application can provide [services](../technical/services.md) by specifying them in their [manifest](../specs/applications/manifest.md).
+Application can provide [services](../technical/services.md) by specifying them in their [manifest](../specs/applications.md#application-manifest).
 The services will be run at startup with the usual application's permissions.
 
 There is exactly one process for each service per active user.

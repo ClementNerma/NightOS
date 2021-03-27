@@ -45,7 +45,7 @@ It also displays informations on processes, services, and sum for applications w
 - Approximate battery consumption
 - [Process identifier](../specs/kernel/processes.md#process-identifier)
 - Command-line arguments (when started as a command)
-- [Application context](../specs/applications/context.md) (if applicable)
+- [Execution context](../specs/applications.md#execution-context) (if applicable)
 - Process priority
 - Number of threads
 - Number of file handles

@@ -12,11 +12,11 @@ There are two default DEA: [Nova](../applications/Nova.md), and [BareEnv](../app
 
 The former acts as the default, reference and recommanded DE of NightOS, while the latter is for servers and other computers without a graphical output. It only supports text-based workflows, which limits it to command-line usage.
 
-An application can register itself as a DEA by exposing a `SYS_DENV` service in its [manifest](../specs/applications/manifest.md).
+An application can register itself as a DEA by exposing a `SYS_DENV` service in its [manifest](../specs/applications.md#execution-context).
 
 ## Permissions
 
-A [DEA](#desktop-environment-applications) does not require specific permissions in order to work ; it only requires to expose a [specific integration service](../specs/services/integration/desktop-environments.md) in its [manifest](../specs/applications/manifest.md).
+A [DEA](#desktop-environment-applications) does not require specific permissions in order to work ; it only requires to expose a [specific integration service](../specs/services/integration/desktop-environments.md) in its [manifest](../specs/applications.md#execution-context).
 
 ## Display layers
 

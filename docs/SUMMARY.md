@@ -39,9 +39,8 @@
   - [Notifications](ux/notifications.md)
   - [Sound](ux/sound.md)
 - [Specifications](specs/README.md)
-  - [Application context](specs/applications/context.md) - launch an application to directly perform a specific task
-  - [Applications package](specs/applications/package.md) - files representing a whole application
-  - [Applications manifest](specs/applications/manifest.md) - how applications describe themselves in their package
+  - [Applications and libraries](specs/applications-libraries.md) - what applications and libraries are
+  - [Applications](specs/applications.md) - how applications are structured and behave
   - [Filesystem](specs/filesystem.md) - how the filesystem works
   - [Storage permissions map](specs/storage-permissions-map.md) - how permissions are managed on filesystem elements
   - [Libraries](specs/libraries.md) - what are libraries

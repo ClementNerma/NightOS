@@ -28,7 +28,7 @@ Applications exposing integration services get special recognition for the tasks
 
 Applications have exactly one running process per service, and each service has exactly one running instance per active user, to prevent a user to connect to the service of a user with more privileges than itself. System services, on their side, only have one global instance.
 
-An application process can tell if it was started as a service or not by looking at its [execution context](applications/context.md#execution-context).
+An application process can tell if it was started as a service or not by looking at its [execution context](applications.md#execution-context).
 
 Once a service process indicates it's ready using the [`READY`](kernel/syscalls.md#0x04-ready) syscall, other processes will be able to _connect_ to this service.
 

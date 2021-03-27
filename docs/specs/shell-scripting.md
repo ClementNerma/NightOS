@@ -1230,7 +1230,7 @@ cmd_z # ERROR (not in namespace)
 
 ### Volatile imports
 
-As [volatile applications](../concepts/applications.md#volatile-applications)' commands [are not exposed globally](applications/commands.md#volatile-applications), there is a special import syntax for such applications, allowing to import their commands directly from their [application package](applications/package.md):
+As [volatile applications](../concepts/applications.md#volatile-applications)' commands [are not exposed globally](applications.md#volatile-applications), there is a special import syntax for such applications, allowing to import their commands directly from their [application package](applications.md#application-package):
 
 ```hydre
 import ./app.nva::super_command

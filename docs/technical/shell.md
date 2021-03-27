@@ -9,7 +9,7 @@ The _shell_, called _Hydre_, is the part that interprets scripts.
 ## Commands
 
 Hydre works using _commands_, which can take _arguments_.
-When running a command which comes from an applications which [expose it](../concepts/applications.md#commands), the said application is run in a new process which uses its [execution context](../specs/applications/context.md#execution-context).
+When running an application's [exposed command](../concepts/applications.md#commands), the said application is run in a new process with a specific [execution context](../specs/applications.md#execution-context).
 
 The special thing about running an application from one of its exposed commands is that its CMDIN, CMDUSR, CMDMSG, CMDERR, CMDOUT and CMDRAW pipes are exposed to the caller.
 

@@ -5,9 +5,7 @@ Think of these as reference documents - they are not meant to be easily understo
 For more informations about low-level concepts these documents refer to, you can check the [technical documents](../technical/README.md) first.
 
 - [Applications and libraries](applications-libraries.md) - document describing common things between applications and libraries
-- [Application context](applications/context.md) - launch an application to directly perform a specific task
-- [Applications package](applications/package.md) - files representing a whole application
-- [Applications manifest](applications/manifest.md) - how applications describe themselves in their package
+- [Applications](applications.md) - how applications are structured and behave
 - [Filesystem](filesystem.md) - how the filesystem works
 - [Storage permissions map](storage-permissions-map.md) - how permissions are managed on filesystem elements
 - [Libraries](libraries.md) - what are libraries

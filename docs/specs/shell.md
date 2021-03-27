@@ -50,7 +50,7 @@ Commands are evaluated one by one, as scripts cannot be run in a concurrent way.
 
 ## Command pipes
 
-When an application is started from a command, its [execution context](applications/context.md#execution-context) indicates it and the process gets access to several pipes called the _command pipes_:
+When an application is started from a command, its [execution context](applications.md#execution-context) indicates it and the process gets access to several pipes called the _command pipes_:
 
 | Pipe identifier | Standard pipe name | Pipe type | Format  | Description                                                                                                |
 | --------------- | ------------------ | --------- | ------- | ---------------------------------------------------------------------------------------------------------- |
@@ -61,7 +61,7 @@ When an application is started from a command, its [execution context](applicati
 | CMDRAW          | Raw bytes          | Raw       | Raw     | Output data, which will be redirected if an output pipe (`>`) is used                                      |
 | CMDOUT          | Typed output       | Raw       | _typed_ | Typed output data, which will be used by [shell scripts](shell-scripting.md))                              |
 
-The SC/RC identifiers of these pipes are available in the application's [context](applications/context.md).
+The SC/RC identifiers of these pipes are available in the application's [execution context](applications.md#execution-context).
 
 The process that launched the command gets the ability to:
 

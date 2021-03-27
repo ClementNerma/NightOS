@@ -725,7 +725,7 @@ Create a child process from the current one. The new process gets a separate mem
 
 Communication can be done through [standard IPC](ipc.md).
 
-The initialization data is joined as part of the [application's context](../applications/context.md).
+The initialization data is joined as part of the application's [execution context](../applications.md#execution-context).
 
 **Arguments:**
 
@@ -1093,7 +1093,7 @@ _None_
 
 ### `0xA0` EXECUTION_CONTEXT
 
-Get informations from the application's [execution context](../applications/context.md).
+Get informations from the application's [execution context](../applications.md#execution-context).
 
 **Arguments:**
 
@@ -1123,7 +1123,7 @@ Create a [userland process](processes.md#types-of-processes).
 **Arguments:**
 
 - Code location token from the [`sys::fs`](../services/system/fs.md) service
-- [Application context](../applications/context.md)
+- Application's [execution context](../applications.md#execution-context)
 
 **Return value:**
 

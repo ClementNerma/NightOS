@@ -1711,7 +1711,65 @@ It indicates why the application was started and so what it is supposed to do.</
 <p>Globally installed applications (located in <code>/apps</code>) can store user-specific data in <code>/home/[user]/appdata/[appname]</code>, which will only be made of the <code>data</code>, <code>crashsaves</code> and <code>sandboxes</code> folder.</p>
 <h1 id="storage-permissions-map-1"><a class="header" href="#storage-permissions-map-1">Storage permissions map</a></h1>
 <p>The <strong>Storage Permissions Map</strong>, or <strong>SPM</strong>, is a non-contiguous data structure used to control access for every user of a computer or <a href="specs/../features/domains.html">domain</a>.</p>
-<p><strong>TODO</strong></p>
+<p>It may be located anywhere in the filesystem.</p>
+<h2 id="header"><a class="header" href="#header">Header</a></h2>
+<p>The SPM's header is a contiguous block located at its beginning.</p>
+<p>It is made of the following:</p>
+<ul>
+<li>Number of pages (8 bytes)</li>
+<li>Address of the first page (8 bytes) - <code>0</code> if none</li>
+<li>Address of the last page (8 bytes) - <code>0</code> if none</li>
+</ul>
+<h2 id="pages-header"><a class="header" href="#pages-header">Pages' header</a></h2>
+<p>Each page is made of a contiguous header (data block) made of the following:</p>
+<ul>
+<li>Maximum number of entries (capacity) (8 bytes)</li>
+<li>Number of free entries (8 bytes)</li>
+<li>Address of the previous page (8 bytes) - <code>0</code> if none</li>
+<li>Address of the next page (8 bytes) - <code>0</code> if none</li>
+</ul>
+<h2 id="entries"><a class="header" href="#entries">Entries</a></h2>
+<p>Each page contains a set of entries, which may be split on the disk. An entry is made of the following:</p>
+<ul>
+<li>Number of entities described in the entry (8 bytes)</li>
+<li>For each entity:
+<ul>
+<li>Entity type (1 byte):
+<ul>
+<li><code>0x01</code>: <a href="specs/../concepts/users.html">User</a></li>
+<li><code>0x02</code>: <a href="specs/../concepts/users.html#groups">Group</a></li>
+</ul>
+</li>
+<li>Entity ID (8 bytes)</li>
+<li><a href="specs/storage-permissions-map.html#permission-levels">Permission levels</a>
+<ul>
+<li>Bits 00-01: List directory's content</li>
+<li>Bits 02-03: Read files</li>
+<li>Bits 04-05: Create new items</li>
+<li>Bits 06-07: Edit items</li>
+<li>Bits 08-09: Delete items</li>
+<li>Bits 10-11: Read metadata</li>
+<li>Bits 12-13: Write metadata</li>
+<li>Bits 14-15: Change owner</li>
+<li>Bits 16-17: Edit SPM permissions</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>An item's owner will have all of these permissions set by default.</p>
+<h2 id="permission-levels"><a class="header" href="#permission-levels">Permission levels</a></h2>
+<p>A <em>permission level</em> is a 2-bit value which can either be:</p>
+<ul>
+<li><code>0b00</code>: inherit from the parent entity / from the system's settings</li>
+<li><code>0b01</code>: refuse for this specific item</li>
+<li><code>0b02</code>: allow for this item, recursively</li>
+<li><code>0b03</code>: allow for this item but only for content owned by the referred entity, recursively</li>
+</ul>
+<h2 id="file-table-pointer"><a class="header" href="#file-table-pointer">File table pointer</a></h2>
+<p>Unless a filesystem does not support it, nor natively or through the use of extended attributes, each file and directory's entry must contain the address of its entry in the SPM, with <code>0</code> indicating no entry exists for it.</p>
+<p>When the item is created, no entry is created for it by default. It's only when permissions are set for the item that an entry is made and referenced in the file table.</p>
+<p>When the entry is cleared, it is destroyed and the <code>0</code> value is assigned back to the file table entry's SPM pointer.</p>
 <h1 id="libraries-1"><a class="header" href="#libraries-1">Libraries</a></h1>
 <p>Libraries are NightOS' way to share code between multiple applications.</p>
 <ul>

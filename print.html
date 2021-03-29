@@ -1727,10 +1727,17 @@ It indicates why the application was started and so what it is supposed to do.</
 <li>Number of free entries (8 bytes)</li>
 <li>Address of the previous page (8 bytes) - <code>0</code> if none</li>
 <li>Address of the next page (8 bytes) - <code>0</code> if none</li>
+<li>For each entry:
+<ul>
+<li>Address of the entry (8 bytes)</li>
+</ul>
+</li>
 </ul>
 <h2 id="entries"><a class="header" href="#entries">Entries</a></h2>
 <p>Each page contains a set of entries, which may be split on the disk. An entry is made of the following:</p>
 <ul>
+<li>Address of the page referencing this entry (8 bytes)</li>
+<li>Entry index in the page referencing it (8 bytes)</li>
 <li>Number of entities described in the entry (8 bytes)</li>
 <li>For each entity:
 <ul>
@@ -1758,6 +1765,7 @@ It indicates why the application was started and so what it is supposed to do.</
 </li>
 </ul>
 <p>An item's owner will have all of these permissions set by default.</p>
+<p>An entry's content must be contiguous ; if it grows too large to fit inside its allocated space when updated, it must be moved somewhere else.</p>
 <h2 id="permission-levels"><a class="header" href="#permission-levels">Permission levels</a></h2>
 <p>A <em>permission level</em> is a 2-bit value which can either be:</p>
 <ul>

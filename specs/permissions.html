@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Permissions - NightOS documentation</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Design and specification documents for NightOS">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../FOREWORD.html"><strong aria-hidden="true">1.</strong> Foreword</a></li><li class="chapter-item expanded "><a href="../FAQ.html"><strong aria-hidden="true">2.</strong> Frequently-asked questions</a></li><li class="chapter-item expanded "><a href="../project/index.html"><strong aria-hidden="true">3.</strong> Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../project/roadmap.html"><strong aria-hidden="true">3.1.</strong> Roadmap</a></li><li class="chapter-item expanded "><a href="../project/development.html"><strong aria-hidden="true">3.2.</strong> Development</a></li><li class="chapter-item expanded "><a href="../project/hw-requirements.html"><strong aria-hidden="true">3.3.</strong> Hardware requirements</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/applications.html"><strong aria-hidden="true">4.1.</strong> What are applications?</a></li><li class="chapter-item expanded "><a href="../concepts/libraries.html"><strong aria-hidden="true">4.2.</strong> What are libraries?</a></li><li class="chapter-item expanded "><a href="../concepts/users.html"><strong aria-hidden="true">4.3.</strong> What are users?</a></li></ol></li><li class="chapter-item expanded "><a href="../features/index.html"><strong aria-hidden="true">5.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../features/balancer.html"><strong aria-hidden="true">5.1.</strong> The balancer</a></li><li class="chapter-item expanded "><a href="../features/crash-saves.html"><strong aria-hidden="true">5.2.</strong> Crash saves</a></li><li class="chapter-item expanded "><a href="../features/domains.html"><strong aria-hidden="true">5.3.</strong> Domains</a></li><li class="chapter-item expanded "><a href="../features/encryption.html"><strong aria-hidden="true">5.4.</strong> Encryption</a></li><li class="chapter-item expanded "><a href="../features/freeze-prevention.html"><strong aria-hidden="true">5.5.</strong> Freeze-prevention system</a></li><li class="chapter-item expanded "><a href="../features/parental-control.html"><strong aria-hidden="true">5.6.</strong> Parental control</a></li><li class="chapter-item expanded "><a href="../features/sandboxes.html"><strong aria-hidden="true">5.7.</strong> Sandboxes</a></li><li class="chapter-item expanded "><a href="../features/synchronization.html"><strong aria-hidden="true">5.8.</strong> Synchronization</a></li></ol></li><li class="chapter-item expanded "><a href="../technical/index.html"><strong aria-hidden="true">6.</strong> Technical</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../technical/overview.html"><strong aria-hidden="true">6.1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="../technical/controller.html"><strong aria-hidden="true">6.2.</strong> The controller</a></li><li class="chapter-item expanded "><a href="../technical/dev-mode.html"><strong aria-hidden="true">6.3.</strong> Developer mode</a></li><li class="chapter-item expanded "><a href="../technical/devices.html"><strong aria-hidden="true">6.4.</strong> Devices</a></li><li class="chapter-item expanded "><a href="../technical/file-formats.html"><strong aria-hidden="true">6.5.</strong> File formats</a></li><li class="chapter-item expanded "><a href="../technical/integrity-checker.html"><strong aria-hidden="true">6.6.</strong> Integrity checker</a></li><li class="chapter-item expanded "><a href="../technical/io-manager.html"><strong aria-hidden="true">6.7.</strong> I/O manager</a></li><li class="chapter-item expanded "><a href="../technical/multi-platform.html"><strong aria-hidden="true">6.8.</strong> Multi-platform management</a></li><li class="chapter-item expanded "><a href="../technical/performances.html"><strong aria-hidden="true">6.9.</strong> Performances</a></li><li class="chapter-item expanded "><a href="../technical/pre-compiling.html"><strong aria-hidden="true">6.10.</strong> Pre-compiling applications</a></li><li class="chapter-item expanded "><a href="../technical/processes.html"><strong aria-hidden="true">6.11.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../technical/registry.html"><strong aria-hidden="true">6.12.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../technical/services.html"><strong aria-hidden="true">6.13.</strong> Services</a></li><li class="chapter-item expanded "><a href="../technical/shell.html"><strong aria-hidden="true">6.14.</strong> The shell</a></li></ol></li><li class="chapter-item expanded "><a href="../ux/index.html"><strong aria-hidden="true">7.</strong> User Experience</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ux/desktop-environment.html"><strong aria-hidden="true">7.1.</strong> Desktop environments</a></li><li class="chapter-item expanded "><a href="../ux/notifications.html"><strong aria-hidden="true">7.2.</strong> Notifications</a></li><li class="chapter-item expanded "><a href="../ux/sound.html"><strong aria-hidden="true">7.3.</strong> Sound</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/index.html"><strong aria-hidden="true">8.</strong> Specifications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/applications-libraries.html"><strong aria-hidden="true">8.1.</strong> Applications and libraries</a></li><li class="chapter-item expanded "><a href="../specs/applications.html"><strong aria-hidden="true">8.2.</strong> Applications</a></li><li class="chapter-item expanded "><a href="../specs/filesystem.html"><strong aria-hidden="true">8.3.</strong> Filesystem</a></li><li class="chapter-item expanded "><a href="../specs/storage-permissions-map.html"><strong aria-hidden="true">8.4.</strong> Storage permissions map</a></li><li class="chapter-item expanded "><a href="../specs/libraries.html"><strong aria-hidden="true">8.5.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../specs/permissions.html" class="active"><strong aria-hidden="true">8.6.</strong> Permissions</a></li><li class="chapter-item expanded "><a href="../specs/containers.html"><strong aria-hidden="true">8.7.</strong> Containers</a></li><li class="chapter-item expanded "><a href="../specs/registry.html"><strong aria-hidden="true">8.8.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../specs/vocabulary.html"><strong aria-hidden="true">8.9.</strong> Vocabulary</a></li><li class="chapter-item expanded "><a href="../specs/shell.html"><strong aria-hidden="true">8.10.</strong> The shell</a></li><li class="chapter-item expanded "><a href="../specs/shell-scripting.html"><strong aria-hidden="true">8.11.</strong> Shell scripting</a></li><li class="chapter-item expanded "><a href="../specs/services.html"><strong aria-hidden="true">8.12.</strong> Services</a></li><li class="chapter-item expanded "><a href="../specs/kernel/index.html"><strong aria-hidden="true">8.13.</strong> Kernel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/kernel/hardware.html"><strong aria-hidden="true">8.13.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="../specs/kernel/memory.html"><strong aria-hidden="true">8.13.2.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../specs/kernel/processes.html"><strong aria-hidden="true">8.13.3.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../specs/kernel/scheduling.html"><strong aria-hidden="true">8.13.4.</strong> Scheduling</a></li><li class="chapter-item expanded "><a href="../specs/kernel/data-structures.html"><strong aria-hidden="true">8.13.5.</strong> Data structures</a></li><li class="chapter-item expanded "><a href="../specs/kernel/kpc.html"><strong aria-hidden="true">8.13.6.</strong> Kernel-process communication</a></li><li class="chapter-item expanded "><a href="../specs/kernel/ipc.html"><strong aria-hidden="true">8.13.7.</strong> Inter-process communication</a></li><li class="chapter-item expanded "><a href="../specs/kernel/signals.html"><strong aria-hidden="true">8.13.8.</strong> Signals</a></li><li class="chapter-item expanded "><a href="../specs/kernel/syscalls.html"><strong aria-hidden="true">8.13.9.</strong> System calls</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/integration/index.html"><strong aria-hidden="true">8.14.</strong> Integration services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/integration/desktop-environments.html"><strong aria-hidden="true">8.14.1.</strong> Desktop environments</a></li><li class="chapter-item expanded "><a href="../specs/services/integration/file-managers.html"><strong aria-hidden="true">8.14.2.</strong> File managers</a></li><li class="chapter-item expanded "><a href="../specs/services/integration/file-openers.html"><strong aria-hidden="true">8.14.3.</strong> File openers</a></li><li class="chapter-item expanded "><a href="../specs/services/integration/filesystem-interfaces.html"><strong aria-hidden="true">8.14.4.</strong> Filesystem interfaces</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/drivers/index.html"><strong aria-hidden="true">8.15.</strong> Driver services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/drivers/storage.html"><strong aria-hidden="true">8.15.1.</strong> Storage driver service</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/system/index.html"><strong aria-hidden="true">8.16.</strong> System services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/system/fs.html"><strong aria-hidden="true">8.16.1.</strong> sys::fs</a></li><li class="chapter-item expanded "><a href="../specs/services/system/fsh.html"><strong aria-hidden="true">8.16.2.</strong> sys::fsh</a></li><li class="chapter-item expanded "><a href="../specs/services/system/hw.html"><strong aria-hidden="true">8.16.3.</strong> sys::hw</a></li><li class="chapter-item expanded "><a href="../specs/services/system/perm.html"><strong aria-hidden="true">8.16.4.</strong> sys::perm</a></li><li class="chapter-item expanded "><a href="../specs/services/system/net.html"><strong aria-hidden="true">8.16.5.</strong> sys::net</a></li><li class="chapter-item expanded "><a href="../specs/services/system/crypto.html"><strong aria-hidden="true">8.16.6.</strong> sys::crypto</a></li><li class="chapter-item expanded "><a href="../specs/services/system/crashsave.html"><strong aria-hidden="true">8.16.7.</strong> sys::crashsave</a></li><li class="chapter-item expanded "><a href="../specs/services/system/flow.html"><strong aria-hidden="true">8.16.8.</strong> sys::flow</a></li><li class="chapter-item expanded "><a href="../specs/services/system/hydre.html"><strong aria-hidden="true">8.16.9.</strong> sys::hydre</a></li><li class="chapter-item expanded "><a href="../specs/services/system/app.html"><strong aria-hidden="true">8.16.10.</strong> sys::app</a></li><li class="chapter-item expanded "><a href="../specs/services/system/process.html"><strong aria-hidden="true">8.16.11.</strong> sys::process</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../applications/index.html"><strong aria-hidden="true">9.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../applications/Astral.html"><strong aria-hidden="true">9.1.</strong> Astral</a></li><li class="chapter-item expanded "><a href="../applications/BareEnv.html"><strong aria-hidden="true">9.2.</strong> BareEnv</a></li><li class="chapter-item expanded "><a href="../applications/Blackhole.html"><strong aria-hidden="true">9.3.</strong> Blackhole</a></li><li class="chapter-item expanded "><a href="../applications/Central.html"><strong aria-hidden="true">9.4.</strong> Central</a></li><li class="chapter-item expanded "><a href="../applications/Cloudy.html"><strong aria-hidden="true">9.5.</strong> Cloudy</a></li><li class="chapter-item expanded "><a href="../applications/Comet.html"><strong aria-hidden="true">9.6.</strong> Comet</a></li><li class="chapter-item expanded "><a href="../applications/Gravity.html"><strong aria-hidden="true">9.7.</strong> Gravity</a></li><li class="chapter-item expanded "><a href="../applications/Locky.html"><strong aria-hidden="true">9.8.</strong> Locky</a></li><li class="chapter-item expanded "><a href="../applications/Milkshake.html"><strong aria-hidden="true">9.9.</strong> Milkshake</a></li><li class="chapter-item expanded "><a href="../applications/Monitor.html"><strong aria-hidden="true">9.10.</strong> Monitor</a></li><li class="chapter-item expanded "><a href="../applications/Nova.html"><strong aria-hidden="true">9.11.</strong> Nova</a></li><li class="chapter-item expanded "><a href="../applications/Particle.html"><strong aria-hidden="true">9.12.</strong> Particle</a></li><li class="chapter-item expanded "><a href="../applications/Pluton.html"><strong aria-hidden="true">9.13.</strong> Pluton</a></li><li class="chapter-item expanded "><a href="../applications/Postal.html"><strong aria-hidden="true">9.14.</strong> Postal</a></li><li class="chapter-item expanded "><a href="../applications/Reader.html"><strong aria-hidden="true">9.15.</strong> Reader</a></li><li class="chapter-item expanded "><a href="../applications/Registry.html"><strong aria-hidden="true">9.16.</strong> Registry</a></li><li class="chapter-item expanded "><a href="../applications/Rocket.html"><strong aria-hidden="true">9.17.</strong> Rocket</a></li><li class="chapter-item expanded "><a href="../applications/ShootingStar.html"><strong aria-hidden="true">9.18.</strong> ShootingStar</a></li><li class="chapter-item expanded "><a href="../applications/Skyer.html"><strong aria-hidden="true">9.19.</strong> Skyer</a></li><li class="chapter-item expanded "><a href="../applications/Sonata.html"><strong aria-hidden="true">9.20.</strong> Sonata</a></li><li class="chapter-item expanded "><a href="../applications/Stellar.html"><strong aria-hidden="true">9.21.</strong> Stellar</a></li><li class="chapter-item expanded "><a href="../applications/Thinker.html"><strong aria-hidden="true">9.22.</strong> Thinker</a></li><li class="chapter-item expanded "><a href="../applications/TimeTravel.html"><strong aria-hidden="true">9.23.</strong> TimeTravel</a></li><li class="chapter-item expanded "><a href="../applications/Vortex.html"><strong aria-hidden="true">9.24.</strong> Vortex</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NightOS documentation</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="permissions"><a class="header" href="#permissions">Permissions</a></h1>
+<p>Permissions are used to <a href="../features/permissions.html">control what applications can do or not</a>. They have no effect by themselves, but allow different <a href="services/system/README.html">system services</a> to ensure an application has enough permissions to perform a specific action.</p>
+<p><strong>WARNING:</strong> This document is <strong>far from being complete</strong>, and as such may be edited in any way at any moment.</p>
+<h2 id="levels-of-permissions"><a class="header" href="#levels-of-permissions">Levels of permissions</a></h2>
+<p>Permissions are split across different categories:</p>
+<ul>
+<li><em>Basic</em> (B): basic permissions, like windows creation, which are granted automatically by default ;</li>
+<li><em>Implicit</em> (I): permissions implied by the usage of an application, like opening a file with an application grants it an access while the application is running ;</li>
+<li><em>Global</em> (G): accessing and modifying non-critical parts of the state of the system, like controlling the global volume or reading</li>
+<li><em>Sensitive</em> (S): accessing sensitive informations, like filesystem or network access ;</li>
+<li><em>Privacy</em> (P): accessing privacy-related data, like microphone or webcam access</li>
+</ul>
+<p>There are also <a href="../features/domains.html">domain-controlled permissions</a> as well as <a href="../technical/dev-mode.html#application-proxies">application proxies</a>) which influence how permissions are granted.</p>
+<p>When using visual applications, requesting interactive, sensitive and privacy permissions will show a popup asking the user if they want to grant the permission:</p>
+<ul>
+<li>Only one time</li>
+<li>For the active application (until it stops)</li>
+<li>For the current session (until the user logs out or the system is shutdown)</li>
+<li>Forever</li>
+</ul>
+<p>By default, it is set to &quot;forever&quot;. But for the privacy level, this choice is set by default to &quot;forever while the application is active&quot;, which prevents the application from accessing them from background tasks.</p>
+<p><em>NOTE:</em> If the application is uninstalled and re-installed later, all the granted permissions will have been dropped, so confirmation will be required again.</p>
+<p><em>NOTE:</em> Permissions granted to volatile applications are saved using the application's hash, so while the exact same application is opened volatilely, permissions are kept in memory.</p>
+<p><em>NOTE:</em> Permissions are specific to the current user (the AUC is not taken in account here), so in the case of a global application, each user will have to approve the permission manually (unless the administrator set it otherwise).</p>
+<h2 id="user-privileges"><a class="header" href="#user-privileges">User privileges</a></h2>
+<p>Some permissions require the user to have specific privileges, such as being <a href="../concepts/users.html#users-type">administrator</a>. These permissions are marked in this document with an <code>{A}</code>.</p>
+<h2 id="list-of-permissions"><a class="header" href="#list-of-permissions">List of permissions</a></h2>
+<p>Below is the exhaustive list of all available permissions, with their category between parenthesis (e.g. <code>(P)</code> for <em>privacy</em>, etc.).</p>
+<p>Most permissions require to have an associated <em>scope</em>, indicating the resources they can access. Each scope is a path or filesystem with a set of permissions that apply on this specific path/filesystem.</p>
+<h3 id="devices"><a class="header" href="#devices">Devices</a></h3>
+<p><strong>Scope:</strong> list of <a href="services/system/hw.html#patterns">device patterns</a> the permission applies on</p>
+<ul>
+<li>(P) <code>devices.enum</code>: enumerate devices</li>
+<li>(P) <code>devices.subscribe</code>: subscribe to devices</li>
+<li>(P) <code>devices.register_driver</code>: register a device driver</li>
+<li>(P) <code>devices.ask_driver</code>: ask a device's driver to perform a <a href="services/system/hw.html#normalization">normalized method</a></li>
+</ul>
+<p>For praticity purpose, the list of device patterns is converted to a human-readable format, with more or less informations depending on the <a href="../concepts/users.html#complexity-level">user's complexity level</a>.</p>
+<h3 id="filesystems"><a class="header" href="#filesystems">Filesystems</a></h3>
+<p><strong>Scope</strong>: filesystems the permission applies on</p>
+<ul>
+<li>(S) <code>fs.filesystems.mounted</code>: check if a given filesystem is mounted (all other <code>fs.filesystems.*</code> permissions imply this one)</li>
+<li>(S) <code>fs.filesystems.metadata</code>: get metadata on a given filesystem</li>
+<li>(S) <code>fs.filesystems.list</code>: enumerate mounted filesystems</li>
+<li>(S) <code>fs.filesystems.mount</code>: mount an existing filesystem</li>
+<li>(S) <code>fs.filesystems.unmount</code>: unmount filesystems mounted by other applications</li>
+<li>(S) <code>fs.filesystems.watch</code>: be notified when a filesystem is mounted / unmounted</li>
+<li>(S) <code>fs.filesystems.format</code>: format an existing filesystem</li>
+</ul>
+<h3 id="filesystem-elements"><a class="header" href="#filesystem-elements">Filesystem elements</a></h3>
+<p><strong>Scope</strong>: <a href="services/integration/filesystem-interfaces.html#split-paths">paths</a> the permission applies on</p>
+<p>These permissions are automatically granted if their scope is one of the application's own data directories.</p>
+<ul>
+<li>
+<p>(S) <code>fs.feid.path</code>: convert a given <a href="filesystem.html#element-unique-identifier">FEID</a> to a <a href="services/integration/filesystem-interfaces.html#split-paths">split path</a></p>
+</li>
+<li>
+<p>(S) <code>fs.feid.exists</code>: check if a given <a href="filesystem.html#element-unique-identifier">FEID</a> exists in a filesystem</p>
+</li>
+<li>
+<p>(S) <code>fs.path.canonicalize</code>: canonicalize a <a href="services/integration/filesystem-interfaces.html#split-paths">split path</a></p>
+</li>
+<li>
+<p>(S) <code>fs.items.exists</code>: check if an item exists at a given path</p>
+</li>
+<li>
+<p>(S) <code>fs.items.metadata</code>: get metadata on a given item</p>
+</li>
+<li>
+<p>(S) <code>fs.items.create</code>: create new filesystem elements</p>
+</li>
+<li>
+<p>(S) <code>fs.items.move</code>: rename and move existing filesystem elements</p>
+</li>
+<li>
+<p>(S) <code>fs.items.remove.trash</code>: send items to the current user's trash</p>
+</li>
+<li>
+<p>(S) <code>fs.items.remove</code>: delete items permanently</p>
+</li>
+<li>
+<p>(S) <code>fs.items.write</code>: update an existing filesystem element's content</p>
+</li>
+<li>
+<p>(S) <code>fs.items.lock</code>: lock an item to prevent modifications from other processes</p>
+</li>
+<li>
+<p>(S) <code>fs.items.lock.full</code>: lock an item to prevent modifications and access from other processes</p>
+</li>
+<li>
+<p>(S) <code>fs.dir.read</code>: list items contained inside given directories</p>
+</li>
+<li>
+<p>(S) <code>fs.dir.read.hidden</code>: list hidden items in directories</p>
+</li>
+<li>
+<p>(S) <code>fs.dir.lock</code>: lock a full directory's content to prevent modifications from other processes</p>
+</li>
+<li>
+<p>(S) <code>fs.dir.lock.full</code>: lock a full directory's content to prevent modifications and access from other processes</p>
+</li>
+<li>
+<p>(S) <code>fs.symlinks.create</code>: create symbolic links</p>
+</li>
+<li>
+<p>(S) <code>fs.symlinks.update</code>: update existing symbolic links</p>
+</li>
+<li>
+<p>(S) <code>fs.symlinks.read</code>: read the target of a symbolic link</p>
+</li>
+</ul>
+<h4 id="flows"><a class="header" href="#flows">Flows</a></h4>
+<ul>
+<li>(S) <code>flow.list</code>: list flows opened by all applications</li>
+<li>(S) <code>flow.metadata</code>: get metadata on flows</li>
+<li>(B) <code>flow.create</code>: create flows</li>
+<li>(S) <code>flow.read</code>: read from flows</li>
+<li>(S) <code>flow.write</code>: write to flows</li>
+</ul>
+<h3 id="network"><a class="header" href="#network">Network</a></h3>
+<ul>
+<li>(S) <code>net.fetch</code>: fetch a resource<br />
+<strong>Scope:</strong> list of domains (wildcards supported for subdomains), list of protocols</li>
+<li>(S) <code>net.expose</code>: listen to a specific port or a range of ports
+<strong>Scope:</strong> range of ports (may cover a single port)</li>
+</ul>
+<h3 id="system"><a class="header" href="#system">System</a></h3>
+<ul>
+<li>
+<p>(B) <code>system.clock.date.read</code>: get the current date</p>
+</li>
+<li>
+<p>(B) <code>system.clock.time.read</code>: get the current time</p>
+</li>
+<li>
+<p>(B) <code>system.clock.timezone.read</code>: get the current timezone</p>
+</li>
+<li>
+<p>(B) <code>system.clock.uptime</code>: get the system's uptime</p>
+</li>
+<li>
+<p>(S) <code>system.user.name.read</code>: get the current user's name</p>
+</li>
+<li>
+<p>(S) <code>system.user.avatar.read</code>: get the current user's avatar</p>
+</li>
+<li>
+<p>(B) <code>system.hw.cpu.count</code>: get the number of CPUs</p>
+</li>
+<li>
+<p>(G) <code>system.hw.cpu.list</code>: list CPUs (model, frequency, etc.)</p>
+</li>
+<li>
+<p>(B) <code>system.hw.mem.total</code>: get the amount of total memory</p>
+</li>
+<li>
+<p>(B) <code>system.hw.mem.available</code>: get the amount of available memory</p>
+</li>
+<li>
+<p>(G) <code>system.hw.mem.slots</code>: get the number of RAM slots</p>
+</li>
+<li>
+<p>(G) <code>system.hw.mem.list</code>: list RAM slots (model, frequency, etc.)</p>
+</li>
+</ul>
+<h3 id="hardware-interfaces"><a class="header" href="#hardware-interfaces">Hardware interfaces</a></h3>
+<ul>
+<li>(S) <code>hwmid.keyboard.write</code>: simulate key presses</li>
+<li>(P) <code>hwmid.keyboard.read</code>: read key presses from the keyboard</li>
+<li>(S) <code>hwmid.pointer.write</code>: simulate actions from pointer devices</li>
+<li>(P) <code>hwmid.pointer.read</code>: read actions from pointer devices</li>
+<li>(P) <code>hwmid.video.read</code>: access video input streams (cameras, ...)</li>
+<li>(P) <code>hwmid.audio.read</code>: access audio input streams (microphones, ...)</li>
+<li>(P) <code>hwmid.screen.read</code>: read portions of the screen as image buffers (screenshots, ...)</li>
+<li>(I) <code>hwmid.screen.read_self</code>: read portions of the current application's windows (screenshots, ...)</li>
+</ul>
+<h3 id="state"><a class="header" href="#state">State</a></h3>
+<ul>
+<li>(B) <code>state.laptop.is</code>: check if the device is a laptop</li>
+<li>(B) <code>state.laptop.is_open</code>: check if the laptop is physically opened</li>
+<li>(B) <code>state.battery.has</code>: check if the device has a battery</li>
+<li>(B) <code>state.battery.level</code>: check the battery level</li>
+<li>(B) <code>state.battery.is_charging</code>: check if the battery is charging</li>
+<li>(B) <code>state.battery.is_full</code>: check if the battery is considered full</li>
+<li>(B) <code>state.battery.is_critical</code>: check if the battery is at a critically low level</li>
+<li>(B) <code>state.battery.estimated_remaining</code>: get the remaining running time estimated by the system in minutes</li>
+</ul>
+<h3 id="programs"><a class="header" href="#programs">Programs</a></h3>
+<ul>
+<li>(S) + {A} <code>programs.running.processes</code>: get the list of running processes</li>
+<li>(S) + {A} <code>programs.running.windows</code>: get informations on each running application's windows</li>
+<li>(S) <code>programs.running.apps</code>: get the list of running applications</li>
+</ul>
+<h3 id="system-reserved-permissions"><a class="header" href="#system-reserved-permissions">System-reserved permissions</a></h3>
+<p>These permissions are reserved to processes <a href="kernel/processes.html#process-attributes">marked as system</a>.</p>
+<ul>
+<li><code>sysapp.process.kill</code>: suspend or kill external processes</li>
+<li><code>sysapp.process.signal</code>: send a signal to an external process</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../specs/libraries.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../specs/containers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../specs/libraries.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../specs/containers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

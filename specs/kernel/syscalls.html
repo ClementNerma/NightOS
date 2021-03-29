@@ -244,14 +244,12 @@ When performing a syscall, the process will put in a specific CPU register an ad
 <li><code>0x02</code>: at least one argument is invalid (e.g. providing a pointer to the <code>0</code> address)</li>
 <li><code>0x03</code>: unmapped memory pointer (e.g. provided a pointer to a memory location that is not mapped yet)</li>
 <li><code>0x04</code>: memory permission error (e.g. provided a writable buffer to an allocated but non-writable memory address)</li>
-</ul>
-<p>Errors are encoded this way:</p>
-<ul>
-<li><code>0x00</code> to <code>0x0F</code>: generic errors (see above)</li>
-<li><code>0x10</code> to <code>0x1F</code>: invalid arguments provided (e.g. value is too high)</li>
-<li><code>0x20</code> to <code>0x2F</code>: arguments are not valid in the current context (e.g. provided ID does not exist)</li>
-<li><code>0x30</code> to <code>0x3F</code>: resource errors (e.g. file not found)</li>
-<li><code>0x40</code> to <code>0xFF</code>: other types of errors</li>
+<li><code>0x10</code> to <code>0x1F</code>: Invalid argument(s) provided (constant checking)</li>
+<li><code>0x20</code> to <code>0x2F</code>: Provided arguments are not valid in the current context (in relation with other arguments)</li>
+<li><code>0x30</code> to <code>0x3F</code>: Provided arguments are not valid (after resources checking)</li>
+<li><code>0x40</code> to <code>0x4F</code>: Resource access or modification error</li>
+<li><code>0x50</code> to <code>0x5F</code>: Handled hardware errors</li>
+<li><code>0x60</code> to <code>0x6F</code>: Other types of errors</li>
 </ul>
 <p>System calls' code are categorized as follows:</p>
 <ul>
@@ -293,7 +291,7 @@ If the address pointed by this syscall's is not executable by the current proces
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: The requested signal does not exist</li>
-<li><code>0x20</code>: The requested signal does not have an handler</li>
+<li><code>0x30</code>: The requested signal does not have an handler</li>
 </ul>
 <h3 id="0x03-is_signal_handled"><a class="header" href="#0x03-is_signal_handled"><code>0x03</code> IS_SIGNAL_HANDLED</a></h3>
 <p>Check if a signal has a registered handler.</p>
@@ -319,7 +317,7 @@ If the address pointed by this syscall's is not executable by the current proces
 <p><em>Empty</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: The process already told it was ready</li>
+<li><code>0x30</code>: The process already told it was ready</li>
 </ul>
 <h3 id="0x20-open_pipe"><a class="header" href="#0x20-open_pipe"><code>0x20</code> OPEN_PIPE</a></h3>
 <p>Open a pipe with a process of the same application and running under the same user and get its SC.<br />
@@ -344,10 +342,10 @@ The target process will receive the SC/RC's counterpart through the <a href="sig
 <ul>
 <li><code>0x10</code>: Invalid transmission mode provided</li>
 <li><code>0x11</code>: Invalid notification mode provided</li>
-<li><code>0x20</code>: The provided PID does not exist</li>
-<li><code>0x21</code>: The target process is not part of this application</li>
-<li><code>0x22</code>: The target process runs under another user</li>
-<li><code>0x23</code>: Notification mode is enabled but the target process does not have a handler registered for the <a href="signals.html#0x20-recv_pipe"><code>RECV_PIPE</code></a> signal</li>
+<li><code>0x30</code>: The provided PID does not exist</li>
+<li><code>0x31</code>: The target process is not part of this application</li>
+<li><code>0x32</code>: The target process runs under another user</li>
+<li><code>0x33</code>: Notification mode is enabled but the target process does not have a handler registered for the <a href="signals.html#0x20-recv_pipe"><code>RECV_PIPE</code></a> signal</li>
 </ul>
 <h3 id="0x21-send_pipe"><a class="header" href="#0x21-send_pipe"><code>0x21</code> SEND_PIPE</a></h3>
 <p>Share an RC or SC identifier with another process.<br />
@@ -363,7 +361,7 @@ This will trigger in the target process the <a href="signals.html#0x20-recv_pipe
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Notification mode is enabled but the target process does not have a handler registered for the <a href="signals.html#0x20-recv_pipe"><code>RECV_PIPE</code></a> signal</li>
+<li><code>0x30</code>: Notification mode is enabled but the target process does not have a handler registered for the <a href="signals.html#0x20-recv_pipe"><code>RECV_PIPE</code></a> signal</li>
 </ul>
 <h3 id="0x22-pipe_write"><a class="header" href="#0x22-pipe_write"><code>0x22</code> PIPE_WRITE</a></h3>
 <p>Write data through a pipe.<br />
@@ -386,11 +384,11 @@ If the data is 0-byte long, this pipe will return successfully without waiting, 
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid mode provided</li>
-<li><code>0x20</code>: The provided SC identifier does not exist</li>
-<li><code>0x21</code>: The provided SC was already closed</li>
-<li><code>0x22</code>: The provided SC refers to a message pipe but the provided size is larger than 64 KB</li>
-<li><code>0x23</code>: The provided SC refers to a message pipe but the <code>0x02</code> mode was provided</li>
-<li><code>0x30</code>: There is not enough space in the pipe to write all the provided data and the mode argument was set to <code>0x01</code></li>
+<li><code>0x30</code>: The provided SC identifier does not exist</li>
+<li><code>0x31</code>: The provided SC was already closed</li>
+<li><code>0x32</code>: The provided SC refers to a message pipe but the provided size is larger than 64 KB</li>
+<li><code>0x33</code>: The provided SC refers to a message pipe but the <code>0x02</code> mode was provided</li>
+<li><code>0x40</code>: There is not enough space in the pipe to write all the provided data and the mode argument was set to <code>0x01</code></li>
 </ul>
 <h3 id="0x23-pipe_read"><a class="header" href="#0x23-pipe_read"><code>0x23</code> PIPE_READ</a></h3>
 <p>Read pending data or message from a pipe.<br />
@@ -411,10 +409,10 @@ If the pipe was closed while the buffer was not empty, this syscall will still b
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid mode provided</li>
-<li><code>0x20</code>: The provided RC identifier does not exist</li>
-<li><code>0x21</code>: The provided RC was already closed</li>
-<li><code>0x22</code>: There is no pending data in the pipe and the mode argument was set to <code>0x01</code></li>
-<li><code>0x23</code>: The provided RC refers to a message pipe but the <code>0x02</code> mode was provided</li>
+<li><code>0x30</code>: The provided RC identifier does not exist</li>
+<li><code>0x31</code>: The provided RC was already closed</li>
+<li><code>0x32</code>: There is no pending data in the pipe and the mode argument was set to <code>0x01</code></li>
+<li><code>0x33</code>: The provided RC refers to a message pipe but the <code>0x02</code> mode was provided</li>
 </ul>
 <h3 id="0x24-pipe_info"><a class="header" href="#0x24-pipe_info"><code>0x24</code> PIPE_INFO</a></h3>
 <p>Get informations on a pipe from its RC or SC identifier.</p>
@@ -440,7 +438,9 @@ If the pipe was closed while the buffer was not empty, this syscall will still b
 <li>Pipe's creator's PID (8 bytes)</li>
 </ul>
 <p><strong>Errors:</strong></p>
-<p><em>None</em></p>
+<ul>
+<li><code>0x30</code>: The provided RC or SC identifier does not exist</li>
+</ul>
 <h3 id="0x25-close_pipe"><a class="header" href="#0x25-close_pipe"><code>0x25</code> CLOSE_PIPE</a></h3>
 <p>Close a pipe properly. The RC and SC parts will be immediatly closed.<br />
 The other process this pipe was shared with will receive the <a href="signals.html#0x21-pipe_closed"><code>PIPE_CLOSED</code></a> signal unless this pipe was created during a <a href="#0x2c-accept_service_conn">service connection</a>.<br />
@@ -453,9 +453,9 @@ If this syscall is not performed on a pipe before the process exits, the other p
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: The provided RC/SC identifier does not exist</li>
-<li><code>0x11</code>: The target process already terminated</li>
-<li><code>0x20</code>: The provided RC/SC identifier is part of a service pipe</li>
+<li><code>0x30</code>: The provided RC/SC identifier does not exist</li>
+<li><code>0x31</code>: The target process already terminated</li>
+<li><code>0x32</code>: The provided RC/SC identifier is part of a service pipe</li>
 </ul>
 <h3 id="0x26-open_serv_sock"><a class="header" href="#0x26-open_serv_sock"><code>0x26</code> OPEN_SERV_SOCK</a></h3>
 <p>Open a <a href="ipc.html#service-sockets">service socket</a>.<br />
@@ -468,6 +468,11 @@ Triggers the <a href="signals.html#0x26-recv_serv_sock"><code>RECV_SERV_SOCK</co
 <p><strong>Return value:</strong></p>
 <ul>
 <li>Socket identifier (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x30</code>: Unknown PID provided</li>
+<li><code>0x31</code>: Current process is not allowed to communicate with the provided process</li>
 </ul>
 <h3 id="0x27-send_sock_msg"><a class="header" href="#0x27-send_sock_msg"><code>0x27</code> SEND_SOCK_MSG</a></h3>
 <p>Send a message through a <a href="ipc.html#exchanges-and-messages">service socket exchange</a>.<br />
@@ -488,10 +493,10 @@ This syscall can also be used to create a new exchange.</p>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Unknown socket identifier</li>
-<li><code>0x21</code>: Socket is already closed</li>
-<li><code>0x22</code>: Unknown exchange identifier</li>
-<li><code>0x23</code>: Exchange has already been concluded</li>
+<li><code>0x30</code>: Unknown socket identifier</li>
+<li><code>0x31</code>: Socket is already closed</li>
+<li><code>0x32</code>: Unknown exchange identifier</li>
+<li><code>0x40</code>: Exchange has already been concluded</li>
 </ul>
 <h3 id="0x28-read_sock_msg"><a class="header" href="#0x28-read_sock_msg"><code>0x28</code> READ_SOCK_MSG</a></h3>
 <p>Read the pending message of a <a href="ipc.html#service-sockets">service socket</a>.</p>
@@ -514,10 +519,10 @@ This syscall can also be used to create a new exchange.</p>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Unknown socket identifier</li>
-<li><code>0x21</code>: Socket is already closed</li>
-<li><code>0x22</code>: Unknown exchange identifier</li>
-<li><code>0x23</code>: Exchange has already been concluded</li>
+<li><code>0x30</code>: Unknown socket identifier</li>
+<li><code>0x31</code>: Socket is already closed</li>
+<li><code>0x32</code>: Unknown exchange identifier</li>
+<li><code>0x40</code>: Exchange has already been concluded</li>
 </ul>
 <h3 id="0x29-close_serv_sock"><a class="header" href="#0x29-close_serv_sock"><code>0x29</code> CLOSE_SERV_SOCK</a></h3>
 <p>Close a <a href="ipc.html#service-sockets">service socket</a>.<br />
@@ -530,8 +535,8 @@ Triggers the <a href="signals.html#0x29-serv_sock_closed"><code>SERV_SOCK_CLOSED
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Unknown socket identifier</li>
-<li><code>0x21</code>: Socket is already closed</li>
+<li><code>0x30</code>: Unknown socket identifier</li>
+<li><code>0x40</code>: Socket is already closed</li>
 </ul>
 <h3 id="0x2a-connect_service"><a class="header" href="#0x2a-connect_service"><code>0x2A</code> CONNECT_SERVICE</a></h3>
 <p>Ask a service to etablish connection. The current process is called the service's <em>client</em>.</p>
@@ -561,13 +566,13 @@ Triggers the <a href="signals.html#0x29-serv_sock_closed"><code>SERV_SOCK_CLOSED
 <ul>
 <li><code>0x10</code>: Invalid flexible mode provided</li>
 <li><code>0x11</code>: Invalid target ytpe provided</li>
-<li><code>0x20</code>: Requested an integration or driver service but client is not a <a href="../services/system/README.html">system services</a></li>
-<li><code>0x21</code>: The provided ANID does not exist</li>
-<li><code>0x22</code>: Target application does not <a href="../../concepts/applications.html#services">expose the requested service</a></li>
-<li><code>0x22</code>: Current process already has an active connection to the target service and flexible mode is not set</li>
-<li><code>0x2F</code>: Client is the <a href="../services/system/fs.html"><code>sys::fs</code></a> service but a service other than a <a href="../services/drivers/storage.html">storage driver service</a> or a <a href="../services/integration/filesystem-interfaces.html">filesystem interface service</a> was requested</li>
-<li><code>0x30</code>: Failed to send the <a href="signals.html#0x2a-service_conn_request"><code>SERVICE_CONN_REQUEST</code></a> due to a <a href="signals.html#0x01-handler_fault">double handler fault</a></li>
-<li><code>0x31</code>: Service rejected the connection request</li>
+<li><code>0x30</code>: Requested an integration or driver service but client is not a <a href="../services/system/README.html">system services</a></li>
+<li><code>0x31</code>: The provided ANID does not exist</li>
+<li><code>0x32</code>: Target application does not <a href="../../concepts/applications.html#services">expose the requested service</a></li>
+<li><code>0x32</code>: Current process already has an active connection to the target service and flexible mode is not set</li>
+<li><code>0x3F</code>: Client is the <a href="../services/system/fs.html"><code>sys::fs</code></a> service but a service other than a <a href="../services/drivers/storage.html">storage driver service</a> or a <a href="../services/integration/filesystem-interfaces.html">filesystem interface service</a> was requested</li>
+<li><code>0x40</code>: Failed to send the <a href="signals.html#0x2a-service_conn_request"><code>SERVICE_CONN_REQUEST</code></a> due to a <a href="signals.html#0x01-handler_fault">double handler fault</a></li>
+<li><code>0x41</code>: Service rejected the connection request</li>
 </ul>
 <h3 id="0x2b-end_service_conn"><a class="header" href="#0x2b-end_service_conn"><code>0x2B</code> END_SERVICE_CONN</a></h3>
 <p>Tell a service to properly close the connection. The associated <a href="ipc.html#service-sockets">service socke</a> will immediatly be closed.</p>
@@ -579,9 +584,9 @@ Triggers the <a href="signals.html#0x29-serv_sock_closed"><code>SERV_SOCK_CLOSED
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: The provided connection ID does not exist</li>
-<li><code>0x20</code>: This connection was already closed</li>
-<li><code>0x21</code>: The associated service thread already terminated</li>
+<li><code>0x30</code>: The provided connection ID does not exist</li>
+<li><code>0x40</code>: This connection was already closed</li>
+<li><code>0x41</code>: The associated service thread already terminated</li>
 </ul>
 <h3 id="0x2c-accept_service_conn"><a class="header" href="#0x2c-accept_service_conn"><code>0x2C</code> ACCEPT_SERVICE_CONN</a></h3>
 <p>Confirm the current service accepts the connection with a client.<br />
@@ -600,9 +605,9 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: This request ID does not exist</li>
-<li><code>0x20</code>: The process which requested the connection already terminated</li>
-<li><code>0x30</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
+<li><code>0x30</code>: This request ID does not exist</li>
+<li><code>0x40</code>: The process which requested the connection already terminated</li>
+<li><code>0x41</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
 </ul>
 <h3 id="0x2d-reject_service_conn"><a class="header" href="#0x2d-reject_service_conn"><code>0x2D</code> REJECT_SERVICE_CONN</a></h3>
 <p>Reject a connection request to the current service.</p>
@@ -614,9 +619,9 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: This request ID does not exist</li>
-<li><code>0x20</code>: The process which requested the connection already terminated</li>
-<li><code>0x30</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
+<li><code>0x30</code>: This request ID does not exist</li>
+<li><code>0x40</code>: The process which requested the connection already terminated</li>
+<li><code>0x41</code>: Answer was given after the delay set in the <a href="../registry.html">registry</a>'s <code>system.processes.service_answer_delay</code> key (default: 2000ms)</li>
 </ul>
 <h3 id="0x2e-has_scoped_service"><a class="header" href="#0x2e-has_scoped_service"><code>0x2E</code> HAS_SCOPED_SERVICE</a></h3>
 <p><strong>Arguments:</strong></p>
@@ -630,8 +635,8 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: The provided ANID does not exist</li>
-<li><code>0x21</code>: Target application does not <a href="../../concepts/applications.html#services">expose the provided service</a></li>
+<li><code>0x30</code>: The provided ANID does not exist</li>
+<li><code>0x31</code>: Target application does not <a href="../../concepts/applications.html#services">expose the provided service</a></li>
 </ul>
 <h3 id="0x30-mem_alloc"><a class="header" href="#0x30-mem_alloc"><code>0x30</code> MEM_ALLOC</a></h3>
 <p>Allocate a linear block of memory.</p>
@@ -646,7 +651,7 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: The kernel could not find a linear block of memory of the requested size</li>
+<li><code>0x40</code>: The kernel could not find a linear block of memory of the requested size</li>
 </ul>
 <h3 id="0x31-mem_free"><a class="header" href="#0x31-mem_free"><code>0x31</code> MEM_FREE</a></h3>
 <p>Unallocate a linear block of memory.</p>
@@ -663,10 +668,10 @@ Mapped memory pages must be unmapped through the <a href="#0x38-unmap_ams"><code
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: The provided start address it not aligned with a page</li>
-<li><code>0x20</code>: The provided start address is out of the process' range</li>
-<li><code>0x21</code>: The provided size, added to the start address, would exceed the process' range</li>
-<li><code>0x22</code>: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)</li>
-<li><code>0x23</code>: One or more of the provided pages are shared with another process</li>
+<li><code>0x30</code>: The provided start address is out of the process' range</li>
+<li><code>0x31</code>: The provided size, added to the start address, would exceed the process' range</li>
+<li><code>0x32</code>: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)</li>
+<li><code>0x33</code>: One or more of the provided pages are shared with another process</li>
 </ul>
 <h3 id="0x32-virt_mem_ams"><a class="header" href="#0x32-virt_mem_ams"><code>0x32</code> VIRT_MEM_AMS</a></h3>
 <p>Create an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from a part of the current process' address space.</p>
@@ -683,7 +688,7 @@ Mapped memory pages must be unmapped through the <a href="#0x38-unmap_ams"><code
 <ul>
 <li><code>0x10</code>: Start address is unaligned</li>
 <li><code>0x11</code>: Number of bytes is unaligned</li>
-<li><code>0x22</code>: Address is out of range</li>
+<li><code>0x30</code>: Address is out of range</li>
 </ul>
 <h3 id="0x33-backed_ams"><a class="header" href="#0x33-backed_ams"><code>0x33</code> BACKED_AMS</a></h3>
 <p>Create an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> backed by the <a href="signals.html#0x33-read_backed_ams"><code>READ_BACKED_AMS</code></a> and <a href="signals.html#0x34-write_backed_ams"><code>WRITE_BACKED_AMS</code></a> signals.</p>
@@ -724,10 +729,10 @@ Mapped memory pages must be unmapped through the <a href="#0x38-unmap_ams"><code
 <ul>
 <li><code>0x10</code>: Invalid notification mode provided</li>
 <li><code>0x11</code>: Invalid mode provided</li>
-<li><code>0x12</code>: Access permissions were not set but the sharing mode is set to mutual</li>
-<li><code>0x13</code>: Access permissions were provided but the sharing mode is set to exclusive</li>
-<li><code>0x14</code>: Invalid exclusive mode provided</li>
-<li><code>0x30</code>: There is not enough contiguous space in the receiver process' memory space to map the shared memory</li>
+<li><code>0x12</code>: Invalid exclusive mode provided</li>
+<li><code>0x20</code>: Access permissions were not set but the sharing mode is set to mutual</li>
+<li><code>0x21</code>: Access permissions were provided but the sharing mode is set to exclusive</li>
+<li><code>0x40</code>: There is not enough contiguous space in the receiver process' memory space to map the shared memory</li>
 </ul>
 <h3 id="0x35-ams_sharing_info"><a class="header" href="#0x35-ams_sharing_info"><code>0x35</code> AMS_SHARING_INFO</a></h3>
 <p>Get informations about a <a href="#0x34-share_ams">shared</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a>.</p>
@@ -746,7 +751,7 @@ Mapped memory pages must be unmapped through the <a href="#0x38-unmap_ams"><code
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Unknwon AMS ID provided</li>
+<li><code>0x30</code>: Unknwon AMS ID provided</li>
 </ul>
 <h3 id="0x36-unshare_ams"><a class="header" href="#0x36-unshare_ams"><code>0x36</code> UNSHARE_AMS</a></h3>
 <p>Stop sharing an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> started by <a href="#0x34-share_ams"><code>SHARE_AMS</code></a>. Note that exlusive sharings cannot be unmapped.</p>
@@ -760,9 +765,9 @@ Mapped memory pages must be unmapped through the <a href="#0x38-unmap_ams"><code
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Unknown AMS ID provided</li>
-<li><code>0x20</code>: Provided AMS ID is exclusive</li>
-<li><code>0x21</code>: Provided AMS was not shared with the provided process</li>
+<li><code>0x30</code>: Unknown AMS ID provided</li>
+<li><code>0x21</code>: Provided AMS ID is exclusive</li>
+<li><code>0x32</code>: Provided AMS was not shared with the provided process</li>
 </ul>
 <h3 id="0x37-map_ams"><a class="header" href="#0x37-map_ams"><code>0x37</code> MAP_AMS</a></h3>
 <p>Map an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> in the current process' address space.</p>
@@ -776,9 +781,9 @@ Mapped memory pages must be unmapped through the <a href="#0x38-unmap_ams"><code
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: Unknown AMS ID provided</li>
-<li><code>0x20</code>: Provided mapping address or address+length is out-of-range in the AMS</li>
-<li><code>0x21</code>: Provided address to map or address+length is out-of-orange in this process' address space</li>
+<li><code>0x30</code>: Unknown AMS ID provided</li>
+<li><code>0x31</code>: Provided mapping address or address+length is out-of-range in the AMS</li>
+<li><code>0x32</code>: Provided address to map or address+length is out-of-orange in this process' address space</li>
 </ul>
 <h3 id="0x38-unmap_ams"><a class="header" href="#0x38-unmap_ams"><code>0x38</code> UNMAP_AMS</a></h3>
 <p>Unmap an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from the current process' address space.<br />
@@ -793,7 +798,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Unknown AMS ID provided</li>
-<li><code>0x20</code>: Provided AMS it not mapped at this address</li>
+<li><code>0x30</code>: Provided AMS it not mapped at this address</li>
 </ul>
 <h3 id="0x40-create_process"><a class="header" href="#0x40-create_process"><code>0x40</code> CREATE_PROCESS</a></h3>
 <p>Create a child process from the current one. The new process gets a separate memory space.</p>
@@ -812,8 +817,8 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: The current process is not an application process</li>
-<li><code>0x30</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
+<li><code>0x30</code>: The current process is not an application process</li>
+<li><code>0x40</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
 </ul>
 <h3 id="0x41-wait_child_process"><a class="header" href="#0x41-wait_child_process"><code>0x41</code> WAIT_CHILD_PROCESS</a></h3>
 <p>Wait for a child process to terminate.</p>
@@ -826,7 +831,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 <p><em>Empty</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: The provided PID does not exist or does not belong to the current application</li>
+<li><code>0x30</code>: The provided PID does not exist or does not belong to the current application</li>
 </ul>
 <h3 id="0x42-kill_child_process"><a class="header" href="#0x42-kill_child_process"><code>0x42</code> KILL_CHILD_PROCESS</a></h3>
 <p>Kill a child process, which will first receive the <a href="signals.html#0x4f-will_terminate"><code>WILL_TERMINATE</code></a> signal.</p>
@@ -841,7 +846,7 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
+<li><code>0x40</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
 </ul>
 <h3 id="0x43-get_pid"><a class="header" href="#0x43-get_pid"><code>0x43</code> GET_PID</a></h3>
 <p>Get the current process' PID.</p>
@@ -865,8 +870,8 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: the current process is not an application process</li>
-<li><code>0x21</code>: the current PID was not found or is not a child of the current process</li>
+<li><code>0x30</code>: the current process is not an application process</li>
+<li><code>0x31</code>: the current PID was not found or is not a child of the current process</li>
 </ul>
 <h3 id="0x45-unsuspend"><a class="header" href="#0x45-unsuspend"><code>0x45</code> UNSUSPEND</a></h3>
 <p><a href="../../features/balancer.html#application-processes-suspension">Unsuspend</a> a child process.</p>
@@ -881,8 +886,8 @@ If the AMS is mapped at multiple addresses of this process, only one of the mapp
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: the current process is not an application process</li>
-<li><code>0x21</code>: the current PID was not found or is not a child of the current process</li>
+<li><code>0x30</code>: the current process is not an application process</li>
+<li><code>0x31</code>: the current PID was not found or is not a child of the current process</li>
 </ul>
 <h3 id="0x46-hand_over"><a class="header" href="#0x46-hand_over"><code>0x46</code> HAND_OVER</a></h3>
 <p>End this process' <a href="scheduling.html#cycles-and-context-switching">cycle</a>.</p>
@@ -919,7 +924,7 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x30</code>: Failed to create a new process due to hardware problem (cannot allocate memory, ...)</li>
+<li><code>0x40</code>: Failed to create a new thread due to hardware problem (cannot allocate memory, ...)</li>
 </ul>
 <h3 id="0x51-create_tls_slot"><a class="header" href="#0x51-create_tls_slot"><code>0x51</code> CREATE_TLS_SLOT</a></h3>
 <p>Create a <a href="../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
@@ -930,7 +935,10 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <li>TLS slot identifier (8 bytes)</li>
 </ul>
 <p><strong>Errors:</strong></p>
-<p><em>None</em></p>
+<ul>
+<li><code>0x40</code>: Maximum number of TLS slots was reached</li>
+<li><code>0x41</code>: Could not allocate memory for a new TLS slot</li>
+</ul>
 <h3 id="0x52-read_tls_slot"><a class="header" href="#0x52-read_tls_slot"><code>0x52</code> READ_TLS_SLOT</a></h3>
 <p>Read from a <a href="../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
 <p><strong>Arguments:</strong></p>
@@ -944,7 +952,7 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Unknown TLS identifier</li>
+<li><code>0x30</code>: Unknown TLS identifier</li>
 </ul>
 <h3 id="0x53-write_tls_slot"><a class="header" href="#0x53-write_tls_slot"><code>0x53</code> WRITE_TLS_SLOT</a></h3>
 <p>Write to a <a href="../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
@@ -957,8 +965,8 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Unknown TLS identifier</li>
-<li><code>0x30</code>: Failed to allocate enough memory for the written data</li>
+<li><code>0x30</code>: Unknown TLS identifier</li>
+<li><code>0x40</code>: Failed to allocate enough memory for the written data</li>
 </ul>
 <h3 id="0x54-delete_tls_slot"><a class="header" href="#0x54-delete_tls_slot"><code>0x54</code> DELETE_TLS_SLOT</a></h3>
 <p>Delete a <a href="../../technical/processes.html#thread-local-storage">TLS slot</a>.</p>
@@ -970,7 +978,7 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Unknown TLS identifier</li>
+<li><code>0x30</code>: Unknown TLS identifier</li>
 </ul>
 <h3 id="0x5f-exit_thread"><a class="header" href="#0x5f-exit_thread"><code>0x5F</code> EXIT_THREAD</a></h3>
 <p>Kill the current thread and all of its children threads.</p>
@@ -997,10 +1005,10 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 </ul>
 <p><strong>Error codes:</strong></p>
 <ul>
-<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
-<li><code>0x21</code>: The provided device KDI was not found</li>
-<li><code>0x22</code>: The provided I/O port does not exist for the provided device</li>
-<li><code>0x23</code>: The provided I/O port is an output port</li>
+<li><code>0x30</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x31</code>: The provided device KDI was not found</li>
+<li><code>0x32</code>: The provided I/O port does not exist for the provided device</li>
+<li><code>0x33</code>: The provided I/O port is an output port</li>
 </ul>
 <h3 id="0x61-write_io_port"><a class="header" href="#0x61-write_io_port"><code>0x61</code> WRITE_IO_PORT</a></h3>
 <p>Write data to the physical <a href="hardware.html#inputoutput-ports">I/O port</a> a device, if <a href="processes.html#drivable-devices">authorized as a driver</a>.</p>
@@ -1017,10 +1025,10 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 </ul>
 <p><strong>Error codes:</strong></p>
 <ul>
-<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
-<li><code>0x21</code>: The provided device KDI was not found</li>
-<li><code>0x22</code>: The provided I/O port does not exist for the provided device</li>
-<li><code>0x23</code>: The provided I/O port is an input port</li>
+<li><code>0x30</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x31</code>: The provided device KDI was not found</li>
+<li><code>0x32</code>: The provided I/O port does not exist for the provided device</li>
+<li><code>0x33</code>: The provided I/O port is an input port</li>
 </ul>
 <h3 id="0x62-device_interrupt"><a class="header" href="#0x62-device_interrupt"><code>0x62</code> DEVICE_INTERRUPT</a></h3>
 <p>Trigger a hardware interruption on a device, if <a href="processes.html#drivable-devices">authorized as a driver</a>.</p>
@@ -1035,10 +1043,10 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><em>None</em></p>
 <p><strong>Error codes:</strong></p>
 <ul>
-<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
-<li><code>0x21</code>: The provided device KDI was not found</li>
-<li><code>0x22</code>: The provided I/O port does not exist for the provided device</li>
-<li><code>0x23</code>: The provided I/O port is an input port</li>
+<li><code>0x30</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x31</code>: The provided device KDI was not found</li>
+<li><code>0x32</code>: The provided I/O port does not exist for the provided device</li>
+<li><code>0x33</code>: The provided I/O port is an input port</li>
 </ul>
 <h3 id="0x63-device_ams"><a class="header" href="#0x63-device_ams"><code>0x63</code> DEVICE_AMS</a></h3>
 <p>Create an <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> from a device's memory through <em>Mapped Memory Input/Output</em> (MMIO).</p>
@@ -1060,9 +1068,9 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <li><code>0x10</code>: The mapping's start address is not aligned with a page</li>
 <li><code>0x11</code>: The mapping's length is not a multiple of a page's size</li>
 <li><code>0x12</code>: The mapping's size is null (0 bytes)</li>
-<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
-<li><code>0x21</code>: The provided device KDI was not found</li>
-<li><code>0x22</code>: The provided device is not compatible with MMIO</li>
+<li><code>0x30</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x31</code>: The provided device KDI was not found</li>
+<li><code>0x32</code>: The provided device is not compatible with MMIO</li>
 </ul>
 <h3 id="0x64-set_dma_mem_access"><a class="header" href="#0x64-set_dma_mem_access"><code>0x64</code> SET_DMA_MEM_ACCESS</a></h3>
 <p>Allow or disallow a device to access a range of addresses through <em>Direct Memory Access</em> (DMA) in the current process' address space.</p>
@@ -1082,9 +1090,9 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <li><code>0x10</code>: The range's start address is not aligned with a page</li>
 <li><code>0x11</code>: The range's length is not a multiple of a page's size</li>
 <li><code>0x12</code>: The range's size is null (0 bytes)</li>
-<li><code>0x20</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
-<li><code>0x21</code>: The provided device KDI was not found</li>
-<li><code>0x22</code>: The provided device is not compatible with DMA</li>
+<li><code>0x30</code>: This device is not registered in this process' <a href="processes.html#drivable-devices">drivable devices attribute</a></li>
+<li><code>0x31</code>: The provided device KDI was not found</li>
+<li><code>0x32</code>: The provided device is not compatible with DMA</li>
 </ul>
 <h3 id="0xa0-execution_context"><a class="header" href="#0xa0-execution_context"><code>0xA0</code> EXECUTION_CONTEXT</a></h3>
 <p>Get informations from the application's <a href="../applications.html#execution-context">execution context</a>.</p>
@@ -1109,8 +1117,8 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x10</code>: invalid information number provided</li>
-<li><code>0x20</code>: caller process is a system service</li>
+<li><code>0x10</code>: Invalid information number provided</li>
+<li><code>0x30</code>: Caller process is a system service</li>
 </ul>
 <h3 id="0xd0-sys_create_process"><a class="header" href="#0xd0-sys_create_process"><code>0xD0</code> SYS_CREATE_PROCESS</a></h3>
 <p>Syscall resserved to the <a href="../services/system/process.html"><code>sys::process</code></a> service.</p>
@@ -1126,9 +1134,9 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::process</code></a> service</li>
-<li><code>0x30</code>: Code location token was not accepted by the <a href="../services/system/fs.html"><code>sys::fs</code></a></li>
-<li><code>0x31</code>: Application context is not valid</li>
+<li><code>0x30</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::process</code></a> service</li>
+<li><code>0x31</code>: Code location token was not accepted by the <a href="../services/system/fs.html"><code>sys::fs</code></a> service</li>
+<li><code>0x32</code>: Application context is not valid</li>
 </ul>
 <h3 id="0xd1-sys_manage_process"><a class="header" href="#0xd1-sys_manage_process"><code>0xD1</code> SYS_MANAGE_PROCESS</a></h3>
 <p>Syscall resserved to the <a href="../services/system/process.html"><code>sys::process</code></a> service.</p>
@@ -1151,9 +1159,9 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid action code provided</li>
-<li><code>0x20</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::process</code></a> service</li>
-<li><code>0x21</code>: Unknown PID</li>
-<li><code>0x22</code>: Process is already in the requested state</li>
+<li><code>0x30</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::process</code></a> service</li>
+<li><code>0x31</code>: Unknown PID</li>
+<li><code>0x32</code>: Process is already in the requested state</li>
 </ul>
 <h3 id="0xd2-sys_process_attributes"><a class="header" href="#0xd2-sys_process_attributes"><code>0xD2</code> SYS_PROCESS_ATTRIBUTES</a></h3>
 <p>Syscall resserved to the <a href="../services/system/process.html"><code>sys::process</code></a> service.</p>
@@ -1216,9 +1224,9 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <li><code>0x10</code>: Invalid action code provided</li>
 <li><code>0x11</code>: Invalid attribute number provided</li>
 <li><code>0x12</code>: Asked to write a read-only attribute</li>
-<li><code>0x20</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::process</code></a> service</li>
-<li><code>0x21</code>: This system service is not allowed to access or edit this attribute</li>
-<li><code>0x22</code>: Provided index is out-of-bounds</li>
+<li><code>0x30</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::process</code></a> service</li>
+<li><code>0x31</code>: This system service is not allowed to access or edit this attribute</li>
+<li><code>0x32</code>: Provided index is out-of-bounds</li>
 </ul>
 <h3 id="0xd4-sys_enum_devices"><a class="header" href="#0xd4-sys_enum_devices"><code>0xD4</code> SYS_ENUM_DEVICES</a></h3>
 <p>Syscall resserved to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service.</p>
@@ -1245,7 +1253,7 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid connection type in CII</li>
-<li><code>0x20</code>: Caller process is not the <a href="../services/system/hw.html"><code>sys::hw</code></a> service</li>
+<li><code>0x30</code>: Caller process is not the <a href="../services/system/hw.html"><code>sys::hw</code></a> service</li>
 </ul>
 <h3 id="0xd5-create_container"><a class="header" href="#0xd5-create_container"><code>0xD5</code> CREATE_CONTAINER</a></h3>
 <p>Create a <a href="../containers.html">container</a>.</p>
@@ -1257,7 +1265,7 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::proc</code></a> service.</li>
+<li><code>0x30</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::proc</code></a> service.</li>
 </ul>
 <h3 id="0xd6-link_container_device"><a class="header" href="#0xd6-link_container_device"><code>0xD6</code> LINK_CONTAINER_DEVICE</a></h3>
 <p>Make a hardware device available to a <a href="#0xd5-create_container">previously-created container</a>.</p>
@@ -1270,8 +1278,8 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::proc</code></a> service.</li>
-<li><code>0x30</code>: Unknown KDI provided</li>
+<li><code>0x30</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::proc</code></a> service.</li>
+<li><code>0x31</code>: Unknown KDI provided</li>
 </ul>
 <h3 id="0xd7-destroy_container"><a class="header" href="#0xd7-destroy_container"><code>0xD7</code> DESTROY_CONTAINER</a></h3>
 <p>Destroy a <a href="#0xd5-create_container">previously-created container</a> as well as all its children.</p>
@@ -1283,8 +1291,8 @@ If the current process is a service, a <a href="signals.html#0x2d-service_server
 <p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
-<li><code>0x20</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::proc</code></a> service.</li>
-<li><code>0x30</code>: Unknown conatiner ID provided</li>
+<li><code>0x30</code>: Caller process is not the <a href="../services/system/process.html"><code>sys::proc</code></a> service.</li>
+<li><code>0x31</code>: Unknown conatiner ID provided</li>
 </ul>
 
                     </main>

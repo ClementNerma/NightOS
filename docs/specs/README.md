@@ -9,6 +9,7 @@ For more informations about low-level concepts these documents refer to, you can
 - [Filesystem](filesystem.md) - how the filesystem works
 - [Storage permissions map](storage-permissions-map.md) - how permissions are managed on filesystem elements
 - [Libraries](libraries.md) - what are libraries
+- [Permissions](permissions.md) - list of applications' permissions
 - [The registry](registry.md) - exhaustive specification of the registry's content
 - [Vocabulary](vocabulary.md) - the list of NightOS-related terms
 - [The shell](shell.md) - how [Hydre](../technical/shell.md) works

@@ -78,14 +78,12 @@ System calls always return two numbers: a 8-bit one (errcode) and a 8 bytes one 
 - `0x02`: at least one argument is invalid (e.g. providing a pointer to the `0` address)
 - `0x03`: unmapped memory pointer (e.g. provided a pointer to a memory location that is not mapped yet)
 - `0x04`: memory permission error (e.g. provided a writable buffer to an allocated but non-writable memory address)
-
-Errors are encoded this way:
-
-- `0x00` to `0x0F`: generic errors (see above)
-- `0x10` to `0x1F`: invalid arguments provided (e.g. value is too high)
-- `0x20` to `0x2F`: arguments are not valid in the current context (e.g. provided ID does not exist)
-- `0x30` to `0x3F`: resource errors (e.g. file not found)
-- `0x40` to `0xFF`: other types of errors
+- `0x10` to `0x1F`: Invalid argument(s) provided (constant checking)
+- `0x20` to `0x2F`: Provided arguments are not valid in the current context (in relation with other arguments)
+- `0x30` to `0x3F`: Provided arguments are not valid (after resources checking)
+- `0x40` to `0x4F`: Resource access or modification error
+- `0x50` to `0x5F`: Handled hardware errors
+- `0x60` to `0x6F`: Other types of errors
 
 System calls' code are categorized as follows:
 
@@ -138,7 +136,7 @@ _Empty_
 **Errors:**
 
 - `0x10`: The requested signal does not exist
-- `0x20`: The requested signal does not have an handler
+- `0x30`: The requested signal does not have an handler
 
 ### `0x03` IS_SIGNAL_HANDLED
 
@@ -174,7 +172,7 @@ _Empty_
 
 **Errors:**
 
-- `0x20`: The process already told it was ready
+- `0x30`: The process already told it was ready
 
 ### `0x20` OPEN_PIPE
 
@@ -201,10 +199,10 @@ The target process will receive the SC/RC's counterpart through the [`RECV_PIPE`
 
 - `0x10`: Invalid transmission mode provided
 - `0x11`: Invalid notification mode provided
-- `0x20`: The provided PID does not exist
-- `0x21`: The target process is not part of this application
-- `0x22`: The target process runs under another user
-- `0x23`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal
+- `0x30`: The provided PID does not exist
+- `0x31`: The target process is not part of this application
+- `0x32`: The target process runs under another user
+- `0x33`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal
 
 ### `0x21` SEND_PIPE
 
@@ -225,7 +223,7 @@ _None_
 
 **Errors:**
 
-- `0x10`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal
+- `0x30`: Notification mode is enabled but the target process does not have a handler registered for the [`RECV_PIPE`](signals.md#0x20-recv_pipe) signal
 
 ### `0x22` PIPE_WRITE
 
@@ -251,11 +249,11 @@ Encoded on 4 bytes:
 **Errors:**
 
 - `0x10`: Invalid mode provided
-- `0x20`: The provided SC identifier does not exist
-- `0x21`: The provided SC was already closed
-- `0x22`: The provided SC refers to a message pipe but the provided size is larger than 64 KB
-- `0x23`: The provided SC refers to a message pipe but the `0x02` mode was provided
-- `0x30`: There is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
+- `0x30`: The provided SC identifier does not exist
+- `0x31`: The provided SC was already closed
+- `0x32`: The provided SC refers to a message pipe but the provided size is larger than 64 KB
+- `0x33`: The provided SC refers to a message pipe but the `0x02` mode was provided
+- `0x40`: There is not enough space in the pipe to write all the provided data and the mode argument was set to `0x01`
 
 ### `0x23` PIPE_READ
 
@@ -279,10 +277,10 @@ Encoded on 4 bytes:
 **Errors:**
 
 - `0x10`: Invalid mode provided
-- `0x20`: The provided RC identifier does not exist
-- `0x21`: The provided RC was already closed
-- `0x22`: There is no pending data in the pipe and the mode argument was set to `0x01`
-- `0x23`: The provided RC refers to a message pipe but the `0x02` mode was provided
+- `0x30`: The provided RC identifier does not exist
+- `0x31`: The provided RC was already closed
+- `0x32`: There is no pending data in the pipe and the mode argument was set to `0x01`
+- `0x33`: The provided RC refers to a message pipe but the `0x02` mode was provided
 
 ### `0x24` PIPE_INFO
 
@@ -308,7 +306,7 @@ Get informations on a pipe from its RC or SC identifier.
 
 **Errors:**
 
-_None_
+- `0x30`: The provided RC or SC identifier does not exist
 
 ### `0x25` CLOSE_PIPE
 
@@ -326,9 +324,9 @@ _None_
 
 **Errors:**
 
-- `0x10`: The provided RC/SC identifier does not exist
-- `0x11`: The target process already terminated
-- `0x20`: The provided RC/SC identifier is part of a service pipe
+- `0x30`: The provided RC/SC identifier does not exist
+- `0x31`: The target process already terminated
+- `0x32`: The provided RC/SC identifier is part of a service pipe
 
 ### `0x26` OPEN_SERV_SOCK
 
@@ -343,6 +341,11 @@ Triggers the [`RECV_SERV_SOCK`](signals.md#0x26-recv_serv_sock) signal on the re
 **Return value:**
 
 - Socket identifier (8 bytes)
+
+**Errors:**
+
+- `0x30`: Unknown PID provided
+- `0x31`: Current process is not allowed to communicate with the provided process
 
 ### `0x27` SEND_SOCK_MSG
 
@@ -366,10 +369,10 @@ Sending a non-zero error code will close the exchange.
 
 **Errors:**
 
-- `0x20`: Unknown socket identifier
-- `0x21`: Socket is already closed
-- `0x22`: Unknown exchange identifier
-- `0x23`: Exchange has already been concluded
+- `0x30`: Unknown socket identifier
+- `0x31`: Socket is already closed
+- `0x32`: Unknown exchange identifier
+- `0x40`: Exchange has already been concluded
 
 ### `0x28` READ_SOCK_MSG
 
@@ -391,10 +394,10 @@ Read the pending message of a [service socket](ipc.md#service-sockets).
 
 **Errors:**
 
-- `0x20`: Unknown socket identifier
-- `0x21`: Socket is already closed
-- `0x22`: Unknown exchange identifier
-- `0x23`: Exchange has already been concluded
+- `0x30`: Unknown socket identifier
+- `0x31`: Socket is already closed
+- `0x32`: Unknown exchange identifier
+- `0x40`: Exchange has already been concluded
 
 ### `0x29` CLOSE_SERV_SOCK
 
@@ -411,8 +414,8 @@ _None_
 
 **Errors:**
 
-- `0x20`: Unknown socket identifier
-- `0x21`: Socket is already closed
+- `0x30`: Unknown socket identifier
+- `0x40`: Socket is already closed
 
 ### `0x2A` CONNECT_SERVICE
 
@@ -443,13 +446,13 @@ If the current process already has an active connection (a connection that hasn'
 
 - `0x10`: Invalid flexible mode provided
 - `0x11`: Invalid target ytpe provided
-- `0x20`: Requested an integration or driver service but client is not a [system services](../services/system/README.md)
-- `0x21`: The provided ANID does not exist
-- `0x22`: Target application does not [expose the requested service](../../concepts/applications.md#services)
-- `0x22`: Current process already has an active connection to the target service and flexible mode is not set
-- `0x2F`: Client is the [`sys::fs`](../services/system/fs.md) service but a service other than a [storage driver service](../services/drivers/storage.md) or a [filesystem interface service](../services/integration/filesystem-interfaces.md) was requested
-- `0x30`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
-- `0x31`: Service rejected the connection request
+- `0x30`: Requested an integration or driver service but client is not a [system services](../services/system/README.md)
+- `0x31`: The provided ANID does not exist
+- `0x32`: Target application does not [expose the requested service](../../concepts/applications.md#services)
+- `0x32`: Current process already has an active connection to the target service and flexible mode is not set
+- `0x3F`: Client is the [`sys::fs`](../services/system/fs.md) service but a service other than a [storage driver service](../services/drivers/storage.md) or a [filesystem interface service](../services/integration/filesystem-interfaces.md) was requested
+- `0x40`: Failed to send the [`SERVICE_CONN_REQUEST`](signals.md#0x2a-service_conn_request) due to a [double handler fault](signals.md#0x01-handler_fault)
+- `0x41`: Service rejected the connection request
 
 ### `0x2B` END_SERVICE_CONN
 
@@ -465,9 +468,9 @@ _None_
 
 **Errors:**
 
-- `0x10`: The provided connection ID does not exist
-- `0x20`: This connection was already closed
-- `0x21`: The associated service thread already terminated
+- `0x30`: The provided connection ID does not exist
+- `0x40`: This connection was already closed
+- `0x41`: The associated service thread already terminated
 
 ### `0x2C` ACCEPT_SERVICE_CONN
 
@@ -490,9 +493,9 @@ When the associated client terminates, the [`SERVICE_CLIENT_CLOSED`](signals.md#
 
 **Errors:**
 
-- `0x10`: This request ID does not exist
-- `0x20`: The process which requested the connection already terminated
-- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 2000ms)
+- `0x30`: This request ID does not exist
+- `0x40`: The process which requested the connection already terminated
+- `0x41`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 2000ms)
 
 ### `0x2D` REJECT_SERVICE_CONN
 
@@ -508,9 +511,9 @@ _None_
 
 **Errors:**
 
-- `0x10`: This request ID does not exist
-- `0x20`: The process which requested the connection already terminated
-- `0x30`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 2000ms)
+- `0x30`: This request ID does not exist
+- `0x40`: The process which requested the connection already terminated
+- `0x41`: Answer was given after the delay set in the [registry](../registry.md)'s `system.processes.service_answer_delay` key (default: 2000ms)
 
 ### `0x2E` HAS_SCOPED_SERVICE
 
@@ -525,8 +528,8 @@ _None_
 
 **Errors:**
 
-- `0x20`: The provided ANID does not exist
-- `0x21`: Target application does not [expose the provided service](../../concepts/applications.md#services)
+- `0x30`: The provided ANID does not exist
+- `0x31`: Target application does not [expose the provided service](../../concepts/applications.md#services)
 
 ### `0x30` MEM_ALLOC
 
@@ -544,7 +547,7 @@ Allocate a linear block of memory.
 
 **Errors:**
 
-- `0x30`: The kernel could not find a linear block of memory of the requested size
+- `0x40`: The kernel could not find a linear block of memory of the requested size
 
 ### `0x31` MEM_FREE
 
@@ -567,10 +570,10 @@ _None_
 **Errors:**
 
 - `0x10`: The provided start address it not aligned with a page
-- `0x20`: The provided start address is out of the process' range
-- `0x21`: The provided size, added to the start address, would exceed the process' range
-- `0x22`: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)
-- `0x23`: One or more of the provided pages are shared with another process
+- `0x30`: The provided start address is out of the process' range
+- `0x31`: The provided size, added to the start address, would exceed the process' range
+- `0x32`: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)
+- `0x33`: One or more of the provided pages are shared with another process
 
 ### `0x32` VIRT_MEM_AMS
 
@@ -589,7 +592,7 @@ Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) fr
 
 - `0x10`: Start address is unaligned
 - `0x11`: Number of bytes is unaligned
-- `0x22`: Address is out of range
+- `0x30`: Address is out of range
 
 ### `0x33` BACKED_AMS
 
@@ -636,10 +639,10 @@ The returned AMS ID is common for both the sender and the receiver, allowing to 
 
 - `0x10`: Invalid notification mode provided
 - `0x11`: Invalid mode provided
-- `0x12`: Access permissions were not set but the sharing mode is set to mutual
-- `0x13`: Access permissions were provided but the sharing mode is set to exclusive
-- `0x14`: Invalid exclusive mode provided
-- `0x30`: There is not enough contiguous space in the receiver process' memory space to map the shared memory
+- `0x12`: Invalid exclusive mode provided
+- `0x20`: Access permissions were not set but the sharing mode is set to mutual
+- `0x21`: Access permissions were provided but the sharing mode is set to exclusive
+- `0x40`: There is not enough contiguous space in the receiver process' memory space to map the shared memory
 
 ### `0x35` AMS_SHARING_INFO
 
@@ -660,7 +663,7 @@ Get informations about a [shared](#0x34-share_ams) [abstract memory segment (AMS
 
 **Errors:**
 
-- `0x10`: Unknwon AMS ID provided
+- `0x30`: Unknwon AMS ID provided
 
 ### `0x36` UNSHARE_AMS
 
@@ -679,9 +682,9 @@ _None_
 
 **Errors:**
 
-- `0x10`: Unknown AMS ID provided
-- `0x20`: Provided AMS ID is exclusive
-- `0x21`: Provided AMS was not shared with the provided process
+- `0x30`: Unknown AMS ID provided
+- `0x21`: Provided AMS ID is exclusive
+- `0x32`: Provided AMS was not shared with the provided process
 
 ### `0x37` MAP_AMS
 
@@ -699,9 +702,9 @@ _None_
 
 **Errors:**
 
-- `0x10`: Unknown AMS ID provided
-- `0x20`: Provided mapping address or address+length is out-of-range in the AMS
-- `0x21`: Provided address to map or address+length is out-of-orange in this process' address space
+- `0x30`: Unknown AMS ID provided
+- `0x31`: Provided mapping address or address+length is out-of-range in the AMS
+- `0x32`: Provided address to map or address+length is out-of-orange in this process' address space
 
 ### `0x38` UNMAP_AMS
 
@@ -720,7 +723,7 @@ _Empty_
 **Errors:**
 
 - `0x10`: Unknown AMS ID provided
-- `0x20`: Provided AMS it not mapped at this address
+- `0x30`: Provided AMS it not mapped at this address
 
 ### `0x40` CREATE_PROCESS
 
@@ -744,8 +747,8 @@ If the parent process is part of a [container](../containers.md), the child proc
 
 **Errors:**
 
-- `0x20`: The current process is not an application process
-- `0x30`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
+- `0x30`: The current process is not an application process
+- `0x40`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
 
 ### `0x41` WAIT_CHILD_PROCESS
 
@@ -762,7 +765,7 @@ _Empty_
 
 **Errors:**
 
-- `0x20`: The provided PID does not exist or does not belong to the current application
+- `0x30`: The provided PID does not exist or does not belong to the current application
 
 ### `0x42` KILL_CHILD_PROCESS
 
@@ -779,7 +782,7 @@ Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md
 
 **Errors:**
 
-- `0x30`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
+- `0x40`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
 
 ### `0x43` GET_PID
 
@@ -811,8 +814,8 @@ _None_
 
 **Errors:**
 
-- `0x20`: the current process is not an application process
-- `0x21`: the current PID was not found or is not a child of the current process
+- `0x30`: the current process is not an application process
+- `0x31`: the current PID was not found or is not a child of the current process
 
 ### `0x45` UNSUSPEND
 
@@ -830,8 +833,8 @@ Will trigger the [`UNSUSPENDED`](signals.md#0x46-unsuspended) signal on the chil
 
 **Errors:**
 
-- `0x20`: the current process is not an application process
-- `0x21`: the current PID was not found or is not a child of the current process
+- `0x30`: the current process is not an application process
+- `0x31`: the current PID was not found or is not a child of the current process
 
 ### `0x46` HAND_OVER
 
@@ -886,7 +889,7 @@ Create a thread from the current one. The new thread will share the current one'
 
 **Errors:**
 
-- `0x30`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
+- `0x40`: Failed to create a new thread due to hardware problem (cannot allocate memory, ...)
 
 ### `0x51` CREATE_TLS_SLOT
 
@@ -902,7 +905,8 @@ _None_
 
 **Errors:**
 
-_None_
+- `0x40`: Maximum number of TLS slots was reached
+- `0x41`: Could not allocate memory for a new TLS slot
 
 ### `0x52` READ_TLS_SLOT
 
@@ -919,7 +923,7 @@ Read from a [TLS slot](../../technical/processes.md#thread-local-storage).
 
 **Errors:**
 
-- `0x20`: Unknown TLS identifier
+- `0x30`: Unknown TLS identifier
 
 ### `0x53` WRITE_TLS_SLOT
 
@@ -936,8 +940,8 @@ _None_
 
 **Errors:**
 
-- `0x20`: Unknown TLS identifier
-- `0x30`: Failed to allocate enough memory for the written data
+- `0x30`: Unknown TLS identifier
+- `0x40`: Failed to allocate enough memory for the written data
 
 ### `0x54` DELETE_TLS_SLOT
 
@@ -953,7 +957,7 @@ _None_
 
 **Errors:**
 
-- `0x20`: Unknown TLS identifier
+- `0x30`: Unknown TLS identifier
 
 ### `0x5F` EXIT_THREAD
 
@@ -989,10 +993,10 @@ Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
 
 **Error codes:**
 
-- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
-- `0x21`: The provided device KDI was not found
-- `0x22`: The provided I/O port does not exist for the provided device
-- `0x23`: The provided I/O port is an output port
+- `0x30`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x31`: The provided device KDI was not found
+- `0x32`: The provided I/O port does not exist for the provided device
+- `0x33`: The provided I/O port is an output port
 
 ### `0x61` WRITE_IO_PORT
 
@@ -1012,10 +1016,10 @@ Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
 
 **Error codes:**
 
-- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
-- `0x21`: The provided device KDI was not found
-- `0x22`: The provided I/O port does not exist for the provided device
-- `0x23`: The provided I/O port is an input port
+- `0x30`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x31`: The provided device KDI was not found
+- `0x32`: The provided I/O port does not exist for the provided device
+- `0x33`: The provided I/O port is an input port
 
 ### `0x62` DEVICE_INTERRUPT
 
@@ -1035,10 +1039,10 @@ _None_
 
 **Error codes:**
 
-- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
-- `0x21`: The provided device KDI was not found
-- `0x22`: The provided I/O port does not exist for the provided device
-- `0x23`: The provided I/O port is an input port
+- `0x30`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x31`: The provided device KDI was not found
+- `0x32`: The provided I/O port does not exist for the provided device
+- `0x33`: The provided I/O port is an input port
 
 ### `0x63` DEVICE_AMS
 
@@ -1064,9 +1068,9 @@ Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
 - `0x10`: The mapping's start address is not aligned with a page
 - `0x11`: The mapping's length is not a multiple of a page's size
 - `0x12`: The mapping's size is null (0 bytes)
-- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
-- `0x21`: The provided device KDI was not found
-- `0x22`: The provided device is not compatible with MMIO
+- `0x30`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x31`: The provided device KDI was not found
+- `0x32`: The provided device is not compatible with MMIO
 
 ### `0x64` SET_DMA_MEM_ACCESS
 
@@ -1092,9 +1096,9 @@ _None_
 - `0x10`: The range's start address is not aligned with a page
 - `0x11`: The range's length is not a multiple of a page's size
 - `0x12`: The range's size is null (0 bytes)
-- `0x20`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
-- `0x21`: The provided device KDI was not found
-- `0x22`: The provided device is not compatible with DMA
+- `0x30`: This device is not registered in this process' [drivable devices attribute](processes.md#drivable-devices)
+- `0x31`: The provided device KDI was not found
+- `0x32`: The provided device is not compatible with DMA
 
 ### `0xA0` EXECUTION_CONTEXT
 
@@ -1116,8 +1120,8 @@ Get informations from the application's [execution context](../applications.md#e
 
 **Errors:**
 
-- `0x10`: invalid information number provided
-- `0x20`: caller process is a system service
+- `0x10`: Invalid information number provided
+- `0x30`: Caller process is a system service
 
 ### `0xD0` SYS_CREATE_PROCESS
 
@@ -1136,9 +1140,9 @@ Create a [userland process](processes.md#types-of-processes).
 
 **Errors:**
 
-- `0x20`: Caller process is not the [`sys::process`](../services/system/process.md) service
-- `0x30`: Code location token was not accepted by the [`sys::fs`](../services/system/fs.md)
-- `0x31`: Application context is not valid
+- `0x30`: Caller process is not the [`sys::process`](../services/system/process.md) service
+- `0x31`: Code location token was not accepted by the [`sys::fs`](../services/system/fs.md) service
+- `0x32`: Application context is not valid
 
 ### `0xD1` SYS_MANAGE_PROCESS
 
@@ -1163,9 +1167,9 @@ _None_
 **Errors:**
 
 - `0x10`: Invalid action code provided
-- `0x20`: Caller process is not the [`sys::process`](../services/system/process.md) service
-- `0x21`: Unknown PID
-- `0x22`: Process is already in the requested state
+- `0x30`: Caller process is not the [`sys::process`](../services/system/process.md) service
+- `0x31`: Unknown PID
+- `0x32`: Process is already in the requested state
 
 ### `0xD2` SYS_PROCESS_ATTRIBUTES
 
@@ -1218,9 +1222,9 @@ _For list-based attributes:_
 - `0x10`: Invalid action code provided
 - `0x11`: Invalid attribute number provided
 - `0x12`: Asked to write a read-only attribute
-- `0x20`: Caller process is not the [`sys::process`](../services/system/process.md) service
-- `0x21`: This system service is not allowed to access or edit this attribute
-- `0x22`: Provided index is out-of-bounds
+- `0x30`: Caller process is not the [`sys::process`](../services/system/process.md) service
+- `0x31`: This system service is not allowed to access or edit this attribute
+- `0x32`: Provided index is out-of-bounds
 
 ### `0xD4` SYS_ENUM_DEVICES
 
@@ -1249,7 +1253,7 @@ By prodiving a pattern with all bits set and a full CII, it is possible to retri
 **Errors:**
 
 - `0x10`: Invalid connection type in CII
-- `0x20`: Caller process is not the [`sys::hw`](../services/system/hw.md) service
+- `0x30`: Caller process is not the [`sys::hw`](../services/system/hw.md) service
 
 ### `0xD5` CREATE_CONTAINER
 
@@ -1265,7 +1269,7 @@ _None_
 
 **Errors:**
 
-- `0x20`: Caller process is not the [`sys::proc`](../services/system/process.md) service.
+- `0x30`: Caller process is not the [`sys::proc`](../services/system/process.md) service.
 
 ### `0xD6` LINK_CONTAINER_DEVICE
 
@@ -1283,8 +1287,8 @@ _None_
 
 **Errors:**
 
-- `0x20`: Caller process is not the [`sys::proc`](../services/system/process.md) service.
-- `0x30`: Unknown KDI provided
+- `0x30`: Caller process is not the [`sys::proc`](../services/system/process.md) service.
+- `0x31`: Unknown KDI provided
 
 ### `0xD7` DESTROY_CONTAINER
 
@@ -1300,5 +1304,5 @@ _None_
 
 **Errors:**
 
-- `0x20`: Caller process is not the [`sys::proc`](../services/system/process.md) service.
-- `0x30`: Unknown conatiner ID provided
+- `0x30`: Caller process is not the [`sys::proc`](../services/system/process.md) service.
+- `0x31`: Unknown conatiner ID provided

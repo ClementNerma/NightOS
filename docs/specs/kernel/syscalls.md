@@ -56,6 +56,9 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0xD1` SYS_MANAGE_PROCESS](#0xd1-sys_manage_process)
   - [`0xD2` SYS_PROCESS_ATTRIBUTES](#0xd2-sys_process_attributes)
   - [`0xD4` SYS_ENUM_DEVICES](#0xd4-sys_enum_devices)
+  - [`0xD5` CREATE_CONTAINER](#0xd5-create_container)
+  - [`0xD6` LINK_CONTAINER_DEVICE](#0xd6-link_container_device)
+  - [`0xD7` DESTROY_CONTAINER](#0xd7-destroy_container)
 
 ## Technical overview
 
@@ -727,6 +730,8 @@ Communication can be done through [standard IPC](ipc.md).
 
 The initialization data is joined as part of the application's [execution context](../applications.md#execution-context).
 
+If the parent process is part of a [container](../containers.md), the child process will be part of the same one.
+
 **Arguments:**
 
 - Initialization data (8 bytes)
@@ -1180,6 +1185,7 @@ _For value-based attributes:_
   - `0x04`: Execution context (startup reason)
   - `0x05`: Execution context (header)
   - `0x06`: Execution context (arguments)
+  - `0x07`: Container ID
 
 - Action code:
   - `0x00`: Read the information (followed by a [writable buffer](data-structures.md#buffer-pointers) on 16 bytes)
@@ -1211,6 +1217,7 @@ _For list-based attributes:_
 
 - `0x10`: Invalid action code provided
 - `0x11`: Invalid attribute number provided
+- `0x12`: Asked to write a read-only attribute
 - `0x20`: Caller process is not the [`sys::process`](../services/system/process.md) service
 - `0x21`: This system service is not allowed to access or edit this attribute
 - `0x22`: Provided index is out-of-bounds
@@ -1243,3 +1250,55 @@ By prodiving a pattern with all bits set and a full CII, it is possible to retri
 
 - `0x10`: Invalid connection type in CII
 - `0x20`: Caller process is not the [`sys::hw`](../services/system/hw.md) service
+
+### `0xD5` CREATE_CONTAINER
+
+Create a [container](../containers.md).
+
+**Arguments:**
+
+_None_
+
+**Return value:**
+
+- Container ID (8 bytes)
+
+**Errors:**
+
+- `0x20`: Caller process is not the [`sys::proc`](../services/system/process.md) service.
+
+### `0xD6` LINK_CONTAINER_DEVICE
+
+Make a hardware device available to a [previously-created container](#0xd5-create_container).
+
+The device may be a real hardware device or a virtual one.
+
+**Arguments:**
+
+- [KDI](hardware.md#kernel-device-identifier) of the device to link (8 bytes)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x20`: Caller process is not the [`sys::proc`](../services/system/process.md) service.
+- `0x30`: Unknown KDI provided
+
+### `0xD7` DESTROY_CONTAINER
+
+Destroy a [previously-created container](#0xd5-create_container) as well as all its children.
+
+**Arguments:**
+
+- Container ID (8 bytes)
+
+**Return value:**
+
+_None_
+
+**Errors:**
+
+- `0x20`: Caller process is not the [`sys::proc`](../services/system/process.md) service.
+- `0x30`: Unknown conatiner ID provided

@@ -45,6 +45,7 @@
   - [Storage permissions map](specs/storage-permissions-map.md) - how permissions are managed on filesystem elements
   - [Libraries](specs/libraries.md) - what are libraries
   - [Permissions](specs/permissions.md) - list of applications' permissions
+  - [Containers](specs/containers.md) - process isolation system
   - [The registry](specs/registry.md) - exhaustive specification of the registry's content
   - [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms
   - [The shell](specs/shell.md) - the native shell of NightOS

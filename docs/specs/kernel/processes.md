@@ -39,6 +39,7 @@ Each process has a set of _attributes_ which contains critical informations on i
 - PID (8 bytes)
 - Priority (1 byte)
 - System marker (1 byte) to indicate if the process comes from a system program
+- [Container](../containers.md)'s ID (8 bytes)
 - [Running user](../../concepts/users.md)'s ID (8 bytes)
 - Parent application [ANID](../applications-libraries.md#application-identifier) (8 bytes) - `0` for system services
 - Pointer to the [execution context](../applications.md#execution-context) (8 bytes) - `0` for system services

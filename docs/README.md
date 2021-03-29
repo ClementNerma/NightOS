@@ -60,6 +60,7 @@ The list of default applications and their description can be found [here](appli
 - [Filesystem](specs/filesystem.md) - how the filesystem works
 - [Storage permissions map](specs/storage-permissions-map.md) - how permissions are managed on filesystem elements
 - [Libraries](specs/libraries.md) - what are libraries
+- [Containers](specs/containers.md) - process isolation system
 - [Permissions](specs/permissions.md) - list of applications' permissions
 - [The registry](specs/registry.md) - exhaustive specification of the registry's content
 - [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms

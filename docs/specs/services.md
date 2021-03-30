@@ -79,7 +79,7 @@ You can find the list of all system services in the [related directory](services
 
 ## Third-party communication
 
-An application can enable communication to and from other applications thanks to a service.
+An application can enable communication to and from other applications using a service.
 
 For instance, let's consider two applications, A and B. If A wants to be able to be contacted by other applications (such as B), it sets up a service and subscribes to it. Then, when B sends a message to the service, it is forwarded to A through a notification by the service itself.
 
@@ -87,6 +87,6 @@ It can also work the other way: B subscribes to the service, and when A wants to
 
 The downside of this structure is that latency is approximately doubled compared to a direct A-B communication. But as they use messages and notifications, which are based on hardware interrupts, the latency is extremely low, mainly composed of the time the kernel spends to ensure the communication between A and the service and then the service and B (or the other way around) is allowed.
 
-This method works for small pieces of data though, and isn't suited for large chunks. For that purpose, A can [share a memory segment](kernel/memory.md#abstract-memory-segments) with the service, who shares it in turn to B (with restricted permissions if required).
+Although this method works fine for small pieces of data, it isn't suited for transmitting large chunks in a performant way. For that purpose, A can [share a memory segment](kernel/memory.md#abstract-memory-segments) with the service, who shares it in turn to B (with restricted permissions if required).
 
 Note that this only applies to different applications ; processes from a same application can communicate directly through [IPC](kernel/ipc.md).

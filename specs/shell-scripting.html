@@ -4,47 +4,27 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Shell scripting - NightOS documentation</title>
-        
-        
-
-
         <!-- Custom HTML head -->
-        
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Design and specification documents for NightOS">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
-        
         <link rel="stylesheet" href="../css/print.css" media="print">
-        
-
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
-
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
         <link rel="stylesheet" href="../tomorrow-night.css">
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,7 +83,6 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
@@ -120,33 +99,26 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">NightOS documentation</h1>
 
                     <div class="right-buttons">
-                        
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
-                        
                         <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -154,8 +126,6 @@
                         </ul>
                     </div>
                 </div>
-                
-
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -192,6 +162,7 @@
 <li><a href="#assignment-operators">Assignment operators</a></li>
 </ul>
 </li>
+<li><a href="#lists-and-maps">Lists and maps</a></li>
 <li><a href="#blocks">Blocks</a>
 <ul>
 <li><a href="#conditionals">Conditionals</a></li>
@@ -328,6 +299,7 @@
 <li><a href="#lists">Lists</a>
 <ul>
 <li><a href="#listcharstringify---str"><code>list[char].stringify() -&gt; str</code></a></li>
+<li><a href="#liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></li>
 <li><a href="#listtgetindex-int---t"><code>list[T].get(index: int) -&gt; T?</code></a></li>
 <li><a href="#listtexpectindex-number-message-string---t"><code>list[T].expect(index: number, message: string) -&gt; T</code></a></li>
 <li><a href="#listtunshiftvalue-t"><code>list[T].unshift(value: T)</code></a></li>
@@ -337,9 +309,20 @@
 <li><a href="#listtsortasc--true---listt"><code>list[T].sort(asc = true) -&gt; list[T]</code></a></li>
 <li><a href="#listtreverse---listt"><code>list[T].reverse() -&gt; list[T]</code></a></li>
 <li><a href="#listtlen---int"><code>list[T].len() -&gt; int</code></a></li>
-<li><a href="#liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></li>
 <li><a href="#listtconcatanother-listt---listt"><code>list[T].concat(another: list[T]) -&gt; list[T]</code></a></li>
 <li><a href="#listtconcatlists-listlistt---listt"><code>list[T].concat(lists: list[list[T]]) -&gt; list[T]</code></a></li>
+</ul>
+</li>
+<li><a href="#maps">Maps</a>
+<ul>
+<li><a href="#mapk-vhaskey-k---bool"><code>map[K, V].has(key: K) -&gt; bool</code></a></li>
+<li><a href="#mapk-vgetkey-k---v"><code>map[K, V].get(key: K) -&gt; V?</code></a></li>
+<li><a href="#mapk-vkeys---listk"><code>map[K, V].keys() -&gt; list[K]</code></a></li>
+<li><a href="#mapk-vvalues---listv"><code>map[K, V].values() -&gt; list[V]</code></a></li>
+<li><a href="#mapk-vvalues---liststruct--key-k-value-v-"><code>map[K, V].values() -&gt; list[struct { key: K, value: V }]</code></a></li>
+<li><a href="#mapk-vexpectkey-k-message-string---v"><code>map[K, V].expect(key: K, message: string) -&gt; V</code></a></li>
+<li><a href="#mapk-vdeletekey-k---bool"><code>map[K, V].delete(key: K) -&gt; bool</code></a></li>
+<li><a href="#mapk-vcount---int"><code>map[K, V].count() -&gt; int</code></a></li>
 </ul>
 </li>
 <li><a href="#commands">Commands</a>
@@ -442,6 +425,9 @@ _ = &quot;abc&quot;
 # Lists of a given type (list[type])
 _ = [ 3, 3.14 ]
 
+# Maps (key-values) (map[key_type, value_type])
+_ = { &quot;a&quot;: 1, &quot;b&quot;: 2 }
+
 # Paths (path) - must contain at least one `/` to indicate clearly that it's a path and not a string or something else
 _ = dir/file.ext
 _ = ./file.ext
@@ -503,6 +489,11 @@ echo &quot;Hello, ${name}!&quot; # Hello, Jack!
 <p>Values in lists through their index (starting at 0):</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot; ]
 echo &quot;Hello, ${names[0]}!&quot; # Hello, Jack!
+</code></pre>
+<p>Values in maps through their key:</p>
+<pre><code class="language-hydre">var ages = { &quot;Jack&quot;: 28 }
+
+echo &quot;Jack is ${ages[&quot;Jack&quot;]} years old!&quot;
 </code></pre>
 <p>Note that getting an out-of-bound index will make the program <em>panic</em>, which means it exits immediatly with an error message.</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot; ]
@@ -570,6 +561,43 @@ a ++
 a --
 
 echo ${a} # 1
+</code></pre>
+<h2 id="lists-and-maps"><a class="header" href="#lists-and-maps">Lists and maps</a></h2>
+<p>Lists and maps behave in a similar way: while lists have <em>indexes</em>, which are handled behind-the-scenes, maps have <em>keys</em>, which are provided explicitly.</p>
+<p>Here is how we declare a list or a map:</p>
+<pre><code class="language-hydre"># Type: list[string]
+var names = [ &quot;Jack&quot;, &quot;John&quot; ]
+
+# Type: map[string, int]
+var ages = { &quot;Jack&quot;: 28, &quot;John&quot;: 29 }
+</code></pre>
+<p>To add a new value:</p>
+<pre><code class="language-hydre"># Lists
+names[] = &quot;Paolo&quot;
+
+# Maps
+ages[&quot;Paolo&quot;] = 26
+</code></pre>
+<p>To get a value:</p>
+<pre><code class="language-hydre"># Type: int
+names[0]
+
+# Type: int
+ages[&quot;Paolo&quot;]
+</code></pre>
+<p>To remove a value:</p>
+<pre><code class="language-hydre"># Lists
+delete names[0]
+
+# Maps
+delete ages[&quot;Paolo&quot;]
+</code></pre>
+<p>To get the number of entries:</p>
+<pre><code class="language-hydre"># Type: int
+names.len()
+
+# Maps: int
+ages.count()
 </code></pre>
 <h2 id="blocks"><a class="header" href="#blocks">Blocks</a></h2>
 <p>Blocks allow to run a piece of code multiple times or if a specific condition is met. They are useful combined to comparison operators.</p>
@@ -656,6 +684,13 @@ end
 end
 </code></pre>
 <p>This will display <code>0: Jack</code> and <code>1: John</code>.</p>
+<p>For maps:</p>
+<pre><code class="language-hydre">var ages = { &quot;Jack&quot;: 28, &quot;John&quot;: 29 }
+
+for name, age in ages
+  echo &quot;${name} is ${age} years old!&quot;
+end
+</code></pre>
 <p>There is another type of loop, which runs a piece of code while a condition is met:</p>
 <pre><code class="language-hydre">while # condition
   command
@@ -1563,6 +1598,11 @@ split(&quot;a b&quot;, &quot; &quot;) # [ &quot;a&quot;, &quot;b&quot; ]
 <p>Turns a list of characters to a string.</p>
 <pre><code class="language-hydre">_ = ([ 'a', 'b', 'c' ].str() == &quot;abc&quot;) # true
 </code></pre>
+<h4 id="liststringjoinsep-----string"><a class="header" href="#liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></h4>
+<p>Join a list of strings with a separator.</p>
+<pre><code class="language-hydre">join([ &quot;a&quot;, &quot;b&quot; ])       # &quot;a,b&quot;
+join([ &quot;a&quot;, &quot;b&quot; ], &quot;; &quot;) # &quot;a; b&quot;
+</code></pre>
 <h4 id="listtgetindex-int---t"><a class="header" href="#listtgetindex-int---t"><code>list[T].get(index: int) -&gt; T?</code></a></h4>
 <p>Try to get an item from the list, without panicking if the index is out-of-bounds.</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot;, &quot;John&quot; ]
@@ -1575,7 +1615,7 @@ names.get(2) # null
 <p>Get an item from the list, and panic with a custom error message if the index is out-of-bounds.</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot;, &quot;John&quot; ]
 
-names.get(2, &quot;Third item was not found&quot;)
+names.expect(2, &quot;Third item was not found&quot;)
 </code></pre>
 <h4 id="listtunshiftvalue-t"><a class="header" href="#listtunshiftvalue-t"><code>list[T].unshift(value: T)</code></a></h4>
 <p>Insert a new value at the beginning of the list.</p>
@@ -1598,11 +1638,6 @@ _ = [ 2, 8, 4 ].sort(false) # [ 8, 4, 2 ]
 <p>Count the number of entries in a list.</p>
 <pre><code class="language-hydre">_ = [ 2, 8, 4 ].len() # 3
 </code></pre>
-<h4 id="liststringjoinsep-----string"><a class="header" href="#liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></h4>
-<p>Join a list of strings with a separator.</p>
-<pre><code class="language-hydre">join([ &quot;a&quot;, &quot;b&quot; ])       # &quot;a,b&quot;
-join([ &quot;a&quot;, &quot;b&quot; ], &quot;; &quot;) # &quot;a; b&quot;
-</code></pre>
 <h4 id="listtconcatanother-listt---listt"><a class="header" href="#listtconcatanother-listt---listt"><code>list[T].concat(another: list[T]) -&gt; list[T]</code></a></h4>
 <p>Concatenate two lists.</p>
 <pre><code class="language-hydre">_ = [ 1, 2 ].concat([ 3, 4 ]) # [ 1, 2, 3, 4 ]
@@ -1611,6 +1646,23 @@ join([ &quot;a&quot;, &quot;b&quot; ], &quot;; &quot;) # &quot;a; b&quot;
 <p>Concatenate multiple lists.</p>
 <pre><code class="language-hydre">_ = [ 1, 2 ].concat([ [ 3, 4 ], [ 5, 6 ] ]) # [ 1, 2, 3, 4, 5, 6 ]
 </code></pre>
+<h3 id="maps"><a class="header" href="#maps">Maps</a></h3>
+<h4 id="mapk-vhaskey-k---bool"><a class="header" href="#mapk-vhaskey-k---bool"><code>map[K, V].has(key: K) -&gt; bool</code></a></h4>
+<p>Check if a key exists in a map.</p>
+<h4 id="mapk-vgetkey-k---v"><a class="header" href="#mapk-vgetkey-k---v"><code>map[K, V].get(key: K) -&gt; V?</code></a></h4>
+<p>Get a value without panicking if the key doesn't exist.</p>
+<h4 id="mapk-vkeys---listk"><a class="header" href="#mapk-vkeys---listk"><code>map[K, V].keys() -&gt; list[K]</code></a></h4>
+<p>Get all keys of a map.</p>
+<h4 id="mapk-vvalues---listv"><a class="header" href="#mapk-vvalues---listv"><code>map[K, V].values() -&gt; list[V]</code></a></h4>
+<p>Get all values of a map.</p>
+<h4 id="mapk-vvalues---liststruct--key-k-value-v-"><a class="header" href="#mapk-vvalues---liststruct--key-k-value-v-"><code>map[K, V].values() -&gt; list[struct { key: K, value: V }]</code></a></h4>
+<p>Turn a map into a list.</p>
+<h4 id="mapk-vexpectkey-k-message-string---v"><a class="header" href="#mapk-vexpectkey-k-message-string---v"><code>map[K, V].expect(key: K, message: string) -&gt; V</code></a></h4>
+<p>Get an item from the map, and panic with a custom error message if the key doen't exist.</p>
+<h4 id="mapk-vdeletekey-k---bool"><a class="header" href="#mapk-vdeletekey-k---bool"><code>map[K, V].delete(key: K) -&gt; bool</code></a></h4>
+<p>Delete a key, returns <code>false</code> if the key didn't exist in the map, or <code>true</code> otherwise.</p>
+<h4 id="mapk-vcount---int"><a class="header" href="#mapk-vcount---int"><code>map[K, V].count() -&gt; int</code></a></h4>
+<p>Count the number of entries in a map.</p>
 <h3 id="commands"><a class="header" href="#commands">Commands</a></h3>
 <h4 id="commandrun---int"><a class="header" href="#commandrun---int"><code>command.run() -&gt; int</code></a></h4>
 <p>Run the command and gets its status code after exit.</p>
@@ -1765,67 +1817,38 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../specs/shell.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
-
-                        
                             <a rel="next" href="../specs/services.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
-
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../specs/shell.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
-
-                
                     <a rel="next" href="../specs/services.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
-
-        
-
-        
-
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
-
-        
-
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
-
-        
-
     </body>
 </html>

@@ -4,49 +4,28 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>NightOS documentation</title>
-        
         <meta name="robots" content="noindex" />
-        
-        
-
-
         <!-- Custom HTML head -->
-        
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Design and specification documents for NightOS">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
-        
         <link rel="stylesheet" href="css/print.css" media="print">
-        
-
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
-
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -105,7 +84,6 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
@@ -122,33 +100,26 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">NightOS documentation</h1>
 
                     <div class="right-buttons">
-                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
-                        
                         <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -156,8 +127,6 @@
                         </ul>
                     </div>
                 </div>
-                
-
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -195,7 +164,7 @@ In its early stages though, we will use a the Linux kernel as a base, and the mi
 <h2 id="special-thanks"><a class="header" href="#special-thanks">Special thanks</a></h2>
 <p>Thanks to <strong><a href="https://www.deviantart.com/rmradev">rmRander</a></strong> for providing the image that served as a base for this <a href="https://raw.githubusercontent.com/ClementNerma/NightOS/main/logo.png">project's logo</a>.
 You can find the original picture <a href="https://www.deviantart.com/rmradev/art/Moon-sunset-landscape-825321054">here</a>.</p>
-<h1 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently-Asked Questions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently-Asked Questions</a></h1>
 <p>Welcome to NightOS' FAQ. This document answers to common questions about the project, completing the <a href="FOREWORD.html">foreword</a>.</p>
 <ul>
 <li><a href="FAQ.html#this-project-seems-too-good-to-be-true">This project seems too good to be true</a></li>
@@ -233,7 +202,7 @@ You can find the original picture <a href="https://www.deviantart.com/rmradev/ar
 This is where I had the idea of creating NightOS: an operating system that is both robust (understand stable, with mechanisms to minimize data loss in case something goes wrong) and secure, with many security features available to the average user and some more complex ones for advanced users.</p>
 <h2 id="how-can-i-help"><a class="header" href="#how-can-i-help">How can I help?</a></h2>
 <p>Help is very welcome but there's not many things to help with currently, as the system is still being designed. You can still help by suggesting improvements or fixing an error (whatever it is, a design problem or a simple typo) by <a href="https://github.com/ClementNerma/NightOS/issues/new">submitting an issue</a>.</p>
-<h1 id="project"><a class="header" href="#project">Project</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="project"><a class="header" href="#project">Project</a></h1>
 <p>This folder contains the documentation about the project itself - how is will be developed, maintained, its release schedule, etc.
 <strong>Please note that this part is far from being complete</strong>, and many informations will be missing and/or incomplete.</p>
 <ul>
@@ -241,7 +210,7 @@ This is where I had the idea of creating NightOS: an operating system that is bo
 <li><a href="project/development.html">Development</a> - how the project will be developped</li>
 <li><a href="project/hw-requirements.html">Hardware requirements</a> - hardware required in order to install and run NightOS</li>
 </ul>
-<h1 id="projects-roadmap"><a class="header" href="#projects-roadmap">Project's ROADMAP</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="projects-roadmap"><a class="header" href="#projects-roadmap">Project's ROADMAP</a></h1>
 <p><strong>WARNING: This document is only a draft and as such far from being complete. All informations described here are subject to change anytime.</strong></p>
 <p>The project will be cut in the four phases described below.</p>
 <ul>
@@ -291,7 +260,7 @@ This is where I had the idea of creating NightOS: an operating system that is bo
 <h2 id="evolution-optimization--maintenance"><a class="header" href="#evolution-optimization--maintenance">Evolution, Optimization &amp; Maintenance</a></h2>
 <p>The <em>Evolution, Optimization &amp; Maintenance</em> (EPM) part is pretty explicit: it's all about improving NightOS' existing features, introducing new ones as needed, improving performances and stability, and fixing new bugs.</p>
 <p>This part will last forever, as for all operating systems - or until the project dies.</p>
-<h1 id="project-development"><a class="header" href="#project-development">Project development</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="project-development"><a class="header" href="#project-development">Project development</a></h1>
 <p><strong>WARNING: This document is only a draft and as such far from being complete. All informations described here are subject to change anytime.</strong></p>
 <ul>
 <li><a href="project/development.html#languages">Languages</a></li>
@@ -304,7 +273,7 @@ API interopability will be assured for <a href="https://www.typescriptlang.org/"
 <li>The desired behaviour cannot be reached without assembly (e.g. direct register or stack manipulation)</li>
 <li>Extremely performances-critical pieces</li>
 </ul>
-<h1 id="hardware-requirements"><a class="header" href="#hardware-requirements">Hardware requirements</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="hardware-requirements"><a class="header" href="#hardware-requirements">Hardware requirements</a></h1>
 <p><strong>WARNING: This document is only a draft and as such far from being complete. All informations described here are subject to change anytime.</strong></p>
 <p>This document presents the minimal hardware requirements required by NightOS in order to work. This is also means NightOS will work on any computer with these attributes.</p>
 <ul>
@@ -317,14 +286,14 @@ API interopability will be assured for <a href="https://www.typescriptlang.org/"
 <li>A modern process with a built-in cryptography module</li>
 <li>An <em>I/O Memory Management Unit</em> (IOMMU) for DMA access</li>
 </ul>
-<h1 id="concepts"><a class="header" href="#concepts">Concepts</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="concepts"><a class="header" href="#concepts">Concepts</a></h1>
 <p>This folder contains documentation for each high-level concept of NightOS. They are designed to be easily readable and understandable.</p>
 <ul>
 <li><a href="concepts/applications.html">What are applications?</a> - the way to run software on NightOS</li>
 <li><a href="concepts/libraries.html">What are libraries?</a> - sharing identical behaviours between multiple applications</li>
 <li><a href="concepts/users.html">What are users?</a> - sharing a computer between multiple persons</li>
 </ul>
-<h1 id="applications"><a class="header" href="#applications">Applications</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="applications"><a class="header" href="#applications">Applications</a></h1>
 <p><em>Applications</em> are the system's way to handle software.</p>
 <p><strong>NOTE :</strong> This document is only an <em>introduction</em> to how applications work.</p>
 <ul>
@@ -400,7 +369,7 @@ Native applications which are <em>not</em> system applications can be removed, t
 <p>Application can provide <a href="concepts/../technical/services.html">services</a> by specifying them in their <a href="concepts/../specs/applications.html#application-manifest">manifest</a>.
 The services will be run at startup with the usual application's permissions.</p>
 <p>There is exactly one process for each service per active user.</p>
-<h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
 <p><em>Libraries</em> allow to share a program between multiple applications.</p>
 <ul>
 <li><a href="concepts/libraries.html#how-libraries-work">How libraries work</a></li>
@@ -410,7 +379,7 @@ The services will be run at startup with the usual application's permissions.</p
 <p>When an application wants to use a library, it explicitly indicates the list of versions it is compatible with. The system then gets the related version and provides it to the application.</p>
 <p>A library by itself cannot do itself: no background process, no commands exposure, no permission granting. Applications simply use libraries as helpers to achieve specific tasks.</p>
 <p>For instance, the system library <code>fs</code> which is natively available allows to manipulate files and directories easily.</p>
-<h1 id="users"><a class="header" href="#users">Users</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="users"><a class="header" href="#users">Users</a></h1>
 <ul>
 <li><a href="concepts/users.html#the-concept">The concept</a></li>
 <li><a href="concepts/users.html#users-type">Users type</a></li>
@@ -472,7 +441,7 @@ The administrator can add and remove users from groups with the control panel.</
 <p>When a user is in a group, the group's privileges cannot be revoked for this user.</p>
 <h2 id="user-privileges"><a class="header" href="#user-privileges">User privileges</a></h2>
 <p>User privileges indicate the list of actions a user can perform or not. You can find more in the specifications of the <a href="concepts/../specs/services/system/perm.html"><code>sys::perm</code></a> system service.</p>
-<h1 id="features"><a class="header" href="#features">Features</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="features"><a class="header" href="#features">Features</a></h1>
 <p>This folder contains explanations about each major feature of NightOS. Each document is designed to be relatively easy to read and understand.</p>
 <ul>
 <li><a href="features/balancer.html">The balancer</a> - improve performances by balancing processes' priority</li>
@@ -485,7 +454,7 @@ The administrator can add and remove users from groups with the control panel.</
 <li><a href="features/sandboxes.html">Sandboxes</a> - isolate applications to prevent them from harming important data</li>
 <li><a href="features/synchronization.html">Synchronization</a> - synchronize settings between multiple computers</li>
 </ul>
-<h1 id="balancer"><a class="header" href="#balancer">Balancer</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="balancer"><a class="header" href="#balancer">Balancer</a></h1>
 <p>The <em>balancer</em> is a kernel feature that allows to get more performances out of most important applications.</p>
 <ul>
 <li><a href="features/balancer.html#how-the-balancer-works">How the balancer works</a></li>
@@ -516,7 +485,7 @@ This is achieved by setting their priority to 0.</p>
 The priority is re-calculated whenever the active window changes.</p>
 <p>When a fullscreen application uses more than 50% of CPU in fullscreen, or when it asks for it, an overlay suggesting to enter performance mode is shown.</p>
 <p>Performance mode is automatically exited when the related process exits.</p>
-<h1 id="crash-saves"><a class="header" href="#crash-saves">Crash saves</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="crash-saves"><a class="header" href="#crash-saves">Crash saves</a></h1>
 <p><em>Crash saves</em> prevent most data loss caused by a crash, in all applications supporting it.</p>
 <ul>
 <li><a href="features/crash-saves.html#how-crash-saves-work">How crash saves work</a></li>
@@ -554,7 +523,7 @@ When the system detects the application exited, if this file still exists, it sh
 The application is expected to confirm the signal when it has finished restoring its state using the crash save.
 The crash save is not deleted directly, though. It is renamed using the new instance's PID and kept until the next collect process receives a new crash save for this instance.</p>
 <p>If the application crashes before another crash save can be made <em>and</em> didn't confirm the restoration signal, when this process happens again, system will indicate the application appear to have crashed during crash save restoration.</p>
-<h1 id="domains"><a class="header" href="#domains">Domains</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="domains"><a class="header" href="#domains">Domains</a></h1>
 <p><em>Domains</em> are a set of computers running NightOS which are linked to each other. The way a domain's computers behave and interact are defined in the <em>Domain Supervisor</em>, which is only available to the domain administrator user.</p>
 <p>It behaves like an extension of the <a href="features/parental-control.html">parental control</a>, though they are two completely distinct features and domains offer a lot more features, while being made not to manage a child's access to a computer but to manage thousands of comupters at once.</p>
 <ul>
@@ -585,7 +554,7 @@ The crash save is not deleted directly, though. It is renamed using the new inst
 <p>The <em>Domain Supervisor</em> is a system application that shows up on any computer that is part of a domain. Only domain supervisor users can see it, but every user can run it through command line (though it will ask for a domain supervisor's username and password).</p>
 <p>Here is the list of options the domain supervisor proposes:</p>
 <p><strong>TODO</strong></p>
-<h1 id="encryption"><a class="header" href="#encryption">Encryption</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="encryption"><a class="header" href="#encryption">Encryption</a></h1>
 <p>Encryption allows to prevent unauthorized access to a data with a password.</p>
 <ul>
 <li><a href="features/encryption.html#global-encryption">Global encryption</a></li>
@@ -612,7 +581,7 @@ This process allows administrators to change the master password whenever they w
 <h2 id="combining-global-and-per-user-encryptions"><a class="header" href="#combining-global-and-per-user-encryptions">Combining global and per-user encryptions</a></h2>
 <p>When both a user enabled encryption for its user account and global encryption is active too, instead of having to encrypt and decrypt the data twice the user's data will be encrypted using a key derived from the master key as well as the user's encryption key.</p>
 <p>This allows to save a lot of time but still prevent unauthorized access if the user's password is weak.</p>
-<h1 id="freeze-prevention"><a class="header" href="#freeze-prevention">Freeze prevention</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="freeze-prevention"><a class="header" href="#freeze-prevention">Freeze prevention</a></h1>
 <p><em>Freeze prevention</em> prevents nearly all computer freezes, by reserving a little amount of resources to the system.
 It is enabled by default, but it can be disabled during installation process or from the control panel.</p>
 <ul>
@@ -622,7 +591,7 @@ It is enabled by default, but it can be disabled during installation process or 
 <p>The system forbids applications to access a fixed amount of RAM, called the <em>freeze prevention resource</em> (FPR), which is by default the smallest between 1% of the total RAM and 8 megabytes.</p>
 <p>When more than 99% of CPU and/or RAM is used, the system puts itself in <em>freeze prevention mode</em> (FPM), which consists in listening to a specific keyboard shortcut (by default, <code>Ctrl+Alt+P</code>), controllable using the keyboard or the mouse (with a special block cursor, not changeable by applications) which asks user if they want to terminate gently the more resources-consuming application instance (by sending the <code>TERMINATE</code> signal), to kill it, to kill all instances of the application, or to see the list of running application instances with how much resources they consume, to make a choice on another one.</p>
 <p>If developer mode is enabled, another option is added to access a tiny shell containing a set of commands made to list and manage running applications in a more powerful way.</p>
-<h1 id="parental-control"><a class="header" href="#parental-control">Parental Control</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="parental-control"><a class="header" href="#parental-control">Parental Control</a></h1>
 <p><em>Parental control</em> allows to manage a child's access to a computer running NightOS.</p>
 <ul>
 <li><a href="features/parental-control.html#how-it-works">How it works</a></li>
@@ -672,7 +641,7 @@ It's also possible to set specific hours for some specific weeks or periods of t
 By default, installation is allowed but sends a notification to the parent user asking if the child user is allowed to install the requested application ; while running volatile applications is simply disabled.</p>
 <h3 id="controlling-session-remotely"><a class="header" href="#controlling-session-remotely">Controlling session remotely</a></h3>
 <p>This feature allows parents to log out the child user remotely. This will show a pop-up indicating the session will be closed in 60 seconds, behaving just like usage hours restriction. It may also provide session time extension based on how the log out was triggered (log out the child user <em>or</em> log out the child user and disable session time extension) and the setting selected during the setup process.</p>
-<h1 id="sandboxes"><a class="header" href="#sandboxes">Sandboxes</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sandboxes"><a class="header" href="#sandboxes">Sandboxes</a></h1>
 <p><em>Sandboxes</em> allow to test an application without applying modifications to the system.</p>
 <ul>
 <li><a href="features/sandboxes.html#how-sandboxes-work">How sandboxes work</a></li>
@@ -686,9 +655,9 @@ By default, installation is allowed but sends a notification to the parent user 
 <p>Sandboxes can also be created as <em>persistent</em>, which prevents them from being removed after the app. exited. Instead, the next time it will run, the same sandbox will be used again.</p>
 <h2 id="puppet-sandbox"><a class="header" href="#puppet-sandbox">Puppet sandbox</a></h2>
 <p>Sandboxes can be controlled by another application (this requires an administrator permission, though). This allows to automatically accept or decline every API usage, like permissions or I/O requests. Such sandboxes are called <em>puppet sandboxes</em>, and they can be especially useful for testing.</p>
-<h1 id="synchronization"><a class="header" href="#synchronization">Synchronization</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="synchronization"><a class="header" href="#synchronization">Synchronization</a></h1>
 <p>Online backup and synchronization is performed through <a href="features/../applications/Cloudy.html">Cloudy</a>.</p>
-<h1 id="technical"><a class="header" href="#technical">Technical</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="technical"><a class="header" href="#technical">Technical</a></h1>
 <p>This folder contains technical documents which essential describe low-level parts of NightOS.</p>
 <p>A global overview of the system can be found in the <a href="technical/overview.html">overview document</a>.</p>
 <ul>
@@ -706,7 +675,7 @@ By default, installation is allowed but sends a notification to the parent user 
 <li><a href="technical/services.html">Services</a> - special processes that run in the background and allow other applications to perform specific tasks</li>
 <li><a href="technical/shell.html">The shell</a> - the de-facto way to run complex and/or automatized tasks on NightOS</li>
 </ul>
-<h1 id="overwiew"><a class="header" href="#overwiew">Overwiew</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overwiew"><a class="header" href="#overwiew">Overwiew</a></h1>
 <p>This document presents a global overview of NightOS. It is only a simplified representation of the system, but allows to better understand its architecture and organization.</p>
 <p>The referenced documents are mostly technical overviews themselves, which is why links to their associated specification document are also provided (marked as <em>(specs)</em>).</p>
 <p>Note that this is only an overview, and as such many topics will not be covered by this document. For more informations, refer to the <a href="technical/../README.html">global document</a>.</p>
@@ -771,7 +740,7 @@ By default, installation is allowed but sends a notification to the parent user 
 <p>External security is guaranteed through <a href="technical/../features/encryption.html">by-default encryption</a>, and <a href="technical/../features/encryption.html#per-user-encryption">additional per-user encryption</a>.</p>
 <h2 id="for-developers"><a class="header" href="#for-developers">For developers</a></h2>
 <p>Developers can access additional features through the <a href="technical/dev-mode.html">developer mode</a>.</p>
-<h1 id="controller"><a class="header" href="#controller">Controller</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="controller"><a class="header" href="#controller">Controller</a></h1>
 <p>The <em>controller</em> is a system library that manages permissions of processes.</p>
 <p>It is concretely represented by the <a href="technical/../specs/permissions.html"><code>sys::perm</code></a> service.</p>
 <ul>
@@ -793,7 +762,7 @@ By default, installation is allowed but sends a notification to the parent user 
 <h2 id="permissions-extension"><a class="header" href="#permissions-extension">Permissions extension</a></h2>
 <p>A process can, at any moment, send a <em>permission extension request</em> (PER) using the <code>perm</code> library. It allows to gain a new permission by showing an overlay the user can accept or decline. If the permission is accepted, the requested permission is added to the process' one - and sometimes to the application's one.</p>
 <p>If the requested permission is out of its maximum scope (e.g. asking for write access to <code>/etc</code> while being ran as standard user), the request is rejected.</p>
-<h1 id="developer-mode"><a class="header" href="#developer-mode">Developer mode</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="developer-mode"><a class="header" href="#developer-mode">Developer mode</a></h1>
 <p>The <em>developer mode</em> enables several features that are not available to default users. Only administrator users get access to them when they are enabled.</p>
 <ul>
 <li><a href="technical/dev-mode.html#how-to-enable">How to enable</a></li>
@@ -802,7 +771,7 @@ By default, installation is allowed but sends a notification to the parent user 
 </ul>
 <h2 id="how-to-enable"><a class="header" href="#how-to-enable">How to enable</a></h2>
 <p>Developer mode can be enabled either by typing the following command in the terminal:</p>
-<pre><code class="language-shellscript">adm central --enable dev-mode
+<pre><code class="language-shell script">adm central --enable dev-mode
 </code></pre>
 <p>Or, while holding the <code>Ctrl</code> <code>Alt</code> and <code>Maj</code> key, type <code>DEV</code> (three letters).</p>
 <p>A warning dialog will appear.
@@ -817,7 +786,7 @@ Then a final confirmation dialog will ensure you're sure about what you're doing
 <p><em>Application proxies</em> are applications that intercept all applications calls to the system on-the-fly. It is useful for applications debugging.</p>
 <p>When a proxy is set up for an application, all system calls sent to this application will be transferred to the proxy, which will be able to do whatever it wants with it. It's possible for the proxy to never answer the signal, to change its content before actually sending it to the system, etc.</p>
 <p>Basic usage of an application proxy is as a &quot;listener&quot;: it only listens to specific signals and logs them, without cancelling them and/or modifying them. This is useful to check all filesystem access requested by an application, in real time.</p>
-<h1 id="devices"><a class="header" href="#devices">Devices</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="devices"><a class="header" href="#devices">Devices</a></h1>
 <ul>
 <li><a href="technical/devices.html#connecting-a-new-device">Connecting a new device</a></li>
 <li><a href="technical/devices.html#interacting-with-a-device">Interacting with a device</a></li>
@@ -849,7 +818,7 @@ Then a final confirmation dialog will ensure you're sure about what you're doing
 <p>It's possible to give a custom handler filename for intuitivity. In such case, a new DHF is created in the related directory, but the old DHF is kept anyway. This allows to not break compatibility with applications that rely on the old DHF.</p>
 <p>The two DHF will point to the exact same device, without any difference. The custom DHF can be removed anytime, although this is discouraged as applications may rely on it.</p>
 <p>Also, custom DHF names must always be longer than 4 characters, to avoid confusion with automatically-generated DHFs.</p>
-<h1 id="file-formats"><a class="header" href="#file-formats">File Formats</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="file-formats"><a class="header" href="#file-formats">File Formats</a></h1>
 <p>This document presents the file formats natively handled by NightOS. Some files are only handled by optional first-party applications that may not be installed on the computer, so some formats may not be supported in specific installs where such applications have been removed/were never installed.</p>
 <ul>
 <li><a href="technical/file-formats.html#common-formats">Common formats</a></li>
@@ -882,7 +851,7 @@ Installable applications have the <code>.nap</code> (NightOS Application Package
 <p>The system is intended to be updated through the update section in the settings, but sometimes it may be required to install updates offline for specific reasons (e.g. no network connection available at the moment). In such case, it is possible to download incremental updates as system update files.</p>
 <p>They may contain one or several updates, and are only installable on a very specific version of the system, to avoid missing some other incremental updates.</p>
 <p>System update files have the <code>.nsu</code> (NightOS System Update) extension and are opened using the <a href="technical/../applications/Central.html">control center</a>.</p>
-<h1 id="integrity-checker"><a class="header" href="#integrity-checker">Integrity checker</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="integrity-checker"><a class="header" href="#integrity-checker">Integrity checker</a></h1>
 <ul>
 <li><a href="technical/integrity-checker.html#system-immutability">System immutability</a></li>
 <li><a href="technical/integrity-checker.html#hashes-computing">Hashes computing</a></li>
@@ -905,7 +874,7 @@ It's possible to force the boot process, but a large warning will indicate it ma
 <li><em>Sandbox</em>: system will refuse to start the sandbox (can be forced but with a large warning) ;</li>
 </ul>
 <p><strong>IMPORTANT:</strong> If some malicious person edits the system files <strong>and</strong> its backup, it can also edit the hash registry, so the error won't show up. So that's not because there is no error the system is safe and has not been modified!</p>
-<h1 id="io-nano-manager"><a class="header" href="#io-nano-manager">I/O nano-manager</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="io-nano-manager"><a class="header" href="#io-nano-manager">I/O nano-manager</a></h1>
 <p>The <em>Input/Output Nano-manager</em>, formerly known as <em>Ion</em>, is a part of the system which treats input/output requests from processes.</p>
 <p>It is concretely represented by the <a href="technical/../specs/services/system/hw.html"><code>sys::hw</code></a> service.</p>
 <ul>
@@ -920,11 +889,11 @@ It's possible to force the boot process, but a large warning will indicate it ma
 <p>Non-agnostic access can be performed through various services, such as <a href="technical/../specs/services/system/fs.html"><code>sys::fs</code></a>.</p>
 <h2 id="requests-priority"><a class="header" href="#requests-priority">Requests priority</a></h2>
 <p>Requests are treated by priority, which is made both of its arrival timestamp (first one, first out) but also of the process' priority: a process with an higher priority will see its I/O requests treated more quickly.</p>
-<h1 id="multi-platform"><a class="header" href="#multi-platform">Multi-platform</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="multi-platform"><a class="header" href="#multi-platform">Multi-platform</a></h1>
 <p>NightOS programs can be ran either on Linux, Windows or MacOS systems using a wrapper called the <em>NightOS Calls Wrapper</em> (NCW).
 It can be downloaded from NightOS' official website.</p>
 <p>When installed on a system, it allows to use NightOS applications natively, although permissions management will not be as smooth and many options will not be available (e.g. no desktop, no access to native NightOS applications - only native libraries, etc.).</p>
-<h1 id="performances"><a class="header" href="#performances">Performances</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="performances"><a class="header" href="#performances">Performances</a></h1>
 <ul>
 <li><a href="technical/performances.html#cycle-and-phases">Cycle and phases</a></li>
 <li><a href="technical/performances.html#processes-priority">Processes' priority</a></li>
@@ -939,7 +908,7 @@ It can be downloaded from NightOS' official website.</p>
 <p>When a process asks to set its priority to 9 or 10, a confirmation overlay is shown.</p>
 <h2 id="balancing-performances"><a class="header" href="#balancing-performances">Balancing performances</a></h2>
 <p>See the performances <a href="technical/../features/balancer.html">balancer</a>.</p>
-<h1 id="pre-compiling"><a class="header" href="#pre-compiling">Pre-compiling</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pre-compiling"><a class="header" href="#pre-compiling">Pre-compiling</a></h1>
 <p>On traditional operating systems, programs are provided as binary and so are only available for one specific platform (Windows, Linux, MacOS, ...) with a specific architecture (x86, ARM, ...).</p>
 <p>In order to prevent this, and in order to bring more stability and security to native programs, NightOS programs are shipped as <em>NightOS Pre-compiled Programs</em> (NPP) using a specific language called <em>CommonAssembly</em>.</p>
 <ul>
@@ -962,7 +931,7 @@ It can be downloaded from NightOS' official website.</p>
 <h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
 <p>Open-source and closed-source NightOS applications usually bring pre-compiled versions of themselves in order to fasten a lot the installation process, and to get rid of the need of having the heavy build toolchain installed on the target computer.</p>
 <p>This allows to install applications really fast, and to optimize them for the current machine.</p>
-<h1 id="processes"><a class="header" href="#processes">Processes</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="processes"><a class="header" href="#processes">Processes</a></h1>
 <p><strong>WARNING: This document is far from being complete and may lack a good description of what processes are, and/or the features they offer.</strong></p>
 <p>NightOS <em>processes</em> are implemented a bit like Linux' ones, with additional features.
 There are several types of processes:</p>
@@ -1005,7 +974,7 @@ There are several types of processes:</p>
 <p>Each slot has a unique identifier, which can be used across threads to access TLS data from any thread of the process.</p>
 <h2 id="automatic-permissions-inheritance"><a class="header" href="#automatic-permissions-inheritance">Automatic permissions inheritance</a></h2>
 <p>When an application process gets a new permission, all other processes from the same application inherit it, unless this permission is granted only for this instance of the application.</p>
-<h1 id="registry"><a class="header" href="#registry">Registry</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="registry"><a class="header" href="#registry">Registry</a></h1>
 <p>The registry contains all system configuration.</p>
 <ul>
 <li><a href="technical/registry.html#format-and-content">Format and content</a></li>
@@ -1015,7 +984,7 @@ There are several types of processes:</p>
 <p>The registry's format and content can be found in the <a href="technical/../specs/registry.html">specifications document</a>.</p>
 <h2 id="debugging"><a class="header" href="#debugging">Debugging</a></h2>
 <p>In <a href="technical/dev-mode.html">developer mode</a>, the registry can be exported to the HFRR format and imported back.</p>
-<h1 id="services-1"><a class="header" href="#services-1">Services</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="services-1"><a class="header" href="#services-1">Services</a></h1>
 <p>A <em>service</em> is a process that launches at startup and may receive <a href="technical/ipc.html">IPC</a> messages from any process.</p>
 <ul>
 <li><a href="technical/services.html#system-services">System services</a></li>
@@ -1029,7 +998,7 @@ Their purpose is to allow processes to perform specific actions like permissions
 <p>You can find the list of system services in their <a href="technical/../specs/services/system/README.html">specifications directory</a>.</p>
 <h2 id="application-services"><a class="header" href="#application-services">Application services</a></h2>
 <p>Application services, also called <em>userland services</em>, are provided by <a href="technical/../concepts/applications.html#services">applications themselves</a>.</p>
-<h1 id="shell"><a class="header" href="#shell">Shell</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="shell"><a class="header" href="#shell">Shell</a></h1>
 <p>The <em>shell</em>, called <em>Hydre</em>, is the part that interprets scripts.</p>
 <ul>
 <li><a href="technical/shell.html#commands">Commands</a></li>
@@ -1051,7 +1020,7 @@ When running an application's <a href="technical/../concepts/applications.html#c
 </ul>
 <h2 id="specifications"><a class="header" href="#specifications">Specifications</a></h2>
 <p>Hydre's specifications can be found in the <a href="technical/../specs/shell.html">related document</a>.</p>
-<h1 id="user-experience"><a class="header" href="#user-experience">User Experience</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="user-experience"><a class="header" href="#user-experience">User Experience</a></h1>
 <p>This folder contains technical documents about user experience.</p>
 <p>They only act as drafts and may change at anytime. They mainly contain global ideas or technical overview for some parts. Some documents may also contain specifications.</p>
 <h2 id="documents"><a class="header" href="#documents">Documents</a></h2>
@@ -1060,7 +1029,7 @@ When running an application's <a href="technical/../concepts/applications.html#c
 <li><a href="ux/notifications.html">Notifications</a></li>
 <li><a href="ux/sound.html">Sound</a></li>
 </ul>
-<h1 id="desktop-environment"><a class="header" href="#desktop-environment">Desktop Environment</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="desktop-environment"><a class="header" href="#desktop-environment">Desktop Environment</a></h1>
 <p>The <em>Desktop Environment</em> (DE) is an application that acts as the main graphical interface of NightOS.</p>
 <p>It is launched with the system, does never stop until the system itself stops, and handles most of the user interface.</p>
 <h2 id="desktop-environment-applications"><a class="header" href="#desktop-environment-applications">Desktop Environment Applications</a></h2>
@@ -1134,7 +1103,7 @@ When running an application's <a href="technical/../concepts/applications.html#c
 <p>Typically, an interface windows created by an application is hidden by default, and the DEA shows it only after getting its identifier returned by the service it is communicating with.</p>
 <h2 id="popups"><a class="header" href="#popups">Popups</a></h2>
 <p>Popups are special windows which are not drawable directly by the application. They usually contain a single icon, as well as a message and at least one clickable button. They are used to transmit informations to the end user, such as an error or a warning message.</p>
-<h1 id="notifications"><a class="header" href="#notifications">Notifications</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="notifications"><a class="header" href="#notifications">Notifications</a></h1>
 <p>Notifications are the way for both the applications and the system itself to indicate when an event happens which the user should be notified of, or to indicate a persistent state.</p>
 <h2 id="structure"><a class="header" href="#structure">Structure</a></h2>
 <p>A notification is made of:</p>
@@ -1173,7 +1142,7 @@ When running an application's <a href="technical/../concepts/applications.html#c
 <h3 id="multimedia-notifications"><a class="header" href="#multimedia-notifications">Multimedia notifications</a></h3>
 <p>Multimedia notifications are used to indicate a <a href="ux/sound.html#multimedia-playback">multimedia playback</a>. It must be composed of a cover image and six buttons (previous, rewind, play/pause, stop, fast-forward, next) whose appearance is decided by the <a href="ux/desktop-environment.html">desktop environment</a>.</p>
 <p>They are always persistent, and disappear when the playback stops completely.</p>
-<h1 id="sound"><a class="header" href="#sound">Sound</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sound"><a class="header" href="#sound">Sound</a></h1>
 <p>This document describes how audio is implemented in NightOS.</p>
 <h2 id="audio-inputs"><a class="header" href="#audio-inputs">Audio inputs</a></h2>
 <p>Devices recognized as <a href="ux/../specs/services/system/hw.html#driven-device-type">audio inputs</a> can act as global audio input devices. Multiple devices can be used at the same time, but only one default input can be selected.</p>
@@ -1185,7 +1154,7 @@ When running an application's <a href="technical/../concepts/applications.html#c
 <p>It is also possible to set a device as always being the default one, even if other devices are connected afterwards.</p>
 <h2 id="multimedia-playback"><a class="header" href="#multimedia-playback">Multimedia playback</a></h2>
 <p>When a sound is played, the process must specify the type of the audio resource, which is either &quot;standalone sound&quot; or &quot;multimedia sound&quot;. In the second case, a <a href="ux/notifications.html#multimedia-notifications">multimedia notification</a> is emitted, which can then be controlled by the application but cannot be closed while the media is playing.</p>
-<h1 id="specifications-1"><a class="header" href="#specifications-1">Specifications</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="specifications-1"><a class="header" href="#specifications-1">Specifications</a></h1>
 <p>This folder contains <em>specification documents</em>, whose purpose is to describe fully a specific concept or feature.
 Think of these as reference documents - they are not meant to be easily understood without a solid knowledge of how NightOS works.
 For more informations about low-level concepts these documents refer to, you can check the <a href="specs/../technical/README.html">technical documents</a> first.</p>
@@ -1230,7 +1199,7 @@ For more informations about low-level concepts these documents refer to, you can
 <li><a href="specs/services/system/app.html"><code>sys::app</code></a>: applications management service</li>
 <li><a href="specs/services/system/process.html"><code>sys::process</code></a>: processes management service</li>
 </ul>
-<h1 id="applications-and-libraries"><a class="header" href="#applications-and-libraries">Applications and libraries</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="applications-and-libraries"><a class="header" href="#applications-and-libraries">Applications and libraries</a></h1>
 <p>This document describes the structure, features and behaviours common to both <a href="specs/../concepts/applications.html">applications</a> and <a href="specs/../concepts/libraries.html">libraries</a>.</p>
 <h2 id="name-and-slug"><a class="header" href="#name-and-slug">Name and slug</a></h2>
 <p>Each application has a name as well as a slug. The name can any valid UTF-8 string, while the slug must respect several rules:</p>
@@ -1321,7 +1290,7 @@ features:
     # [OPT] Additional languages (e.g. language pack)
     languages: []
 </code></pre>
-<h1 id="applications-1"><a class="header" href="#applications-1">Applications</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="applications-1"><a class="header" href="#applications-1">Applications</a></h1>
 <p>This document describes application-specific structure and behaviour. For common reference, see the <a href="specs/applications-libraries.html">applications and libraries</a> document.</p>
 <ul>
 <li><a href="specs/applications.html#application-package">Application package</a>
@@ -1546,7 +1515,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <h3 id="arguments-structure"><a class="header" href="#arguments-structure">Arguments structure</a></h3>
 <p>The context header is followed by the list of each command-line argument, taking up to 64 KB.</p>
 <p>Arguments are a simple concatenation of <a href="specs/applications.html#values-encoding">encoded values</a>.</p>
-<h1 id="filesystem"><a class="header" href="#filesystem">Filesystem</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="filesystem"><a class="header" href="#filesystem">Filesystem</a></h1>
 <p>This document presents how files are stored in NightOS.</p>
 <ul>
 <li><a href="specs/filesystem.html#presentation">Presentation</a></li>
@@ -1709,7 +1678,7 @@ It indicates why the application was started and so what it is supposed to do.</
 </ul>
 <h3 id="notes"><a class="header" href="#notes">Notes</a></h3>
 <p>Globally installed applications (located in <code>/apps</code>) can store user-specific data in <code>/home/[user]/appdata/[appname]</code>, which will only be made of the <code>data</code>, <code>crashsaves</code> and <code>sandboxes</code> folder.</p>
-<h1 id="storage-permissions-map-1"><a class="header" href="#storage-permissions-map-1">Storage permissions map</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="storage-permissions-map-1"><a class="header" href="#storage-permissions-map-1">Storage permissions map</a></h1>
 <p>The <strong>Storage Permissions Map</strong>, or <strong>SPM</strong>, is a non-contiguous data structure used to control access for every user of a computer or <a href="specs/../features/domains.html">domain</a>.</p>
 <p>It may be located anywhere in the filesystem.</p>
 <h2 id="header"><a class="header" href="#header">Header</a></h2>
@@ -1778,7 +1747,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <p>Unless a filesystem does not support it, nor natively or through the use of extended attributes, each file and directory's entry must contain the address of its entry in the SPM, with <code>0</code> indicating no entry exists for it.</p>
 <p>When the item is created, no entry is created for it by default. It's only when permissions are set for the item that an entry is made and referenced in the file table.</p>
 <p>When the entry is cleared, it is destroyed and the <code>0</code> value is assigned back to the file table entry's SPM pointer.</p>
-<h1 id="libraries-1"><a class="header" href="#libraries-1">Libraries</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="libraries-1"><a class="header" href="#libraries-1">Libraries</a></h1>
 <p>Libraries are NightOS' way to share code between multiple applications.</p>
 <ul>
 <li><a href="specs/libraries.html#manifest">Manifest</a></li>
@@ -1812,7 +1781,7 @@ It indicates why the application was started and so what it is supposed to do.</
 </ul>
 <h2 id="system-applications-libraries"><a class="header" href="#system-applications-libraries">System applications' libraries</a></h2>
 <p>Each <a href="specs/../concepts/applications.html#system-applications">system application</a> also exposes a library with the <code>sysl::&lt;app name lowercased&gt;</code> AID which applications can rely on, as these applications are not removable. These are abbreviated SAL for <em><strong>S</strong>ystem <strong>A</strong>pplication <strong>L</strong>ibrary</em>.</p>
-<h1 id="permissions-3"><a class="header" href="#permissions-3">Permissions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="permissions-3"><a class="header" href="#permissions-3">Permissions</a></h1>
 <p>Permissions are used to <a href="specs/../features/permissions.html">control what applications can do or not</a>. They have no effect by themselves, but allow different <a href="specs/services/system/README.html">system services</a> to ensure an application has enough permissions to perform a specific action.</p>
 <p><strong>WARNING:</strong> This document is <strong>far from being complete</strong>, and as such may be edited in any way at any moment.</p>
 <h2 id="levels-of-permissions"><a class="header" href="#levels-of-permissions">Levels of permissions</a></h2>
@@ -2011,7 +1980,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <li><code>sysapp.process.kill</code>: suspend or kill external processes</li>
 <li><code>sysapp.process.signal</code>: send a signal to an external process</li>
 </ul>
-<h1 id="containers"><a class="header" href="#containers">Containers</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="containers"><a class="header" href="#containers">Containers</a></h1>
 <p>A <em>container</em> is a virtual space containing a set of limited resources. They are used to isolate sets of applications and establish virtual environments.</p>
 <ul>
 <li><a href="specs/containers.html#concept-of-container">Concept of container</a></li>
@@ -2045,7 +2014,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
 <p>A container can only run NightOS applications. As it is not a virtul machine, the kernel version and behaviour will also remain exactly identical across all containers, and upgrading the kernel itself will upgrade it for all containers as well.</p>
 <p>If an application is not directly installed inside a container but instead shared as a mount point from the parent container, upgrading or removing the application will have the same effect in the child container.</p>
-<h1 id="registry-1"><a class="header" href="#registry-1">Registry</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="registry-1"><a class="header" href="#registry-1">Registry</a></h1>
 <p>This document describes the format of the <a href="specs/../technical/registry.html">system registy</a> as well as its content.</p>
 <ul>
 <li><a href="specs/registry.html#format">Format</a>
@@ -2192,7 +2161,7 @@ users(map:(uint{4}):(in:(0,1,2,3))):
   0: 1 # System
   1: 1 # Administrator
 </code></pre>
-<h1 id="vocabulary"><a class="header" href="#vocabulary">Vocabulary</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vocabulary"><a class="header" href="#vocabulary">Vocabulary</a></h1>
 <p>This document introduces all vocabulary related to NightOS;</p>
 <ul>
 <li><a href="specs/vocabulary.html#graphics-related-terms">Graphics-related terms</a></li>
@@ -2235,7 +2204,7 @@ There are several types of windows: <a href="specs/vocabulary.html#resizable-win
 <p>A window's <em>resizing lines</em> are four lines on all sides of a window, 1-pixel wide or high, which allow to extend or reduce the window's size relatively to the line's position.</p>
 <p>For example, dragging the top line to a pixel higher on the screen will result in the window being extended to this direction - but other borders of the window won't move. Dragging the top line to the opposite direction will result in the window being compressed to this direction.</p>
 <p>The top line is located above the window's titlebar.</p>
-<h1 id="hydre"><a class="header" href="#hydre">Hydre</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="hydre"><a class="header" href="#hydre">Hydre</a></h1>
 <p>The <em>shell</em> is the part responsible for running <em>scripts</em>, which are small text-based programs that are natively available on every NightOS installation. It is called <em>Hydre</em> and is part of the system under the form of the <a href="specs/services/system/hydre.html"><code>sys::hydre</code></a> service.</p>
 <p>You can get a quick overview of Hydre in its <a href="specs/../technical/shell.html">technical document</a>.</p>
 <p><strong>NOTE:</strong> The behaviours described here only apply when using the <a href="specs/../applications/Pluton.html">Pluton</a> terminal application. Although all terminals are expected to follow these specifications as they act as a standard for terminals, they are technically not forced to and so misbehaviours may appear when using an alternative terminal application.</p>
@@ -2389,7 +2358,7 @@ Once the input data have been fully transmitted, the CMDIN pipe is closed.</p>
 <h3 id="pre-evaluation-checking"><a class="header" href="#pre-evaluation-checking">Pre-evaluation checking</a></h3>
 <p>Before executing a script, the shell looks for errors in it, such as unknown command, invalid argument, type mismatch and so on. If an error is foud, the script doesn't even start to run ; an error is directly reported and the command is considered as failed.</p>
 <p>This prevents errors from happening in the middle of a script, leaving it in an inconsistent state ; this also makes script errors easier to debug as they are reported at compile time.</p>
-<h1 id="shell-scripting"><a class="header" href="#shell-scripting">Shell scripting</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="shell-scripting"><a class="header" href="#shell-scripting">Shell scripting</a></h1>
 <p>The scripting language of <a href="specs/../technical/shell.html">Hydre</a> offers a lot of powerful easy-to-use features. This allows to create complex script that are still very readable and maintanable.</p>
 <ul>
 <li><a href="specs/shell-scripting.html#running-a-command">Running a command</a>
@@ -2414,6 +2383,7 @@ Once the input data have been fully transmitted, the CMDIN pipe is closed.</p>
 <li><a href="specs/shell-scripting.html#assignment-operators">Assignment operators</a></li>
 </ul>
 </li>
+<li><a href="specs/shell-scripting.html#lists-and-maps">Lists and maps</a></li>
 <li><a href="specs/shell-scripting.html#blocks">Blocks</a>
 <ul>
 <li><a href="specs/shell-scripting.html#conditionals">Conditionals</a></li>
@@ -2550,6 +2520,7 @@ Once the input data have been fully transmitted, the CMDIN pipe is closed.</p>
 <li><a href="specs/shell-scripting.html#lists">Lists</a>
 <ul>
 <li><a href="specs/shell-scripting.html#listcharstringify---str"><code>list[char].stringify() -&gt; str</code></a></li>
+<li><a href="specs/shell-scripting.html#liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></li>
 <li><a href="specs/shell-scripting.html#listtgetindex-int---t"><code>list[T].get(index: int) -&gt; T?</code></a></li>
 <li><a href="specs/shell-scripting.html#listtexpectindex-number-message-string---t"><code>list[T].expect(index: number, message: string) -&gt; T</code></a></li>
 <li><a href="specs/shell-scripting.html#listtunshiftvalue-t"><code>list[T].unshift(value: T)</code></a></li>
@@ -2559,9 +2530,20 @@ Once the input data have been fully transmitted, the CMDIN pipe is closed.</p>
 <li><a href="specs/shell-scripting.html#listtsortasc--true---listt"><code>list[T].sort(asc = true) -&gt; list[T]</code></a></li>
 <li><a href="specs/shell-scripting.html#listtreverse---listt"><code>list[T].reverse() -&gt; list[T]</code></a></li>
 <li><a href="specs/shell-scripting.html#listtlen---int"><code>list[T].len() -&gt; int</code></a></li>
-<li><a href="specs/shell-scripting.html#liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></li>
 <li><a href="specs/shell-scripting.html#listtconcatanother-listt---listt"><code>list[T].concat(another: list[T]) -&gt; list[T]</code></a></li>
 <li><a href="specs/shell-scripting.html#listtconcatlists-listlistt---listt"><code>list[T].concat(lists: list[list[T]]) -&gt; list[T]</code></a></li>
+</ul>
+</li>
+<li><a href="specs/shell-scripting.html#maps">Maps</a>
+<ul>
+<li><a href="specs/shell-scripting.html#mapk-vhaskey-k---bool"><code>map[K, V].has(key: K) -&gt; bool</code></a></li>
+<li><a href="specs/shell-scripting.html#mapk-vgetkey-k---v"><code>map[K, V].get(key: K) -&gt; V?</code></a></li>
+<li><a href="specs/shell-scripting.html#mapk-vkeys---listk"><code>map[K, V].keys() -&gt; list[K]</code></a></li>
+<li><a href="specs/shell-scripting.html#mapk-vvalues---listv"><code>map[K, V].values() -&gt; list[V]</code></a></li>
+<li><a href="specs/shell-scripting.html#mapk-vvalues---liststruct--key-k-value-v-"><code>map[K, V].values() -&gt; list[struct { key: K, value: V }]</code></a></li>
+<li><a href="specs/shell-scripting.html#mapk-vexpectkey-k-message-string---v"><code>map[K, V].expect(key: K, message: string) -&gt; V</code></a></li>
+<li><a href="specs/shell-scripting.html#mapk-vdeletekey-k---bool"><code>map[K, V].delete(key: K) -&gt; bool</code></a></li>
+<li><a href="specs/shell-scripting.html#mapk-vcount---int"><code>map[K, V].count() -&gt; int</code></a></li>
 </ul>
 </li>
 <li><a href="specs/shell-scripting.html#commands">Commands</a>
@@ -2664,6 +2646,9 @@ _ = &quot;abc&quot;
 # Lists of a given type (list[type])
 _ = [ 3, 3.14 ]
 
+# Maps (key-values) (map[key_type, value_type])
+_ = { &quot;a&quot;: 1, &quot;b&quot;: 2 }
+
 # Paths (path) - must contain at least one `/` to indicate clearly that it's a path and not a string or something else
 _ = dir/file.ext
 _ = ./file.ext
@@ -2725,6 +2710,11 @@ echo &quot;Hello, ${name}!&quot; # Hello, Jack!
 <p>Values in lists through their index (starting at 0):</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot; ]
 echo &quot;Hello, ${names[0]}!&quot; # Hello, Jack!
+</code></pre>
+<p>Values in maps through their key:</p>
+<pre><code class="language-hydre">var ages = { &quot;Jack&quot;: 28 }
+
+echo &quot;Jack is ${ages[&quot;Jack&quot;]} years old!&quot;
 </code></pre>
 <p>Note that getting an out-of-bound index will make the program <em>panic</em>, which means it exits immediatly with an error message.</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot; ]
@@ -2792,6 +2782,43 @@ a ++
 a --
 
 echo ${a} # 1
+</code></pre>
+<h2 id="lists-and-maps"><a class="header" href="#lists-and-maps">Lists and maps</a></h2>
+<p>Lists and maps behave in a similar way: while lists have <em>indexes</em>, which are handled behind-the-scenes, maps have <em>keys</em>, which are provided explicitly.</p>
+<p>Here is how we declare a list or a map:</p>
+<pre><code class="language-hydre"># Type: list[string]
+var names = [ &quot;Jack&quot;, &quot;John&quot; ]
+
+# Type: map[string, int]
+var ages = { &quot;Jack&quot;: 28, &quot;John&quot;: 29 }
+</code></pre>
+<p>To add a new value:</p>
+<pre><code class="language-hydre"># Lists
+names[] = &quot;Paolo&quot;
+
+# Maps
+ages[&quot;Paolo&quot;] = 26
+</code></pre>
+<p>To get a value:</p>
+<pre><code class="language-hydre"># Type: int
+names[0]
+
+# Type: int
+ages[&quot;Paolo&quot;]
+</code></pre>
+<p>To remove a value:</p>
+<pre><code class="language-hydre"># Lists
+delete names[0]
+
+# Maps
+delete ages[&quot;Paolo&quot;]
+</code></pre>
+<p>To get the number of entries:</p>
+<pre><code class="language-hydre"># Type: int
+names.len()
+
+# Maps: int
+ages.count()
 </code></pre>
 <h2 id="blocks"><a class="header" href="#blocks">Blocks</a></h2>
 <p>Blocks allow to run a piece of code multiple times or if a specific condition is met. They are useful combined to comparison operators.</p>
@@ -2878,6 +2905,13 @@ end
 end
 </code></pre>
 <p>This will display <code>0: Jack</code> and <code>1: John</code>.</p>
+<p>For maps:</p>
+<pre><code class="language-hydre">var ages = { &quot;Jack&quot;: 28, &quot;John&quot;: 29 }
+
+for name, age in ages
+  echo &quot;${name} is ${age} years old!&quot;
+end
+</code></pre>
 <p>There is another type of loop, which runs a piece of code while a condition is met:</p>
 <pre><code class="language-hydre">while # condition
   command
@@ -3785,6 +3819,11 @@ split(&quot;a b&quot;, &quot; &quot;) # [ &quot;a&quot;, &quot;b&quot; ]
 <p>Turns a list of characters to a string.</p>
 <pre><code class="language-hydre">_ = ([ 'a', 'b', 'c' ].str() == &quot;abc&quot;) # true
 </code></pre>
+<h4 id="liststringjoinsep-----string"><a class="header" href="#liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></h4>
+<p>Join a list of strings with a separator.</p>
+<pre><code class="language-hydre">join([ &quot;a&quot;, &quot;b&quot; ])       # &quot;a,b&quot;
+join([ &quot;a&quot;, &quot;b&quot; ], &quot;; &quot;) # &quot;a; b&quot;
+</code></pre>
 <h4 id="listtgetindex-int---t"><a class="header" href="#listtgetindex-int---t"><code>list[T].get(index: int) -&gt; T?</code></a></h4>
 <p>Try to get an item from the list, without panicking if the index is out-of-bounds.</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot;, &quot;John&quot; ]
@@ -3797,7 +3836,7 @@ names.get(2) # null
 <p>Get an item from the list, and panic with a custom error message if the index is out-of-bounds.</p>
 <pre><code class="language-hydre">var names = [ &quot;Jack&quot;, &quot;John&quot; ]
 
-names.get(2, &quot;Third item was not found&quot;)
+names.expect(2, &quot;Third item was not found&quot;)
 </code></pre>
 <h4 id="listtunshiftvalue-t"><a class="header" href="#listtunshiftvalue-t"><code>list[T].unshift(value: T)</code></a></h4>
 <p>Insert a new value at the beginning of the list.</p>
@@ -3820,11 +3859,6 @@ _ = [ 2, 8, 4 ].sort(false) # [ 8, 4, 2 ]
 <p>Count the number of entries in a list.</p>
 <pre><code class="language-hydre">_ = [ 2, 8, 4 ].len() # 3
 </code></pre>
-<h4 id="liststringjoinsep-----string"><a class="header" href="#liststringjoinsep-----string"><code>list[string].join(sep = &quot;,&quot;) -&gt; string</code></a></h4>
-<p>Join a list of strings with a separator.</p>
-<pre><code class="language-hydre">join([ &quot;a&quot;, &quot;b&quot; ])       # &quot;a,b&quot;
-join([ &quot;a&quot;, &quot;b&quot; ], &quot;; &quot;) # &quot;a; b&quot;
-</code></pre>
 <h4 id="listtconcatanother-listt---listt"><a class="header" href="#listtconcatanother-listt---listt"><code>list[T].concat(another: list[T]) -&gt; list[T]</code></a></h4>
 <p>Concatenate two lists.</p>
 <pre><code class="language-hydre">_ = [ 1, 2 ].concat([ 3, 4 ]) # [ 1, 2, 3, 4 ]
@@ -3833,6 +3867,23 @@ join([ &quot;a&quot;, &quot;b&quot; ], &quot;; &quot;) # &quot;a; b&quot;
 <p>Concatenate multiple lists.</p>
 <pre><code class="language-hydre">_ = [ 1, 2 ].concat([ [ 3, 4 ], [ 5, 6 ] ]) # [ 1, 2, 3, 4, 5, 6 ]
 </code></pre>
+<h3 id="maps"><a class="header" href="#maps">Maps</a></h3>
+<h4 id="mapk-vhaskey-k---bool"><a class="header" href="#mapk-vhaskey-k---bool"><code>map[K, V].has(key: K) -&gt; bool</code></a></h4>
+<p>Check if a key exists in a map.</p>
+<h4 id="mapk-vgetkey-k---v"><a class="header" href="#mapk-vgetkey-k---v"><code>map[K, V].get(key: K) -&gt; V?</code></a></h4>
+<p>Get a value without panicking if the key doesn't exist.</p>
+<h4 id="mapk-vkeys---listk"><a class="header" href="#mapk-vkeys---listk"><code>map[K, V].keys() -&gt; list[K]</code></a></h4>
+<p>Get all keys of a map.</p>
+<h4 id="mapk-vvalues---listv"><a class="header" href="#mapk-vvalues---listv"><code>map[K, V].values() -&gt; list[V]</code></a></h4>
+<p>Get all values of a map.</p>
+<h4 id="mapk-vvalues---liststruct--key-k-value-v-"><a class="header" href="#mapk-vvalues---liststruct--key-k-value-v-"><code>map[K, V].values() -&gt; list[struct { key: K, value: V }]</code></a></h4>
+<p>Turn a map into a list.</p>
+<h4 id="mapk-vexpectkey-k-message-string---v"><a class="header" href="#mapk-vexpectkey-k-message-string---v"><code>map[K, V].expect(key: K, message: string) -&gt; V</code></a></h4>
+<p>Get an item from the map, and panic with a custom error message if the key doen't exist.</p>
+<h4 id="mapk-vdeletekey-k---bool"><a class="header" href="#mapk-vdeletekey-k---bool"><code>map[K, V].delete(key: K) -&gt; bool</code></a></h4>
+<p>Delete a key, returns <code>false</code> if the key didn't exist in the map, or <code>true</code> otherwise.</p>
+<h4 id="mapk-vcount---int"><a class="header" href="#mapk-vcount---int"><code>map[K, V].count() -&gt; int</code></a></h4>
+<p>Count the number of entries in a map.</p>
 <h3 id="commands-3"><a class="header" href="#commands-3">Commands</a></h3>
 <h4 id="commandrun---int"><a class="header" href="#commandrun---int"><code>command.run() -&gt; int</code></a></h4>
 <p>Run the command and gets its status code after exit.</p>
@@ -3982,7 +4033,7 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 #
 # &quot;-u&quot;: update the symlink to the new target path if it already exists instead of failing
 </code></pre>
-<h1 id="services-2"><a class="header" href="#services-2">Services</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="services-2"><a class="header" href="#services-2">Services</a></h1>
 <p>This document describes the architecture of <a href="specs/../technical/services.html">services</a>, as well as the list of all system services and their main features.</p>
 <ul>
 <li><a href="specs/services.html#types-of-services">Types of services</a></li>
@@ -4041,7 +4092,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <p>The downside of this structure is that latency is approximately doubled compared to a direct A-B communication. But as they use messages and notifications, which are based on hardware interrupts, the latency is extremely low, mainly composed of the time the kernel spends to ensure the communication between A and the service and then the service and B (or the other way around) is allowed.</p>
 <p>Although this method works fine for small pieces of data, it isn't suited for transmitting large chunks in a performant way. For that purpose, A can <a href="specs/kernel/memory.html#abstract-memory-segments">share a memory segment</a> with the service, who shares it in turn to B (with restricted permissions if required).</p>
 <p>Note that this only applies to different applications ; processes from a same application can communicate directly through <a href="specs/kernel/ipc.html">IPC</a>.</p>
-<h1 id="kernel"><a class="header" href="#kernel">Kernel</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kernel"><a class="header" href="#kernel">Kernel</a></h1>
 <p>NightOS' kernel is named <em>Cosmos</em>. It is a micro-kernel which tries to be as simple and straightforward as possible, delegating all non-trivial tasks such as filesystem access or permissions management to <a href="specs/kernel/../../technical/services.html">services</a>.</p>
 <p><strong>NOTE: This document is in its <em>very early stages</em>, and so is far from being complete. Major changes may and will be made to related documents.</strong></p>
 <h2 id="documents-1"><a class="header" href="#documents-1">Documents</a></h2>
@@ -4056,7 +4107,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <li><a href="specs/kernel/signals.html">Signals</a> - complete specification of <a href="specs/kernel/kpc.html">signals</a></li>
 <li><a href="specs/kernel/syscalls.html">System calls</a> - complete specification of <a href="specs/kernel/kpc.html">system calls</a></li>
 </ul>
-<h1 id="hardware-management"><a class="header" href="#hardware-management">Hardware management</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="hardware-management"><a class="header" href="#hardware-management">Hardware management</a></h1>
 <p>This document describes how the kernel interacts with hardware.</p>
 <ul>
 <li><a href="specs/kernel/hardware.html#hardware-detection">Hardware detection</a></li>
@@ -4129,7 +4180,7 @@ hardw</p>
 <p>The <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service is considered as a driver for all devices.</p>
 <h2 id="kernel-communication"><a class="header" href="#kernel-communication">Kernel communication</a></h2>
 <p>The kernel does not identify devices, as this task is relegated to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service. In order to communicate with hardware devices, only the <a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> is provided.</p>
-<h1 id="memory"><a class="header" href="#memory">Memory</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="memory"><a class="header" href="#memory">Memory</a></h1>
 <p>This document describes how the kernel organizes and manages the memory.</p>
 <h2 id="pages"><a class="header" href="#pages">Pages</a></h2>
 <p><strong>TODO</strong></p>
@@ -4143,7 +4194,7 @@ hardw</p>
 <li><a href="specs/kernel/syscalls.html#0x33-backed_ams">Making a virtual memory space handled by signals</a></li>
 </ul>
 <p>An AMS can then be mapped at multiple places in a process' memory, or shared with other processes. The kernel handles mappings to get optimal performances and reduce the number of memory accesses as much as possible.</p>
-<h1 id="processes-1"><a class="header" href="#processes-1">Processes</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="processes-1"><a class="header" href="#processes-1">Processes</a></h1>
 <p>Apart from the kernel itself, all programs run in <em>processes</em>.</p>
 <ul>
 <li><a href="specs/kernel/processes.html#why-processes">Why processes</a></li>
@@ -4192,7 +4243,7 @@ hardw</p>
 <p><em>Raw permissions</em> are used by system services to determine the permissions of a process without <a href="specs/kernel/ipc.html#exchanges-and-messages">sending a message</a> to the <a href="specs/kernel/../services/system/perm.html"><code>sys::perm</code></a> service and waiting for its answer, which would be costly in terms of performance.</p>
 <p>These permissions use a specific structure, specified in the <a href="specs/kernel/../services/system/perm.html#list-of-permissions">related service's specifications document</a>.</p>
 <p>Permissions can be managed using the <a href="specs/kernel/../services/system/perm.html"><code>sys::perm</code></a> service.</p>
-<h1 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h1>
 <p>This document presents how tasks are scheduled internally.</p>
 <h2 id="performance-balancing"><a class="header" href="#performance-balancing">Performance balancing</a></h2>
 <p>Each process has a <em>priority</em> number, between 1 and 20, which indicates how much its performances must be prioritized compare to other processes.</p>
@@ -4226,7 +4277,7 @@ hardw</p>
 <li>Does the process owns a visible window?</li>
 <li>Is the process a driver or service? If so, how much is it used?</li>
 </ul>
-<h1 id="data-structures"><a class="header" href="#data-structures">Data structures</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="data-structures"><a class="header" href="#data-structures">Data structures</a></h1>
 <p>This documents describes the structures used by the kernel to represent the data it uses in memory.</p>
 <p>All contiguous data structures are made such as it is easy to delimit them by computing their size in the memory.</p>
 <ul>
@@ -4354,7 +4405,7 @@ The second entry is the last one and so simply contains the number of initialize
 <li>Increase the memory cost of the last entry when it isn't full</li>
 <li>Slow down insert times when the last entry is full (needs to allocate)</li>
 </ul>
-<h1 id="kernel-process-communication"><a class="header" href="#kernel-process-communication">Kernel-Process Communication</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kernel-process-communication"><a class="header" href="#kernel-process-communication">Kernel-Process Communication</a></h1>
 <p>The <em>Kernel-Process Communication</em> (KPC) describes how a process can interact with the kernel, and vice-versa.</p>
 <p>There are two types of KPC:</p>
 <ul>
@@ -4363,7 +4414,7 @@ The second entry is the last one and so simply contains the number of initialize
 </ul>
 <p>Note that, unlike many operating systems like Linux, it's not possible for a process to send a signal to another. Only the kernel is allowed to emit signals.</p>
 <p>For more advanced features, like permissions management or filesystem, check <a href="specs/kernel/../../technical/ipc.html">IPC</a>.</p>
-<h1 id="inter-process-communication"><a class="header" href="#inter-process-communication">Inter-Process Communication</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="inter-process-communication"><a class="header" href="#inter-process-communication">Inter-Process Communication</a></h1>
 <p>This document describes the way <a href="specs/kernel/../../technical/ipc.html">Inter-Process Communication (IPC)</a> works.</p>
 <ul>
 <li><a href="specs/kernel/ipc.html#pipes">Pipes</a>
@@ -4466,7 +4517,7 @@ Their length is determined when the message is sent which, coupled to <a href="s
 </ul>
 <p>Exclusive mode has several advantages: the sender process to not have to care about managing this memory and avoid overwriting it by accident, but it also ensures the receiving process that the sender will not perform malicious modifications on the shared buffer while the data is processed on its side.</p>
 <p>Mutual memory sharing can be stopped using the <a href="specs/kernel/syscalls.html#0x36-unshare_ams"><code>UNSHARE_AMS</code></a> syscall, while exclusive sharing are left to the receiver process.</p>
-<h1 id="signals"><a class="header" href="#signals">Signals</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="signals"><a class="header" href="#signals">Signals</a></h1>
 <p><em>Signals</em> are a type of <a href="specs/kernel/kpc.html">KPC</a>. They are used by the kernel to send informations to processes about a specific event.</p>
 <ul>
 <li><a href="specs/kernel/signals.html#technical-overview">Technical overview</a></li>
@@ -4735,7 +4786,7 @@ The associated RC and SC are immediatly closed.</p>
 <li><a href="specs/kernel/hardware.html#kernel-device-identifier">KDI</a> (8 bytes)</li>
 <li>Interruption code (1 byte)</li>
 </ul>
-<h1 id="system-calls"><a class="header" href="#system-calls">System calls</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="system-calls"><a class="header" href="#system-calls">System calls</a></h1>
 <p><em>System calls</em>, abbreviated <em>syscalls</em>, are a type of <a href="specs/kernel/kpc.html">KPC</a>. They allow a process to ask the kernel to perform an action.</p>
 <ul>
 <li><a href="specs/kernel/syscalls.html#technical-overview">Technical overview</a></li>
@@ -5862,7 +5913,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><code>0x30</code>: Caller process is not the <a href="specs/kernel/../services/system/process.html"><code>sys::proc</code></a> service.</li>
 <li><code>0x31</code>: Unknown conatiner ID provided</li>
 </ul>
-<h1 id="integration-services"><a class="header" href="#integration-services">Integration services</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="integration-services"><a class="header" href="#integration-services">Integration services</a></h1>
 <p>This document lists all <a href="specs/services/integration/../../services.html#types-of-services">integration services</a>, which are services whose methods and notifications follow a convention established by the system itself to permit an integration at different levels.</p>
 <p>An application exposing such a service in its <a href="specs/services/integration/../../applications.html#application-manifest">manifest</a> will automatically be assignable to specific tasks, such as being set as the default desktop environment or file manager.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="specs/services/integration/../../services/system/README.html">system services</a>.</p>
@@ -5876,7 +5927,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><a href="specs/services/integration/file-openers.html">File openers</a></li>
 <li><a href="specs/services/integration/filesystem-interfaces.html">Filesystem interfaces</a></li>
 </ul>
-<h1 id="desktop-environments"><a class="header" href="#desktop-environments">Desktop Environments</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="desktop-environments"><a class="header" href="#desktop-environments">Desktop Environments</a></h1>
 <ul>
 <li><a href="specs/services/integration/desktop-environments.html#user-interface-concepts">User interface concepts</a></li>
 <li><a href="specs/services/integration/desktop-environments.html#windows-state">Window's state</a>
@@ -6557,7 +6608,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <ul>
 <li>Notification identifier (8 bytes)</li>
 </ul>
-<h1 id="file-manager"><a class="header" href="#file-manager">File Manager</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="file-manager"><a class="header" href="#file-manager">File Manager</a></h1>
 <ul>
 <li><a href="specs/services/integration/file-managers.html#methods">Methods</a>
 <ul>
@@ -6643,7 +6694,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><code>0x4002</code>: Failed to open the provided item due to an I/O error</li>
 <li><code>0x4FFF</code>: Unspecified error</li>
 </ul>
-<h2 id="file-openers"><a class="header" href="#file-openers">File openers</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="file-openers"><a class="header" href="#file-openers">File openers</a></h2>
 <p>A file opener is an application which can associate open specific items. It exposes an integration service with the standardized methods and notifications described in this document.</p>
 <p>The list of openers can be viewed and modified through the <a href="specs/services/integration/../../services/system/fsh.html"><code>sys::fsh</code></a>.</p>
 <p>They are essentially used by the <a href="specs/services/integration/file-managers.html">default file manager</a>.</p>
@@ -6702,7 +6753,7 @@ If it cannot, the default file manager will be in charge of providing a placehol
 <li><code>0x3002</code>: Thumbnail could not be generated from the item as its content is invalid</li>
 <li><code>0x3FFF</code>: Unspecified error</li>
 </ul>
-<h1 id="filesystem-interfaces"><a class="header" href="#filesystem-interfaces">Filesystem interfaces</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="filesystem-interfaces"><a class="header" href="#filesystem-interfaces">Filesystem interfaces</a></h1>
 <p>Filesystem interfaces are services that act as a layer of indirection between a storage <a href="specs/services/integration/../system/hw.html#drivers">driver</a> and the <a href="specs/services/integration/../system/fs.html"><code>sys::fs</code></a> service. Their role is to translate all common filesystem operations, such as items management and modification, for filesystems that aren't <a href="specs/services/integration/../system/fs.html#list-of-natively-supported-filesystems">natively supported</a>. They heavily communicate with the <a href="specs/services/integration/../system/hw.html"><code>sys::hw</code></a> service to communicate with the underlying storage device.</p>
 <p>A filesystem is tied to only one partition, and each partition has a filesystem. A storage space is made, unless empty, of a partitions table which lists all the available partitions.</p>
 <p>Most <a href="specs/services/integration/filesystem-interfaces.html#methods">methods</a> and <a href="specs/services/integration/filesystem-interfaces.html#notifications">notifications</a> of filesystems interfaces are also available in the <a href="specs/services/integration/../system/fs.html"><code>sys::fs</code></a> service, with first perform permissions checking and determines the device and location to perform the operation on. It also leverages many more powerful features such as items watching, and features that are our of the scope of a filesystem interface such as partitions management.</p>
@@ -7271,7 +7322,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<h1 id="driver-services"><a class="header" href="#driver-services">Driver services</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="driver-services"><a class="header" href="#driver-services">Driver services</a></h1>
 <p>This document lists all <a href="specs/services/drivers/../../services.html#types-of-services">driver services</a>, which are services whose methods and notifications follow a convention established by the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service to permit interaction with hardware devices.</p>
 <p>An application exposing such a service in its <a href="specs/services/drivers/../../applications.html#application-manifest">manifest</a> will gain the permission to <a href="specs/services/drivers/../system/hw.html#0x1000-register_driver">register itself as a driver</a> through the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="specs/services/drivers/../system/README.html">system services</a>.</p>
@@ -7289,7 +7340,7 @@ If the number of items to get is larger than the number of entries in the direct
 <ul>
 <li><code>0x0001</code> <a href="specs/services/drivers/storage.html">Storage driver service</a></li>
 </ul>
-<h1 id="storage-driver-services"><a class="header" href="#storage-driver-services">Storage driver services</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="storage-driver-services"><a class="header" href="#storage-driver-services">Storage driver services</a></h1>
 <p>Storage driver services handle storage devices. They are used to perform basic I/O operations.</p>
 <p>As an application can only expose one single storage driver service, the said service will handle all of the hardware devices it drives. This is why the the <a href="specs/services/drivers/../system/hw.html#unique-device-identifier">UDI</a> of the target device is provided for each request.</p>
 <h2 id="methods-5"><a class="header" href="#methods-5">Methods</a></h2>
@@ -7402,7 +7453,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<h1 id="system-services-2"><a class="header" href="#system-services-2">System services</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="system-services-2"><a class="header" href="#system-services-2">System services</a></h1>
 <p>As NightOS' <a href="specs/services/system/../../kernel/README.html">kernel</a> is not monolithic but a microkernel, it only handles the most fundamental tasks of the system, like memory and processes management, as well as direct hardware communication.</p>
 <p>The vast majority of its features can be found in system <a href="specs/services/system/../../services.html">services</a>, run by the system itself under the <code>sys</code> <a href="specs/services/system/../../applications-libraries.html#application-identifier">DID</a>.</p>
 <p>This splitting implies that most low-level features of the system are documented in the individual services' specifications documents, which you will find here.</p>
@@ -7441,7 +7492,7 @@ If the number of items to get is larger than the number of entries in the direct
 <li>PID 20: <a href="specs/services/system/app.html"><code>sys::app</code></a>: applications management service</li>
 <li>PID 21: <a href="specs/services/system/process.html"><code>sys::process</code></a>: processes management service</li>
 </ul>
-<h1 id="sysfs-service"><a class="header" href="#sysfs-service"><code>sys::fs</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sysfs-service"><a class="header" href="#sysfs-service"><code>sys::fs</code> service</a></h1>
 <p>The <code>sys::fs</code> service is in charge of operations related to the <a href="specs/services/system/../../filesystem.html">filesystems</a>.</p>
 <ul>
 <li><a href="specs/services/system/fs.html#behaviour">Behaviour</a>
@@ -8228,7 +8279,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<h1 id="sysfsh-service"><a class="header" href="#sysfsh-service"><code>sys::fsh</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sysfsh-service"><a class="header" href="#sysfsh-service"><code>sys::fsh</code> service</a></h1>
 <p>The <code>sys::fsh</code> service is in charge of handling high-level filesystem operations, such as file associations and thumbnails generation.</p>
 <ul>
 <li><a href="specs/services/system/fsh.html#methods">Methods</a>
@@ -8330,7 +8381,7 @@ If the number of items to get is larger than the number of entries in the direct
 <li><code>0x3001</code>: Unknown FSID</li>
 <li><code>0x3002</code>: Unknown FEID</li>
 </ul>
-<h1 id="syshw-service"><a class="header" href="#syshw-service"><code>sys::hw</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="syshw-service"><a class="header" href="#syshw-service"><code>sys::hw</code> service</a></h1>
 <p>The <code>sys::hw</code> service is in charge of hardware devices. It coordinates and manages communications with the hardware.</p>
 <p>It is known as the <a href="specs/services/system/../../../technical/io-manager.html">I/O manager</a>, or Ion.</p>
 <ul>
@@ -8714,7 +8765,7 @@ This notification is transferred by the <code>sys::hw</code> service after the d
 <li>Device's <a href="specs/services/system/hw.html#unique-device-identifier">UDI</a> (4 bytes)</li>
 <li><a href="specs/services/system/hw.html#normalization"><em>Normalized notification's content</em></a></li>
 </ul>
-<h1 id="sysperm-service"><a class="header" href="#sysperm-service"><code>sys::perm</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sysperm-service"><a class="header" href="#sysperm-service"><code>sys::perm</code> service</a></h1>
 <p>The <code>sys::perm</code> service is used to manage the <a href="specs/services/system/../../../concepts/users.html#user-privileges">privileges</a> of <a href="specs/services/system/../../../concepts/users.html">users</a> and the <a href="specs/services/system/../../../features/permissions.html">permissions</a> of <a href="specs/services/system/../../kernel/processes.html">processes</a>.</p>
 <h2 id="the-purpose-of-user-privileges"><a class="header" href="#the-purpose-of-user-privileges">The purpose of user privileges</a></h2>
 <p>In NightOS, executable instructions can run in three different contexts:</p>
@@ -8732,42 +8783,42 @@ System services communicate directly with the kernel and are trusted processes s
 <p><strong>TODO</strong></p>
 <h2 id="notifications-6"><a class="header" href="#notifications-6">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="sysnet-service"><a class="header" href="#sysnet-service"><code>sys::net</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sysnet-service"><a class="header" href="#sysnet-service"><code>sys::net</code> service</a></h1>
 <h2 id="methods-10"><a class="header" href="#methods-10">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-7"><a class="header" href="#notifications-7">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="syscrypto-service"><a class="header" href="#syscrypto-service"><code>sys::crypto</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="syscrypto-service"><a class="header" href="#syscrypto-service"><code>sys::crypto</code> service</a></h1>
 <h2 id="methods-11"><a class="header" href="#methods-11">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-8"><a class="header" href="#notifications-8">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="syscrashsave-service"><a class="header" href="#syscrashsave-service"><code>sys::crashsave</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="syscrashsave-service"><a class="header" href="#syscrashsave-service"><code>sys::crashsave</code> service</a></h1>
 <h2 id="methods-12"><a class="header" href="#methods-12">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-9"><a class="header" href="#notifications-9">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="sysflow-service"><a class="header" href="#sysflow-service"><code>sys::flow</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sysflow-service"><a class="header" href="#sysflow-service"><code>sys::flow</code> service</a></h1>
 <h2 id="methods-13"><a class="header" href="#methods-13">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-10"><a class="header" href="#notifications-10">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="syshydre-service"><a class="header" href="#syshydre-service"><code>sys::hydre</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="syshydre-service"><a class="header" href="#syshydre-service"><code>sys::hydre</code> service</a></h1>
 <h2 id="methods-14"><a class="header" href="#methods-14">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-11"><a class="header" href="#notifications-11">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="sysapp-service"><a class="header" href="#sysapp-service"><code>sys::app</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sysapp-service"><a class="header" href="#sysapp-service"><code>sys::app</code> service</a></h1>
 <h2 id="methods-15"><a class="header" href="#methods-15">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-12"><a class="header" href="#notifications-12">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="sysprocess-service"><a class="header" href="#sysprocess-service"><code>sys::process</code> service</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sysprocess-service"><a class="header" href="#sysprocess-service"><code>sys::process</code> service</a></h1>
 <h2 id="methods-16"><a class="header" href="#methods-16">Methods</a></h2>
 <p><strong>TODO</strong></p>
 <h2 id="notifications-13"><a class="header" href="#notifications-13">Notifications</a></h2>
 <p><strong>TODO</strong></p>
-<h1 id="native-applications"><a class="header" href="#native-applications">Native applications</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="native-applications"><a class="header" href="#native-applications">Native applications</a></h1>
 <p>This folder contains documentation for each native application.</p>
 <p><strong>WARNING:</strong> These documents act as a general list of features and technical overview of the applications. These may change at anytime, and are by no mean a final indication of what the application will consist of and what features it will have.</p>
 <p>Below is the list of applications that are installed (by default) during the installation process.</p>
@@ -8813,7 +8864,7 @@ System services communicate directly with the kernel and are trusted processes s
 </ul>
 <h2 id="system-services-3"><a class="header" href="#system-services-3">System services</a></h2>
 <p>System services are listed in their own <a href="applications/../specs/services/system/README.html">specifications directory</a>.</p>
-<h1 id="astral"><a class="header" href="#astral">Astral</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="astral"><a class="header" href="#astral">Astral</a></h1>
 <p>Astral is the toolchain required to build NightOS applications. It's a command-line only application.</p>
 <h2 id="description"><a class="header" href="#description">Description</a></h2>
 <p>Astral is made of several tools:</p>
@@ -8823,12 +8874,12 @@ System services communicate directly with the kernel and are trusted processes s
 <li>A <em>debugger</em>, which provides tools to run and debug an application (monitor <a href="applications/../features/permissions.html">permissions</a>, create <a href="applications/../features/sandboxes.html#puppet-sandbox">puppet sandboxes</a>, ...) </li>
 </ul>
 <p>It relies on several external compilers (Rust, TypeScript, ...) to build applications from source. Infrastructure for the main languages is installed by default, but additional toolchains can be installed manually.</p>
-<h1 id="bareenv"><a class="header" href="#bareenv">BareEnv</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="bareenv"><a class="header" href="#bareenv">BareEnv</a></h1>
 <p><em>BareEnv</em>, for <em>bare environment</em>, is text-based desktop environment meant for servers as well as fallback when no graphical output is available or when the primary desktop environment does not work for any reason.</p>
 <p>Graphical features are disabled, and any direct application launch will fail ; they can only be launched through commands, to reduce the risk of crash due to the creation of graphical backends failing.</p>
 <p>Tracking devices such as mouses are still supported and can be used in compatible command-line applications.</p>
 <p>The application itself allows to manage the environment's settings, as well as to optionally change the behaviour of specific devices and system features to be more adapted for text-based usage.</p>
-<h1 id="blackhole"><a class="header" href="#blackhole">Blackhole</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="blackhole"><a class="header" href="#blackhole">Blackhole</a></h1>
 <p>Blackhole is the default archive manager of NightOS.</p>
 <p>It relies on <a href="applications/Locky.html">Locky</a> for encrypted archives, filesystems and files.</p>
 <h2 id="features-4"><a class="header" href="#features-4">Features</a></h2>
@@ -8849,7 +8900,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li><a href="applications/../technical/file-formats.html#application-packages">NightOS application file</a> (<code>.nap</code>, <code>.nva</code>)</li>
 <li><a href="applications/../technical/file-formats.html#system-updates">NightOS system updates</a> (<code>.nsu</code>)</li>
 </ul>
-<h1 id="central"><a class="header" href="#central">Central</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="central"><a class="header" href="#central">Central</a></h1>
 <p>The <em>Central</em> application delivers the <em>Control Center</em> which allows to configure how the system behaves. It is split into three distinct categories.</p>
 <pre><code>&gt; Current user settings
     &gt; User Account
@@ -8902,7 +8953,7 @@ System services communicate directly with the kernel and are trusted processes s
         | Enable
         | Disable
 </code></pre>
-<h1 id="cloudy"><a class="header" href="#cloudy">Cloudy</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cloudy"><a class="header" href="#cloudy">Cloudy</a></h1>
 <p>While the system and main data can be backed up using <a href="applications/TimeTravel.html">TimeTravel</a>, it's not always handy to manage backups on an external hard drive and keep it safe.</p>
 <p>This is where Cloudy comes: it allows to synchronize data on the cloud, using a master password which is stored nowhere but in the user's mind.</p>
 <h2 id="how-it-works-2"><a class="header" href="#how-it-works-2">How it works</a></h2>
@@ -8929,7 +8980,7 @@ System services communicate directly with the kernel and are trusted processes s
 <p>Data are synchronized through all computers of a single <em>synchronization chain</em>, which is simply a set of computers. Synchronization happens per user, which is why Cloudy doesn't backup every user of the computer, but only the one synchronization is enabled on. Of course, every user can enable synchronization for its account.</p>
 <p>When a user enabled Cloudy for its account, it must connect with a NightOS account, and it is then added to the synchronization chain consisting of every computer having Cloudy enabled with this NightOS account.</p>
 <p>For down-sync to happen, the username must be on the receiving computers than on the upload computer, else a specific setting will need to be changed in Cloudy.</p>
-<h1 id="comet"><a class="header" href="#comet">Comet</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="comet"><a class="header" href="#comet">Comet</a></h1>
 <p>Comet is the default file manager of NightOS.</p>
 <h2 id="compatible-filesystems"><a class="header" href="#compatible-filesystems">Compatible filesystems</a></h2>
 <p>Comet can open and manage all filesystems natively supported by NightOS, meaning it also supports custom filesystems handled by the <a href="applications/../specs/services/system/fs.html"><code>sys::fs</code></a> service as well as remote drives such as SSH and SFTP storages.</p>
@@ -8949,7 +9000,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Tabs</li>
 <li>Real-time refresh</li>
 </ul>
-<h1 id="gravity"><a class="header" href="#gravity">Gravity</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gravity"><a class="header" href="#gravity">Gravity</a></h1>
 <p>Gravity is a text editor featuring syntax highlighting for code.</p>
 <p>It supports many different languages, and comes with customizable keyboard shortcuts. Mouse is supported.</p>
 <h2 id="features-6"><a class="header" href="#features-6">Features</a></h2>
@@ -8966,7 +9017,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Workspaces (single- or multi-folders)</li>
 <li>Memorize unsaved files, per workspace</li>
 </ul>
-<h1 id="locky"><a class="header" href="#locky">Locky</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="locky"><a class="header" href="#locky">Locky</a></h1>
 <p>Locky is NightOS' encryption tool. It is used to <a href="applications/../features/encryption.html#global-encryption">encrypt the whole storage</a> and <a href="applications/../features/encryption.html#per-user-encryption">encrypt individual users' data</a>.</p>
 <h2 id="user-interface-features"><a class="header" href="#user-interface-features">User interface features</a></h2>
 <ul>
@@ -8980,7 +9031,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Support for third-party algorithms</li>
 <li>Can act as an intermediary file driver</li>
 </ul>
-<h1 id="milkshake"><a class="header" href="#milkshake">Milkshake</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="milkshake"><a class="header" href="#milkshake">Milkshake</a></h1>
 <p>Milkshake is the default video player of NightOS.</p>
 <h2 id="supported-formats-1"><a class="header" href="#supported-formats-1">Supported formats</a></h2>
 <ul>
@@ -9008,7 +9059,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>DVD and BD (Blu-ray) support with menu</li>
 <li>Media library management</li>
 </ul>
-<h1 id="monitor"><a class="header" href="#monitor">Monitor</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="monitor"><a class="header" href="#monitor">Monitor</a></h1>
 <p>Monitor allows to see and manage running applications and processes, as well as to watch resources usage like CPU percentage or used RAM.</p>
 <h2 id="features-8"><a class="header" href="#features-8">Features</a></h2>
 <p>Monitor can display as an instant, real-time label or as a graph multiple informations:</p>
@@ -9063,7 +9114,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Number of processes (application only)</li>
 <li>Number of threads (application only)</li>
 </ul>
-<h1 id="nova"><a class="header" href="#nova">Nova</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nova"><a class="header" href="#nova">Nova</a></h1>
 <p>Nova is the default desktop environment of NightOS.</p>
 <p>It has a highly-customizable user interface.</p>
 <p><strong>WARNING:</strong> This document is only a draft and is <strong>extremely far</strong> from being complete! Anything written in this document is subject to change at anytime.</p>
@@ -9085,14 +9136,14 @@ System services communicate directly with the kernel and are trusted processes s
 <h2 id="user-experience-1"><a class="header" href="#user-experience-1">User experience</a></h2>
 <h3 id="removing-native-applications"><a class="header" href="#removing-native-applications">Removing native applications</a></h3>
 <p>When removing a native applications, a popup will suggest to hide the app instead of removing it, which allows other applications and scripts to still interact with them.</p>
-<h1 id="particle"><a class="header" href="#particle">Particle</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="particle"><a class="header" href="#particle">Particle</a></h1>
 <p>Particle is a complete IDE for making NightOS applications. It uses the <a href="applications/Astral.html">Astral</a> toolchain.</p>
 <h2 id="features-9"><a class="header" href="#features-9">Features</a></h2>
 <p>Its features are the same as <a href="applications/Gravity.html">Gravity</a>, plus many additional ones (too many to be listed here).</p>
 <p>It also features a strong integration with the Astral toolchain in order to build, debug and deploy NightOS applications.</p>
-<h1 id="pluton"><a class="header" href="#pluton">Pluton</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pluton"><a class="header" href="#pluton">Pluton</a></h1>
 <p>Pluton is the default terminal of NightOS. It features a strong integration of <a href="applications/../technical/shell.html">Hydre</a>.</p>
-<h1 id="postal"><a class="header" href="#postal">Postal</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="postal"><a class="header" href="#postal">Postal</a></h1>
 <p>Postal is the default e-mail client of NightOS.</p>
 <h2 id="features-10"><a class="header" href="#features-10">Features</a></h2>
 <ul>
@@ -9104,7 +9155,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Offline support to consult e-mails without an internet connection</li>
 <li>Support for PGP encryption (end-to-end)</li>
 </ul>
-<h1 id="reader"><a class="header" href="#reader">Reader</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="reader"><a class="header" href="#reader">Reader</a></h1>
 <p>Reader is an e-book reader with supports for comics. It can also manage libraries of books.</p>
 <h2 id="supported-e-books-formats"><a class="header" href="#supported-e-books-formats">Supported e-books formats</a></h2>
 <p>Here is the list of the supported <em>e-book</em> formats, which act as containers. See also the <a href="applications/Reader.html#supported-image-formats">supported image formats</a>.</p>
@@ -9118,7 +9169,7 @@ System services communicate directly with the kernel and are trusted processes s
 </ul>
 <h2 id="supported-image-formats"><a class="header" href="#supported-image-formats">Supported image formats</a></h2>
 <p>Same as <a href="applications/ShootingStar.html#supported-formats">ShootingStar</a> (uses the <code>sysl::shootingstar</code> <a href="applications/../specs/libraries.html#system-applications-libraries">SAL</a> to render pictures).</p>
-<h1 id="registry-2"><a class="header" href="#registry-2">Registry</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="registry-2"><a class="header" href="#registry-2">Registry</a></h1>
 <p>Registry allows to view and edit the <a href="applications/../technical/registry.html">registry</a>. It is reserved to advanced users.</p>
 <h2 id="features-11"><a class="header" href="#features-11">Features</a></h2>
 <ul>
@@ -9128,9 +9179,9 @@ System services communicate directly with the kernel and are trusted processes s
 </ul>
 <h2 id="user-interface-2"><a class="header" href="#user-interface-2">User Interface</a></h2>
 <p>The U.I. is made of a set of panes (one by default) containing a tree showing all structures and lists stored in the registry and allowing to edit them.</p>
-<h1 id="rocket"><a class="header" href="#rocket">Rocket</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rocket"><a class="header" href="#rocket">Rocket</a></h1>
 <p>Rocket is the default web browser of NightOS.</p>
-<h1 id="shootingstar"><a class="header" href="#shootingstar">ShootingStar</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="shootingstar"><a class="header" href="#shootingstar">ShootingStar</a></h1>
 <p>ShootingStar is the default pictures viewer and editor of NightOS. Edition is limited to simple manipulations such as cropping and resizing.</p>
 <h2 id="library-usage"><a class="header" href="#library-usage">Library usage</a></h2>
 <p>ShootingStar exposes the <code>sys::shootingstar</code> library to manipulate, perform basic manipulations and most of all render different image formats.</p>
@@ -9167,9 +9218,9 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Edit/remove EXIF metadata</li>
 <li>Convert to black and white</li>
 </ul>
-<h1 id="skyer"><a class="header" href="#skyer">Skyer</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="skyer"><a class="header" href="#skyer">Skyer</a></h1>
 <p>Skyer is the applications manager of NightOS. It allows to install and remove applications, as well as to manage their permissions and enable <a href="applications/../technical/dev-mode.html#application-proxies">application proxies</a> in developer mode.</p>
-<h1 id="sonata"><a class="header" href="#sonata">Sonata</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sonata"><a class="header" href="#sonata">Sonata</a></h1>
 <p>Sonata is the default music player of NightOS. It features support for Hi-Res audio files and can play many different formats (e.g. 32 bits / 384 kHz FLAC, DSD, ...). It also supports bit-to-bit playing to USB DACs.</p>
 <h2 id="features-12"><a class="header" href="#features-12">Features</a></h2>
 <ul>
@@ -9203,72 +9254,44 @@ System services communicate directly with the kernel and are trusted processes s
 <li>Windows Media Audio (<code>.wma</code>)</li>
 <li>Advanced Audio Coding (<code>.aac</code>)</li>
 </ul>
-<h1 id="stellar"><a class="header" href="#stellar">Stellar</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="stellar"><a class="header" href="#stellar">Stellar</a></h1>
 <p>Stellar is the default application store of NightOS.</p>
-<h1 id="thinker"><a class="header" href="#thinker">Thinker</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="thinker"><a class="header" href="#thinker">Thinker</a></h1>
 <p>Thinker is a simple notes application.</p>
-<h1 id="timetravel"><a class="header" href="#timetravel">TimeTravel</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="timetravel"><a class="header" href="#timetravel">TimeTravel</a></h1>
 <p>TimeTravel is the backup and versioning program of NightOS.</p>
-<h1 id="vortex"><a class="header" href="#vortex">Vortex</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vortex"><a class="header" href="#vortex">Vortex</a></h1>
 <p>Vortex is NightOS' built-in firewall. It can also be used in combination with <a href="applications/../features/parental-control.html#restrict-access-to-websites">parental control</a>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
-
-                        
-
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
-
-                
             </nav>
 
         </div>
 
-        
-
-        
-
-        
-
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
-
-        
-
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
-
-        
-        
         <script type="text/javascript">
         window.addEventListener('load', function() {
             window.setTimeout(window.print, 100);
         });
         </script>
-        
-        
-
     </body>
 </html>

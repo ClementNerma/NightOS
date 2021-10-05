@@ -1938,7 +1938,7 @@ Get an item from the list, and panic with a custom error message if the index is
 ```hydre
 var names = [ "Jack", "John" ]
 
-names.get(2, "Third item was not found")
+names.expect(2, "Third item was not found")
 ```
 
 #### `list[T].unshift(value: T)`

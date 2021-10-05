@@ -15,6 +15,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
   - [Bit-wise operators](#bit-wise-operators)
   - [Logical operators](#logical-operators)
   - [Assignment operators](#assignment-operators)
+- [Lists and maps](#lists-and-maps)
 - [Blocks](#blocks)
   - [Conditionals](#conditionals)
   - [Switches](#switches)
@@ -436,6 +437,60 @@ a ++
 a --
 
 echo ${a} # 1
+```
+
+## Lists and maps
+
+Lists and maps behave in a similar way: while lists have _indexes_, which are handled behind-the-scenes, maps have _keys_, which are provided explicitly.
+
+Here is how we declare a list or a map:
+
+```hydre
+# Type: list[string]
+var names = [ "Jack", "John" ]
+
+# Type: map[string, int]
+var ages = { "Jack": 28, "John": 29 }
+```
+
+To add a new value:
+
+```hydre
+# Lists
+names[] = "Paolo"
+
+# Maps
+ages["Paolo"] = 26
+```
+
+To get a value:
+
+```hydre
+# Type: int? (the index may not exist)
+names[0]
+
+# Type: int? (the key may not exist)
+ages["Paolo"]
+```
+
+To remove a value:
+
+```hydre
+# Lists
+delete names[0]
+
+# Maps
+delete ages["Paolo"]
+```
+
+To get the number of entries:
+
+```hydre
+# Type: int
+names.len()
+
+# Maps: int
+ages.count()
 ```
 
 ## Blocks

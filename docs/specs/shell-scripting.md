@@ -113,6 +113,14 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
     - [`list[string].join(sep = ",") -> string`](#liststringjoinsep-----string)
     - [`list[T].concat(another: list[T]) -> list[T]`](#listtconcatanother-listt---listt)
     - [`list[T].concat(lists: list[list[T]]) -> list[T]`](#listtconcatlists-listlistt---listt)
+  - [Maps](#maps)
+    - [`map[K, V].has(key: K) -> bool`](#mapk-vhaskey-k---bool)
+    - [`map[K, V].keys() -> list[K]`](#mapk-vkeys---listk)
+    - [`map[K, V].values() -> list[V]`](#mapk-vvalues---listv)
+    - [`map[K, V].values() -> list[struct { key: K, value: V }]`](#mapk-vvalues---liststruct--key-k-value-v-)
+    - [`map[K, V].expect(key: K, message: string) -> V`](#mapk-vexpectkey-k-message-string---v)
+    - [`map[K, V].delete(key: K) -> bool`](#mapk-vdeletekey-k---bool)
+    - [`map[K, V].count() -> int`](#mapk-vcount---int)
   - [Commands](#commands)
     - [`command.run() -> int`](#commandrun---int)
     - [`command.fallible()`](#commandfallible)
@@ -235,6 +243,9 @@ _ = "abc"
 # Lists of a given type (list[type])
 _ = [ 3, 3.14 ]
 
+# Maps (key-values) (map[key_type, value_type])
+_ = { "a": 1, "b": 2 }
+
 # Paths (path) - must contain at least one `/` to indicate clearly that it's a path and not a string or something else
 _ = dir/file.ext
 _ = ./file.ext
@@ -327,6 +338,14 @@ Values in lists through their index (starting at 0):
 ```hydre
 var names = [ "Jack" ]
 echo "Hello, ${names[0]}!" # Hello, Jack!
+```
+
+Values in maps through their key:
+
+```hydre
+var ages = { "Jack": 28 }
+
+echo "Jack is ${ages["Jack"]} years old!"
 ```
 
 Note that getting an out-of-bound index will make the program _panic_, which means it exits immediatly with an error message.
@@ -545,6 +564,16 @@ end
 ```
 
 This will display `0: Jack` and `1: John`.
+
+For maps:
+
+```hydre
+var ages = { "Jack": 28, "John": 29 }
+
+for name, age in ages
+  echo "${name} is ${age} years old!"
+end
+```
 
 There is another type of loop, which runs a piece of code while a condition is met:
 
@@ -1977,6 +2006,37 @@ Concatenate multiple lists.
 ```hydre
 _ = [ 1, 2 ].concat([ [ 3, 4 ], [ 5, 6 ] ]) # [ 1, 2, 3, 4, 5, 6 ]
 ```
+
+### Maps
+
+#### `map[K, V].has(key: K) -> bool`
+
+Check if a key exists in a map.
+
+#### `map[K, V].keys() -> list[K]`
+
+Get all keys of a map.
+
+#### `map[K, V].values() -> list[V]`
+
+Get all values of a map.
+
+#### `map[K, V].values() -> list[struct { key: K, value: V }]`
+
+Turn a map into a list.
+
+#### `map[K, V].expect(key: K, message: string) -> V`
+
+Get an item from the map, and panic with a custom error message if the key doen't exist.
+
+#### `map[K, V].delete(key: K) -> bool`
+
+Delete a key, returns `false` if the key didn't exist in the map, or `true` otherwise.
+
+
+#### `map[K, V].count() -> int`
+
+Count the number of entries in a map.
 
 ### Commands
 

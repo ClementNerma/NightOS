@@ -116,6 +116,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
     - [`list[T].concat(lists: list[list[T]]) -> list[T]`](#listtconcatlists-listlistt---listt)
   - [Maps](#maps)
     - [`map[K, V].has(key: K) -> bool`](#mapk-vhaskey-k---bool)
+    - [`map[K, V].get(key: K) -> V?`](#mapk-vgetkey-k---v)
     - [`map[K, V].keys() -> list[K]`](#mapk-vkeys---listk)
     - [`map[K, V].values() -> list[V]`](#mapk-vvalues---listv)
     - [`map[K, V].values() -> list[struct { key: K, value: V }]`](#mapk-vvalues---liststruct--key-k-value-v-)
@@ -466,10 +467,10 @@ ages["Paolo"] = 26
 To get a value:
 
 ```hydre
-# Type: int? (the index may not exist)
+# Type: int
 names[0]
 
-# Type: int? (the key may not exist)
+# Type: int
 ages["Paolo"]
 ```
 
@@ -2067,6 +2068,10 @@ _ = [ 1, 2 ].concat([ [ 3, 4 ], [ 5, 6 ] ]) # [ 1, 2, 3, 4, 5, 6 ]
 #### `map[K, V].has(key: K) -> bool`
 
 Check if a key exists in a map.
+
+#### `map[K, V].get(key: K) -> V?`
+
+Get a value without panicking if the key doesn't exist.
 
 #### `map[K, V].keys() -> list[K]`
 

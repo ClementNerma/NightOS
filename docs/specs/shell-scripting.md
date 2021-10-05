@@ -102,6 +102,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
     - [`string.split(str: string, sep: string) -> string`](#stringsplitstr-string-sep-string---string)
   - [Lists](#lists)
     - [`list[char].stringify() -> str`](#listcharstringify---str)
+    - [`list[string].join(sep = ",") -> string`](#liststringjoinsep-----string)
     - [`list[T].get(index: int) -> T?`](#listtgetindex-int---t)
     - [`list[T].expect(index: number, message: string) -> T`](#listtexpectindex-number-message-string---t)
     - [`list[T].unshift(value: T)`](#listtunshiftvalue-t)
@@ -111,7 +112,6 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
     - [`list[T].sort(asc = true) -> list[T]`](#listtsortasc--true---listt)
     - [`list[T].reverse() -> list[T]`](#listtreverse---listt)
     - [`list[T].len() -> int`](#listtlen---int)
-    - [`list[string].join(sep = ",") -> string`](#liststringjoinsep-----string)
     - [`list[T].concat(another: list[T]) -> list[T]`](#listtconcatanother-listt---listt)
     - [`list[T].concat(lists: list[list[T]]) -> list[T]`](#listtconcatlists-listlistt---listt)
   - [Maps](#maps)
@@ -1974,6 +1974,15 @@ Turns a list of characters to a string.
 _ = ([ 'a', 'b', 'c' ].str() == "abc") # true
 ```
 
+#### `list[string].join(sep = ",") -> string`
+
+Join a list of strings with a separator.
+
+```hydre
+join([ "a", "b" ])       # "a,b"
+join([ "a", "b" ], "; ") # "a; b"
+```
+
 #### `list[T].get(index: int) -> T?`
 
 Try to get an item from the list, without panicking if the index is out-of-bounds.
@@ -2035,15 +2044,6 @@ Count the number of entries in a list.
 
 ```hydre
 _ = [ 2, 8, 4 ].len() # 3
-```
-
-#### `list[string].join(sep = ",") -> string`
-
-Join a list of strings with a separator.
-
-```hydre
-join([ "a", "b" ])       # "a,b"
-join([ "a", "b" ], "; ") # "a; b"
 ```
 
 #### `list[T].concat(another: list[T]) -> list[T]`

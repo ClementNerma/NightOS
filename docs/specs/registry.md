@@ -51,6 +51,7 @@ All types are described as a name, optionally followed by a maximum number of en
 | `id:lib`           | s <= 256              | Identifier of an installed library (ASCII string)                                             |
 | `id:user`          | s = 4                 | Identifier of an installed user (32-bit unsigned number)                                      |
 | `in:(type):(a...)` | s = max(sizeof(type)) | Any value in the provided tuple                                                               |
+| `enum:(a,b,c,...)` | s = 1                 | One of `a`, `b`, `c`...                                                                       |
 
 The registry's root is a `struct`. Each key-value association in a struct is called a _node_. Nodes that are single values (neither a list, a map or a structure) are called _leafs_.
 
@@ -156,7 +157,7 @@ system(struct):
 # Users (keys = user's unique identifier, value = user's type with 0 = main admin., 1 = admin., 2 = standard, 3 = guest)
 # Detailed informations about each user (nickname, privileges, encryption password, ...) and groups are stored
 #   in the user profiles file at '/etc/sys/users'
-users(map:(uint{4}):(in:(0,1,2,3))):
-  0: 1 # System
-  1: 1 # Administrator
+users(map:(uint{4}):(enum:(MainAdmin, Admin, Standard, Guest))):
+  0: Admin # System
+  1: Admin # Administrator
 ```

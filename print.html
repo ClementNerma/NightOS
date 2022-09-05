@@ -1230,6 +1230,11 @@ For more informations about low-level concepts these documents refer to, you can
 <p>Each feature allows to embed additional assets and declare additional supported languages (e.g. language packs), and a specific build option is provided to the build tool to indicate at build time weither a feature is selected or not.</p>
 <p>This allows to save space and build time when a specific feature isn't required, but should still be embedded in the program itself instead of making an additional application or library.</p>
 <p>When the manifest declares one or more feature(s), it must also specify a set of <em>default features</em> to enable, which are selected by default.</p>
+<h2 id="extensions"><a class="header" href="#extensions">Extensions</a></h2>
+<p>Applications and libraries can have <em>extensions</em>, which are additional content that may or may not be downloaded and installed alongside the original application/library.</p>
+<p>If we take the example of a file browser, an extension could be an image previewer with support for many image formats, which would be unreasonable to put in the original application given most people won't use it. In a media player, it could be a set of additional codecs.</p>
+<p>Extensions can contain executable code, but they must be run from within the original application/library only. They do not appear in the list of installed applications visible to the end user, and are instead located in a sub-menu for the application/library they belong to.</p>
+<p>For apps and libs downloaded from the <a href="specs/../applications/Stellar.html">Store</a>, extensions can be downloaded from within the original content by calling a dedicated API.</p>
 <h2 id="the-manifest"><a class="header" href="#the-manifest">The manifest</a></h2>
 <p>A <em>manifest</em> is a file describing the application or library. It is mandatory to build and distribute it. Its content differ for applications and libraries, but there are common fields (<code>REQ</code>: required, <code>OPT</code>: optional):</p>
 <pre><code class="language-yaml"># [REQ] Informations about the application
@@ -1295,8 +1300,21 @@ features:
     # [OPT] Feature's dependencies
     dependencies: {}
 
+    # [OPT] Required extensions
+    extensions: {}
+
     # [OPT] Additional languages (e.g. language pack)
     languages: []
+
+# [OPT] Extensions
+extensions:
+  # Describe each extension, by name
+  test:
+    # [REQ] Display name
+    name: Test
+    
+    # [REQ] Description
+    description: A test extension
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="applications-1"><a class="header" href="#applications-1">Applications</a></h1>
 <p>This document describes application-specific structure and behaviour. For common reference, see the <a href="specs/applications-libraries.html">applications and libraries</a> document.</p>

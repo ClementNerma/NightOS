@@ -52,7 +52,7 @@ All types are described as a name, optionally followed by a maximum number of en
 | `id:user`          | s = 4                 | Identifier of an installed user (32-bit unsigned number)                                      |
 | `in:(type):(a...)` | s = max(sizeof(type)) | Any value in the provided tuple                                                               |
 
-The registry's root is a `struct`. Each key-value association in a struct is called a _node_. Nodes that are single values (neither a list, a map or a structure) or called _leafs_.
+The registry's root is a `struct`. Each key-value association in a struct is called a _node_. Nodes that are single values (neither a list, a map or a structure) are called _leafs_.
 
 All sizes that are exceptly provided in bytes must be a multiple of two.
 

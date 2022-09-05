@@ -36,6 +36,16 @@ This allows to save space and build time when a specific feature isn't required,
 
 When the manifest declares one or more feature(s), it must also specify a set of _default features_ to enable, which are selected by default.
 
+## Extensions
+
+Applications and libraries can have _extensions_, which are additional content that may or may not be downloaded and installed alongside the original application/library.
+
+If we take the example of a file browser, an extension could be an image previewer with support for many image formats, which would be unreasonable to put in the original application given most people won't use it. In a media player, it could be a set of additional codecs.
+
+Extensions can contain executable code, but they must be run from within the original application/library only. They do not appear in the list of installed applications visible to the end user, and are instead located in a sub-menu for the application/library they belong to.
+
+For apps and libs downloaded from the [Store](../applications/Stellar.md), extensions can be downloaded from within the original content by calling a dedicated API.
+
 ## The manifest
 
 A _manifest_ is a file describing the application or library. It is mandatory to build and distribute it. Its content differ for applications and libraries, but there are common fields (`REQ`: required, `OPT`: optional):
@@ -104,6 +114,19 @@ features:
     # [OPT] Feature's dependencies
     dependencies: {}
 
+    # [OPT] Required extensions
+    extensions: {}
+
     # [OPT] Additional languages (e.g. language pack)
     languages: []
+
+# [OPT] Extensions
+extensions:
+  # Describe each extension, by name
+  test:
+    # [REQ] Display name
+    name: Test
+    
+    # [REQ] Description
+    description: A test extension
 ```

@@ -4,7 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Desktop environments - NightOS documentation</title>
+
+
         <!-- Custom HTML head -->
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Design and specification documents for NightOS">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,15 +19,18 @@
         <link rel="stylesheet" href="../../../css/general.css">
         <link rel="stylesheet" href="../../../css/chrome.css">
         <link rel="stylesheet" href="../../../css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="../../../fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../../highlight.css">
         <link rel="stylesheet" href="../../../tomorrow-night.css">
         <link rel="stylesheet" href="../../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -83,7 +89,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -113,6 +119,7 @@
                         <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -126,6 +133,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -196,7 +204,7 @@
 <p>The window's state is made of a <em>header</em>, containing 1 bit for each conventional element to get/update (listed below). Each bit must be set if the element is provided, unset otherwise.</p>
 <p>It is followed by the number of custom elements to get/update (2 bytes), and the list of custom elements' identifiers (4 bytes per identifier).</p>
 <p>The header is followed by the value of each element to update, <em>only</em> if the element must be updated.</p>
-<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / Size in bytes</th><th>Content</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Header bit</th><th>Description</th><th>Type / Size in bytes</th><th>Content</th></tr></thead><tbody>
 <tr><td>0</td><td>Title</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>1</td><td>Buttons</td><td><a href="#buttons">Buttons</a></td><td></td></tr>
 <tr><td>2</td><td>Icon</td><td><a href="#icons">Icon</a></td><td></td></tr>
@@ -211,6 +219,7 @@
 <tr><td>11</td><td><a href="../../../ux/desktop-environment.html#window-display-state">Display state</a></td><td><a href="#display-state">Display state</a></td><td></td></tr>
 <tr><td>12-31</td><td><em>Future-proof</em></td><td></td><td></td></tr>
 </tbody></table>
+</div>
 <h4 id="delimited-title-strings"><a class="header" href="#delimited-title-strings">Delimited title strings</a></h4>
 <p>Delimited title strings are encoded as <a href="../../kernel/data-structures.html#delimited-strings">delimited strings</a>.</p>
 <h4 id="icons"><a class="header" href="#icons">Icons</a></h4>
@@ -536,11 +545,12 @@
 <p>Create a popup.</p>
 <p><strong>Arguments:</strong></p>
 <p>Same structure than for a <a href="#windows-state">window's state</a>, but with the following common elements:</p>
-<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th></tr></thead><tbody>
 <tr><td>0</td><td>Title</td><td><a href="#delimited-title-strings">String</a></td></tr>
 <tr><td>1</td><td>Icon</td><td><a href="#icons">Icon</a></td></tr>
 <tr><td>2</td><td>Buttons</td><td><a href="#buttons">Buttons</a></td></tr>
 </tbody></table>
+</div>
 <p><strong>Return value:</strong></p>
 <ul>
 <li>Popup identifier (8 bytes)</li>
@@ -602,7 +612,7 @@
 <p>Send a music player notificaiton.</p>
 <p><strong>Arguments:</strong></p>
 <p>Same structure than for a <a href="#windows-state">window's state</a>, but with the following common elements:</p>
-<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
 <tr><td>0</td><td>Track's title</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>1</td><td>Album's title</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>2</td><td>Artist's name</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
@@ -624,6 +634,7 @@
 <tr><td>19</td><td>Track position</td><td>8 bytes</td><td>Track index (4 bytes) ; Tracks in the queue (4 bytes)</td></tr>
 <tr><td>20</td><td>Buttons availibility</td><td>1 byte</td><td>Pause/resume ; Rewind/Fast-forward ; Previous track ; Next track ; Shuffle</td></tr>
 </tbody></table>
+</div>
 <p>The visualizer shows a value from 0 to 255 to indicate the bar eight. Each bar value corresponds to a specific frequency range. The lower frequency bound of each bar can be found with: <code>exponential(i / 1.88) - 1</code>, where <code>i</code> is the bar number, from 0 to 23.</p>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -653,7 +664,7 @@
 <p>Send a video player notificaiton.</p>
 <p><strong>Arguments:</strong></p>
 <p>Same structure than for a <a href="#windows-state">window's state</a>, but with the following common elements:</p>
-<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
 <tr><td>0</td><td>Video's title</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>1</td><td>Video's author</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>2</td><td>Video's source</td><td><a href="#delimited-title-strings">String</a></td><td></td></tr>
@@ -664,6 +675,7 @@
 <tr><td>7</td><td>Video position</td><td>8 bytes</td><td>Video index (4 bytes) ; Videos in the queue (4 bytes)</td></tr>
 <tr><td>8</td><td>Buttons availibility</td><td>1 byte</td><td>Pause/resume ; Rewind/Fast-forward ; Previous track ; Next track ; Shuffle</td></tr>
 </tbody></table>
+</div>
 <p><strong>Return value:</strong></p>
 <ul>
 <li>Notification identifier (8 bytes)</li>
@@ -826,9 +838,11 @@
                             <a rel="prev" href="../../../specs/services/integration/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="../../../specs/services/integration/file-managers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -838,6 +852,7 @@
                     <a rel="prev" href="../../../specs/services/integration/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="../../../specs/services/integration/file-managers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -845,16 +860,24 @@
 
         </div>
 
+
+
+
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
+
+
         <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
         <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+
+
     </body>
 </html>

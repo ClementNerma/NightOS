@@ -5,7 +5,10 @@
         <meta charset="UTF-8">
         <title>NightOS documentation</title>
         <meta name="robots" content="noindex" />
+
+
         <!-- Custom HTML head -->
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Design and specification documents for NightOS">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,15 +20,18 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -114,6 +120,7 @@
                         <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -127,6 +134,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -1173,18 +1181,18 @@ For more informations about low-level concepts these documents refer to, you can
 <li><a href="specs/kernel/README.html">Kernel</a> - complete specifications of the kernel</li>
 <li><a href="specs/services.html">Services</a> - specifications about services work and behave</li>
 </ul>
-<h2 id="a-hrefspecsservicesintegrationreadmehtmlintegration-servicesa"><a class="header" href="#a-hrefspecsservicesintegrationreadmehtmlintegration-servicesa"><a href="specs/services/integration/README.html">Integration services</a></a></h2>
+<h2 id="integration-services"><a class="header" href="#integration-services"><a href="specs/services/integration/README.html">Integration services</a></a></h2>
 <ul>
 <li><a href="specs/services/integration/desktop-environments.html">Desktop environment</a></li>
 <li><a href="specs/services/integration/file-managers.html">File managers</a></li>
 <li><a href="specs/services/integration/file-openers.html">File openers</a></li>
 <li><a href="specs/services/integration/filesystem-interfaces.html">Filesystem interfaces</a></li>
 </ul>
-<h2 id="a-hrefspecsservicesdriversreadmehtmldriver-servicesa"><a class="header" href="#a-hrefspecsservicesdriversreadmehtmldriver-servicesa"><a href="specs/services/drivers/README.html">Driver services</a></a></h2>
+<h2 id="driver-services"><a class="header" href="#driver-services"><a href="specs/services/drivers/README.html">Driver services</a></a></h2>
 <ul>
 <li><a href="specs/services/drivers/storage.html">Storage driver service</a></li>
 </ul>
-<h2 id="a-hrefspecsservicessystemreadmehtmlsystem-servicesa"><a class="header" href="#a-hrefspecsservicessystemreadmehtmlsystem-servicesa"><a href="specs/services/system/README.html">System services</a></a></h2>
+<h2 id="system-services-1"><a class="header" href="#system-services-1"><a href="specs/services/system/README.html">System services</a></a></h2>
 <ul>
 <li><a href="specs/services/system/fs.html"><code>sys::fs</code></a>: filesystem management</li>
 <li><a href="specs/services/system/fsh.html"><code>sys::fsh</code></a>: high-level filesystem management</li>
@@ -1340,7 +1348,7 @@ features:
 <li>The value's <a href="specs/shell-scripting.html#value-types">shell type</a> code (see the table below) ;</li>
 <li>The encoded value (see the table below)</li>
 </ul>
-<table><thead><tr><th>Type code</th><th>Type</th><th>Description</th><th>Representation</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Type code</th><th>Type</th><th>Description</th><th>Representation</th></tr></thead><tbody>
 <tr><td><code>0x00</code></td><td><code>void</code></td><td>Void</td><td>nothing</td></tr>
 <tr><td><code>0x01</code></td><td><code>bool</code></td><td>Boolean</td><td>1 byte, <code>0x00</code> = falsy, <code>0x01</code> = truthy</td></tr>
 <tr><td><code>0x02</code></td><td><code>int</code></td><td>64-bit signed integer number</td><td>Two's complement</td></tr>
@@ -1352,6 +1360,7 @@ features:
 <tr><td><code>0x08</code></td><td><code>command</code></td><td>Shell command</td><td>Represented as an UTF-8 string</td></tr>
 <tr><td><code>0x09</code></td><td><code>stream</code></td><td><a href="specs/kernel/ipc.html#pipes">Pipe RC</a></td><td>RC identifier (8 bytes)</td></tr>
 </tbody></table>
+</div>
 <p>The type code is present to avoid misinterpreting the value in case the command returned a value of the wrong type.</p>
 <h3 id="returning-and-failing"><a class="header" href="#returning-and-failing">Returning and failing</a></h3>
 <p>The value must be returned using the <a href="specs/kernel/ipc.html#interactive-usage">CMDOUT</a> pipe. The data sent through this pipe must follow the above <a href="specs/applications.html#values-encoding">encoding</a>.</p>
@@ -1594,12 +1603,13 @@ It indicates why the application was started and so what it is supposed to do.</
 <h3 id="concept-1"><a class="header" href="#concept-1">Concept</a></h3>
 <p>A flow is a file without extension, located in the <code>/fl</code> directory, that can either send data to reader processes (<em>read-only</em>) or receive data from writer processes (<em>write-only</em>).</p>
 <p>To understand the concept better, here is the list of native flow files that are always available:</p>
-<table><thead><tr><th>Flow file</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Flow file</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>/fl/zero</code></td><td>Read-only</td><td>Outputs zeroes all the time ; useful to zero a file or device or to benchmark a storage</td></tr>
 <tr><td><code>/fl/rand</code></td><td>Read-only</td><td>Outputs cryptographically-secure random numbers. Useful to randomly fill a storage or memory area</td></tr>
 <tr><td><code>/fl/ucrand</code></td><td>Read-only</td><td>Outputs non-cryptographically-secure random numbers, thus faster that <code>/fl/rand</code></td></tr>
 <tr><td><code>/fl/null</code></td><td>Write-only</td><td>Receives data but does nothing with them</td></tr>
 </tbody></table>
+</div>
 <p>Processes are based on <a href="specs/kernel/ipc.html">pipes</a>.</p>
 <h3 id="creating-a-flow"><a class="header" href="#creating-a-flow">Creating a flow</a></h3>
 <p>When a process wants to create a flow, it follows the following procedure:</p>
@@ -2029,7 +2039,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <p>The registry is located in the <code>/etc/sys/registry</code> file. It's basically a nested B-Tree map.</p>
 <p>Each map has string keys and a value that describes the entry: its purpose, its type with optional constraints, and then the type-safe value.</p>
 <p>All types are described as a name, optionally followed by a maximum number of entries between brackets or a maximum number of bytes between braces. Here is the list, in <a href="specs/registry.html#hffr-format">HFRR notation</a>:</p>
-<table><thead><tr><th>Name</th><th>Size (s) in bytes</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Size (s) in bytes</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>struct</code></td><td>s = ?</td><td>A structure - keys are ASCII strings and values' type may be various</td></tr>
 <tr><td><code>string</code></td><td>s = ?</td><td>An UTF-8 encoded string</td></tr>
 <tr><td><code>string[x]</code></td><td>x &lt;= s &lt;= x * 4</td><td>An UTF-8 encoded string with a maximum capacity of <code>x</code> characters</td></tr>
@@ -2064,8 +2074,10 @@ It indicates why the application was started and so what it is supposed to do.</
 <tr><td><code>id:lib</code></td><td>s &lt;= 256</td><td>Identifier of an installed library (ASCII string)</td></tr>
 <tr><td><code>id:user</code></td><td>s = 4</td><td>Identifier of an installed user (32-bit unsigned number)</td></tr>
 <tr><td><code>in:(type):(a...)</code></td><td>s = max(sizeof(type))</td><td>Any value in the provided tuple</td></tr>
+<tr><td><code>enum:(a,b,c,...)</code></td><td>s = 1</td><td>One of <code>a</code>, <code>b</code>, <code>c</code>...</td></tr>
 </tbody></table>
-<p>The registry's root is a <code>struct</code>. Each key-value association in a struct is called a <em>node</em>. Nodes that are single values (neither a list, a map or a structure) or called <em>leafs</em>.</p>
+</div>
+<p>The registry's root is a <code>struct</code>. Each key-value association in a struct is called a <em>node</em>. Nodes that are single values (neither a list, a map or a structure) are called <em>leafs</em>.</p>
 <p>All sizes that are exceptly provided in bytes must be a multiple of two.</p>
 <h3 id="notes-about-types"><a class="header" href="#notes-about-types">Notes about types</a></h3>
 <ul>
@@ -2157,9 +2169,9 @@ system(struct):
 # Users (keys = user's unique identifier, value = user's type with 0 = main admin., 1 = admin., 2 = standard, 3 = guest)
 # Detailed informations about each user (nickname, privileges, encryption password, ...) and groups are stored
 #   in the user profiles file at '/etc/sys/users'
-users(map:(uint{4}):(in:(0,1,2,3))):
-  0: 1 # System
-  1: 1 # Administrator
+users(map:(uint{4}):(enum:(MainAdmin, Admin, Standard, Guest))):
+  0: Admin # System
+  1: Admin # Administrator
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="vocabulary"><a class="header" href="#vocabulary">Vocabulary</a></h1>
 <p>This document introduces all vocabulary related to NightOS;</p>
@@ -2256,7 +2268,7 @@ When a process contacts the <a href="specs/services/system/hydre.html"><code>sys
 </ul>
 <h2 id="command-pipes"><a class="header" href="#command-pipes">Command pipes</a></h2>
 <p>When an application is started from a command, its <a href="specs/applications.html#execution-context">execution context</a> indicates it and the process gets access to several pipes called the <em>command pipes</em>:</p>
-<table><thead><tr><th>Pipe identifier</th><th>Standard pipe name</th><th>Pipe type</th><th>Format</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Pipe identifier</th><th>Standard pipe name</th><th>Pipe type</th><th>Format</th><th>Description</th></tr></thead><tbody>
 <tr><td>CMDIN</td><td>Typed input</td><td>Raw</td><td><em>typed</em></td><td>Data coming either from a command pipe (`</td></tr>
 <tr><td>CMDUSR</td><td>Interactive input</td><td>Message</td><td>UTF-8</td><td>Data coming from a terminal session (e.g. user inputs)</td></tr>
 <tr><td>CMDMSG</td><td>Messages output</td><td>Message</td><td>UTF-8</td><td>Messages to display in the console, which won't be redirected by default</td></tr>
@@ -2264,6 +2276,7 @@ When a process contacts the <a href="specs/services/system/hydre.html"><code>sys
 <tr><td>CMDRAW</td><td>Raw bytes</td><td>Raw</td><td>Raw</td><td>Output data, which will be redirected if an output pipe (<code>&gt;</code>) is used</td></tr>
 <tr><td>CMDOUT</td><td>Typed output</td><td>Raw</td><td><em>typed</em></td><td>Typed output data, which will be used by <a href="specs/shell-scripting.html">shell scripts</a>)</td></tr>
 </tbody></table>
+</div>
 <p>The SC/RC identifiers of these pipes are available in the application's <a href="specs/applications.html#execution-context">execution context</a>.</p>
 <p>The process that launched the command gets the ability to:</p>
 <ul>
@@ -2747,7 +2760,7 @@ If both operands are integers, the result will be an integer, but if at least on
 </ul>
 <h3 id="logical-operators"><a class="header" href="#logical-operators">Logical operators</a></h3>
 <p>Logical operators take two operands and return a boolean:</p>
-<table><thead><tr><th>Symbol</th><th>Name</th><th>Returns <code>true</code> if...</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Symbol</th><th>Name</th><th>Returns <code>true</code> if...</th></tr></thead><tbody>
 <tr><td><code>&amp;&amp;</code></td><td>and</td><td><code>a</code> and <code>b</code> are <code>true</code> booleans</td></tr>
 <tr><td><code>\|\|</code></td><td>or</td><td><code>a</code>, <code>b</code> or both are <code>true</code> booleans</td></tr>
 <tr><td><code>==</code></td><td>equal to</td><td><code>a</code> is equal to <code>b</code></td></tr>
@@ -2757,6 +2770,7 @@ If both operands are integers, the result will be an integer, but if at least on
 <tr><td><code>&gt;=</code></td><td>greater than or equal to</td><td><code>a</code> is greater than or equal to <code>b</code></td></tr>
 <tr><td><code>&lt;=</code></td><td>lower than or equal to</td><td><code>a</code> is lower than or equal to <code>b</code></td></tr>
 </tbody></table>
+</div>
 <p>Finally, there is the <code>!</code> operator, which takes a single operand on its right, and simply reverts a boolean.</p>
 <h3 id="assignment-operators"><a class="header" href="#assignment-operators">Assignment operators</a></h3>
 <p>The neutral assignment operator <code>=</code> can be prefixed by any mathematical, bit-wise or logical operator's symbol(s). The operator's left operand will be the current variable's content, while the right one will be the value on the left of the assignment operator. The result will then be stored in the variable.</p>
@@ -4081,7 +4095,7 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <p>The service then receives the <a href="specs/kernel/signals.html#0x2c-service_client_quitted"><code>SERVICE_CLIENT_QUITTED</code></a> signal.</p>
 <p>If the client terminates brutally (before the connection was properly ended), the client thread receives the <a href="specs/kernel/signals.html#0x2b-service_client_closed"><code>SERVICE_CLIENT_CLOSED</code></a> signal.</p>
 <p>When a client thread receives on these two signals, it is expected to end as soon as possible (though there is no time limit).</p>
-<h2 id="system-services-1"><a class="header" href="#system-services-1">System services</a></h2>
+<h2 id="system-services-2"><a class="header" href="#system-services-2">System services</a></h2>
 <p>System services are run by the system and get access to special <a href="specs/kernel/syscalls.html">system calls</a> and <a href="specs/kernel/signals.html">signals</a> that aren't available otherwise.</p>
 <p>They also have a specific process identifier (PID) to identify them easily.</p>
 <p>You can find the list of all system services in the <a href="specs/services/system/README.html">related directory</a>.</p>
@@ -5913,7 +5927,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><code>0x30</code>: Caller process is not the <a href="specs/kernel/../services/system/process.html"><code>sys::proc</code></a> service.</li>
 <li><code>0x31</code>: Unknown conatiner ID provided</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="integration-services"><a class="header" href="#integration-services">Integration services</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="integration-services-1"><a class="header" href="#integration-services-1">Integration services</a></h1>
 <p>This document lists all <a href="specs/services/integration/../../services.html#types-of-services">integration services</a>, which are services whose methods and notifications follow a convention established by the system itself to permit an integration at different levels.</p>
 <p>An application exposing such a service in its <a href="specs/services/integration/../../applications.html#application-manifest">manifest</a> will automatically be assignable to specific tasks, such as being set as the default desktop environment or file manager.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="specs/services/integration/../../services/system/README.html">system services</a>.</p>
@@ -5986,7 +6000,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <p>The window's state is made of a <em>header</em>, containing 1 bit for each conventional element to get/update (listed below). Each bit must be set if the element is provided, unset otherwise.</p>
 <p>It is followed by the number of custom elements to get/update (2 bytes), and the list of custom elements' identifiers (4 bytes per identifier).</p>
 <p>The header is followed by the value of each element to update, <em>only</em> if the element must be updated.</p>
-<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / Size in bytes</th><th>Content</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Header bit</th><th>Description</th><th>Type / Size in bytes</th><th>Content</th></tr></thead><tbody>
 <tr><td>0</td><td>Title</td><td><a href="specs/services/integration/desktop-environments.html#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>1</td><td>Buttons</td><td><a href="specs/services/integration/desktop-environments.html#buttons">Buttons</a></td><td></td></tr>
 <tr><td>2</td><td>Icon</td><td><a href="specs/services/integration/desktop-environments.html#icons">Icon</a></td><td></td></tr>
@@ -6001,6 +6015,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <tr><td>11</td><td><a href="specs/services/integration/../../../ux/desktop-environment.html#window-display-state">Display state</a></td><td><a href="specs/services/integration/desktop-environments.html#display-state">Display state</a></td><td></td></tr>
 <tr><td>12-31</td><td><em>Future-proof</em></td><td></td><td></td></tr>
 </tbody></table>
+</div>
 <h4 id="delimited-title-strings"><a class="header" href="#delimited-title-strings">Delimited title strings</a></h4>
 <p>Delimited title strings are encoded as <a href="specs/services/integration/../../kernel/data-structures.html#delimited-strings">delimited strings</a>.</p>
 <h4 id="icons"><a class="header" href="#icons">Icons</a></h4>
@@ -6326,11 +6341,12 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <p>Create a popup.</p>
 <p><strong>Arguments:</strong></p>
 <p>Same structure than for a <a href="specs/services/integration/desktop-environments.html#windows-state">window's state</a>, but with the following common elements:</p>
-<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th></tr></thead><tbody>
 <tr><td>0</td><td>Title</td><td><a href="specs/services/integration/desktop-environments.html#delimited-title-strings">String</a></td></tr>
 <tr><td>1</td><td>Icon</td><td><a href="specs/services/integration/desktop-environments.html#icons">Icon</a></td></tr>
 <tr><td>2</td><td>Buttons</td><td><a href="specs/services/integration/desktop-environments.html#buttons">Buttons</a></td></tr>
 </tbody></table>
+</div>
 <p><strong>Return value:</strong></p>
 <ul>
 <li>Popup identifier (8 bytes)</li>
@@ -6392,7 +6408,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <p>Send a music player notificaiton.</p>
 <p><strong>Arguments:</strong></p>
 <p>Same structure than for a <a href="specs/services/integration/desktop-environments.html#windows-state">window's state</a>, but with the following common elements:</p>
-<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
 <tr><td>0</td><td>Track's title</td><td><a href="specs/services/integration/desktop-environments.html#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>1</td><td>Album's title</td><td><a href="specs/services/integration/desktop-environments.html#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>2</td><td>Artist's name</td><td><a href="specs/services/integration/desktop-environments.html#delimited-title-strings">String</a></td><td></td></tr>
@@ -6414,6 +6430,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <tr><td>19</td><td>Track position</td><td>8 bytes</td><td>Track index (4 bytes) ; Tracks in the queue (4 bytes)</td></tr>
 <tr><td>20</td><td>Buttons availibility</td><td>1 byte</td><td>Pause/resume ; Rewind/Fast-forward ; Previous track ; Next track ; Shuffle</td></tr>
 </tbody></table>
+</div>
 <p>The visualizer shows a value from 0 to 255 to indicate the bar eight. Each bar value corresponds to a specific frequency range. The lower frequency bound of each bar can be found with: <code>exponential(i / 1.88) - 1</code>, where <code>i</code> is the bar number, from 0 to 23.</p>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -6443,7 +6460,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <p>Send a video player notificaiton.</p>
 <p><strong>Arguments:</strong></p>
 <p>Same structure than for a <a href="specs/services/integration/desktop-environments.html#windows-state">window's state</a>, but with the following common elements:</p>
-<table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Header bit</th><th>Description</th><th>Type / length in bytes</th><th>Content</th></tr></thead><tbody>
 <tr><td>0</td><td>Video's title</td><td><a href="specs/services/integration/desktop-environments.html#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>1</td><td>Video's author</td><td><a href="specs/services/integration/desktop-environments.html#delimited-title-strings">String</a></td><td></td></tr>
 <tr><td>2</td><td>Video's source</td><td><a href="specs/services/integration/desktop-environments.html#delimited-title-strings">String</a></td><td></td></tr>
@@ -6454,6 +6471,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <tr><td>7</td><td>Video position</td><td>8 bytes</td><td>Video index (4 bytes) ; Videos in the queue (4 bytes)</td></tr>
 <tr><td>8</td><td>Buttons availibility</td><td>1 byte</td><td>Pause/resume ; Rewind/Fast-forward ; Previous track ; Next track ; Shuffle</td></tr>
 </tbody></table>
+</div>
 <p><strong>Return value:</strong></p>
 <ul>
 <li>Notification identifier (8 bytes)</li>
@@ -7322,7 +7340,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="driver-services"><a class="header" href="#driver-services">Driver services</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="driver-services-1"><a class="header" href="#driver-services-1">Driver services</a></h1>
 <p>This document lists all <a href="specs/services/drivers/../../services.html#types-of-services">driver services</a>, which are services whose methods and notifications follow a convention established by the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service to permit interaction with hardware devices.</p>
 <p>An application exposing such a service in its <a href="specs/services/drivers/../../applications.html#application-manifest">manifest</a> will gain the permission to <a href="specs/services/drivers/../system/hw.html#0x1000-register_driver">register itself as a driver</a> through the <a href="specs/services/drivers/../system/hw.html"><code>sys::hw</code></a> service.</p>
 <p>These services are not available directly to the end applications ; they can only be used through <a href="specs/services/drivers/../system/README.html">system services</a>.</p>
@@ -7453,7 +7471,7 @@ If the number of items to get is larger than the number of entries in the direct
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="system-services-2"><a class="header" href="#system-services-2">System services</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="system-services-3"><a class="header" href="#system-services-3">System services</a></h1>
 <p>As NightOS' <a href="specs/services/system/../../kernel/README.html">kernel</a> is not monolithic but a microkernel, it only handles the most fundamental tasks of the system, like memory and processes management, as well as direct hardware communication.</p>
 <p>The vast majority of its features can be found in system <a href="specs/services/system/../../services.html">services</a>, run by the system itself under the <code>sys</code> <a href="specs/services/system/../../applications-libraries.html#application-identifier">DID</a>.</p>
 <p>This splitting implies that most low-level features of the system are documented in the individual services' specifications documents, which you will find here.</p>
@@ -8530,9 +8548,9 @@ If the number of items to get is larger than the number of entries in the direct
 <h3 id="a-note-on-performances"><a class="header" href="#a-note-on-performances">A note on performances</a></h3>
 <p>Although hardware devices' interrupts are notified to the driver through <a href="specs/services/system/../../kernel/ipc.html#methods-and-notifications">service socket notifications</a>, the latency is still minimal as soon as the driver listens to the <a href="specs/services/system/../../kernel/signals.html#0x27-recv_sock_msg"><code>RECV_SOCK_MSG</code></a> signal, which like all signals uses interrupts and so guarantees a very low latency.</p>
 <h2 id="latency-reduction-for-storage-devices"><a class="header" href="#latency-reduction-for-storage-devices">Latency reduction for storage devices</a></h2>
-<h3 id="direct-driver-access-for-a-hrefspecsservicessystemfshtmlsysfsa"><a class="header" href="#direct-driver-access-for-a-hrefspecsservicessystemfshtmlsysfsa">Direct driver access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
+<h3 id="direct-driver-access-for-sysfs"><a class="header" href="#direct-driver-access-for-sysfs">Direct driver access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
 <p>All operations related to storage devices are handled by the <a href="specs/services/system/fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all <a href="specs/services/system/../drivers/storage.html">storage driver services</a>.</p>
-<h3 id="direct-storage-access-for-a-hrefspecsservicessystemfshtmlsysfsa"><a class="header" href="#direct-storage-access-for-a-hrefspecsservicessystemfshtmlsysfsa">Direct storage access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
+<h3 id="direct-storage-access-for-sysfs"><a class="header" href="#direct-storage-access-for-sysfs">Direct storage access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
 <p>In case a specific storage device doesn't require a <a href="specs/services/system/../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware device.</p>
 <h2 id="methods-8"><a class="header" href="#methods-8">Methods</a></h2>
 <h3 id="0x0001-enum_devices"><a class="header" href="#0x0001-enum_devices"><code>0x0001</code> ENUM_DEVICES</a></h3>
@@ -8862,7 +8880,7 @@ System services communicate directly with the kernel and are trusted processes s
 <li><a href="applications/Vortex.html"><em>Vortex</em></a> : Firewall</li>
 <li><a href="applications/Locky.html"><em>Locky</em></a> : System's encryption tool, with the ability to manage encrypted archives and volumes</li>
 </ul>
-<h2 id="system-services-3"><a class="header" href="#system-services-3">System services</a></h2>
+<h2 id="system-services-4"><a class="header" href="#system-services-4">System services</a></h2>
 <p>System services are listed in their own <a href="applications/../specs/services/system/README.html">specifications directory</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="astral"><a class="header" href="#astral">Astral</a></h1>
 <p>Astral is the toolchain required to build NightOS applications. It's a command-line only application.</p>
@@ -9267,31 +9285,42 @@ System services communicate directly with the kernel and are trusted processes s
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
             </nav>
 
         </div>
 
+
+
+
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
+
+
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+
         <script type="text/javascript">
         window.addEventListener('load', function() {
             window.setTimeout(window.print, 100);
         });
         </script>
+
     </body>
 </html>

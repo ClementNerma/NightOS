@@ -21,6 +21,8 @@ When a crash save has been collected for a given application, it is stored in `/
 
 _NOTE:_ Crash saves' intregrity is controlled using the system's [integrity checker](../technical/integrity-checker.md).
 
+All [native applications](../applications/README.md) support crash saves.
+
 ## Crashes detection
 
 ### Invalid shutdown indicator

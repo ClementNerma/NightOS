@@ -60,10 +60,13 @@ Get the thumbnail for a specific item.
 
 The thumbnail should be generated using the [`sys::fsh`](../../services/system/fsh.md) system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.
 
+The thumbnail can be requested to have a specific width and height. The returned thumbnail may not have the correct size, but this will require the system to resize the picture.
+
 **Arguments:**
 
 - Refresh mode (1 byte): `0x00` to get the current thumbnail or a cached one, `0x01` to force generating a new thumbnail for the item
 - [Filesystem path](filesystem-interfaces.md#filesystem-paths)
+- Requested thumbnail width (2 bytes) and height (2 bytes) in pixels, or `0` if no request
 
 **Answer:**
 
@@ -82,10 +85,13 @@ Get the video preview for a specific item.
 
 The preview should be generated using the [`sys::fsh`](../../services/system/fsh.md) system service, which will provide the cached preview (if any) and else ask for a preview buffer, which will be put in the cache if relevant.
 
+The preview can be requested to have a specific width and height. The returned preview may not have the correct size, but this will require the system to resize the video.
+
 **Arguments:**
 
 - Refresh mode (1 byte): `0x00` to get the current preview or a cached one, `0x01` to force generating a new preview for the item
 - [Filesystem path](filesystem-interfaces.md#filesystem-paths)
+- Requested preview width (2 bytes) and height (2 bytes) in pixels, or `0` if no request
 
 **Answer:**
 

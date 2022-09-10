@@ -4320,6 +4320,7 @@ hardw</p>
 <li><a href="specs/kernel/data-structures.html#options">Options</a></li>
 <li><a href="specs/kernel/data-structures.html#fallible-results">Fallible results</a></li>
 <li><a href="specs/kernel/data-structures.html#bitmap-images">Bitmap images</a></li>
+<li><a href="specs/kernel/data-structures.html#bitmap-videos">Bitmap videos</a></li>
 <li><a href="specs/kernel/data-structures.html#packed-linked-lists">Packed linked lists</a>
 <ul>
 <li><a href="specs/kernel/data-structures.html#caracteristics">Caracteristics</a></li>
@@ -4387,6 +4388,22 @@ hardw</p>
 <p>As shown above, if the number of colors is set to <code>0</code> for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for <code>256 power &lt;number in the header&gt;</code> different colors.</p>
 <p>Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.</p>
 <p>The size of pixel list can be calculated as <code>IW * IH * (NR + NG + NB + NA)</code> bytes. Add another 8 bytes for the header.</p>
+<h2 id="bitmap-videos"><a class="header" href="#bitmap-videos">Bitmap videos</a></h2>
+<p>Bitmap videos are represented as a <em>header</em> and a <em>frame list</em>.</p>
+<p>The header is composed as a suite of 16 bytes:</p>
+<ul>
+<li>Frames width (IW), in pixels (2 bytes)</li>
+<li>Frames height (IH), in pixels (2 bytes)</li>
+<li>Number of frames per second (1 byte)</li>
+<li>Number of frames (4 bytes)</li>
+<li>Number of colors (power of 256) for the red channel (NR), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the green channel (NG), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the blue channel (NB), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the alpha channel (NA), <code>0</code> if unused (1 byte)</li>
+<li><em>Future-proof</em> (3 bytes)</li>
+</ul>
+<p>Each frame is a <a href="specs/kernel/data-structures.html#bitmap-images">bitmap image</a> without the header.</p>
+<p>All frames will inherit the informations stored in the video's header (width, height, color channels).</p>
 <h2 id="packed-linked-lists"><a class="header" href="#packed-linked-lists">Packed linked lists</a></h2>
 <p><em>Packed linked lists</em> (PLL) are linked lists used for items whose size is both small (usually &lt;= 32 bytes) and fixed for all items.</p>
 <p>It uses a system of same-size entries, each containing a micro bump allocator.</p>
@@ -6651,6 +6668,7 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <li><a href="specs/services/integration/file-managers.html#0x1000-open_item"><code>0x1000</code> OPEN_ITEM</a></li>
 <li><a href="specs/services/integration/file-managers.html#0x1001-is_item_openable"><code>0x1001</code> IS_ITEM_OPENABLE</a></li>
 <li><a href="specs/services/integration/file-managers.html#0x2000-get_thumbnail"><code>0x2000</code> GET_THUMBNAIL</a></li>
+<li><a href="specs/services/integration/file-managers.html#0x2100-get_video_preview"><code>0x2100</code> GET_VIDEO_PREVIEW</a></li>
 <li><a href="specs/services/integration/file-managers.html#0xa000-context_menu"><code>0xA000</code> CONTEXT_MENU</a></li>
 </ul>
 </li>
@@ -6695,20 +6713,43 @@ If the current process is a service, a <a href="specs/kernel/signals.html#0x2d-s
 <h3 id="0x2000-get_thumbnail"><a class="header" href="#0x2000-get_thumbnail"><code>0x2000</code> GET_THUMBNAIL</a></h3>
 <p>Get the thumbnail for a specific item.</p>
 <p>The thumbnail should be generated using the <a href="specs/services/integration/../../services/system/fsh.html"><code>sys::fsh</code></a> system service, which will provide the cached thumbnail (if any) and else ask for a thumbnail buffer, which will be put in the cache if relevant.</p>
+<p>The thumbnail can be requested to have a specific width and height. The returned thumbnail may not have the correct size, but this will require the system to resize the picture.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Refresh mode (1 byte): <code>0x00</code> to get the current thumbnail or a cached one, <code>0x01</code> to force generating a new thumbnail for the item</li>
 <li><a href="specs/services/integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a></li>
+<li>Requested thumbnail width (2 bytes) and height (2 bytes) in pixels, or <code>0</code> if no request</li>
 </ul>
 <p><strong>Answer:</strong></p>
 <ul>
-<li><a href="specs/services/integration/../../filesystem.html#temporary-feid">Temporary FEID</a> to the thumbnail</li>
+<li>Thumbnail as a <a href="specs/services/integration/../../kernel/data-structures.html#bitmap-images">bitmap image</a></li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x3000</code>: Invalid FMP</li>
 <li><code>0x3001</code>: Could not find the provided item</li>
 <li><code>0x4000</code>: The thumbnail generator failed</li>
+<li><code>0x4FFF</code>: Unspecified error</li>
+</ul>
+<h3 id="0x2100-get_video_preview"><a class="header" href="#0x2100-get_video_preview"><code>0x2100</code> GET_VIDEO_PREVIEW</a></h3>
+<p>Get the video preview for a specific item.</p>
+<p>The preview should be generated using the <a href="specs/services/integration/../../services/system/fsh.html"><code>sys::fsh</code></a> system service, which will provide the cached preview (if any) and else ask for a preview buffer, which will be put in the cache if relevant.</p>
+<p>The preview can be requested to have a specific width and height. The returned preview may not have the correct size, but this will require the system to resize the video.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Refresh mode (1 byte): <code>0x00</code> to get the current preview or a cached one, <code>0x01</code> to force generating a new preview for the item</li>
+<li><a href="specs/services/integration/filesystem-interfaces.html#filesystem-paths">Filesystem path</a></li>
+<li>Requested preview width (2 bytes) and height (2 bytes) in pixels, or <code>0</code> if no request</li>
+</ul>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>Preview as a <a href="specs/services/integration/../../kernel/data-structures.html#bitmap-videos">bitmap video</a></li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x3000</code>: Invalid FMP</li>
+<li><code>0x3001</code>: Could not find the provided item</li>
+<li><code>0x4000</code>: The preview generator failed</li>
 <li><code>0x4FFF</code>: Unspecified error</li>
 </ul>
 <h3 id="0xa000-context_menu"><a class="header" href="#0xa000-context_menu"><code>0xA000</code> CONTEXT_MENU</a></h3>
@@ -8409,6 +8450,50 @@ If the number of items to get is larger than the number of entries in the direct
 <p><strong>Return value:</strong></p>
 <ul>
 <li>Thumbnail <a href="specs/services/system/../../filesystem.html#temporary-feid">TFEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x1000</code>: Invalid bitmap data</li>
+<li><code>0x3000</code>: Client is not a <a href="specs/services/system/../../services/integration/file-managers.html">file manager service</a></li>
+<li><code>0x3001</code>: Unknown FSID</li>
+<li><code>0x3002</code>: Unknown FEID</li>
+</ul>
+<h3 id="0x1100-check_item_preview_cache"><a class="header" href="#0x1100-check_item_preview_cache"><code>0x1100</code> CHECK_ITEM_PREVIEW_CACHE</a></h3>
+<p>Check if a cached preview exists for a given filesystem item to determine if another should be generated or not.</p>
+<p>The cache policy is determined using internal criterias.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Presence (1 byte): <code>0x01</code> if a preview is present, <code>0x00</code> else</li>
+</ul>
+<p>If a preview is present, this is followed by:</p>
+<ul>
+<li>Preview caching <a href="specs/services/system/../../kernel/data-structures.html#timestamps">timestamp</a> (8 bytes)</li>
+<li>Preview <a href="specs/services/system/../../filesystem.html#temporary-feid">TFEID</a> (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<ul>
+<li><code>0x3000</code>: Client is not a <a href="specs/services/system/../../services/integration/file-managers.html">file manager service</a></li>
+<li><code>0x3001</code>: Unknown FSID</li>
+<li><code>0x3002</code>: Unknown FEID</li>
+</ul>
+<h3 id="0x1101-cache_item_preview"><a class="header" href="#0x1101-cache_item_preview"><code>0x1101</code> CACHE_ITEM_PREVIEW</a></h3>
+<p>Write a filesystem item's preview in the cache.</p>
+<p>If a preview already exists in cache, it will be replaced by the new one.</p>
+<p>The cache policy is determined using internal criterias.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><a href="specs/services/system/../../filesystem.html#filesystem-unique-identifier">FSID</a> (8 bytes)</li>
+<li><a href="specs/services/system/../../filesystem.html#element-unique-identifier">FEID</a> (8 bytes)</li>
+<li>Preview as a <a href="specs/services/system/../../kernel/data-structures.html#bitmap-images">bitmap image</a></li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Preview <a href="specs/services/system/../../filesystem.html#temporary-feid">TFEID</a> (8 bytes)</li>
 </ul>
 <p><strong>Errors:</strong></p>
 <ul>

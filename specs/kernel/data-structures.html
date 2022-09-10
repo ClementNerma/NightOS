@@ -156,6 +156,7 @@
 <li><a href="#options">Options</a></li>
 <li><a href="#fallible-results">Fallible results</a></li>
 <li><a href="#bitmap-images">Bitmap images</a></li>
+<li><a href="#bitmap-videos">Bitmap videos</a></li>
 <li><a href="#packed-linked-lists">Packed linked lists</a>
 <ul>
 <li><a href="#caracteristics">Caracteristics</a></li>
@@ -223,6 +224,22 @@
 <p>As shown above, if the number of colors is set to <code>0</code> for a specific channel in the header, it must not be contained in the pixel's content. The number of bytes used for each channel of a pixel is equal to the number provided for this specific channel in the header, allowing for <code>256 power &lt;number in the header&gt;</code> different colors.</p>
 <p>Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.</p>
 <p>The size of pixel list can be calculated as <code>IW * IH * (NR + NG + NB + NA)</code> bytes. Add another 8 bytes for the header.</p>
+<h2 id="bitmap-videos"><a class="header" href="#bitmap-videos">Bitmap videos</a></h2>
+<p>Bitmap videos are represented as a <em>header</em> and a <em>frame list</em>.</p>
+<p>The header is composed as a suite of 16 bytes:</p>
+<ul>
+<li>Frames width (IW), in pixels (2 bytes)</li>
+<li>Frames height (IH), in pixels (2 bytes)</li>
+<li>Number of frames per second (1 byte)</li>
+<li>Number of frames (4 bytes)</li>
+<li>Number of colors (power of 256) for the red channel (NR), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the green channel (NG), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the blue channel (NB), <code>0</code> if unused (1 byte)</li>
+<li>Number of colors (power of 256) for the alpha channel (NA), <code>0</code> if unused (1 byte)</li>
+<li><em>Future-proof</em> (3 bytes)</li>
+</ul>
+<p>Each frame is a <a href="#bitmap-images">bitmap image</a> without the header.</p>
+<p>All frames will inherit the informations stored in the video's header (width, height, color channels).</p>
 <h2 id="packed-linked-lists"><a class="header" href="#packed-linked-lists">Packed linked lists</a></h2>
 <p><em>Packed linked lists</em> (PLL) are linked lists used for items whose size is both small (usually &lt;= 32 bytes) and fixed for all items.</p>
 <p>It uses a system of same-size entries, each containing a micro bump allocator.</p>

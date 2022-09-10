@@ -4,6 +4,7 @@
   - [`0x1000` OPEN_ITEM](#0x1000-open_item)
   - [`0x1001` IS_ITEM_OPENABLE](#0x1001-is_item_openable)
   - [`0x2000` GET_THUMBNAIL](#0x2000-get_thumbnail)
+  - [`0x2100` GET_VIDEO_PREVIEW](#0x2100-get_video_preview)
   - [`0xA000` CONTEXT_MENU](#0xa000-context_menu)
 
 A file manager is an application which can manage the filesystem's content. It does not have any restriction on its user interface, but needs to expose an integration service with the standardized methods and notifications described in this document.
@@ -66,7 +67,7 @@ The thumbnail should be generated using the [`sys::fsh`](../../services/system/f
 
 **Answer:**
 
-- [Temporary FEID](../../filesystem.md#temporary-feid) to the thumbnail
+- Thumbnail as a [bitmap image](../../kernel/data-structures.md#bitmap-images)
 
 **Errors:**
 
@@ -88,7 +89,7 @@ The preview should be generated using the [`sys::fsh`](../../services/system/fsh
 
 **Answer:**
 
-- [Temporary FEID](../../filesystem.md#temporary-feid) to the preview
+- Preview as a [bitmap video](../../kernel/data-structures.md#bitmap-videos)
 
 **Errors:**
 

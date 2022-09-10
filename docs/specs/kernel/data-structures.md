@@ -11,6 +11,7 @@ All contiguous data structures are made such as it is easy to delimit them by co
 - [Options](#options)
 - [Fallible results](#fallible-results)
 - [Bitmap images](#bitmap-images)
+- [Bitmap videos](#bitmap-videos)
 - [Packed linked lists](#packed-linked-lists)
   - [Caracteristics](#caracteristics)
   - [Structure in memory](#structure-in-memory)
@@ -92,6 +93,26 @@ As shown above, if the number of colors is set to `0` for a specific channel in 
 Pixels are listed from the top left corner of the image to the bottom right corner. They are always square.
 
 The size of pixel list can be calculated as `IW * IH * (NR + NG + NB + NA)` bytes. Add another 8 bytes for the header.
+
+## Bitmap videos
+
+Bitmap videos are represented as a _header_ and a _frame list_.
+
+The header is composed as a suite of 16 bytes:
+
+- Frames width (IW), in pixels (2 bytes)
+- Frames height (IH), in pixels (2 bytes)
+- Number of frames per second (1 byte)
+- Number of frames (4 bytes)
+- Number of colors (power of 256) for the red channel (NR), `0` if unused (1 byte)
+- Number of colors (power of 256) for the green channel (NG), `0` if unused (1 byte)
+- Number of colors (power of 256) for the blue channel (NB), `0` if unused (1 byte)
+- Number of colors (power of 256) for the alpha channel (NA), `0` if unused (1 byte)
+- _Future-proof_ (3 bytes)
+
+Each frame is a [bitmap image](#bitmap-images) without the header.
+
+All frames will inherit the informations stored in the video's header (width, height, color channels).
 
 ## Packed linked lists
 

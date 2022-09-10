@@ -116,3 +116,54 @@ The cache policy is determined using internal criterias.
 - `0x3000`: Client is not a [file manager service](../../services/integration/file-managers.md)
 - `0x3001`: Unknown FSID
 - `0x3002`: Unknown FEID
+
+### `0x1100` CHECK_ITEM_PREVIEW_CACHE
+
+Check if a cached preview exists for a given filesystem item to determine if another should be generated or not.
+
+The cache policy is determined using internal criterias.
+
+**Arguments:**
+
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
+
+**Return value:**
+
+- Presence (1 byte): `0x01` if a preview is present, `0x00` else
+
+If a preview is present, this is followed by:
+
+- Preview caching [timestamp](../../kernel/data-structures.md#timestamps) (8 bytes)
+- Preview [TFEID](../../filesystem.md#temporary-feid) (8 bytes)
+
+**Errors:**
+
+- `0x3000`: Client is not a [file manager service](../../services/integration/file-managers.md)
+- `0x3001`: Unknown FSID
+- `0x3002`: Unknown FEID
+
+### `0x1101` CACHE_ITEM_PREVIEW
+
+Write a filesystem item's preview in the cache.
+
+If a preview already exists in cache, it will be replaced by the new one.
+
+The cache policy is determined using internal criterias.
+
+**Arguments:**
+
+- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
+- [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
+- Preview as a [bitmap image](../../kernel/data-structures.md#bitmap-images)
+
+**Return value:**
+
+- Preview [TFEID](../../filesystem.md#temporary-feid) (8 bytes)
+
+**Errors:**
+
+- `0x1000`: Invalid bitmap data
+- `0x3000`: Client is not a [file manager service](../../services/integration/file-managers.md)
+- `0x3001`: Unknown FSID
+- `0x3002`: Unknown FEID

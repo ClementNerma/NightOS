@@ -75,6 +75,28 @@ The thumbnail should be generated using the [`sys::fsh`](../../services/system/f
 - `0x4000`: The thumbnail generator failed
 - `0x4FFF`: Unspecified error
 
+### `0x2100` GET_VIDEO_PREVIEW
+
+Get the video preview for a specific item.
+
+The preview should be generated using the [`sys::fsh`](../../services/system/fsh.md) system service, which will provide the cached preview (if any) and else ask for a preview buffer, which will be put in the cache if relevant.
+
+**Arguments:**
+
+- Refresh mode (1 byte): `0x00` to get the current preview or a cached one, `0x01` to force generating a new preview for the item
+- [Filesystem path](filesystem-interfaces.md#filesystem-paths)
+
+**Answer:**
+
+- [Temporary FEID](../../filesystem.md#temporary-feid) to the preview
+
+**Errors:**
+
+- `0x3000`: Invalid FMP
+- `0x3001`: Could not find the provided item
+- `0x4000`: The preview generator failed
+- `0x4FFF`: Unspecified error
+
 ### `0xA000` CONTEXT_MENU
 
 Generate a context menu for a specific filesystem item. Used by the DEA.

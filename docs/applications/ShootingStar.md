@@ -6,6 +6,8 @@ ShootingStar is the default pictures viewer and editor of NightOS. Edition is li
 
 ShootingStar exposes the `sys::shootingstar` library to manipulate, perform basic manipulations and most of all render different image formats.
 
+It can also be used by [file managers](../specs/services/integration/file-managers.md) to generate [thumbnails](../specs/services/integration/file-managers.md#0x2000-getthumbnail) and [video previews](../specs/services/integration/file-managers.md#0x2100-getvideopreview).
+
 ## Supported formats
 
 - Joint Photographic Experts Group (`.jpg`, `.jpeg`)

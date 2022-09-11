@@ -15,6 +15,7 @@ For more informations about low-level concepts these documents refer to, you can
 - [Vocabulary](vocabulary.md) - the list of NightOS-related terms
 - [The shell](shell.md) - how [Hydre](../technical/shell.md) works
 - [Shell scripting](shell-scripting.md) - [Hydre](../technical/shell.md)'s scripting language
+- [Crash saves](crash-saves.md) - what are crash saves and how they are handled
 - [Kernel](kernel/README.md) - complete specifications of the kernel
 - [Services](services.md) - specifications about services work and behave
 

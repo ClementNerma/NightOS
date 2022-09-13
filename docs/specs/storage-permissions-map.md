@@ -30,7 +30,7 @@ Each page is made of a contiguous header (data block) made of the following:
 Each page contains a set of entries, which may be split on the disk. An entry is made of the following:
 
 - Address of the page referencing this entry (8 bytes)
-- Entry index in the page referencing it (8 bytes)
+- [FEID](filesystem.md#filesystem-unique-identifier) of the item this entry is for (8 bytes)
 - Number of entities described in the entry (8 bytes)
 - For each entity:
   - Entity type (1 byte):

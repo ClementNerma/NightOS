@@ -4,7 +4,13 @@ The **Storage Permissions Map**, or **SPM**, is a non-contiguous data structure 
 
 It may be located anywhere in the filesystem.
 
-## Header
+## How does it work
+
+Each item (identified by its [FEID](filesystem.md#element-unique-identifier))
+
+## Structure
+
+### Header
 
 The SPM's header is a contiguous block located at its beginning.
 
@@ -14,7 +20,7 @@ It is made of the following:
 - Address of the first page (8 bytes) - `0` if none
 - Address of the last page (8 bytes) - `0` if none
 
-## Pages' header
+### Pages' header
 
 Each page is made of a contiguous header (data block) made of the following:
 
@@ -25,12 +31,12 @@ Each page is made of a contiguous header (data block) made of the following:
 - For each entry:
   - Address of the entry (8 bytes)
 
-## Entries
+### Entries
 
 Each page contains a set of entries, which may be split on the disk. An entry is made of the following:
 
 - Address of the page referencing this entry (8 bytes)
-- [FEID](filesystem.md#filesystem-unique-identifier) of the item this entry is for (8 bytes)
+- [FEID](filesystem.md#element-unique-identifier) of the item this entry is for (8 bytes)
 - Number of entities described in the entry (8 bytes)
 - For each entity:
   - Entity type (1 byte):
@@ -52,7 +58,7 @@ An item's owner will have all of these permissions set by default.
 
 An entry's content must be contiguous ; if it grows too large to fit inside its allocated space when updated, it must be moved somewhere else.
 
-## Permission levels
+### Permission levels
 
 A _permission level_ is a 2-bit value which can either be:
 
@@ -61,7 +67,7 @@ A _permission level_ is a 2-bit value which can either be:
 - `0b10`: allow for this item, recursively
 - `0b11`: allow for this item but only for content owned by the referred entity, recursively
 
-## File table pointer
+### File table pointer
 
 Unless a filesystem does not support it, nor natively or through the use of extended attributes, each file and directory's entry must contain the address of its entry in the SPM, with `0` indicating no entry exists for it.
 

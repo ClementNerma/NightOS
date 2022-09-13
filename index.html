@@ -151,6 +151,12 @@
 <h2 id="what-another-os-why"><a class="header" href="#what-another-os-why">What? Another O.S.? Why?</a></h2>
 <p>The problem with current OSes like Windows, Linux or MacOS is they were built on bad roots. At the time they were created, security wasn't a concern like today, and computers weren't nearly as powerful as they are now. Which means a lot of things we have to deal with today in order to maintain a good level of security or performance isn't met at all with these systems, because they can't just be rewritten from scratch or break compatibility with older pieces of software.</p>
 <p>NightOS, on its side, starts from a blank page. There is no compatibility to maintain on the software level, and everything is designed from the start to be future-proof, meaning it will be easy to add new security features for instance, without breaking any software compatibility.</p>
+<h2 id="what-nightos-isnt"><a class="header" href="#what-nightos-isnt">What NightOS isn't</a></h2>
+<p>Unlike other operating systems such as Linux which are able to run on a very wide variety of devices, the goal of NightOS is not to be as flexible as this would require to make some big compromises and hugely complexify the system. Here is a list of things NightOS won't do:</p>
+<ul>
+<li>Running on embedded devices</li>
+<li>Running on multi-CPU computers (although this decision might change in the future)</li>
+</ul>
 <h2 id="whats-the-projects-structure"><a class="header" href="#whats-the-projects-structure">What's the project's structure?</a></h2>
 <p>The project is composed of three distinct parts: the kernel, the system, and the desktop environment.</p>
 <p>The first one is the part that allows the software to access the hardware, like writing files to the disk or making network requests. It's a microkernel, meaning it's easier to maintain and has a reduced attack surface for potential security issues than a monolithic kernel like Linux.

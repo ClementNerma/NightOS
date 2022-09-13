@@ -300,7 +300,7 @@ The associated RC and SC are immediatly closed.</p>
 <li>Connection's unique request ID (8 bytes)</li>
 </ul>
 <h3 id="0x33-read_backed_ams"><a class="header" href="#0x33-read_backed_ams"><code>0x33</code> READ_BACKED_AMS</a></h3>
-<p>Sent to a process when a <a href="syscalls.html#0x33-backed_ams">signal-backed</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is accessed in read mode.</p>
+<p>Sent to a process when a <a href="syscalls.html#0x41-backed_ams">signal-backed</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is accessed in read mode.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>AMS ID (8 bytes)</li>
@@ -319,7 +319,7 @@ The associated RC and SC are immediatly closed.</p>
 </li>
 </ul>
 <h3 id="0x34-write_backed_ams"><a class="header" href="#0x34-write_backed_ams"><code>0x34</code> WRITE_BACKED_AMS</a></h3>
-<p>Sent to a process when a <a href="syscalls.html#0x33-backed_ams">signal-backed</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is accessed in write mode.</p>
+<p>Sent to a process when a <a href="syscalls.html#0x41-backed_ams">signal-backed</a> <a href="memory.html#abstract-memory-segments">abstract memory segment (AMS)</a> is accessed in write mode.</p>
 <p><strong>Datafield:</strong></p>
 <ul>
 <li>AMS ID (8 bytes)</li>
@@ -357,13 +357,13 @@ The associated RC and SC are immediatly closed.</p>
 <ul>
 <li>Unsharing type (1 byte):
 <ul>
-<li><code>0x00</code> if the shared memory was unshared properly using the <a href="syscalls.html#0x36-unshare_ams">UNSHARE_AMS</a> syscall</li>
+<li><code>0x00</code> if the shared memory was unshared properly using the <a href="syscalls.html#0x44-unshare_ams">UNSHARE_AMS</a> syscall</li>
 <li><code>0x01</code> if the other process brutally terminated</li>
 </ul>
 </li>
 </ul>
 <h3 id="0x44-suspend"><a class="header" href="#0x44-suspend"><code>0x44</code> SUSPEND</a></h3>
-<p>Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the <a href="syscalls.html#0x44-suspend"><code>SUSPEND</code></a> syscall.</p>
+<p>Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the <a href="syscalls.html#0x54-suspend"><code>SUSPEND</code></a> syscall.</p>
 <h3 id="0x45-will_suspend"><a class="header" href="#0x45-will_suspend"><code>0x45</code> WILL_SUSPEND</a></h3>
 <p>Sent when the process is asked to suspend. If it is not suspended after the provided delay, the process is suspended.</p>
 <p><strong>Datafield:</strong></p>
@@ -377,7 +377,7 @@ The associated RC and SC are immediatly closed.</p>
 <li>Suspension duration, in microseconds (8 bytes)</li>
 </ul>
 <h3 id="0x4e-terminate"><a class="header" href="#0x4e-terminate"><code>0x4E</code> TERMINATE</a></h3>
-<p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="syscalls.html#0x4f-exit"><code>EXIT</code></a> syscall).</p>
+<p>Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the <a href="syscalls.html#0x5f-exit"><code>EXIT</code></a> syscall).</p>
 <h3 id="0x4f-will_terminate"><a class="header" href="#0x4f-will_terminate"><code>0x4F</code> WILL_TERMINATE</a></h3>
 <p>Sent when the process is asked to terminate. If it does not terminate by itself before the provided delay, the process is killed.</p>
 <p>If no handler is registered for this signal, it will kill the process when received.</p>

@@ -232,14 +232,14 @@ Their length is determined when the message is sent which, coupled to <a href="#
 <li>There is no pipe buffer to manage which means all the data can be sent at once</li>
 </ul>
 <p>Its main disadvantage being that all data is shared at once, so there is no synchronization or &quot;asynchronous sending&quot; mechanism, which is the purpose of pipes.</p>
-<p>It works by asking the kernel to share the memory through the <a href="syscalls.html#0x34-share_ams"><code>SHARE_AMS</code></a> syscall, the target process receiving the <a href="signals.html#0x35-recv_shared_ams"><code>RECV_SHARED_AMS</code></a> signal.</p>
+<p>It works by asking the kernel to share the memory through the <a href="syscalls.html#0x42-share_ams"><code>SHARE_AMS</code></a> syscall, the target process receiving the <a href="signals.html#0x35-recv_shared_ams"><code>RECV_SHARED_AMS</code></a> signal.</p>
 <p>There are two types of sharing:</p>
 <ul>
 <li><em>Mutual</em> sharing allows both the sharer and the receiver processes to access the shared memory ;</li>
 <li><em>Exclusive</em> sharing unmaps the shared memory from the sharer and only allows the receiver process to access it</li>
 </ul>
 <p>Exclusive mode has several advantages: the sender process to not have to care about managing this memory and avoid overwriting it by accident, but it also ensures the receiving process that the sender will not perform malicious modifications on the shared buffer while the data is processed on its side.</p>
-<p>Mutual memory sharing can be stopped using the <a href="syscalls.html#0x36-unshare_ams"><code>UNSHARE_AMS</code></a> syscall, while exclusive sharing are left to the receiver process.</p>
+<p>Mutual memory sharing can be stopped using the <a href="syscalls.html#0x44-unshare_ams"><code>UNSHARE_AMS</code></a> syscall, while exclusive sharing are left to the receiver process.</p>
 
                     </main>
 

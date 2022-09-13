@@ -197,16 +197,16 @@ hardw</p>
 <h2 id="inputoutput-ports"><a class="header" href="#inputoutput-ports">Input/output ports</a></h2>
 <p>The kernel first detects the I/O ports used by each device, and maps it to the device's <a href="#kernel-device-identifier">KDI</a>.</p>
 <p>They are uni-directionals and as such are split in two categories: <em>input</em> ports and <em>output</em> ports.</p>
-<p>Input ports are used by devices to transmit informations to the kernel. When this happens, the data is put on a stack, and <a href="#drivers">drivers</a> can then retrieve it using the <a href="syscalls.html#0x60-read_io_port"><code>READ_IO_PORT</code></a> system call.</p>
-<p>Output ports are used by <a href="#drivers">drivers</a> to transmit informations to devices, using the <a href="syscalls.html#0x61-write_io_port"><code>WRITE_IO_PORT</code></a> system call.</p>
+<p>Input ports are used by devices to transmit informations to the kernel. When this happens, the data is put on a stack, and <a href="#drivers">drivers</a> can then retrieve it using the <a href="syscalls.html#0x70-read_io_port"><code>READ_IO_PORT</code></a> system call.</p>
+<p>Output ports are used by <a href="#drivers">drivers</a> to transmit informations to devices, using the <a href="syscalls.html#0x71-write_io_port"><code>WRITE_IO_PORT</code></a> system call.</p>
 <h3 id="io-ports-identifiers"><a class="header" href="#io-ports-identifiers">I/O ports identifiers</a></h3>
 <p>I/O ports are accessed using <em>relative identifiers</em>, which corresponds to the <em>nth</em> port of the physical device, meaning it starts to <code>0</code> and ends to <code>&lt;number of ports in the device&gt; - 1</code>. The kernel transparently translates the relative identifier to the real port number.</p>
 <p>The association with the real port number is transparently performed by the kernel.</p>
 <h2 id="drivers"><a class="header" href="#drivers">Drivers</a></h2>
-<p>A <em>driver</em> is a process which can directly communicate with hardware devices using <a href="syscalls.html#0x62-device_interrupt">the dedicated system calls</a>.</p>
+<p>A <em>driver</em> is a process which can directly communicate with hardware devices using <a href="syscalls.html#0x72-device_interrupt">the dedicated system calls</a>.</p>
 <p>They communicate with external processes through the <a href="../services/system/hw.html"><code>sys::hw</code></a> system service, or <a href="../services/system/fs.html"><code>sys::fs</code></a> when <a href="../services/system/hw.html#direct-driver-access-for-sysfs">direct driver access</a> is possible.</p>
 <p>You can find more about how drivers work in <a href="../services/system/hw.html#drivers">this section</a>.</p>
-<p>Direct communication with device hardwares is made through <a href="syscalls.html#0x62-device_interrupt">system calls</a>.</p>
+<p>Direct communication with device hardwares is made through <a href="syscalls.html#0x72-device_interrupt">system calls</a>.</p>
 <p>The <a href="../services/system/hw.html"><code>sys::hw</code></a> service is considered as a driver for all devices.</p>
 <h2 id="kernel-communication"><a class="header" href="#kernel-communication">Kernel communication</a></h2>
 <p>The kernel does not identify devices, as this task is relegated to the <a href="../services/system/hw.html"><code>sys::hw</code></a> service. In order to communicate with hardware devices, only the <a href="#connection-interface-identifier">CII</a> is provided.</p>

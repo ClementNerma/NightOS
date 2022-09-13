@@ -2,9 +2,9 @@ name: docs
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   CARGO_TERM_COLOR: always
@@ -13,30 +13,33 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3
         with:
           persist-credentials: false
 
-      - name: Cache Cargo dependencies
-        uses: actions/cache@v2.1.4
-        with:
-          path: /usr/share/rust
-          key: ${{ runner.OS }}-cargo-cache
-
       - name: Get "broken-md-links" tool
-        run: cargo install broken-md-links
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: ClementNerma/broken-md-links
+          latest: true
+          fileName: broken-md-links-linux-x86_64-musl.zip
 
-      - name: Get "mdBook" tool
-        run: cargo install mdbook
+      - run: 7z x broken-md-links-linux-x86_64-musl.zip
+      - run: chmod +x broken-md-links
 
       - name: Look for broken markdown links
-        run: broken-md-links ${GITHUB_WORKSPACE}/docs --recursive
+        run: ./broken-md-links ${GITHUB_WORKSPACE}/docs --recursive
+
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v1
+        with:
+          mdbook-version: latest
 
       - name: Build the docs
         run: mdbook build
 
       - name: Deploy the docs
-        uses: JamesIves/github-pages-deploy-action@4.1.0
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: book

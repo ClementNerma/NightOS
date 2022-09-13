@@ -95,6 +95,7 @@ System calls' code are categorized as follows:
 - `0x40` to `0x4F`: [AMS](memory.md#abstract-memory-segments) management
 - `0x50` to `0x5F`: processes management
 - `0x60` to `0x6F`: threads management
+- `0x70` to `0x7F`: hardware interaction
 - `0xA0` to `0xAF`: applications-related syscalls
 - `0xD0` to `0xDF`: reserved to system services
 

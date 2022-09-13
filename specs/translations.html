@@ -1,0 +1,394 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Translations - NightOS documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Design and specification documents for NightOS">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../FOREWORD.html"><strong aria-hidden="true">1.</strong> Foreword</a></li><li class="chapter-item expanded "><a href="../FAQ.html"><strong aria-hidden="true">2.</strong> Frequently-asked questions</a></li><li class="chapter-item expanded "><a href="../project/index.html"><strong aria-hidden="true">3.</strong> Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../project/roadmap.html"><strong aria-hidden="true">3.1.</strong> Roadmap</a></li><li class="chapter-item expanded "><a href="../project/development.html"><strong aria-hidden="true">3.2.</strong> Development</a></li><li class="chapter-item expanded "><a href="../project/hw-requirements.html"><strong aria-hidden="true">3.3.</strong> Hardware requirements</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/applications.html"><strong aria-hidden="true">4.1.</strong> What are applications?</a></li><li class="chapter-item expanded "><a href="../concepts/libraries.html"><strong aria-hidden="true">4.2.</strong> What are libraries?</a></li><li class="chapter-item expanded "><a href="../concepts/users.html"><strong aria-hidden="true">4.3.</strong> What are users?</a></li></ol></li><li class="chapter-item expanded "><a href="../features/index.html"><strong aria-hidden="true">5.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../features/balancer.html"><strong aria-hidden="true">5.1.</strong> The balancer</a></li><li class="chapter-item expanded "><a href="../features/crash-saves.html"><strong aria-hidden="true">5.2.</strong> Crash saves</a></li><li class="chapter-item expanded "><a href="../features/domains.html"><strong aria-hidden="true">5.3.</strong> Domains</a></li><li class="chapter-item expanded "><a href="../features/encryption.html"><strong aria-hidden="true">5.4.</strong> Encryption</a></li><li class="chapter-item expanded "><a href="../features/freeze-prevention.html"><strong aria-hidden="true">5.5.</strong> Freeze-prevention system</a></li><li class="chapter-item expanded "><a href="../features/parental-control.html"><strong aria-hidden="true">5.6.</strong> Parental control</a></li><li class="chapter-item expanded "><a href="../features/sandboxes.html"><strong aria-hidden="true">5.7.</strong> Sandboxes</a></li><li class="chapter-item expanded "><a href="../features/synchronization.html"><strong aria-hidden="true">5.8.</strong> Synchronization</a></li></ol></li><li class="chapter-item expanded "><a href="../technical/index.html"><strong aria-hidden="true">6.</strong> Technical</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../technical/overview.html"><strong aria-hidden="true">6.1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="../technical/controller.html"><strong aria-hidden="true">6.2.</strong> The controller</a></li><li class="chapter-item expanded "><a href="../technical/dev-mode.html"><strong aria-hidden="true">6.3.</strong> Developer mode</a></li><li class="chapter-item expanded "><a href="../technical/devices.html"><strong aria-hidden="true">6.4.</strong> Devices</a></li><li class="chapter-item expanded "><a href="../technical/file-formats.html"><strong aria-hidden="true">6.5.</strong> File formats</a></li><li class="chapter-item expanded "><a href="../technical/integrity-checker.html"><strong aria-hidden="true">6.6.</strong> Integrity checker</a></li><li class="chapter-item expanded "><a href="../technical/io-manager.html"><strong aria-hidden="true">6.7.</strong> I/O manager</a></li><li class="chapter-item expanded "><a href="../technical/multi-platform.html"><strong aria-hidden="true">6.8.</strong> Multi-platform management</a></li><li class="chapter-item expanded "><a href="../technical/performances.html"><strong aria-hidden="true">6.9.</strong> Performances</a></li><li class="chapter-item expanded "><a href="../technical/pre-compiling.html"><strong aria-hidden="true">6.10.</strong> Pre-compiling applications</a></li><li class="chapter-item expanded "><a href="../technical/processes.html"><strong aria-hidden="true">6.11.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../technical/registry.html"><strong aria-hidden="true">6.12.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../technical/services.html"><strong aria-hidden="true">6.13.</strong> Services</a></li><li class="chapter-item expanded "><a href="../technical/shell.html"><strong aria-hidden="true">6.14.</strong> The shell</a></li></ol></li><li class="chapter-item expanded "><a href="../ux/index.html"><strong aria-hidden="true">7.</strong> User Experience</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ux/desktop-environment.html"><strong aria-hidden="true">7.1.</strong> Desktop environments</a></li><li class="chapter-item expanded "><a href="../ux/notifications.html"><strong aria-hidden="true">7.2.</strong> Notifications</a></li><li class="chapter-item expanded "><a href="../ux/sound.html"><strong aria-hidden="true">7.3.</strong> Sound</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/index.html"><strong aria-hidden="true">8.</strong> Specifications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/applications-libraries.html"><strong aria-hidden="true">8.1.</strong> Applications and libraries</a></li><li class="chapter-item expanded "><a href="../specs/applications.html"><strong aria-hidden="true">8.2.</strong> Applications</a></li><li class="chapter-item expanded "><a href="../specs/filesystem.html"><strong aria-hidden="true">8.3.</strong> Filesystem</a></li><li class="chapter-item expanded "><a href="../specs/storage-permissions.html"><strong aria-hidden="true">8.4.</strong> Storage permissions</a></li><li class="chapter-item expanded "><a href="../specs/libraries.html"><strong aria-hidden="true">8.5.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="../specs/permissions.html"><strong aria-hidden="true">8.6.</strong> Permissions</a></li><li class="chapter-item expanded "><a href="../specs/containers.html"><strong aria-hidden="true">8.7.</strong> Containers</a></li><li class="chapter-item expanded "><a href="../specs/registry.html"><strong aria-hidden="true">8.8.</strong> The registry</a></li><li class="chapter-item expanded "><a href="../specs/vocabulary.html"><strong aria-hidden="true">8.9.</strong> Vocabulary</a></li><li class="chapter-item expanded "><a href="../specs/shell.html"><strong aria-hidden="true">8.10.</strong> The shell</a></li><li class="chapter-item expanded "><a href="../specs/shell-scripting.html"><strong aria-hidden="true">8.11.</strong> Shell scripting</a></li><li class="chapter-item expanded "><a href="../specs/crash-saves.html"><strong aria-hidden="true">8.12.</strong> Crash saves</a></li><li class="chapter-item expanded "><a href="../specs/services.html"><strong aria-hidden="true">8.13.</strong> Services</a></li><li class="chapter-item expanded "><a href="../specs/translations.html" class="active"><strong aria-hidden="true">8.14.</strong> Translations</a></li><li class="chapter-item expanded "><a href="../specs/kernel/index.html"><strong aria-hidden="true">8.15.</strong> Kernel</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/kernel/hardware.html"><strong aria-hidden="true">8.15.1.</strong> Hardware</a></li><li class="chapter-item expanded "><a href="../specs/kernel/memory.html"><strong aria-hidden="true">8.15.2.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../specs/kernel/processes.html"><strong aria-hidden="true">8.15.3.</strong> Processes</a></li><li class="chapter-item expanded "><a href="../specs/kernel/scheduling.html"><strong aria-hidden="true">8.15.4.</strong> Scheduling</a></li><li class="chapter-item expanded "><a href="../specs/kernel/data-structures.html"><strong aria-hidden="true">8.15.5.</strong> Data structures</a></li><li class="chapter-item expanded "><a href="../specs/kernel/kpc.html"><strong aria-hidden="true">8.15.6.</strong> Kernel-process communication</a></li><li class="chapter-item expanded "><a href="../specs/kernel/ipc.html"><strong aria-hidden="true">8.15.7.</strong> Inter-process communication</a></li><li class="chapter-item expanded "><a href="../specs/kernel/signals.html"><strong aria-hidden="true">8.15.8.</strong> Signals</a></li><li class="chapter-item expanded "><a href="../specs/kernel/syscalls.html"><strong aria-hidden="true">8.15.9.</strong> System calls</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/integration/index.html"><strong aria-hidden="true">8.16.</strong> Integration services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/integration/desktop-environments.html"><strong aria-hidden="true">8.16.1.</strong> Desktop environments</a></li><li class="chapter-item expanded "><a href="../specs/services/integration/file-managers.html"><strong aria-hidden="true">8.16.2.</strong> File managers</a></li><li class="chapter-item expanded "><a href="../specs/services/integration/file-openers.html"><strong aria-hidden="true">8.16.3.</strong> File openers</a></li><li class="chapter-item expanded "><a href="../specs/services/integration/filesystem-interfaces.html"><strong aria-hidden="true">8.16.4.</strong> Filesystem interfaces</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/drivers/index.html"><strong aria-hidden="true">8.17.</strong> Driver services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/drivers/storage.html"><strong aria-hidden="true">8.17.1.</strong> Storage driver service</a></li></ol></li><li class="chapter-item expanded "><a href="../specs/services/system/index.html"><strong aria-hidden="true">8.18.</strong> System services</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../specs/services/system/fs.html"><strong aria-hidden="true">8.18.1.</strong> sys::fs</a></li><li class="chapter-item expanded "><a href="../specs/services/system/fsh.html"><strong aria-hidden="true">8.18.2.</strong> sys::fsh</a></li><li class="chapter-item expanded "><a href="../specs/services/system/hw.html"><strong aria-hidden="true">8.18.3.</strong> sys::hw</a></li><li class="chapter-item expanded "><a href="../specs/services/system/perm.html"><strong aria-hidden="true">8.18.4.</strong> sys::perm</a></li><li class="chapter-item expanded "><a href="../specs/services/system/net.html"><strong aria-hidden="true">8.18.5.</strong> sys::net</a></li><li class="chapter-item expanded "><a href="../specs/services/system/crypto.html"><strong aria-hidden="true">8.18.6.</strong> sys::crypto</a></li><li class="chapter-item expanded "><a href="../specs/services/system/crashsave.html"><strong aria-hidden="true">8.18.7.</strong> sys::crashsave</a></li><li class="chapter-item expanded "><a href="../specs/services/system/flow.html"><strong aria-hidden="true">8.18.8.</strong> sys::flow</a></li><li class="chapter-item expanded "><a href="../specs/services/system/hydre.html"><strong aria-hidden="true">8.18.9.</strong> sys::hydre</a></li><li class="chapter-item expanded "><a href="../specs/services/system/app.html"><strong aria-hidden="true">8.18.10.</strong> sys::app</a></li><li class="chapter-item expanded "><a href="../specs/services/system/process.html"><strong aria-hidden="true">8.18.11.</strong> sys::process</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../applications/index.html"><strong aria-hidden="true">9.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../applications/Astral.html"><strong aria-hidden="true">9.1.</strong> Astral</a></li><li class="chapter-item expanded "><a href="../applications/BareEnv.html"><strong aria-hidden="true">9.2.</strong> BareEnv</a></li><li class="chapter-item expanded "><a href="../applications/Blackhole.html"><strong aria-hidden="true">9.3.</strong> Blackhole</a></li><li class="chapter-item expanded "><a href="../applications/Central.html"><strong aria-hidden="true">9.4.</strong> Central</a></li><li class="chapter-item expanded "><a href="../applications/Cloudy.html"><strong aria-hidden="true">9.5.</strong> Cloudy</a></li><li class="chapter-item expanded "><a href="../applications/Comet.html"><strong aria-hidden="true">9.6.</strong> Comet</a></li><li class="chapter-item expanded "><a href="../applications/Gravity.html"><strong aria-hidden="true">9.7.</strong> Gravity</a></li><li class="chapter-item expanded "><a href="../applications/Locky.html"><strong aria-hidden="true">9.8.</strong> Locky</a></li><li class="chapter-item expanded "><a href="../applications/Milkshake.html"><strong aria-hidden="true">9.9.</strong> Milkshake</a></li><li class="chapter-item expanded "><a href="../applications/Monitor.html"><strong aria-hidden="true">9.10.</strong> Monitor</a></li><li class="chapter-item expanded "><a href="../applications/Nova.html"><strong aria-hidden="true">9.11.</strong> Nova</a></li><li class="chapter-item expanded "><a href="../applications/Particle.html"><strong aria-hidden="true">9.12.</strong> Particle</a></li><li class="chapter-item expanded "><a href="../applications/Pluton.html"><strong aria-hidden="true">9.13.</strong> Pluton</a></li><li class="chapter-item expanded "><a href="../applications/Postal.html"><strong aria-hidden="true">9.14.</strong> Postal</a></li><li class="chapter-item expanded "><a href="../applications/Reader.html"><strong aria-hidden="true">9.15.</strong> Reader</a></li><li class="chapter-item expanded "><a href="../applications/Registry.html"><strong aria-hidden="true">9.16.</strong> Registry</a></li><li class="chapter-item expanded "><a href="../applications/Rocket.html"><strong aria-hidden="true">9.17.</strong> Rocket</a></li><li class="chapter-item expanded "><a href="../applications/ShootingStar.html"><strong aria-hidden="true">9.18.</strong> ShootingStar</a></li><li class="chapter-item expanded "><a href="../applications/Skyer.html"><strong aria-hidden="true">9.19.</strong> Skyer</a></li><li class="chapter-item expanded "><a href="../applications/Sonata.html"><strong aria-hidden="true">9.20.</strong> Sonata</a></li><li class="chapter-item expanded "><a href="../applications/Stellar.html"><strong aria-hidden="true">9.21.</strong> Stellar</a></li><li class="chapter-item expanded "><a href="../applications/Thinker.html"><strong aria-hidden="true">9.22.</strong> Thinker</a></li><li class="chapter-item expanded "><a href="../applications/TimeTravel.html"><strong aria-hidden="true">9.23.</strong> TimeTravel</a></li><li class="chapter-item expanded "><a href="../applications/Vortex.html"><strong aria-hidden="true">9.24.</strong> Vortex</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">NightOS documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ClementNerma/NightOS" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="translations"><a class="header" href="#translations">Translations</a></h1>
+<p>Translations are a complex topic and can be handled in several ways.</p>
+<p>Applications' and libraries' content can either be translated using a custom way (e.g. a translation framework), or by using the system's <a href="services/system/i18n.html">builtin translation service, <code>sys::i18n</code></a>.</p>
+<h2 id="translation-sets"><a class="header" href="#translation-sets">Translation sets</a></h2>
+<p>Translation sets are a way to specify how to translate a set of content.</p>
+<p>They use an extremely compact and efficient format to minimize disk usage and maximize performances. Some trade-offs are made to accelerate performance at the expansve of file size.</p>
+<p>They are not made to be modified directly, and should instead be derived from other text formats if the translation sets need to be manually edited by a person.</p>
+<h3 id="header"><a class="header" href="#header">Header</a></h3>
+<p>The header is made of the following informations:</p>
+<ul>
+<li>Number of translatable languages (2 bytes)</li>
+<li>For each language:
+<ul>
+<li>Language's code in ASCII (3 bytes, using the <a href="https://en.wikipedia.org/wiki/ISO_639-2">ISO 639-2</a> format)</li>
+<li>Location of the language's <a href="#translation-tables">translation table</a> in the file (8 bytes)</li>
+</ul>
+</li>
+<li>Code of the reference language(3 bytes)</li>
+<li>Number of translation models (8 bytes)</li>
+<li>For each translation model:
+<ul>
+<li>The <a href="#translation-models">translation model</a> itself</li>
+</ul>
+</li>
+</ul>
+<p>The reference language is the one the translations are made from. For instance, a translation set may be procuced by translating english models to french. But when the set is bundled, both english and french will actually be written in their own <a href="#translation-tables">translation tables</a>, meaning we can't easily reverse the process. The reference language is here to ensure that we can automatically determine which language was used to create the translations. It can be also be used in debug messages in case something goes wrong.</p>
+<h3 id="translation-models"><a class="header" href="#translation-models">Translation models</a></h3>
+<p>A <em>translation model</em> is a translatable string. They can use variables which are provided at runtime.</p>
+<p>It only consists in a <a href="#variable-set-declaration">variable set declaration</a>.</p>
+<p>Translation models contain no text as that is the role of the <a href="#translation-strings">translation strings</a>, which means that decoding a translation set will not allow to directly see what the source text is, as there is in fact no text in the models.</p>
+<p>Most translation tools provide a way to start from a source language (like english) and then translate to other languages, but when the file is actually bundled, the source language is just written as any other inside its own translation table.</p>
+<h4 id="variable-set-declaration"><a class="header" href="#variable-set-declaration">Variable set declaration</a></h4>
+<p>A variable set declaration of made of the following:</p>
+<ul>
+<li>Number of variables in the set (2 bytes)</li>
+<li>For each variable:
+<ul>
+<li>Unique identifier of the variable (4 bytes)</li>
+<li>Variable type (1 byte):
+<ul>
+<li><code>0x00</code>: <a href="kernel/data-structures.html#delimited-strings">delimited string</a> (<code>string</code>)</li>
+<li><code>0x01</code>: boolean (<code>bool</code>)</li>
+<li><code>0x02</code>: 64-bit signed integer (<code>int</code>)</li>
+<li><code>0x03</code>: 64-bit unsigned integer (<code>uint</code>)</li>
+<li><code>0x04</code>: 64-bit floating-pointer number (<code>float</code>)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="translation-tables"><a class="header" href="#translation-tables">Translation tables</a></h3>
+<p>A <em>translation table</em> represents the translation of each defined <a href="#translation-models">model</a> for a provided language.</p>
+<p>It consists in the following:</p>
+<ul>
+<li>For each model defined in the <a href="#header">header</a>:
+<ul>
+<li>Relative address of the <a href="#translation-strings">translation string</a> in this table</li>
+</ul>
+</li>
+<li>For each model defined in the <a href="#header">header</a>:
+<ul>
+<li>The <a href="#translation-strings">translation string</a></li>
+</ul>
+</li>
+</ul>
+<p>Translation strings must be in the same order as defined in the header.</p>
+<h3 id="translation-strings"><a class="header" href="#translation-strings">Translation strings</a></h3>
+<p>A <em>translation string</em> is the dynamic translation, for a given language, of a <a href="#translation-models">translation model</a>.</p>
+<p>They use a complex format as they permit to achieve both compacity in term of file size, high performance when decoding and actually performing the translations, as well as allowing complex translations. It is for instance possible to link together multiple conditionals to only show a text if a set of provided numbers meet a requirement.</p>
+<p>Translation strings use the following structure:</p>
+<ul>
+<li>Length of the translation string, in bytes (4 bytes)</li>
+<li><a href="#variable-set-declaration">Assignable variables set</a></li>
+<li>Number of direct translation segments (4 bytes)</li>
+<li>Relative address of the dynamic library (4 bytes)</li>
+<li>For each translation segment:
+<ul>
+<li><a href="#translation-segments">Translation segment</a></li>
+</ul>
+</li>
+<li>Number of optional translation segments in the dynamic library (4 bytes)</li>
+<li>For each optional translation segments:
+<ul>
+<li>Unique identifier for this segment (4 bytes)</li>
+<li><a href="#translation-segments">Translation segment</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="translation-segments"><a class="header" href="#translation-segments">Translation segments</a></h4>
+<ul>
+<li>Length of the segment in bytes (4 bytes)</li>
+<li>Segment type (1 byte):
+<ul>
+<li><code>0x00</code>: fixed text
+<ul>
+<li>Followed by a <a href="kernel/data-structures.html#delimited-strings">delimited string</a></li>
+</ul>
+</li>
+<li><code>0x01</code>: toggle
+<ul>
+<li>Followed by the identifier of a boolean variable (4 bytes)</li>
+<li>Followed by the ID of the optional translation segment to use if the variable is truthy</li>
+<li>Followed by the ID of the optional translation segment to use if the variable is falsy</li>
+</ul>
+</li>
+<li><code>0x02</code>: comparison
+<ul>
+<li>Followed by the ID of the variable to compare (must be of a number type)</li>
+<li>Comparator (1 byte):
+<ul>
+<li><code>0x01</code>: equal</li>
+<li><code>0x02</code>: not equal</li>
+<li><code>0x03</code>: greater than</li>
+<li><code>0x04</code>: less than</li>
+<li><code>0x05</code>: greater than or equal to</li>
+<li><code>0x06</code>: less than or equal to</li>
+</ul>
+</li>
+<li>Comparison object (1 byte):
+<ul>
+<li><code>0x01</code>: direct value
+<ul>
+<li>Followed by the raw number (must be of the <strong>same</strong> number type)</li>
+</ul>
+</li>
+<li><code>0x02</code>: variable
+<ul>
+<li>Followed by the ID of the variable to compare it to (must be of the <strong>same</strong> number type)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Followed by the ID of the optional translation segment to use if the comparison is truthy</li>
+<li>Followed by the ID of the optional translation segment to use if the comparison is falsy</li>
+</ul>
+</li>
+<li><code>0x03</code>: property checking
+<ul>
+<li>Followed by the ID of the variable to check</li>
+<li>Negation (1 byte)
+<ul>
+<li><code>0x00</code>: perform the check normally</li>
+<li><code>0x01</code>: revert the check's result</li>
+</ul>
+</li>
+<li>Check (1 byte):
+<ul>
+<li><code>0x01</code>: (<code>string</code>-only): string is empty</li>
+<li><code>0x02</code>: (<code>string</code>-only): string only contains ASCII characters</li>
+<li><code>0x20</code>: (<code>int</code>-only): number if positive</li>
+<li><code>0x21</code>: (<code>int</code>-only): number could be converted to a <code>uint</code> without loss</li>
+<li><code>0x30</code>: (<code>uint</code>-only): number could be converted to an <code>int</code> without loss</li>
+<li><code>0x31</code>: (<code>uint</code>-only): if the number was signed as an <code>int</code>, it would be negative</li>
+<li><code>0x40</code>: (<code>float</code>-only): number has a non-zero decimal part</li>
+<li><code>0x41</code>: (<code>float</code>-only): number could be converted to an <code>int</code> without loss</li>
+<li><code>0x42</code>: (<code>float-only</code>): number could be converted to a <code>uint</code> without loss</li>
+</ul>
+</li>
+<li>Followed by the ID of the optional translation segment to use if the variable is truthy</li>
+<li>Followed by the ID of the optional translation segment to use if the variable is falsy</li>
+</ul>
+</li>
+<li><code>0x04</code>: assignments
+<ul>
+<li>Identifier of the assignable variable (4 bytes)</li>
+<li>Action type (1 byte):
+<ul>
+<li><code>0x00</code>: Raw assign
+<ul>
+<li>Followed by the value to assign (must be of the exact same type)</li>
+<li>Followed by the identifier of a variable (4 bytes)</li>
+</ul>
+</li>
+<li><code>0x01</code>: (<code>bool</code>-only) Result of a comparison
+<ul>
+<li>Followed by a comparison's data (type, comparator, ...)</li>
+</ul>
+</li>
+<li><code>0x02</code>: (<code>bool</code>-only) Result of a property checking
+<ul>
+<li>Followed by the check's data (negation, check, ...)</li>
+</ul>
+</li>
+<li><code>0x10</code>: (<code>uint</code>-only): length of a string, in bytes
+<ul>
+<li>Followed by the identifier of a <code>string</code> variable</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>0xFF</code>: empty (used for conditionals)</li>
+</ul>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../specs/services.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../specs/kernel/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../specs/services.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../specs/kernel/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

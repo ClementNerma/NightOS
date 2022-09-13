@@ -50,6 +50,7 @@
   - [Vocabulary](specs/vocabulary.md) - the list of NightOS-related terms
   - [The shell](specs/shell.md) - the native shell of NightOS
   - [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
+  - [Crash saves](specs/crash-saves.md) - what are crash saves and how they are handled
   - [Services](specs/services.md) - specifications about services work and behave
   - [Kernel](specs/kernel/README.md)
     - [Hardware](specs/kernel/hardware.md) - how the kernel interacts with hardware

@@ -7,7 +7,7 @@ For more informations about low-level concepts these documents refer to, you can
 - [Applications and libraries](applications-libraries.md) - document describing common things between applications and libraries
 - [Applications](applications.md) - how applications are structured and behave
 - [Filesystem](filesystem.md) - how the filesystem works
-- [Storage permissions map](storage-permissions-map.md) - how permissions are managed on filesystem elements
+- [Storage permissions](storage-permissions.md) - how permissions are managed on filesystem elements
 - [Libraries](libraries.md) - what are libraries
 - [Containers](containers.md) - process isolation system
 - [Permissions](permissions.md) - list of applications' permissions

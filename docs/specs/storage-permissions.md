@@ -1,14 +1,23 @@
-# Storage permissions map
+# Storage permissions
 
-The **Storage Permissions Map**, or **SPM**, is a non-contiguous data structure used to control access for every user of a computer or [domain](../features/domains.md).
+This document presents how permissions are handled on filesystems.
 
-It may be located anywhere in the filesystem.
+## How permissions work
 
-## How does it work
+Each item (identified by its [FEID](filesystem.md#element-unique-identifier)) uses a set of permissions determined by multiple rules.
 
-Each item (identified by its [FEID](filesystem.md#element-unique-identifier))
+- Items in the `/dev`, `/etc` and `/sys` are not available to any user.
+- Items in a `/app/<xxx>` directory are only available to the `xxx` application. Users do not have direct access to these files.
+- Items in a `/home/<xxx>` directory are only available to the `xxx` user.
+- Items in a `/mnt/<xxx>` directory can be available to various users depending on the mount options.
+
+Note that an exception is made for the [system user](../concepts/users.md#users-type) which gets access to every single file.
+
+These are the default permissions, but it's possible to restrict or extend permissions based on a **Storage Permissions Map** (or **SPM**).
 
 ## Structure
+
+The SPM is a non-contiguous data structure which can be located anywhere in the filesystem.
 
 ### Header
 

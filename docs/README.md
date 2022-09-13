@@ -58,7 +58,7 @@ The list of default applications and their description can be found [here](appli
 - [Applications and libraries](specs/applications-libraries.md) - document describing common things between applications and libraries
 - [Applications](specs/applications.md) - how applications are structured and behave
 - [Filesystem](specs/filesystem.md) - how the filesystem works
-- [Storage permissions map](specs/storage-permissions-map.md) - how permissions are managed on filesystem elements
+- [Storage permissions](specs/storage-permissions.md) - how permissions are managed on filesystem elements
 - [Libraries](specs/libraries.md) - what are libraries
 - [Containers](specs/containers.md) - process isolation system
 - [Permissions](specs/permissions.md) - list of applications' permissions

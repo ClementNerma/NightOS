@@ -62,7 +62,7 @@ For naming conventions, see the [related specification](services/integration/fil
 
 ## Permissions
 
-Permissions on individual items is achieved through [storage permissions maps](storage-permissions-map.md).
+Permissions on individual items is achieved through [storage permissions maps](storage-permissions.md).
 
 ## Symbolic links
 

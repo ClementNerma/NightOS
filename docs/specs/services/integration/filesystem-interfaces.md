@@ -113,11 +113,11 @@ The _capabitilies list_ is a 2-byte long value which indicate the capabitilies o
 - Bit  6: set if the filesystem can store modification dates
 - Bit  7: set if the filesystem can store last access dates
 - Bit  8: set if the filesystem can store an owner UID on 8 bytes
-- Bit  9: set if the filesystem can natively store a [storage permissions map](../../storage-permissions-map.md)
-- Bit 10: set if the interface can store a [storage permissions map](../../storage-permissions-map.md) in the filesystem
+- Bit  9: set if the filesystem can natively store a [storage permissions map](../../storage-permissions.md)
+- Bit 10: set if the interface can store a [storage permissions map](../../storage-permissions.md) in the filesystem
 - Bit 11: set if the filesystem supports ahead space reservation
 
-In case the filesystem can't natively handle a [storage permissions map (SPM)](../../storage-permissions-map.md), the interface is allowed to store, query and update the map in the filesystem by itself, using non-native ways such as extended attributes. In such case, the relevant bit must be set to indicate a SPM can be stored on this filesystem.
+In case the filesystem can't natively handle a [storage permissions map (SPM)](../../storage-permissions.md), the interface is allowed to store, query and update the map in the filesystem by itself, using non-native ways such as extended attributes. In such case, the relevant bit must be set to indicate a SPM can be stored on this filesystem.
 
 This list acts as a contract between the service and the [`sys::fs`](../system/fs.md) service ; if a capability bit is not set, the related methods are guaranteed to never be called. If it is set, the "incompatibility" error code present in such methods cannot be returned or it will be considered a bug.
 

@@ -497,40 +497,16 @@ The priority is re-calculated whenever the active window changes.</p>
 <p><em>Crash saves</em> prevent most data loss caused by a crash, in all applications supporting it.</p>
 <ul>
 <li><a href="features/crash-saves.html#how-crash-saves-work">How crash saves work</a></li>
-<li><a href="features/crash-saves.html#crashes-detection">Crashes detection</a>
-<ul>
-<li><a href="features/crash-saves.html#invalid-shutdown-indicator">Invalid shutdown indicator</a></li>
-<li><a href="features/crash-saves.html#applications-crash-indicator">Application's crash indicator</a></li>
-</ul>
-</li>
-<li><a href="features/crash-saves.html#restoration-process">Restoration process</a></li>
 </ul>
 <h2 id="how-crash-saves-work"><a class="header" href="#how-crash-saves-work">How crash saves work</a></h2>
-<p>Every minute (this delay can be changed in the registry), a <code>SYS_CRASHSAVE_COLLECT</code> answerable signal is sent to all running applications.
+<p>Every minute (this delay can be changed in the registry), a <a href="features/../specs/kernel/ipc.html#methods-and-notifications">notification</a> is sent to all running applications.
 Applications can then answer with their <em>state data</em>, which should contain every data required for the application in order to be restored to its exact current state later. They may join a <em>title message</em>, which is expected to be their main window's title - if they have ones.
 They can also answer with a specific message telling they won't give a crash save data during the current collect. The signal will still be sent on the next collect process (e.g. a minute later).
 A last answer method is with another message telling they won't give any crash save for the running instance. The signal won't be sent again for this instance of the application. This message is most of the time encountered when the application doesn't implement the crash save process.</p>
 <p>If the application didn't answer when the next collect occurs, the signal is aborted, but the next one will be sent.</p>
 <p>When a crash save has been collected for a given application, it is stored in <code>/home/[user]/appdata/[appname]/crashsaves/[timestamp]_[pid].csf</code>.</p>
 <p><em>NOTE:</em> Crash saves' intregrity is controlled using the system's <a href="features/../technical/integrity-checker.html">integrity checker</a>.</p>
-<h2 id="crashes-detection"><a class="header" href="#crashes-detection">Crashes detection</a></h2>
-<h3 id="invalid-shutdown-indicator"><a class="header" href="#invalid-shutdown-indicator">Invalid shutdown indicator</a></h3>
-<p>When the system starts up, it creates an empty file in <code>/etc/sys/awake</code>.
-When the system shutdowns gracefully, this file is removed.</p>
-<p>If, during startup, this file already exists, the system hasn't shutdowned gracefully.
-When this happens, a dialog message is shown, suggesting to re-open crashed applications with their last crash save.</p>
-<p>For each application that do not have an available crash save (e.g. when the system crashed before a crash save could have been collected for this application), an indicator in the dialog box will show this application cannot be restored.</p>
-<h3 id="applications-crash-indicator"><a class="header" href="#applications-crash-indicator">Application's crash indicator</a></h3>
-<p>When an application starts, the system creates an empty file in <code>/home/[user]/appdata/[appname]/crashsaves/awake</code> for user applications (even for global applications).</p>
-<p>When the application exits gracefully, the file is removed automatically.
-When the system detects the application exited, if this file still exists, it shows a dialog box asking if the user wants to relaunch the application with the last crash save.</p>
-<p><em>NOTE:</em> If there is no available crash save (e.g. when the application crashed before a crash save could have been made), the dialog box will simply show the application crashed.</p>
-<p><em>NOTE:</em> Because a crash save could have been collected for several instances of an application, they can all be restored afterwise.</p>
-<h2 id="restoration-process"><a class="header" href="#restoration-process">Restoration process</a></h2>
-<p>When a crash save is attempted to be restored, the <a href="features/../specs/services/system/crashsave.html"><code>sys::crashsave</code></a> service. When the application is ready, a <code>SYS_CRASHSAVE_RESTORE</code> confirmable signal is sent, with the application's crash save.
-The application is expected to confirm the signal when it has finished restoring its state using the crash save.
-The crash save is not deleted directly, though. It is renamed using the new instance's PID and kept until the next collect process receives a new crash save for this instance.</p>
-<p>If the application crashes before another crash save can be made <em>and</em> didn't confirm the restoration signal, when this process happens again, system will indicate the application appear to have crashed during crash save restoration.</p>
+<p>All <a href="features/../applications/README.html">native applications</a> support crash saves.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="domains"><a class="header" href="#domains">Domains</a></h1>
 <p><em>Domains</em> are a set of computers running NightOS which are linked to each other. The way a domain's computers behave and interact are defined in the <em>Domain Supervisor</em>, which is only available to the domain administrator user.</p>
 <p>It behaves like an extension of the <a href="features/parental-control.html">parental control</a>, though they are two completely distinct features and domains offer a lot more features, while being made not to manage a child's access to a computer but to manage thousands of comupters at once.</p>
@@ -1178,6 +1154,7 @@ For more informations about low-level concepts these documents refer to, you can
 <li><a href="specs/vocabulary.html">Vocabulary</a> - the list of NightOS-related terms</li>
 <li><a href="specs/shell.html">The shell</a> - how <a href="specs/../technical/shell.html">Hydre</a> works</li>
 <li><a href="specs/shell-scripting.html">Shell scripting</a> - <a href="specs/../technical/shell.html">Hydre</a>'s scripting language</li>
+<li><a href="specs/crash-saves.html">Crash saves</a> - what are crash saves and how they are handled</li>
 <li><a href="specs/kernel/README.html">Kernel</a> - complete specifications of the kernel</li>
 <li><a href="specs/services.html">Services</a> - specifications about services work and behave</li>
 </ul>
@@ -1422,6 +1399,11 @@ services:
   driver:
     # [OPT] Storage driver service
     storage: false
+
+# [REQ] System features
+sysfeatures:
+  # [REQ] Does the application support crash saves?
+  crash_saves_support: true
 
 # [OPT] Additional informations
 additional:
@@ -8916,9 +8898,72 @@ System services communicate directly with the kernel and are trusted processes s
 <p><strong>TODO</strong></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="syscrashsave-service"><a class="header" href="#syscrashsave-service"><code>sys::crashsave</code> service</a></h1>
 <h2 id="methods-12"><a class="header" href="#methods-12">Methods</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x0100-get_last_crash_save"><a class="header" href="#0x0100-get_last_crash_save"><code>0x0100</code> GET_LAST_CRASH_SAVE</a></h3>
+<p>Get the last crash save for this application, if any. The crash saves removal can be controlled by the answer provided to the <a href="specs/services/system/crashsave.html#0x0200-restore_crash_save"><code>RESTORE_CRASH_SAVE</code></a> notification.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Answer:</strong></p>
+<ul>
+<li><a href="specs/services/system/../../kernel/data-structures.html#data-structures">Optional</a> data provided in the datafield of the <a href="specs/services/system/crashsave.html#0x0200-restore_crash_save"><code>RESTORE_CRASH_SAVE</code></a> notification (none if there is no crash save for this application)</li>
+</ul>
+<h3 id="0x0101-remove_crash_save"><a class="header" href="#0x0101-remove_crash_save"><code>0x0101</code> REMOVE_CRASH_SAVE</a></h3>
+<p>Remove the existing crash save for this application.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>Status (1 byte):
+<ul>
+<li><code>0x00</code>: the crash save was successfully deleted</li>
+<li><code>0x01</code>: no crash save was found for this application</li>
+<li><code>0x02</code>: couldn't delete the crash save as the file is currently in use</li>
+</ul>
+</li>
+</ul>
 <h2 id="notifications-9"><a class="header" href="#notifications-9">Notifications</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x0100-crash_save_collection"><a class="header" href="#0x0100-crash_save_collection"><code>0x0100</code> CRASH_SAVE_COLLECTION</a></h3>
+<p>Sent to a process during crash save collection.</p>
+<p>It is only sent to applications indicating they support crash saves in their <a href="specs/services/system/../../applications.html#application-manifest">manifest</a>.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Number in seconds under which this notification must be answered (1 byte)</li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#timestamps">Timestamp</a> of the last crash save for this application (1 byte)</li>
+<li><code>0x01</code> if this notification was not answered in time the last time it was sent, <code>0x00</code> otherwise (1 byte)</li>
+<li><a href="specs/services/system/../../filesystem.html#temporary-feid">Temporary FEID</a> to write the crash save in</li>
+</ul>
+<p><strong>Expected answer:</strong></p>
+<ul>
+<li>Status (1 byte):
+<ul>
+<li><code>0x00</code> if the crash save was written succesfully</li>
+<li><code>0x01</code> if the application didn't have enough time to fully write the crash save</li>
+<li><code>0x02</code> if the application couldn't create a crash save for whatever reason</li>
+<li><code>0x03</code> if the application couuldn't create</li>
+</ul>
+</li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#options">Optional</a> <a href="specs/services/system/../../kernel/data-structures.html#delimited-strings">log message</a> which will be written to the system's logs</li>
+</ul>
+<h3 id="0x0200-restore_crash_save"><a class="header" href="#0x0200-restore_crash_save"><code>0x0200</code> RESTORE_CRASH_SAVE</a></h3>
+<p>Sent to a process when a <a href="specs/services/system/../../../features/crash-saves.html">crash save</a> is to be restored.</p>
+<p>This notification is sent only if the correct bit is set in the <a href="specs/services/system/../../applications.html#startup-reason">application's startup reason</a>.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="specs/services/system/../../filesystem.html#temporary-feid">Temporary FEID</a> to the crash save (8 bytes)</li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#timestamps">Timestamp</a> when the <a href="specs/services/system/crashsave.html#0x0100-crash_save_collection"><code>CRASH_SAVE_COLLECTION</code></a> signal that resulted in this crash save was sent (8 bytes)</li>
+<li><a href="specs/services/system/../../kernel/data-structures.html#timestamps">Timestamp</a> when this crash save was actually written to the disk (8 bytes)</li>
+<li><code>0x00</code> if this crash save is sent for the first time, <code>0x01</code> if the application was interrupted before it answered this notification the last time (e.g. application or system crash) (1 byte)</li>
+<li><code>0x00</code> if this crash save is sent for the first time or if the application itself didn't crash while trying to restore it the last time, <code>0x01</code> if the application itself crashed last time (1 byte)</li>
+</ul>
+<p><strong>Expected answer:</strong></p>
+<ul>
+<li>Status (1 byte):
+<ul>
+<li><code>0x01</code>: crash save was restored successfully</li>
+<li><code>0x02</code>: crash save is corrupted and/or invalid</li>
+</ul>
+</li>
+<li><code>0x00</code> if the crash save can be deleted, <code>0x01</code> if it should be kept (1 byte)</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sysflow-service"><a class="header" href="#sysflow-service"><code>sys::flow</code> service</a></h1>
 <h2 id="methods-13"><a class="header" href="#methods-13">Methods</a></h2>
 <p><strong>TODO</strong></p>
@@ -9306,6 +9351,7 @@ System services communicate directly with the kernel and are trusted processes s
 <p>ShootingStar is the default pictures viewer and editor of NightOS. Edition is limited to simple manipulations such as cropping and resizing.</p>
 <h2 id="library-usage"><a class="header" href="#library-usage">Library usage</a></h2>
 <p>ShootingStar exposes the <code>sys::shootingstar</code> library to manipulate, perform basic manipulations and most of all render different image formats.</p>
+<p>It can also be used by <a href="applications/../specs/services/integration/file-managers.html">file managers</a> to generate <a href="applications/../specs/services/integration/file-managers.html#0x2000-get_thumbnail">thumbnails</a> and <a href="applications/../specs/services/integration/file-managers.html#0x2100-get_video_preview">video previews</a>.</p>
 <h2 id="supported-formats-2"><a class="header" href="#supported-formats-2">Supported formats</a></h2>
 <ul>
 <li>Joint Photographic Experts Group (<code>.jpg</code>, <code>.jpeg</code>)</li>

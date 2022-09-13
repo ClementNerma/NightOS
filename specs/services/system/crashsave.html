@@ -147,9 +147,72 @@
                     <main>
                         <h1 id="syscrashsave-service"><a class="header" href="#syscrashsave-service"><code>sys::crashsave</code> service</a></h1>
 <h2 id="methods"><a class="header" href="#methods">Methods</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x0100-get_last_crash_save"><a class="header" href="#0x0100-get_last_crash_save"><code>0x0100</code> GET_LAST_CRASH_SAVE</a></h3>
+<p>Get the last crash save for this application, if any. The crash saves removal can be controlled by the answer provided to the <a href="#0x0200-restore_crash_save"><code>RESTORE_CRASH_SAVE</code></a> notification.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Answer:</strong></p>
+<ul>
+<li><a href="../../kernel/data-structures.html#data-structures">Optional</a> data provided in the datafield of the <a href="#0x0200-restore_crash_save"><code>RESTORE_CRASH_SAVE</code></a> notification (none if there is no crash save for this application)</li>
+</ul>
+<h3 id="0x0101-remove_crash_save"><a class="header" href="#0x0101-remove_crash_save"><code>0x0101</code> REMOVE_CRASH_SAVE</a></h3>
+<p>Remove the existing crash save for this application.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>Status (1 byte):
+<ul>
+<li><code>0x00</code>: the crash save was successfully deleted</li>
+<li><code>0x01</code>: no crash save was found for this application</li>
+<li><code>0x02</code>: couldn't delete the crash save as the file is currently in use</li>
+</ul>
+</li>
+</ul>
 <h2 id="notifications"><a class="header" href="#notifications">Notifications</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x0100-crash_save_collection"><a class="header" href="#0x0100-crash_save_collection"><code>0x0100</code> CRASH_SAVE_COLLECTION</a></h3>
+<p>Sent to a process during crash save collection.</p>
+<p>It is only sent to applications indicating they support crash saves in their <a href="../../applications.html#application-manifest">manifest</a>.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li>Number in seconds under which this notification must be answered (1 byte)</li>
+<li><a href="../../kernel/data-structures.html#timestamps">Timestamp</a> of the last crash save for this application (1 byte)</li>
+<li><code>0x01</code> if this notification was not answered in time the last time it was sent, <code>0x00</code> otherwise (1 byte)</li>
+<li><a href="../../filesystem.html#temporary-feid">Temporary FEID</a> to write the crash save in</li>
+</ul>
+<p><strong>Expected answer:</strong></p>
+<ul>
+<li>Status (1 byte):
+<ul>
+<li><code>0x00</code> if the crash save was written succesfully</li>
+<li><code>0x01</code> if the application didn't have enough time to fully write the crash save</li>
+<li><code>0x02</code> if the application couldn't create a crash save for whatever reason</li>
+<li><code>0x03</code> if the application couuldn't create</li>
+</ul>
+</li>
+<li><a href="../../kernel/data-structures.html#options">Optional</a> <a href="../../kernel/data-structures.html#delimited-strings">log message</a> which will be written to the system's logs</li>
+</ul>
+<h3 id="0x0200-restore_crash_save"><a class="header" href="#0x0200-restore_crash_save"><code>0x0200</code> RESTORE_CRASH_SAVE</a></h3>
+<p>Sent to a process when a <a href="../../../features/crash-saves.html">crash save</a> is to be restored.</p>
+<p>This notification is sent only if the correct bit is set in the <a href="../../applications.html#startup-reason">application's startup reason</a>.</p>
+<p><strong>Datafield:</strong></p>
+<ul>
+<li><a href="../../filesystem.html#temporary-feid">Temporary FEID</a> to the crash save (8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#timestamps">Timestamp</a> when the <a href="#0x0100-crash_save_collection"><code>CRASH_SAVE_COLLECTION</code></a> signal that resulted in this crash save was sent (8 bytes)</li>
+<li><a href="../../kernel/data-structures.html#timestamps">Timestamp</a> when this crash save was actually written to the disk (8 bytes)</li>
+<li><code>0x00</code> if this crash save is sent for the first time, <code>0x01</code> if the application was interrupted before it answered this notification the last time (e.g. application or system crash) (1 byte)</li>
+<li><code>0x00</code> if this crash save is sent for the first time or if the application itself didn't crash while trying to restore it the last time, <code>0x01</code> if the application itself crashed last time (1 byte)</li>
+</ul>
+<p><strong>Expected answer:</strong></p>
+<ul>
+<li>Status (1 byte):
+<ul>
+<li><code>0x01</code>: crash save was restored successfully</li>
+<li><code>0x02</code>: crash save is corrupted and/or invalid</li>
+</ul>
+</li>
+<li><code>0x00</code> if the crash save can be deleted, <code>0x01</code> if it should be kept (1 byte)</li>
+</ul>
 
                     </main>
 

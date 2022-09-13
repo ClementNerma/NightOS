@@ -6,7 +6,7 @@ _Crash saves_ prevent most data loss caused by a crash, in all applications supp
 
 ## How crash saves work
 
-Every minute (this delay can be changed in the registry), a `SYS_CRASHSAVE_COLLECT` answerable signal is sent to all running applications.
+Every minute (this delay can be changed in the registry), a [notification](../specs/kernel/ipc.md#methods-and-notifications) is sent to all running applications.
 Applications can then answer with their _state data_, which should contain every data required for the application in order to be restored to its exact current state later. They may join a _title message_, which is expected to be their main window's title - if they have ones.
 They can also answer with a specific message telling they won't give a crash save data during the current collect. The signal will still be sent on the next collect process (e.g. a minute later).
 A last answer method is with another message telling they won't give any crash save for the running instance. The signal won't be sent again for this instance of the application. This message is most of the time encountered when the application doesn't implement the crash save process.

@@ -52,6 +52,7 @@
   - [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
   - [Crash saves](specs/crash-saves.md) - what are crash saves and how they are handled
   - [Services](specs/services.md) - specifications about services work and behave
+  - [Translations](specs/translations.md) - how content translation is handled
   - [Kernel](specs/kernel/README.md)
     - [Hardware](specs/kernel/hardware.md) - how the kernel interacts with hardware
     - [Memory](specs/kernel/memory.md) - memory organization and management

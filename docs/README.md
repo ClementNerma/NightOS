@@ -68,6 +68,7 @@ The list of default applications and their description can be found [here](appli
 - [Shell scripting](specs/shell-scripting.md) - [Hydre](technical/shell.md)'s scripting language
 - [Crash saves](specs/crash-saves.md) - what are crash saves and how they are handled
 - [Services](specs/services.md) - specifications about services work and behave
+- [Translations](specs/translations.md) - how content translation is handled
 
 ### [Kernel](specs/kernel/README.md)
 

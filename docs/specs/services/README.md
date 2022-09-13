@@ -60,6 +60,7 @@ Conventional error codes use an increasing importance order ; checkings should a
 * [`sys::crashsave`](system/crashsave.md): [crash saves](../../features/crash-saves.md) management
 * [`sys::flow`](system/flow.md): [flows](..//filesystem.md#flows) management
 * [`sys::hydre`](system/hydre.md): [Hydre](../shell.md) shell service
+* [`sys::i18n`](system/i18n.md): [translation](../translations.md) service
 * [`sys::ui`](system/ui.md): user interface service
 * [`sys::app`](system/app.md): applications management service
 * [`sys::process`](system/process.md): processes management service

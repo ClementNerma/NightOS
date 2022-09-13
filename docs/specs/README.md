@@ -18,6 +18,7 @@ For more informations about low-level concepts these documents refer to, you can
 - [Crash saves](crash-saves.md) - what are crash saves and how they are handled
 - [Kernel](kernel/README.md) - complete specifications of the kernel
 - [Services](services.md) - specifications about services work and behave
+- [Translations](translations.md) - how content translation is handled
 
 ## [Integration services](services/integration/README.md)
 
@@ -41,6 +42,7 @@ For more informations about low-level concepts these documents refer to, you can
 * [`sys::crashsave`](services/system/crashsave.md): [crash saves](../features/crash-saves.md) management
 * [`sys::flow`](services/system/flow.md): [flows](filesystem.md#flows) management
 * [`sys::hydre`](services/system/hydre.md): [Hydre](shell.md) shell service
+* [`sys::i18n`](services/system/i18n.md): [translation](translations.md) service
 * [`sys::ui`](services/system/ui.md): user interface service
 * [`sys::app`](services/system/app.md): applications management service
 * [`sys::process`](services/system/process.md): processes management service

@@ -100,12 +100,12 @@ A flow is a file without extension, located in the `/fl` directory, that can eit
 
 To understand the concept better, here is the list of native flow files that are always available:
 
-| Flow file    | Type       | Description                                                                                       |
-| ------------ | ---------- | ------------------------------------------------------------------------------------------------- |
-| `/fl/zero`   | Read-only  | Outputs zeroes all the time ; useful to zero a file or device or to benchmark a storage           |
-| `/fl/rand`   | Read-only  | Outputs cryptographically-secure random numbers. Useful to randomly fill a storage or memory area |
-| `/fl/ucrand` | Read-only  | Outputs non-cryptographically-secure random numbers, thus faster that `/fl/rand`                  |
-| `/fl/null`   | Write-only | Receives data but does nothing with them                                                          |
+| Flow file   | Type       | Description                                                                                       |
+| ----------- | ---------- | ------------------------------------------------------------------------------------------------- |
+| `/fl/zero`  | Read-only  | Outputs zeroes all the time ; useful to zero a file or device or to benchmark a storage           |
+| `/fl/urand` | Read-only  | Outputs cryptographically-secure random numbers. Useful to randomly fill a storage or memory area |
+| `/fl/crand` | Read-only  | Outputs non-cryptographically-secure random numbers, thus faster that `/fl/rand`                  |
+| `/fl/null`  | Write-only | Receives data but does nothing with them                                                          |
 
 Processes are based on [pipes](kernel/ipc.md).
 

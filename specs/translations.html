@@ -148,6 +148,24 @@
                         <h1 id="translations"><a class="header" href="#translations">Translations</a></h1>
 <p>Translations are a complex topic and can be handled in several ways.</p>
 <p>Applications' and libraries' content can either be translated using a custom way (e.g. a translation framework), or by using the system's <a href="services/system/i18n.html">builtin translation service, <code>sys::i18n</code></a>.</p>
+<ul>
+<li><a href="#translation-sets">Translation sets</a>
+<ul>
+<li><a href="#header">Header</a></li>
+<li><a href="#translation-models">Translation models</a>
+<ul>
+<li><a href="#variable-set-declaration">Variable set declaration</a></li>
+</ul>
+</li>
+<li><a href="#translation-tables">Translation tables</a></li>
+<li><a href="#translation-strings">Translation strings</a>
+<ul>
+<li><a href="#translation-segments">Translation segments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="translation-sets"><a class="header" href="#translation-sets">Translation sets</a></h2>
 <p>Translation sets are a way to specify how to translate a set of content.</p>
 <p>They use an extremely compact and efficient format to minimize disk usage and maximize performances. Some trade-offs are made to accelerate performance at the expansve of file size.</p>

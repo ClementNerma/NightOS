@@ -67,9 +67,9 @@ The kernel first detects the I/O ports used by each device, and maps it to the d
 
 They are uni-directionals and as such are split in two categories: _input_ ports and _output_ ports.
 
-Input ports are used by devices to transmit informations to the kernel. When this happens, the data is put on a stack, and [drivers](#drivers) can then retrieve it using the [`READ_IO_PORT`](syscalls.md#0x60-read_io_port) system call.
+Input ports are used by devices to transmit informations to the kernel. When this happens, the data is put on a stack, and [drivers](#drivers) can then retrieve it using the [`READ_IO_PORT`](syscalls.md#0x70-read_io_port) system call.
 
-Output ports are used by [drivers](#drivers) to transmit informations to devices, using the [`WRITE_IO_PORT`](syscalls.md#0x61-write_io_port) system call.
+Output ports are used by [drivers](#drivers) to transmit informations to devices, using the [`WRITE_IO_PORT`](syscalls.md#0x71-write_io_port) system call.
 
 ### I/O ports identifiers
 
@@ -79,13 +79,13 @@ The association with the real port number is transparently performed by the kern
 
 ## Drivers
 
-A _driver_ is a process which can directly communicate with hardware devices using [the dedicated system calls](syscalls.md#0x62-device_interrupt).
+A _driver_ is a process which can directly communicate with hardware devices using [the dedicated system calls](syscalls.md#0x72-device_interrupt).
 
 They communicate with external processes through the [`sys::hw`](../services/system/hw.md) system service, or [`sys::fs`](../services/system/fs.md) when [direct driver access](../services/system/hw.md#direct-driver-access-for-sysfs) is possible.
 
 You can find more about how drivers work in [this section](../services/system/hw.md#drivers).
 
-Direct communication with device hardwares is made through [system calls](syscalls.md#0x62-device_interrupt).
+Direct communication with device hardwares is made through [system calls](syscalls.md#0x72-device_interrupt).
 
 The [`sys::hw`](../services/system/hw.md) service is considered as a driver for all devices.
 

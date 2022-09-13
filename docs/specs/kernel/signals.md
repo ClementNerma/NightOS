@@ -189,7 +189,7 @@ Sent to a process that previously established a connection with a service, to in
 
 ### `0x33` READ_BACKED_AMS
 
-Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments) is accessed in read mode.
+Sent to a process when a [signal-backed](syscalls.md#0x41-backed_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments) is accessed in read mode.
 
 **Datafield:**
 
@@ -207,7 +207,7 @@ Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract 
 
 ### `0x34` WRITE_BACKED_AMS
 
-Sent to a process when a [signal-backed](syscalls.md#0x33-backed_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments) is accessed in write mode.
+Sent to a process when a [signal-backed](syscalls.md#0x41-backed_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments) is accessed in write mode.
 
 **Datafield:**
 
@@ -243,12 +243,12 @@ Sent to a process when an [abstract memory segment (AMS)](memory.md#abstract-mem
 **Datafield:**
 
 - Unsharing type (1 byte):
-  - `0x00` if the shared memory was unshared properly using the [UNSHARE_AMS](syscalls.md#0x36-unshare_ams) syscall
+  - `0x00` if the shared memory was unshared properly using the [UNSHARE_AMS](syscalls.md#0x44-unshare_ams) syscall
   - `0x01` if the other process brutally terminated
 
 ### `0x44` SUSPEND
 
-Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the [`SUSPEND`](syscalls.md#0x44-suspend) syscall.
+Sent when the process is asked to suspend. It's up to the process to either ignore this signal or suspend itself using the [`SUSPEND`](syscalls.md#0x54-suspend) syscall.
 
 ### `0x45` WILL_SUSPEND
 
@@ -268,7 +268,7 @@ Sent when the process was just unsuspended.
 
 ### `0x4E` TERMINATE
 
-Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the [`EXIT`](syscalls.md#0x4f-exit) syscall).
+Sent when the process is asked to terminate. It's up to the process to either ignore this signal or terminate itself (preferably by using the [`EXIT`](syscalls.md#0x5f-exit) syscall).
 
 ### `0x4F` WILL_TERMINATE
 

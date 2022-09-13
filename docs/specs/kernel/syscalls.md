@@ -25,32 +25,32 @@ _System calls_, abbreviated _syscalls_, are a type of [KPC](kpc.md). They allow 
   - [`0x2E` HAS_SCOPED_SERVICE](#0x2e-has_scoped_service)
   - [`0x30` MEM_ALLOC](#0x30-mem_alloc)
   - [`0x31` MEM_FREE](#0x31-mem_free)
-  - [`0x32` VIRT_MEM_AMS](#0x32-virt_mem_ams)
-  - [`0x33` BACKED_AMS](#0x33-backed_ams)
-  - [`0x34` SHARE_AMS](#0x34-share_ams)
-  - [`0x35` AMS_SHARING_INFO](#0x35-ams_sharing_info)
-  - [`0x36` UNSHARE_AMS](#0x36-unshare_ams)
-  - [`0x37` MAP_AMS](#0x37-map_ams)
-  - [`0x38` UNMAP_AMS](#0x38-unmap_ams)
-  - [`0x40` CREATE_PROCESS](#0x40-create_process)
-  - [`0x41` WAIT_CHILD_PROCESS](#0x41-wait_child_process)
-  - [`0x42` KILL_CHILD_PROCESS](#0x42-kill_child_process)
-  - [`0x43` GET_PID](#0x43-get_pid)
-  - [`0x44` SUSPEND](#0x44-suspend)
-  - [`0x45` UNSUSPEND](#0x45-unsuspend)
-  - [`0x46` HAND_OVER](#0x46-hand_over)
-  - [`0x4F` EXIT](#0x4f-exit)
-  - [`0x50` CREATE_THREAD](#0x50-create_thread)
-  - [`0x51` CREATE_TLS_SLOT](#0x51-create_tls_slot)
-  - [`0x52` READ_TLS_SLOT](#0x52-read_tls_slot)
-  - [`0x53` WRITE_TLS_SLOT](#0x53-write_tls_slot)
-  - [`0x54` DELETE_TLS_SLOT](#0x54-delete_tls_slot)
-  - [`0x5F` EXIT_THREAD](#0x5f-exit_thread)
-  - [`0x60` READ_IO_PORT](#0x60-read_io_port)
-  - [`0x61` WRITE_IO_PORT](#0x61-write_io_port)
-  - [`0x62` DEVICE_INTERRUPT](#0x62-device_interrupt)
-  - [`0x63` DEVICE_AMS](#0x63-device_ams)
-  - [`0x64` SET_DMA_MEM_ACCESS](#0x64-set_dma_mem_access)
+  - [`0x40` VIRT_MEM_AMS](#0x40-virt_mem_ams)
+  - [`0x41` BACKED_AMS](#0x41-backed_ams)
+  - [`0x42` SHARE_AMS](#0x42-share_ams)
+  - [`0x43` AMS_SHARING_INFO](#0x43-ams_sharing_info)
+  - [`0x44` UNSHARE_AMS](#0x44-unshare_ams)
+  - [`0x45` MAP_AMS](#0x45-map_ams)
+  - [`0x46` UNMAP_AMS](#0x46-unmap_ams)
+  - [`0x50` CREATE_PROCESS](#0x50-create_process)
+  - [`0x51` WAIT_CHILD_PROCESS](#0x51-wait_child_process)
+  - [`0x52` KILL_CHILD_PROCESS](#0x52-kill_child_process)
+  - [`0x53` GET_PID](#0x53-get_pid)
+  - [`0x54` SUSPEND](#0x54-suspend)
+  - [`0x55` UNSUSPEND](#0x55-unsuspend)
+  - [`0x56` HAND_OVER](#0x56-hand_over)
+  - [`0x5F` EXIT](#0x5f-exit)
+  - [`0x60` CREATE_THREAD](#0x60-create_thread)
+  - [`0x61` CREATE_TLS_SLOT](#0x61-create_tls_slot)
+  - [`0x62` READ_TLS_SLOT](#0x62-read_tls_slot)
+  - [`0x63` WRITE_TLS_SLOT](#0x63-write_tls_slot)
+  - [`0x64` DELETE_TLS_SLOT](#0x64-delete_tls_slot)
+  - [`0x6F` EXIT_THREAD](#0x6f-exit_thread)
+  - [`0x70` READ_IO_PORT](#0x70-read_io_port)
+  - [`0x71` WRITE_IO_PORT](#0x71-write_io_port)
+  - [`0x72` DEVICE_INTERRUPT](#0x72-device_interrupt)
+  - [`0x73` DEVICE_AMS](#0x73-device_ams)
+  - [`0x74` SET_DMA_MEM_ACCESS](#0x74-set_dma_mem_access)
   - [`0xA0` EXECUTION_CONTEXT](#0xa0-execution_context)
   - [`0xD0` SYS_CREATE_PROCESS](#0xd0-sys_create_process)
   - [`0xD1` SYS_MANAGE_PROCESS](#0xd1-sys_manage_process)
@@ -92,8 +92,9 @@ System calls' code are categorized as follows:
 - `0x20` to `0x29`: pipes
 - `0x2A` to `0x2F`: services communication
 - `0x30` to `0x3F`: memory management
-- `0x40` to `0x4F`: processes management
-- `0x50` to `0x5F`: threads management
+- `0x40` to `0x4F`: [AMS](memory.md#abstract-memory-segments) management
+- `0x50` to `0x5F`: processes management
+- `0x60` to `0x6F`: threads management
 - `0xA0` to `0xAF`: applications-related syscalls
 - `0xD0` to `0xDF`: reserved to system services
 
@@ -553,8 +554,8 @@ Allocate a linear block of memory.
 
 Unallocate a linear block of memory.
 
-Shared memory pages must first be unshared through the [`UNSHARE_AMS`](#0x36-unshare_ams) syscall.  
-Mapped memory pages must be unmapped through the [`UNMAP_AMS`](#0x38-unmap_ams) syscall.
+Shared memory pages must first be unshared through the [`UNSHARE_AMS`](#0x44-unshare_ams) syscall.  
+Mapped memory pages must be unmapped through the [`UNMAP_AMS`](#0x46-unmap_ams) syscall.
 
 **WARNING:** Memory will not be zeroed, therefore the caller process shall ensure critical informations are zeroed or randomized before freeing the memory.
 
@@ -575,7 +576,7 @@ _None_
 - `0x32`: One or more of the provided pages was not allocated (e.g. unmapped page or memory-mapped page)
 - `0x33`: One or more of the provided pages are shared with another process
 
-### `0x32` VIRT_MEM_AMS
+### `0x40` VIRT_MEM_AMS
 
 Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) from a part of the current process' address space.
 
@@ -594,7 +595,7 @@ Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) fr
 - `0x11`: Number of bytes is unaligned
 - `0x30`: Address is out of range
 
-### `0x33` BACKED_AMS
+### `0x41` BACKED_AMS
 
 Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) backed by the [`READ_BACKED_AMS`](signals.md#0x33-read_backed_ams) and [`WRITE_BACKED_AMS`](signals.md#0x34-write_backed_ams) signals.
 
@@ -610,7 +611,7 @@ Copy-on-write support can be enabled to allow the receiver process to write data
 - `0x10`: Invalid COW mode provided
 - `0x11`: Provided length is unaligned
 
-### `0x34` SHARE_AMS
+### `0x42` SHARE_AMS
 
 Share an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) with another process.
 
@@ -618,7 +619,7 @@ This will trigger in the target process the [`RECV_SHARED_MEM`](signals.md#0x35-
 
 The _mutual mode_ allows both processes to access the memory, with the sharer setting the permissions for the receiver to limit its access. Copy-on-write can also be enabled to allow the receiver process to write data without affecting the sharer process' memory.
 
-The _exclusive mode_ allows, only when sharing AMS [made from existing memory pages](#0x32-virt_mem_ams) from its original process, to unmap the original pages from the said process to let the exclusive access to the target process. This is useful when transferring temporarily large chunks of data to another process. Also, access permissions are ignored when using exclusive mode.
+The _exclusive mode_ allows, only when sharing AMS [made from existing memory pages](#0x40-virt_mem_ams) from its original process, to unmap the original pages from the said process to let the exclusive access to the target process. This is useful when transferring temporarily large chunks of data to another process. Also, access permissions are ignored when using exclusive mode.
 
 The returned AMS ID is common for both the sender and the receiver, allowing to use it in exchanges.
 
@@ -644,9 +645,9 @@ The returned AMS ID is common for both the sender and the receiver, allowing to 
 - `0x21`: Access permissions were provided but the sharing mode is set to exclusive
 - `0x40`: There is not enough contiguous space in the receiver process' memory space to map the shared memory
 
-### `0x35` AMS_SHARING_INFO
+### `0x43` AMS_SHARING_INFO
 
-Get informations about a [shared](#0x34-share_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments).
+Get informations about a [shared](#0x42-share_ams) [abstract memory segment (AMS)](memory.md#abstract-memory-segments).
 
 **Arguments:**
 
@@ -665,9 +666,9 @@ Get informations about a [shared](#0x34-share_ams) [abstract memory segment (AMS
 
 - `0x30`: Unknwon AMS ID provided
 
-### `0x36` UNSHARE_AMS
+### `0x44` UNSHARE_AMS
 
-Stop sharing an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) started by [`SHARE_AMS`](#0x34-share_ams). Note that exlusive sharings cannot be unmapped.
+Stop sharing an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) started by [`SHARE_AMS`](#0x42-share_ams). Note that exlusive sharings cannot be unmapped.
 
 This will trigger in the target process the [`UNSHARED_AMS`](signals.md#0x37-unshared_ams) signal.
 
@@ -686,7 +687,7 @@ _None_
 - `0x21`: Provided AMS ID is exclusive
 - `0x32`: Provided AMS was not shared with the provided process
 
-### `0x37` MAP_AMS
+### `0x45` MAP_AMS
 
 Map an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) in the current process' address space.
 
@@ -706,7 +707,7 @@ _None_
 - `0x31`: Provided mapping address or address+length is out-of-range in the AMS
 - `0x32`: Provided address to map or address+length is out-of-orange in this process' address space
 
-### `0x38` UNMAP_AMS
+### `0x46` UNMAP_AMS
 
 Unmap an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) from the current process' address space.  
 If the AMS is mapped at multiple addresses of this process, only one of the mappings will be unmapped by default.
@@ -725,7 +726,7 @@ _Empty_
 - `0x10`: Unknown AMS ID provided
 - `0x30`: Provided AMS it not mapped at this address
 
-### `0x40` CREATE_PROCESS
+### `0x50` CREATE_PROCESS
 
 Create a child process from the current one. The new process gets a separate memory space.
 
@@ -750,7 +751,7 @@ If the parent process is part of a [container](../containers.md), the child proc
 - `0x30`: The current process is not an application process
 - `0x40`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
 
-### `0x41` WAIT_CHILD_PROCESS
+### `0x51` WAIT_CHILD_PROCESS
 
 Wait for a child process to terminate.
 
@@ -767,7 +768,7 @@ _Empty_
 
 - `0x30`: The provided PID does not exist or does not belong to the current application
 
-### `0x42` KILL_CHILD_PROCESS
+### `0x52` KILL_CHILD_PROCESS
 
 Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md#0x4f-will_terminate) signal.
 
@@ -778,13 +779,13 @@ Kill a child process, which will first receive the [`WILL_TERMINATE`](signals.md
 
 **Return value:**
 
-- Process' exit data (provided through [`EXIT_PROCESS`](#0x4f-exit), `0` otherwise)
+- Process' exit data (provided through [`EXIT_PROCESS`](#0x5f-exit), `0` otherwise)
 
 **Errors:**
 
 - `0x40`: Failed to create a new process due to hardware problem (cannot allocate memory, ...)
 
-### `0x43` GET_PID
+### `0x53` GET_PID
 
 Get the current process' PID.
 
@@ -800,7 +801,7 @@ _None_
 
 _None_
 
-### `0x44` SUSPEND
+### `0x54` SUSPEND
 
 [Suspend](../../features/balancer.md#application-processes-suspension) the current process or a child process.
 
@@ -817,7 +818,7 @@ _None_
 - `0x30`: the current process is not an application process
 - `0x31`: the current PID was not found or is not a child of the current process
 
-### `0x45` UNSUSPEND
+### `0x55` UNSUSPEND
 
 [Unsuspend](../../features/balancer.md#application-processes-suspension) a child process.
 
@@ -836,7 +837,7 @@ Will trigger the [`UNSUSPENDED`](signals.md#0x46-unsuspended) signal on the chil
 - `0x30`: the current process is not an application process
 - `0x31`: the current PID was not found or is not a child of the current process
 
-### `0x46` HAND_OVER
+### `0x56` HAND_OVER
 
 End this process' [cycle](scheduling.md#cycles-and-context-switching).
 
@@ -854,7 +855,7 @@ _None_
 
 _None_
 
-### `0x4F` EXIT
+### `0x5F` EXIT
 
 Kill the current process.
 
@@ -873,7 +874,7 @@ _None_ (never returns)
 
 _None_
 
-### `0x50` CREATE_THREAD
+### `0x60` CREATE_THREAD
 
 Create a thread from the current one. The new thread will share the current one's memory space.
 
@@ -891,7 +892,7 @@ Create a thread from the current one. The new thread will share the current one'
 
 - `0x40`: Failed to create a new thread due to hardware problem (cannot allocate memory, ...)
 
-### `0x51` CREATE_TLS_SLOT
+### `0x61` CREATE_TLS_SLOT
 
 Create a [TLS slot](../../technical/processes.md#thread-local-storage).
 
@@ -908,7 +909,7 @@ _None_
 - `0x40`: Maximum number of TLS slots was reached
 - `0x41`: Could not allocate memory for a new TLS slot
 
-### `0x52` READ_TLS_SLOT
+### `0x62` READ_TLS_SLOT
 
 Read from a [TLS slot](../../technical/processes.md#thread-local-storage).
 
@@ -925,7 +926,7 @@ Read from a [TLS slot](../../technical/processes.md#thread-local-storage).
 
 - `0x30`: Unknown TLS identifier
 
-### `0x53` WRITE_TLS_SLOT
+### `0x63` WRITE_TLS_SLOT
 
 Write to a [TLS slot](../../technical/processes.md#thread-local-storage).
 
@@ -943,7 +944,7 @@ _None_
 - `0x30`: Unknown TLS identifier
 - `0x40`: Failed to allocate enough memory for the written data
 
-### `0x54` DELETE_TLS_SLOT
+### `0x64` DELETE_TLS_SLOT
 
 Delete a [TLS slot](../../technical/processes.md#thread-local-storage).
 
@@ -959,7 +960,7 @@ _None_
 
 - `0x30`: Unknown TLS identifier
 
-### `0x5F` EXIT_THREAD
+### `0x6F` EXIT_THREAD
 
 Kill the current thread and all of its children threads.
 
@@ -975,7 +976,7 @@ _None_ (never returns)
 
 _None_
 
-### `0x60` READ_IO_PORT
+### `0x70` READ_IO_PORT
 
 Read data from the physical [I/O port](hardware.md#inputoutput-ports) a device, if [authorized as a driver](processes.md#drivable-devices).
 
@@ -998,7 +999,7 @@ Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
 - `0x32`: The provided I/O port does not exist for the provided device
 - `0x33`: The provided I/O port is an output port
 
-### `0x61` WRITE_IO_PORT
+### `0x71` WRITE_IO_PORT
 
 Write data to the physical [I/O port](hardware.md#inputoutput-ports) a device, if [authorized as a driver](processes.md#drivable-devices).
 
@@ -1021,7 +1022,7 @@ Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
 - `0x32`: The provided I/O port does not exist for the provided device
 - `0x33`: The provided I/O port is an input port
 
-### `0x62` DEVICE_INTERRUPT
+### `0x72` DEVICE_INTERRUPT
 
 Trigger a hardware interruption on a device, if [authorized as a driver](processes.md#drivable-devices).
 
@@ -1044,7 +1045,7 @@ _None_
 - `0x32`: The provided I/O port does not exist for the provided device
 - `0x33`: The provided I/O port is an input port
 
-### `0x63` DEVICE_AMS
+### `0x73` DEVICE_AMS
 
 Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) from a device's memory through _Mapped Memory Input/Output_ (MMIO).
 
@@ -1072,7 +1073,7 @@ Complete access is granted to the [`sys::hw`](../services/system/hw.md) service.
 - `0x31`: The provided device KDI was not found
 - `0x32`: The provided device is not compatible with MMIO
 
-### `0x64` SET_DMA_MEM_ACCESS
+### `0x74` SET_DMA_MEM_ACCESS
 
 Allow or disallow a device to access a range of addresses through _Direct Memory Access_ (DMA) in the current process' address space.
 

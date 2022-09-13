@@ -1716,7 +1716,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <p>Each page contains a set of entries, which may be split on the disk. An entry is made of the following:</p>
 <ul>
 <li>Address of the page referencing this entry (8 bytes)</li>
-<li>Entry index in the page referencing it (8 bytes)</li>
+<li><a href="specs/filesystem.html#filesystem-unique-identifier">FEID</a> of the item this entry is for (8 bytes)</li>
 <li>Number of entities described in the entry (8 bytes)</li>
 <li>For each entity:
 <ul>
@@ -1750,8 +1750,8 @@ It indicates why the application was started and so what it is supposed to do.</
 <ul>
 <li><code>0b00</code>: inherit from the parent entity / from the system's settings</li>
 <li><code>0b01</code>: refuse for this specific item</li>
-<li><code>0b02</code>: allow for this item, recursively</li>
-<li><code>0b03</code>: allow for this item but only for content owned by the referred entity, recursively</li>
+<li><code>0b10</code>: allow for this item, recursively</li>
+<li><code>0b11</code>: allow for this item but only for content owned by the referred entity, recursively</li>
 </ul>
 <h2 id="file-table-pointer"><a class="header" href="#file-table-pointer">File table pointer</a></h2>
 <p>Unless a filesystem does not support it, nor natively or through the use of extended attributes, each file and directory's entry must contain the address of its entry in the SPM, with <code>0</code> indicating no entry exists for it.</p>

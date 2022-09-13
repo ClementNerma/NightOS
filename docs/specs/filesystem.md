@@ -9,7 +9,7 @@ This document presents how files are stored in NightOS.
   - [Temporary FEID](#temporary-feid)
   - [Paths' size limit](#paths-size-limit)
 - [Filenames](#filenames)
-- [Storage permissions map](#storage-permissions-map)
+- [Permissions](#permissions)
 - [Symbolic links](#symbolic-links)
   - [Concept](#concept)
   - [Cyclic symlinks](#cyclic-symlinks)
@@ -60,7 +60,7 @@ This limit exists to avoid too costly string copies on path manipulation, while 
 
 For naming conventions, see the [related specification](services/integration/filesystem-interfaces.md#filenames).
 
-## Storage permissions map
+## Permissions
 
 Permissions on individual items is achieved through [storage permissions maps](storage-permissions-map.md).
 

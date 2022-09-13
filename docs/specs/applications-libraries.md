@@ -50,7 +50,6 @@ For apps and libs downloaded from the [Store](../applications/Stellar.md), exten
 
 Applications' and libraries' name, description, content, etc. can be translated using _translation files_. The content itself can be handled in any other manner, e.g. using a translation framework, but the metadata must use a translation file so the system does not have to run code in order to perform the translation.
 
-
 ## The manifest
 
 A _manifest_ is a file describing the application or library. It is mandatory to build and distribute it. Its content differ for applications and libraries, but there are common fields (`REQ`: required, `OPT`: optional):

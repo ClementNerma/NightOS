@@ -92,6 +92,7 @@ Translation strings use the following structure:
   - [Translation segment](#translation-segments)
 
 #### Translation segments
+
 - Length of the segment in bytes (4 bytes)
 - Segment type (1 byte):
   - `0x00`: fixed text

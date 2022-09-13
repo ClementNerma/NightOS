@@ -40,7 +40,7 @@ Notifications can have action buttons, which are then linked to the owner applic
 
 ## Persistent notifications
 
-Persistent notifications don't disappear after a timeout. They can for instance be used to indicate a pending state like the activation of a battery-consuming element like a GPS.
+Persistent notifications don't disappear after a timeout. They can for instance be used to indicate a continuous state like the progress of a task.
 
 ## Notification types
 

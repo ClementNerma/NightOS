@@ -535,13 +535,13 @@ _None_
 
 ### `0x30` MEM_ALLOC
 
-Allocate a linear block of memory.
+Allocate a contiguous block of memory.
 
 **WARNING:** Allocated memory will not be rewritten unless it previously belonged to another process, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.
 
 **Arguments:**
 
-- The number of [pages](memory.md#pages) to allocate (8 bytes)
+- Number of bytes to allocate (8 bytes)
 
 **Return value:**
 
@@ -549,11 +549,11 @@ Allocate a linear block of memory.
 
 **Errors:**
 
-- `0x40`: The kernel could not find a linear block of memory of the requested size
+- `0x40`: The kernel could not find a contiguous block of memory of the requested size
 
 ### `0x31` MEM_FREE
 
-Unallocate a linear block of memory.
+Unallocate a contiguous block of memory.
 
 Shared memory pages must first be unshared through the [`UNSHARE_AMS`](#0x44-unshare_ams) syscall.  
 Mapped memory pages must be unmapped through the [`UNMAP_AMS`](#0x46-unmap_ams) syscall.

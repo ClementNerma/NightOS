@@ -156,6 +156,8 @@
 <h2 id="addresses-randomization"><a class="header" href="#addresses-randomization">Addresses randomization</a></h2>
 <p>Allocations happen at random addresses using address space layout randomization (ASLR).</p>
 <p>Kernel memory's randomization using processes like KASLR or KARL are currently being considered.</p>
+<h2 id="write-or-exec"><a class="header" href="#write-or-exec">Write-or-exec</a></h2>
+<p>Memory implements a W^X model where memory can be writable <strong>or</strong> executable, but not both. This way, an attacker cannot write arbitrary instructions in memory and then execute them.</p>
 
                     </main>
 

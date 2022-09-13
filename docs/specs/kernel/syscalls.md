@@ -542,6 +542,11 @@ Allocate a contiguous block of memory. In case of large allocations, a large mem
 **Arguments:**
 
 - Number of bytes to allocate (8 bytes)
+- Permissions (3 bits, from the weakest):
+  - `0b001`: Read-only
+  - `0b010`: Write-only
+  - `0b011`: Read-write
+  - `0b100`: Exec-only
 
 **Return value:**
 
@@ -549,6 +554,7 @@ Allocate a contiguous block of memory. In case of large allocations, a large mem
 
 **Errors:**
 
+- `0x10`: Invalid permission
 - `0x40`: The kernel could not find a contiguous block of memory of the requested size
 
 ### `0x31` MEM_FREE

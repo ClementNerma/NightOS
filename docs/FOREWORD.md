@@ -32,6 +32,7 @@ Unlike other operating systems such as Linux which are able to run on a very wid
 
 * Running on embedded devices
 * Running on multi-CPU computers (although this decision might change in the future)
+* Running on 32-bit devices
 
 ## What's the project's structure?
 

@@ -535,7 +535,7 @@ _None_
 
 ### `0x30` MEM_ALLOC
 
-Allocate a contiguous block of memory.
+Allocate a contiguous block of memory. In case of large allocations, a large memory page may be allocated instead of multiple small ones.
 
 **WARNING:** Allocated memory will not be rewritten unless it previously belonged to another process, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.
 

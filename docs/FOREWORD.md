@@ -26,6 +26,13 @@ The problem with current OSes like Windows, Linux or MacOS is they were built on
 
 NightOS, on its side, starts from a blank page. There is no compatibility to maintain on the software level, and everything is designed from the start to be future-proof, meaning it will be easy to add new security features for instance, without breaking any software compatibility.
 
+## What NightOS isn't
+
+Unlike other operating systems such as Linux which are able to run on a very wide variety of devices, the goal of NightOS is not to be as flexible as this would require to make some big compromises and hugely complexify the system. Here is a list of things NightOS won't do:
+
+* Running on embedded devices
+* Running on multi-CPU computers (although this decision might change in the future)
+
 ## What's the project's structure?
 
 The project is composed of three distinct parts: the kernel, the system, and the desktop environment.

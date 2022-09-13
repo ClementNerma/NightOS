@@ -4453,10 +4453,12 @@ hardw</p>
 <p>The kernel does not identify devices, as this task is relegated to the <a href="specs/kernel/../services/system/hw.html"><code>sys::hw</code></a> service. In order to communicate with hardware devices, only the <a href="specs/kernel/hardware.html#connection-interface-identifier">CII</a> is provided.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="memory"><a class="header" href="#memory">Memory</a></h1>
 <p>This document describes how the kernel organizes and manages the memory.</p>
+<p><strong>WARNING:</strong> This document is only a short draft and is missing a LOT of informations on how the memory will be structured and managed.</p>
+<h2 id="structure-4"><a class="header" href="#structure-4">Structure</a></h2>
+<p>Every running code that is not part of the kernel itself doesn't have access to the physical memory. Instead, every process has a virtual 64-bit address space split into <em>pages</em>.</p>
 <h2 id="pages"><a class="header" href="#pages">Pages</a></h2>
-<p><strong>TODO</strong></p>
-<h2 id="isolation"><a class="header" href="#isolation">Isolation</a></h2>
-<p>Each <a href="specs/kernel/processes.html">process</a> has its own 64-bit address space, preventing it from accessing other processes' data. The memory is made of pages, which must be either be <a href="specs/kernel/syscalls.html#0x30-mem_alloc">allocated</a> or mapped using <a href="specs/kernel/memory.html#abstract-memory-segments">virtual memory segments</a>.</p>
+<p>A page can either be <em>small</em> (usually 4 KB) or <em>large</em> (usually 2 or 4 MB), the exact sizes depending on the CPU architecture.</p>
+<p>Pages can be allocated through the <a href="specs/kernel/syscalls.html#0x30-mem_alloc">dedicated syscall</a> syscall, or mapped using <a href="specs/kernel/memory.html#abstract-memory-segments">abstract memory segments</a>.</p>
 <h2 id="abstract-memory-segments"><a class="header" href="#abstract-memory-segments">Abstract memory segments</a></h2>
 <p>An <em>abstract memory segment</em> (AMS) is an identifier which refers to a segment of memory which doesn't actually exist. To be used, they must be <em>mapped</em> in a process' memory to be accessed like regular memory. The kernel then intercepts all memory accesses to these mappings and handle them, depending on their nature which cover three cases:</p>
 <ul>
@@ -4465,6 +4467,9 @@ hardw</p>
 <li><a href="specs/kernel/syscalls.html#0x41-backed_ams">Making a virtual memory space handled by signals</a></li>
 </ul>
 <p>An AMS can then be mapped at multiple places in a process' memory, or shared with other processes. The kernel handles mappings to get optimal performances and reduce the number of memory accesses as much as possible.</p>
+<h2 id="addresses-randomization"><a class="header" href="#addresses-randomization">Addresses randomization</a></h2>
+<p>Allocations happen at random addresses using address space layout randomization (ASLR).</p>
+<p>Kernel memory's randomization using processes like KASLR or KARL are currently being considered.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="processes-1"><a class="header" href="#processes-1">Processes</a></h1>
 <p>Apart from the kernel itself, all programs run in <em>processes</em>.</p>
 <ul>
@@ -5549,7 +5554,7 @@ The client thread will not receive any <a href="specs/kernel/signals.html#0x2a-s
 </ul>
 <h3 id="0x30-mem_alloc"><a class="header" href="#0x30-mem_alloc"><code>0x30</code> MEM_ALLOC</a></h3>
 <p>Allocate a linear block of memory.</p>
-<p><strong>WARNING:</strong> Allocated memory will not be rewritten, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.</p>
+<p><strong>WARNING:</strong> Allocated memory will not be rewritten unless it previously belonged to another process, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>The number of <a href="specs/kernel/memory.html#pages">pages</a> to allocate (8 bytes)</li>

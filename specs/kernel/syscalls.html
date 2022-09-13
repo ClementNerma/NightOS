@@ -612,7 +612,7 @@ The client thread will not receive any <a href="signals.html#0x2a-service_conn_r
 </ul>
 <h3 id="0x30-mem_alloc"><a class="header" href="#0x30-mem_alloc"><code>0x30</code> MEM_ALLOC</a></h3>
 <p>Allocate a linear block of memory.</p>
-<p><strong>WARNING:</strong> Allocated memory will not be rewritten, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.</p>
+<p><strong>WARNING:</strong> Allocated memory will not be rewritten unless it previously belonged to another process, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>The number of <a href="memory.html#pages">pages</a> to allocate (8 bytes)</li>

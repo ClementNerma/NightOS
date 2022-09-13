@@ -4,6 +4,14 @@ Translations are a complex topic and can be handled in several ways.
 
 Applications' and libraries' content can either be translated using a custom way (e.g. a translation framework), or by using the system's [builtin translation service, `sys::i18n`](services/system/i18n.md).
 
+- [Translation sets](#translation-sets)
+  - [Header](#header)
+  - [Translation models](#translation-models)
+    - [Variable set declaration](#variable-set-declaration)
+  - [Translation tables](#translation-tables)
+  - [Translation strings](#translation-strings)
+    - [Translation segments](#translation-segments)
+
 ## Translation sets
 
 Translation sets are a way to specify how to translate a set of content.

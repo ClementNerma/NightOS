@@ -30,6 +30,7 @@ Each user is of a specific type:
 - _Standard_: nothing special
 - _Administrator_: can run programs directly as administrator
 - _Main administrator_: administrator that can manage storage encryption
+- _System_: reserved to a specific builtin user that can only be accessed by the main administrator using a special procedure
 
 When a user wants to perform a task it does not have the privileges to, it can (by default) ask to run the task as _another user_. The other user's credentials are then required.
 

@@ -10,7 +10,7 @@ To support crash saves, applications must opt-in through an option in their [man
 
 ## Crash saves collection
 
-Every once in a while (once per minute by default), a [`CRASH_SAVE_COLLETION`](services/system/crashsave.md#0x0100-crash_save_collection) notification is sent to the application, which is expected to write a state it will be able to restore later on in a temporary file provided by the [`sys::crashsave`](../features/crash-saves.md) service.
+Every once in a while (once per minute by default), a [`CRASH_SAVE_COLLECTION`](services/system/crashsave.md#0x0100-crash_save_collection) notification is sent to the application, which is expected to write a state it will be able to restore later on in a temporary file provided by the [`sys::crashsave`](../features/crash-saves.md) service.
 
 ## Crash saves restoration
 

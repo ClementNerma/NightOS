@@ -537,7 +537,7 @@ _None_
 
 Allocate a linear block of memory.
 
-**WARNING:** Allocated memory will not be rewritten, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.
+**WARNING:** Allocated memory will not be rewritten unless it previously belonged to another process, thus it may contain non-zero data. Therefore the caller process shall ensure memory is used correctly.
 
 **Arguments:**
 

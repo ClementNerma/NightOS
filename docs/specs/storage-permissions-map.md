@@ -58,8 +58,8 @@ A _permission level_ is a 2-bit value which can either be:
 
 - `0b00`: inherit from the parent entity / from the system's settings
 - `0b01`: refuse for this specific item
-- `0b02`: allow for this item, recursively
-- `0b03`: allow for this item but only for content owned by the referred entity, recursively
+- `0b10`: allow for this item, recursively
+- `0b11`: allow for this item but only for content owned by the referred entity, recursively
 
 ## File table pointer
 

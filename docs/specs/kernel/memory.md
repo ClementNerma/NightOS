@@ -29,3 +29,7 @@ An AMS can then be mapped at multiple places in a process' memory, or shared wit
 Allocations happen at random addresses using address space layout randomization (ASLR).
 
 Kernel memory's randomization using processes like KASLR or KARL are currently being considered.
+
+## Write-or-exec
+
+Memory implements a W^X model where memory can be writable **or** executable, but not both. This way, an attacker cannot write arbitrary instructions in memory and then execute them.

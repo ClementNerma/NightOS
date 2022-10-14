@@ -633,6 +633,7 @@ The returned AMS ID is common for both the sender and the receiver, allowing to 
 **Arguments:**
 
 - Target process' PID (8 bytes)
+- AMS ID (8 bytes)
 - Command code (2 bytes)
 - Notification mode (1 byte): `0x00` to notify the process with the [`RECV_SHARED_AMS`](signals.md#0x35-recv_shared_ams) signal, `0x01` to skip it
 - Mode (1 byte):
@@ -641,7 +642,7 @@ The returned AMS ID is common for both the sender and the receiver, allowing to 
 
 **Return value:**
 
-- AMS ID (8 bytes)
+_None_
 
 **Errors:**
 

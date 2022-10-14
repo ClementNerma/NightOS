@@ -5637,6 +5637,7 @@ Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.
 <p><strong>Arguments:</strong></p>
 <ul>
 <li>Target process' PID (8 bytes)</li>
+<li>AMS ID (8 bytes)</li>
 <li>Command code (2 bytes)</li>
 <li>Notification mode (1 byte): <code>0x00</code> to notify the process with the <a href="specs/kernel/signals.html#0x35-recv_shared_ams"><code>RECV_SHARED_AMS</code></a> signal, <code>0x01</code> to skip it</li>
 <li>Mode (1 byte):
@@ -5647,9 +5648,7 @@ Mapped memory pages must be unmapped through the <a href="specs/kernel/syscalls.
 </li>
 </ul>
 <p><strong>Return value:</strong></p>
-<ul>
-<li>AMS ID (8 bytes)</li>
-</ul>
+<p><em>None</em></p>
 <p><strong>Errors:</strong></p>
 <ul>
 <li><code>0x10</code>: Invalid notification mode provided</li>

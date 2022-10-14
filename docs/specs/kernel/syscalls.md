@@ -594,7 +594,7 @@ Create an [abstract memory segment (AMS)](memory.md#abstract-memory-segments) fr
 
 **Return value:**
 
-- AMS ID (4 bytes)
+- AMS ID (8 bytes)
 
 **Errors:**
 

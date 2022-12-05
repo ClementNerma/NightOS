@@ -547,6 +547,7 @@ Allocate a contiguous block of memory. In case of large allocations, a large mem
   - `0b010`: Write-only
   - `0b011`: Read-write
   - `0b100`: Exec-only
+- `0x01` to ensure the zone is zeroed before allocating, `0x00` else (1 byte)
 
 **Return value:**
 

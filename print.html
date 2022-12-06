@@ -9167,8 +9167,29 @@ System services communicate directly with the kernel and are trusted processes s
 <h2 id="notifications-7"><a class="header" href="#notifications-7">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="syscrypto-service"><a class="header" href="#syscrypto-service"><code>sys::crypto</code> service</a></h1>
+<p><strong>WARNING:</strong> I am not a cryptography expert, so this document certainly contains mistakes or bad practices. In which case, feel free to let me know!</p>
 <h2 id="methods-11"><a class="header" href="#methods-11">Methods</a></h2>
-<p><strong>TODO</strong></p>
+<h3 id="0x1000-generate_number"><a class="header" href="#0x1000-generate_number"><code>0x1000</code> GENERATE_NUMBER</a></h3>
+<p>Generate a 64-bit number using a cryptographically-secure method.</p>
+<p><strong>Arguments:</strong></p>
+<p><em>None</em></p>
+<p><strong>Return value:</strong></p>
+<ul>
+<li>Generated number (8 bytes)</li>
+</ul>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
+<h4 id="0x0001-random_buffer"><a class="header" href="#0x0001-random_buffer"><code>0x0001</code> RANDOM_BUFFER</a></h4>
+<p>Fill a number with random values using a cryptographically-secure method.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li>Address of the buffer to fill (8 bytes)</li>
+<li>Number of bytes to write (8 bytes)</li>
+</ul>
+<p><strong>Return value:</strong></p>
+<p><em>None</em></p>
+<p><strong>Errors:</strong></p>
+<p><em>None</em></p>
 <h2 id="notifications-8"><a class="header" href="#notifications-8">Notifications</a></h2>
 <p><strong>TODO</strong></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="syscrashsave-service"><a class="header" href="#syscrashsave-service"><code>sys::crashsave</code> service</a></h1>

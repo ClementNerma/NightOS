@@ -48,7 +48,7 @@ Delimited strings are made of:
 
 A buffer pointer refers to a buffer that is either _readable_, meaning its creator process has read permission on its entire memory location, and/or _writable_, meaning its creator process has write permission on its entire memory location.
 
-It is made as follows:
+It is made of:
 
 - The memory address of the buffer (8 bytes)
 - The buffer's length (8 bytes)

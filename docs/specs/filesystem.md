@@ -152,10 +152,10 @@ _NOTE:_ `<F>` indicates the item is a file.
 │   ├── hosts <F>                  Hosts overriding (e.g. 'localhost')
 │   ├── lock                       Opened lock files
 │   ├── logs                       Log files
-│   |   └── upe                    History of UPE requests (1)
+│   |   └── upe <F>                History of UPE requests (1)
 │   ├── public                     Public data, readable and writable by everyone
 │   └── sys                        System's mutable data - available to system only
-│       ├── registry               System's registry
+│       ├── registry <F>           System's registry
 │       ├── awake    <F>           System's shutdown indicator to detect if there was an error during last shutdown
 │       ├── hashes   <F>           Critical files' hashes for the integrity checker (2)
 │       ├── gbpwd    <F>           Global storage's encryption key (3)

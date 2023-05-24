@@ -52,7 +52,7 @@ In such case, the program is still run as the current user, but with the privile
 
 Running a program with UPE requires to know either the other account's password, or to have an _authorization_ from this user. For instance, admin. users have an _authorization_ to use the Administrator account, without providing any password, although a human confirmation is required.
 
-Each request, successful or not, is logged in the log file at `/etc/logs/auc`.
+Each request, successful or not, is logged in the log file at `/etc/logs/upe`.
 
 ## Complexity level
 

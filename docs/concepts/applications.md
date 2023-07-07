@@ -40,11 +40,11 @@ For the latter, user can choose either to build the program from source, using t
 
 ### Sideloading
 
-Applications sideloading (installing an application directly from its [package](../specs/applications.md#application-package)) follows strict rules determined by the _sideloading mode_, which is either "disabled", "secure" or "unsecure".
+Applications sideloading (installing an application directly from its [package](../specs/applications.md#application-package)) follows strict rules determined by the _sideloading mode_, which is either "disabled", "store-checking" or "unsecure".
 
-**Disable mode** prevents all sideloading ; it's not possible to install applications from their package in this mode. [Volatile applications](#volatile-applications) can stil be run, though.
+**Disabled mode** prevents all sideloading ; it's not possible to install applications from their package in this mode. [Volatile applications](#volatile-applications) can stil be run.
 
-**Secure mode** allows sideloading but will first make the system check if the application's [AID](../specs/applications-libraries.md#application-identifier) matches an existing application on the Store. If so, it compares the application's signature to the Store application's one. If they don't match, the application is considered malicious and won't be installed.  
+**Store-checking mode** allows sideloading but will first make the system check if the application's [AID](../specs/applications-libraries.md#application-identifier) matches an existing application on the Store. If so, it compares the application's signature to the Store application's one. If they don't match, the application is considered malicious and won't be installed.  
 Note that this mode only works while connected to internet, as the system needs to check the Store to ensure the application is not malicious. If the computer is offline, sideloading will be disabled.
 
 **Unsecure mode** allows sideloading without any checking, which is highly dangerous as it allows spoofing.
@@ -53,14 +53,14 @@ The sideloading mode can be changed in the [control center](../applications/Cent
 
 ### Volatile applications
 
-Applications can be also be ran as _volatile applications_, which means they are not installed on the disk. There are three methods:
+Applications can be also be ran as _volatile applications_, which means they are not installed on the disk. There are four different methods:
 
-- _Full-volatile_: the app's data are removed when the application closes
-- _Session-scoped_: the app's data are stored on disk until the system shuts down
-- _Local-persistent_: the app's data are stored within a data file located in the same folder
-- _Persistent_: the app's data are stored in a dedicated folder, also enabling common data between users
+- **Fully volatile**: the app's data are removed when the application closes
+- **Session-scoped**: the app's data are stored on disk until the system shuts down
+- **Locally persistent**: the app's data are stored within a data file located in the same folder
+- **Persistent**: the app's data are stored in a dedicated folder, also enabling common data between users
 
-By default, volatile applications are ran in _local-persistent_ mode. In this mode, the system first checks if a file with the same name as the application's package but with the _.vad_ (Volatile Application's Data) exists. If so, it opens this file as the application's storage. Then, when the application wants to store some data, it is stored inside this data file.
+By default, volatile applications are ran in **locally persistent** mode. In this mode, the system first checks if a file with the same name as the application's package but with the _.vad_ (Volatile Application's Data) exists. If so, it opens this file as the application's storage. Then, when the application wants to store some data, it is stored inside this data file.
 
 Note that VAD files are disguised [VSF](../technical/file-formats.md#virtual-storages) files.
 
@@ -70,7 +70,7 @@ Note that the store has an option for installing applications as volatile.
 
 ## Permissions
 
-See the [permissions feature document](../features/permissions.md).
+Permissions allow to finely control what an application can do (or not). See the [permissions feature document](../features/permissions.md) for more details.
 
 ## Commands
 
@@ -78,9 +78,9 @@ Application can expose [shell commands](../technical/shell.md). Multiple command
 
 For instance, if an application with AID `superdev.utils` exposes an `get_time` command, the final usable command will be `:superdev.utils.get_time`.
 
-This is quite a long name but allows to prevent any clashing between commands. It's common for shell scripts to use imports at the beginning of the script to refer more easily to applications' commands.
+This is quite a long name but allows to prevent any clashing between commands. Shell scripts must use imports at the beginning to specify the commands they will use. This also allows to directly spot any missing application required for that script. For more informations on the shell language, check the related [specifications document](../specs/shell-scripting.md).
 
-Note that, by default, shell prompts (not scripts) will allow to directly use commands such as `get_time` in the short form if no other application exposes a command with the same name.
+Note that, by default, shell prompts (not scripts) will allow to directly use commands such as `get_time` in the short form if no other application exposes a command with the same name, for convenience.
 
 Commands work by launching the application with a specific [execution context](../specs/applications.md#execution-context).
 
@@ -99,7 +99,6 @@ These applications can be updated independently of the system itself, thus their
 
 ## Services
 
-Application can provide [services](../technical/services.md) by specifying them in their [manifest](../specs/applications.md#application-manifest).
-The services will be run at startup with the usual application's permissions.
+Application can provide [services](../technical/services.md) to run at startup. They must be specified in their [manifest](../specs/applications.md#application-manifest).
 
-There is exactly one process for each service per active user.
+Services run at startup with the usual application's permissions, and services get one process per active user.

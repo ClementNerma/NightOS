@@ -1,6 +1,6 @@
 # Users
 
-- [The concept](#the-concept)
+- [Concept](#concept)
 - [Users type](#users-type)
 - [Dangers of an admin. account](#dangers-of-an-admin-account)
 - [User Privileges Elevation (UPE)](#user-privileges-elevation-upe)
@@ -10,7 +10,7 @@
 - [Groups](#groups)
 - [User privileges](#user-privileges)
 
-## The concept
+## Concept
 
 Many computers are intended to be shared by multiple persons. In such case, it is useful to separate the data of each user and to prevent other users from accesing another's.
 
@@ -27,9 +27,9 @@ Each custom user has a dedicated data directory called the _homedir_, in `/home/
 Each user is of a specific type:
 
 - _Phantom_: the user's data are erased after the computer is turned off ;
-- _Standard_: nothing special
-- _Administrator_: can run programs directly as administrator
-- _Main administrator_: administrator that can manage storage encryption
+- _Standard_: the default user account type ;
+- _Administrator_: can run programs directly as administrator ;
+- _Main administrator_: administrator that can manage global storage encryption ;
 - _System_: reserved to a specific builtin user that can only be accessed by the main administrator using a special procedure
 
 When a user wants to perform a task it does not have the privileges to, it can (by default) ask to run the task as _another user_. The other user's credentials are then required.
@@ -40,7 +40,7 @@ Note that there is always one and exactly one main administrator. This user acco
 
 ## Dangers of an admin. account
 
-The problem with administrators account is that they can do almost **anything** (except some very specific things like editing the system's files). They can change system settings, read and change other users' data, and even run background processes at startup. They also have all possible privileges as they can edit their own.
+The problem with administrators account is that they can do almost anything (except some very specific things like editing the system's files). They can change system settings, read and change other users' data, and even run background processes at startup. They also have all possible privileges as they can edit their own.
 
 This is why it's extremely discouraged to have two administrator users on the same computer, unless the two accounts are used by really trustworthy persons. As such, a large warning is shown if you try to create a new administrator user.
 

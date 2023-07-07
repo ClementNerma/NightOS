@@ -2,7 +2,7 @@
 
 On traditional operating systems, programs are provided as binary and so are only available for one specific platform (Windows, Linux, MacOS, ...) with a specific architecture (x86, ARM, ...).
 
-In order to prevent this, and in order to bring more stability and security to native programs, NightOS programs are shipped as _NightOS Pre-compiled Programs_ (NPP) using a specific language called _CommonAssembly_.
+In order to simplify distribution, and to bring more stability and security to native programs, NightOS programs are shipped as _NightOS Pre-compiled Programs_ (NPP) using a specific language called _CommonAssembly_.
 
 - [How it works](#how-it-works)
 - [Compatibility](#compatibility)

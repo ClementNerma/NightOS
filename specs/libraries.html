@@ -88,11 +88,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -159,7 +181,7 @@
 <li><a href="#system-applications-libraries">System applications' libraries</a></li>
 </ul>
 <h2 id="manifest"><a class="header" href="#manifest">Manifest</a></h2>
-<p>As libaries are only meant to share code, there manifest is a lot simplier than <a href="applications.html#application-manifest">applications' manifest</a> as it is only made of the <a href="applications-libraries.html#the-manifest">common fields</a>.</p>
+<p>As libaries are only meant to share code, there manifest is a lot more simple than the <a href="applications.html#application-manifest">applications' one</a> as it is only made of the <a href="applications-libraries.html#the-manifest">common fields</a>.</p>
 <h2 id="the-system-library"><a class="header" href="#the-system-library">The system library</a></h2>
 <p>The system provides a single <em>system library</em> with the <code>sys::lib</code> <a href="applications-libraries.html#application-identifier">AID</a>, which is built in the system and not removable. Apart from these points, it acts like a standard library. Its version is identical to the system itself, allowing applications and libraries to specify a minimum system version in their dependencies field.</p>
 <h3 id="system-library-modules"><a class="header" href="#system-library-modules">System library modules</a></h3>

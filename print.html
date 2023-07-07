@@ -89,11 +89,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -346,31 +368,31 @@ Administrator users can install global applications, which are available to ever
 </ul>
 <p>For the latter, user can choose either to build the program from source, using the appropriated build tools in order to optimize performances, or to simply use the pre-built programs (which is the option by default).</p>
 <h3 id="sideloading"><a class="header" href="#sideloading">Sideloading</a></h3>
-<p>Applications sideloading (installing an application directly from its <a href="concepts/../specs/applications.html#application-package">package</a>) follows strict rules determined by the <em>sideloading mode</em>, which is either &quot;disabled&quot;, &quot;secure&quot; or &quot;unsecure&quot;.</p>
-<p><strong>Disable mode</strong> prevents all sideloading ; it's not possible to install applications from their package in this mode. <a href="concepts/applications.html#volatile-applications">Volatile applications</a> can stil be run, though.</p>
-<p><strong>Secure mode</strong> allows sideloading but will first make the system check if the application's <a href="concepts/../specs/applications-libraries.html#application-identifier">AID</a> matches an existing application on the Store. If so, it compares the application's signature to the Store application's one. If they don't match, the application is considered malicious and won't be installed.<br />
+<p>Applications sideloading (installing an application directly from its <a href="concepts/../specs/applications.html#application-package">package</a>) follows strict rules determined by the <em>sideloading mode</em>, which is either &quot;disabled&quot;, &quot;store-checking&quot; or &quot;unsecure&quot;.</p>
+<p><strong>Disabled mode</strong> prevents all sideloading ; it's not possible to install applications from their package in this mode. <a href="concepts/applications.html#volatile-applications">Volatile applications</a> can stil be run.</p>
+<p><strong>Store-checking mode</strong> allows sideloading but will first make the system check if the application's <a href="concepts/../specs/applications-libraries.html#application-identifier">AID</a> matches an existing application on the Store. If so, it compares the application's signature to the Store application's one. If they don't match, the application is considered malicious and won't be installed.<br />
 Note that this mode only works while connected to internet, as the system needs to check the Store to ensure the application is not malicious. If the computer is offline, sideloading will be disabled.</p>
 <p><strong>Unsecure mode</strong> allows sideloading without any checking, which is highly dangerous as it allows spoofing.</p>
 <p>The sideloading mode can be changed in the <a href="concepts/../applications/Central.html">control center</a>.</p>
 <h3 id="volatile-applications"><a class="header" href="#volatile-applications">Volatile applications</a></h3>
-<p>Applications can be also be ran as <em>volatile applications</em>, which means they are not installed on the disk. There are three methods:</p>
+<p>Applications can be also be ran as <em>volatile applications</em>, which means they are not installed on the disk. There are four different methods:</p>
 <ul>
-<li><em>Full-volatile</em>: the app's data are removed when the application closes</li>
-<li><em>Session-scoped</em>: the app's data are stored on disk until the system shuts down</li>
-<li><em>Local-persistent</em>: the app's data are stored within a data file located in the same folder</li>
-<li><em>Persistent</em>: the app's data are stored in a dedicated folder, also enabling common data between users</li>
+<li><strong>Fully volatile</strong>: the app's data are removed when the application closes</li>
+<li><strong>Session-scoped</strong>: the app's data are stored on disk until the system shuts down</li>
+<li><strong>Locally persistent</strong>: the app's data are stored within a data file located in the same folder</li>
+<li><strong>Persistent</strong>: the app's data are stored in a dedicated folder, also enabling common data between users</li>
 </ul>
-<p>By default, volatile applications are ran in <em>local-persistent</em> mode. In this mode, the system first checks if a file with the same name as the application's package but with the <em>.vad</em> (Volatile Application's Data) exists. If so, it opens this file as the application's storage. Then, when the application wants to store some data, it is stored inside this data file.</p>
+<p>By default, volatile applications are ran in <strong>locally persistent</strong> mode. In this mode, the system first checks if a file with the same name as the application's package but with the <em>.vad</em> (Volatile Application's Data) exists. If so, it opens this file as the application's storage. Then, when the application wants to store some data, it is stored inside this data file.</p>
 <p>Note that VAD files are disguised <a href="concepts/../technical/file-formats.html#virtual-storages">VSF</a> files.</p>
 <p>Volatile applications running as persistent do not appear in the applications list and can only be managed through a specific option in the <em>Control Center</em>. Their executable files are not stored anywhere and stay in the application's package, while only their data are stored on the disk. This allows to run the same application several times without losing any data and without worrying about a data file. This also allows to store common data between users.</p>
 <p>Note that the store has an option for installing applications as volatile.</p>
 <h2 id="permissions"><a class="header" href="#permissions">Permissions</a></h2>
-<p>See the <a href="concepts/../features/permissions.html">permissions feature document</a>.</p>
+<p>Permissions allow to finely control what an application can do (or not). See the <a href="concepts/../features/permissions.html">permissions feature document</a> for more details.</p>
 <h2 id="commands"><a class="header" href="#commands">Commands</a></h2>
 <p>Application can expose <a href="concepts/../technical/shell.html">shell commands</a>. Multiple commands can be exposed without any risk of clashing as the command name must be prefixed by the AID first.</p>
 <p>For instance, if an application with AID <code>superdev.utils</code> exposes an <code>get_time</code> command, the final usable command will be <code>:superdev.utils.get_time</code>.</p>
-<p>This is quite a long name but allows to prevent any clashing between commands. It's common for shell scripts to use imports at the beginning of the script to refer more easily to applications' commands.</p>
-<p>Note that, by default, shell prompts (not scripts) will allow to directly use commands such as <code>get_time</code> in the short form if no other application exposes a command with the same name.</p>
+<p>This is quite a long name but allows to prevent any clashing between commands. Shell scripts must use imports at the beginning to specify the commands they will use. This also allows to directly spot any missing application required for that script. For more informations on the shell language, check the related <a href="concepts/../specs/shell-scripting.html">specifications document</a>.</p>
+<p>Note that, by default, shell prompts (not scripts) will allow to directly use commands such as <code>get_time</code> in the short form if no other application exposes a command with the same name, for convenience.</p>
 <p>Commands work by launching the application with a specific <a href="concepts/../specs/applications.html#execution-context">execution context</a>.</p>
 <h2 id="system-applications"><a class="header" href="#system-applications">System applications</a></h2>
 <p>Some <a href="concepts/../applications/README.html">native applications</a> are part of the system itself and are called <em>system applications</em> as such. They get a few specific features:</p>
@@ -383,22 +405,21 @@ Note that this mode only works while connected to internet, as the system needs 
 Native applications which are <em>not</em> system applications can be removed, though.</p>
 <p>These applications can be updated independently of the system itself, thus their version may differ from the system itself.</p>
 <h2 id="services"><a class="header" href="#services">Services</a></h2>
-<p>Application can provide <a href="concepts/../technical/services.html">services</a> by specifying them in their <a href="concepts/../specs/applications.html#application-manifest">manifest</a>.
-The services will be run at startup with the usual application's permissions.</p>
-<p>There is exactly one process for each service per active user.</p>
+<p>Application can provide <a href="concepts/../technical/services.html">services</a> to run at startup. They must be specified in their <a href="concepts/../specs/applications.html#application-manifest">manifest</a>.</p>
+<p>Services run at startup with the usual application's permissions, and services get one process per active user.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
 <p><em>Libraries</em> allow to share a program between multiple applications.</p>
 <ul>
 <li><a href="concepts/libraries.html#how-libraries-work">How libraries work</a></li>
 </ul>
 <h2 id="how-libraries-work"><a class="header" href="#how-libraries-work">How libraries work</a></h2>
-<p>Unlike applications, libraries can be installed in multiple versions. This means you can have three versions of the same library installed at the same time on your computer.</p>
-<p>When an application wants to use a library, it explicitly indicates the list of versions it is compatible with. The system then gets the related version and provides it to the application.</p>
-<p>A library by itself cannot do itself: no background process, no commands exposure, no permission granting. Applications simply use libraries as helpers to achieve specific tasks.</p>
-<p>For instance, the system library <code>fs</code> which is natively available allows to manipulate files and directories easily.</p>
+<p>Libraries allow to share runtime elements to applications. Unlike the latter, they can be installed in multiple versions. This means you can have three versions of the same library installed at the same time on your computer.</p>
+<p>When an application needs to use a library, it explicitly indicates the list of versions it is compatible with. The system then gets the related version and provides it to the application.</p>
+<p>Libraries cannot perform interactive tasks by themselves, which means no background process, no commands exposure, no permission granting. Applications simply use libraries as helpers to achieve specific tasks.</p>
+<p>For more details, check the <a href="concepts/../specs/libraries.html">specifications document</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="users"><a class="header" href="#users">Users</a></h1>
 <ul>
-<li><a href="concepts/users.html#the-concept">The concept</a></li>
+<li><a href="concepts/users.html#concept">Concept</a></li>
 <li><a href="concepts/users.html#users-type">Users type</a></li>
 <li><a href="concepts/users.html#dangers-of-an-admin-account">Dangers of an admin. account</a></li>
 <li><a href="concepts/users.html#user-privileges-elevation-upe">User Privileges Elevation (UPE)</a></li>
@@ -408,7 +429,7 @@ The services will be run at startup with the usual application's permissions.</p
 <li><a href="concepts/users.html#groups">Groups</a></li>
 <li><a href="concepts/users.html#user-privileges">User privileges</a></li>
 </ul>
-<h2 id="the-concept"><a class="header" href="#the-concept">The concept</a></h2>
+<h2 id="concept"><a class="header" href="#concept">Concept</a></h2>
 <p>Many computers are intended to be shared by multiple persons. In such case, it is useful to separate the data of each user and to prevent other users from accesing another's.</p>
 <p>By default, there is two user accounts: the System and the Administrator. They are called <em>virtual users</em> because it's not possible to log in these accounts. Other users (the ones which are created manually) are called <em>custom users</em>.</p>
 <p>Each custom user has a dedicated data directory called the <em>homedir</em>, in <code>/home/[username]</code>, as well as a list of files and directories it can read and/or write. By default, each user gets access to:</p>
@@ -421,16 +442,16 @@ The services will be run at startup with the usual application's permissions.</p
 <p>Each user is of a specific type:</p>
 <ul>
 <li><em>Phantom</em>: the user's data are erased after the computer is turned off ;</li>
-<li><em>Standard</em>: nothing special</li>
-<li><em>Administrator</em>: can run programs directly as administrator</li>
-<li><em>Main administrator</em>: administrator that can manage storage encryption</li>
+<li><em>Standard</em>: the default user account type ;</li>
+<li><em>Administrator</em>: can run programs directly as administrator ;</li>
+<li><em>Main administrator</em>: administrator that can manage global storage encryption ;</li>
 <li><em>System</em>: reserved to a specific builtin user that can only be accessed by the main administrator using a special procedure</li>
 </ul>
 <p>When a user wants to perform a task it does not have the privileges to, it can (by default) ask to run the task as <em>another user</em>. The other user's credentials are then required.</p>
 <p>It's not possible to ask to run a task as system or as administrator as these accounts are virtual and do not have passwords as such, <strong>except</strong> if an administrator user is tries to run a task as administrator.</p>
 <p>Note that there is always one and exactly one main administrator. This user account is created during the installation process, and can be transferred later on to another administrator account.</p>
 <h2 id="dangers-of-an-admin-account"><a class="header" href="#dangers-of-an-admin-account">Dangers of an admin. account</a></h2>
-<p>The problem with administrators account is that they can do almost <strong>anything</strong> (except some very specific things like editing the system's files). They can change system settings, read and change other users' data, and even run background processes at startup. They also have all possible privileges as they can edit their own.</p>
+<p>The problem with administrators account is that they can do almost anything (except some very specific things like editing the system's files). They can change system settings, read and change other users' data, and even run background processes at startup. They also have all possible privileges as they can edit their own.</p>
 <p>This is why it's extremely discouraged to have two administrator users on the same computer, unless the two accounts are used by really trustworthy persons. As such, a large warning is shown if you try to create a new administrator user.</p>
 <h2 id="user-privileges-elevation-upe"><a class="header" href="#user-privileges-elevation-upe">User Privileges Elevation (UPE)</a></h2>
 <p>Users can ask to perform a task with the privileges of another user, such as running a program as administrator. This uses the <em>User Privileges Elevation</em> (UPE) system, builtin the <a href="concepts/../specs/services/system/perm.html"><code>sys::perm</code></a> service.</p>
@@ -524,7 +545,7 @@ A last answer method is with another message telling they won't give any crash s
 <li><a href="features/domains.html#the-concept">The concept</a></li>
 <li><a href="features/domains.html#domain-supervisor">Domain supervisor</a></li>
 </ul>
-<h2 id="the-concept-1"><a class="header" href="#the-concept-1">The concept</a></h2>
+<h2 id="the-concept"><a class="header" href="#the-concept">The concept</a></h2>
 <p>Domains enable all features of <a href="features/parental-control.html">parental control</a> (without the dedicated application though), as well as the following ones:</p>
 <ul>
 <li>Mount a common storage between computers</li>
@@ -904,7 +925,7 @@ It can be downloaded from NightOS' official website.</p>
 <p>See the performances <a href="technical/../features/balancer.html">balancer</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pre-compiling"><a class="header" href="#pre-compiling">Pre-compiling</a></h1>
 <p>On traditional operating systems, programs are provided as binary and so are only available for one specific platform (Windows, Linux, MacOS, ...) with a specific architecture (x86, ARM, ...).</p>
-<p>In order to prevent this, and in order to bring more stability and security to native programs, NightOS programs are shipped as <em>NightOS Pre-compiled Programs</em> (NPP) using a specific language called <em>CommonAssembly</em>.</p>
+<p>In order to simplify distribution, and to bring more stability and security to native programs, NightOS programs are shipped as <em>NightOS Pre-compiled Programs</em> (NPP) using a specific language called <em>CommonAssembly</em>.</p>
 <ul>
 <li><a href="technical/pre-compiling.html#how-it-works">How it works</a></li>
 <li><a href="technical/pre-compiling.html#compatibility">Compatibility</a></li>
@@ -1598,7 +1619,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <p>Permissions on individual items is achieved through <a href="specs/storage-permissions.html">storage permissions maps</a>.</p>
 <h2 id="symbolic-links"><a class="header" href="#symbolic-links">Symbolic links</a></h2>
 <p><em>Symbolic links</em>, abbreviated <em>symlinks</em>, are files that point to another location.</p>
-<h3 id="concept"><a class="header" href="#concept">Concept</a></h3>
+<h3 id="concept-1"><a class="header" href="#concept-1">Concept</a></h3>
 <p>A symlink points to a specific item: file, folder, device, anything. It's just not a shortcut, though, as the symlink will still work if its target is moved.</p>
 <p>When a symlink is accessed, the system will transparently access its target item instead.</p>
 <p>When a symlink is removed, it does not affect the original target. Also, any number of symlinks can target the same item, and symlinks can target other symlinks to. When accessing a symlink, if its target item is a symlink itself, the latter's target will be accessed instead, and so on, until we do not encounter a symlink anymore.</p>
@@ -1614,7 +1635,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <p>When we will try to access <code>A</code>, the system will access <code>B</code>, then <code>A</code>, then <code>B</code>, and so on. This is called a <em>cyclic symlink chain</em>. In such case, the chain is reduced to the minimum (for instance, if we had <code>C</code> pointing to <code>A</code>, the minimum chain would not be <code>C</code> <code>A</code> <code>B</code> but just <code>A</code> <code>B</code>), and marked as erroneous. The process that tried to access the symlink will receive a specific error code to indicate a cyclic symlink chain was encountered.</p>
 <h2 id="flows"><a class="header" href="#flows">Flows</a></h2>
 <p><em>Flows</em> are a simple and efficient way for processes (mostly <a href="specs/services.html">services</a>) to allow treating flows of data.</p>
-<h3 id="concept-1"><a class="header" href="#concept-1">Concept</a></h3>
+<h3 id="concept-2"><a class="header" href="#concept-2">Concept</a></h3>
 <p>A flow is a file without extension, located in the <code>/fl</code> directory, that can either send data to reader processes (<em>read-only</em>) or receive data from writer processes (<em>write-only</em>).</p>
 <p>To understand the concept better, here is the list of native flow files that are always available:</p>
 <div class="table-wrapper"><table><thead><tr><th>Flow file</th><th>Type</th><th>Description</th></tr></thead><tbody>
@@ -1794,7 +1815,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <li><a href="specs/libraries.html#system-applications-libraries">System applications' libraries</a></li>
 </ul>
 <h2 id="manifest"><a class="header" href="#manifest">Manifest</a></h2>
-<p>As libaries are only meant to share code, there manifest is a lot simplier than <a href="specs/applications.html#application-manifest">applications' manifest</a> as it is only made of the <a href="specs/applications-libraries.html#the-manifest">common fields</a>.</p>
+<p>As libaries are only meant to share code, there manifest is a lot more simple than the <a href="specs/applications.html#application-manifest">applications' one</a> as it is only made of the <a href="specs/applications-libraries.html#the-manifest">common fields</a>.</p>
 <h2 id="the-system-library"><a class="header" href="#the-system-library">The system library</a></h2>
 <p>The system provides a single <em>system library</em> with the <code>sys::lib</code> <a href="specs/applications-libraries.html#application-identifier">AID</a>, which is built in the system and not removable. Apart from these points, it acts like a standard library. Its version is identical to the system itself, allowing applications and libraries to specify a minimum system version in their dependencies field.</p>
 <h3 id="system-library-modules"><a class="header" href="#system-library-modules">System library modules</a></h3>

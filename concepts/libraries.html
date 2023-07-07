@@ -88,11 +88,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -153,10 +175,10 @@
 <li><a href="#how-libraries-work">How libraries work</a></li>
 </ul>
 <h2 id="how-libraries-work"><a class="header" href="#how-libraries-work">How libraries work</a></h2>
-<p>Unlike applications, libraries can be installed in multiple versions. This means you can have three versions of the same library installed at the same time on your computer.</p>
-<p>When an application wants to use a library, it explicitly indicates the list of versions it is compatible with. The system then gets the related version and provides it to the application.</p>
-<p>A library by itself cannot do itself: no background process, no commands exposure, no permission granting. Applications simply use libraries as helpers to achieve specific tasks.</p>
-<p>For instance, the system library <code>fs</code> which is natively available allows to manipulate files and directories easily.</p>
+<p>Libraries allow to share runtime elements to applications. Unlike the latter, they can be installed in multiple versions. This means you can have three versions of the same library installed at the same time on your computer.</p>
+<p>When an application needs to use a library, it explicitly indicates the list of versions it is compatible with. The system then gets the related version and provides it to the application.</p>
+<p>Libraries cannot perform interactive tasks by themselves, which means no background process, no commands exposure, no permission granting. Applications simply use libraries as helpers to achieve specific tasks.</p>
+<p>For more details, check the <a href="../specs/libraries.html">specifications document</a>.</p>
 
                     </main>
 

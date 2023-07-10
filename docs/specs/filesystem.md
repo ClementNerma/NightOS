@@ -44,7 +44,7 @@ Each filesystem item has an 8-byte identifier, called the _**F**ilesystem **E**l
 
 It is only unique in the filesystem the item is stored in.
 
-Note that some filesystem do not support this identifier.
+Note that some filesystems may not support this feature. For those, the FEID will be derived from the item's [split path](../integration/filesystem-interfaces.md#split-paths), which means it will still be unique in the filesystem but will not be resilient to file moving or another file replacing the previous one.
 
 ### Temporary FEID
 

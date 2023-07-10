@@ -12,4 +12,4 @@ API interopability will be assured for [TypeScript](https://www.typescriptlang.o
 Usage of architecture-specific assembly will be reduced as much as possible, being only used in two cases:
 
 - The desired behaviour cannot be reached without assembly (e.g. direct register or stack manipulation)
-- Extremely performances-critical pieces
+- Extremely performance-critical pieces (e.g. memory management, context switching, etc.)

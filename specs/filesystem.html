@@ -217,7 +217,7 @@
 <h3 id="element-unique-identifier"><a class="header" href="#element-unique-identifier">Element unique identifier</a></h3>
 <p>Each filesystem item has an 8-byte identifier, called the <em><strong>F</strong>ilesystem <strong>E</strong>lement <strong>Id</strong>entifier</em> (FEID).</p>
 <p>It is only unique in the filesystem the item is stored in.</p>
-<p>Note that some filesystem do not support this identifier.</p>
+<p>Note that some filesystems may not support this feature. For those, the FEID will be derived from the item's <a href="services/integration/filesystem-interfaces.html#split-paths">split path</a>, which means it will still be unique in the filesystem but will not be resilient to file moving or another file replacing the previous one.</p>
 <h3 id="temporary-feid"><a class="header" href="#temporary-feid">Temporary FEID</a></h3>
 <p>A temporary FEID can be created to grant access to a resource to an application without giving actual access to the original item itself. A temporary FEID only lives in memory, and refers an existing filesystem item. If the original item is deleted, the temporary FEID is deleted too.</p>
 <h3 id="paths-size-limit"><a class="header" href="#paths-size-limit">Paths' size limit</a></h3>

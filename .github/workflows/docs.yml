@@ -13,25 +13,21 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.0.0
         with:
           persist-credentials: false
 
-      - name: Get "broken-md-links" tool
-        uses: robinraju/release-downloader@v1
-        with:
-          repository: ClementNerma/broken-md-links
-          latest: true
-          fileName: broken-md-links-linux-x86_64-musl.zip
+      - name: Install "cargo-binstall"
+        uses: cargo-bins/cargo-binstall@install-cargo-binstall-1.0.0
 
-      - run: 7z x broken-md-links-linux-x86_64-musl.zip
-      - run: chmod +x broken-md-links
+      - name: Install "broken-md-links"
+        run: cargo binstall "broken-md-links"
 
-      - name: Look for broken markdown links
-        run: ./broken-md-links ${GITHUB_WORKSPACE}/docs --recursive
-
+      - name: Check docs
+        run: broken-md-links ${GITHUB_WORKSPACE}/docs --recursive
+        
       - name: Setup mdBook
-        uses: peaceiris/actions-mdbook@v1
+        uses: peaceiris/actions-mdbook@v1.2.0
         with:
           mdbook-version: latest
 
@@ -39,7 +35,7 @@ jobs:
         run: mdbook build
 
       - name: Deploy the docs
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           branch: gh-pages
           folder: book

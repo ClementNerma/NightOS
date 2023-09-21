@@ -24,7 +24,7 @@ jobs:
         run: cargo binstall "broken-md-links" -y
 
       - name: Check docs
-        run: broken-md-links ${GITHUB_WORKSPACE}/docs --recursive
+        run: broken-md-links ${GITHUB_WORKSPACE}/docs
         
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v1.2.0

@@ -16,9 +16,9 @@ A global, technical overview of the system's architecture can be found [here](do
 
 ## [Concepts](concepts/README.md)
 
-- [What are applications?](concepts/applications.md) - the way to run software on NightOS
-- [What are libraries?](concepts/libraries.md) - sharing identical behaviours between multiple applications
-- [What are users?](concepts/users.md) - sharing a computer between multiple persons
+- [Applications](concepts/applications.md) - the way to run software on NightOS
+- [Libraries](concepts/libraries.md) - sharing identical behaviours between multiple applications
+- [Users](concepts/users.md) - sharing a computer between multiple persons
 
 ## [Features](features/README.md)
 

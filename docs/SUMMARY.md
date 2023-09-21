@@ -7,9 +7,9 @@
   - [Development](project/development.md) - how the project will be developped
   - [Hardware requirements](project/hw-requirements.md) - hardware required in order to install and run NightOS
 - [Concepts](concepts/README.md)
-  - [What are applications?](concepts/applications.md) - the way to run software on NightOS
-  - [What are libraries?](concepts/libraries.md) - sharing identical behaviours between multiple applications
-  - [What are users?](concepts/users.md) - sharing a computer between multiple persons
+  - [Applications](concepts/applications.md) - the way to run software on NightOS
+  - [Libraries](concepts/libraries.md) - sharing identical behaviours between multiple applications
+  - [Users](concepts/users.md) - sharing a computer between multiple persons
 - [Features](features/README.md)
   - [The balancer](features/balancer.md) - improve performances by balancing processes' priority
   - [Crash saves](features/crash-saves.md) - prevent data loss at maximum with crash-proof data saving

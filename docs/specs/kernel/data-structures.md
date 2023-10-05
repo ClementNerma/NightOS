@@ -4,23 +4,30 @@ This documents describes the structures used by the kernel to represent the data
 
 All contiguous data structures are made such as it is easy to delimit them by computing their size in the memory.
 
-- [Timestamps](#timestamps)
-- [Delimited lists](#delimited-lists)
-- [Delimited strings](#delimited-strings)
-- [Buffer pointers](#buffer-pointers)
-- [Options](#options)
-- [Fallible results](#fallible-results)
-- [Bitmap images](#bitmap-images)
-- [Bitmap videos](#bitmap-videos)
-- [Packed linked lists](#packed-linked-lists)
-  - [Caracteristics](#caracteristics)
-  - [Structure in memory](#structure-in-memory)
-  - [Checking an entry's type](#checking-an-entrys-type)
-  - [The ratio](#the-ratio)
-  - [Performances bottlenecks](#performances-bottlenecks)
-  - [Performance advantages](#performance-advantages)
-  - [Length-first variant](#length-first-variant)
-  - [Tricking the `NIE`](#tricking-the-nie)
+- [Data structures](#data-structures)
+  - [Booleans](#booleans)
+  - [Timestamps](#timestamps)
+  - [Delimited lists](#delimited-lists)
+  - [Delimited strings](#delimited-strings)
+  - [Buffer pointers](#buffer-pointers)
+  - [Options](#options)
+  - [Fallible results](#fallible-results)
+  - [Bitmap images](#bitmap-images)
+  - [Bitmap videos](#bitmap-videos)
+  - [Packed linked lists](#packed-linked-lists)
+    - [Caracteristics](#caracteristics)
+    - [Structure in memory](#structure-in-memory)
+    - [Checking an entry's type](#checking-an-entrys-type)
+    - [The ratio](#the-ratio)
+    - [Performances bottlenecks](#performances-bottlenecks)
+    - [Performance advantages](#performance-advantages)
+    - [Length-first variant](#length-first-variant)
+    - [Tricking the `NIE`](#tricking-the-nie)
+  - [Unions](#unions)
+
+## Booleans
+
+A boolean is a single byte value that's either `0x01` for `true` or `0x02` for `false`.
 
 ## Timestamps
 
@@ -193,3 +200,11 @@ But also:
 
 - Increase the memory cost of the last entry when it isn't full
 - Slow down insert times when the last entry is full (needs to allocate)
+
+## Unions
+
+Unions allow to construct multiple types of data in a single one.
+
+An union is made of a _type ID_ (1 byte) followed by the data.
+
+For instance, if we want to store either a string or a list, we can associate type ID 0 to the former and type ID 1 to the latter, then append the actual string or list to it.

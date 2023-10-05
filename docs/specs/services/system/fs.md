@@ -19,28 +19,27 @@ The `sys::fs` service is in charge of operations related to the [filesystems](..
     - [`0x1000` ITEM\_EXISTS](#0x1000-item_exists)
     - [`0x1001` FEID\_TO\_SPLIT](#0x1001-feid_to_split)
     - [`0x1002` ITEM\_METADATA](#0x1002-item_metadata)
-    - [`0x1003` RENAME\_ITEM](#0x1003-rename_item)
-    - [`0x1004` MOVE\_ITEM](#0x1004-move_item)
-    - [`0x1005` DELETE\_ITEM](#0x1005-delete_item)
-    - [`0x2000` CREATE\_DIRECTORY](#0x2000-create_directory)
-    - [`0x2001` READ\_DIRECTORY](#0x2001-read_directory)
-    - [`0x3000` CREATE\_FILE](#0x3000-create_file)
-    - [`0x3001` READ\_FILE](#0x3001-read_file)
-    - [`0x3101` WRITE\_FILE](#0x3101-write_file)
-    - [`0x4000` CREATE\_SYMLINK](#0x4000-create_symlink)
-    - [`0x4001` UPDATE\_SYMLINK](#0x4001-update_symlink)
-    - [`0x4002` READ\_SYMLINK](#0x4002-read_symlink)
+    - [`0x2000` RENAME\_ITEM](#0x2000-rename_item)
+    - [`0x2001` MOVE\_ITEM](#0x2001-move_item)
+    - [`0x2002` DELETE\_ITEM](#0x2002-delete_item)
+    - [`0x3000` CREATE\_DIRECTORY](#0x3000-create_directory)
+    - [`0x3001` READ\_DIRECTORY](#0x3001-read_directory)
+    - [`0x4000` OPEN\_FILE](#0x4000-open_file)
+    - [`0x4001` CLOSE\_FILE](#0x4001-close_file)
+    - [`0x4002` READ\_FILE](#0x4002-read_file)
+    - [`0x4002` WRITE\_FILE](#0x4002-write_file)
+    - [`0x5000` CREATE\_SYMLINK](#0x5000-create_symlink)
+    - [`0x5001` UPDATE\_SYMLINK](#0x5001-update_symlink)
+    - [`0x5002` READ\_SYMLINK](#0x5002-read_symlink)
     - [`0xA000` WATCH\_ITEM](#0xa000-watch_item)
     - [`0xA001` WATCH\_DIR\_CONTENT](#0xa001-watch_dir_content)
     - [`0xA002` UNWATCH](#0xa002-unwatch)
     - [`0xAA00` LOCK\_ITEM](#0xaa00-lock_item)
     - [`0xAA01` UNLOCK\_ITEM](#0xaa01-unlock_item)
-    - [`0xF000` FORMAT\_ASYNC](#0xf000-format_async)
+    - [`0xF000` FORMAT](#0xf000-format)
   - [Notifications](#notifications)
     - [`0x0006` FS\_CHANGED](#0x0006-fs_changed)
     - [`0xA000` ITEM\_CHANGED](#0xa000-item_changed)
-    - [`0xA001` DIR\_CONTENT\_CHANGED](#0xa001-dir_content_changed)
-    - [`0xF000` FORMATTED](#0xf000-formatted)
 
 ## Behaviour
 
@@ -304,7 +303,7 @@ Get the metadata of a given item.
 - `0x3001`: Requested filesystem is currently not mounted
 - `0x3002`: The provided path was not found
 
-### `0x1003` RENAME_ITEM
+### `0x2000` RENAME_ITEM
 
 Rename an existing item.
 
@@ -325,7 +324,7 @@ Rename an existing item.
 - `0x3002`: Requested filesystem is currently not mounted
 - `0x3003`: The provided path was not foud
 
-### `0x1004` MOVE_ITEM
+### `0x2001` MOVE_ITEM
 
 Move an existing item.
 
@@ -351,7 +350,7 @@ Move an existing item.
 - `0x4003`: Item cannot be moved for unspecified reasons
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x1005` DELETE_ITEM
+### `0x2002` DELETE_ITEM
 
 Delete an item.
 
@@ -378,7 +377,7 @@ _None_
 - `0x3003`: Cannot remove a non-empty directory
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x2000` CREATE_DIRECTORY
+### `0x3000` CREATE_DIRECTORY
 
 Create a directory.
 
@@ -407,12 +406,9 @@ _None_
 - `0x4002`: Maximum path length has been reached
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x2001` READ_DIRECTORY
+### `0x3001` READ_DIRECTORY
 
 List all entries in a directory.
-
-If the provided offset is larger than the number of entries in the directory, all remaining items must be returned.  
-If the number of items to get is larger than the number of entries in the directory less the start offset, all remaining items must be returned.
 
 **Required permissions:**
 
@@ -423,10 +419,7 @@ If the number of items to get is larger than the number of entries in the direct
 
 - [FSID](../../filesystem.md#filesystem-unique-identifier) (40 bytes)
 - [Filesystem path](../integration/filesystem-interfaces.md#filesystem-paths)
-- Start offset (8 bytes)
-- Number of items to get (8 bytes) - `0` to list all items at once
-- [Optional](../../kernel/data-structures.md#options) total number of entries, if available (1 + 8 bytes)
-- Hidden flag match (1 byte): set to `0x00` to match only non-hidden items, `0x01` to match all items
+- Hidden flag match [boolean](../../../specs/kernel/data-structures.md#booleans) (1 byte): match hidden items
 
 **Return value:**
 
@@ -439,105 +432,112 @@ If the number of items to get is larger than the number of entries in the direct
 - `0x3002`: Directory was not found
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x3000` CREATE_FILE
+### `0x4000` OPEN_FILE
 
-Create a file.
+Open a file with the provided options.
 
-The reserved size is only provided if the filesystem [supports it](../integration/filesystem-interfaces.md#capabilities-list).
+Opening a file with read access will prevent writes and removal while the file is open.
+Opening a file with write access will prevent read, writes and removal while the file is open.
+
+Note that read and write access can be enabled together.
 
 **Required permissions:**
 
-- `fs.items.create`
+- `fs.items.create` if the file must be created
+- `fs.items.read` for read access
+- `fs.items.write` for write access
 
 **Arguments:**
 
 - [FSID](../../filesystem.md#filesystem-unique-identifier) (40 bytes)
-- [Filesystem path](../integration/filesystem-interfaces.md#filesystem-paths) of the parent directory
-- New item's [filename](../integration/filesystem-interfaces.md#filenames)
-- [Optional](../../kernel/data-structures.md#options) reserved size (1 + 8 bytes)
-- [Optional](../../kernel/data-structures.md#options) length of the buffer to write (1 + 8 bytes)
-- Buffer to write
+- [Union](../../kernel/data-structures.md#unions) (1 + ? bytes)
+  - Type ID `0x00`: Existing [filesystem path](../integration/filesystem-interfaces.md#filesystem-paths) to open
+  - Type ID `0x01`: Existing [filesystem path](../integration/filesystem-interfaces.md#filesystem-paths) of the parent directory
+- Enable read access (1 byte)
+- Enable write access (1 byte)
 
 **Return value:**
 
-_None_
-
-**Errors:**
-
-- `0x3000`: Invalid filename provided
-- `0x3001`: Invalid FSID provided
-- `0x3002`: Requested filesystem is currently not mounted
-- `0x3003`: Parent directory was not found
-- `0x4000`: Directory's maximum capacity has been reached
-- `0x4001`: Maximum nested items number has been reached
-- `0x4002`: Maximum path length has been reached
-- `0x4003`: Storage's capacity exceeded
-- `0x4004`: Maximum individual file size exceeded
-- `0x4005`: Filesystem's free space exceeded
-- `0x4FFF`: Unspecified filesystem error
-
-### `0x3001` READ_FILE
-
-Read a file synchronously.
-
-If no read length is provided, the whole file must be read.
-
-**Required permissions:**
-
-- `fs.items.read`
-
-**Arguments:**
-
-- [FSID](../../filesystem.md#filesystem-unique-identifier) (40 bytes)
-- File's [path](../integration/filesystem-interfaces.md#filesystem-paths)
-- Start offset address (8 bytes)
-- [Optional](../../kernel/data-structures.md#options) length to read (1 + 8 bytes)
-
-**Return value:**
-
-- Number of read bytes (8 bytes)
-- File's content
+- Opened file ID (8 bytes)
 
 **Errors:**
 
 - `0x3000`: Invalid FSID provided
-- `0x3001`: Requested filesystem is currently not mounted
-- `0x3002`: Start offset is out-of-range
+- `0x3001`: Invalid parent directory provided
+- `0x3002`: Requested filesystem is not currently mounted
+- `0x3003`: Provided file path was not found
+- `0x3004`: Provided directory path was not found
+- `0x4000`: File is already opened
+- `0x4001`: Directory's maximum capacity has been reached
+- `0x4002`: Maximum nested items number has been reached
+- `0x4003`: Maximum path length has been reached
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x3101` WRITE_FILE
+### `0x4001` CLOSE_FILE
 
-Synchronously write a buffer to a file.
+Close a file.
 
-If no offset address is provided, the file's content must be completely overriden with the provided buffer.
-
-**Required permissions:**
-
-- `fs.items.write`
+Removes all locks on the opened file.
 
 **Arguments:**
 
-- [FSID](../../filesystem.md#filesystem-unique-identifier) (40 bytes)
-- File's [path](../integration/filesystem-interfaces.md#filesystem-paths)
-- [Optional](../../kernel/data-structures.md#options) write offset address (1 + 8 bytes)
-- Number of bytes to write (8 bytes)
-- Buffer to write (8 bytes)
-
-**Return value:**
-
-_None_
+- Opened file ID (8 bytes)
 
 **Errors:**
 
-- `0x3000`: Invalid FSID provided
-- `0x3001`: Requested filesystem is currently not mounted
-- `0x3002`: Offset is out-of-range
-- `0x4000`: Storage's capacity exceeded
-- `0x4001`: Maximum individual file size exceeded
-- `0x4002`: Filesystem's free space exceeded
+- `0x3000`: Invalid opened file ID provided
+
+### `0x4002` READ_FILE
+
+Read an open file.
+
+**Required permissions:**
+
+_None_ (implicitly given by the initial [OPEN_FILE](#0x4000-open_file) call)
+
+**Arguments:**
+
+- Opened file ID (8 bytes)
+- Offset to read from (8 bytes)
+- Length to read (8 bytes)
+- Writable [buffer pointer](../../../specs/kernel/data-structures.md#buffer-pointers)
+
+**Errors:**
+
+- `0x3000`: Invalid opened file ID provided
+- `0x3001`: File is not opened in read mode
+- `0x3002`: Provided offset is out-of-range
+- `0x3003`: Provided offset + length is out-of-range
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x4000` CREATE_SYMLINK
+### `0x4002` WRITE_FILE
+
+Write an open file.
+
+File will grow if needed.
+
+**Required permissions:**
+
+_None_ (implicitly given by the initial [OPEN_FILE](#0x4000-open_file) call)
+
+**Arguments:**
+
+- Opened file ID (8 bytes)
+- Offset to write from (8 bytes)
+- Length to write (8 bytes)
+- Readable [buffer pointer](../../../specs/kernel/data-structures.md#buffer-pointers)
+- Truncate [boolean](../../../specs/kernel/data-structures.md#booleans) (1 byte): truncate the file's length to the end of the written data
+
+**Errors:**
+
+- `0x3000`: Invalid opened file ID provided
+- `0x3001`: File is not opened in write mode
+- `0x3002`: Provided offset is out-of-range
+- `0x4000`: Filesystem capacity exceeded
+- `0x4001`: Maximum file size exceeded
+- `0x4FFF`: Unspecified filesystem error
+
+### `0x5000` CREATE_SYMLINK
 
 Create a [symbolic link](../../filesystem.md#symbolic-links).
 
@@ -571,7 +571,7 @@ _None_
 - `0x4003`: Storage's capacity exceeded
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x4001` UPDATE_SYMLINK
+### `0x5001` UPDATE_SYMLINK
 
 Create a [symbolic link](../../filesystem.md#symbolic-links).
 
@@ -599,7 +599,7 @@ _None_
 - `0x3004`: Cannot crate symbolic links to non-existing items
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x4002` READ_SYMLINK
+### `0x5002` READ_SYMLINK
 
 Read a [symbolic link](../../filesystem.md#symbolic-links)'s target.
 
@@ -713,9 +713,9 @@ _None_
 
 - `0x3000`: Unknown lock identifier
 
-### `0xF000` FORMAT_ASYNC
+### `0xF000` FORMAT
 
-Asynchronously format the partition to get an empty filesystem. Once the formatting is complete, 
+Asynchronously format the partition to get an empty filesystem.
 
 **Required permissions:**
 
@@ -735,6 +735,7 @@ Asynchronously format the partition to get an empty filesystem. Once the formatt
 - `0x1000`: Invalid sector size provided
 - `0x3000`: Invalid FSID provided
 - `0x3001`: Requested filesystem is currently not mounted
+- `0x4000`: Unspecified filesystem error
 
 ## Notifications
 
@@ -744,7 +745,7 @@ Sent to a client which subscribed through [`FS_WATCH`](#0x0006-fs_watch) each ti
 
 **Datafield:**
 
-- Mount status (1 byte): `0x01` if the filesystem was mounted, `0x02` if it was unmounted
+- Mount status [boolean](../../../specs/kernel/data-structures.md#booleans) (1 byte): indicate if the filesystem was mounted
 - [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 
 ### `0xA000` ITEM_CHANGED
@@ -761,22 +762,3 @@ Notification sent to clients watching an item through the [`WATCH_ITEM`](#0xa000
   - `0x03`: item was deleted
   - `0x04`: item was locked (only for the parent directory if case of a recursive lock)
   - `0x05`: item was unlocked (only for the parent directory if case of a recursive lock)
-
-### `0xA001` DIR_CONTENT_CHANGED
-
-- `0x10`: the watched directory's content changed, followed by:
-    - Affected element's [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
-    - Affected element's [FEID](../../filesystem.md#element-unique-identifier) (8 bytes)
-    - Affected element's event code (1 byte) - same for [`ITEM_CHANGED`](#0xa000-item_changed), plus `0xA0` if the element was just created
-
-### `0xF000` FORMATTED
-
-Sent to a client after an formatting requested using the [`FORMAT_ASYC`](#0xf000-format_async) method completed.
-
-**Datafield:**
-
-- Task identifier (8 bytes)
-- [Fallible result](../../kernel/data-structures.md#fallible-results) with:
-  - Success data: _None_
-  - Error code (1 byte):
-    - `0x40`: Unspecified filesystem error

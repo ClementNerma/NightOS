@@ -82,8 +82,7 @@ These permissions are automatically granted if their scope is one of the applica
 - (S) `fs.items.remove.trash`: send items to the current user's trash
 - (S) `fs.items.remove`: delete items permanently
 - (S) `fs.items.write`: update an existing filesystem element's content
-- (S) `fs.items.lock`: lock an item to prevent modifications from other processes
-- (S) `fs.items.lock.full`: lock an item to prevent modifications and access from other processes
+- (S) `fs.items.lock`: lock an item to prevent access from other processes
 
 - (S) `fs.dir.read`: list items contained inside given directories
 - (S) `fs.dir.read.hidden`: list hidden items in directories

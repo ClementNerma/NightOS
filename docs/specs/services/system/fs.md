@@ -2,48 +2,45 @@
 
 The `sys::fs` service is in charge of operations related to the [filesystems](../../filesystem.md).
 
-- [Behaviour](#behaviour)
-  - [Operations and latency](#operations-and-latency)
-  - [List of natively supported filesystems](#list-of-natively-supported-filesystems)
-  - [Extending supported filesystems](#extending-supported-filesystems)
-  - [Filesystems detection](#filesystems-detection)
-- [Methods](#methods)
-  - [`0x0001` IS_FS_MOUNTED](#0x0001-is_fs_mounted)
-  - [`0x0002` ENUM_FS](#0x0002-enum_fs)
-  - [`0x0003` FS_METADATA](#0x0003-fs_metadata)
-  - [`0x0004` FS_MOUNT](#0x0004-fs_mount)
-  - [`0x0005` FS_UNMOUNT](#0x0005-fs_unmount)
-  - [`0x0006` FS_WATCH](#0x0006-fs_watch)
-  - [`0x0007` FS_UNWATCH](#0x0007-fs_unwatch)
-  - [`0x1000` ITEM_EXISTS](#0x1000-item_exists)
-  - [`0x1001` FEID_TO_SPLIT](#0x1001-feid_to_split)
-  - [`0x1002` ITEM_METADATA](#0x1002-item_metadata)
-  - [`0x1003` RENAME_ITEM](#0x1003-rename_item)
-  - [`0x1004` MOVE_ITEM](#0x1004-move_item)
-  - [`0x1005` DELETE_ITEM](#0x1005-delete_item)
-  - [`0x2000` CREATE_DIRECTORY](#0x2000-create_directory)
-  - [`0x2001` READ_DIRECTORY](#0x2001-read_directory)
-  - [`0x3000` CREATE_FILE](#0x3000-create_file)
-  - [`0x3001` READ_FILE_SYNC](#0x3001-read_file_sync)
-  - [`0x3002` READ_FILE_ASYNC](#0x3002-read_file_async)
-  - [`0x3003` WRITE_FILE_SYNC](#0x3003-write_file_sync)
-  - [`0x3004` WRITE_FILE_ASYNC](#0x3004-write_file_async)
-  - [`0x4000` CREATE_SYMLINK](#0x4000-create_symlink)
-  - [`0x4001` UPDATE_SYMLINK](#0x4001-update_symlink)
-  - [`0x4002` READ_SYMLINK](#0x4002-read_symlink)
-  - [`0xA000` WATCH_ITEM](#0xa000-watch_item)
-  - [`0xA001` WATCH_DIR_CONTENT](#0xa001-watch_dir_content)
-  - [`0xA002` UNWATCH](#0xa002-unwatch)
-  - [`0xAA00` LOCK_ITEM](#0xaa00-lock_item)
-  - [`0xAA01` UNLOCK_ITEM](#0xaa01-unlock_item)
-  - [`0xF000` FORMAT_ASYNC](#0xf000-format_async)
-- [Notifications](#notifications)
-  - [`0x0006` FS_CHANGED](#0x0006-fs_changed)
-  - [`0x3002` FILE_READ](#0x3002-file_read)
-  - [`0x3004` FILE_WRITTEN](#0x3004-file_written)
-  - [`0xA000` ITEM_CHANGED](#0xa000-item_changed)
-  - [`0xA001` DIR_CONTENT_CHANGED](#0xa001-dir_content_changed)
-  - [`0xF000` FORMATTED](#0xf000-formatted)
+- [`sys::fs` service](#sysfs-service)
+  - [Behaviour](#behaviour)
+    - [Operations and latency](#operations-and-latency)
+    - [List of natively supported filesystems](#list-of-natively-supported-filesystems)
+    - [Extending supported filesystems](#extending-supported-filesystems)
+    - [Filesystems detection](#filesystems-detection)
+  - [Methods](#methods)
+    - [`0x0001` IS\_FS\_MOUNTED](#0x0001-is_fs_mounted)
+    - [`0x0002` ENUM\_FS](#0x0002-enum_fs)
+    - [`0x0003` FS\_METADATA](#0x0003-fs_metadata)
+    - [`0x0004` FS\_MOUNT](#0x0004-fs_mount)
+    - [`0x0005` FS\_UNMOUNT](#0x0005-fs_unmount)
+    - [`0x0006` FS\_WATCH](#0x0006-fs_watch)
+    - [`0x0007` FS\_UNWATCH](#0x0007-fs_unwatch)
+    - [`0x1000` ITEM\_EXISTS](#0x1000-item_exists)
+    - [`0x1001` FEID\_TO\_SPLIT](#0x1001-feid_to_split)
+    - [`0x1002` ITEM\_METADATA](#0x1002-item_metadata)
+    - [`0x1003` RENAME\_ITEM](#0x1003-rename_item)
+    - [`0x1004` MOVE\_ITEM](#0x1004-move_item)
+    - [`0x1005` DELETE\_ITEM](#0x1005-delete_item)
+    - [`0x2000` CREATE\_DIRECTORY](#0x2000-create_directory)
+    - [`0x2001` READ\_DIRECTORY](#0x2001-read_directory)
+    - [`0x3000` CREATE\_FILE](#0x3000-create_file)
+    - [`0x3001` READ\_FILE](#0x3001-read_file)
+    - [`0x3101` WRITE\_FILE](#0x3101-write_file)
+    - [`0x4000` CREATE\_SYMLINK](#0x4000-create_symlink)
+    - [`0x4001` UPDATE\_SYMLINK](#0x4001-update_symlink)
+    - [`0x4002` READ\_SYMLINK](#0x4002-read_symlink)
+    - [`0xA000` WATCH\_ITEM](#0xa000-watch_item)
+    - [`0xA001` WATCH\_DIR\_CONTENT](#0xa001-watch_dir_content)
+    - [`0xA002` UNWATCH](#0xa002-unwatch)
+    - [`0xAA00` LOCK\_ITEM](#0xaa00-lock_item)
+    - [`0xAA01` UNLOCK\_ITEM](#0xaa01-unlock_item)
+    - [`0xF000` FORMAT\_ASYNC](#0xf000-format_async)
+  - [Notifications](#notifications)
+    - [`0x0006` FS\_CHANGED](#0x0006-fs_changed)
+    - [`0xA000` ITEM\_CHANGED](#0xa000-item_changed)
+    - [`0xA001` DIR\_CONTENT\_CHANGED](#0xa001-dir_content_changed)
+    - [`0xF000` FORMATTED](#0xf000-formatted)
 
 ## Behaviour
 
@@ -479,7 +476,7 @@ _None_
 - `0x4005`: Filesystem's free space exceeded
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x3001` READ_FILE_SYNC
+### `0x3001` READ_FILE
 
 Read a file synchronously.
 
@@ -508,38 +505,7 @@ If no read length is provided, the whole file must be read.
 - `0x3002`: Start offset is out-of-range
 - `0x4FFF`: Unspecified filesystem error
 
-### `0x3002` READ_FILE_ASYNC
-
-Asynchronously read a file to a writable [abstract memory segment (AMS)](../../kernel/memory.md#abstract-memory-segments).
-
-THe number of bytes to read is always provided to ensure it does not accidentally exceed the AMS's size.
-
-When the read is complete, a [`FILE_READ`](#0x3002-file_read) notification must be sent to the client.
-
-**Required permissions:**
-
-- `fs.items.read`
-
-**Arguments:**
-
-- [FSID](../../filesystem.md#filesystem-unique-identifier) (40 bytes)
-- File's [path](../integration/filesystem-interfaces.md#filesystem-paths)
-- Start offset address (8 bytes)
-- Number of bytes to read (8 bytes)
-- AMS identifier (8 bytes)
-
-**Return value:**
-
-- Generated task identifier (8 bytes)
-
-**Errors:**
-
-- `0x3000`: Invalid FSID provided
-- `0x3001`: Requested filesystem is currently not mounted
-- `0x3002`: Invalid AMS ID provided
-- `0x4FFF`: Unspecified filesystem error
-
-### `0x3003` WRITE_FILE_SYNC
+### `0x3101` WRITE_FILE
 
 Synchronously write a buffer to a file.
 
@@ -569,37 +535,6 @@ _None_
 - `0x4000`: Storage's capacity exceeded
 - `0x4001`: Maximum individual file size exceeded
 - `0x4002`: Filesystem's free space exceeded
-- `0x4FFF`: Unspecified filesystem error
-
-### `0x3004` WRITE_FILE_ASYNC
-
-Asynchronously write a readable [abstract memory segment (AMS)](../../kernel/memory.md#abstract-memory-segments) to a file.
-
-If no offset address is provided, the file's content must be completely overriden with the provided buffer.
-
-When the writing is complete, a [`FILE_WRITTEN`](#0x3004-file_written) notification must be sent to the client. The notification **must not** be sent before the current method returned successfully.
-
-**Required permissions:**
-
-- `fs.items.write`
-
-**Arguments:**
-
-- [FSID](../../filesystem.md#filesystem-unique-identifier) (40 bytes)
-- File's [path](../integration/filesystem-interfaces.md#filesystem-paths)
-- [Optional](../../kernel/data-structures.md#options) write offset address (1 + 8 bytes)
-- Number of bytes to write (8 bytes)
-- AMS identifier (8 bytes)
-
-**Return value:**
-
-- Generated task identifier (8 bytes)
-
-**Errors:**
-
-- `0x3000`: Invalid FSID provided
-- `0x3001`: Requested filesystem is currently not mounted
-- `0x3002`: Invalid AMS ID provided
 - `0x4FFF`: Unspecified filesystem error
 
 ### `0x4000` CREATE_SYMLINK
@@ -741,25 +676,16 @@ Stop watching a content watched with [`WATCH_ITEM`](#0xa000-watch_item) or [`WAT
 
 ### `0xAA00` LOCK_ITEM
 
-Lock an item to prevent modifications and/or complete access from other processes.
-
-No-modification mode will prevent changing the item's data and metadata (except timestamps).
-
-[`ITEM_CHANGED`](#0xa000-item_changed) and [`DIR_CONTENT_CHANGED`](#0xa001-dir_content_changed) notifications won't be triggered for the locking process.
+Lock an item to prevent modifications, access, renaming and removal from other processes.
 
 **Required permissions:**
 
-- `fs.items.lock`: lock a single item
-- `fs.items.lock.full`: lock a single item with exclusive mode
-- `fs.dir.lock`: lock a full directory's content
-- `fs.dir.lock.full`: lock a full directory's content with exclusive mode
+- `fs.items.lock`
 
 **Arguments:**
 
 - [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
 - Item's [path](../integration/filesystem-interfaces.md#filesystem-paths)
-- Recursive mode (1 byte): `0x01` if the item is a directory and all its content should be locked, `0x00` otherwise
-- Exclusive move (1 byte): `0x01` to prevent access from other processes, `0x00` otherwise
 
 **Return value:**
 
@@ -767,11 +693,8 @@ No-modification mode will prevent changing the item's data and metadata (except 
 
 **Errors:**
 
-- `0x1000`: Invalid recursive mode
-- `0x1001`: Invalid exclude mode
 - `0x3000`: Provided FSID was not found
 - `0x3001`: Provided item was not found
-- `0x3002`: Cannot lock in recursive mode as the item is not a directory
 - `0x4000`: A lock is already in place on this item
 
 ### `0xAA01` UNLOCK_ITEM
@@ -823,34 +746,6 @@ Sent to a client which subscribed through [`FS_WATCH`](#0x0006-fs_watch) each ti
 
 - Mount status (1 byte): `0x01` if the filesystem was mounted, `0x02` if it was unmounted
 - [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
-
-### `0x3002` FILE_READ
-
-Sent to a client after an asynchronous file reading requested using the [`READ_FILE_ASYNC`](#0x3002-read_file_async) method completed.
-
-**Datafield:**
-
-- Task identifier (8 bytes)
-- [Fallible result](../../kernel/data-structures.md#fallible-results) with:
-  - Success data: number of bytes read (8 bytes)
-  - Error code (1 byte)
-    - `0x20`: Start offset is out-of-range
-    - `0x40`: Unspecified filesystem error
-
-### `0x3004` FILE_WRITTEN
-
-Sent to a client after an asynchronous file writing requested using the [`WRITE_FILE_ASYNC`](#0x3004-write_file_async) method completed.
-
-**Datafield:**
-
-- Task identifier (8 bytes)
-- [Fallible result](../../kernel/data-structures.md#fallible-results) with:
-  - Success data: _None_
-  - Error code (1 byte):
-    - `0x20`: Start offset is out-of-range
-    - `0x31`: Maximum individual file size exceeded
-    - `0x32`: Filesystem's free space exceeded
-    - `0x40`: Unspecified filesystem error
 
 ### `0xA000` ITEM_CHANGED
 

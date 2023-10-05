@@ -20,7 +20,7 @@ then
     echo "Done!"
 fi
 
-if ! broken-md-links -r docs/
+if ! broken-md-links docs/
 then
     echo "Broken link(s) found, aborting commit."
     exit 3

@@ -45,7 +45,7 @@ The scripting language of [Hydre](../technical/shell.md) offers a lot of powerfu
   - [Import expansions](#import-expansions)
   - [Non-clashing namespace](#non-clashing-namespace)
   - [Volatile imports](#volatile-imports)
-- [Commands input & output](#commands-input--output)
+- [Commands input \& output](#commands-input--output)
   - [Reading a command's output](#reading-a-commands-output)
   - [Redirecting the output to a file](#redirecting-the-output-to-a-file)
   - [Output data](#output-data)
@@ -155,7 +155,7 @@ Hydre uses an intuitive syntax. Commands are written like they would be in \*-sh
 Arugments can either be positional (they are written directly), shorts (prefixed by a `-` symbol and one-character long), or longs (prefixed by two `-` symbols). Here is an example:
 
 ```hydre
-cmdname "pos1" "pos2" -a --arg1
+cmdname pos1 pos2 -a --arg1
 ```
 
 This line runs the command called `cmdname`, provides two positional arguments `pos1` and `pos2`, a short one `a` and a long one `arg1`.
@@ -209,7 +209,7 @@ comment
 Variables are declared with the `var` keyword:
 
 ```hydre
-var age = 19
+let age = 19
 ```
 
 Here, we declare a variable `age` with value `19`. As variables are typed, this variable will only be allowed to contain numbers from now on - no strings, no booleans, nothing else.
@@ -269,20 +269,30 @@ For instance, considering `pos1` and `pos2` are positional arguments, `--flag` a
 
 ```hydre
 # VALID
-command "pos1" "pos2" --flag --val 2
+command pos1 pos2 --flag --val 2
 
 # VALID
-command "pos1" --val 2 "pos2" --flag
+command pos1 --val 2 pos2 --flag
 
 # VALID
-command "pos1" --flag --val 2 "pos2"
+command pos1 --flag --val 2 pos2
 
 # VALID
-command --flags --val 2 "pos1" "pos2"
+command --flags --val 2 pos1 pos2
 
 # INVALID (we could think by reading this that "pos2" is the
 #          value of the non-flag argument "--flag")
-command "pos1" --flag "pos2" --val 2
+command pos1 --flag pos2 --val 2
+```
+
+As you can see, suites of characters that do not start with a dash (`-`) can be written without quotes when they're part of a command. Any special character (like spaces or dashes) can be escaped using the `\` prefix:
+
+```hydre
+command this\ is\ the\ same\ \-\ argument
+
+# Strictly equivalent to:
+
+command "this is the same - argument"
 ```
 
 ### Variables shadowing
@@ -292,9 +302,9 @@ Any variable can, inside a program, be replaced by a new variable with a same na
 It can be useful when converting data from a type to another, such as:
 
 ```hydre
-var names: list[string] = [ "Jack", "John" ]
+let names: list[string] = [ "Jack", "John" ]
 
-var names: string = names.join(",") # this is called a _method_, we'll talk about them later
+let names: string = names.join(",") # this is called a _method_, we'll talk about them later
 ```
 
 Here, we _shadowed_ the `names` variable to create a new one with a different type from the data we had before, which means we cannot access the original `names` variable anymore.
@@ -304,14 +314,14 @@ Here, we _shadowed_ the `names` variable to create a new one with a different ty
 To use a variable, we can directly use it like this::
 
 ```hydre
-tellage ${age}
+tellage $age
 ```
 
 So this code:
 
 ```hydre
-var age = 20
-tellage ${age}
+let age = 20
+tellage $age
 ```
 
 Is equivalent to this one:
@@ -323,29 +333,29 @@ tellage 20
 It's also possible to perform computations using expressions:
 
 ```hydre
-var age = 20
-var add = 12
-tellage ${age + add}
+let age = 20
+let add = 12
+tellage (age + add)
 ```
 
-String and characters can also be inserted inside a string:
+String, characters and numbers can also be inserted inside strings:
 
 ```hydre
-var name = "Jack"
-echo "Hello, ${name}!" # Hello, Jack!
+let name = "Jack"
+echo "Hello, $name!" # Hello, Jack!
 ```
 
-Values in lists through their index (starting at 0):
+Other expressions require to use `${...}`. For instance, values in lists through their index (starting at 0):
 
 ```hydre
-var names = [ "Jack" ]
+let names = [ "Jack" ]
 echo "Hello, ${names[0]}!" # Hello, Jack!
 ```
 
 Values in maps through their key:
 
 ```hydre
-var ages = { "Jack": 28 }
+let ages = { "Jack": 28 }
 
 echo "Jack is ${ages["Jack"]} years old!"
 ```
@@ -353,8 +363,14 @@ echo "Jack is ${ages["Jack"]} years old!"
 Note that getting an out-of-bound index will make the program _panic_, which means it exits immediatly with an error message.
 
 ```hydre
-var names = [ "Jack" ]
+let names = [ "Jack" ]
 echo "Hello, ${names[1]}!" # Panics
+```
+
+In commands, expressions can be provided wrapped in `(...)`:
+
+```hydre
+echo (2 + 1) # Will display: "3"
 ```
 
 ## Computing values
@@ -408,22 +424,34 @@ Finally, there is the `!` operator, which takes a single operand on its right, a
 
 The neutral assignment operator `=` can be prefixed by any mathematical, bit-wise or logical operator's symbol(s). The operator's left operand will be the current variable's content, while the right one will be the value on the left of the assignment operator. The result will then be stored in the variable.
 
-Here is an example:
+Note that for a variable to be modified, it must be declared as so:
 
 ```hydre
-var a = 3
+# Immutable
+let a = 3
 
+# Mutable
+let mut a = 3
+```
+
+Otherwise, re-assigning a value to the variable would fail.
+
+```hydre
+# We declare the variable as mutable...
+let mut a = 3
+
+# ...and we can then re-assign to it
 a += 1
 a *= 8
 a /= 2
 
-echo ${a} # 16
+echo $a # 16
 ```
 
-Note that the result's type must be compatible with the variable:
+Note that the result's type must also be compatible with the variable:
 
 ```hydre
-var a = 0
+let a = 0
 
 a &&= 1 # ERROR: Cannot assign a 'bool' to an 'int'
 ```
@@ -431,13 +459,13 @@ a &&= 1 # ERROR: Cannot assign a 'bool' to an 'int'
 There are also the `++` and `--` operators, which respectively increase and decrease the desired variable:
 
 ```hydre
-var a = 0
+let a = 0
 
 a ++
 a ++
 a --
 
-echo ${a} # 1
+echo $a # 1
 ```
 
 ## Lists and maps
@@ -448,13 +476,13 @@ Here is how we declare a list or a map:
 
 ```hydre
 # Type: list[string]
-var names = [ "Jack", "John" ]
+let names = [ "Jack", "John" ]
 
 # Type: map[string, int]
-var ages = { "Jack": 28, "John": 29 }
+let ages = { "Jack": 28, "John": 29 }
 ```
 
-To add a new value:
+To add a new value (requires the variable to be mutable):
 
 ```hydre
 # Lists
@@ -583,7 +611,7 @@ Loops allow to run a piece of code for a while. The most common loop is the rang
 
 ```hydre
 for i in 0..10
-  command ${i}
+  command $i
 end
 ```
 
@@ -591,7 +619,7 @@ This will run `command 0` to `command 9`. To include the upper bound, we must ad
 
 ```hydre
 for i in 0..=10
-  command ${i}
+  command $i
 end
 ```
 
@@ -600,12 +628,12 @@ This will run `command 0` to `command 10`.
 We can also iterate on a list:
 
 ```hydre
-var str = "Jack"
+let str = "Jack"
 
-var list = [ "Jack", "John" ]
+let list = [ "Jack", "John" ]
 
 for name in list
-  echo ${name}
+  echo $name
 end
 ```
 
@@ -615,7 +643,7 @@ To get the indexes as well, we can do:
 
 ```hydre
 for i, name in list
-  echo "${i}: ${name}"
+  echo "$i: $name"
 end
 ```
 
@@ -624,10 +652,10 @@ This will display `0: Jack` and `1: John`.
 For maps:
 
 ```hydre
-var ages = { "Jack": 28, "John": 29 }
+let ages = { "Jack": 28, "John": 29 }
 
 for name, age in ages
-  echo "${name} is ${age} years old!"
+  echo "$name is $age years old!"
 end
 ```
 
@@ -645,7 +673,7 @@ Note that loops can be broke anytime using the `break` keyword:
 
 ```hydre
 for i in 0..10
-  command ${i}
+  command $i
 
   if i == 2
     break
@@ -661,7 +689,7 @@ It's possible to iterate on a list of files and directories:
 
 ```hydre
 for file in (./*.txt)
-  echo "Found a text file: ${file}"
+  echo "Found a text file: $file"
 end
 ```
 
@@ -669,7 +697,7 @@ The pattern between parenthesis must be a glob pattern. Recursivity is supported
 
 ```hydre
 for file in (**/*.txt)
-  echo "Found a text file: ${file}"
+  echo "Found a text file: $file"
 end
 ```
 
@@ -680,16 +708,16 @@ When a variable is declared, it is _scoped_ to the current block, meaning it doe
 ```hydre
 # This variable is declared in the "global" block
 # so it's available everywhere in the current script
-var firstName = "Jack"
+let firstName = "Jack"
 
 if firstName == "Jack"
   # This variable is declared in an "if" block
   # so it's not available outside of it
-  var lastName = "Sparrow"
+  let lastName = "Sparrow"
 end
 
-echo ${firstName} # Prints: "Jack"
-echo ${lastName} # ERROR ("lastName" is not in scope)
+echo $firstName # Prints: "Jack"
+echo $lastName # ERROR ("lastName" is not in scope)
 ```
 
 Also, variables are not shared between scripts.
@@ -716,7 +744,7 @@ Function can also take arguments, which must have a type.
 
 ```hydre
 fn hello (name: string)
-  echo "Hello, ${name}!"
+  echo "Hello, $name!"
 end
 
 hello("Jack") # Will print "Hello, Jack!"
@@ -726,18 +754,21 @@ Arguments can be made optional by providing default values. This also allows to 
 
 ```hydre
 fn hello (name = "Unknown")
-  echo "Hello, ${name}!"
+  echo "Hello, $name!"
 end
 
 hello()       # Will print "Hello, Unknown!"
 hello("Jack") # Will print "Hello, Jack!"
 ```
 
-Note that a function's arguments do not require to wrap the value between `${...}` as it's implicit. Which means we can write:
+Note that a function's arguments do not require to wrap expressions between `${...}` as it's implicit. Which means we can write:
 
 ```hydre
-var name = "Jack"
-hello(name) # Prints: "Hello, Jack!"
+fn sayNumber (num: int)
+  echo "Number is: $num"
+end
+
+sayNumber(2 + 1) # Will print "Number is: 3"
 ```
 
 We can also combine functions and blocks, for instance:
@@ -749,7 +780,7 @@ fn greet (names: list[string]) -> int
     echo "No one to greet :|"
   else
     for name in names
-      echo "Hello, ${name}!"
+      echo "Hello, $name!"
     end
   end
 end
@@ -773,8 +804,8 @@ end
 All value types expose specific functions that can be used with a dot after a variable of the given type, called _methods_:
 
 ```hydre
-var letters = "abcdef"
-var letters = letter.split(",")
+let letters = "abcdef"
+let letters = letter.split(",")
 ```
 
 Here, we use the `split` _method_ of the `string` type, which returns a `list[string]`.
@@ -801,11 +832,11 @@ When a function fails, the program stops and print the provided error message. B
 fn handle_bad_div (a: float, b: float) -> float
   catch divide(a, b)
     ok result
-      echo "Divided successfully: ${a} / ${b} = ${result}"
+      echo "Divided successfully: $a / $b = $result"
 
     err errmsg
       echo "Division failed :("
-      echo "Here is the error message: ${errmsg}"
+      echo "Here is the error message: $errmsg"
   end
 end
 ```
@@ -817,7 +848,7 @@ This keyword also allows to catch errors from commands:
 ```hydre
 # Run a command and get error messages from CMDERR instead if the command fails
 catch $(somecommand)
-  ok data => echo "Success: ${data}"
+  ok data => echo "Success: $data"
   err msg => echo "Errors: ${msg.join("; ")}"
 end
 ```
@@ -850,7 +881,7 @@ For information, here is the declaration of the native `retry_cmd` command, whic
 fn retry_cmd(cmd: command, retries: string) -> fallible
   retry(retries) cmd()
   if status() != 0
-    fail "Command did not suceed after ${retries} retries."
+    fail "Command did not suceed after $retries retries."
   end
 end
 ```
@@ -874,7 +905,7 @@ Nullable types are suffixed by a `?` symbol, and may either contain a value of t
 
 ```hydre
 fn custom_rand() -> int?
-  var rnd = rand_int(-5, 5)
+  let rnd = rand_int(-5, 5)
 
   if rnd > 0
     return rnd
@@ -887,20 +918,20 @@ end
 To declare a variable with an nullable type, we wrap its initialization value in the nullable operator `?(...)`:
 
 ```hydre
-var a = 1 # int
-var b = ?(1) # int?
+let a = 1 # int
+let b = ?(1) # int?
 ```
 
 Or we explicitly give the variable a nullable type:
 
 ```hydre
-var b: int? = 1 # int?
+let b: int? = 1 # int?
 ```
 
 To initialize the variable with the `null` value instead, we must use the explicit version:
 
 ```hydre
-var c: int? = null # int?
+let c: int? = null # int?
 ```
 
 Note that imbricated types are not supported, which means we cannot create `int??` values for instance.
@@ -910,18 +941,18 @@ Note that imbricated types are not supported, which means we cannot create `int?
 If we try to access an nullable value "as is", we will get a type error:
 
 ```hydre
-var a = ?(1)
+let a = ?(1)
 
-var b = 0
+let b = 0
 b = a # ERROR: Cannot use an `int?` value where `int` is expected
 ```
 
 We then have multiple options. We can use one of the nullable types' function:
 
 ```hydre
-var a = ?(1)
+let a = ?(1)
 
-var b = 0
+let b = 0
 
 # Make the program exit with an error message if 'a' is null
 b = a.unwrap()
@@ -933,8 +964,8 @@ b = a.expect("'a' should not be null :(")
 We can also detect if a value is `null` by using the `.isNull()` method:
 
 ```hydre
-var a = ?(1)
-var b: int? = null
+let a = ?(1)
+let b: int? = null
 
 echo ${a.isNull()} # false
 echo ${b.isNull()} # true
@@ -943,8 +974,8 @@ echo ${b.isNull()} # true
 There is also the `.default(T)` method that allows to use a fallback value in case of `null`:
 
 ```hydre
-var a = ?(1)
-var b: int? = null
+let a = ?(1)
+let b: int? = null
 
 echo ${a.default(3)} # 1
 echo ${b.default(3)} # 3
@@ -953,7 +984,7 @@ echo ${b.default(3)} # 3
 We can also use special syntaxes in blocks:
 
 ```hydre
-var a = ?(1)
+let a = ?(1)
 
 if some a
   # While we are in this block, 'a' is considered as an 'int'
@@ -969,7 +1000,7 @@ end
 Also, if the program exits in all cases when the argument is considered as null or non-null, the opposite type will be applied to the rest of the program:
 
 ```hydre
-var a = ?(1)
+let a = ?(1)
 
 if some a
   exit
@@ -977,7 +1008,7 @@ end
 
 # 'a' is considered as 'null' here
 
-var b = ?(1)
+let b = ?(1)
 
 if none b
   exit
@@ -991,9 +1022,9 @@ end
 When a command takes an optional argument, it's possible to provide a nullable value of the same type instead:
 
 ```hydre
-var no_newline = ?(false)
+let no_newline = ?(false)
 
-echo "Hello!" -n ${no_newline}
+echo "Hello!" -n $no_newline
 ```
 
 If the value is `null`, the argument will not be provided. Else, it will be provided with the non-null value.
@@ -1020,9 +1051,9 @@ In such a simple example, it's easier to directly use a `firstName` and `lastNam
 
 ```hydre
 fn listRecursively(dir: path) -> list[struct { name: path, size: int }]
-  var list: list[struct { name: path, size: int }] = []
+  let list: list[struct { name: path, size: int }] = []
 
-  for item in $(ls ${dir} --details)
+  for item in $(ls $dir --details)
     if item.isDirectory
       listRecursively(dir)
     else
@@ -1040,7 +1071,7 @@ But, as this is not very readable, it's better to use a _type alias_:
 type fsItem = struct { name: path, size: int }
 
 fn listRecursively(dir: path) -> list[fsItem]
-  var list: list[fsItem] = []
+  let list: list[fsItem] = []
   # ...
 end
 ```
@@ -1050,15 +1081,15 @@ end
 Closures are anonymous functions which are generally used to repeat the same group of operations.
 
 ```hydre
-var test: fn (string, int) = { a, b -> echo "${a.repeat(b)}" }
+let test: fn (string, int) = { a, b -> echo (a.repeat(b)) }
 test("Hello world! ", 3) # Prints: "Hello world! Hello world! Hello world! "
 ```
 
 Note that closures can also return values implicitly:
 
 ```hydre
-var test: fn (string, int) -> string = { a, b -> a.repeat(b) }
-echo ${test("Hello world!", 3)} # Prints: "Hello world! Hello world! Hello world! "
+let test: fn (string, int) -> string = { a, b -> a.repeat(b) }
+echo (test("Hello world!", 3)) # Prints: "Hello world! Hello world! Hello world! "
 ```
 
 Also, closures are not forced to take their declared parameters:
@@ -1066,24 +1097,24 @@ Also, closures are not forced to take their declared parameters:
 ```hydre
 type testType = fn (string, int)
 
-var test: testType = { a, b, c -> ### ... ### } # NOT VALID
-var test: testType = { a, b    -> ### ... ### } # Valid
-var test: testType = { a       -> ### ... ### } # Valid
-var test: testType = {         -> ### ... ### } # Valid
+let test: testType = { a, b, c -> ### ... ### } # NOT VALID
+let test: testType = { a, b    -> ### ... ### } # Valid
+let test: testType = { a       -> ### ... ### } # Valid
+let test: testType = {         -> ### ... ### } # Valid
 ```
 
 Here is a concrete usage example:
 
 ```hydre
 fn forEachFile(dir: path, callback: fn (path))
-  for item in $(ls ${dir} --details)
+  for item in $(ls $dir --details)
     if item.isFile
       callback(item.fullPath)
     end
   end
 end
 
-forEachFile(./, { file -> echo "File: ${file}" })
+forEachFile(./, { file -> echo "File: $file" })
 ```
 
 ### Streams
@@ -1099,7 +1130,7 @@ _Data validation_ is a feature allowing to scripts to check the type of an unkno
 Here is an example:
 
 ```hydre
-var test: any = [ 2, 3, 4 ]
+let test: any = [ 2, 3, 4 ]
 
 # 1. Here, "test" is considered to be of type "any"
 
@@ -1113,7 +1144,7 @@ end
 The `isnt` keyword can also be used:
 
 ```hydre
-var test: any = [ 2, 3, 4 ]
+let test: any = [ 2, 3, 4 ]
 
 # 1. Here, "test" is considered to be of type "any"
 
@@ -1127,7 +1158,7 @@ end
 If, in an "isnt" conditional, the script exits/fails in all cases (or returns if we're in a function), the value is considered with the asserted type for the rest of the script:
 
 ```hydre
-var test: any = [ 2, 3, 4 ]
+let test: any = [ 2, 3, 4 ]
 
 # 1. Here, "test" is considered to be of type "any"
 
@@ -1147,7 +1178,7 @@ This can be used to check complex structures as well:
 
 type User = struct { id: int, firstName: string, lastName: string, email: string }
 
-var json = fetchJson("https://mysuperapi.../users/all")
+let json = fetchJson("https://mysuperapi.../users/all")
 
 if json isnt User
   fail "JSON doesn't have the correct structure"
@@ -1162,7 +1193,7 @@ Scripts can listen to events using the `on` keyword:
 
 ```hydre
 on keypress as keycode
-  echo "A key was pressed: ${keycode}"
+  echo "A key was pressed: $keycode"
 end
 ```
 
@@ -1199,7 +1230,7 @@ The script will block while the provided `condition` is not `true`. The checking
 ```hydre
 echo "Please press the <F> key to validate your choice"
 
-var validated = false
+let validated = false
 
 on keypress as keycode
   if keycode == KEY_F
@@ -1217,7 +1248,7 @@ It's also possible to wait for a variable to not be `null`:
 ```hydre
 echo "Please press a key"
 
-var key: int? = null
+let key: int? = null
 
 on keypress as keycode
   key = keycode
@@ -1225,7 +1256,7 @@ end
 
 wait some key
 
-echo "You pressed key: ${key}"
+echo "You pressed key: $key"
 ```
 
 ## Imports
@@ -1474,17 +1505,17 @@ It's possible to run multiple commands in parallel by using _background commands
 To run a command in backgroud, we use the `bg` keyword:
 
 ```hydre
-bg hello = sleep 5 -x { i -> echo "Counter: ${i}" }
+bg hello = sleep 5 -x { i -> echo "Counter: $i" }
 ```
 
 This will declare an `hello` variable and put an `int` value inside it, which is the background command's _identifier_ (BGID). The command will be started and run in parallel of the current program. For instance, the following program:
 
 ```hydre
-bg hello = sleep 5 -x { i -> echo "Counter: ${i}" } --end { -> echo "Counter completed!" }
+bg hello = sleep 5 -x { i -> echo "Counter: $i" } --end { -> echo "Counter completed!" }
 
 for i in 1..=5
   sleep 1
-  echo "Loop: ${i}"
+  echo "Loop: $i"
 end
 
 echo "Loop completed!"
@@ -1525,7 +1556,7 @@ detach hello
 Or to stop the background command with `kill`:
 
 ```hydre
-bg hello = sleep 5 -x { i -> echo "Counter: ${i}" }
+bg hello = sleep 5 -x { i -> echo "Counter: $i" }
 
 sleep 3
 kill hello
@@ -1570,13 +1601,13 @@ Environment variables cannot be accessed like traditional variables, they must b
 ```hydre
 # In "myscript.ns"
 
-var message = env("MESSAGE") # any?
+let message = env("MESSAGE") # any?
 ```
 
 As the variable may not be defined, the function returns a nullable value, so we must check if the variable is indeed defined:
 
 ```hydre
-var message = env("MESSAGE")
+let message = env("MESSAGE")
 
 if none message
   fail "MESSAGE environment variable was not provided"
@@ -1586,7 +1617,7 @@ end
 Now we are sure that `message` is defined, we get an `any` value, because we don't know the type of the environment variable. So we must use [type assertions](#data-validation) for that:
 
 ```hydre
-var message = env("MESSAGE")
+let message = env("MESSAGE")
 
 if none message
   fail "MESSAGE environment variable was not provided"
@@ -1602,7 +1633,7 @@ end
 Perfect! Note that, if you want to check if the environment variable exists _and_ is of a specific type at the same time, you can skip the first checking, which is only here to perform specific actions in case the environment variable isn't even defined:
 
 ```hydre
-var message = env("MESSAGE")
+let message = env("MESSAGE")
 
 if message isnt string
   fail "MESSAGE environment variable was not provided or is not a string"
@@ -1665,6 +1696,8 @@ Arguments type can be any existing type, or:
 
 The `enum` type for arguments indicate the argument only accepts a subset of values (whose type is inferred), which must be specified as a constant. This means the caller cannot use a variable as this argument's value, because the return type may depend on it.
 
+Syntax is: `enum[value1 | value2 | value3]`
+
 It may also be used as a list of custom values by wrapping the enumeration into a `list[...]`.
 
 ### Return type
@@ -1700,13 +1733,13 @@ cmd
     # ...
     dash "repeat"
       type int
+      enum [1 | 2 | 3 | 4]
       help "How many times to repeat the names"
       short "r"
       long "repeat"
       default 1
       requires "arg1"
       conflicts "arg2" "arg3"
-      enum list[1, 2, 3, 4]
     end
   end
   # ...
@@ -1718,7 +1751,7 @@ The `main` function takes arguments with the same name as described in the `cmd`
 ```hydre
 fn main(names: list[string], repeat: int?)
   for i in 0..=repeat.default(1)
-    echo ${names.join(", ")}
+    echo (names.join(", "))
   end
 end
 ```
@@ -1728,7 +1761,7 @@ The script can then be called like any command, with the default `$(...)` operat
 ```hydre
 ./myscript.ns ["Jack", "John"] -r 1
 # or
-var result = $(./myscript.ns ["Jack", "John"] -r 1)
+let result = $(./myscript.ns ["Jack", "John"] -r 1)
 ```
 
 Also, know that scripts can `fail` too. This allows errors to be handled when the script is run as a function:
@@ -1834,8 +1867,8 @@ _ = @{ streamify "Hello world!" }.str() # "<stream>"
 Check if the value is `null`.
 
 ```hydre
-var a: int? = 1
-var b: int? = null
+let a: int? = 1
+let b: int? = null
 
 echo ${a.isNull()} # false
 echo ${b.isNull()} # true
@@ -1846,8 +1879,8 @@ echo ${b.isNull()} # true
 Use a fallback value in case of `null`:
 
 ```hydre
-var a: int? = 1
-var b: int? = null
+let a: int? = 1
+let b: int? = null
 
 echo ${a.default(3)} # 1
 echo ${b.default(3)}
@@ -1858,8 +1891,8 @@ echo ${b.default(3)}
 Make the program exit with an error message if the value is null.
 
 ```hydre
-var a = ?(0) # int?
-var b = a.unwrap() # int
+let a = ?(0) # int?
+let b = a.unwrap() # int
 ```
 
 #### `T?.expect(message: string) -> T`
@@ -1867,8 +1900,8 @@ var b = a.unwrap() # int
 Make the program exit with a custom error message if 'a' is null
 
 ```hydre
-var a = ?(0) # INt?
-var b = a.expect("'a' should not be null :(") # int
+let a = ?(0) # INt?
+let b = a.expect("'a' should not be null :(") # int
 ```
 
 ### Characters
@@ -1950,7 +1983,7 @@ _ = ("abc").reverse() # "cba"
 
 #### `string.concat(right: string) -> string`
 
-Concatenate two strings (equivalent to `"${left}${right}"`).
+Concatenate two strings (equivalent to `"$left$right"`).
 
 ```hydre
 _ = ("a").concat("b") # "ab"
@@ -1989,7 +2022,7 @@ join([ "a", "b" ], "; ") # "a; b"
 Try to get an item from the list, without panicking if the index is out-of-bounds.
 
 ```hydre
-var names = [ "Jack", "John" ]
+let names = [ "Jack", "John" ]
 
 names.get(0) # "Jack"
 names.get(1) # "John"
@@ -2001,7 +2034,7 @@ names.get(2) # null
 Get an item from the list, and panic with a custom error message if the index is out-of-bounds.
 
 ```hydre
-var names = [ "Jack", "John" ]
+let names = [ "Jack", "John" ]
 
 names.expect(2, "Third item was not found")
 ```
@@ -2145,13 +2178,13 @@ Get the stream's size hint. If no size hint was provided for this stream, `null`
 
 ```hydre
 while true
-  var won = false
-  var secret = rand_int(0, 100)
+  let won = false
+  let secret = rand_int(0, 100)
 
   echo "Secret number between 0 and 100 has been chosen."
 
   while !won
-    var user_input = retry prompt_int("Please input your guess: ")
+    let user_input = retry prompt_int("Please input your guess: ")
 
     if user_input < secret
       echo "It's higher!"
@@ -2284,7 +2317,7 @@ List filesystem items.
 Find filesystem items matching provided criterias.
 
 ```hydre
-# fd [-t | --types list["dir" | "file" | "symlink" | "device"]]
+# fd [-t | --types enum["dir" | "file" | "symlink" | "device"]]
 #    [-a | --absolute]
 #    [-L | --follow]
 #    [-e | --extension <string>]

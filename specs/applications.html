@@ -402,6 +402,7 @@ It indicates why the application was started and so what it is supposed to do.</
 <li>SC identifier for the CMDOUT pipe (8 bytes)</li>
 <li><em>Future-proof shift space</em> (196 bytes)</li>
 </ul>
+<p>RC and SC identifiers come from the relevant <a href="./filesystem.html#flows">flows</a>.</p>
 <h3 id="arguments-structure"><a class="header" href="#arguments-structure">Arguments structure</a></h3>
 <p>The context header is followed by the list of each command-line argument, taking up to 64 KB.</p>
 <p>Arguments are a simple concatenation of <a href="#values-encoding">encoded values</a>.</p>

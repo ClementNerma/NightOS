@@ -56,9 +56,11 @@ The list of default applications and their description can be found [here](appli
 
 - [Applications and libraries](specs/applications-libraries.md) - document describing common things between applications and libraries
 - [Applications](specs/applications.md) - how applications are structured and behave
+- [Libraries](specs/libraries.md) - what are libraries
 - [Filesystem](specs/filesystem.md) - how the filesystem works
 - [Storage permissions](specs/storage-permissions.md) - how permissions are managed on filesystem elements
-- [Libraries](specs/libraries.md) - what are libraries
+- [The boot process](specs/boot-process.md) - how updates are performed
+- [Update processes](update-processes.md) - how updates are performed
 - [Containers](specs/containers.md) - process isolation system
 - [Permissions](specs/permissions.md) - list of applications' permissions
 - [The registry](specs/registry.md) - exhaustive specification of the registry's content

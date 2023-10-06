@@ -6,10 +6,11 @@ For more informations about low-level concepts these documents refer to, you can
 
 - [Applications and libraries](applications-libraries.md) - document describing common things between applications and libraries
 - [Applications](applications.md) - how applications are structured and behave
-- [Boot process](boot-process.md) - how the system starts
+- [Libraries](libraries.md) - what are libraries
 - [Filesystem](filesystem.md) - how the filesystem works
 - [Storage permissions](storage-permissions.md) - how permissions are managed on filesystem elements
-- [Libraries](libraries.md) - what are libraries
+- [The boot process](boot-process.md) - how the system starts
+- [Update processes](update-processes.md) - how updates are performed
 - [Containers](containers.md) - process isolation system
 - [Permissions](permissions.md) - list of applications' permissions
 - [The registry](registry.md) - exhaustive specification of the registry's content

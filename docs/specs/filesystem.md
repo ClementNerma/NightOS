@@ -2,7 +2,7 @@
 
 This document presents how files are stored in NightOS.
 
-- [Presentation](#presentation)
+- [Partitions](#partitions)
 - [Identifiers and limitations](#identifiers-and-limitations)
   - [Filesystem unique identifier](#filesystem-unique-identifier)
   - [Element unique identifier](#element-unique-identifier)
@@ -20,14 +20,15 @@ This document presents how files are stored in NightOS.
 - [Structure](#structure)
   - [Notes](#notes)
 
-## Presentation
+## Partitions
 
 NightOS uses the **Btrfs** filesystem for the main storage due to its robustness, performance, and features (e.g. snapshots).
 
 Three partitions are used to store the data:
 
-* One **FAT32** partition for the bootloader ;
-* One **FAT32** partition for the system (`/sys` and `/etc/sys`) ;
+* One **FAT32** partition for [BOOT1](./boot-process.md#stage-1-unsecure-bootloader-boot1) ;
+* One **FAT32** partition for [BOOT2](./boot-process.md#stage-2-system-loader-boot2) (slot 1) ;
+* One **FAT32** partition for [BOOT2](./boot-process.md#stage-2-system-loader-boot2) (slot 2) ;
 * One **Btrfs** partition for users' data (`/etc` except `/etc/sys`, `/apps` and `/home`)
 
 ## Identifiers and limitations
@@ -150,11 +151,10 @@ _NOTE:_ `<F>` indicates the item is a file.
 ├── etc                            Mutable data folder
 │   ├── env   <F>                  Environment variables
 │   ├── hosts <F>                  Hosts overriding (e.g. 'localhost')
-│   ├── lock                       Opened lock files
 │   ├── logs                       Log files
 │   |   └── upe <F>                History of UPE requests (1)
 │   ├── public                     Public data, readable and writable by everyone
-│   └── sys                        System's mutable data - available to system only
+│   └── sys (4)                    System's mutable data - available to system only
 │       ├── registry    <F>        System's registry
 │       ├── awake       <F>        System's shutdown indicator to detect if there was an error during last shutdown
 │       ├── integrity              Integrity data used during the boot process (2)
@@ -176,7 +176,7 @@ _NOTE:_ `<F>` indicates the item is a file.
 │       └── trash                  User's trash
 ├── mnt                            Mounted storages
 │   └── root                       Soft link to `/`
-├── sys                            System - immutable outside of installation, repair processes and updates
+├── sys (4)                        System - immutable outside of installation, repair processes and updates
 │   ├── apps                       System applications
 │   ├── boot                       System's boot program
 │   ├── langs                      Translation files
@@ -193,6 +193,7 @@ Links:
 - (1) [UPE requests](../concepts/users.md#user-privileges-elevation-upe)
 - (2) Used for [integrity checking](../specs/boot-process.md)
 - (3) Global storage's [encryption](../features/encryption.md) key
+- (4) Not stored in the main data pratition but in the [BOOT2 partition](#partitions)
 
 ### Notes
 

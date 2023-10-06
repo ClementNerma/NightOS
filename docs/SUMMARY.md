@@ -40,10 +40,11 @@
 - [Specifications](specs/README.md)
   - [Applications and libraries](specs/applications-libraries.md) - what applications and libraries are
   - [Applications](specs/applications.md) - how applications are structured and behave
-  - [Filesystem](specs/filesystem.md) - how the filesystem works
-  - [Boot process](specs/boot-process.md) - how the system starts
-  - [Storage permissions](specs/storage-permissions.md) - how permissions are managed on filesystem elements
   - [Libraries](specs/libraries.md) - what are libraries
+  - [Filesystem](specs/filesystem.md) - how the filesystem works
+  - [Storage permissions](specs/storage-permissions.md) - how permissions are managed on filesystem elements
+  - [The boot process](specs/boot-process.md) - how the system starts
+  - [Update processes](update-processes.md) - how updates are performed
   - [Permissions](specs/permissions.md) - list of applications' permissions
   - [Containers](specs/containers.md) - process isolation system
   - [The registry](specs/registry.md) - exhaustive specification of the registry's content

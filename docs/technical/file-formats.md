@@ -6,6 +6,7 @@ This document presents the file formats natively handled by NightOS. Some files 
 - [Virtual storages](#virtual-storages)
 - [Application packages](#application-packages)
 - [System updates](#system-updates)
+- [Application updates](#application-updates)
 
 ## Common formats
 
@@ -44,3 +45,11 @@ The system is intended to be updated through the update section in the settings,
 They may contain one or several updates, and are only installable on a very specific version of the system, to avoid missing some other incremental updates.
 
 System update files have the `.nsu` (NightOS System Update) extension and are opened using the [control center](../applications/Central.md).
+
+## Application updates
+
+Applications are intended to be updated through the update section in the settings, but sometimes it may be required to install updates offline for specific reasons (e.g. no network connection available at the moment). In such case, it is possible to download incremental updates as application update files.
+
+They may contain one or several updates, and are only installable on a very specific version of the application, to avoid missing some other incremental updates.
+
+Application update files have the `.nau` (NightOS Application Update) extension and are opened using the [control center](../applications/Central.md).

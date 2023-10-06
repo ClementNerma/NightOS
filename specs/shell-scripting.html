@@ -404,7 +404,7 @@
 <h2 id="running-a-command"><a class="header" href="#running-a-command">Running a command</a></h2>
 <p>Hydre uses an intuitive syntax. Commands are written like they would be in *-sh shells: the command name is followed by arguments, each separated by a space.</p>
 <p>Arugments can either be positional (they are written directly), shorts (prefixed by a <code>-</code> symbol and one-character long), or longs (prefixed by two <code>-</code> symbols). Here is an example:</p>
-<pre><code class="language-hydre">cmdname &quot;pos1&quot; &quot;pos2&quot; -a --arg1
+<pre><code class="language-hydre">cmdname pos1 pos2 -a --arg1
 </code></pre>
 <p>This line runs the command called <code>cmdname</code>, provides two positional arguments <code>pos1</code> and <code>pos2</code>, a short one <code>a</code> and a long one <code>arg1</code>.
 Short and long arguments are called <em>dash arguments</em>.</p>
@@ -435,7 +435,7 @@ comment
 </code></pre>
 <h2 id="variables"><a class="header" href="#variables">Variables</a></h2>
 <p>Variables are declared with the <code>var</code> keyword:</p>
-<pre><code class="language-hydre">var age = 19
+<pre><code class="language-hydre">let age = 19
 </code></pre>
 <p>Here, we declare a variable <code>age</code> with value <code>19</code>. As variables are typed, this variable will only be allowed to contain numbers from now on - no strings, no booleans, nothing else.</p>
 <p>And to assign a new value to it:</p>
@@ -480,61 +480,71 @@ Finally, there is the <code>void</code> type which cannot be written 'as is' but
 <p><strong>NOTE:</strong> In order to avoid writing errors, positional arguments cannot be provided after a flag argument.</p>
 <p>For instance, considering <code>pos1</code> and <code>pos2</code> are positional arguments, <code>--flag</code> a flag argument and <code>--val</code> a non-flag long argument:</p>
 <pre><code class="language-hydre"># VALID
-command &quot;pos1&quot; &quot;pos2&quot; --flag --val 2
+command pos1 pos2 --flag --val 2
 
 # VALID
-command &quot;pos1&quot; --val 2 &quot;pos2&quot; --flag
+command pos1 --val 2 pos2 --flag
 
 # VALID
-command &quot;pos1&quot; --flag --val 2 &quot;pos2&quot;
+command pos1 --flag --val 2 pos2
 
 # VALID
-command --flags --val 2 &quot;pos1&quot; &quot;pos2&quot;
+command --flags --val 2 pos1 pos2
 
 # INVALID (we could think by reading this that &quot;pos2&quot; is the
 #          value of the non-flag argument &quot;--flag&quot;)
-command &quot;pos1&quot; --flag &quot;pos2&quot; --val 2
+command pos1 --flag pos2 --val 2
+</code></pre>
+<p>As you can see, suites of characters that do not start with a dash (<code>-</code>) can be written without quotes when they're part of a command. Any special character (like spaces or dashes) can be escaped using the <code>\</code> prefix:</p>
+<pre><code class="language-hydre">command this\ is\ the\ same\ \-\ argument
+
+# Strictly equivalent to:
+
+command &quot;this is the same - argument&quot;
 </code></pre>
 <h3 id="variables-shadowing"><a class="header" href="#variables-shadowing">Variables shadowing</a></h3>
 <p>Any variable can, inside a program, be replaced by a new variable with a same name but with a different type. This is called <em>shadowing</em>.</p>
 <p>It can be useful when converting data from a type to another, such as:</p>
-<pre><code class="language-hydre">var names: list[string] = [ &quot;Jack&quot;, &quot;John&quot; ]
+<pre><code class="language-hydre">let names: list[string] = [ &quot;Jack&quot;, &quot;John&quot; ]
 
-var names: string = names.join(&quot;,&quot;) # this is called a _method_, we'll talk about them later
+let names: string = names.join(&quot;,&quot;) # this is called a _method_, we'll talk about them later
 </code></pre>
 <p>Here, we <em>shadowed</em> the <code>names</code> variable to create a new one with a different type from the data we had before, which means we cannot access the original <code>names</code> variable anymore.</p>
 <h2 id="expressions"><a class="header" href="#expressions">Expressions</a></h2>
 <p>To use a variable, we can directly use it like this::</p>
-<pre><code class="language-hydre">tellage ${age}
+<pre><code class="language-hydre">tellage $age
 </code></pre>
 <p>So this code:</p>
-<pre><code class="language-hydre">var age = 20
-tellage ${age}
+<pre><code class="language-hydre">let age = 20
+tellage $age
 </code></pre>
 <p>Is equivalent to this one:</p>
 <pre><code class="language-hydre">tellage 20
 </code></pre>
 <p>It's also possible to perform computations using expressions:</p>
-<pre><code class="language-hydre">var age = 20
-var add = 12
-tellage ${age + add}
+<pre><code class="language-hydre">let age = 20
+let add = 12
+tellage (age + add)
 </code></pre>
-<p>String and characters can also be inserted inside a string:</p>
-<pre><code class="language-hydre">var name = &quot;Jack&quot;
-echo &quot;Hello, ${name}!&quot; # Hello, Jack!
+<p>String, characters and numbers can also be inserted inside strings:</p>
+<pre><code class="language-hydre">let name = &quot;Jack&quot;
+echo &quot;Hello, $name!&quot; # Hello, Jack!
 </code></pre>
-<p>Values in lists through their index (starting at 0):</p>
-<pre><code class="language-hydre">var names = [ &quot;Jack&quot; ]
+<p>Other expressions require to use <code>${...}</code>. For instance, values in lists through their index (starting at 0):</p>
+<pre><code class="language-hydre">let names = [ &quot;Jack&quot; ]
 echo &quot;Hello, ${names[0]}!&quot; # Hello, Jack!
 </code></pre>
 <p>Values in maps through their key:</p>
-<pre><code class="language-hydre">var ages = { &quot;Jack&quot;: 28 }
+<pre><code class="language-hydre">let ages = { &quot;Jack&quot;: 28 }
 
 echo &quot;Jack is ${ages[&quot;Jack&quot;]} years old!&quot;
 </code></pre>
 <p>Note that getting an out-of-bound index will make the program <em>panic</em>, which means it exits immediatly with an error message.</p>
-<pre><code class="language-hydre">var names = [ &quot;Jack&quot; ]
+<pre><code class="language-hydre">let names = [ &quot;Jack&quot; ]
 echo &quot;Hello, ${names[1]}!&quot; # Panics
+</code></pre>
+<p>In commands, expressions can be provided wrapped in <code>(...)</code>:</p>
+<pre><code class="language-hydre">echo (2 + 1) # Will display: &quot;3&quot;
 </code></pre>
 <h2 id="computing-values"><a class="header" href="#computing-values">Computing values</a></h2>
 <p>It's also possible to compute values using operators. Each operator takes one or multiple operands, which can be either a variable or a literal value.</p>
@@ -577,39 +587,48 @@ If both operands are integers, the result will be an integer, but if at least on
 <p>Finally, there is the <code>!</code> operator, which takes a single operand on its right, and simply reverts a boolean.</p>
 <h3 id="assignment-operators"><a class="header" href="#assignment-operators">Assignment operators</a></h3>
 <p>The neutral assignment operator <code>=</code> can be prefixed by any mathematical, bit-wise or logical operator's symbol(s). The operator's left operand will be the current variable's content, while the right one will be the value on the left of the assignment operator. The result will then be stored in the variable.</p>
-<p>Here is an example:</p>
-<pre><code class="language-hydre">var a = 3
+<p>Note that for a variable to be modified, it must be declared as so:</p>
+<pre><code class="language-hydre"># Immutable
+let a = 3
 
+# Mutable
+let mut a = 3
+</code></pre>
+<p>Otherwise, re-assigning a value to the variable would fail.</p>
+<pre><code class="language-hydre"># We declare the variable as mutable...
+let mut a = 3
+
+# ...and we can then re-assign to it
 a += 1
 a *= 8
 a /= 2
 
-echo ${a} # 16
+echo $a # 16
 </code></pre>
-<p>Note that the result's type must be compatible with the variable:</p>
-<pre><code class="language-hydre">var a = 0
+<p>Note that the result's type must also be compatible with the variable:</p>
+<pre><code class="language-hydre">let a = 0
 
 a &amp;&amp;= 1 # ERROR: Cannot assign a 'bool' to an 'int'
 </code></pre>
 <p>There are also the <code>++</code> and <code>--</code> operators, which respectively increase and decrease the desired variable:</p>
-<pre><code class="language-hydre">var a = 0
+<pre><code class="language-hydre">let a = 0
 
 a ++
 a ++
 a --
 
-echo ${a} # 1
+echo $a # 1
 </code></pre>
 <h2 id="lists-and-maps"><a class="header" href="#lists-and-maps">Lists and maps</a></h2>
 <p>Lists and maps behave in a similar way: while lists have <em>indexes</em>, which are handled behind-the-scenes, maps have <em>keys</em>, which are provided explicitly.</p>
 <p>Here is how we declare a list or a map:</p>
 <pre><code class="language-hydre"># Type: list[string]
-var names = [ &quot;Jack&quot;, &quot;John&quot; ]
+let names = [ &quot;Jack&quot;, &quot;John&quot; ]
 
 # Type: map[string, int]
-var ages = { &quot;Jack&quot;: 28, &quot;John&quot;: 29 }
+let ages = { &quot;Jack&quot;: 28, &quot;John&quot;: 29 }
 </code></pre>
-<p>To add a new value:</p>
+<p>To add a new value (requires the variable to be mutable):</p>
 <pre><code class="language-hydre"># Lists
 names[] = &quot;Paolo&quot;
 
@@ -697,36 +716,36 @@ end
 <h3 id="loops"><a class="header" href="#loops">Loops</a></h3>
 <p>Loops allow to run a piece of code for a while. The most common loop is the range loop:</p>
 <pre><code class="language-hydre">for i in 0..10
-  command ${i}
+  command $i
 end
 </code></pre>
 <p>This will run <code>command 0</code> to <code>command 9</code>. To include the upper bound, we must add an <code>=</code> symbol:</p>
 <pre><code class="language-hydre">for i in 0..=10
-  command ${i}
+  command $i
 end
 </code></pre>
 <p>This will run <code>command 0</code> to <code>command 10</code>.</p>
 <p>We can also iterate on a list:</p>
-<pre><code class="language-hydre">var str = &quot;Jack&quot;
+<pre><code class="language-hydre">let str = &quot;Jack&quot;
 
-var list = [ &quot;Jack&quot;, &quot;John&quot; ]
+let list = [ &quot;Jack&quot;, &quot;John&quot; ]
 
 for name in list
-  echo ${name}
+  echo $name
 end
 </code></pre>
 <p>This will display <code>Jack</code> and <code>John</code>.</p>
 <p>To get the indexes as well, we can do:</p>
 <pre><code class="language-hydre">for i, name in list
-  echo &quot;${i}: ${name}&quot;
+  echo &quot;$i: $name&quot;
 end
 </code></pre>
 <p>This will display <code>0: Jack</code> and <code>1: John</code>.</p>
 <p>For maps:</p>
-<pre><code class="language-hydre">var ages = { &quot;Jack&quot;: 28, &quot;John&quot;: 29 }
+<pre><code class="language-hydre">let ages = { &quot;Jack&quot;: 28, &quot;John&quot;: 29 }
 
 for name, age in ages
-  echo &quot;${name} is ${age} years old!&quot;
+  echo &quot;$name is $age years old!&quot;
 end
 </code></pre>
 <p>There is another type of loop, which runs a piece of code while a condition is met:</p>
@@ -737,7 +756,7 @@ end
 <p>If the <code>condition</code> is <code>false</code> when the loop is reached, the <code>command</code> will not be ran once. Else, it will be ran as long as the <code>condition</code> is <code>true</code>.</p>
 <p>Note that loops can be broke anytime using the <code>break</code> keyword:</p>
 <pre><code class="language-hydre">for i in 0..10
-  command ${i}
+  command $i
 
   if i == 2
     break
@@ -748,28 +767,28 @@ end
 <h3 id="filesystem-iteration"><a class="header" href="#filesystem-iteration">Filesystem iteration</a></h3>
 <p>It's possible to iterate on a list of files and directories:</p>
 <pre><code class="language-hydre">for file in (./*.txt)
-  echo &quot;Found a text file: ${file}&quot;
+  echo &quot;Found a text file: $file&quot;
 end
 </code></pre>
 <p>The pattern between parenthesis must be a glob pattern. Recursivity is supported to:</p>
 <pre><code class="language-hydre">for file in (**/*.txt)
-  echo &quot;Found a text file: ${file}&quot;
+  echo &quot;Found a text file: $file&quot;
 end
 </code></pre>
 <h3 id="variables-scoping"><a class="header" href="#variables-scoping">Variables scoping</a></h3>
 <p>When a variable is declared, it is <em>scoped</em> to the current block, meaning it doesn't exist outside of the current block:</p>
 <pre><code class="language-hydre"># This variable is declared in the &quot;global&quot; block
 # so it's available everywhere in the current script
-var firstName = &quot;Jack&quot;
+let firstName = &quot;Jack&quot;
 
 if firstName == &quot;Jack&quot;
   # This variable is declared in an &quot;if&quot; block
   # so it's not available outside of it
-  var lastName = &quot;Sparrow&quot;
+  let lastName = &quot;Sparrow&quot;
 end
 
-echo ${firstName} # Prints: &quot;Jack&quot;
-echo ${lastName} # ERROR (&quot;lastName&quot; is not in scope)
+echo $firstName # Prints: &quot;Jack&quot;
+echo $lastName # ERROR (&quot;lastName&quot; is not in scope)
 </code></pre>
 <p>Also, variables are not shared between scripts.</p>
 <h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
@@ -784,22 +803,25 @@ end
 <h3 id="arguments"><a class="header" href="#arguments">Arguments</a></h3>
 <p>Function can also take arguments, which must have a type.</p>
 <pre><code class="language-hydre">fn hello (name: string)
-  echo &quot;Hello, ${name}!&quot;
+  echo &quot;Hello, $name!&quot;
 end
 
 hello(&quot;Jack&quot;) # Will print &quot;Hello, Jack!&quot;
 </code></pre>
 <p>Arguments can be made optional by providing default values. This also allows to get rid of their explicit type as it's now implicit:</p>
 <pre><code class="language-hydre">fn hello (name = &quot;Unknown&quot;)
-  echo &quot;Hello, ${name}!&quot;
+  echo &quot;Hello, $name!&quot;
 end
 
 hello()       # Will print &quot;Hello, Unknown!&quot;
 hello(&quot;Jack&quot;) # Will print &quot;Hello, Jack!&quot;
 </code></pre>
-<p>Note that a function's arguments do not require to wrap the value between <code>${...}</code> as it's implicit. Which means we can write:</p>
-<pre><code class="language-hydre">var name = &quot;Jack&quot;
-hello(name) # Prints: &quot;Hello, Jack!&quot;
+<p>Note that a function's arguments do not require to wrap expressions between <code>${...}</code> as it's implicit. Which means we can write:</p>
+<pre><code class="language-hydre">fn sayNumber (num: int)
+  echo &quot;Number is: $num&quot;
+end
+
+sayNumber(2 + 1) # Will print &quot;Number is: 3&quot;
 </code></pre>
 <p>We can also combine functions and blocks, for instance:</p>
 <pre><code class="language-hydre">fn greet (names: list[string]) -&gt; int
@@ -808,7 +830,7 @@ hello(name) # Prints: &quot;Hello, Jack!&quot;
     echo &quot;No one to greet :|&quot;
   else
     for name in names
-      echo &quot;Hello, ${name}!&quot;
+      echo &quot;Hello, $name!&quot;
     end
   end
 end
@@ -824,8 +846,8 @@ end
 </code></pre>
 <h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
 <p>All value types expose specific functions that can be used with a dot after a variable of the given type, called <em>methods</em>:</p>
-<pre><code class="language-hydre">var letters = &quot;abcdef&quot;
-var letters = letter.split(&quot;,&quot;)
+<pre><code class="language-hydre">let letters = &quot;abcdef&quot;
+let letters = letter.split(&quot;,&quot;)
 </code></pre>
 <p>Here, we use the <code>split</code> <em>method</em> of the <code>string</code> type, which returns a <code>list[string]</code>.</p>
 <h3 id="failing"><a class="header" href="#failing">Failing</a></h3>
@@ -843,11 +865,11 @@ end
 <pre><code class="language-hydre">fn handle_bad_div (a: float, b: float) -&gt; float
   catch divide(a, b)
     ok result
-      echo &quot;Divided successfully: ${a} / ${b} = ${result}&quot;
+      echo &quot;Divided successfully: $a / $b = $result&quot;
 
     err errmsg
       echo &quot;Division failed :(&quot;
-      echo &quot;Here is the error message: ${errmsg}&quot;
+      echo &quot;Here is the error message: $errmsg&quot;
   end
 end
 </code></pre>
@@ -855,7 +877,7 @@ end
 <p>This keyword also allows to catch errors from commands:</p>
 <pre><code class="language-hydre"># Run a command and get error messages from CMDERR instead if the command fails
 catch $(somecommand)
-  ok data =&gt; echo &quot;Success: ${data}&quot;
+  ok data =&gt; echo &quot;Success: $data&quot;
   err msg =&gt; echo &quot;Errors: ${msg.join(&quot;; &quot;)}&quot;
 end
 </code></pre>
@@ -877,7 +899,7 @@ retry may_fail()
 <pre><code class="language-hydre">fn retry_cmd(cmd: command, retries: string) -&gt; fallible
   retry(retries) cmd()
   if status() != 0
-    fail &quot;Command did not suceed after ${retries} retries.&quot;
+    fail &quot;Command did not suceed after $retries retries.&quot;
   end
 end
 </code></pre>
@@ -891,7 +913,7 @@ The failure may be handled using <code>fallible</code> in the caller script.</p>
 <p>Sometimes, it's useful to be able to represent a value that may be either <em>something</em> or <em>nothing</em>. In many programming languages, &quot;nothing&quot; is represented as the <code>null</code>, <code>nil</code> or <code>()</code> value.</p>
 <p>Nullable types are suffixed by a <code>?</code> symbol, and may either contain a value of the provided type <strong>or</strong> <code>null</code>. Here is an example:</p>
 <pre><code class="language-hydre">fn custom_rand() -&gt; int?
-  var rnd = rand_int(-5, 5)
+  let rnd = rand_int(-5, 5)
 
   if rnd &gt; 0
     return rnd
@@ -901,27 +923,27 @@ The failure may be handled using <code>fallible</code> in the caller script.</p>
 end
 </code></pre>
 <p>To declare a variable with an nullable type, we wrap its initialization value in the nullable operator <code>?(...)</code>:</p>
-<pre><code class="language-hydre">var a = 1 # int
-var b = ?(1) # int?
+<pre><code class="language-hydre">let a = 1 # int
+let b = ?(1) # int?
 </code></pre>
 <p>Or we explicitly give the variable a nullable type:</p>
-<pre><code class="language-hydre">var b: int? = 1 # int?
+<pre><code class="language-hydre">let b: int? = 1 # int?
 </code></pre>
 <p>To initialize the variable with the <code>null</code> value instead, we must use the explicit version:</p>
-<pre><code class="language-hydre">var c: int? = null # int?
+<pre><code class="language-hydre">let c: int? = null # int?
 </code></pre>
 <p>Note that imbricated types are not supported, which means we cannot create <code>int??</code> values for instance.</p>
 <h3 id="handle-the-null-value"><a class="header" href="#handle-the-null-value">Handle the <code>null</code> value</a></h3>
 <p>If we try to access an nullable value &quot;as is&quot;, we will get a type error:</p>
-<pre><code class="language-hydre">var a = ?(1)
+<pre><code class="language-hydre">let a = ?(1)
 
-var b = 0
+let b = 0
 b = a # ERROR: Cannot use an `int?` value where `int` is expected
 </code></pre>
 <p>We then have multiple options. We can use one of the nullable types' function:</p>
-<pre><code class="language-hydre">var a = ?(1)
+<pre><code class="language-hydre">let a = ?(1)
 
-var b = 0
+let b = 0
 
 # Make the program exit with an error message if 'a' is null
 b = a.unwrap()
@@ -930,21 +952,21 @@ b = a.unwrap()
 b = a.expect(&quot;'a' should not be null :(&quot;)
 </code></pre>
 <p>We can also detect if a value is <code>null</code> by using the <code>.isNull()</code> method:</p>
-<pre><code class="language-hydre">var a = ?(1)
-var b: int? = null
+<pre><code class="language-hydre">let a = ?(1)
+let b: int? = null
 
 echo ${a.isNull()} # false
 echo ${b.isNull()} # true
 </code></pre>
 <p>There is also the <code>.default(T)</code> method that allows to use a fallback value in case of <code>null</code>:</p>
-<pre><code class="language-hydre">var a = ?(1)
-var b: int? = null
+<pre><code class="language-hydre">let a = ?(1)
+let b: int? = null
 
 echo ${a.default(3)} # 1
 echo ${b.default(3)} # 3
 </code></pre>
 <p>We can also use special syntaxes in blocks:</p>
-<pre><code class="language-hydre">var a = ?(1)
+<pre><code class="language-hydre">let a = ?(1)
 
 if some a
   # While we are in this block, 'a' is considered as an 'int'
@@ -957,7 +979,7 @@ while some a
 end
 </code></pre>
 <p>Also, if the program exits in all cases when the argument is considered as null or non-null, the opposite type will be applied to the rest of the program:</p>
-<pre><code class="language-hydre">var a = ?(1)
+<pre><code class="language-hydre">let a = ?(1)
 
 if some a
   exit
@@ -965,7 +987,7 @@ end
 
 # 'a' is considered as 'null' here
 
-var b = ?(1)
+let b = ?(1)
 
 if none b
   exit
@@ -975,9 +997,9 @@ end
 </code></pre>
 <h3 id="the-case-of-optional-arguments"><a class="header" href="#the-case-of-optional-arguments">The case of optional arguments</a></h3>
 <p>When a command takes an optional argument, it's possible to provide a nullable value of the same type instead:</p>
-<pre><code class="language-hydre">var no_newline = ?(false)
+<pre><code class="language-hydre">let no_newline = ?(false)
 
-echo &quot;Hello!&quot; -n ${no_newline}
+echo &quot;Hello!&quot; -n $no_newline
 </code></pre>
 <p>If the value is <code>null</code>, the argument will not be provided. Else, it will be provided with the non-null value.</p>
 <h3 id="nullable-any"><a class="header" href="#nullable-any">Nullable <code>any</code></a></h3>
@@ -993,9 +1015,9 @@ sayHello({ firstName: &quot;Bat&quot;, lastName: &quot;Man&quot; }) # Prints: &q
 </code></pre>
 <p>In such a simple example, it's easier to directly use a <code>firstName</code> and <code>lastName</code> parameters instead of a <code>struct</code>, but they are useful when returning heterogenous sets of data, for example in a list:</p>
 <pre><code class="language-hydre">fn listRecursively(dir: path) -&gt; list[struct { name: path, size: int }]
-  var list: list[struct { name: path, size: int }] = []
+  let list: list[struct { name: path, size: int }] = []
 
-  for item in $(ls ${dir} --details)
+  for item in $(ls $dir --details)
     if item.isDirectory
       listRecursively(dir)
     else
@@ -1010,37 +1032,37 @@ end
 <pre><code class="language-hydre">type fsItem = struct { name: path, size: int }
 
 fn listRecursively(dir: path) -&gt; list[fsItem]
-  var list: list[fsItem] = []
+  let list: list[fsItem] = []
   # ...
 end
 </code></pre>
 <h3 id="closures"><a class="header" href="#closures">Closures</a></h3>
 <p>Closures are anonymous functions which are generally used to repeat the same group of operations.</p>
-<pre><code class="language-hydre">var test: fn (string, int) = { a, b -&gt; echo &quot;${a.repeat(b)}&quot; }
+<pre><code class="language-hydre">let test: fn (string, int) = { a, b -&gt; echo (a.repeat(b)) }
 test(&quot;Hello world! &quot;, 3) # Prints: &quot;Hello world! Hello world! Hello world! &quot;
 </code></pre>
 <p>Note that closures can also return values implicitly:</p>
-<pre><code class="language-hydre">var test: fn (string, int) -&gt; string = { a, b -&gt; a.repeat(b) }
-echo ${test(&quot;Hello world!&quot;, 3)} # Prints: &quot;Hello world! Hello world! Hello world! &quot;
+<pre><code class="language-hydre">let test: fn (string, int) -&gt; string = { a, b -&gt; a.repeat(b) }
+echo (test(&quot;Hello world!&quot;, 3)) # Prints: &quot;Hello world! Hello world! Hello world! &quot;
 </code></pre>
 <p>Also, closures are not forced to take their declared parameters:</p>
 <pre><code class="language-hydre">type testType = fn (string, int)
 
-var test: testType = { a, b, c -&gt; ### ... ### } # NOT VALID
-var test: testType = { a, b    -&gt; ### ... ### } # Valid
-var test: testType = { a       -&gt; ### ... ### } # Valid
-var test: testType = {         -&gt; ### ... ### } # Valid
+let test: testType = { a, b, c -&gt; ### ... ### } # NOT VALID
+let test: testType = { a, b    -&gt; ### ... ### } # Valid
+let test: testType = { a       -&gt; ### ... ### } # Valid
+let test: testType = {         -&gt; ### ... ### } # Valid
 </code></pre>
 <p>Here is a concrete usage example:</p>
 <pre><code class="language-hydre">fn forEachFile(dir: path, callback: fn (path))
-  for item in $(ls ${dir} --details)
+  for item in $(ls $dir --details)
     if item.isFile
       callback(item.fullPath)
     end
   end
 end
 
-forEachFile(./, { file -&gt; echo &quot;File: ${file}&quot; })
+forEachFile(./, { file -&gt; echo &quot;File: $file&quot; })
 </code></pre>
 <h3 id="streams"><a class="header" href="#streams">Streams</a></h3>
 <p>An usual type for manipulating large data is <code>stream</code>, which is notably used to treat a chunk of data that is either too large for the memory or is more easier to treat as things progress.</p>
@@ -1048,7 +1070,7 @@ forEachFile(./, { file -&gt; echo &quot;File: ${file}&quot; })
 <p>Some commands may return a value whose type cannot be predicted before runtime. For instance, a command fetching a JSON object from a remote server will, in case of success, return a value but whose type cannot be known beforehand.</p>
 <p><em>Data validation</em> is a feature allowing to scripts to check the type of an unknown value at runtime, using <em>type assertions</em>.</p>
 <p>Here is an example:</p>
-<pre><code class="language-hydre">var test: any = [ 2, 3, 4 ]
+<pre><code class="language-hydre">let test: any = [ 2, 3, 4 ]
 
 # 1. Here, &quot;test&quot; is considered to be of type &quot;any&quot;
 
@@ -1059,7 +1081,7 @@ else
 end
 </code></pre>
 <p>The <code>isnt</code> keyword can also be used:</p>
-<pre><code class="language-hydre">var test: any = [ 2, 3, 4 ]
+<pre><code class="language-hydre">let test: any = [ 2, 3, 4 ]
 
 # 1. Here, &quot;test&quot; is considered to be of type &quot;any&quot;
 
@@ -1070,7 +1092,7 @@ else
 end
 </code></pre>
 <p>If, in an &quot;isnt&quot; conditional, the script exits/fails in all cases (or returns if we're in a function), the value is considered with the asserted type for the rest of the script:</p>
-<pre><code class="language-hydre">var test: any = [ 2, 3, 4 ]
+<pre><code class="language-hydre">let test: any = [ 2, 3, 4 ]
 
 # 1. Here, &quot;test&quot; is considered to be of type &quot;any&quot;
 
@@ -1087,7 +1109,7 @@ end
 
 type User = struct { id: int, firstName: string, lastName: string, email: string }
 
-var json = fetchJson(&quot;https://mysuperapi.../users/all&quot;)
+let json = fetchJson(&quot;https://mysuperapi.../users/all&quot;)
 
 if json isnt User
   fail &quot;JSON doesn't have the correct structure&quot;
@@ -1098,7 +1120,7 @@ end
 <h2 id="event-listeners"><a class="header" href="#event-listeners">Event listeners</a></h2>
 <p>Scripts can listen to events using the <code>on</code> keyword:</p>
 <pre><code class="language-hydre">on keypress as keycode
-  echo &quot;A key was pressed: ${keycode}&quot;
+  echo &quot;A key was pressed: $keycode&quot;
 end
 </code></pre>
 <p>This program will display a message each time a key is pressed.</p>
@@ -1124,7 +1146,7 @@ echo &quot;Hello world!&quot;
 <p>The script will block while the provided <code>condition</code> is not <code>true</code>. The checking interval is defined by the system, and the condition should as fast to check as possible to consume as little CPU as possible.</p>
 <pre><code class="language-hydre">echo &quot;Please press the &lt;F&gt; key to validate your choice&quot;
 
-var validated = false
+let validated = false
 
 on keypress as keycode
   if keycode == KEY_F
@@ -1139,7 +1161,7 @@ echo &quot;Thanks for validating your choice :D&quot;
 <p>It's also possible to wait for a variable to not be <code>null</code>:</p>
 <pre><code class="language-hydre">echo &quot;Please press a key&quot;
 
-var key: int? = null
+let key: int? = null
 
 on keypress as keycode
   key = keycode
@@ -1147,7 +1169,7 @@ end
 
 wait some key
 
-echo &quot;You pressed key: ${key}&quot;
+echo &quot;You pressed key: $key&quot;
 </code></pre>
 <h2 id="imports"><a class="header" href="#imports">Imports</a></h2>
 <p>As you may already know, command names can be <a href="../concepts/applications.html#commands">quite long and complicated</a>. In order to prevent from having to repeat very long names that are not really readable, it's recommanded to use <em>imports</em> which are declared at the beginning of script with the form <code>&lt;dev&gt;::&lt;app&gt;::&lt;command&gt;</code>:</p>
@@ -1297,14 +1319,14 @@ read ./somefile.txt | length # Prints: 12
 <h2 id="running-in-background"><a class="header" href="#running-in-background">Running in background</a></h2>
 <p>It's possible to run multiple commands in parallel by using <em>background commands</em>. A background command runs, as the name suggests, in the background, and so its output isn't visible. If it fails, it won't generate any error nor affect the <code>status()</code> code.</p>
 <p>To run a command in backgroud, we use the <code>bg</code> keyword:</p>
-<pre><code class="language-hydre">bg hello = sleep 5 -x { i -&gt; echo &quot;Counter: ${i}&quot; }
+<pre><code class="language-hydre">bg hello = sleep 5 -x { i -&gt; echo &quot;Counter: $i&quot; }
 </code></pre>
 <p>This will declare an <code>hello</code> variable and put an <code>int</code> value inside it, which is the background command's <em>identifier</em> (BGID). The command will be started and run in parallel of the current program. For instance, the following program:</p>
-<pre><code class="language-hydre">bg hello = sleep 5 -x { i -&gt; echo &quot;Counter: ${i}&quot; } --end { -&gt; echo &quot;Counter completed!&quot; }
+<pre><code class="language-hydre">bg hello = sleep 5 -x { i -&gt; echo &quot;Counter: $i&quot; } --end { -&gt; echo &quot;Counter completed!&quot; }
 
 for i in 1..=5
   sleep 1
-  echo &quot;Loop: ${i}&quot;
+  echo &quot;Loop: $i&quot;
 end
 
 echo &quot;Loop completed!&quot;
@@ -1333,7 +1355,7 @@ fg hello # The commands comes back to the foreground
 detach hello
 </code></pre>
 <p>Or to stop the background command with <code>kill</code>:</p>
-<pre><code class="language-hydre">bg hello = sleep 5 -x { i -&gt; echo &quot;Counter: ${i}&quot; }
+<pre><code class="language-hydre">bg hello = sleep 5 -x { i -&gt; echo &quot;Counter: $i&quot; }
 
 sleep 3
 kill hello
@@ -1367,17 +1389,17 @@ with MESSAGE=&quot;Hello world!&quot; run ./myscript.ns
 <p>Environment variables cannot be accessed like traditional variables, they must be retrieved through the <code>env</code> builtin function:</p>
 <pre><code class="language-hydre"># In &quot;myscript.ns&quot;
 
-var message = env(&quot;MESSAGE&quot;) # any?
+let message = env(&quot;MESSAGE&quot;) # any?
 </code></pre>
 <p>As the variable may not be defined, the function returns a nullable value, so we must check if the variable is indeed defined:</p>
-<pre><code class="language-hydre">var message = env(&quot;MESSAGE&quot;)
+<pre><code class="language-hydre">let message = env(&quot;MESSAGE&quot;)
 
 if none message
   fail &quot;MESSAGE environment variable was not provided&quot;
 end
 </code></pre>
 <p>Now we are sure that <code>message</code> is defined, we get an <code>any</code> value, because we don't know the type of the environment variable. So we must use <a href="#data-validation">type assertions</a> for that:</p>
-<pre><code class="language-hydre">var message = env(&quot;MESSAGE&quot;)
+<pre><code class="language-hydre">let message = env(&quot;MESSAGE&quot;)
 
 if none message
   fail &quot;MESSAGE environment variable was not provided&quot;
@@ -1390,7 +1412,7 @@ end
 # Here, &quot;message&quot; is a string
 </code></pre>
 <p>Perfect! Note that, if you want to check if the environment variable exists <em>and</em> is of a specific type at the same time, you can skip the first checking, which is only here to perform specific actions in case the environment variable isn't even defined:</p>
-<pre><code class="language-hydre">var message = env(&quot;MESSAGE&quot;)
+<pre><code class="language-hydre">let message = env(&quot;MESSAGE&quot;)
 
 if message isnt string
   fail &quot;MESSAGE environment variable was not provided or is not a string&quot;
@@ -1444,6 +1466,7 @@ end
 </ul>
 <h3 id="enumerations"><a class="header" href="#enumerations">Enumerations</a></h3>
 <p>The <code>enum</code> type for arguments indicate the argument only accepts a subset of values (whose type is inferred), which must be specified as a constant. This means the caller cannot use a variable as this argument's value, because the return type may depend on it.</p>
+<p>Syntax is: <code>enum[value1 | value2 | value3]</code></p>
 <p>It may also be used as a list of custom values by wrapping the enumeration into a <code>list[...]</code>.</p>
 <h3 id="return-type"><a class="header" href="#return-type">Return type</a></h3>
 <p>The command's return type can be any existing type.</p>
@@ -1470,13 +1493,13 @@ For flag arguments, at least <code>short</code> or <code>long</code> must be pro
     # ...
     dash &quot;repeat&quot;
       type int
+      enum [1 | 2 | 3 | 4]
       help &quot;How many times to repeat the names&quot;
       short &quot;r&quot;
       long &quot;repeat&quot;
       default 1
       requires &quot;arg1&quot;
       conflicts &quot;arg2&quot; &quot;arg3&quot;
-      enum list[1, 2, 3, 4]
     end
   end
   # ...
@@ -1485,14 +1508,14 @@ end
 <p>The <code>main</code> function takes arguments with the same name as described in the <code>cmd</code> block, and in the same order:</p>
 <pre><code class="language-hydre">fn main(names: list[string], repeat: int?)
   for i in 0..=repeat.default(1)
-    echo ${names.join(&quot;, &quot;)}
+    echo (names.join(&quot;, &quot;))
   end
 end
 </code></pre>
 <p>The script can then be called like any command, with the default <code>$(...)</code> operator returning the script's return value:</p>
 <pre><code class="language-hydre">./myscript.ns [&quot;Jack&quot;, &quot;John&quot;] -r 1
 # or
-var result = $(./myscript.ns [&quot;Jack&quot;, &quot;John&quot;] -r 1)
+let result = $(./myscript.ns [&quot;Jack&quot;, &quot;John&quot;] -r 1)
 </code></pre>
 <p>Also, know that scripts can <code>fail</code> too. This allows errors to be handled when the script is run as a function:</p>
 <pre><code class="language-hydre"># main(names: list[string], repeat: int?) -&gt; fallible
@@ -1557,29 +1580,29 @@ _ = @{ streamify &quot;Hello world!&quot; }.str() # &quot;&lt;stream&gt;&quot;
 <h3 id="nullable-types-1"><a class="header" href="#nullable-types-1">Nullable types</a></h3>
 <h4 id="tisnull---t"><a class="header" href="#tisnull---t"><code>T?.isNull() -&gt; T</code></a></h4>
 <p>Check if the value is <code>null</code>.</p>
-<pre><code class="language-hydre">var a: int? = 1
-var b: int? = null
+<pre><code class="language-hydre">let a: int? = 1
+let b: int? = null
 
 echo ${a.isNull()} # false
 echo ${b.isNull()} # true
 </code></pre>
 <h4 id="tdefaultfallback-t---t"><a class="header" href="#tdefaultfallback-t---t"><code>T?.default(fallback: T) -&gt; T</code></a></h4>
 <p>Use a fallback value in case of <code>null</code>:</p>
-<pre><code class="language-hydre">var a: int? = 1
-var b: int? = null
+<pre><code class="language-hydre">let a: int? = 1
+let b: int? = null
 
 echo ${a.default(3)} # 1
 echo ${b.default(3)}
 </code></pre>
 <h4 id="tunwrap---t"><a class="header" href="#tunwrap---t"><code>T?.unwrap() -&gt; T</code></a></h4>
 <p>Make the program exit with an error message if the value is null.</p>
-<pre><code class="language-hydre">var a = ?(0) # int?
-var b = a.unwrap() # int
+<pre><code class="language-hydre">let a = ?(0) # int?
+let b = a.unwrap() # int
 </code></pre>
 <h4 id="texpectmessage-string---t"><a class="header" href="#texpectmessage-string---t"><code>T?.expect(message: string) -&gt; T</code></a></h4>
 <p>Make the program exit with a custom error message if 'a' is null</p>
-<pre><code class="language-hydre">var a = ?(0) # INt?
-var b = a.expect(&quot;'a' should not be null :(&quot;) # int
+<pre><code class="language-hydre">let a = ?(0) # INt?
+let b = a.expect(&quot;'a' should not be null :(&quot;) # int
 </code></pre>
 <h3 id="characters"><a class="header" href="#characters">Characters</a></h3>
 <h4 id="charsingle---bool"><a class="header" href="#charsingle---bool"><code>char.single() -&gt; bool</code></a></h4>
@@ -1623,7 +1646,7 @@ _ = (&quot;A&quot;).parse_int(16) # 11
 <pre><code class="language-hydre">_ = (&quot;abc&quot;).reverse() # &quot;cba&quot;
 </code></pre>
 <h4 id="stringconcatright-string---string"><a class="header" href="#stringconcatright-string---string"><code>string.concat(right: string) -&gt; string</code></a></h4>
-<p>Concatenate two strings (equivalent to <code>&quot;${left}${right}&quot;</code>).</p>
+<p>Concatenate two strings (equivalent to <code>&quot;$left$right&quot;</code>).</p>
 <pre><code class="language-hydre">_ = (&quot;a&quot;).concat(&quot;b&quot;) # &quot;ab&quot;
 </code></pre>
 <h4 id="stringsplitstr-string-sep-string---string"><a class="header" href="#stringsplitstr-string-sep-string---string"><code>string.split(str: string, sep: string) -&gt; string</code></a></h4>
@@ -1643,7 +1666,7 @@ join([ &quot;a&quot;, &quot;b&quot; ], &quot;; &quot;) # &quot;a; b&quot;
 </code></pre>
 <h4 id="listtgetindex-int---t"><a class="header" href="#listtgetindex-int---t"><code>list[T].get(index: int) -&gt; T?</code></a></h4>
 <p>Try to get an item from the list, without panicking if the index is out-of-bounds.</p>
-<pre><code class="language-hydre">var names = [ &quot;Jack&quot;, &quot;John&quot; ]
+<pre><code class="language-hydre">let names = [ &quot;Jack&quot;, &quot;John&quot; ]
 
 names.get(0) # &quot;Jack&quot;
 names.get(1) # &quot;John&quot;
@@ -1651,7 +1674,7 @@ names.get(2) # null
 </code></pre>
 <h4 id="listtexpectindex-number-message-string---t"><a class="header" href="#listtexpectindex-number-message-string---t"><code>list[T].expect(index: number, message: string) -&gt; T</code></a></h4>
 <p>Get an item from the list, and panic with a custom error message if the index is out-of-bounds.</p>
-<pre><code class="language-hydre">var names = [ &quot;Jack&quot;, &quot;John&quot; ]
+<pre><code class="language-hydre">let names = [ &quot;Jack&quot;, &quot;John&quot; ]
 
 names.expect(2, &quot;Third item was not found&quot;)
 </code></pre>
@@ -1725,13 +1748,13 @@ Equivalent to calling the command with simple parenthesis like <code>cmd()</code
 <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
 <h3 id="guess-the-number"><a class="header" href="#guess-the-number">Guess The Number</a></h3>
 <pre><code class="language-hydre">while true
-  var won = false
-  var secret = rand_int(0, 100)
+  let won = false
+  let secret = rand_int(0, 100)
 
   echo &quot;Secret number between 0 and 100 has been chosen.&quot;
 
   while !won
-    var user_input = retry prompt_int(&quot;Please input your guess: &quot;)
+    let user_input = retry prompt_int(&quot;Please input your guess: &quot;)
 
     if user_input &lt; secret
       echo &quot;It's higher!&quot;
@@ -1824,7 +1847,7 @@ echo &quot;Hello world!&quot; &gt;&gt; ./test.txt
 </code></pre>
 <h3 id="fd-find-filesystem-items"><a class="header" href="#fd-find-filesystem-items"><code>fd</code>: find filesystem items</a></h3>
 <p>Find filesystem items matching provided criterias.</p>
-<pre><code class="language-hydre"># fd [-t | --types list[&quot;dir&quot; | &quot;file&quot; | &quot;symlink&quot; | &quot;device&quot;]]
+<pre><code class="language-hydre"># fd [-t | --types enum[&quot;dir&quot; | &quot;file&quot; | &quot;symlink&quot; | &quot;device&quot;]]
 #    [-a | --absolute]
 #    [-L | --follow]
 #    [-e | --extension &lt;string&gt;]

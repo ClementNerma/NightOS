@@ -32,6 +32,7 @@ The library contains several _modules_ (called **SLM** for _**S**ystem **L**ibra
 - `sandbox` : Sandboxes management (run applications in sandboxes, ...)
 - `desktop` : Desktop management (desktop, windows, notifications, ...)
 - `hardware` : Hardware management (drivers and devices)
+- `i18n`: Translations
 
 ## System applications' libraries
 

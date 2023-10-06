@@ -2,7 +2,7 @@
 
 Translations are a complex topic and can be handled in several ways.
 
-Applications' and libraries' content can either be translated using a custom way (e.g. a translation framework), or by using the system's [builtin translation service, `sys::i18n`](services/system/i18n.md).
+Applications' and libraries' content can either be translated using a custom way (e.g. a translation framework), or by using the system's [builtin translation library, `i18n`](./libraries.md#system-library-modules).
 
 - [Translation sets](#translation-sets)
   - [Header](#header)

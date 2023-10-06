@@ -44,7 +44,6 @@ For more informations about low-level concepts these documents refer to, you can
 * [`sys::crashsave`](services/system/crashsave.md): [crash saves](../features/crash-saves.md) management
 * [`sys::flow`](services/system/flow.md): [flows](filesystem.md#flows) management
 * [`sys::hydre`](services/system/hydre.md): [Hydre](shell.md) shell service
-* [`sys::i18n`](services/system/i18n.md): [translation](translations.md) service
 * [`sys::ui`](services/system/ui.md): user interface service
 * [`sys::app`](services/system/app.md): applications management service
 * [`sys::process`](services/system/process.md): processes management service

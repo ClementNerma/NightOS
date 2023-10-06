@@ -125,7 +125,7 @@ Translation strings use the following structure:
     - Check (1 byte):
       - `0x01`: (`string`-only): string is empty
       - `0x02`: (`string`-only): string only contains ASCII characters
-      - `0x20`: (`int`-only): number if positive
+      - `0x20`: (`int`-only): number is positive
       - `0x21`: (`int`-only): number could be converted to a `uint` without loss
       - `0x30`: (`uint`-only): number could be converted to an `int` without loss
       - `0x31`: (`uint`-only): if the number was signed as an `int`, it would be negative

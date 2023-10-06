@@ -191,8 +191,8 @@ _NOTE:_ `<F>` indicates the item is a file.
 Links:
 
 - (1) [UPE requests](../concepts/users.md#user-privileges-elevation-upe)
-- (2) The [integrity checker](../technical/integrity-checker.md)
-- (3) Global storage's [encryption key](../features/encryption.md#global-encryption)
+- (2) Used for [integrity checking](../specs/boot-process.md)
+- (3) Global storage's [encryption](../features/encryption.md) key
 
 ### Notes
 

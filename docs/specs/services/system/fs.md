@@ -31,8 +31,7 @@ The `sys::fs` service is in charge of operations related to the [filesystems](..
   - [`0x5001` UPDATE\_SYMLINK](#0x5001-update_symlink)
   - [`0x5002` READ\_SYMLINK](#0x5002-read_symlink)
   - [`0xA000` WATCH\_ITEM](#0xa000-watch_item)
-  - [`0xA001` WATCH\_DIR\_CONTENT](#0xa001-watch_dir_content)
-  - [`0xA002` UNWATCH](#0xa002-unwatch)
+  - [`0xA001` UNWATCH](#0xa001-unwatch)
   - [`0xF000` FORMAT](#0xf000-format)
 - [Notifications](#notifications)
   - [`0x0006` FS\_CHANGED](#0x0006-fs_changed)
@@ -640,28 +639,9 @@ Watch an item for changes on its metadata or content. Any change will trigger a 
 - `0x3000`: Invalid FSID provided
 - `0x3001`: Provided path was not found
 
-### `0xA001` WATCH_DIR_CONTENT
+### `0xA001` UNWATCH
 
-Watch a directory's content for changes on its metadata or content. Any change will trigger a [`DIR_CONTENT_CHANGED`](#0xa001-dir_content_changed) notification.
-
-**Required permission:**
-
-- `fs.dir.read`
-
-**Arguments:**
-
-- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
-- [Path](../integration/filesystem-interfaces.md#filesystem-paths) to watch
-- Generated watch identifier (8 bytes)
-
-**Errors:**
-
-- `0x3000`: Invalid FSID provided
-- `0x3001`: Provided path was not found
-
-### `0xA002` UNWATCH
-
-Stop watching a content watched with [`WATCH_ITEM`](#0xa000-watch_item) or [`WATCH_DIR_CONTENT`](#0xa001-watch_dir_content).
+Stop watching a content watched with [`WATCH_ITEM`](#0xa000-watch_item).
 
 **Arguments:**
 

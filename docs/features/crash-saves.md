@@ -15,6 +15,6 @@ If the application didn't answer when the next collect occurs, the signal is abo
 
 When a crash save has been collected for a given application, it is stored in `/home/[user]/appdata/[appname]/crashsaves/[timestamp]_[pid].csf`.
 
-_NOTE:_ Crash saves' intregrity is controlled using the system's [integrity checker](../technical/integrity-checker.md).
+_NOTE:_ Crash saves' intregrity is controlled during the boot process.
 
 All [native applications](../applications/README.md) support crash saves.

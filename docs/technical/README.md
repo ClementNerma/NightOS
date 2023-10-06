@@ -7,7 +7,6 @@ A global overview of the system can be found in the [overview document](overview
 - [The controller](controller.md) - permissions management system
 - [Developer mode](dev-mode.md) - enable powerful development options
 - [File formats](file-formats.md) - description of all native file formats
-- [Integrity checker](integrity-checker.md) - ensure the system hasn't been corrupted
 - [I/O manager](io-manager.md) - manage input/output requests
 - [Inter-process communication](ipc.md) - communication between processes
 - [Multi-platform management](multi-platform.md) - how the NightOS ecosystem can be used on other operating systems

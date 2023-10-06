@@ -25,7 +25,6 @@
   - [Developer mode](technical/dev-mode.md) - enable powerful development options
   - [Devices](technical/devices.md) - manage hardware devices
   - [File formats](technical/file-formats.md) - description of all native file formats
-  - [Integrity checker](technical/integrity-checker.md) - ensure the system hasn't been corrupted
   - [I/O manager](technical/io-manager.md) - manage input/output requests
   - [Multi-platform management](technical/multi-platform.md) - how the NightOS ecosystem can be used on other operating systems
   - [Performances](technical/performances.md) - system tweaks used to optimize general and specific-case performances
@@ -42,6 +41,7 @@
   - [Applications and libraries](specs/applications-libraries.md) - what applications and libraries are
   - [Applications](specs/applications.md) - how applications are structured and behave
   - [Filesystem](specs/filesystem.md) - how the filesystem works
+  - [Boot process](specs/boot-process.md) - how the system starts
   - [Storage permissions](specs/storage-permissions.md) - how permissions are managed on filesystem elements
   - [Libraries](specs/libraries.md) - what are libraries
   - [Permissions](specs/permissions.md) - list of applications' permissions

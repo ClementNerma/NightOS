@@ -674,45 +674,6 @@ Stop watching a content watched with [`WATCH_ITEM`](#0xa000-watch_item) or [`WAT
 
 - `0x3000`: Provided watch identifier was not found
 
-### `0xAA00` LOCK_ITEM
-
-Lock an item to prevent modifications, access, renaming and removal from other processes.
-
-**Required permissions:**
-
-- `fs.items.lock`
-
-**Arguments:**
-
-- [FSID](../../filesystem.md#filesystem-unique-identifier) (8 bytes)
-- Item's [path](../integration/filesystem-interfaces.md#filesystem-paths)
-
-**Return value:**
-
-- Generated lock identifier (8 bytes)
-
-**Errors:**
-
-- `0x3000`: Provided FSID was not found
-- `0x3001`: Provided item was not found
-- `0x4000`: A lock is already in place on this item
-
-### `0xAA01` UNLOCK_ITEM
-
-Unlock an item locked with [`LOCK_ITEM`](#0xaa00-lock_item).
-
-**Arguments:**
-
-- Lock identifier (8 bytes)
-
-**Return value:**
-
-_None_
-
-**Errors:**
-
-- `0x3000`: Unknown lock identifier
-
 ### `0xF000` FORMAT
 
 Asynchronously format the partition to get an empty filesystem.

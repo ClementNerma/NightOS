@@ -15,6 +15,7 @@ It can also be used by [file managers](../specs/services/integration/file-manage
 - Tagged Image File Format (`.tiff`, `.tif`)
 - Graphics Interchange Format (`.gif`)
 - Graphics Interchange Format Video (`.gifv`)
+- AV1 Image File Format (`.avif`)
 - Windows Bitmap (`.bmp`)
 - NightOS [Bitmap Image](../specs/kernel/data-structures.md#bitmap-images) (`.nbi`)
 - NightOS [Bitmap Video](../specs/kernel/data-structures.md#bitmap-videos) (`.nbv`)

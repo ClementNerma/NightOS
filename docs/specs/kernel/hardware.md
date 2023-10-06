@@ -21,13 +21,14 @@ As all devices do not use the same connection protocols, the detection process d
 * PCI-Express devices are detected through their Configuration Space
 * IDE/SATA devices are detected through the IDE/SATA controller
 * USB devices are enumerated through the USB protocol stack
+* Motherboard-connected devices are enumerated through the BIOS/UEFI (e.g. CPU and case fans)
 
 Some devices may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.
 
 ## Connection interface identifier
 
 The *connection interface identifier* (CII) is a 4-byte number describing what a device is connected to:
-hardw
+
 - Connection type (1 byte):
   - `0x01`: PCI-Express
   - `0x02`: IDE
@@ -35,6 +36,7 @@ hardw
   - `0x04`: M.2
   - `0x05`: USB
   - `0x06`: RGB
+  - `0x07`: Fans
 - Bus number (1 byte)
 - Port number (2 bytes)
 

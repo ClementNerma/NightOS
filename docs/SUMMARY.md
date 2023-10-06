@@ -44,7 +44,7 @@
   - [Filesystem](specs/filesystem.md) - how the filesystem works
   - [Storage permissions](specs/storage-permissions.md) - how permissions are managed on filesystem elements
   - [The boot process](specs/boot-process.md) - how the system starts
-  - [Update processes](update-processes.md) - how updates are performed
+  - [Update processes](specs/update-processes.md) - how updates are performed
   - [Permissions](specs/permissions.md) - list of applications' permissions
   - [Containers](specs/containers.md) - process isolation system
   - [The registry](specs/registry.md) - exhaustive specification of the registry's content

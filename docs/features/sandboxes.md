@@ -4,7 +4,7 @@ _Sandboxes_ allow to test an application without applying modifications to the s
 
 - [How sandboxes work](#how-sandboxes-work)
 - [Persistent sandboxes](#persistent-sandboxes)
-- [Puppet sandbox](#puppet-sandbox)
+- [Puppet sandboxes](#puppet-sandboxes)
 
 ## How sandboxes work
 
@@ -16,6 +16,6 @@ In developer mode, it is possible to export sandboxes and import them on other c
 
 Sandboxes can also be created as _persistent_, which prevents them from being removed after the app. exited. Instead, the next time it will run, the same sandbox will be used again.
 
-## Puppet sandbox
+## Puppet sandboxes
 
 Sandboxes can be controlled by another application (this requires an administrator permission, though). This allows to automatically accept or decline every API usage, like permissions or I/O requests. Such sandboxes are called _puppet sandboxes_, and they can be especially useful for testing.

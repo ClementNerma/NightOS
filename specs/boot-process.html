@@ -201,8 +201,10 @@
 <p>If BOOT2 is encrypted (full-storage encryption only), the master key is used to decrypt it. Its signature is then checked to ensure it has not been modified. If the signature don't match, the computer will by default refuse to boot to avoid corruption and/or booting malicious programs. By inputting a specific phrase displayed on the screen, the user can force the boot process, at the expense of security.</p>
 <p>If signatures match, BOOT2 is launched directly.</p>
 <h2 id="stage-2-system-loader-boot2"><a class="header" href="#stage-2-system-loader-boot2">Stage 2: system loader (BOOT2)</a></h2>
-<p>This component checks signature for BOOT3. It also provides more advanced troubleshooting thanks to the whole storage being decryptable.</p>
+<p>This component is responsible to user account selection and storage decryption. It is stored in a dedicated partition as the <code>/sys/boot</code> file, a header-less raw executable program.</p>
+<p>It starts by checking signature of all system files (everything located in <code>/sys</code> and <code>/etc/sys</code>).</p>
 <p>If signatures are not valid, an error message is shown and the booting process is halt. By inputting a specific phrase displayed on the screen, the user can force the boot process, at the expense of security.</p>
+<p>BOOT2 also provides more advanced troubleshooting thanks to the whole storage being decryptable.</p>
 <p>It then initializes all required drivers, initialize a graphical session, and asks to select a user account. At this point, it also provides more troubleshooting options.</p>
 <p>If the provided username and password are valid, it then does the following:</p>
 <ul>
@@ -210,6 +212,8 @@
 <li>If <a href="../features/encryption.html#per-user-encryption">per-user encryption</a> is enabled, the user key is decrypted</li>
 </ul>
 <p>The user session is then opened by calling the relevant system component.</p>
+<p>Note that the BOOT2 partition is read-only except to the <a href="../concepts/users.html#users-type">system user</a> itself.</p>
+<p>It is only updated through the <a href="update-processes.html#system-updates">system update process</a> and when rollbacked.</p>
 
                     </main>
 

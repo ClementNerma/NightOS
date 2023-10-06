@@ -323,7 +323,7 @@
 │   └── root                       Soft link to `/`
 ├── sys (4)                        System - immutable outside of installation, repair processes and updates
 │   ├── apps                       System applications
-│   ├── boot                       System's boot program
+│   ├── boot                   (5) System's boot program (BOOT2)
 │   ├── langs                      Translation files
 │   ├── old                        Old versions of the system, used during the repair process (compressed archives)
 │   ├── backup                     Copy of the last system version (compressed archive)
@@ -337,7 +337,8 @@
 <li>(1) <a href="../concepts/users.html#user-privileges-elevation-upe">UPE requests</a></li>
 <li>(2) Used for <a href="../specs/boot-process.html">integrity checking</a></li>
 <li>(3) Global storage's <a href="../features/encryption.html">encryption</a> key</li>
-<li>(4) Not stored in the main data pratition but in the <a href="#partitions">BOOT2 partition</a></li>
+<li>(4) Not stored in the main data partition but in <a href="#partitions">BOOT2's partition</a></li>
+<li>(5) Raw boot program (without header), represented by <a href="boot-process.html#stage-2-system-loader-boot2">BOOT2</a></li>
 </ul>
 <h3 id="notes"><a class="header" href="#notes">Notes</a></h3>
 <p>Globally installed applications (located in <code>/apps</code>) can store user-specific data in <code>/home/[user]/appdata/[appname]</code>, which will only be made of the <code>data</code>, <code>crashsaves</code> and <code>sandboxes</code> folder.</p>

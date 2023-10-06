@@ -1758,7 +1758,7 @@ It indicates why the application was started and so what it is supposed to do.</
 │   └── root                       Soft link to `/`
 ├── sys (4)                        System - immutable outside of installation, repair processes and updates
 │   ├── apps                       System applications
-│   ├── boot                       System's boot program
+│   ├── boot                   (5) System's boot program (BOOT2)
 │   ├── langs                      Translation files
 │   ├── old                        Old versions of the system, used during the repair process (compressed archives)
 │   ├── backup                     Copy of the last system version (compressed archive)
@@ -1772,7 +1772,8 @@ It indicates why the application was started and so what it is supposed to do.</
 <li>(1) <a href="specs/../concepts/users.html#user-privileges-elevation-upe">UPE requests</a></li>
 <li>(2) Used for <a href="specs/../specs/boot-process.html">integrity checking</a></li>
 <li>(3) Global storage's <a href="specs/../features/encryption.html">encryption</a> key</li>
-<li>(4) Not stored in the main data pratition but in the <a href="specs/filesystem.html#partitions">BOOT2 partition</a></li>
+<li>(4) Not stored in the main data partition but in <a href="specs/filesystem.html#partitions">BOOT2's partition</a></li>
+<li>(5) Raw boot program (without header), represented by <a href="specs/boot-process.html#stage-2-system-loader-boot2">BOOT2</a></li>
 </ul>
 <h3 id="notes"><a class="header" href="#notes">Notes</a></h3>
 <p>Globally installed applications (located in <code>/apps</code>) can store user-specific data in <code>/home/[user]/appdata/[appname]</code>, which will only be made of the <code>data</code>, <code>crashsaves</code> and <code>sandboxes</code> folder.</p>
@@ -1883,8 +1884,10 @@ It indicates why the application was started and so what it is supposed to do.</
 <p>If BOOT2 is encrypted (full-storage encryption only), the master key is used to decrypt it. Its signature is then checked to ensure it has not been modified. If the signature don't match, the computer will by default refuse to boot to avoid corruption and/or booting malicious programs. By inputting a specific phrase displayed on the screen, the user can force the boot process, at the expense of security.</p>
 <p>If signatures match, BOOT2 is launched directly.</p>
 <h2 id="stage-2-system-loader-boot2"><a class="header" href="#stage-2-system-loader-boot2">Stage 2: system loader (BOOT2)</a></h2>
-<p>This component checks signature for BOOT3. It also provides more advanced troubleshooting thanks to the whole storage being decryptable.</p>
+<p>This component is responsible to user account selection and storage decryption. It is stored in a dedicated partition as the <code>/sys/boot</code> file, a header-less raw executable program.</p>
+<p>It starts by checking signature of all system files (everything located in <code>/sys</code> and <code>/etc/sys</code>).</p>
 <p>If signatures are not valid, an error message is shown and the booting process is halt. By inputting a specific phrase displayed on the screen, the user can force the boot process, at the expense of security.</p>
+<p>BOOT2 also provides more advanced troubleshooting thanks to the whole storage being decryptable.</p>
 <p>It then initializes all required drivers, initialize a graphical session, and asks to select a user account. At this point, it also provides more troubleshooting options.</p>
 <p>If the provided username and password are valid, it then does the following:</p>
 <ul>
@@ -1892,6 +1895,8 @@ It indicates why the application was started and so what it is supposed to do.</
 <li>If <a href="specs/../features/encryption.html#per-user-encryption">per-user encryption</a> is enabled, the user key is decrypted</li>
 </ul>
 <p>The user session is then opened by calling the relevant system component.</p>
+<p>Note that the BOOT2 partition is read-only except to the <a href="specs/../concepts/users.html#users-type">system user</a> itself.</p>
+<p>It is only updated through the <a href="specs/update-processes.html#system-updates">system update process</a> and when rollbacked.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="update-processes"><a class="header" href="#update-processes">Update processes</a></h1>
 <p>This document describes how updates are performed.</p>
 <h2 id="system-updates-1"><a class="header" href="#system-updates-1">System updates</a></h2>

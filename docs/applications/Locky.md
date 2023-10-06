@@ -1,6 +1,6 @@
 # Locky
 
-Locky is NightOS' [encryption](../features/encryption.md) tool. It heavily relies on the [`sys:crypto`](../specs/services/system/crypto.md) service.
+Locky is NightOS' [encryption](../features/encryption.md) tool. It heavily relies on the [`sys::crypto`](../specs/services/system/crypto.md) service.
 
 ## User interface features
 

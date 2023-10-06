@@ -6,7 +6,7 @@ It relies on [Locky](Locky.md) for encrypted archives, filesystems and files.
 
 ## Features
 
-Blackhole can open, extract and create [different formats](#supported-formats). It supports compression as well as encryption.
+Blackhole can open, extract and create [different formats](#supported-containers). It supports compression as well as encryption.
 
 ## Supported containers
 

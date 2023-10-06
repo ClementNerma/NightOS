@@ -7,8 +7,8 @@ This document presents the minimal hardware requirements required by NightOS in 
 * **Processor**: `x86_64` processor
 * **Memory**: at least 256 MB or RAM
 * **Storage**: *to be determined*
+* **Graphics card:** Required for graphical access (otherwise see [BareEnv](../applications/BareEnv.md))
 
 ## Recommanded configuration
 
-* A modern process with a built-in cryptography module
-* An _I/O Memory Management Unit_ (IOMMU) for DMA access
+* A modern process with TPM (ideally 2.0 or higher)

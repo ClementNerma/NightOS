@@ -4565,11 +4565,11 @@ If a client thread terminates brutally, the <a href="specs/kernel/signals.html#0
 <li>PCI-Express devices are detected through their Configuration Space</li>
 <li>IDE/SATA devices are detected through the IDE/SATA controller</li>
 <li>USB devices are enumerated through the USB protocol stack</li>
+<li>Motherboard-connected devices are enumerated through the BIOS/UEFI (e.g. CPU and case fans)</li>
 </ul>
 <p>Some devices may not be detected through these though, such as some legacy ISA devices, which will be detected through a set of methods like ACPI enumeration or simply checking UART serial ports.</p>
 <h2 id="connection-interface-identifier"><a class="header" href="#connection-interface-identifier">Connection interface identifier</a></h2>
-<p>The <em>connection interface identifier</em> (CII) is a 4-byte number describing what a device is connected to:
-hardw</p>
+<p>The <em>connection interface identifier</em> (CII) is a 4-byte number describing what a device is connected to:</p>
 <ul>
 <li>Connection type (1 byte):
 <ul>
@@ -4579,6 +4579,7 @@ hardw</p>
 <li><code>0x04</code>: M.2</li>
 <li><code>0x05</code>: USB</li>
 <li><code>0x06</code>: RGB</li>
+<li><code>0x07</code>: Fans</li>
 </ul>
 </li>
 <li>Bus number (1 byte)</li>

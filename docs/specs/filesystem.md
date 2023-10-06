@@ -178,7 +178,7 @@ _NOTE:_ `<F>` indicates the item is a file.
 │   └── root                       Soft link to `/`
 ├── sys (4)                        System - immutable outside of installation, repair processes and updates
 │   ├── apps                       System applications
-│   ├── boot                       System's boot program
+│   ├── boot                   (5) System's boot program (BOOT2)
 │   ├── langs                      Translation files
 │   ├── old                        Old versions of the system, used during the repair process (compressed archives)
 │   ├── backup                     Copy of the last system version (compressed archive)
@@ -193,7 +193,8 @@ Links:
 - (1) [UPE requests](../concepts/users.md#user-privileges-elevation-upe)
 - (2) Used for [integrity checking](../specs/boot-process.md)
 - (3) Global storage's [encryption](../features/encryption.md) key
-- (4) Not stored in the main data pratition but in the [BOOT2 partition](#partitions)
+- (4) Not stored in the main data partition but in [BOOT2's partition](#partitions)
+- (5) Raw boot program (without header), represented by [BOOT2](boot-process.md#stage-2-system-loader-boot2)
 
 ### Notes
 

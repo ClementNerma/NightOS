@@ -31,9 +31,13 @@ If signatures match, BOOT2 is launched directly.
 
 ## Stage 2: system loader (BOOT2)
 
-This component checks signature for BOOT3. It also provides more advanced troubleshooting thanks to the whole storage being decryptable.
+This component is responsible to user account selection and storage decryption. It is stored in a dedicated partition as the `/sys/boot` file, a header-less raw executable program.
+
+It starts by checking signature of all system files (everything located in `/sys` and `/etc/sys`).
 
 If signatures are not valid, an error message is shown and the booting process is halt. By inputting a specific phrase displayed on the screen, the user can force the boot process, at the expense of security.
+
+BOOT2 also provides more advanced troubleshooting thanks to the whole storage being decryptable.
 
 It then initializes all required drivers, initialize a graphical session, and asks to select a user account. At this point, it also provides more troubleshooting options.
 
@@ -43,3 +47,7 @@ If the provided username and password are valid, it then does the following:
 * If [per-user encryption](../features/encryption.md#per-user-encryption) is enabled, the user key is decrypted
 
 The user session is then opened by calling the relevant system component.
+
+Note that the BOOT2 partition is read-only except to the [system user](../concepts/users.md#users-type) itself.
+
+It is only updated through the [system update process](update-processes.md#system-updates) and when rollbacked.

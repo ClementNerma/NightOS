@@ -239,6 +239,8 @@ If the command was started as a command, it also contains the following informat
 - SC identifier for the CMDOUT pipe (8 bytes)
 - _Future-proof shift space_ (196 bytes)
 
+RC and SC identifiers come from the relevant [flows](./filesystem.md#flows).
+
 ### Arguments structure
 
 The context header is followed by the list of each command-line argument, taking up to 64 KB.

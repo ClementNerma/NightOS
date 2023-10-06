@@ -2,7 +2,7 @@
 
 Milkshake is the default video player of NightOS.
 
-## Supported formats
+## Supported containers and codecs
 
 - WebM (`.webm`)
 - Matroska (`.mkv`)
@@ -17,6 +17,7 @@ Milkshake is the default video player of NightOS.
 - MPEG-1/-2 (`.mpg`, `.mp2`, `.mpeg`, `.mpe`, `.mpv`, `.m2v`)
 - M4V (`.m4v`)
 - 3rd Generation Partnership Project (`.3gp`, `.3g2`)
+- AV1 codec
 
 ## Features
 

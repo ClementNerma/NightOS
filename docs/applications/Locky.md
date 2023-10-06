@@ -1,11 +1,12 @@
 # Locky
 
-Locky is NightOS' encryption tool. It is used to [encrypt the whole storage](../features/encryption.md#global-encryption) and [encrypt individual users' data](../features/encryption.md#per-user-encryption).
+Locky is NightOS' [encryption](../features/encryption.md) tool. It heavily relies on the [`sys:crypto`](../specs/services/system/crypto.md) service.
 
 ## User interface features
 
 - Encryption and decryption of notes
 - Encryption and decryption of files, folders
+- Encryption and decryption of users
 - Encryption and decryption of storages (for supported filesystems)
 
 ## Library features

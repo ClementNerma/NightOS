@@ -93,7 +93,7 @@ When we will try to access `A`, the system will access `B`, then `A`, then `B`, 
 
 ## Flows
 
-_Flows_ are a simple and efficient way for processes (mostly [services](services.md)) to allow treating flows of data.
+_Flows_ are a simple and efficient way for [shell scripts](./services/system/hydre.md) to allow manipulating asynchronous streams of data.
 
 ### Concept
 
@@ -114,7 +114,7 @@ Processes are based on [pipes](kernel/ipc.md).
 
 When a process wants to create a flow, it follows the following procedure:
 
-1. The process asks the [`sys::flow`](services/system/flow.md) service to create a flow
+1. The process asks the [`sys::fs`](services/system/fs.md) service to create a flow
 2. The service creates the related flow file in `/fl`
 3. When a process reads from the (readable) flow file, all data is continuely retrieved from the creator's SC (until the flow is closed)
 4. When a process writes to the (writable) flow file, all data is continuely written to the creator's RC (the flow is not closed after that though)
@@ -122,7 +122,7 @@ When a process wants to create a flow, it follows the following procedure:
 
 ### Connecting to a flow
 
-When a process wants to read from or write to a file, it first asks the [`sys::flow`](services/system/flow.md) service to connect to this file. If accepted, it receives a [SC or RC](kernel/ipc.md#pipes) to interact with the flow.
+When a process wants to read from or write to a file, it first asks the [`sys::fs`](services/system/fs.md) service to connect to this file. If accepted, it receives a [SC or RC](kernel/ipc.md#pipes) to interact with the flow.
 
 ## Structure
 

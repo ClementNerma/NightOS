@@ -58,7 +58,6 @@ Conventional error codes use an increasing importance order ; checkings should a
 * [`sys::net`](system/net.md): network communications
 * [`sys::crypto`](system/crypto.md): cryptography utilities
 * [`sys::crashsave`](system/crashsave.md): [crash saves](../../features/crash-saves.md) management
-* [`sys::flow`](system/flow.md): [flows](..//filesystem.md#flows) management
 * [`sys::hydre`](system/hydre.md): [Hydre](../shell.md) shell service
 * [`sys::ui`](system/ui.md): user interface service
 * [`sys::app`](system/app.md): applications management service

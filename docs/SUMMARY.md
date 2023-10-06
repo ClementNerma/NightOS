@@ -79,7 +79,6 @@
     - [`sys::net`](specs/services/system/net.md)
     - [`sys::crypto`](specs/services/system/crypto.md)
     - [`sys::crashsave`](specs/services/system/crashsave.md)
-    - [`sys::flow`](specs/services/system/flow.md)
     - [`sys::hydre`](specs/services/system/hydre.md)
     - [`sys::app`](specs/services/system/app.md)
     - [`sys::process`](specs/services/system/process.md)

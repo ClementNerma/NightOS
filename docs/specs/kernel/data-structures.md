@@ -4,26 +4,25 @@ This documents describes the structures used by the kernel to represent the data
 
 All contiguous data structures are made such as it is easy to delimit them by computing their size in the memory.
 
-- [Data structures](#data-structures)
-  - [Booleans](#booleans)
-  - [Timestamps](#timestamps)
-  - [Delimited lists](#delimited-lists)
-  - [Delimited strings](#delimited-strings)
-  - [Buffer pointers](#buffer-pointers)
-  - [Options](#options)
-  - [Fallible results](#fallible-results)
-  - [Bitmap images](#bitmap-images)
-  - [Bitmap videos](#bitmap-videos)
-  - [Packed linked lists](#packed-linked-lists)
-    - [Caracteristics](#caracteristics)
-    - [Structure in memory](#structure-in-memory)
-    - [Checking an entry's type](#checking-an-entrys-type)
-    - [The ratio](#the-ratio)
-    - [Performances bottlenecks](#performances-bottlenecks)
-    - [Performance advantages](#performance-advantages)
-    - [Length-first variant](#length-first-variant)
-    - [Tricking the `NIE`](#tricking-the-nie)
-  - [Unions](#unions)
+- [Booleans](#booleans)
+- [Timestamps](#timestamps)
+- [Delimited lists](#delimited-lists)
+- [Delimited strings](#delimited-strings)
+- [Buffer pointers](#buffer-pointers)
+- [Options](#options)
+- [Fallible results](#fallible-results)
+- [Bitmap images](#bitmap-images)
+- [Bitmap videos](#bitmap-videos)
+- [Packed linked lists](#packed-linked-lists)
+  - [Caracteristics](#caracteristics)
+  - [Structure in memory](#structure-in-memory)
+  - [Checking an entry's type](#checking-an-entrys-type)
+  - [The ratio](#the-ratio)
+  - [Performances bottlenecks](#performances-bottlenecks)
+  - [Performance advantages](#performance-advantages)
+  - [Length-first variant](#length-first-variant)
+  - [Tricking the `NIE`](#tricking-the-nie)
+- [Unions](#unions)
 
 ## Booleans
 
@@ -131,7 +130,7 @@ The goal of a PLL is to provide a blazing fast read and iteration speed, while c
 
 ### Caracteristics
 
-A PLL is caracterized by its _item size_, _length_ (the number of items in the list) and the _number of items per entry_ (NIE) (up to 255), which is the number of items which can be stored per entry. It is noted `PLL(e=<number of items per entry>[, s=<item size in bytes>][, l=<number of elements currently in the list>])`.
+A PLL is caracterized by its _item size_ (in bytes), _number of items per entry_ (NIE, up to 255) and its _length_ (the number of items in the list), which is the number of items which can be stored per entry. It is noted `PLL(e=<number of items per entry>[, s=<item size in bytes>][, l=<length>])`.
 
 ### Structure in memory
 

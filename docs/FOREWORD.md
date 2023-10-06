@@ -28,11 +28,12 @@ NightOS, on its side, starts from a blank page. There is no compatibility to mai
 
 ## What NightOS isn't
 
-Unlike other operating systems such as Linux which are able to run on a very wide variety of devices, the goal of NightOS is not to be as flexible as this would require to make some big compromises and hugely complexify the system. Here is a list of things NightOS won't do:
+Unlike other operating systems such as Linux which are able to run on a very wide variety of devices, the goal of NightOS is not to be as flexible as this would require to make some big compromises and hugely complexify the system. Here is a list of things NightOS isn't designed for running on:
 
-* Running on embedded devices
-* Running on multi-CPU computers (although this decision might change in the future)
-* Running on 32-bit devices
+* Embedded devices
+* Multi-CPU computers (although this decision might change in the future)
+* Non-64-bit CPU architectures
+* Headless devices (such as servers)
 
 ## What's the project's structure?
 

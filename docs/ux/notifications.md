@@ -48,7 +48,7 @@ There are several notification types, which their own required sets of data.
 
 ### Free notifications
 
-This is the default type of notifications, which no particular constraint.
+This is the default type of notifications, which has no particular constraint.
 
 ### Multimedia notifications
 

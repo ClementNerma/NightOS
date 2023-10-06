@@ -4723,8 +4723,6 @@ hardw</p>
 <p>This documents describes the structures used by the kernel to represent the data it uses in memory.</p>
 <p>All contiguous data structures are made such as it is easy to delimit them by computing their size in the memory.</p>
 <ul>
-<li><a href="specs/kernel/data-structures.html#data-structures">Data structures</a>
-<ul>
 <li><a href="specs/kernel/data-structures.html#booleans">Booleans</a></li>
 <li><a href="specs/kernel/data-structures.html#timestamps">Timestamps</a></li>
 <li><a href="specs/kernel/data-structures.html#delimited-lists">Delimited lists</a></li>
@@ -4747,8 +4745,6 @@ hardw</p>
 </ul>
 </li>
 <li><a href="specs/kernel/data-structures.html#unions">Unions</a></li>
-</ul>
-</li>
 </ul>
 <h2 id="booleans"><a class="header" href="#booleans">Booleans</a></h2>
 <p>A boolean is a single byte value that's either <code>0x01</code> for <code>true</code> or <code>0x02</code> for <code>false</code>.</p>
@@ -4827,7 +4823,7 @@ hardw</p>
 <p>It uses a system of same-size entries, each containing a micro bump allocator.</p>
 <p>The goal of a PLL is to provide a blazing fast read and iteration speed, while compromising on insertion and deletion speeds.</p>
 <h3 id="caracteristics"><a class="header" href="#caracteristics">Caracteristics</a></h3>
-<p>A PLL is caracterized by its <em>item size</em>, <em>length</em> (the number of items in the list) and the <em>number of items per entry</em> (NIE) (up to 255), which is the number of items which can be stored per entry. It is noted <code>PLL(e=&lt;number of items per entry&gt;[, s=&lt;item size in bytes&gt;][, l=&lt;number of elements currently in the list&gt;])</code>.</p>
+<p>A PLL is caracterized by its <em>item size</em> (in bytes), <em>number of items per entry</em> (NIE, up to 255) and its <em>length</em> (the number of items in the list), which is the number of items which can be stored per entry. It is noted <code>PLL(e=&lt;number of items per entry&gt;[, s=&lt;item size in bytes&gt;][, l=&lt;length&gt;])</code>.</p>
 <h3 id="structure-in-memory"><a class="header" href="#structure-in-memory">Structure in memory</a></h3>
 <p>Each entry is a contiguous suite of bytes which can store up to <code>NIE</code> items contiguously. It starts by either a pointer to the next entry (on 8 bytes), or the number of items actually initialized in the current entry (pre-filled with zeros to be stored on 8 bytes).</p>
 <p>For instance, let's take a <code>PLL(e=3, s=2, l=4)</code>. Its content is the four following items:</p>

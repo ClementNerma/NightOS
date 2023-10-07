@@ -177,6 +177,8 @@
                         <h1 id="sysfs-service"><a class="header" href="#sysfs-service"><code>sys::fs</code> service</a></h1>
 <p>The <code>sys::fs</code> service is in charge of operations related to the <a href="../../filesystem.html">filesystems</a>.</p>
 <ul>
+<li><a href="#sysfs-service"><code>sys::fs</code> service</a>
+<ul>
 <li><a href="#behaviour">Behaviour</a>
 <ul>
 <li><a href="#operations-and-latency">Operations and latency</a></li>
@@ -218,6 +220,8 @@
 <ul>
 <li><a href="#0x0006-fs_changed"><code>0x0006</code> FS_CHANGED</a></li>
 <li><a href="#0xa000-item_changed"><code>0xA000</code> ITEM_CHANGED</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -552,7 +556,7 @@ Opening a file with write access will prevent read, writes and removal while the
 <p><strong>Arguments:</strong></p>
 <ul>
 <li><a href="../../filesystem.html#filesystem-unique-identifier">FSID</a> (40 bytes)</li>
-<li><a href="../../kernel/data-structures.html#unions">Union</a> (1 + ? bytes)
+<li><a href="../../kernel/data-structures.html#enumerations">Enumeration</a> (1 + ? bytes)
 <ul>
 <li>Type ID <code>0x00</code>: Existing <a href="../integration/filesystem-interfaces.html#filesystem-paths">filesystem path</a> to open</li>
 <li>Type ID <code>0x01</code>: Existing <a href="../integration/filesystem-interfaces.html#filesystem-paths">filesystem path</a> of the parent directory</li>

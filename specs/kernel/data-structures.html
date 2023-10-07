@@ -178,6 +178,8 @@
 <p>This documents describes the structures used by the kernel to represent the data it uses in memory.</p>
 <p>All contiguous data structures are made such as it is easy to delimit them by computing their size in the memory.</p>
 <ul>
+<li><a href="#data-structures">Data structures</a>
+<ul>
 <li><a href="#booleans">Booleans</a></li>
 <li><a href="#timestamps">Timestamps</a></li>
 <li><a href="#delimited-lists">Delimited lists</a></li>
@@ -196,10 +198,13 @@
 <li><a href="#performances-bottlenecks">Performances bottlenecks</a></li>
 <li><a href="#performance-advantages">Performance advantages</a></li>
 <li><a href="#length-first-variant">Length-first variant</a></li>
-<li><a href="#tricking-the-nie">Tricking the <code>NIE</code></a></li>
+<li><a href="#tweaking-the-nie">Tweaking the <code>NIE</code></a></li>
 </ul>
 </li>
 <li><a href="#unions">Unions</a></li>
+<li><a href="#enumerations">Enumerations</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="booleans"><a class="header" href="#booleans">Booleans</a></h2>
 <p>A boolean is a single byte value that's either <code>0x01</code> for <code>true</code> or <code>0x02</code> for <code>false</code>.</p>
@@ -311,22 +316,25 @@ The second entry is the last one and so simply contains the number of initialize
 <p>There is a variant of the PLL that stores the total length of the list somewhere in the memory. In that case, the first byte of the last entry does not need to store the number of items in the entry.</p>
 <p>This variant is interesting being we can instantly get the number of items in the list, but the downside is that reading sequentially the list will also incur an additional reading to know where the last entry ends, and updating the total length incur a high risk of cache fault as the chances of the memory area where the length is as well as the entry itself be in the cache at the same time are pretty low.</p>
 <p>The length-first variant should only be used when accessing the length instantly is critical.</p>
-<h3 id="tricking-the-nie"><a class="header" href="#tricking-the-nie">Tricking the <code>NIE</code></a></h3>
+<h3 id="tweaking-the-nie"><a class="header" href="#tweaking-the-nie">Tweaking the <code>NIE</code></a></h3>
 <p>Increasing the NIE will:</p>
 <ul>
 <li>Reduce the needs of allocating</li>
 <li>Speed up iteration times</li>
-<li>Speed up insertion times when the last entry isn't full</li>
+<li>Speed up insertion times when the last entry isn't occupied</li>
 </ul>
 <p>But also:</p>
 <ul>
-<li>Increase the memory cost of the last entry when it isn't full</li>
-<li>Slow down insert times when the last entry is full (needs to allocate)</li>
+<li>Increase the memory cost of the last entry when it isn't occupied</li>
+<li>Slow down insert times when the last entry is occupied (need to allocate)</li>
 </ul>
 <h2 id="unions"><a class="header" href="#unions">Unions</a></h2>
 <p>Unions allow to construct multiple types of data in a single one.</p>
-<p>An union is made of a <em>type ID</em> (1 byte) followed by the data.</p>
+<p>It is made of a <em>type ID</em> (1 byte) followed by the data.</p>
 <p>For instance, if we want to store either a string or a list, we can associate type ID 0 to the former and type ID 1 to the latter, then append the actual string or list to it.</p>
+<h2 id="enumerations"><a class="header" href="#enumerations">Enumerations</a></h2>
+<p>Enumerations allow to switch between behaviours using a unified data type.</p>
+<p>It is made of a <em>variant ID</em> (1 byte) followed by the data (which can be of any fixed type).</p>
 
                     </main>
 

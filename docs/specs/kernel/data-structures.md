@@ -24,6 +24,7 @@ All contiguous data structures are made such as it is easy to delimit them by co
     - [Length-first variant](#length-first-variant)
     - [Tweaking the `NIE`](#tweaking-the-nie)
   - [Unions](#unions)
+  - [Enumerations](#enumerations)
 
 ## Booleans
 
@@ -205,6 +206,12 @@ But also:
 
 Unions allow to construct multiple types of data in a single one.
 
-An union is made of a _type ID_ (1 byte) followed by the data.
+It is made of a _type ID_ (1 byte) followed by the data.
 
 For instance, if we want to store either a string or a list, we can associate type ID 0 to the former and type ID 1 to the latter, then append the actual string or list to it.
+
+## Enumerations
+
+Enumerations allow to switch between behaviours using a unified data type.
+
+It is made of a _variant ID_ (1 byte) followed by the data (which can be of any fixed type).

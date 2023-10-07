@@ -4,25 +4,26 @@ This documents describes the structures used by the kernel to represent the data
 
 All contiguous data structures are made such as it is easy to delimit them by computing their size in the memory.
 
-- [Booleans](#booleans)
-- [Timestamps](#timestamps)
-- [Delimited lists](#delimited-lists)
-- [Delimited strings](#delimited-strings)
-- [Buffer pointers](#buffer-pointers)
-- [Options](#options)
-- [Fallible results](#fallible-results)
-- [Bitmap images](#bitmap-images)
-- [Bitmap videos](#bitmap-videos)
-- [Packed linked lists](#packed-linked-lists)
-  - [Caracteristics](#caracteristics)
-  - [Structure in memory](#structure-in-memory)
-  - [Checking an entry's type](#checking-an-entrys-type)
-  - [The ratio](#the-ratio)
-  - [Performances bottlenecks](#performances-bottlenecks)
-  - [Performance advantages](#performance-advantages)
-  - [Length-first variant](#length-first-variant)
-  - [Tricking the `NIE`](#tricking-the-nie)
-- [Unions](#unions)
+- [Data structures](#data-structures)
+  - [Booleans](#booleans)
+  - [Timestamps](#timestamps)
+  - [Delimited lists](#delimited-lists)
+  - [Delimited strings](#delimited-strings)
+  - [Buffer pointers](#buffer-pointers)
+  - [Options](#options)
+  - [Fallible results](#fallible-results)
+  - [Bitmap images](#bitmap-images)
+  - [Bitmap videos](#bitmap-videos)
+  - [Packed linked lists](#packed-linked-lists)
+    - [Caracteristics](#caracteristics)
+    - [Structure in memory](#structure-in-memory)
+    - [Checking an entry's type](#checking-an-entrys-type)
+    - [The ratio](#the-ratio)
+    - [Performances bottlenecks](#performances-bottlenecks)
+    - [Performance advantages](#performance-advantages)
+    - [Length-first variant](#length-first-variant)
+    - [Tricking the `NIE`](#tricking-the-nie)
+  - [Unions](#unions)
 
 ## Booleans
 
@@ -193,12 +194,12 @@ Increasing the NIE will:
 
 - Reduce the needs of allocating
 - Speed up iteration times
-- Speed up insertion times when the last entry isn't full
+- Speed up insertion times when the last entry isn't occupied
 
 But also:
 
-- Increase the memory cost of the last entry when it isn't full
-- Slow down insert times when the last entry is full (needs to allocate)
+- Increase the memory cost of the last entry when it isn't occupied
+- Slow down insert times when the last entry is occupied (need to allocate)
 
 ## Unions
 

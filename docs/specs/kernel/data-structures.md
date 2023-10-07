@@ -22,7 +22,7 @@ All contiguous data structures are made such as it is easy to delimit them by co
     - [Performances bottlenecks](#performances-bottlenecks)
     - [Performance advantages](#performance-advantages)
     - [Length-first variant](#length-first-variant)
-    - [Tricking the `NIE`](#tricking-the-nie)
+    - [Tweaking the `NIE`](#tweaking-the-nie)
   - [Unions](#unions)
 
 ## Booleans
@@ -188,7 +188,7 @@ This variant is interesting being we can instantly get the number of items in th
 
 The length-first variant should only be used when accessing the length instantly is critical.
 
-### Tricking the `NIE`
+### Tweaking the `NIE`
 
 Increasing the NIE will:
 

@@ -1,6 +1,6 @@
 # Central
 
-The _Central_ application delivers the _Control Center_ which allows to configure how the system behaves. It is split into three distinct categories.
+The _Central_ application delivers the _Control Center_ which allows to configure how the system behaves. It is split into several categories.
 
 ```
 > Current user settings

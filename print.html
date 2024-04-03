@@ -9180,19 +9180,8 @@ System services communicate directly with the kernel and are trusted processes s
 <p><strong>WARNING:</strong> I am not a cryptography expert, so this document certainly contains mistakes or bad practices. In which case, feel free to let me know!</p>
 <p>This service provides ways to perform secure cryptography operations from any process. Most methods do not require any permission.</p>
 <h2 id="methods-11"><a class="header" href="#methods-11">Methods</a></h2>
-<h3 id="0x1000-generate_number"><a class="header" href="#0x1000-generate_number"><code>0x1000</code> GENERATE_NUMBER</a></h3>
-<p>Generate a 64-bit number using a cryptographically-secure method with a high level of entropy. A TPM will be used if available.</p>
-<p><strong>Arguments:</strong></p>
-<p><em>None</em></p>
-<p><strong>Return value:</strong></p>
-<ul>
-<li>Generated number (8 bytes)</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<p><em>None</em></p>
-<h4 id="0x0001-random_buffer"><a class="header" href="#0x0001-random_buffer"><code>0x0001</code> RANDOM_BUFFER</a></h4>
+<h4 id="0x1000-random_buffer"><a class="header" href="#0x1000-random_buffer"><code>0x1000</code> RANDOM_BUFFER</a></h4>
 <p>Fill a number with random values using a cryptographically-secure method.</p>
-<p>Generation is performed using the same methods as for <a href="specs/services/system/crypto.html#0x1000-generate_number"><code>GENERATE_NUMBER</code></a>.</p>
 <p><strong>Arguments:</strong></p>
 <ul>
 <li><a href="specs/services/system/../../kernel/data-structures.html#buffer-pointers">Buffer pointer</a> (16 bytes)</li>

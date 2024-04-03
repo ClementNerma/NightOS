@@ -6,27 +6,9 @@ This service provides ways to perform secure cryptography operations from any pr
 
 ## Methods
 
-### `0x1000` GENERATE_NUMBER
-
-Generate a 64-bit number using a cryptographically-secure method with a high level of entropy. A TPM will be used if available.
-
-**Arguments:**
-
-_None_
-
-**Return value:**
-
-- Generated number (8 bytes)
-
-**Errors:**
-
-_None_
-
-#### `0x0001` RANDOM_BUFFER
+#### `0x1000` RANDOM_BUFFER
 
 Fill a number with random values using a cryptographically-secure method.
-
-Generation is performed using the same methods as for [`GENERATE_NUMBER`](#0x1000-generate_number).
 
 **Arguments:**
 

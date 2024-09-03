@@ -19,15 +19,15 @@ It is known as the [I/O manager](../../../technical/io-manager.md), or Ion.
   - [Direct driver access for `sys::fs`](#direct-driver-access-for-sysfs)
   - [Direct storage access for `sys::fs`](#direct-storage-access-for-sysfs)
 - [Methods](#methods)
-  - [`0x0001` ENUM_DEVICES](#0x0001-enum_devices)
-  - [`0x0002` SUBSCRIBE_DEVICES](#0x0002-subscribe_devices)
-  - [`0x1000` REGISTER_DRIVER](#0x1000-register_driver)
-  - [`0x1001` UNREGISTER_DRIVER](#0x1001-unregister_driver)
-  - [`0x2000` NOTIFY_PROCESS](#0x2000-notify_process)
-  - [`0xA000` ASK_DRIVER](#0xa000-ask_driver)
-  - [`0xD000` AUTHORIZE_FS_INTERFACE](#0xd000-authorize_fs_interface)
-  - [`0xD001` UNAUTHORIZE_FS_INTERFACE](#0xd001-unauthorize_fs_interface)
-  - [`0xD002` AUTH_PERFORM_STORAGE](#0xd002-auth_perform_storage)
+  - [`0x0001` ENUM\_DEVICES](#0x0001-enum_devices)
+  - [`0x0002` SUBSCRIBE\_DEVICES](#0x0002-subscribe_devices)
+  - [`0x1000` REGISTER\_DRIVER](#0x1000-register_driver)
+  - [`0x1001` UNREGISTER\_DRIVER](#0x1001-unregister_driver)
+  - [`0x2000` NOTIFY\_PROCESS](#0x2000-notify_process)
+  - [`0xA000` ASK\_DRIVER](#0xa000-ask_driver)
+  - [`0xD000` AUTHORIZE\_FS\_INTERFACE](#0xd000-authorize_fs_interface)
+  - [`0xD001` UNAUTHORIZE\_FS\_INTERFACE](#0xd001-unauthorize_fs_interface)
+  - [`0xD002` AUTH\_PERFORM\_STORAGE](#0xd002-auth_perform_storage)
 - [Notifications](#notifications)
   - [0x0002 `IDENTIFY_DEVICE`](#0x0002-identify_device)
   - [0x0003 `DEVICE_EVENT`](#0x0003-device_event)
@@ -41,9 +41,7 @@ Hardware detection is handled by [the kernel itself](../../kernel/hardware.md#ha
 
 ## Unique device identifier
 
-Each device gets a _unique device identifier_ (UDI) encoded on 8 bytes, which identifies a unique hardware device. It is unique across devices and consistent across reboots. Unlike the [KDI](../../kernel/hardware.md#kernel-device-identifier), the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.
-
-The identification mechanism depends on the connection type and is yet to be specified.
+Each device gets a _unique device identifier_ (UDI) encoded on 8 bytes, which identifies a unique hardware device. It is unique across devices and consistent across reboots. Unlike the [kernel's device identifier (KDI)](../../kernel/hardware.md#kernel-device-identifier), the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.
 
 ## Device formats
 
@@ -70,7 +68,7 @@ A _drivable device raw descriptor_ (DDRD) is a 512-byte long data structure mean
 - [UDI](#unique-device-identifier) (8 bytes)
 - [CII](../../kernel/hardware.md#connection-interface-identifier) (4 bytes)
 - Size of the [DTD](#device-type-descriptor) (1 byte)
-- [DTD](#device-type-descriptor) (256 bytes, unused weakest bytes filled with zeros)
+- [DTD](#device-type-descriptor) (up to 256 bytes)
 - _Future-proof_
 
 ### Driven device type
@@ -168,7 +166,7 @@ All operations related to storage devices are handled by the [`sys::fs`](fs.md) 
 
 ### Direct storage access for [`sys::fs`](fs.md)
 
-In case a specific storage device doesn't require a [dedicated driver](../drivers/storage.md), the `sys::fs` service can directly access the said hardware device.
+In the event a specific storage device doesn't require a [dedicated driver](../drivers/storage.md), the `sys::fs` service can directly access the said hardware device.
 
 ## Methods
 

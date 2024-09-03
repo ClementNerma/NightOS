@@ -8825,8 +8825,7 @@ Opening a file with write access will prevent read, writes and removal while the
 <h2 id="hardware-detection-1"><a class="header" href="#hardware-detection-1">Hardware detection</a></h2>
 <p>Hardware detection is handled by <a href="specs/services/system/../../kernel/hardware.html#hardware-detection">the kernel itself</a>, which exposes a <a href="specs/services/system/../../kernel/hardware.html#raw-device-descriptor"><em>raw device descriptor</em> (RDD)</a>.</p>
 <h2 id="unique-device-identifier"><a class="header" href="#unique-device-identifier">Unique device identifier</a></h2>
-<p>Each device gets a <em>unique device identifier</em> (UDI) encoded on 8 bytes, which identifies a unique hardware device. It is unique across devices and consistent across reboots. Unlike the <a href="specs/services/system/../../kernel/hardware.html#kernel-device-identifier">KDI</a>, the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.</p>
-<p>The identification mechanism depends on the connection type and is yet to be specified.</p>
+<p>Each device gets a <em>unique device identifier</em> (UDI) encoded on 8 bytes, which identifies a unique hardware device. It is unique across devices and consistent across reboots. Unlike the <a href="specs/services/system/../../kernel/hardware.html#kernel-device-identifier">kernel's device identifier (KDI)</a>, the UDI is generated randomly to prevent from getting informations on the hardware just from the UDI.</p>
 <h2 id="device-formats"><a class="header" href="#device-formats">Device formats</a></h2>
 <p>This section describes the multiple formats used by this service to deal with devices.</p>
 <h3 id="device-type-descriptor"><a class="header" href="#device-type-descriptor">Device type descriptor</a></h3>
@@ -8850,7 +8849,7 @@ Opening a file with write access will prevent read, writes and removal while the
 <li><a href="specs/services/system/hw.html#unique-device-identifier">UDI</a> (8 bytes)</li>
 <li><a href="specs/services/system/../../kernel/hardware.html#connection-interface-identifier">CII</a> (4 bytes)</li>
 <li>Size of the <a href="specs/services/system/hw.html#device-type-descriptor">DTD</a> (1 byte)</li>
-<li><a href="specs/services/system/hw.html#device-type-descriptor">DTD</a> (256 bytes, unused weakest bytes filled with zeros)</li>
+<li><a href="specs/services/system/hw.html#device-type-descriptor">DTD</a> (up to 256 bytes)</li>
 <li><em>Future-proof</em></li>
 </ul>
 <h3 id="driven-device-type"><a class="header" href="#driven-device-type">Driven device type</a></h3>
@@ -8921,7 +8920,7 @@ Opening a file with write access will prevent read, writes and removal while the
 <h3 id="direct-driver-access-for-sysfs"><a class="header" href="#direct-driver-access-for-sysfs">Direct driver access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
 <p>All operations related to storage devices are handled by the <a href="specs/services/system/fs.html"><code>sys::fs</code></a> service. To avoid the cost of using <code>sys::hw</code> as a relay for hardware operations, the <code>sys::fs</code> service is allowed to directly communicate with all <a href="specs/services/system/../drivers/storage.html">storage driver services</a>.</p>
 <h3 id="direct-storage-access-for-sysfs"><a class="header" href="#direct-storage-access-for-sysfs">Direct storage access for <a href="specs/services/system/fs.html"><code>sys::fs</code></a></a></h3>
-<p>In case a specific storage device doesn't require a <a href="specs/services/system/../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware device.</p>
+<p>In the event a specific storage device doesn't require a <a href="specs/services/system/../drivers/storage.html">dedicated driver</a>, the <code>sys::fs</code> service can directly access the said hardware device.</p>
 <h2 id="methods-8"><a class="header" href="#methods-8">Methods</a></h2>
 <h3 id="0x0001-enum_devices"><a class="header" href="#0x0001-enum_devices"><code>0x0001</code> ENUM_DEVICES</a></h3>
 <p>Enumerate connected devices, reserved to <a href="specs/services/system/../../services.html">system services</a>.</p>

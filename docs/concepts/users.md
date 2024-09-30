@@ -1,14 +1,15 @@
 # Users
 
-- [Concept](#concept)
-- [Users type](#users-type)
-- [Dangers of an admin. account](#dangers-of-an-admin-account)
-- [User Privileges Elevation (UPE)](#user-privileges-elevation-upe)
-- [Complexity level](#complexity-level)
-- [Users' data encryption](#users-data-encryption)
-- [Child and supervised users](#child-and-supervised-users)
-- [Groups](#groups)
-- [User privileges](#user-privileges)
+- [Users](#users)
+  - [Concept](#concept)
+  - [User permissions level](#user-permissions-level)
+  - [Dangers of an admin. account](#dangers-of-an-admin-account)
+  - [User Privileges Elevation (UPE)](#user-privileges-elevation-upe)
+  - [Complexity level](#complexity-level)
+  - [Users' data encryption](#users-data-encryption)
+  - [Child and supervised users](#child-and-supervised-users)
+  - [Groups](#groups)
+  - [User privileges](#user-privileges)
 
 ## Concept
 
@@ -22,15 +23,15 @@ Each custom user has a dedicated data directory called the _homedir_, in `/home/
 - The mounted periphericals in `/media` ;
 - Its temporary directory in `/tmp/[username]`
 
-## Users type
+## User permissions level
 
-Each user is of a specific type:
+Each user has an associated _permissions level_:
 
-- _Phantom_: the user's data are erased after the computer is turned off ;
-- _Standard_: the default user account type ;
-- _Administrator_: can run programs directly as administrator ;
-- _Main administrator_: administrator that can manage global storage encryption ;
-- _System_: reserved to a specific builtin user that can only be accessed by the main administrator using a special procedure
+- Level 1 (_Phantom_): the user's data are erased after the computer is turned off ;
+- Level 2 (_Standard_): the default user account type ;
+- Level 3 (_Administrator_): can run programs directly as administrator ;
+- Level 4 (_Main administrator_): administrator that can manage global storage encryption ;
+- Level 5 (_System_): reserved to a specific builtin user that can only be accessed by the main administrator using a special procedure
 
 When a user wants to perform a task it does not have the privileges to, it can (by default) ask to run the task as _another user_. The other user's credentials are then required.
 

@@ -2,10 +2,11 @@
 
 _Permissions_ allow users to finely control what applications can access, and administrators to finely control what other users can do.
 
-- [How permissions work](#how-permissions-work)
-- [Levels of permissions](#levels-of-permissions)
-- [From the control center](#from-the-control-center)
-- [Security level](#security-level)
+- [Permissions](#permissions)
+  - [How permissions work](#how-permissions-work)
+  - [Levels of permissions](#levels-of-permissions)
+  - [From the control center](#from-the-control-center)
+  - [Security level](#security-level)
 
 ## How permissions work
 
@@ -27,8 +28,8 @@ Permissions can be revoked at anytime from the [control center](../applications/
 
 The permissions policy depends on the current user's _security level_, which can be set through the [control center](../applications/Central.md):
 
-- **Basic**: grant all permissions automatically, except privacy permissions
+- **Unsecure**: grant all permissions automatically, except privacy permissions
 - **Standard** (default): grant safe and implicit permissions automatically, but ask for most sensitive and all privacy permissions
-- **Restricted**: only grant implicit permissions but ask for all sensitive and privacy permissions
+- **Tight**: only grant implicit permissions but ask for all sensitive and privacy permissions
 - **Extreme**: only grant safe permissions, ask for every other type of permissions
-- **Total** (only available in developer mode): ask for every permissions, including safe ones
+- **Complete** (only available in developer mode): ask for every permissions, including safe ones

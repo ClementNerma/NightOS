@@ -32,7 +32,7 @@ _NOTE:_ Permissions are specific to the current user (the AUC is not taken in ac
 
 ## User privileges
 
-Some permissions require the user to be an [administrator](../concepts/users.md#users-type). These permissions are marked in this document with an `{A}`.
+Some permissions require the user to be an [administrator](../concepts/users.md#user-permissions-level). These permissions are marked in this document with an `{A}`.
 
 ## List of permissions
 

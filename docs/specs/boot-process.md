@@ -48,6 +48,6 @@ If the provided username and password are valid, it then does the following:
 
 The user session is then opened by calling the relevant system component.
 
-Note that the BOOT2 partition is read-only except to the [system user](../concepts/users.md#users-type) itself.
+Note that the BOOT2 partition is read-only except to the [system user](../concepts/users.md#user-permissions-level) itself.
 
 It is only updated through the [system update process](update-processes.md#system-updates) and when rollbacked.

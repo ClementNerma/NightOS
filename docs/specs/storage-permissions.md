@@ -11,7 +11,7 @@ Each item (identified by its [FEID](filesystem.md#element-unique-identifier)) us
 - Items in a `/home/<xxx>` directory are only available to the `xxx` user.
 - Items in a `/mnt/<xxx>` directory can be available to various users depending on the mount options.
 
-Note that an exception is made for the [system user](../concepts/users.md#users-type) which gets access to every single file.
+Note that an exception is made for the [system user](../concepts/users.md#user-permissions-level) which gets access to every single file.
 
 These are the default permissions, but it's possible to restrict or extend permissions based on a **Storage Permissions Map** (or **SPM**).
 

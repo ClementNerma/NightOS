@@ -178,8 +178,10 @@
                     <main>
                         <h1 id="users"><a class="header" href="#users">Users</a></h1>
 <ul>
+<li><a href="#users">Users</a>
+<ul>
 <li><a href="#concept">Concept</a></li>
-<li><a href="#users-type">Users type</a></li>
+<li><a href="#user-permissions-level">User permissions level</a></li>
 <li><a href="#dangers-of-an-admin-account">Dangers of an admin. account</a></li>
 <li><a href="#user-privileges-elevation-upe">User Privileges Elevation (UPE)</a></li>
 <li><a href="#complexity-level">Complexity level</a></li>
@@ -187,6 +189,8 @@
 <li><a href="#child-and-supervised-users">Child and supervised users</a></li>
 <li><a href="#groups">Groups</a></li>
 <li><a href="#user-privileges">User privileges</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="concept"><a class="header" href="#concept">Concept</a></h2>
 <p>Many computers are intended to be shared by multiple persons. In such case, it is useful to separate the data of each user and to prevent other users from accesing another's.</p>
@@ -197,14 +201,14 @@
 <li>The mounted periphericals in <code>/media</code> ;</li>
 <li>Its temporary directory in <code>/tmp/[username]</code></li>
 </ul>
-<h2 id="users-type"><a class="header" href="#users-type">Users type</a></h2>
-<p>Each user is of a specific type:</p>
+<h2 id="user-permissions-level"><a class="header" href="#user-permissions-level">User permissions level</a></h2>
+<p>Each user has an associated <em>permissions level</em>:</p>
 <ul>
-<li><em>Phantom</em>: the user's data are erased after the computer is turned off ;</li>
-<li><em>Standard</em>: the default user account type ;</li>
-<li><em>Administrator</em>: can run programs directly as administrator ;</li>
-<li><em>Main administrator</em>: administrator that can manage global storage encryption ;</li>
-<li><em>System</em>: reserved to a specific builtin user that can only be accessed by the main administrator using a special procedure</li>
+<li>Level 1 (<em>Phantom</em>): the user's data are erased after the computer is turned off ;</li>
+<li>Level 2 (<em>Standard</em>): the default user account type ;</li>
+<li>Level 3 (<em>Administrator</em>): can run programs directly as administrator ;</li>
+<li>Level 4 (<em>Main administrator</em>): administrator that can manage global storage encryption ;</li>
+<li>Level 5 (<em>System</em>): reserved to a specific builtin user that can only be accessed by the main administrator using a special procedure</li>
 </ul>
 <p>When a user wants to perform a task it does not have the privileges to, it can (by default) ask to run the task as <em>another user</em>. The other user's credentials are then required.</p>
 <p>It's not possible to ask to run a task as system or as administrator as these accounts are virtual and do not have passwords as such, <strong>except</strong> if an administrator user is tries to run a task as administrator.</p>

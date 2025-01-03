@@ -52,18 +52,18 @@ The application's startup arguments and output value use the following encoding:
 - The value's [shell type](shell-scripting.md#value-types) code (see the table below) ;
 - The encoded value (see the table below)
 
-| Type code | Type      | Description                         | Representation                                                                             |
-| --------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------ |
-| `0x00`    | `void`    | Void                                | nothing                                                                                    |
-| `0x01`    | `bool`    | Boolean                             | 1 byte, `0x00` = falsy, `0x01` = truthy                                                    |
-| `0x02`    | `int`     | 64-bit signed integer number        | Two's complement                                                                           |
-| `0x03`    | `float`   | 64-bit signed floating-point number | [IEEE 754](https://standards.ieee.org/standard/754-2019.html)                              |
-| `0x04`    | `char`    | UTF-8 grapheme cluster              | Character's length (8 bytes), followed by the UTF-8 grapheme cluster                       |
-| `0x05`    | `string`  | UTF-8 string                        | String's length (8 bytes), followed by the UTF-8 encoded string                            |
-| `0x06`    | `list`    | Typed linear list                   | Type code of the list's number of items (1 byte), length in bytes (64 bits), encoded items |
-| `0x07`    | `path`    | Filesystem path                     | Represented as an UTF-8 string                                                             |
-| `0x08`    | `command` | Shell command                       | Represented as an UTF-8 string                                                             |
-| `0x09`    | `stream`  | [Pipe RC](kernel/ipc.md#pipes)      | RC identifier (8 bytes)                                                                    |
+| Type code | Type      | Description                         | Representation                                                                                              |
+| --------- | --------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `0x00`    | `void`    | Void                                | nothing                                                                                                     |
+| `0x01`    | `bool`    | Boolean                             | 1 byte, `0x00` = falsy, `0x01` = truthy                                                                     |
+| `0x02`    | `int`     | 64-bit signed integer number        | Two's complement                                                                                            |
+| `0x03`    | `float`   | 64-bit signed floating-point number | [IEEE 754](https://standards.ieee.org/standard/754-2019.html)                                               |
+| `0x04`    | `char`    | UTF-8 character                     | An UTF-32-encoded character (4 bytes)                                                                       |
+| `0x05`    | `string`  | UTF-8 string                        | String's length in bytes (8 bytes), followed by the UTF-8 encoded string                                    |
+| `0x06`    | `list`    | Typed linear list                   | Number of items (8 bytes), contiguous items made of their type code followed by their actual representation |
+| `0x07`    | `path`    | Filesystem path                     | Represented as an UTF-8 string                                                                              |
+| `0x08`    | `command` | Shell command                       | Represented as an UTF-8 string                                                                              |
+| `0x09`    | `stream`  | [Pipe RC](kernel/ipc.md#pipes)      | RC identifier (8 bytes)                                                                                     |
 
 The type code is present to avoid misinterpreting the value in case the command returned a value of the wrong type.
 
